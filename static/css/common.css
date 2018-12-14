@@ -1,0 +1,26 @@
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div{
+    margin:0;
+    padding:0;
+    border:0;
+    outline: none!important;
+    }
+html,body{
+    padding-top: 0;
+    background: #252525;
+    font-size: 14px;
+    height: 100% !important;
+    font-family:"Microsoft YaHei";
+    }
+ul,ol{
+    list-style-type:none;
+    }
+#app{
+    height: 100%;
+}
+img{
+    display: block;
+}
+select,input,img,select,button{
+    vertical-align:middle;
+    outline: none;
+    }
