@@ -2,7 +2,11 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import App from './App'
-import router from './router'
+import VueRouter from 'vue-router'
+import routes from './router'
+import VueI18n from 'vue-i18n'
+import i18n from './i18n/i18n'
+import echarts from 'echarts'
 import './lib/jquery-vender.js'
 import 'bootstrap'
 import 'admin-lte'
@@ -11,12 +15,22 @@ import 'font-awesome/css/font-awesome.css'
 import 'admin-lte/dist/css/AdminLTE.min.css'
 import 'admin-lte/dist/css/skins/_all-skins.min.css'
 
+Vue.use(VueRouter)
+Vue.use(VueI18n)
+
+Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
+
+var router = new VueRouter({
+  routes,
+  mode: 'history'
+})
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  i18n,
   template: '<App/>',
   components: { App }
 })

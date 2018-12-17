@@ -21,18 +21,21 @@
                         <li><a href="#">Separated link</a></li>
                     </ul>
                     </div>
-                    <input class="phoneIpt" type="text" :placeholder="placeholderPhone" >
+                    <input class="phoneIpt" type="text" :placeholder="placeholderPhone" v-model="phone">
               </div>
             </div>
             <div class="mailRes" v-show="!phoneShow">
                 <input type="text" :placeholder="placeholderMail">
             </div>
             <input type="password" :placeholder="placeholderPassword" v-model="password" @blur="checkPassword()">
-            <input type="password" :placeholder="placeholderSurePassword">
+            <input type="password" :placeholder="placeholderSurePassword" v-model="surepwd" @blur="surePassword">
             <input type="text" class="inputCode" :placeholder="placeholderCode">
             <button class="getCode" :class="{disabledGet: !this.canClick}" @click="countDown">{{content}}</button>
-            <router-link class="loginRes" :to="{ path: 'login'}">使用已有账户登录</router-link>
-            <button class="registerBtn">重置密码</button>
+            <router-link class="loginRes" :to="{ path: 'login'}">返回登录页面</router-link>
+            <div class="prompt">
+                {{prompt}}
+            </div>
+            <button class="registerBtn">确定</button>
         </div>
     </section>
 </template>
@@ -51,7 +54,11 @@ export default {
             totalTime: 10,
             canClick: true,
             content: '发送验证码',
-            password: ''
+            phone: '',
+            mail: '',
+            password: '',
+            surepwd: '',
+            prompt: ''
         }
     },
     methods: {
@@ -62,6 +69,7 @@ export default {
             this.phoneShow = false
         },
         countDown () {
+            this.getCode()
             if (!this.canClick) return 
             this.canClick = false
             this.content = this.totalTime + 's后重新发送'
@@ -76,18 +84,27 @@ export default {
             }
             },1000)
         },
+        getCode () {
+            if (this.phone === '' && this.mail === '') {
+                this.prompt = '请完善以上信息'
+            } else {
+                this.prompt = ''
+            }
+        },
         checkPassword () {
-            // if (this.passWord === '') {
-            // this.pwdError = this.$t('resetPwd.checkPwd1')
-            // this.$refs.passWord.focus()
-            // } else if (this.passWord.length < 6) {
-            // this.pwdError = this.$t('resetPwd.checkPwd2')
-            // this.$refs.passWord.focus()
-            // } else {
-            // this.pwdError = ''
-            // }
             if (this.password === '') {
-                console.log("123")
+                this.prompt = '密码不能为空'
+            } else if (this.password.length < 6 || this.password.length > 12) {
+                this.prompt = '6-16位密码'
+            }else {
+                this.prompt = ''
+            }
+        },
+        surePassword () {
+            if (this.surepwd !== this.password) {
+            this.prompt = '密码不一致'
+            } else {
+            this.prompt = ''
             }
         },
         
@@ -144,7 +161,7 @@ export default {
                         font-family:PingFang-SC-Heavy;
                         border-bottom: 2px solid #81a028;
                         color:#81a028;
-                        transition: all 1.5s;
+                        transition: all .5s;
                     }
                 }
             }
@@ -213,6 +230,11 @@ export default {
                 font-size:16px;
                 color:#ffffff;
                 line-height:20px;
+            }
+            .prompt{
+                text-align: left;
+                padding-left: 20px;
+                color: red;
             }
         }
     }

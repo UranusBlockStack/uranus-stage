@@ -5,7 +5,7 @@
         </div>
         <div class="loginContent">
             <div class="btnChoose">
-                <div class="btnMail" @click="chooseMail"><span :class="{chooseBtn:!phoneShow}">邮箱登录</span></div>
+                <div class="btnMail" @click="chooseMail"><span :class="{chooseBtn:!phoneShow}">{{$t('login.tittle')}}</span></div>
                 <div class="btnPhone" @click="choosePhone"><span :class="{chooseBtn:phoneShow}">手机登录</span></div>
             </div>
             <div class="phoneRes" v-show="phoneShow">
@@ -21,16 +21,19 @@
                         <li><a href="#">Separated link</a></li>
                     </ul>
                     </div>
-                    <input class="phoneIpt" type="text" :placeholder="placeholderPhone">
+                    <input class="phoneIpt" type="text" v-model="phone" :placeholder="placeholderPhone">
               </div>
             </div>
             <div class="mailRes" v-show="!phoneShow">
-                <input type="text" :placeholder="placeholderMail">
+                <input type="text" :placeholder="placeholderMail" v-model="mail">
             </div>
-            <input type="text" :placeholder="placeholderPassword">
+            <input type="text" :placeholder="placeholderPassword" v-model="password">
             <router-link class="register" :to="{ path: 'register'}">注册用户</router-link>
             <router-link class="forgetPwd" :to="{ path: 'forgetPwd'}">忘记密码</router-link>
-            <button class="loginBtn">登录</button>
+            <div class="prompt">
+                {{prompt}}
+            </div>
+            <button class="loginBtn" @click="userLogin">登录</button>
         </div>
     </section>
 </template>
@@ -43,7 +46,11 @@ export default {
             placeholderPhone: '手机号',
             placeholderMail: '邮箱',
             placeholderPassword: '6-16位密码 区分大小写',
-            phoneShow: 'true'
+            phoneShow: 'true',
+            prompt: '',
+            phone: '',
+            mail: '',
+            password: ''
         }
     },
     methods: {
@@ -52,8 +59,16 @@ export default {
         },
         chooseMail () {
             this.phoneShow = false;
+        },
+        userLogin (){
+            if (this.phone === '' && this.mail === '') {
+                this.prompt = '请完善信息后登陆'
+            } else if (this.password === '') {
+                this.prompt = '请填写密码'
+            } else {
+                this.prompt = ''
+            }
         }
-        
     }
 }
 </script>
@@ -107,7 +122,7 @@ export default {
                         font-family:PingFang-SC-Heavy;
                         border-bottom: 2px solid #81a028;
                         color:#81a028;
-                        transition: all 1.5s;
+                        transition: all .5s;
                     }
                 }
             }
@@ -162,6 +177,11 @@ export default {
                 font-size:16px;
                 color:#ffffff;
                 line-height:24px;
+            }
+            .prompt {
+                color: red;
+                text-align: left;
+                padding-left: 20px;
             }
         }
     }

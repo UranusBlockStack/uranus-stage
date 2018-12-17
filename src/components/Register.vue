@@ -128,7 +128,7 @@ export default {
                         font-family:PingFang-SC-Heavy;
                         border-bottom: 2px solid #81a028;
                         color:#81a028;
-                        transition: all 1.5s;
+                        transition: all .5s;
                     }
                 }
             }

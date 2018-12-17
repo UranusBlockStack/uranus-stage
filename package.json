@@ -16,9 +16,11 @@
   "dependencies": {
     "admin-lte": "^2.4.2",
     "bootstrap": "^3.3.7",
+    "echarts": "^4.2.0-rc.2",
     "font-awesome": "^4.7.0",
     "jquery": "^3.2.1",
     "vue": "^2.5.2",
+    "vue-i18n": "^8.4.0",
     "vue-router": "^3.0.1"
   },
   "devDependencies": {

@@ -1,19 +1,21 @@
-import Vue from 'vue'
-import Router from 'vue-router'
 import Starter from '@/components/starter'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import ForgetPwd from '@/components/ForgetPwd'
+import NotFound from '@/components/NotFound'
+import Map from '@/components/Map'
 
-Vue.use(Router)
+// common component
 
-export default new Router({
-  mode: 'history',
-  routes: [
+// seller
+import Seller from '@/components/Seller'
+
+
+const routes = [
     {
-      path: '/',
-      name: 'Starter',
-      component: Starter
+      path: '/map',
+      name: 'Map',
+      component: Map
     },
     {
       path: '/login',
@@ -29,6 +31,25 @@ export default new Router({
       path: '/forgetPwd',
       name: 'ForgetPwd',
       component: ForgetPwd
+    },
+    {
+      path: '/',
+      name: 'Starter',
+      component: Starter,
+      children: [
+        {
+          path: 'seller',
+          component: Seller,
+          name: 'Seller'
+        }
+      ]
+    },
+    {
+      path: '*',
+      name: 'NotFound',
+      component: NotFound
     }
   ]
-})
+
+  export default routes
+
