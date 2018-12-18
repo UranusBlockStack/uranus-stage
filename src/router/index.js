@@ -8,7 +8,7 @@ import Map from '@/components/Map'
 // common component
 
 // seller
-import Seller from '@/components/Seller'
+import Seller from '@/components/seller/Seller'
 
 
 const routes = [

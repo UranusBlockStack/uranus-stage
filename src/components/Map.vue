@@ -2,21 +2,18 @@
     <section class="Map">
         <header class="mapHead">
             <img class="headImg" src="/static/img/uranus/head.png" alt="uranus">
-            <router-link :to="{path: 'register'}">注册用户</router-link>
+            
             <div class="btn-group language">
-                  <button type="button" class="btn btn-default">Action</button>
                   <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                      中文
                     <span class="caret"></span>
                     <span class="sr-only">Toggle Dropdown</span>
                   </button>
                   <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
-                    <li><a href="#">Another action</a></li>
-                    <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
+                    <li><a href="#">选择语言</a></li>
                   </ul>
             </div>
+            <router-link :to="{path: 'register'}" class="register">注册用户</router-link>
         </header>
         <div id="mapWorld"></div>
         <div class="mapCon">
@@ -154,8 +151,27 @@
           margin: 10px 25px;
           float: left;
       }
+      .register {
+          display: block;
+          width: 200px;
+          height: 60px;
+          line-height: 60px;
+          text-align: center;
+          float: right;
+          color: greenyellow;
+      }
       .language {
           float: right;
+          right: 50px;
+          top: 13px;
+          .btn-default {
+              background: #252525;
+              color: greenyellow;
+              border: none;
+          }
+          .dropdown-menu {
+              left: -47px;
+          }
       }
   }
   .mapCon {

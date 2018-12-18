@@ -1,19 +1,19 @@
 <template>
     <section class="Head">
-          <!-- Logo -->
-    <a href="index2.html" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>A</b>LT</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>Admin</b>LTE</span>
-    </a>
+      <!-- Logo -->
+      <router-link :to="{path : '/map'}" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini"><img src="/static/img/uranus/urans_icon.png" alt=""></span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg"><img src="/static/img/uranus/head.png" alt=""></span>
+      </router-link>
 
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
       <!-- Sidebar toggle button-->
-      <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+      <div href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
         <span class="sr-only">Toggle navigation</span>
-      </a>
+      </div>
       <!-- Navbar Right Menu -->
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
@@ -33,7 +33,7 @@
                     <a href="#">
                       <div class="pull-left">
                         <!-- User Image -->
-                        <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                        <img src="/static/img/uranus/starter/user.jpg" class="img-circle" alt="User Image">
                       </div>
                       <!-- Message title and timestamp -->
                       <h4>
@@ -118,14 +118,14 @@
             <!-- Menu Toggle Button -->
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <!-- The user image in the navbar-->
-              <img src="dist/img/user2-160x160.jpg" class="user-image" alt="Image">
+              <img src="/static/img/uranus/starter/user.jpg" class="user-image" alt="Image">
               <!-- hidden-xs hides the username on small devices so only the image appears. -->
               <span class="hidden-xs">Alexander Pierce</span>
             </a>
             <ul class="dropdown-menu">
               <!-- The user image in the menu -->
               <li class="user-header">
-                <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                <img src="/static/img/uranus/starter/user.jpg" class="img-circle" alt="User Image">
 
                 <p>
                   Alexander Pierce - Web Developer
@@ -153,15 +153,15 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <router-link :to="{path: '/map'}" class="btn btn-default btn-flat">Sign out</router-link>
                 </div>
               </li>
             </ul>
           </li>
           <!-- Control Sidebar Toggle Button -->
-          <li>
+          <!-- <li>
             <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-          </li>
+          </li> -->
         </ul>
       </div>
     </nav>
@@ -175,3 +175,27 @@ export default {
 }
 </script>
 
+<style lang="scss" scoped>
+  .Head {
+    .logo {
+      background: #252525;
+      .logo-mini {
+        img {
+          display: block;
+          height: 30px;
+          margin-top: 10px; 
+        }
+      }
+      .logo-lg {
+        img {
+          height: 40px;
+          margin-top: 5px;
+        }
+      }
+    }
+    .navbar {
+      background: #252525;
+    }
+  }
+  
+</style>
