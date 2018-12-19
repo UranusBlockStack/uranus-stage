@@ -30,7 +30,9 @@
       <ul class="sidebar-menu" data-widget="tree">
         <!-- <li class="header">HEADER</li> -->
         <!-- Optionally, you can add icons to the links -->
-        <li><a href="#"><i class="fa fa-link"></i> <span>首页</span></a></li>
+        <li><router-link :to="{path: '/seller'}"><i class="fa fa-link"></i> <span>首页</span></router-link></li>
+        <li><router-link :to="{path: '/buyer'}"><i class="fa fa-link"></i> <span>首页</span></router-link></li>
+        <li><router-link :to="{path: '/developer'}"><i class="fa fa-link"></i> <span>首页</span></router-link></li>
         <li class="treeview">
           <a href="#"><i class="fa fa-link"></i> <span>应用市场</span>
             <span class="pull-right-container">

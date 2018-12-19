@@ -7,44 +7,59 @@ import Map from '@/components/Map'
 
 // common component
 
+// buyer
+import Buyer from '@/components/buyer/Buyer'
+
+// developer
+import Developer from '@/components/developer/Developer'
+
 // seller
 import Seller from '@/components/seller/Seller'
-
 
 const routes = [
     {
       path: '/map',
       name: 'Map',
       component: Map
-    },
-    {
+    },{
       path: '/login',
       name: 'Login',
       component: Login
-    },
-    {
+    },{
       path: '/register',
       name: 'Register',
       component: Register
-    },
-    {
+    },{
       path: '/forgetPwd',
       name: 'ForgetPwd',
       component: ForgetPwd
-    },
-    {
+    },{
       path: '/',
       name: 'Starter',
       component: Starter,
       children: [
+        // buyer routes
+        {
+          path: 'buyer',
+          component: Buyer,
+          name: 'Buyer'
+        },
+        
+        // developer routes
+        {
+          path: 'developer',
+          component: Developer,
+          name: 'Developer'
+        },
+        
+        // seller routes
         {
           path: 'seller',
           component: Seller,
           name: 'Seller'
-        }
+        },
       ]
-    },
-    {
+    },{
       path: '*',
       name: 'NotFound',
       component: NotFound

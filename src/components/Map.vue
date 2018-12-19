@@ -17,24 +17,24 @@
         </header>
         <div id="mapWorld"></div>
         <div class="mapCon">
-            <div class="seller">
+            <router-link :to="{path: 'seller'}" class="seller">
                 <span>
                     出售算力
                 </span>
                 <p>共享多余算力,赚取额外费用</p>
-            </div>
-            <div class="buyer">
+            </router-link>
+            <router-link :to="{path: 'buyer'}" class="buyer">
                 <span>
-                    出售算力
+                    购买产品
                 </span>
                 <p>共享多余算力,赚取额外费用</p>
-            </div>
-            <div class="develop">
+            </router-link>
+            <router-link :to="{path: 'developer'}" class="developer">
                 <span>
-                    出售算力
+                    发布应用
                 </span>
                 <p>共享多余算力,赚取额外费用</p>
-            </div>
+            </router-link>
         </div>
         
     </section>
@@ -47,7 +47,7 @@
         name: 'Map',
         data() {
             return {
-                charts: ''
+                
             }
         },
         methods: {
@@ -183,7 +183,7 @@
       display: flex;
       justify-content: center;
 
-      div {
+      a {
           width: 320px;
           height: 120px;
           border-radius: 15px;
@@ -210,7 +210,7 @@
       .buyer {
           background: greenyellow;
       }
-      .develop {
+      .developer {
           background: yellow;
       }
   }
