@@ -47,219 +47,25 @@
         </div>
       </div>
       <div class="record">
-        <div>
-          <div class="col-sm-12">
-            <table
-              id="example2"
-              class="table table-bordered table-hover dataTable"
-              role="grid"
-              aria-describedby="example2_info"
-            >
-              <thead>
-                <tr role="row">
-                  <th
-                    class="sorting_asc"
-                    tabindex="0"
-                    aria-controls="example2"
-                    rowspan="1"
-                    colspan="1"
-                    aria-sort="ascending"
-                    aria-label="Rendering engine: activate to sort column descending"
-                  >Rendering engine</th>
-                  <th
-                    class="sorting"
-                    tabindex="0"
-                    aria-controls="example2"
-                    rowspan="1"
-                    colspan="1"
-                    aria-label="Browser: activate to sort column ascending"
-                  >Browser</th>
-                  <th
-                    class="sorting"
-                    tabindex="0"
-                    aria-controls="example2"
-                    rowspan="1"
-                    colspan="1"
-                    aria-label="Platform(s): activate to sort column ascending"
-                  >Platform(s)</th>
-                  <th
-                    class="sorting"
-                    tabindex="0"
-                    aria-controls="example2"
-                    rowspan="1"
-                    colspan="1"
-                    aria-label="Engine version: activate to sort column ascending"
-                  >Engine version</th>
-                  <th
-                    class="sorting"
-                    tabindex="0"
-                    aria-controls="example2"
-                    rowspan="1"
-                    colspan="1"
-                    aria-label="CSS grade: activate to sort column ascending"
-                  >CSS grade</th>
-                  <th
-                    class="sorting"
-                    tabindex="0"
-                    aria-controls="example2"
-                    rowspan="1"
-                    colspan="1"
-                    aria-label="CSS grade: activate to sort column ascending"
-                  >CSS grade</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr role="row" class="odd">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Firefox 1.0</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.7</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="even">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Firefox 1.5</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="odd">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Firefox 2.0</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="even">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Firefox 3.0</td>
-                  <td>Win 2k+ / OSX.3+</td>
-                  <td>1.9</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="odd">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Camino 1.0</td>
-                  <td>OSX.2+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="even">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Camino 1.5</td>
-                  <td>OSX.3+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="odd">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Netscape 7.2</td>
-                  <td>Win 95+ / Mac OS 8.6-9.2</td>
-                  <td>1.7</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="even">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Netscape Browser 8</td>
-                  <td>Win 98SE+</td>
-                  <td>1.7</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="odd">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Netscape Navigator 9</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="even">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Mozilla 1.0</td>
-                  <td>Win 95+ / OSX.1+</td>
-                  <td>1</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="odd">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Netscape Navigator 9</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="even">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Mozilla 1.0</td>
-                  <td>Win 95+ / OSX.1+</td>
-                  <td>1</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="odd">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Netscape Navigator 9</td>
-                  <td>Win 98+ / OSX.2+</td>
-                  <td>1.8</td>
-                  <td>A</td>
-                </tr>
-                <tr role="row" class="even">
-                  <td class="sorting_1">Gecko</td>
-                  <td>Mozilla 1.0</td>
-                  <td>Win 95+ / OSX.1+</td>
-                  <td>1</td>
-                  <td>A</td>
-                </tr>
-              </tbody>
-              <!-- <tfoot>
-                <tr>
-                  <th rowspan="1" colspan="1">Rendering engine</th>
-                  <th rowspan="1" colspan="1">Browser</th>
-                  <th rowspan="1" colspan="1">Platform(s)</th>
-                  <th rowspan="1" colspan="1">Engine version</th>
-                  <th rowspan="1" colspan="1">CSS grade</th>
-                </tr>
-              </tfoot> -->
-            </table>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-5">
-            <div
-              class="dataTables_info"
-              id="example2_info"
-              role="status"
-              aria-live="polite"
-            >Showing 1 to 10 of 57 entries</div>
-          </div>
-          <div class="col-sm-7">
-            <div class="dataTables_paginate paging_simple_numbers" id="example2_paginate">
-              <ul class="pagination">
-                <li class="paginate_button previous disabled" id="example2_previous">
-                  <a href="#" aria-controls="example2" data-dt-idx="0" tabindex="0">Previous</a>
-                </li>
-                <li class="paginate_button active">
-                  <a href="#" aria-controls="example2" data-dt-idx="1" tabindex="0">1</a>
-                </li>
-                <li class="paginate_button">
-                  <a href="#" aria-controls="example2" data-dt-idx="2" tabindex="0">2</a>
-                </li>
-                <li class="paginate_button">
-                  <a href="#" aria-controls="example2" data-dt-idx="3" tabindex="0">3</a>
-                </li>
-                <li class="paginate_button">
-                  <a href="#" aria-controls="example2" data-dt-idx="4" tabindex="0">4</a>
-                </li>
-                <li class="paginate_button">
-                  <a href="#" aria-controls="example2" data-dt-idx="5" tabindex="0">5</a>
-                </li>
-                <li class="paginate_button">
-                  <a href="#" aria-controls="example2" data-dt-idx="6" tabindex="0">6</a>
-                </li>
-                <li class="paginate_button next" id="example2_next">
-                  <a href="#" aria-controls="example2" data-dt-idx="7" tabindex="0">Next</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
+        <div class="record-head">Record</div>
+        <el-row>
+          <el-col :span="24" style="background:pink">
+            <el-table :data="tableData" border style="width: 100%">
+              <el-table-column prop="date" label="日期" width="180"></el-table-column>
+              <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+              <el-table-column prop="date" label="日期" width="180"></el-table-column>
+              <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+              <el-table-column prop="date" label="日期" width="180"></el-table-column>
+              <el-table-column prop="name" label="姓名" width="120"></el-table-column>
+              <el-table-column prop="address" label="地址" min-width="230"></el-table-column>
+            </el-table>
+          </el-col>
+        </el-row>
+         <el-row :gutter="20" style="height: 50px">
+          <el-col :span="6" :offset="9">
+            <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
+          </el-col>
+        </el-row>
       </div>
     </div>
   </section>
@@ -270,8 +76,8 @@ export default {
   name: "Seller",
   data() {
     return {
-      indexCon: '3',
-      indexPro: '3',
+      indexCon: "3",
+      indexPro: "3",
       dataConsumption: {
         day: {
           x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
@@ -315,86 +121,126 @@ export default {
       profitVal: {
         x: "",
         y: ""
-      }
+      },
+      tableData: [
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        },
+        {
+          date: "2016-05-02",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1518 弄"
+        },
+        {
+          date: "2016-05-04",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1517 弄"
+        },
+        {
+          date: "2016-05-01",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1519 弄"
+        },
+        {
+          date: "2016-05-03",
+          name: "王小虎",
+          address: "上海市普陀区金沙江路 1516 弄"
+        }
+      ]
     };
+  },
+  computed: {
+    echartsWidth : function() {
+      let wid = $('#myConsumption').width;
+      return wid;
+    }
   },
   methods: {
     consumptionDay(x) {
-      this.consumptionVal.x = this.dataConsumption.day.x;
-      this.consumptionVal.y = this.dataConsumption.day.y;
-      this.initEchart(
-        this.consumptionVal,
-        this.$echarts.init(document.getElementById("myConsumption"))
-      );
+      this.consumptionVal = this.dataConsumption.day;
+      this.initEchart(this.consumptionVal,this.profitVal);
       this.indexCon = x;
     },
     consumptionWeek(x) {
-      this.consumptionVal.x = this.dataConsumption.week.x;
-      this.consumptionVal.y = this.dataConsumption.week.y;
-      this.initEchart(
-        this.consumptionVal,
-        this.$echarts.init(document.getElementById("myConsumption"))
-      );
+      this.consumptionVal = this.dataConsumption.week;
+      this.initEchart(this.consumptionVal,this.profitVal);
       this.indexCon = x;
     },
     consumptionMounth(x) {
-      this.consumptionVal.x = this.dataConsumption.mounth.x;
-      this.consumptionVal.y = this.dataConsumption.mounth.y;
-      this.initEchart(
-        this.consumptionVal,
-        this.$echarts.init(document.getElementById("myConsumption"))
-      );
+      this.consumptionVal = this.dataConsumption.mounth;
+      this.initEchart(this.consumptionVal,this.profitVal);
       this.indexCon = x;
     },
     consumptionYear(x) {
-      this.consumptionVal.x = this.dataConsumption.year.x;
-      this.consumptionVal.y = this.dataConsumption.year.y;
-      this.initEchart(
-        this.consumptionVal,
-        this.$echarts.init(document.getElementById("myConsumption"))
-      );
+      this.consumptionVal = this.dataConsumption.year;
+      this.initEchart(this.consumptionVal,this.profitVal);
       this.indexCon = x;
     },
     profitDay(x) {
-      this.profitVal.x = this.dataProfit.day.x;
-      this.profitVal.y = this.dataProfit.day.y;
-      this.initEchart(
-        this.profitVal,
-        this.$echarts.init(document.getElementById("myProfit"))
-      );
+      this.profitVal = this.dataProfit.day;
+      this.initEchart(this.consumptionVal,this.profitVal);
       this.indexPro = x;
     },
     profitWeek(x) {
-      this.profitVal.x = this.dataProfit.week.x;
-      this.profitVal.y = this.dataProfit.week.y;
-      this.initEchart(
-        this.profitVal,
-        this.$echarts.init(document.getElementById("myProfit"))
-      );
+      this.profitVal = this.dataProfit.week;
+      this.initEchart(this.consumptionVal,this.profitVal);
       this.indexPro = x;
     },
     profitMounth(x) {
-      this.profitVal.x = this.dataProfit.mounth.x;
-      this.profitVal.y = this.dataProfit.mounth.y;
-      this.initEchart(
-        this.profitVal,
-        this.$echarts.init(document.getElementById("myProfit"))
-      );
+      this.profitVal = this.dataProfit.mounth;
+      this.initEchart(this.consumptionVal,this.profitVal);
       this.indexPro = x;
     },
     profitYear(x) {
-      this.profitVal.x = this.dataProfit.year.x;
-      this.profitVal.y = this.dataProfit.year.y;
-      this.initEchart(
-        this.profitVal,
-        this.$echarts.init(document.getElementById("myProfit"))
-      );
+      this.profitVal = this.dataProfit.year;
+      this.initEchart(this.consumptionVal,this.profitVal);
       this.indexPro = x;
     },
-    initEchart(val, box) {
-      var myChart = box;
-      var myData = val;
-      myChart.setOption({
+    initEchart(val1,val2) {
+      var myChart1 = this.$echarts.init(
+        document.getElementById("myConsumption")
+      );
+      var myChart2 = this.$echarts.init(document.getElementById("myProfit"));
+      var myData1 = val1;
+      var myData2 = val2;
+      myChart1.setOption({
         color: ["#3398DB"],
         tooltip: {
           trigger: "axis",
@@ -412,7 +258,7 @@ export default {
         xAxis: [
           {
             type: "category",
-            data: myData.x,
+            data: myData1.x,
             axisTick: {
               alignWithLabel: true
             }
@@ -431,10 +277,55 @@ export default {
             name: "uranus",
             type: "bar",
             barWidth: "60%",
-            data: myData.y
+            data: myData1.y
           }
         ]
       });
+      myChart2.setOption({
+        color: ["#3398DB"],
+        tooltip: {
+          trigger: "axis",
+          axisPointer: {
+            // 坐标轴指示器，坐标轴触发有效
+            type: "line" // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        grid: {
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: "category",
+            data: myData2.x,
+            axisTick: {
+              alignWithLabel: true
+            }
+          }
+        ],
+        yAxis: [
+          {
+            type: "value",
+            axisLabel: {
+              formatter: "{value}"
+            }
+          }
+        ],
+        series: [
+          {
+            name: "uranus",
+            type: "bar",
+            barWidth: "60%",
+            data: myData2.y
+          }
+        ]
+      });
+      window.onresize = function() {
+        myChart1.resize();
+        myChart2.resize();
+      };
     }
   },
 
@@ -471,7 +362,7 @@ export default {
   .content {
     width: 100%;
     .my-content {
-      width: 85%;
+      width: 95%;
       min-width: 1130px;
       height: 400px;
       margin: 0 auto;
@@ -479,9 +370,10 @@ export default {
       justify-content: space-between;
       .active {
         color: green;
+        font-weight: bolder;
       }
       .consumption {
-        width: 45%;
+        width: 48%;
         min-width: 530px;
         height: 400px;
         background: #ffffff;
@@ -502,13 +394,13 @@ export default {
           }
         }
         #myConsumption {
-          width: 530px;
+          width: 100%;
           height: 300px;
-          margin: 0 auto;
+          overflow:hidden;
         }
       }
       .profit {
-        width: 45%;
+        width: 48%;
         min-width: 530px;
         height: 400px;
         background: #ffffff;
@@ -529,20 +421,21 @@ export default {
           }
         }
         #myProfit {
-          width: 530px;
+          width: 100%;
           height: 300px;
-          margin: 0 auto;
+          overflow: hidden;
         }
       }
     }
     .power {
-      width: 85%;
+      width: 95%;
       min-width: 1130px;
       height: 280px;
       margin: 20px auto;
       background: #ffffff;
       box-shadow: 5px 5px 5px gray;
       p {
+        padding-left: 15px;
         height: 40px;
       }
       .powerBox {
@@ -559,10 +452,16 @@ export default {
     }
     .record {
       background: #ffffff;
-      width: 85%;
+      width: 95%;
       min-width: 1130px;
       margin: 20px auto;
       box-shadow: 5px 5px 5px gray;
+      .record-head {
+        height: 50px;
+        width: 100%;
+        line-height: 50px;
+        padding-left: 15px;
+      }
     }
   }
 }

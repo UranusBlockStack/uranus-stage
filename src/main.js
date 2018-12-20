@@ -7,6 +7,8 @@ import routes from './router'
 import VueI18n from 'vue-i18n'
 import i18n from './i18n/i18n'
 import echarts from 'echarts'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 import './lib/jquery-vender.js'
 import 'bootstrap'
 import 'admin-lte'
@@ -17,6 +19,7 @@ import 'admin-lte/dist/css/skins/_all-skins.min.css'
 
 Vue.use(VueRouter)
 Vue.use(VueI18n)
+Vue.use(ElementUI)
 
 Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
