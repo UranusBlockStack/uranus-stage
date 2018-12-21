@@ -1,56 +1,63 @@
 <template>
-<div class="wrapper">
-  <!-- Main Header -->
-  <header class="main-header">
-    <Top/>
-  </header>
+  <div class="wrapper">
+    <!-- Main Header -->
+    <header class="main-header">
+      <Top/>
+    </header>
 
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <SidebarLeft/>
-  </aside>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <SidebarLeft/>
+    </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
       <router-view></router-view>
-  </div>
-  <!-- /.content-wrapper -->
-
-  <!-- Main Footer -->
-  <!-- <footer class="main-footer"> -->
+    </div>
+    <!-- /.content-wrapper -->
+    <!-- Main Footer -->
+    <!-- <footer class="main-footer"> -->
     <!-- To the right -->
     <!-- <div class="pull-right hidden-xs">
       Anything you want
-    </div> -->
+    </div>-->
     <!-- Default to the left -->
     <!-- <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
-  </footer> -->
-
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <SiderbarRight/>
-  </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-  immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
-</div>
+    </footer>-->
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+      <SiderbarRight/>
+    </aside>
+    <!-- /.control-sidebar -->
+    <!-- Add the sidebar's background. This div must be placed
+    immediately after the control sidebar-->
+    <div class="control-sidebar-bg"></div>
+  </div>
 </template>
 
 <script>
-import Top from './Top'
-import SidebarLeft from './SidebarLeft'
-import SiderbarRight from './SiderbarRight'
+import Top from "./Top";
+import SidebarLeft from "./SidebarLeft";
+import SiderbarRight from "./SiderbarRight";
 
 export default {
-  name: 'Starter',
+  name: "Starter",
   components: {
-    Top,SidebarLeft,SiderbarRight
+    Top,
+    SidebarLeft,
+    SiderbarRight
   },
-  data () {
+  data() {
     return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+      msg: "Welcome to Your Vue.js App"
+    };
   }
-}
+};
 </script>
+
+<style lang="scss" scoped>
+.main-sidebar {
+  background: #ffffff;
+  box-shadow: 2px 0 6px 0 rgba(0, 0, 0, 0.2);
+}
+</style>

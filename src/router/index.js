@@ -16,6 +16,10 @@ import Developer from '@/components/developer/Developer'
 // seller
 import Seller from '@/components/seller/Seller'
 
+// common
+import Wallet from '@/components/common/Wallet'
+import Setting from '@/components/common/Setting'
+
 const routes = [
     {
       path: '/map',
@@ -58,6 +62,17 @@ const routes = [
           component: Seller,
           name: 'Seller'
         },
+
+        // common routes
+        {
+          path: 'wallet',
+          component: Wallet,
+          name: 'Wallet'
+        },{
+          path: 'setting',
+          component: Setting,
+          name: 'Setting'
+        }
       ]
     },{
       path: '*',

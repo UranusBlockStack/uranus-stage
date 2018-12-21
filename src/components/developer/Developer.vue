@@ -49,7 +49,7 @@
       <div class="record">
         <div class="record-head">Record</div>
         <el-row>
-          <el-col :span="24" style="background:pink">
+          <el-col :span="24">
             <el-table :data="tableData" border style="width: 100%">
               <el-table-column prop="date" label="日期" width="180"></el-table-column>
               <el-table-column prop="name" label="姓名" width="120"></el-table-column>

@@ -188,8 +188,8 @@ export default {
       }
       .logo-lg {
         img {
-          height: 40px;
-          margin-top: 5px;
+          height: 38px;
+          margin: 6px 30px;
         }
       }
     }
