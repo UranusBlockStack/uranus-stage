@@ -15,14 +15,33 @@
     <div class="content container-fluid">
       <div class="shop">
         <el-row>
-          <el-col :span="12">应用商店</el-col>
-          <el-col :span="12" class="more-application">查看更多>></el-col>
+          <el-col :span="12"><p>应用商店</p></el-col>
+          <el-col :span="11"><p class="more">查看更多>></p></el-col>
         </el-row>
-        <el-row class="shop-content">
-          <el-col :span="6"></el-col>
-          <el-col :span="6">应用商店</el-col>
-          <el-col :span="6">应用商店</el-col>
-          <el-col :span="6">应用商店</el-col>
+        <el-row class="shopBox" :gutter="20">
+          <el-col :span="6" v-for="(app, index) in appList" :key="index" style="margin-bottom:40px">
+            <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
+              <div class="resources">
+                <div>
+                  <p class="shops">{{app.shop}}</p>
+                  <img src="/static/img/uranus/developer/app.png" alt="img">
+                  <p class="name">Imagepuler</p>
+                  <p
+                    class="detail"
+                  >DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
+                  <el-row :gutter="20">
+                    <el-col :span="6" :offset="2">
+                      <p class="free">免费</p>
+                    </el-col>
+                    <el-col :span="10" :offset="6">
+                      <p class="downloads">123人下载</p>
+                    </el-col>
+                    <el-button type="success">查看详情</el-button>
+                  </el-row>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
         </el-row>
       </div>
       <div class="power">
@@ -63,7 +82,13 @@ export default {
           y: [10000, 520, 200, 334, 390]
         }
       },
-      powerVal: {}
+      powerVal: {},
+      appList: [
+        { id: "1", name: "Imagepuller", shop: "商店1"},
+        { id: "1", name: "Imagepuller", shop: "商店2"},
+        { id: "1", name: "Imagepuller", shop: "商店3"},
+        { id: "1", name: "Imagepuller", shop: "商店4"}
+      ]
     };
   },
   methods: {
@@ -91,13 +116,16 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("myPower"));
       var myData = val;
       myChart.setOption({
-        color: ["#3398DB"],
+        color: ["#3398DB",'#003366'],
         tooltip: {
           trigger: "axis",
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
             type: "line" // 默认为直线，可选为：'line' | 'shadow'
           }
+        },
+        legend: {
+          data: ['我的','算力']
         },
         grid: {
           left: "3%",
@@ -126,7 +154,12 @@ export default {
           {
             name: "uranus",
             type: "bar",
-            barWidth: "60%",
+            barWidth: "25%",
+            data: myData.y
+          },{
+            name: "uranus-web",
+            type: "bar",
+            barWidth: "25%",
             data: myData.y
           }
         ]
@@ -171,17 +204,81 @@ export default {
       min-width: 1130px;
       margin: 20px auto;
       padding: 15px;
-      box-shadow: 5px 5px 5px gray;
-      .more-application {
-        text-align: right;
-        color: green;
+      box-shadow:0 1px 4px 0;
+      p {
+        height: 40px;
+        font-family: PingFang-SC-Bold;
+        font-size: 16px;
+        color: #252525;
+        line-height: 24px;
+        text-align: left;
       }
-      .shop-content {
-        border: 1px;
-        .el-col {
-          border: 1px solid greenyellow;
-          height: 350px;
-          border-radius: 5px;
+      .more {
+        font-family: PingFang-SC-Bold;
+        font-size: 16px;
+        color: #8eb357;
+        line-height: 24px;
+        text-align: right;
+      }
+      .shopBox {
+        width: 100%;
+        min-width: 1130px;
+        .resources {
+          text-align: center;
+          padding: 20px;
+          div {
+            cursor: pointer;
+            .shops {
+              height: 30px;
+              margin-bottom: -20px;
+              text-align: right;
+            }
+            img {
+              width: 110px;
+              height: 105px;
+              display: inline-block;
+            }
+            .name {
+              font-weight: 600;
+              padding: 5px 0 10px;
+              border-bottom: 2px solid #eee;
+              font-family: PingFang-SC-Medium;
+              font-size: 20px;
+              color: #251e1c;
+              text-align: center;
+              line-height: 24px;
+            }
+            .detail {
+              width: 220px;
+              height: 66px;
+              overflow: hidden;
+              box-sizing: content-box;
+              font-family: PingFangSC-Regular;
+              font-size: 14px;
+              color: rgba(0, 0, 0, 0.45);
+              text-align: center;
+              line-height: 22px;
+              margin: 10px auto;
+            }
+            .free {
+              font-weight: 600;
+              padding: 10px 0;
+              font-family: PingFangSC-Regular;
+              font-size: 14px;
+              color: #1890ff;
+              letter-spacing: 0;
+              line-height: 22px;
+              text-align: left;
+            }
+            .downloads {
+              font-family: PingFangSC-Regular;
+              font-size: 14px;
+              color: #5d5d5d;
+              letter-spacing: 0;
+              text-align: center;
+              line-height: 22px;
+            }
+          }
         }
       }
     }

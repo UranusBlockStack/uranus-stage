@@ -116,7 +116,10 @@
         //       color: 'lightgreen' // 值域控件的文本颜色
         //     }
         //   }
-        })
+        });
+        window.onresize = function() {
+        myChartMap2.resize();
+      };
       },
     },
     mounted() {
@@ -134,6 +137,7 @@
   }
   #mapWorld {
     width: 100%;
+    min-width: 1130px;
     height:800px;
   }
   .mapHead {
@@ -144,7 +148,6 @@
       top: 0;
       left: 0;
       z-index: 1;
-
       .headImg {
           display: block;
           height: 40px;
@@ -182,7 +185,6 @@
       bottom: 30px;
       display: flex;
       justify-content: center;
-
       a {
           width: 320px;
           height: 120px;

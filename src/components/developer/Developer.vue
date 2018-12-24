@@ -36,28 +36,62 @@
         </div>
       </div>
       <div class="application">
-        <p>我的应用</p>
-        <div class="applicationBox">
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
-        </div>
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <p>我的应用</p>
+          </el-col>
+          <el-col :span="3" :offset="15">
+            <p class="more">查看更多>></p>
+          </el-col>
+        </el-row>
+        <el-row class="applicationBox" :gutter="20">
+          <el-col :span="6" v-for="(app, index) in appList" :key="index" style="margin-bottom:40px">
+            <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
+              <div class="resources">
+                <div>
+                  <img src="/static/img/uranus/developer/app.png" alt="img">
+                  <p class="name">Imagepuler</p>
+                  <p
+                    class="detail"
+                  >DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
+                  <el-row :gutter="20">
+                    <el-col :span="6" :offset="2">
+                      <p class="free">免费</p>
+                    </el-col>
+                    <el-col :span="10" :offset="6">
+                      <p class="downloads">123人下载</p>
+                    </el-col>
+                    <el-button type="success">查看详情</el-button>
+                  </el-row>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+          <el-col :span="6" style="margin-bottom:40px">
+            <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
+              <div class="resources">
+                <div class="upload">
+                  <img src="/static/img/uranus/developer/upload.png" alt="img">
+                  <p class="detail">发布更多应用,赚取额外费用</p>
+                  <el-row :gutter="20">
+                    <el-button type="success">添加应用</el-button>
+                  </el-row>
+                </div>
+              </div>
+            </el-card>
+          </el-col>
+        </el-row>
       </div>
       <div class="record">
         <div class="record-head">Record</div>
         <el-row>
           <el-col :span="24">
             <el-table :data="tableData" border style="width: 100%">
-              <el-table-column prop="date" label="日期" width="180"></el-table-column>
-              <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-              <el-table-column prop="date" label="日期" width="180"></el-table-column>
-              <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-              <el-table-column prop="date" label="日期" width="180"></el-table-column>
-              <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-              <el-table-column prop="address" label="地址" min-width="230"></el-table-column>
+              <el-table-column prop="type" label="Type"></el-table-column>
+              <el-table-column prop="time" label="Order Time"></el-table-column>
+              <el-table-column prop="hash" label="Order Hash"></el-table-column>
+              <el-table-column prop="amount" label="Amount"></el-table-column>
+              <el-table-column prop="fee" label="Fee"></el-table-column>
             </el-table>
           </el-col>
         </el-row>
@@ -122,67 +156,33 @@ export default {
         x: "",
         y: ""
       },
+      appList: [
+        { id: "1", name: "Imagepuller" },
+        { id: "1", name: "Imagepuller" },
+        { id: "1", name: "Imagepuller" }
+      ],
       tableData: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
+          type: "Receive",
+          time: "2018-11-02 09:56",
+          hash: "0xb2ddddc25f1375bo693e6",
+          amount: "0.63367",
+          fee: "0.000378"
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
+          type: "Receive",
+          time: "2018-11-02 09:56",
+          hash: "0xb2ddddc25f1375bo693e6",
+          amount: "0.63367",
+          fee: "0.000378"
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        },
+          type: "Receive",
+          time: "2018-11-02 09:56",
+          hash: "0xb2ddddc25f1375bo693e6",
+          amount: "0.63367",
+          fee: "0.000378"
+        }
       ]
     };
   },
@@ -268,7 +268,8 @@ export default {
           {
             name: "uranus",
             type: "bar",
-            barWidth: "60%",
+            barWidth: "25%",
+            color: "#1890ff",
             data: myData1.y
           }
         ]
@@ -309,7 +310,8 @@ export default {
           {
             name: "uranus",
             type: "bar",
-            barWidth: "60%",
+            barWidth: "25%",
+            color: "#1890ff",
             data: myData2.y
           }
         ]
@@ -320,7 +322,6 @@ export default {
       };
     }
   },
-
   mounted() {
     this.downloadsDay(3);
     this.profitDay(3);
@@ -360,19 +361,23 @@ export default {
       display: flex;
       justify-content: space-between;
       .active {
-        color: green;
+        color: #8eb357;
         font-weight: bolder;
       }
       .downloads {
-        width: 48%;
+        width: 49%;
         min-width: 530px;
         height: 400px;
         background: #ffffff;
-        box-shadow: 5px 5px 5px gray;
         p {
-          padding-left: 15px;
+          padding-left: 30px;
+          padding-top: 20px;
           height: 40px;
           line-height: 40px;
+          font-family: PingFang-SC-Bold;
+          font-size: 16px;
+          color: #252525;
+          text-align: left;
         }
         .chooseDown {
           height: 30px;
@@ -391,15 +396,19 @@ export default {
         }
       }
       .profit {
-        width: 48%;
+        width: 49%;
         min-width: 530px;
         height: 400px;
         background: #ffffff;
-        box-shadow: 5px 5px 5px gray;
         p {
-          padding-left: 15px;
+          padding-left: 30px;
+          padding-top: 20px;
           height: 40px;
           line-height: 40px;
+          font-family: PingFang-SC-Bold;
+          font-size: 16px;
+          color: #252525;
+          text-align: left;
         }
         .choosePro {
           height: 30px;
@@ -421,23 +430,84 @@ export default {
     .application {
       width: 95%;
       min-width: 1130px;
-      height: 280px;
+      height: 450px;
       margin: 20px auto;
+      padding: 30px;
       background: #ffffff;
-      box-shadow: 5px 5px 5px gray;
       p {
         height: 40px;
-        padding-left: 15px;
+        font-family: PingFang-SC-Bold;
+        font-size: 16px;
+        color: #252525;
+        line-height: 24px;
+        text-align: left;
+      }
+      .more {
+        font-family: PingFang-SC-Bold;
+        font-size: 16px;
+        color: #8eb357;
+        line-height: 24px;
       }
       .applicationBox {
         width: 100%;
-        display: flex;
-        justify-content: space-around;
-        div {
-          width: 180px;
-          height: 180px;
-          background: green;
-          margin: 10px;
+        min-width: 1130px;
+        .resources {
+          text-align: center;
+          padding: 20px;
+          div {
+            cursor: pointer;
+            img {
+              width: 110px;
+              height: 105px;
+              display: inline-block;
+            }
+            .name {
+              font-weight: 600;
+              padding: 5px 0 10px;
+              border-bottom: 2px solid #eee;
+              font-family: PingFang-SC-Medium;
+              font-size: 20px;
+              color: #251e1c;
+              text-align: center;
+              line-height: 24px;
+            }
+            .detail {
+              width: 220px;
+              height: 66px;
+              overflow: hidden;
+              box-sizing: content-box;
+              font-family: PingFangSC-Regular;
+              font-size: 14px;
+              color: rgba(0, 0, 0, 0.45);
+              text-align: center;
+              line-height: 22px;
+              margin: 10px auto;
+            }
+            .free {
+              font-weight: 600;
+              padding: 10px 0;
+              font-family: PingFangSC-Regular;
+              font-size: 14px;
+              color: #1890ff;
+              letter-spacing: 0;
+              line-height: 22px;
+              text-align: left;
+            }
+            .downloads {
+              font-family: PingFangSC-Regular;
+              font-size: 14px;
+              color: #5d5d5d;
+              letter-spacing: 0;
+              text-align: center;
+              line-height: 22px;
+            }
+          }
+          .upload {
+            padding-top: 50px;
+            .detail {
+              margin-top: 50px;
+            }
+          }
         }
       }
     }
@@ -446,7 +516,7 @@ export default {
       width: 95%;
       min-width: 1130px;
       margin: 20px auto;
-      box-shadow: 5px 5px 5px gray;
+      padding: 20px;
       .record-head {
         height: 50px;
         width: 100%;

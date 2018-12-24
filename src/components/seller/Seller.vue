@@ -38,30 +38,27 @@
       <div class="power">
         <p>我的算力</p>
         <div class="powerBox">
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
-          <div>1</div>
+          <div id="Cpu">1</div>
+          <div id="Memory">1</div>
+          <div id="Storage">1</div>
+          <div id="Network">1</div>
+          <div id="Gpu">1</div>
         </div>
       </div>
       <div class="record">
-        <div class="record-head">Record</div>
+        <div class="record-head">Transaction Record</div>
         <el-row>
-          <el-col :span="24" style="background:pink">
+          <el-col :span="24">
             <el-table :data="tableData" border style="width: 100%">
-              <el-table-column prop="date" label="日期" width="180"></el-table-column>
-              <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-              <el-table-column prop="date" label="日期" width="180"></el-table-column>
-              <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-              <el-table-column prop="date" label="日期" width="180"></el-table-column>
-              <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-              <el-table-column prop="address" label="地址" min-width="230"></el-table-column>
+              <el-table-column prop="type" label="Type"></el-table-column>
+              <el-table-column prop="time" label="Order Time"></el-table-column>
+              <el-table-column prop="hash" label="Order Hash"></el-table-column>
+              <el-table-column prop="amount" label="Amount"></el-table-column>
+              <el-table-column prop="fee" label="Fee"></el-table-column>
             </el-table>
           </el-col>
         </el-row>
-         <el-row :gutter="20" style="height: 50px">
+        <el-row :gutter="20" style="height: 50px">
           <el-col :span="6" :offset="9">
             <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
           </el-col>
@@ -124,122 +121,88 @@ export default {
       },
       tableData: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
+          type: "Receive",
+          time: "2018-11-02 09:56",
+          hash: "0xb2ddddc25f1375bo693e6",
+          amount: "0.63367",
+          fee: "0.000378",
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
+          type: "Receive",
+          time: "2018-11-02 09:56",
+          hash: "0xb2ddddc25f1375bo693e6",
+          amount: "0.63367",
+          fee: "0.000378",
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
+          type: "Receive",
+          time: "2018-11-02 09:56",
+          hash: "0xb2ddddc25f1375bo693e6",
+          amount: "0.63367",
+          fee: "0.000378",
         },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        },
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
       ]
     };
   },
   computed: {
-    echartsWidth : function() {
-      let wid = $('#myConsumption').width;
+    echartsWidth: function() {
+      let wid = $("#myConsumption").width;
       return wid;
     }
   },
   methods: {
     consumptionDay(x) {
       this.consumptionVal = this.dataConsumption.day;
-      this.initEchart(this.consumptionVal,this.profitVal);
+      this.initEchart(this.consumptionVal, this.profitVal);
       this.indexCon = x;
     },
     consumptionWeek(x) {
       this.consumptionVal = this.dataConsumption.week;
-      this.initEchart(this.consumptionVal,this.profitVal);
+      this.initEchart(this.consumptionVal, this.profitVal);
       this.indexCon = x;
     },
     consumptionMounth(x) {
       this.consumptionVal = this.dataConsumption.mounth;
-      this.initEchart(this.consumptionVal,this.profitVal);
+      this.initEchart(this.consumptionVal, this.profitVal);
       this.indexCon = x;
     },
     consumptionYear(x) {
       this.consumptionVal = this.dataConsumption.year;
-      this.initEchart(this.consumptionVal,this.profitVal);
+      this.initEchart(this.consumptionVal, this.profitVal);
       this.indexCon = x;
     },
     profitDay(x) {
       this.profitVal = this.dataProfit.day;
-      this.initEchart(this.consumptionVal,this.profitVal);
+      this.initEchart(this.consumptionVal, this.profitVal);
       this.indexPro = x;
     },
     profitWeek(x) {
       this.profitVal = this.dataProfit.week;
-      this.initEchart(this.consumptionVal,this.profitVal);
+      this.initEchart(this.consumptionVal, this.profitVal);
       this.indexPro = x;
     },
     profitMounth(x) {
       this.profitVal = this.dataProfit.mounth;
-      this.initEchart(this.consumptionVal,this.profitVal);
+      this.initEchart(this.consumptionVal, this.profitVal);
       this.indexPro = x;
     },
     profitYear(x) {
       this.profitVal = this.dataProfit.year;
-      this.initEchart(this.consumptionVal,this.profitVal);
+      this.initEchart(this.consumptionVal, this.profitVal);
       this.indexPro = x;
     },
-    initEchart(val1,val2) {
-      var myChart1 = this.$echarts.init(
+    initEchart(val1, val2) {
+      let myChart1 = this.$echarts.init(
         document.getElementById("myConsumption")
       );
-      var myChart2 = this.$echarts.init(document.getElementById("myProfit"));
-      var myData1 = val1;
-      var myData2 = val2;
+      let myChart2 = this.$echarts.init(document.getElementById("myProfit"));
+      let myChart3 = this.$echarts.init(document.getElementById("Cpu"));
+      let myChart4 = this.$echarts.init(document.getElementById("Memory"));
+      let myChart5 = this.$echarts.init(document.getElementById("Storage"));
+      let myChart6 = this.$echarts.init(document.getElementById("Network"));
+      let myChart7 = this.$echarts.init(document.getElementById("Gpu"));
+      let myData1 = val1;
+      let myData2 = val2;
       myChart1.setOption({
         color: ["#3398DB"],
         tooltip: {
@@ -276,7 +239,14 @@ export default {
           {
             name: "uranus",
             type: "bar",
-            barWidth: "60%",
+            barWidth: "25%",
+            color: "#1890ff",
+            data: myData1.y
+          },
+          {
+            name: "line",
+            type: "line",
+            color: "#1890ff",
             data: myData1.y
           }
         ]
@@ -317,14 +287,225 @@ export default {
           {
             name: "uranus",
             type: "bar",
-            barWidth: "60%",
+            barWidth: "25%",
+            color: "#1890ff",
+            data: myData2.y,
+          },{
+            name: "line",
+            type: "line",
+            color: "#1890ff",
             data: myData2.y
+          }
+        ]
+      });
+      myChart3.setOption({
+        tooltip: {
+          formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [
+          {
+            name: "我的算力",
+            type: "gauge",
+            title: {
+              show: true,
+              offsetCenter: [0, "60%"], // x, y，单位px
+              textStyle: {
+                color: "#979797",
+                fontSize: 14
+              }
+            },
+            detail: {
+              show: true,
+              formatter: "{value}%",
+              offsetCenter: [0, "90%"],
+              textStyle: {
+                color: "#5d5d5d",
+                fontSize: 24
+              }
+            },
+            data: [{ value: 20, name: "CPU" }],
+            axisLabel: {
+              formatter: function(value) {
+                  return "";
+              }
+            },
+            axisLine:{
+              lineStyle:{
+                width:10,
+                color: [[0.2, '#91c7ae'], [0.8, '#1890ff'], [1, '#c23531']]
+              }, 
+            },
+          }
+        ]
+      });
+      myChart4.setOption({
+        tooltip: {
+          formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [
+          {
+            name: "我的算力",
+            type: "gauge",
+            title: {
+              show: true,
+              offsetCenter: [0, "60%"], // x, y，单位px
+              textStyle: {
+                color: "#979797",
+                fontSize: 14
+              }
+            },
+            detail: {
+              show: true,
+              formatter: "{value}%",
+              offsetCenter: [0, "90%"],
+              textStyle: {
+                color: "#5d5d5d",
+                fontSize: 24
+              }
+            },
+            data: [{ value: 40, name: "MEMORY" }],
+            axisLabel: {
+              formatter: function(value) {
+                  return "";
+              }
+            },
+            axisLine:{
+              lineStyle:{
+                width:10,
+                color: [[0.2, '#91c7ae'], [0.8, '#1890ff'], [1, '#c23531']]
+              }, 
+            },
+          }
+        ]
+      });
+      myChart5.setOption({
+        tooltip: {
+          formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [
+          {
+            name: "我的算力",
+            type: "gauge",
+            title: {
+              show: true,
+              offsetCenter: [0, "60%"], // x, y，单位px
+              textStyle: {
+                color: "#979797",
+                fontSize: 14
+              }
+            },
+            detail: {
+              show: true,
+              formatter: "{value}%",
+              offsetCenter: [0, "90%"],
+              textStyle: {
+                color: "#5d5d5d",
+                fontSize: 24
+              }
+            },
+            data: [{ value: 50, name: "STORAGE" }],
+            axisLabel: {
+              formatter: function(value) {
+                  return "";
+              }
+            },
+            axisLine:{
+              lineStyle:{
+                width:10,
+                color: [[0.2, '#91c7ae'], [0.8, '#1890ff'], [1, '#c23531']]
+              }, 
+            },
+          }
+        ]
+      });
+      myChart6.setOption({
+        tooltip: {
+          formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [
+          {
+            name: "我的算力",
+            type: "gauge",
+            title: {
+              show: true,
+              offsetCenter: [0, "60%"], // x, y，单位px
+              textStyle: {
+                color: "#979797",
+                fontSize: 14
+              }
+            },
+            detail: {
+              show: true,
+              formatter: "{value}%",
+              offsetCenter: [0, "90%"],
+              textStyle: {
+                color: "#5d5d5d",
+                fontSize: 24
+              }
+            },
+            data: [{ value: 70, name: "NETWORK" }],
+            axisLabel: {
+              formatter: function(value) {
+                  return "";
+              }
+            },
+            axisLine:{
+              lineStyle:{
+                width:10,
+                color: [[0.2, '#91c7ae'], [0.8, '#1890ff'], [1, '#c23531']]
+              }, 
+            },
+          }
+        ]
+      });
+      myChart7.setOption({
+        tooltip: {
+          formatter: "{a} <br/>{b} : {c}%"
+        },
+        series: [
+          {
+            name: "我的算力",
+            type: "gauge",
+            title: {
+              show: true,
+              offsetCenter: [0, "60%"], // x, y，单位px
+              textStyle: {
+                color: "#979797",
+                fontSize: 14
+              }
+            },
+            detail: {
+              show: true,
+              formatter: "{value}%",
+              offsetCenter: [0, "90%"],
+              textStyle: {
+                color: "#5d5d5d",
+                fontSize: 24
+              }
+            },
+            data: [{ value: 90, name: "GPU" }],
+            axisLabel: {
+              formatter: function(value) {
+                  return "";
+              }
+            },
+            axisLine:{
+              lineStyle:{
+                width:10,
+                color: [[0.2, '#91c7ae'], [0.8, '#1890ff'], [1, '#c23531']]
+              }, 
+            },
           }
         ]
       });
       window.onresize = function() {
         myChart1.resize();
         myChart2.resize();
+        myChart3.resize();
+        myChart4.resize();
+        myChart5.resize();
+        myChart6.resize();
+        myChart7.resize();
       };
     }
   },
@@ -373,15 +554,16 @@ export default {
         font-weight: bolder;
       }
       .consumption {
-        width: 48%;
+        width: 49%;
         min-width: 530px;
         height: 400px;
         background: #ffffff;
-        box-shadow: 5px 5px 5px gray;
         p {
-          padding-left: 15px;
+          padding-left: 30px;
+          padding-top: 20px;
           height: 40px;
-          line-height: 40px;
+          font-family: PingFang-SC-Bold;
+          font-size: 16px;
         }
         .chooseCon {
           height: 30px;
@@ -396,19 +578,20 @@ export default {
         #myConsumption {
           width: 100%;
           height: 300px;
-          overflow:hidden;
+          overflow: hidden;
         }
       }
       .profit {
-        width: 48%;
+        width: 49%;
         min-width: 530px;
         height: 400px;
         background: #ffffff;
-        box-shadow: 5px 5px 5px gray;
         p {
-          padding-left: 15px;
+          padding-left: 30px;
+          padding-top: 20px;
           height: 40px;
-          line-height: 40px;
+          font-family: PingFang-SC-Bold;
+          font-size: 16px;
         }
         .choosePro {
           height: 30px;
@@ -430,23 +613,27 @@ export default {
     .power {
       width: 95%;
       min-width: 1130px;
-      height: 280px;
+      height: 360px;
       margin: 20px auto;
       background: #ffffff;
-      box-shadow: 5px 5px 5px gray;
+      box-shadow: 0 1px 4px 0;
       p {
-        padding-left: 15px;
+        padding-left: 30px;
+        padding-top: 20px;
         height: 40px;
+        font-family: PingFang-SC-Bold;
+        font-size: 16px;
       }
       .powerBox {
         width: 100%;
+        margin-top: -20px;
         display: flex;
         justify-content: space-around;
         div {
-          width: 180px;
-          height: 180px;
-          background: green;
+          width: 20%;
+          height: 300px;
           margin: 10px;
+          color: #979797;
         }
       }
     }
@@ -455,12 +642,11 @@ export default {
       width: 95%;
       min-width: 1130px;
       margin: 20px auto;
-      box-shadow: 5px 5px 5px gray;
+      padding: 30px;
       .record-head {
-        height: 50px;
-        width: 100%;
-        line-height: 50px;
-        padding-left: 15px;
+        height: 40px;
+        font-family: PingFang-SC-Bold;
+        font-size: 16px;
       }
     }
   }
