@@ -17,7 +17,7 @@
       <el-col :span="12">
         <p>
           <el-button type="text" @click="mailOuterVisible = true">修改绑定邮箱</el-button>
-          <el-dialog title="修改绑定邮箱" :visible.sync="mailOuterVisible">
+          <el-dialog title="修改绑定邮箱" :visible.sync="mailOuterVisible" width="480px">
             <el-form
               :model="ruleForm"
               :rules="rules"
@@ -29,11 +29,26 @@
                 <el-input v-model="ruleForm.buyerEmail"></el-input>
               </el-form-item>
               <el-form-item label="请输入验证码:" prop="buyerPhone">
-                <el-input v-model="ruleForm.buyerPhone" style="width:80%"></el-input>
-                <button style="width:19%">获取验证码</button>
+                <el-input v-model="ruleForm.buyerPhone" style="width:69%"></el-input>
+                <button style="width:28%">获取验证码</button>
               </el-form-item>
             </el-form>
-            <el-dialog width="50%" title="绑定新邮箱" :visible.sync="mailInnerVisible" append-to-body>
+            <el-dialog width="480px" title="绑定新邮箱" :visible.sync="mailInnerVisible" append-to-body>
+              <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              label-width="125px"
+              class="demo-ruleForm"
+            >
+              <el-form-item label="Email:" prop="buyerEmail">
+                <el-input v-model="ruleForm.buyerEmail"></el-input>
+              </el-form-item>
+              <el-form-item label="请输入验证码:" prop="buyerPhone">
+                <el-input v-model="ruleForm.buyerPhone" style="width:69%"></el-input>
+                <button style="width:28%">获取验证码</button>
+              </el-form-item>
+            </el-form>
               <div slot="footer" class="dialog-footer">
                 <el-button @click="mailOuterVisible = false,mailInnerVisible = false">确定</el-button>
               </div>
@@ -51,7 +66,50 @@
         <p>手机:{{phonenum}}</p>
       </el-col>
       <el-col :span="12">
-        <h3></h3>
+        <p>
+          <el-button type="text" @click="phoneOuterVisible = true">修改绑定手机</el-button>
+          <el-dialog title="修改绑定手机" :visible.sync="phoneOuterVisible" width="480px">
+            <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              label-width="125px"
+              class="demo-ruleForm"
+            >
+              <el-form-item label="Phone:" prop="buyerEmail">
+                <el-input v-model="ruleForm.buyerEmail"></el-input>
+              </el-form-item>
+              <el-form-item label="请输入验证码:" prop="buyerPhone">
+                <el-input v-model="ruleForm.buyerPhone" style="width:69%"></el-input>
+                <button style="width:28%">获取验证码</button>
+              </el-form-item>
+            </el-form>
+            <el-dialog width="480px" title="绑定新手机" :visible.sync="phoneInnerVisible" append-to-body>
+              <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              label-width="125px"
+              class="demo-ruleForm"
+            >
+              <el-form-item label="Phone:" prop="buyerEmail">
+                <el-input v-model="ruleForm.buyerEmail"></el-input>
+              </el-form-item>
+              <el-form-item label="请输入验证码:" prop="buyerPhone">
+                <el-input v-model="ruleForm.buyerPhone" style="width:69%"></el-input>
+                <button style="width:28%">获取验证码</button>
+              </el-form-item>
+            </el-form>
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="phoneOuterVisible = false,phoneInnerVisible = false">确定</el-button>
+              </div>
+            </el-dialog>
+            <div slot="footer" class="dialog-footer" center>
+              <el-button @click="phoneOuterVisible = false">取 消</el-button>
+              <el-button type="primary" @click="phoneInnerVisible = true">下一步</el-button>
+            </div>
+          </el-dialog>
+        </p>
       </el-col>
     </el-row>
     <el-row class="pwd-box">
@@ -59,7 +117,32 @@
         <p>登录密码:******</p>
       </el-col>
       <el-col :span="12">
-        <p></p>
+        <p>
+          <el-button type="text" @click="pwdOuterVisible = true">修改密码</el-button>
+          <el-dialog title="修改密码" :visible.sync="pwdOuterVisible" width="480px">
+            <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              label-width="125px"
+              class="demo-ruleForm"
+            >
+              <el-form-item label="旧密码:" prop="buyerEmail">
+                <el-input v-model="ruleForm.buyerEmail"></el-input>
+              </el-form-item>
+              <el-form-item label="新密码:" prop="buyerEmail">
+                <el-input v-model="ruleForm.buyerEmail"></el-input>
+              </el-form-item>
+              <el-form-item label="确认新密码:" prop="buyerEmail">
+                <el-input v-model="ruleForm.buyerEmail"></el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer" center>
+              <el-button @click="pwdOuterVisible = false">取 消</el-button>
+              <el-button type="primary" @click="pwdOuterVisible = false">确定</el-button>
+            </div>
+          </el-dialog>
+        </p>
       </el-col>
     </el-row>
     <el-row class="code-box">
@@ -80,7 +163,7 @@
       </el-col>
     </el-row>
     <el-row class="space">
-      <el-col :span='24'></el-col>
+      <el-col :span="24"></el-col>
     </el-row>
   </section>
 </template>
@@ -132,7 +215,11 @@ export default {
         buyerEmail: [{ validator: checkEmail, trigger: "blur" }]
       },
       phonenum: "12345678911",
+      phoneOuterVisible: false,
+      phoneInnerVisible: false,
       code: "手机",
+      pwdOuterVisible: false,
+      pwdInnerVisible: false,
       codes: [
         {
           value: "选项1",
@@ -142,12 +229,10 @@ export default {
           value: "选项2",
           label: "邮箱"
         }
-      ],
+      ]
     };
   },
-  mounted() {
-
-  },
+  mounted() {},
   methods: {}
 };
 </script>
@@ -200,13 +285,21 @@ export default {
       line-height: 50px;
       text-align: left;
       padding-left: 32px;
-      font-family:PingFangSC-Medium;
+      font-family: PingFangSC-Medium;
+    }
+    p>.el-button {
+      color: #8eb357;
+    }
+  }
+  .code-box {
+    .el-select {
+      width: 100px;
     }
   }
   .space {
     height: 300px;
     margin: 0 20px;
-    background: #ffffff
+    background: #ffffff;
   }
 }
 </style>

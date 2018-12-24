@@ -17,9 +17,19 @@
     <el-row class="transaction">
       <el-col class="transaction-head">
         <p>交易详情</p>
+        <el-dialog title="交易详情" :visible.sync="dialogVisible" width="60%">
+          <el-table :data="tableData1" style="width: 100%">
+            <el-table-column prop="menu" width="180"></el-table-column>
+            <el-table-column prop="value" width="680"></el-table-column>
+          </el-table>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取 消</el-button>
+            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+          </span>
+        </el-dialog>
       </el-col>
       <el-col :span="24">
-        <el-table :data="tableData" border style="width: 100%">
+        <el-table :data="tableData" border style="width: 100%" @row-click="dialogVisible = true">
           <el-table-column prop="1" label="区块哈希" min-width="170"></el-table-column>
           <el-table-column prop="2" label="交易时间" width="180"></el-table-column>
           <el-table-column prop="3" label="发起方" width="180"></el-table-column>
@@ -41,6 +51,7 @@ export default {
   name: "Wallet",
   data() {
     return {
+      dialogVisible: false,
       tableData: [
         {
           1: "548bc46caba···",
@@ -95,6 +106,64 @@ export default {
           5: "1234522678.66",
           6: "13.21",
           7: "成功"
+        }
+      ],
+      tableData1: [
+        {
+          menu: "TxHash:",
+          value: "0x3e98fd1224269fccaf4ee5194932c351a00eaaae6edc2a566a8966b8c253af67"
+        },
+        {
+          menu: "TxReceipt Status:",
+          value: "Success"
+        },
+        {
+          menu: "Block Height:",
+          value: "6924205 (10 Block Confirmations)"
+        },
+        {
+          menu: "TimeStamp:",
+          value: "2 mins ago (Dec-21-2018 02:43:26 AM +UTC)"
+        },
+        {
+          menu: "From:",
+          value: "0x907a6d492e0765451ee2a066326f24f1164a5578"
+        },
+        {
+          menu: "To:",
+          value: "Contract 0x991c2e104dfa1e2f88fd91010ee65cfb2a60e255"
+        },
+        {
+          menu: "Value:",
+          value: "1 Ether ($116.41)"
+        },
+        {
+          menu: "Gas Limit:",
+          value: "41836"
+        },
+        {
+          menu: "Gas Used By Transaction:",
+          value: "41836 (100%)"
+        },
+        {
+          menu: "Gas Price:",
+          value: "0.000000004199999999 Ether (4.199999999 Gwei)"
+        },
+        {
+          menu: "Actual Tx Cost/Fee:",
+          value: "0.00017571119995 Ether ($0.02)"
+        },
+        {
+          menu: "Nonce & {Position}:",
+          value: "1422 | {191}"
+        },
+        {
+          menu: "Input Data:",
+          value: "Function: dbkDeposit() MethodID: 0xc1ba93e1"
+        },
+        {
+          menu: "Private Note:",
+          value: "<To access the Private Note Feature, you must be Logged In>"
         },
       ]
     };
@@ -142,8 +211,8 @@ export default {
     margin: 20px;
     background: #ffffff;
     overflow: hidden;
-    .el-col{
-        padding: 0 30px;
+    .el-col {
+      padding: 0 30px;
     }
     .transaction-head {
       height: 50px;
@@ -155,12 +224,11 @@ export default {
       }
     }
     .transaction-foot {
-        margin-top: 30px;
-        .el-pagination {
-            height: 50px;
-        }
-          
+      margin-top: 30px;
+      .el-pagination {
+        height: 50px;
       }
+    }
   }
 }
 </style>
