@@ -39,43 +39,43 @@
 
 <script>
 export default {
-    name: 'Register' ,
-    data () {
-        return {
-            placeholderPhone: '手机号',
-            placeholderMail: '邮箱',
-            placeholderPassword: '6-16位密码 区分大小写',
-            placeholderSurePassword: '确认密码',
-            placeholderCode: '输入验证码',
-            phoneShow: 'true',
-            totalTime: 10,
-            canClick: true,
-            content: '发送验证码'
-        }
-    },
-    methods: {
-        choosePhone () {
-            this.phoneShow = true;
-        },
-        chooseMail () {
-            this.phoneShow = false;
-        },
-        countDown () {
-            if (!this.canClick) return 
-            this.canClick = false
-            this.content = this.totalTime + 's后重新发送'
-            let clock = window.setInterval(() => {
-            this.totalTime--
-            this.content = this.totalTime + 's后重新发送'
-            if (this.totalTime < 0) {
-            window.clearInterval(clock)
-            this.content = '重新发送'
-            this.totalTime = 10
-            this.canClick = true
-            }
-            },1000)
-        }
+  name: 'Register',
+  data () {
+    return {
+      placeholderPhone: '手机号',
+      placeholderMail: '邮箱',
+      placeholderPassword: '6-16位密码 区分大小写',
+      placeholderSurePassword: '确认密码',
+      placeholderCode: '输入验证码',
+      phoneShow: 'true',
+      totalTime: 10,
+      canClick: true,
+      content: '发送验证码'
     }
+  },
+  methods: {
+    choosePhone () {
+      this.phoneShow = true
+    },
+    chooseMail () {
+      this.phoneShow = false
+    },
+    countDown () {
+      if (!this.canClick) return 
+      this.canClick = false
+      this.content = this.totalTime + 's后重新发送'
+      let clock = window.setInterval(() => {
+        this.totalTime--
+        this.content = this.totalTime + 's后重新发送'
+        if (this.totalTime < 0) {
+          window.clearInterval(clock)
+          this.content = '重新发送'
+          this.totalTime = 10
+          this.canClick = true
+        }
+      }, 1000)
+    }
+  }
 }
 </script>
 

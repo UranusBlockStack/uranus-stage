@@ -1,22 +1,24 @@
 <template>
   <section class="Buyer">
-    <div class="content-header">
-      <h1>首页B</h1>
-      <!-- <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-          <li class="active">Here</li>
-      </ol>-->
-      <div class="balence">
+    <el-row class="content-title">
+      <el-col class="title" :span="12">
+        <h1>首页B</h1>
+      </el-col>
+      <el-col class="record" :span="12">
         <p>余额:12121212</p>
         <p>收益:12121212</p>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
     <!-- Main content -->
     <div class="content container-fluid">
       <div class="shop">
         <el-row>
-          <el-col :span="12"><p>应用商店</p></el-col>
-          <el-col :span="11"><p class="more">查看更多>></p></el-col>
+          <el-col :span="12">
+            <p>应用商店</p>
+          </el-col>
+          <el-col :span="11">
+            <p class="more">查看更多>></p>
+          </el-col>
         </el-row>
         <el-row class="shopBox" :gutter="20">
           <el-col :span="6" v-for="(app, index) in appList" :key="index" style="margin-bottom:40px">
@@ -45,7 +47,26 @@
         </el-row>
       </div>
       <div class="power">
-        <p>我的算力</p>
+        <el-row>
+          <el-col class="powerTitle" :span="4">
+            <p>算力</p>
+          </el-col>
+          <el-col class="powerNet powerCon" :span="2">
+            <p>
+              <span></span>全网算力
+            </p>
+          </el-col>
+          <el-col class="powerPurch powerCon" :span="2">
+            <p>
+              <span></span>已购算力
+            </p>
+          </el-col>
+          <el-col class="powerRest powerCon" :span="2">
+            <p>
+              <span></span>剩余算力
+            </p>
+          </el-col>
+        </el-row>
         <div class="choosePower">
           <span @click="powerYear(0)" :class="{active: this.indexPower == '0'}">全年</span>
           <span @click="powerMounth(1)" :class="{active: indexPower == '1'}">本月</span>
@@ -84,10 +105,10 @@ export default {
       },
       powerVal: {},
       appList: [
-        { id: "1", name: "Imagepuller", shop: "商店1"},
-        { id: "1", name: "Imagepuller", shop: "商店2"},
-        { id: "1", name: "Imagepuller", shop: "商店3"},
-        { id: "1", name: "Imagepuller", shop: "商店4"}
+        { id: "1", name: "Imagepuller", shop: "商店1" },
+        { id: "1", name: "Imagepuller", shop: "商店2" },
+        { id: "1", name: "Imagepuller", shop: "商店3" },
+        { id: "1", name: "Imagepuller", shop: "商店4" }
       ]
     };
   },
@@ -116,7 +137,7 @@ export default {
       var myChart = this.$echarts.init(document.getElementById("myPower"));
       var myData = val;
       myChart.setOption({
-        color: ["#3398DB",'#003366'],
+        color: ["#1890ff", "#facc14", "#9bcc3d"],
         tooltip: {
           trigger: "axis",
           axisPointer: {
@@ -125,7 +146,7 @@ export default {
           }
         },
         legend: {
-          data: ['我的','算力']
+          data: ["我的", "算力"]
         },
         grid: {
           left: "3%",
@@ -154,12 +175,19 @@ export default {
           {
             name: "uranus",
             type: "bar",
-            barWidth: "25%",
+            barWidth: "10%",
             data: myData.y
-          },{
+          },
+          {
             name: "uranus-web",
             type: "bar",
-            barWidth: "25%",
+            barWidth: "10%",
+            data: myData.y
+          },
+          {
+            name: "uranus-w",
+            type: "bar",
+            barWidth: "10%",
             data: myData.y
           }
         ]
@@ -178,20 +206,28 @@ export default {
 <style lang="scss" scoped>
 .Buyer {
   background: #f2f2f2;
-  .content-header {
+    .el-button {
+    background: #8eb357;
+    border: none;
+  }
+  .content-title {
     background: #ffffff;
-    height: 65px;
-    width: 100%;
+    height: 64px;
     h1 {
-      float: left;
+      font-family: PingFang-SC-Bold;
+      font-size: 20px;
+      color: #252525;
+      line-height: 24px;
+      padding-left: 30px;
     }
-    .balence {
+    .record {
       float: right;
       margin-right: 15px;
-      height: 50px;
+      margin-top: 4px;
+      height: 60px;
       width: 105px;
       p {
-        height: 25px;
+        height: 30px;
         line-height: 25px;
         margin: 0;
       }
@@ -204,7 +240,7 @@ export default {
       min-width: 1130px;
       margin: 20px auto;
       padding: 15px;
-      box-shadow:0 1px 4px 0;
+      box-shadow: 0 1px 4px 0;
       p {
         height: 40px;
         font-family: PingFang-SC-Bold;
@@ -284,15 +320,55 @@ export default {
     }
     .power {
       width: 95%;
+      padding: 15px;
       min-width: 1130px;
       height: 400px;
       background: #ffffff;
-      box-shadow: 5px 5px 5px gray;
       margin: 20px auto;
-      p {
-        padding-left: 15px;
+      .powerTitle p {
         height: 40px;
         line-height: 40px;
+        font-family: PingFang-SC-Bold;
+        font-size: 16px;
+        color: #252525;
+        text-align: left;
+      }
+      .powerCon p {
+        font-family: PingFangSC-Regular;
+        font-size: 14px;
+        color: rgba(0, 0, 0, 0.65);
+        line-height: 40px;
+        text-align: left;
+      }
+      .powerNet {
+        span {
+          height: 10px;
+          display: inline-block;
+          width: 10px;
+          background: #1890ff;
+          border-radius: 10px;
+          margin-right: 10px;
+        }
+      }
+      .powerPurch {
+        span {
+          height: 10px;
+          display: inline-block;
+          width: 10px;
+          background: #facc14;
+          border-radius: 10px;
+          margin-right: 10px;
+        }
+      }
+      .powerRest {
+        span {
+          height: 10px;
+          display: inline-block;
+          width: 10px;
+          background: #9bcc3d;
+          border-radius: 10px;
+          margin-right: 10px;
+        }
       }
       .choosePower {
         height: 30px;

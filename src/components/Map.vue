@@ -41,67 +41,65 @@
 </template>
 
 <script>
-    import china from '../../static/js/world.js'
+    import '../../static/js/world.js'
 
     export default {
-        name: 'Map',
-        data() {
-            return {
+      name: 'Map',
+      data() {
+        return {
                 
-            }
-        },
-        methods: {
-      initEchart(){
+        }
+      },
+      methods: {
+        initEchart() {
         // 绘制地图
-        var myChartMap2 = this.$echarts.init(document.getElementById('mapWorld'));
+          let myChartMap2 = this.$echarts.init(document.getElementById('mapWorld'))
         // 地图上数据
-        var myData = [
-          {name: '分店1', value: [121.15, 31.89, 9]},
-          {name: '分店2', value: [89.781327, 39.608266, 120]},
-          {name: '分店3', value: [120.38, 37.35, 142]},
-          {name: '分店4', value: [22.207216, 29.985295, 123]},
-          {name:'分店5',value:[110.245672,30.7787677,566]}
-        ]
+          let myData = [
+            {name: '分店1', value: [121.15, 31.89, 9]},
+            {name: '分店2', value: [89.781327, 39.608266, 120]},
+            {name: '分店3', value: [120.38, 37.35, 142]},
+            {name: '分店4', value: [22.207216, 29.985295, 123]},
+            {name: '分店5', value: [110.245672, 30.7787677, 566]}
+          ]
 
-        myChartMap2.setOption({
+          myChartMap2.setOption({
           // 新建一个地理坐标系 geo ，
-          geo: {
-            map: 'world',//地图类型为世界地图
-            itemStyle:{ // 定义样式
-              normal:{       // 普通状态下的样式
-                areaColor:'#6699CC',
-                borderColor: '#fff',
-              },
-              emphasis: {         // 高亮状态下的样式
-                areaColor: '#f1f1f1'
+            geo: {
+              map: 'world', // 地图类型为世界地图
+              itemStyle: { // 定义样式
+                normal: {       // 普通状态下的样式
+                  areaColor: '#6699CC',
+                  borderColor: '#fff'
+                },
+                emphasis: {         // 高亮状态下的样式
+                  areaColor: '#f1f1f1'
+                }
               }
-            }
-
-          },
-          // hover显示目标数据
-          tooltip : {
-            trigger: 'item',
-            // tooltip的trigger的值可以有'item'、'axis'。
-            //'item':数据项图形触发，主要在散点图，饼图等无类目轴的图表中使用。
-            //'axis':坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
-            textStyle:{
-              align:'left'
             },
-          },
+          // hover显示目标数据
+            tooltip: {
+              trigger: 'item',
+            // tooltip的trigger的值可以有'item'、'axis'。
+            // 'item':数据项图形触发，主要在散点图，饼图等无类目轴的图表中使用。
+            // 'axis':坐标轴触发，主要在柱状图，折线图等会使用类目轴的图表中使用
+              textStyle: {
+                align: 'left'
+              }
+            },
           // 图表背景色
-          backgroundColor: '#f2f2f2',  
+            backgroundColor: '#f2f2f2',  
           // 标志颜色
-          color:'green',
+            color: 'green',
           // 新建散点图series
-          series:[{
-            name:'',//series名称
-            type:'scatter',//为散点类型
-            coordinateSystem: 'geo',// series坐标系类型
-            data:myData,
-            symbol:'pin',
-            symbolSize:[20,20]
-          }],
-
+            series: [{
+              name: '', // series名称
+              type: 'scatter', // 为散点类型
+              coordinateSystem: 'geo', // series坐标系类型
+              data: myData,
+              symbol: 'pin',
+              symbolSize: [20, 20]
+            }]
           // 添加视觉映射组件
         //   visualMap: {
         //     type: 'continuous', // 连续型
@@ -116,15 +114,15 @@
         //       color: 'lightgreen' // 值域控件的文本颜色
         //     }
         //   }
-        });
-        window.onresize = function() {
-        myChartMap2.resize();
-      };
+          })
+          window.onresize= function() {
+            myChartMap2.resize()
+          }
+        }
       },
-    },
-    mounted() {
+      mounted () {
         this.initEchart()
-    },
+      }
     }
 </script>
 
@@ -132,13 +130,15 @@
   .Map {
     width: 100%;
     height: 100%;
+    min-height: 800px;
     background: #f2f2f2;
     overflow: hidden;
   }
   #mapWorld {
     width: 100%;
     min-width: 1130px;
-    height:800px;
+    height: 100%;
+    min-height:800px;
   }
   .mapHead {
       height: 60px;
@@ -182,12 +182,14 @@
       width: 100%;
       position: fixed;
       left: 0;
-      bottom: 30px;
+      bottom: 15%;
       display: flex;
       justify-content: center;
       a {
-          width: 320px;
-          height: 120px;
+          width: 20%;
+          height: 50%;
+          min-width: 320px;
+          min-height: 120px;
           border-radius: 15px;
           margin: 15px;
           opacity: .5;

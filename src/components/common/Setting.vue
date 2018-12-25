@@ -7,14 +7,14 @@
     </el-row>
     <el-row class="userId">
       <el-col :span="24">
-        <p>账号ID:13910154946</p>
+        <p>账号ID：13910154946</p>
       </el-col>
     </el-row>
     <el-row class="mail-box">
       <el-col :span="12">
         <p>邮箱：{{mail}}</p>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8" :offset="4">
         <p>
           <el-button type="text" @click="mailOuterVisible = true">修改绑定邮箱</el-button>
           <el-dialog title="修改绑定邮箱" :visible.sync="mailOuterVisible" width="480px">
@@ -63,9 +63,9 @@
     </el-row>
     <el-row class="phone-box">
       <el-col :span="12">
-        <p>手机:{{phonenum}}</p>
+        <p>手机：{{phonenum}}</p>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8" :offset="4">
         <p>
           <el-button type="text" @click="phoneOuterVisible = true">修改绑定手机</el-button>
           <el-dialog title="修改绑定手机" :visible.sync="phoneOuterVisible" width="480px">
@@ -114,9 +114,9 @@
     </el-row>
     <el-row class="pwd-box">
       <el-col :span="12">
-        <p>登录密码:******</p>
+        <p>登录密码：******</p>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8" :offset="4">
         <p>
           <el-button type="text" @click="pwdOuterVisible = true">修改密码</el-button>
           <el-dialog title="修改密码" :visible.sync="pwdOuterVisible" width="480px">
@@ -147,9 +147,9 @@
     </el-row>
     <el-row class="code-box">
       <el-col :span="12">
-        <p>转账交易接受验证码:</p>
+        <p>转账交易接收验证码：</p>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="8" :offset="4">
         <p>
           <el-select v-model="code" placeholder="请选择">
             <el-option
@@ -170,71 +170,71 @@
 
 <script>
 export default {
-  name: "Setting",
+  name: 'Setting',
   data() {
     var checkPhone = (rule, value, callback) => {
-      const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
+      const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/
       if (!value) {
-        return callback(new Error("电话号码不能为空"));
+        return callback(new Error('电话号码不能为空'))
       }
       setTimeout(() => {
         if (!Number.isInteger(+value)) {
-          callback(new Error("请输入数字值"));
+          callback(new Error('请输入数字值'))
         } else {
           if (phoneReg.test(value)) {
-            callback();
+            callback()
           } else {
-            callback(new Error("电话号码格式不正确"));
+            callback(new Error('电话号码格式不正确'))
           }
         }
-      }, 100);
-    };
+      }, 100)
+    }
     var checkEmail = (rule, value, callback) => {
-      const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+      const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/
       if (!value) {
-        return callback(new Error("邮箱不能为空"));
+        return callback(new Error('邮箱不能为空'))
       }
       setTimeout(() => {
         if (mailReg.test(value)) {
-          callback();
+          callback()
         } else {
-          callback(new Error("请输入正确的邮箱格式"));
+          callback(new Error('请输入正确的邮箱格式'))
         }
-      }, 100);
-    };
+      }, 100)
+    }
     return {
-      mail: "123456789",
+      mail: '123456789',
       mailOuterVisible: false,
       mailInnerVisible: false,
       ruleForm: {
-        buyerPhone: "13833334444",
-        buyerEmail: ""
+        buyerPhone: '13833334444',
+        buyerEmail: ''
       },
       rules: {
-        buyerPhone: [{ validator: checkPhone, trigger: "blur" }],
-        buyerEmail: [{ validator: checkEmail, trigger: "blur" }]
+        buyerPhone: [{ validator: checkPhone, trigger: 'blur' }],
+        buyerEmail: [{ validator: checkEmail, trigger: 'blur' }]
       },
-      phonenum: "12345678911",
+      phonenum: '12345678911',
       phoneOuterVisible: false,
       phoneInnerVisible: false,
-      code: "手机",
+      code: '手机',
       pwdOuterVisible: false,
       pwdInnerVisible: false,
       codes: [
         {
-          value: "选项1",
-          label: "手机"
+          value: '选项1',
+          label: '手机'
         },
         {
-          value: "选项2",
-          label: "邮箱"
+          value: '选项2',
+          label: '邮箱'
         }
       ]
-    };
+    }
   },
   mounted() {},
   methods: {}
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -248,12 +248,12 @@ export default {
     background: #ffffff;
     height: 64px;
     p {
+      font-family:PingFang-SC-Bold;
       padding-left: 30px;
       font-size: 20px;
       color: #252525;
       line-height: 60px;
       text-align: left;
-      font-weight: bold;
     }
   }
   .userId {
@@ -269,7 +269,6 @@ export default {
       line-height: 50px;
       text-align: left;
       padding-left: 32px;
-      font-weight: bold;
     }
   }
   .mail-box,

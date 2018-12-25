@@ -1,16 +1,14 @@
 <template>
   <section class="Developer">
-    <div class="content-header">
-      <h1>首页D</h1>
-      <!-- <ol class="breadcrumb">
-          <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
-          <li class="active">Here</li>
-      </ol>-->
-      <div class="balence">
+    <el-row class="content-title">
+      <el-col class="title" :span="12">
+        <h1>首页D</h1>
+      </el-col>
+      <el-col class="record" :span="12">
         <p>余额:12121212</p>
         <p>收益:12121212</p>
-      </div>
-    </div>
+      </el-col>
+    </el-row>
     <!-- Main content -->
     <div class="content container-fluid">
       <div class="my-content">
@@ -107,149 +105,149 @@
 
 <script>
 export default {
-  name: "Developer",
+  name: 'Developer',
   data() {
     return {
-      indexDown: "3",
-      indexPro: "3",
+      indexDown: '3',
+      indexPro: '3',
       dataDownloads: {
         day: {
-          x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
+          x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
           y: [10, 20, 30, 40, 50, 60]
         },
         week: {
-          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
           y: [100, 200, 300, 400, 500, 600, 700]
         },
         mounth: {
-          x: ["1", "3", "5", "7", "9", "11", "12"],
+          x: ['1', '3', '5', '7', '9', '11', '12'],
           y: [1000, 520, 200, 334, 390, 330, 220]
         },
         year: {
-          x: ["13", "15", "16", "17", "18", "19"],
+          x: ['13', '15', '16', '17', '18', '19'],
           y: [10000, 520, 200, 334, 390, 330]
         }
       },
       downloadsVal: {
-        x: "",
-        y: ""
+        x: '',
+        y: ''
       },
       dataProfit: {
         day: {
-          x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
+          x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
           y: [10, 20, 30, 40, 50, 60]
         },
         week: {
-          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
           y: [100, 200, 300, 400, 500, 600, 700]
         },
         mounth: {
-          x: ["1", "3", "5", "7", "9", "11", "12"],
+          x: ['1', '3', '5', '7', '9', '11', '12'],
           y: [1000, 520, 200, 334, 390, 330, 220]
         },
         year: {
-          x: ["13", "15", "16", "17", "18", "19"],
+          x: ['13', '15', '16', '17', '18', '19'],
           y: [10000, 520, 200, 334, 390, 330]
         }
       },
       profitVal: {
-        x: "",
-        y: ""
+        x: '',
+        y: ''
       },
       appList: [
-        { id: "1", name: "Imagepuller" },
-        { id: "1", name: "Imagepuller" },
-        { id: "1", name: "Imagepuller" }
+        { id: '1', name: 'Imagepuller' },
+        { id: '1', name: 'Imagepuller' },
+        { id: '1', name: 'Imagepuller' }
       ],
       tableData: [
         {
-          type: "Receive",
-          time: "2018-11-02 09:56",
-          hash: "0xb2ddddc25f1375bo693e6",
-          amount: "0.63367",
-          fee: "0.000378"
+          type: 'Receive',
+          time: '2018-11-02 09:56',
+          hash: '0xb2ddddc25f1375bo693e6',
+          amount: '0.63367',
+          fee: '0.000378'
         },
         {
-          type: "Receive",
-          time: "2018-11-02 09:56",
-          hash: "0xb2ddddc25f1375bo693e6",
-          amount: "0.63367",
-          fee: "0.000378"
+          type: 'Receive',
+          time: '2018-11-02 09:56',
+          hash: '0xb2ddddc25f1375bo693e6',
+          amount: '0.63367',
+          fee: '0.000378'
         },
         {
-          type: "Receive",
-          time: "2018-11-02 09:56",
-          hash: "0xb2ddddc25f1375bo693e6",
-          amount: "0.63367",
-          fee: "0.000378"
+          type: 'Receive',
+          time: '2018-11-02 09:56',
+          hash: '0xb2ddddc25f1375bo693e6',
+          amount: '0.63367',
+          fee: '0.000378'
         }
       ]
-    };
+    }
   },
   methods: {
     downloadsDay(x) {
-      this.downloadsVal = this.dataDownloads.day;
-      this.initEchart(this.downloadsVal, this.profitVal);
-      this.indexDown = x;
+      this.downloadsVal = this.dataDownloads.day
+      this.initEchart(this.downloadsVal, this.profitVal)
+      this.indexDown = x
     },
     downloadsWeek(x) {
-      this.downloadsVal = this.dataDownloads.week;
-      this.initEchart(this.downloadsVal, this.profitVal);
-      this.indexDown = x;
+      this.downloadsVal = this.dataDownloads.week
+      this.initEchart(this.downloadsVal, this.profitVal)
+      this.indexDown = x
     },
     downloadsMounth(x) {
-      this.downloadsVal = this.dataDownloads.mounth;
-      this.initEchart(this.downloadsVal, this.profitVal);
-      this.indexDown = x;
+      this.downloadsVal = this.dataDownloads.mounth
+      this.initEchart(this.downloadsVal, this.profitVal)
+      this.indexDown = x
     },
     downloadsYear(x) {
-      this.downloadsVal = this.dataDownloads.year;
-      this.initEchart(this.downloadsVal, this.profitVal);
-      this.indexDown = x;
+      this.downloadsVal = this.dataDownloads.year
+      this.initEchart(this.downloadsVal, this.profitVal)
+      this.indexDown = x
     },
     profitDay(x) {
-      this.profitVal = this.dataProfit.day;
-      this.initEchart(this.downloadsVal, this.profitVal);
-      this.indexPro = x;
+      this.profitVal = this.dataProfit.day
+      this.initEchart(this.downloadsVal, this.profitVal)
+      this.indexPro = x
     },
     profitWeek(x) {
-      this.profitVal = this.dataProfit.week;
-      this.initEchart(this.downloadsVal, this.profitVal);
-      this.indexPro = x;
+      this.profitVal = this.dataProfit.week
+      this.initEchart(this.downloadsVal, this.profitVal)
+      this.indexPro = x
     },
     profitMounth(x) {
-      this.profitVal = this.dataProfit.mounth;
-      this.initEchart(this.downloadsVal, this.profitVal);
-      this.indexPro = x;
+      this.profitVal = this.dataProfit.mounth
+      this.initEchart(this.downloadsVal, this.profitVal)
+      this.indexPro = x
     },
     profitYear(x) {
-      this.profitVal = this.dataProfit.year;
-      this.initEchart(this.downloadsVal, this.profitVal);
-      this.indexPro = x;
+      this.profitVal = this.dataProfit.year
+      this.initEchart(this.downloadsVal, this.profitVal)
+      this.indexPro = x
     },
     initEchart(val1, val2) {
-      var myChart1 = this.$echarts.init(document.getElementById("myDownloads"));
-      var myChart2 = this.$echarts.init(document.getElementById("myProfit"));
-      var myData1 = val1;
-      var myData2 = val2;
+      var myChart1 = this.$echarts.init(document.getElementById('myDownloads'))
+      var myChart2 = this.$echarts.init(document.getElementById('myProfit'))
+      var myData1 = val1
+      var myData2 = val2
       myChart1.setOption({
-        color: ["#3398DB"],
+        color: ['#3398DB'],
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "line" // 默认为直线，可选为：'line' | 'shadow'
+            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
           }
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            type: "category",
+            type: 'category',
             data: myData1.x,
             axisTick: {
               alignWithLabel: true
@@ -258,40 +256,40 @@ export default {
         ],
         yAxis: [
           {
-            type: "value",
+            type: 'value',
             axisLabel: {
-              formatter: "{value}"
+              formatter: '{value}'
             }
           }
         ],
         series: [
           {
-            name: "uranus",
-            type: "bar",
-            barWidth: "25%",
-            color: "#1890ff",
+            name: 'uranus',
+            type: 'bar',
+            barWidth: '25%',
+            color: '#1890ff',
             data: myData1.y
           }
         ]
-      });
+      })
       myChart2.setOption({
-        color: ["#3398DB"],
+        color: ['#3398DB'],
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "line" // 默认为直线，可选为：'line' | 'shadow'
+            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
           }
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            type: "category",
+            type: 'category',
             data: myData2.x,
             axisTick: {
               alignWithLabel: true
@@ -300,53 +298,61 @@ export default {
         ],
         yAxis: [
           {
-            type: "value",
+            type: 'value',
             axisLabel: {
-              formatter: "{value}"
+              formatter: '{value}'
             }
           }
         ],
         series: [
           {
-            name: "uranus",
-            type: "bar",
-            barWidth: "25%",
-            color: "#1890ff",
+            name: 'uranus',
+            type: 'bar',
+            barWidth: '25%',
+            color: '#1890ff',
             data: myData2.y
           }
         ]
-      });
+      })
       window.onresize = function() {
-        myChart1.resize();
-        myChart2.resize();
-      };
+        myChart1.resize()
+        myChart2.resize()
+      }
     }
   },
   mounted() {
-    this.downloadsDay(3);
-    this.profitDay(3);
+    this.downloadsDay(3)
+    this.profitDay(3)
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
 .Developer {
   background: #f2f2f2;
   width: 100%;
-  .content-header {
+    .el-button {
+    background: #8eb357;
+    border: none;
+  }
+  .content-title {
     background: #ffffff;
-    height: 65px;
-    width: 100%;
+    height: 64px;
     h1 {
-      float: left;
+      font-family: PingFang-SC-Bold;
+      font-size: 20px;
+      color: #252525;
+      line-height: 24px;
+      padding-left: 30px;
     }
-    .balence {
+    .record {
       float: right;
       margin-right: 15px;
-      height: 50px;
+      margin-top: 4px;
+      height: 60px;
       width: 105px;
       p {
-        height: 25px;
+        height: 30px;
         line-height: 25px;
         margin: 0;
       }

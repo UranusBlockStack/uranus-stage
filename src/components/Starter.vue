@@ -36,12 +36,12 @@
 </template>
 
 <script>
-import Top from "./Top";
-import SidebarLeft from "./SidebarLeft";
-import SiderbarRight from "./SiderbarRight";
+import Top from './Top'
+import SidebarLeft from './SidebarLeft'
+import SiderbarRight from './SiderbarRight'
 
 export default {
-  name: "Starter",
+  name: 'Starter',
   components: {
     Top,
     SidebarLeft,
@@ -49,13 +49,16 @@ export default {
   },
   data() {
     return {
-      msg: "Welcome to Your Vue.js App"
-    };
+      msg: 'Welcome to Your Vue.js App'
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  background: #f2f2f2;
+}
 .main-sidebar {
   background: #ffffff;
   box-shadow: 2px 0 6px 0 rgba(0, 0, 0, 0.2);

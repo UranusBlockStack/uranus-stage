@@ -9,6 +9,8 @@ import Map from '@/components/Map'
 
 // buyer
 import Buyer from '@/components/buyer/Buyer'
+import ApplicationMarket from '@/components/buyer/ApplicationMarket'
+import ApplicationRepository from '@/components/buyer/ApplicationRepository'
 
 // developer
 import Developer from '@/components/developer/Developer'
@@ -18,68 +20,81 @@ import Seller from '@/components/seller/Seller'
 
 // common
 import Wallet from '@/components/common/Wallet'
+import Transfer from '@/components/common/Transfer'
 import Setting from '@/components/common/Setting'
 
 const routes = [
-    {
-      path: '/map',
-      name: 'Map',
-      component: Map
-    },{
-      path: '/login',
-      name: 'Login',
-      component: Login
-    },{
-      path: '/register',
-      name: 'Register',
-      component: Register
-    },{
-      path: '/forgetPwd',
-      name: 'ForgetPwd',
-      component: ForgetPwd
-    },{
-      path: '/',
-      name: 'Starter',
-      component: Starter,
-      children: [
+  {
+    path: '/map',
+    name: 'Map',
+    component: Map
+  }, {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  }, {
+    path: '/register',
+    name: 'Register',
+    component: Register
+  }, {
+    path: '/forgetPwd',
+    name: 'ForgetPwd',
+    component: ForgetPwd
+  }, {
+    path: '/',
+    name: 'Starter',
+    component: Starter,
+    children: [
         // buyer routes
-        {
-          path: 'buyer',
-          component: Buyer,
-          name: 'Buyer'
-        },
+      {
+        path: 'buyer',
+        component: Buyer,
+        name: 'Buyer'
+      },{
+        path: 'applicationmarket',
+        component: ApplicationMarket,
+        name: 'ApplicationMarket'
+      },
+      {
+        path: 'applicationrepository',
+        component: ApplicationRepository,
+        name: 'ApplicationRepository'
+      },
         
         // developer routes
-        {
-          path: 'developer',
-          component: Developer,
-          name: 'Developer'
-        },
+      {
+        path: 'developer',
+        component: Developer,
+        name: 'Developer'
+      },
         
         // seller routes
-        {
-          path: 'seller',
-          component: Seller,
-          name: 'Seller'
-        },
+      {
+        path: 'seller',
+        component: Seller,
+        name: 'Seller'
+      },
 
         // common routes
-        {
-          path: 'wallet',
-          component: Wallet,
-          name: 'Wallet'
-        },{
-          path: 'setting',
-          component: Setting,
-          name: 'Setting'
-        }
-      ]
-    },{
-      path: '*',
-      name: 'NotFound',
-      component: NotFound
-    }
-  ]
+      {
+        path: 'wallet',
+        component: Wallet,
+        name: 'Wallet'
+      }, {
+        path: 'setting',
+        component: Setting,
+        name: 'Setting'
+      }, {
+        path: 'transfer',
+        component: Transfer,
+        name: 'Transfer'
+      }
+    ]
+  }, {
+    path: '*',
+    name: 'NotFound',
+    component: NotFound
+  }
+]
 
-  export default routes
-
+export default routes

@@ -170,7 +170,7 @@
 
 <script>
 export default {
-    name: 'Head',
+  name: 'Head'
 
 }
 </script>

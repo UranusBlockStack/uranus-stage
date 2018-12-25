@@ -2,7 +2,7 @@
   <section class="Wallet">
     <el-row class="wallet-head">
       <el-col :span="24">
-        <p>我的钱包</p>
+        <p>{{$t('wallet.title')}}</p>
       </el-col>
     </el-row>
     <el-row class="wallet-body">
@@ -11,7 +11,7 @@
         <p>我的地址：0xCB5A152cD01460e6AEfE15BF45F48542a49ecd1f</p>
       </el-col>
       <el-col :span="6">
-        <el-button type="success">转账</el-button>
+        <el-button type="success" @click="goTransfer">转账</el-button>
       </el-col>
     </el-row>
     <el-row class="transaction">
@@ -48,127 +48,132 @@
 
 <script>
 export default {
-  name: "Wallet",
+  name: 'Wallet',
   data() {
     return {
       dialogVisible: false,
       tableData: [
         {
-          1: "548bc46caba···",
-          2: "2018-11-02 09:56",
-          3: "548bc46caba···",
-          4: "548bc46caba···",
-          5: "1234522678.66",
-          6: "13.21",
-          7: "成功"
+          1: '548bc46caba···',
+          2: '2018-11-02 09:56',
+          3: '548bc46caba···',
+          4: '548bc46caba···',
+          5: '1234522678.66',
+          6: '13.21',
+          7: '成功'
         },
         {
-          1: "548bc46caba···",
-          2: "2018-11-02 09:56",
-          3: "548bc46caba···",
-          4: "548bc46caba···",
-          5: "1234522678.66",
-          6: "13.21",
-          7: "成功"
+          1: '548bc46caba···',
+          2: '2018-11-02 09:56',
+          3: '548bc46caba···',
+          4: '548bc46caba···',
+          5: '1234522678.66',
+          6: '13.21',
+          7: '成功'
         },
         {
-          1: "548bc46caba···",
-          2: "2018-11-02 09:56",
-          3: "548bc46caba···",
-          4: "548bc46caba···",
-          5: "1234522678.66",
-          6: "13.21",
-          7: "成功"
+          1: '548bc46caba···',
+          2: '2018-11-02 09:56',
+          3: '548bc46caba···',
+          4: '548bc46caba···',
+          5: '1234522678.66',
+          6: '13.21',
+          7: '成功'
         },
         {
-          1: "548bc46caba···",
-          2: "2018-11-02 09:56",
-          3: "548bc46caba···",
-          4: "548bc46caba···",
-          5: "1234522678.66",
-          6: "13.21",
-          7: "成功"
+          1: '548bc46caba···',
+          2: '2018-11-02 09:56',
+          3: '548bc46caba···',
+          4: '548bc46caba···',
+          5: '1234522678.66',
+          6: '13.21',
+          7: '成功'
         },
         {
-          1: "548bc46caba···",
-          2: "2018-11-02 09:56",
-          3: "548bc46caba···",
-          4: "548bc46caba···",
-          5: "1234522678.66",
-          6: "13.21",
-          7: "成功"
+          1: '548bc46caba···',
+          2: '2018-11-02 09:56',
+          3: '548bc46caba···',
+          4: '548bc46caba···',
+          5: '1234522678.66',
+          6: '13.21',
+          7: '成功'
         },
         {
-          1: "548bc46caba···",
-          2: "2018-11-02 09:56",
-          3: "548bc46caba···",
-          4: "548bc46caba···",
-          5: "1234522678.66",
-          6: "13.21",
-          7: "成功"
+          1: '548bc46caba···',
+          2: '2018-11-02 09:56',
+          3: '548bc46caba···',
+          4: '548bc46caba···',
+          5: '1234522678.66',
+          6: '13.21',
+          7: '成功'
         }
       ],
       tableData1: [
         {
-          menu: "TxHash:",
-          value: "0x3e98fd1224269fccaf4ee5194932c351a00eaaae6edc2a566a8966b8c253af67"
+          menu: 'TxHash:',
+          value: '0x3e98fd1224269fccaf4ee5194932c351a00eaaae6edc2a566a8966b8c253af67'
         },
         {
-          menu: "TxReceipt Status:",
-          value: "Success"
+          menu: 'TxReceipt Status:',
+          value: 'Success'
         },
         {
-          menu: "Block Height:",
-          value: "6924205 (10 Block Confirmations)"
+          menu: 'Block Height:',
+          value: '6924205 (10 Block Confirmations)'
         },
         {
-          menu: "TimeStamp:",
-          value: "2 mins ago (Dec-21-2018 02:43:26 AM +UTC)"
+          menu: 'TimeStamp:',
+          value: '2 mins ago (Dec-21-2018 02:43:26 AM +UTC)'
         },
         {
-          menu: "From:",
-          value: "0x907a6d492e0765451ee2a066326f24f1164a5578"
+          menu: 'From:',
+          value: '0x907a6d492e0765451ee2a066326f24f1164a5578'
         },
         {
-          menu: "To:",
-          value: "Contract 0x991c2e104dfa1e2f88fd91010ee65cfb2a60e255"
+          menu: 'To:',
+          value: 'Contract 0x991c2e104dfa1e2f88fd91010ee65cfb2a60e255'
         },
         {
-          menu: "Value:",
-          value: "1 Ether ($116.41)"
+          menu: 'Value:',
+          value: '1 Ether ($116.41)'
         },
         {
-          menu: "Gas Limit:",
-          value: "41836"
+          menu: 'Gas Limit:',
+          value: '41836'
         },
         {
-          menu: "Gas Used By Transaction:",
-          value: "41836 (100%)"
+          menu: 'Gas Used By Transaction:',
+          value: '41836 (100%)'
         },
         {
-          menu: "Gas Price:",
-          value: "0.000000004199999999 Ether (4.199999999 Gwei)"
+          menu: 'Gas Price:',
+          value: '0.000000004199999999 Ether (4.199999999 Gwei)'
         },
         {
-          menu: "Actual Tx Cost/Fee:",
-          value: "0.00017571119995 Ether ($0.02)"
+          menu: 'Actual Tx Cost/Fee:',
+          value: '0.00017571119995 Ether ($0.02)'
         },
         {
-          menu: "Nonce & {Position}:",
-          value: "1422 | {191}"
+          menu: 'Nonce & {Position}:',
+          value: '1422 | {191}'
         },
         {
-          menu: "Input Data:",
-          value: "Function: dbkDeposit() MethodID: 0xc1ba93e1"
+          menu: 'Input Data:',
+          value: 'Function: dbkDeposit() MethodID: 0xc1ba93e1'
         },
         {
-          menu: "Private Note:",
-          value: "<To access the Private Note Feature, you must be Logged In>"
-        },
+          menu: 'Private Note:',
+          value: '<To access the Private Note Feature, you must be Logged In>'
+        }
       ]
-    };
+    }
+  },
+  methods: {
+    goTransfer() {
+      this.$router.push({path: 'transfer'})
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -187,7 +192,6 @@ export default {
       color: #252525;
       line-height: 60px;
       text-align: left;
-      font-weight: bold;
     }
   }
   .wallet-body {

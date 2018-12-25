@@ -74,7 +74,7 @@
 
 <script>
 export default {
-    name: 'SiderbarRight'
+  name: 'SiderbarRight'
 }
 </script>
 

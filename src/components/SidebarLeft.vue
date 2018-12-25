@@ -46,30 +46,40 @@
         </router-link>
       </li>
       <li class="treeview">
-        <a href="#">
+        <router-link :to="{path: '/applicationmarket'}">
           <i class="fa fa-link"></i>
           <span>应用市场</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <a href="#">我的应用</a>
-          </li>
-        </ul>
+        </router-link>
+      </li>
+      <li class="treeview">
+        <router-link :to="{path: '/applicationrepository'}">
+          <i class="fa fa-link"></i>
+          <span>我的应用仓库</span>
+        </router-link>
       </li>
       <li class="treeview">
         <a href="#">
           <i class="fa fa-link"></i>
           <span>资源市场</span>
+        </a>
+      </li>
+      <li class="treeview">
+        <router-link :to="{path: '/'}">
+          <i class="fa fa-link"></i>
+          <span>我的资源</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
-        </a>
+        </router-link>
         <ul class="treeview-menu">
           <li>
-            <a href="#">我的资源</a>
+            <a href="#"><i class="fa fa-link"></i>我的资源</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-link"></i>我的资源</a>
+          </li>
+          <li>
+            <a href="#"><i class="fa fa-link"></i>我的资源</a>
           </li>
         </ul>
       </li>
@@ -83,7 +93,7 @@
         </a>
         <ul class="treeview-menu">
           <li>
-            <a href="#">我的资源</a>
+            <a href="#"><i class="fa fa-link"></i>我的资源</a>
           </li>
         </ul>
       </li>
@@ -97,26 +107,24 @@
         </a>
         <ul class="treeview-menu">
           <li>
-            <a href="#">我的应用</a>
+            <a href="#"><i class="fa fa-link"></i>我的应用</a>
           </li>
         </ul>
       </li>
       <li class="treeview">
-        <router-link :to="{path: 'wallet'}">
+        <router-link :to="{path: '/wallet'}">
           <i class="fa fa-link"></i>
           <span>钱包</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
         </router-link>
-        <ul class="treeview-menu">
-          <li>
-            <a href="#">转账</a>
-          </li>
-        </ul>
       </li>
       <li class="treeview">
-        <router-link :to="{path: 'setting'}">
+        <router-link :to="{path: '/transfer'}">
+          <i class="fa fa-link"></i>
+          <span>转账</span>
+        </router-link>
+      </li>
+      <li class="treeview">
+        <router-link :to="{path: '/setting'}">
           <i class="fa fa-link"></i>
           <span>系统设置</span>
         </router-link>
@@ -129,8 +137,8 @@
 
 <script>
 export default {
-  name: "SidebarLeft"
-};
+  name: 'SidebarLeft'
+}
 </script>
 
 <style lang="scss" scoped>
@@ -153,6 +161,9 @@ export default {
       }
       .treeview-menu {
         background: #f2f2f2;
+        a {
+          padding-left: 65px;
+        }
       }
     }
 

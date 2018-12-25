@@ -5,7 +5,7 @@
         </div>
         <div class="loginContent">
             <div class="btnChoose">
-                <div class="btnMail" @click="chooseMail"><span :class="{chooseBtn:!phoneShow}">{{$t('login.tittle')}}</span></div>
+                <div class="btnMail" @click="chooseMail"><span :class="{chooseBtn:!phoneShow}">{{$t('login.title')}}</span></div>
                 <div class="btnPhone" @click="choosePhone"><span :class="{chooseBtn:phoneShow}">手机登录</span></div>
             </div>
             <div class="phoneRes" v-show="phoneShow">
@@ -40,36 +40,36 @@
 
 <script>
 export default {
-    name: 'Login' ,
-    data () {
-        return {
-            placeholderPhone: '手机号',
-            placeholderMail: '邮箱',
-            placeholderPassword: '6-16位密码 区分大小写',
-            phoneShow: 'true',
-            prompt: '',
-            phone: '',
-            mail: '',
-            password: ''
-        }
-    },
-    methods: {
-        choosePhone () {
-            this.phoneShow = true;
-        },
-        chooseMail () {
-            this.phoneShow = false;
-        },
-        userLogin (){
-            if (this.phone === '' && this.mail === '') {
-                this.prompt = '请完善信息后登陆'
-            } else if (this.password === '') {
-                this.prompt = '请填写密码'
-            } else {
-                this.prompt = ''
-            }
-        }
+  name: 'Login',
+  data () {
+    return {
+      placeholderPhone: '手机号',
+      placeholderMail: '邮箱',
+      placeholderPassword: '6-16位密码 区分大小写',
+      phoneShow: 'true',
+      prompt: '',
+      phone: '',
+      mail: '',
+      password: ''
     }
+  },
+  methods: {
+    choosePhone () {
+      this.phoneShow = true
+    },
+    chooseMail () {
+      this.phoneShow = false
+    },
+    userLogin () {
+      if (this.phone === '' && this.mail === '') {
+        this.prompt = '请完善信息后登陆'
+      } else if (this.password === '') {
+        this.prompt = '请填写密码'
+      } else {
+        this.prompt = ''
+      }
+    }
+  }
 }
 </script>
 
