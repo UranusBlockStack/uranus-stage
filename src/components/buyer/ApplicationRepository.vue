@@ -5,7 +5,7 @@
         <h1>我的应用仓库</h1>
       </el-col>
       <el-col class="record" :span="12">
-        <p>部署应用记录></p>
+        <router-link :to="{path: '/apprecord'}"><p>部署应用记录></p></router-link>
       </el-col>
     </el-row>
     <el-dialog title="确认要删除该应用吗?" :visible.sync="dialogVisible" width="30%" top="20%">
@@ -70,23 +70,23 @@
 
 <script>
 export default {
-  name: "Applicationmarket",
+  name: 'Applicationmarket',
   data() {
     return {
       dialogVisible: false,
       appList: [
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" },
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" }
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' },
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' }
       ]
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

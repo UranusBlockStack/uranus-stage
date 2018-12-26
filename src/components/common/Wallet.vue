@@ -7,36 +7,32 @@
     </el-row>
     <el-row class="wallet-body">
       <el-col :span="18">
-        <p>账户余额：100URC</p>
-        <p>我的地址：0xCB5A152cD01460e6AEfE15BF45F48542a49ecd1f</p>
+        <p>{{$t('wallet.balance')}}100URC</p>
+        <p>{{$t('wallet.address')}}0xCB5A152cD01460e6AEfE15BF45F48542a49ecd1f</p>
       </el-col>
       <el-col :span="6">
-        <el-button type="success" @click="goTransfer">转账</el-button>
+        <el-button type="success" @click="goTransfer">{{$t('wallet.button')}}</el-button>
       </el-col>
     </el-row>
     <el-row class="transaction">
       <el-col class="transaction-head">
-        <p>交易详情</p>
+        <p>{{$t('wallet.transactionDetails')}}</p>
         <el-dialog title="交易详情" :visible.sync="dialogVisible" width="60%">
           <el-table :data="tableData1" style="width: 100%">
             <el-table-column prop="menu" width="180"></el-table-column>
             <el-table-column prop="value" width="680"></el-table-column>
           </el-table>
-          <span slot="footer" class="dialog-footer">
-            <el-button @click="dialogVisible = false">取 消</el-button>
-            <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
-          </span>
         </el-dialog>
       </el-col>
       <el-col :span="24">
         <el-table :data="tableData" border style="width: 100%" @row-click="dialogVisible = true">
-          <el-table-column prop="1" label="区块哈希" min-width="170"></el-table-column>
-          <el-table-column prop="2" label="交易时间" width="180"></el-table-column>
-          <el-table-column prop="3" label="发起方" width="180"></el-table-column>
-          <el-table-column prop="4" label="接收方" width="120"></el-table-column>
-          <el-table-column prop="5" label="交易额" width="180"></el-table-column>
-          <el-table-column prop="6" label="手续费" width="120"></el-table-column>
-          <el-table-column prop="7" label="状态" width="180"></el-table-column>
+          <el-table-column prop="1" :label="tableLabel[0]" min-width="170"></el-table-column>
+          <el-table-column prop="2" :label="tableLabel[1]" width="180"></el-table-column>
+          <el-table-column prop="3" :label="tableLabel[2]" width="180"></el-table-column>
+          <el-table-column prop="4" :label="tableLabel[3]" width="120"></el-table-column>
+          <el-table-column prop="5" :label="tableLabel[4]" width="180"></el-table-column>
+          <el-table-column prop="6" :label="tableLabel[5]" width="120"></el-table-column>
+          <el-table-column prop="7" :label="tableLabel[6]" width="180"></el-table-column>
         </el-table>
       </el-col>
       <el-col :span="6" :offset="9" class="transaction-foot">
@@ -52,6 +48,7 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      tableLabel: ['区块哈希', '交易时间', '发起方', '接收方', '交易额', '手续费', '状态'],
       tableData: [
         {
           1: '548bc46caba···',

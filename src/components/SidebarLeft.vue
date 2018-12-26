@@ -30,56 +30,56 @@
       <li class="treeview">
         <router-link :to="{path: '/seller'}">
           <i class="fa fa-link"></i>
-          <span>首页S</span>
+          <span>{{$t('menu.index')}}S</span>
         </router-link>
       </li>
       <li class="treeview">
         <router-link :to="{path: '/buyer'}">
           <i class="fa fa-link"></i>
-          <span>首页B</span>
+          <span>{{$t('menu.index')}}B</span>
         </router-link>
       </li>
       <li class="treeview">
         <router-link :to="{path: '/developer'}">
           <i class="fa fa-link"></i>
-          <span>首页D</span>
+          <span>{{$t('menu.index')}}D</span>
         </router-link>
       </li>
       <li class="treeview">
         <router-link :to="{path: '/applicationmarket'}">
           <i class="fa fa-link"></i>
-          <span>应用市场</span>
+          <span>{{$t('menu.appMarket')}}</span>
         </router-link>
       </li>
       <li class="treeview">
         <router-link :to="{path: '/applicationrepository'}">
           <i class="fa fa-link"></i>
-          <span>我的应用仓库</span>
+          <span>{{$t('menu.appRepository')}}</span>
         </router-link>
       </li>
       <li class="treeview">
-        <a href="#">
+        <router-link :to="{path: '/resourcemarket'}">
           <i class="fa fa-link"></i>
-          <span>资源市场</span>
-        </a>
+          <span>{{$t('menu.resourceMarket')}}</span>
+        </router-link>
       </li>
       <li class="treeview">
         <router-link :to="{path: '/'}">
           <i class="fa fa-link"></i>
-          <span>我的资源</span>
+          <span>{{$t('menu.myResource')}}</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </router-link>
         <ul class="treeview-menu">
           <li>
-            <a href="#"><i class="fa fa-link"></i>我的资源</a>
+            <a href="#"><i class="fa fa-link"></i>{{$t('menu.myResource1')}}</a>
           </li>
           <li>
-            <a href="#"><i class="fa fa-link"></i>我的资源</a>
+            <a href="#"><i class="fa fa-link"></i>{{$t('menu.myResource2')}}</a>
           </li>
           <li>
-            <a href="#"><i class="fa fa-link"></i>我的资源</a>
+            <a href="#"><i class="fa fa-link"></i>{{$t('menu.myResource3')}}</a>
           </li>
         </ul>
       </li>
@@ -114,19 +114,19 @@
       <li class="treeview">
         <router-link :to="{path: '/wallet'}">
           <i class="fa fa-link"></i>
-          <span>钱包</span>
+          <span>{{$t('menu.wallet')}}</span>
         </router-link>
       </li>
       <li class="treeview">
         <router-link :to="{path: '/transfer'}">
           <i class="fa fa-link"></i>
-          <span>转账</span>
+          <span>{{$t('menu.transfer')}}</span>
         </router-link>
       </li>
       <li class="treeview">
         <router-link :to="{path: '/setting'}">
           <i class="fa fa-link"></i>
-          <span>系统设置</span>
+          <span>{{$t('menu.setting')}}</span>
         </router-link>
       </li>
     </ul>

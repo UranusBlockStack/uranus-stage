@@ -2,36 +2,39 @@
   <section class="Transfer">
     <el-row class="transfer-head">
       <el-col :span="24">
-        <p>转账</p>
+        <p>{{$t('menu.transfer')}}</p>
       </el-col>
     </el-row>
     <el-row class="transfer-body">
       <el-col :span="6" :offset="16">
-        <p>{{$t('transfer.title')}}123</p>
+        <p>{{$t('transfer.transfer')}}123</p>
       </el-col>
     </el-row>
     <el-row class="transfer-form">
       <el-col :span="12" :offset="6">
         <div class="formGroup">
-          <el-form label-position="right" label-width="80px" :model="formLabelAlign" :rules="rules">
+          <el-form label-position="right" label-width="100px" :model="formLabelAlign" :rules="rules">
             <el-form-item prop="name">
-              <span slot="label">地址码</span>
-              <el-input v-model="formLabelAlign.name"></el-input>
+              <span slot="label">{{$t('transfer.address')}}</span>
+              <el-input v-model="formLabelAlign.address"></el-input>
             </el-form-item>
-            <el-form-item label="转账数量" prop="region">
-              <el-input v-model="formLabelAlign.region"></el-input>
+            <el-form-item prop="region">
+              <span slot="label">{{$t('transfer.number')}}</span>
+              <el-input v-model="formLabelAlign.number"></el-input>
             </el-form-item>
-            <el-form-item label="手续费" prop="type">
-              <el-input v-model="formLabelAlign.type"></el-input>
+            <el-form-item prop="type">
+              <span slot="label">{{$t('transfer.poundage')}}</span>
+              <el-input v-model="formLabelAlign.poundage"></el-input>
             </el-form-item>
-            <el-form-item label="验证码" prop="code">
+            <el-form-item prop="code">
+              <span slot="label">{{$t('transfer.code')}}</span>
               <el-input v-model="formLabelAlign.code"></el-input>
             </el-form-item>
           </el-form>
         </div>
       </el-col>
       <el-col :span="6" :offset="12">
-        <el-button type="success">确认转账</el-button>
+        <el-button type="success">{{$t('transfer.button')}}</el-button>
       </el-col>
     </el-row>
   </section>
@@ -39,30 +42,30 @@
 
 <script>
 export default {
-  name: "Transfer",
+  name: 'Transfer',
   data() {
     return {
       formLabelAlign: {
-        name: "",
-        region: "",
-        type: "",
-        code: ""
+        address: '',
+        number: '',
+        poundage: '',
+        code: ''
       },
       rules: {
-        name: [{ min: 3, max: 5, message: "请输入正确地址", trigger: "blur" }],
-        region: [{ min: 5, message: "余额不足,请重新输入", trigger: "blur" }],
-        type: [{ min: 5, message: "手续费", trigger: "change" }],
+        address: [{ min: 3, max: 5, message: '请输入正确地址', trigger: 'blur' }],
+        number: [{ min: 5, message: '余额不足,请重新输入', trigger: 'blur' }],
+        poundage: [{ min: 5, message: '手续费', trigger: 'change' }],
         code: [
           {
             pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+$/,
-            message: "验证码有误,请重新输入",
-            trigger: "blur"
+            message: '验证码有误,请重新输入',
+            trigger: 'blur'
           }
         ]
       }
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

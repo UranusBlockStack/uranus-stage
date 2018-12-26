@@ -5,7 +5,7 @@
         <h1>应用市场</h1>
       </el-col>
       <el-col class="record" :span="12">
-        <p>部署应用记录></p>
+        <router-link :to="{path: '/apprecord'}"><p>部署应用记录></p></router-link>
       </el-col>
     </el-row>
     <div class="shop">
@@ -73,45 +73,45 @@
 
 <script>
 export default {
-  name: "ApplicationMarket",
+  name: 'ApplicationMarket',
   data() {
     return {
       options: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
+          value: '选项2',
+          label: '选项2'
         },
         {
-          value: "选项3",
-          label: "选项3"
+          value: '选项3',
+          label: '选项3'
         },
         {
-          value: "选项4",
-          label: "选项4"
+          value: '选项4',
+          label: '选项4'
         },
         {
-          value: "选项5",
-          label: "选项5"
+          value: '选项5',
+          label: '选项5'
         }
       ],
-      value: "",
+      value: '',
       appList: [
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" },
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" }
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' },
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' }
       ]
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

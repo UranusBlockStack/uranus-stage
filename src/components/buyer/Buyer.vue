@@ -81,82 +81,82 @@
 
 <script>
 export default {
-  name: "Buyer",
+  name: 'Buyer',
   data() {
     return {
-      indexPower: "",
+      indexPower: '',
       dataPower: {
         day: {
-          x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
+          x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
           y: [10, 20, 30, 40, 50, 60]
         },
         week: {
-          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
           y: [100, 200, 300, 400, 500, 600, 700]
         },
         mounth: {
-          x: ["1", "5", "10", "15", "20", "25", "30"],
+          x: ['1', '5', '10', '15', '20', '25', '30'],
           y: [1000, 520, 200, 334, 390, 330, 220]
         },
         year: {
-          x: ["1", "4", "7", "10", "12"],
+          x: ['1', '4', '7', '10', '12'],
           y: [10000, 520, 200, 334, 390]
         }
       },
       powerVal: {},
       appList: [
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "1", name: "Imagepuller", shop: "商店2" },
-        { id: "1", name: "Imagepuller", shop: "商店3" },
-        { id: "1", name: "Imagepuller", shop: "商店4" }
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '1', name: 'Imagepuller', shop: '商店2' },
+        { id: '1', name: 'Imagepuller', shop: '商店3' },
+        { id: '1', name: 'Imagepuller', shop: '商店4' }
       ]
-    };
+    }
   },
   methods: {
     powerDay(x) {
-      this.powerVal = this.dataPower.day;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.powerVal = this.dataPower.day
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     powerWeek(x) {
-      this.powerVal = this.dataPower.week;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.powerVal = this.dataPower.week
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     powerMounth(x) {
-      this.powerVal = this.dataPower.mounth;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.powerVal = this.dataPower.mounth
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     powerYear(x) {
-      this.powerVal = this.dataPower.year;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.powerVal = this.dataPower.year
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     initEchart(val) {
-      var myChart = this.$echarts.init(document.getElementById("myPower"));
-      var myData = val;
+      var myChart = this.$echarts.init(document.getElementById('myPower'))
+      var myData = val
       myChart.setOption({
-        color: ["#1890ff", "#facc14", "#9bcc3d"],
+        color: ['#1890ff', '#facc14', '#9bcc3d'],
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "line" // 默认为直线，可选为：'line' | 'shadow'
+            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
           }
         },
         legend: {
-          data: ["我的", "算力"]
+          data: ['我的', '算力']
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            type: "category",
+            type: 'category',
             data: myData.x,
             axisTick: {
               alignWithLabel: true
@@ -165,42 +165,42 @@ export default {
         ],
         yAxis: [
           {
-            type: "value",
+            type: 'value',
             axisLabel: {
-              formatter: "{value}"
+              formatter: '{value}'
             }
           }
         ],
         series: [
           {
-            name: "uranus",
-            type: "bar",
-            barWidth: "10%",
+            name: 'uranus',
+            type: 'bar',
+            barWidth: '10%',
             data: myData.y
           },
           {
-            name: "uranus-web",
-            type: "bar",
-            barWidth: "10%",
+            name: 'uranus-web',
+            type: 'bar',
+            barWidth: '10%',
             data: myData.y
           },
           {
-            name: "uranus-w",
-            type: "bar",
-            barWidth: "10%",
+            name: 'uranus-w',
+            type: 'bar',
+            barWidth: '10%',
             data: myData.y
           }
         ]
-      });
+      })
       window.onresize = function() {
-        myChart.resize();
-      };
+        myChart.resize()
+      }
     }
   },
   mounted() {
-    this.powerDay(3);
+    this.powerDay(3)
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

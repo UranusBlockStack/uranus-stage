@@ -1,20 +1,50 @@
 module.exports = {
-    login: {
-      title: '邮箱登录'
+  menu: {
+    index: '首页',
+    appMarket: '应用市场',
+    appRepository: '我的应用仓库',
+    resourceMarket: '资源市场',
+    myResource: '我的资源',
+    myResource1: '我的资源1',
+    myResource2: '我的资源2',
+    myResource3: '我的资源3',
+    wallet: '钱包',
+    transfer: '转账',
+    setting: '系统设置'
+  },
+  login: {
+    title: '邮箱登录'
+  },
+  wallet: {
+    title: '我的钱包',
+    balance: '账户余额：',
+    address: '我的地址：',
+    button: '转账',
+    transactionDetails: '交易详情'
+  },
+  transfer: {
+    transfer: '转账：',
+    balance: '我的余额：',
+    address: '地址码：',
+    number: '转账数量：',
+    poundage: '手续费：',
+    code: '验证码：',
+    button: '确认转账'
+  },
+  setting: {
+    account: '账号ID：',
+    mail: '邮箱：',
+    modifyMail: {
+      click: '修改绑定邮箱',
+      email: 'Email'
+
     },
-    wallet: {
-      title: '我的钱包',
-      head: {
-        balance: '账户余额',
-        address: '我的地址'
-      }
-    },
-    transfer: {
-        title: '转账',
-        balance: '我的余额：',
-        address: '地址码：',
-        number: '转账数量：',
-        code: '验证码：'
-    }
+    phone: '手机：',
+    modifyPhone: '修改绑定手机',
+    password: '登录密码：',
+    modifyPassword: '修改密码',
+    codeSet: '验证码设置',
+    code: '转账交易接收验证码'
+        
   }
-  
+}

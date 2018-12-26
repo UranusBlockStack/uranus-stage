@@ -11,6 +11,8 @@ import Map from '@/components/Map'
 import Buyer from '@/components/buyer/Buyer'
 import ApplicationMarket from '@/components/buyer/ApplicationMarket'
 import ApplicationRepository from '@/components/buyer/ApplicationRepository'
+import AppRecord from '@/components/buyer/AppRecord'
+import ResourceMarket from '@/components/buyer/ResourceMarket'
 
 // developer
 import Developer from '@/components/developer/Developer'
@@ -50,15 +52,22 @@ const routes = [
         path: 'buyer',
         component: Buyer,
         name: 'Buyer'
-      },{
+      }, {
         path: 'applicationmarket',
         component: ApplicationMarket,
         name: 'ApplicationMarket'
-      },
-      {
+      }, {
         path: 'applicationrepository',
         component: ApplicationRepository,
         name: 'ApplicationRepository'
+      }, {
+        path: 'apprecord',
+        component: AppRecord,
+        name: 'AppRecord'
+      },{
+        path: 'resourcemarket',
+        component: ResourceMarket,
+        name: 'ResourceMarket'
       },
         
         // developer routes
