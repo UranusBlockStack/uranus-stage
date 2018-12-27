@@ -4,9 +4,6 @@
       <el-col class="title" :span="12">
         <h1>应用市场</h1>
       </el-col>
-      <el-col class="record" :span="12">
-        <router-link :to="{path: '/apprecord'}"><p>部署应用记录></p></router-link>
-      </el-col>
     </el-row>
     <div class="shop">
       <el-row>
@@ -128,21 +125,6 @@ export default {
         color: #252525;
         line-height: 24px;
         padding-left: 30px;
-      }
-    }
-    .record {
-      float: right;
-      margin-right: 15px;
-      margin-top: 4px;
-      height: 60px;
-      width: 125px;
-      p {
-        height: 60px;
-        line-height: 60px;
-        margin: 0;
-        font-family: PingFang-SC-Bold;
-        font-size: 16px;
-        color: #8eb357;
       }
     }
   }

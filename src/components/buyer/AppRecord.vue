@@ -259,6 +259,7 @@ export default {
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
         line-height: 40px;
+        width: 180px;
         padding: 0 20px;
       }
     }

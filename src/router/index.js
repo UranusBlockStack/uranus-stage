@@ -12,10 +12,15 @@ import Buyer from '@/components/buyer/Buyer'
 import ApplicationMarket from '@/components/buyer/ApplicationMarket'
 import ApplicationRepository from '@/components/buyer/ApplicationRepository'
 import AppRecord from '@/components/buyer/AppRecord'
+import Deployment from '@/components/buyer/Deployment'
 import ResourceMarket from '@/components/buyer/ResourceMarket'
+import MyResource from '@/components/buyer/MyResource'
+import ResourcePool from '@/components/buyer/ResourcePool'
 
 // developer
 import Developer from '@/components/developer/Developer'
+import UploadApplication from '@/components/developer/UploadApplication'
+import MyApplication from '@/components/developer/MyApplication'
 
 // seller
 import Seller from '@/components/seller/Seller'
@@ -60,6 +65,10 @@ const routes = [
         path: 'applicationrepository',
         component: ApplicationRepository,
         name: 'ApplicationRepository'
+      },{
+        path: 'deployment',
+        component: Deployment,
+        name: 'Deployment'
       }, {
         path: 'apprecord',
         component: AppRecord,
@@ -68,6 +77,14 @@ const routes = [
         path: 'resourcemarket',
         component: ResourceMarket,
         name: 'ResourceMarket'
+      },{
+        path: 'myresource',
+        component: MyResource,
+        name: 'MyResource'
+      },{
+        path: 'resourcepool',
+        component: ResourcePool,
+        name: 'ResourcePool'
       },
         
         // developer routes
@@ -75,6 +92,14 @@ const routes = [
         path: 'developer',
         component: Developer,
         name: 'Developer'
+      },{
+        path: 'uploadapplication',
+        component: UploadApplication,
+        name: 'UploadApplication'
+      },{
+        path: 'myapplication',
+        component: MyApplication,
+        name: 'MyApplication'
       },
         
         // seller routes

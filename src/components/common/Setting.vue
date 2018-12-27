@@ -24,7 +24,7 @@
               :model="ruleForm"
               :rules="rules"
               ref="ruleForm"
-              label-width="125px"
+              label-width="115px"
               class="demo-ruleForm"
             >
               <el-form-item label="Email:" prop="buyerEmail">
@@ -40,7 +40,7 @@
                 :model="ruleForm"
                 :rules="rules"
                 ref="ruleForm"
-                label-width="125px"
+                label-width="115px"
                 class="demo-ruleForm"
               >
                 <el-form-item label="Email:" prop="buyerEmail">
@@ -77,7 +77,7 @@
               :model="ruleForm"
               :rules="rules"
               ref="ruleForm"
-              label-width="125px"
+              label-width="115px"
               class="demo-ruleForm"
             >
               <el-form-item label="Phone:" prop="buyerEmail">
@@ -93,7 +93,7 @@
                 :model="ruleForm"
                 :rules="rules"
                 ref="ruleForm"
-                label-width="125px"
+                label-width="115px"
                 class="demo-ruleForm"
               >
                 <el-form-item label="Phone:" prop="buyerEmail">
@@ -129,7 +129,7 @@
               :model="ruleForm"
               :rules="rules"
               ref="ruleForm"
-              label-width="125px"
+              label-width="115px"
               class="demo-ruleForm"
             >
               <el-form-item label="旧密码:" prop="buyerEmail">

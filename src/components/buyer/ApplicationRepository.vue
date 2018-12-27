@@ -52,7 +52,7 @@
                   <el-col :span="10" :offset="6">
                     <p class="shops">{{app.shop}}</p>
                   </el-col>
-                  <el-button type="success">查看详情</el-button>
+                  <router-link :to="{path: '/deployment'}"><el-button type="success">部署</el-button></router-link>
                 </el-row>
               </div>
             </div>

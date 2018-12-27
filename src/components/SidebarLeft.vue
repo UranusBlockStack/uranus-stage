@@ -64,7 +64,7 @@
         </router-link>
       </li>
       <li class="treeview">
-        <router-link :to="{path: '/'}">
+        <router-link :to="{path: '/myresource'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.myResource')}}</span>
           <span class="pull-right-container">
@@ -73,43 +73,53 @@
         </router-link>
         <ul class="treeview-menu">
           <li>
-            <a href="#"><i class="fa fa-link"></i>{{$t('menu.myResource1')}}</a>
+            <router-link :to="{path: '/resourcepool'}"><i class="fa fa-link"></i>{{$t('menu.resourcePool1')}}</router-link>
           </li>
           <li>
-            <a href="#"><i class="fa fa-link"></i>{{$t('menu.myResource2')}}</a>
+            <router-link :to="{path: '/resourcepool'}"><i class="fa fa-link"></i>{{$t('menu.resourcePool2')}}</router-link>
           </li>
           <li>
-            <a href="#"><i class="fa fa-link"></i>{{$t('menu.myResource3')}}</a>
+            <router-link :to="{path: '/resourcepool'}"><i class="fa fa-link"></i>{{$t('menu.resourcePool3')}}</router-link>
           </li>
         </ul>
       </li>
       <li class="treeview">
-        <a href="#">
+        <router-link :to="{path: '/'}">
           <i class="fa fa-link"></i>
-          <span>出售资源</span>
+          <span>{{$t('menu.myHost')}}</span>
+        </router-link>
+      </li>
+      <li class="treeview">
+        <router-link :to="{path: '/'}">
+          <i class="fa fa-link"></i>
+          <span>{{$t('menu.myColony')}}</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
-        </a>
+        </router-link>
         <ul class="treeview-menu">
           <li>
-            <a href="#"><i class="fa fa-link"></i>我的资源</a>
+            <router-link :to="{path: '/'}"><i class="fa fa-link"></i>{{$t('menu.myColony1')}}</router-link>
+          </li>
+          <li>
+            <router-link :to="{path: '/'}"><i class="fa fa-link"></i>{{$t('menu.myColony2')}}</router-link>
+          </li>
+          <li>
+            <router-link :to="{path: '/'}"><i class="fa fa-link"></i>{{$t('menu.myColony3')}}</router-link>
           </li>
         </ul>
       </li>
       <li class="treeview">
-        <a href="#">
+        <router-link :to="{path: '/uploadapplication'}">
           <i class="fa fa-link"></i>
-          <span>上传应用</span>
-          <span class="pull-right-container">
-            <i class="fa fa-angle-left pull-right"></i>
-          </span>
-        </a>
-        <ul class="treeview-menu">
-          <li>
-            <a href="#"><i class="fa fa-link"></i>我的应用</a>
-          </li>
-        </ul>
+          <span>{{$t('menu.uploadApplication')}}</span>
+        </router-link>
+      </li>
+      <li class="treeview">
+        <router-link :to="{path: '/myapplication'}">
+          <i class="fa fa-link"></i>
+          <span>{{$t('menu.myApplication')}}</span>
+        </router-link>
       </li>
       <li class="treeview">
         <router-link :to="{path: '/wallet'}">

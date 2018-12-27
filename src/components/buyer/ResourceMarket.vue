@@ -90,9 +90,9 @@
         </el-col>
       </el-row>
       <el-row class="select">
-        <el-col class="resourceName" :span="12" :offset="2">
+        <el-col class="resourceName" :span="8" :offset="2">
           <span class="select-left">资源名称：</span>
-          <el-input v-model="input" placeholder="创建资源名称"></el-input>
+          <el-input class="input-margin" v-model="input" placeholder="创建资源名称"></el-input>
         </el-col>
       </el-row>
       <el-row class="button">
@@ -131,7 +131,10 @@ export default {
           label: "北京烤鸭"
         }
       ],
-      value: ""
+      value: "",
+      value1: "",
+      value2: "",
+      input: ""
     };
   }
 };
@@ -184,7 +187,11 @@ export default {
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
         line-height: 24px;
+        min-width: 100px;
         width: 100px;
+      }
+      .input-margin {
+          margin-left: -15px;
       }
       .el-icon-arrow-right {
         color: rgba(0, 0, 0, 0.25);
@@ -194,15 +201,14 @@ export default {
       }
     }
     .button {
-        .el-button {
-            margin-top: 66px;
-            border: none;
-            background:#8eb357;
-border-radius:5px;
-width:200px;
-height:34px;
-        }
-        
+      .el-button {
+        margin-top: 66px;
+        border: none;
+        background: #8eb357;
+        border-radius: 5px;
+        width: 200px;
+        height: 34px;
+      }
     }
   }
 }

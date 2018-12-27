@@ -1,16 +1,26 @@
 module.exports = {
   menu: {
     index: '首页',
+    wallet: '钱包',
+    transfer: '转账',
+    setting: '系统设置',
+    // buyer
     appMarket: '应用市场',
     appRepository: '我的应用仓库',
     resourceMarket: '资源市场',
     myResource: '我的资源',
-    myResource1: '我的资源1',
-    myResource2: '我的资源2',
-    myResource3: '我的资源3',
-    wallet: '钱包',
-    transfer: '转账',
-    setting: '系统设置'
+    resourcePool1: '资源池1',
+    resourcePool2: '资源池2',
+    resourcePool3: '资源池3',
+    // seller
+    myHost: '我的主机',
+    myColony: '我的集群',
+    myColony1: '我的集群1',
+    myColony2: '我的集群2',
+    myColony3: '我的集群3',
+    // developer
+    uploadApplication: '上传应用',
+    myApplication: '我的应用',
   },
   login: {
     title: '邮箱登录'
