@@ -1,11 +1,11 @@
 <template>
     <section>
-        123
+        MyApplication
     </section>
 </template>
 
 <script>
 export default {
-    name: 'MyApplication'
+  name: 'MyApplication'
 }
 </script>

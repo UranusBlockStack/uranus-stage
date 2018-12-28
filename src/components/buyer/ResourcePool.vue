@@ -1,11 +1,11 @@
 <template>
     <section>
-        123
+        ResourcePool
     </section>
 </template>
 
 <script>
 export default {
-    name: 'ResourcePool'
+  name: 'ResourcePool'
 }
 </script>

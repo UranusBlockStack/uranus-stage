@@ -20,7 +20,7 @@ module.exports = {
     myColony3: '我的集群3',
     // developer
     uploadApplication: '上传应用',
-    myApplication: '我的应用',
+    myApplication: '我的应用'
   },
   login: {
     title: '邮箱登录'

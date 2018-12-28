@@ -6,6 +6,6 @@
 
 <script>
 export default {
-    name: 'MyHost'
+  name: 'MyHost'
 }
 </script>

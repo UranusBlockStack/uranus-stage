@@ -65,7 +65,7 @@ const routes = [
         path: 'applicationrepository',
         component: ApplicationRepository,
         name: 'ApplicationRepository'
-      },{
+      }, {
         path: 'deployment',
         component: Deployment,
         name: 'Deployment'
@@ -73,15 +73,15 @@ const routes = [
         path: 'apprecord',
         component: AppRecord,
         name: 'AppRecord'
-      },{
+      }, {
         path: 'resourcemarket',
         component: ResourceMarket,
         name: 'ResourceMarket'
-      },{
+      }, {
         path: 'myresource',
         component: MyResource,
         name: 'MyResource'
-      },{
+      }, {
         path: 'resourcepool',
         component: ResourcePool,
         name: 'ResourcePool'
@@ -92,11 +92,11 @@ const routes = [
         path: 'developer',
         component: Developer,
         name: 'Developer'
-      },{
+      }, {
         path: 'uploadapplication',
         component: UploadApplication,
         name: 'UploadApplication'
-      },{
+      }, {
         path: 'myapplication',
         component: MyApplication,
         name: 'MyApplication'

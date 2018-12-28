@@ -144,6 +144,9 @@ export default {
       width: 100%;
       min-width: 1130px;
       margin-top: 15px;
+      .el-button {
+        width: 120px;
+      }
       .resources {
         text-align: center;
         padding: 20px;

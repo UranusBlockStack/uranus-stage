@@ -35,7 +35,7 @@
       <el-row class="border-line"></el-row>
       <el-row class="select">
         <el-col class="title" :span="24">
-          <h1>应用部署</h1>
+          <h1>算力部署</h1>
         </el-col>
         <el-col :span="1" :offset="1">
           <el-radio v-model="radio" lable="1"></el-radio>
@@ -163,7 +163,7 @@
       </el-row>
       <el-row class="edition">
         <el-col class="title" :span="24">
-          <h1>应用部署</h1>
+          <h1>模板版本</h1>
         </el-col>
         <el-col :span="20" :offset="1">
           <span class="select-left">选择模板：</span>
@@ -225,55 +225,55 @@
 
 <script>
 export default {
-  name: "Deployment",
+  name: 'Deployment',
   data() {
     return {
-      radio: "1",
+      radio: '1',
       options: [
         {
-          value: "选项1",
-          label: "黄金糕"
+          value: '选项1',
+          label: '黄金糕'
         },
         {
-          value: "选项2",
-          label: "双皮奶"
+          value: '选项2',
+          label: '双皮奶'
         },
         {
-          value: "选项3",
-          label: "蚵仔煎"
+          value: '选项3',
+          label: '蚵仔煎'
         },
         {
-          value: "选项4",
-          label: "龙须面"
+          value: '选项4',
+          label: '龙须面'
         },
         {
-          value: "选项5",
-          label: "北京烤鸭"
+          value: '选项5',
+          label: '北京烤鸭'
         }
       ],
-      value: "",
-      value1: "",
-      value2: "",
-      input: "",
+      value: '',
+      value1: '',
+      value2: '',
+      input: '',
       more: false,
       configurationList: [
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" },
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" }
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' },
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' }
       ]
-    };
+    }
   },
   methods: {
     changeMore() {
-      this.more = !this.more;
+      this.more = !this.more
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
