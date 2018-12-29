@@ -10,6 +10,7 @@ html,body{
     font-size: 14px;
     height: 100% !important;
     font-family:"Microsoft YaHei";
+    user-select:none;
     }
 ul,ol{
     list-style-type:none;

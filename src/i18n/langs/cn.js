@@ -47,7 +47,6 @@ module.exports = {
     modifyMail: {
       click: '修改绑定邮箱',
       email: 'Email'
-
     },
     phone: '手机：',
     modifyPhone: '修改绑定手机',
@@ -55,6 +54,5 @@ module.exports = {
     modifyPassword: '修改密码',
     codeSet: '验证码设置',
     code: '转账交易接收验证码'
-        
   }
 }

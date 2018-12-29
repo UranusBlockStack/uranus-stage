@@ -51,7 +51,7 @@
           </h3>
         </el-col>
         <el-col :span="3" :offset="1">
-          <p>
+          <p @click="$router.push({path: '/resourcepool'})">
             查看详情
             <i class="el-icon-arrow-right"></i>
           </p>
@@ -151,8 +151,8 @@ export default {
             radius: '80%',
             data: [
               {
-                value: 0.5,
-                direction: 'left',
+                value: 0.3,
+                direction: 'right',
                 itemStyle: {
                   normal: {
                     color: '#1890FF'
@@ -500,6 +500,7 @@ export default {
         ]
       })
       window.onresize = function() {
+        myChart.resize()
         myChart1.resize()
         myChart2.resize()
         myChart3.resize()

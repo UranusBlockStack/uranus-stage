@@ -74,33 +74,22 @@ export default {
         {
           value: '选项1',
           label: '选项1'
-        },
-        {
+        }, {
           value: '选项2',
           label: '选项2'
-        },
-        {
+        }, {
           value: '选项3',
           label: '选项3'
-        },
-        {
+        }, {
           value: '选项4',
           label: '选项4'
-        },
-        {
+        }, {
           value: '选项5',
           label: '选项5'
         }
       ],
       dialogVisible: false,
-      tableLabel: [
-        '订单号',
-        '应用名',
-        '布置时间',
-        '所属资源组',
-        '所属商店',
-        '价格'
-      ],
+      tableLabel: ['订单号', '应用名', '布置时间', '所属资源组', '所属商店', '价格'],
       tableData: [
         {
           1: '1234561',
@@ -109,49 +98,56 @@ export default {
           4: 'Limitid',
           5: 'Limitid',
           6: 'Limitid'
-        }, {
+        },
+        {
           1: '1234561',
           2: 'MySQL',
           3: '2018-12-16',
           4: 'Limitid',
           5: 'Limitid',
           6: 'Limitid'
-        }, {
+        },
+        {
           1: '1234561',
           2: 'MySQL',
           3: '2018-12-16',
           4: 'Limitid',
           5: 'Limitid',
           6: 'Limitid'
-        }, {
+        },
+        {
           1: '1234561',
           2: 'MySQL',
           3: '2018-12-16',
           4: 'Limitid',
           5: 'Limitid',
           6: 'Limitid'
-        }, {
+        },
+        {
           1: '1234561',
           2: 'MySQL',
           3: '2018-12-16',
           4: 'Limitid',
           5: 'Limitid',
           6: 'Limitid'
-        }, {
+        },
+        {
           1: '1234561',
           2: 'MySQL',
           3: '2018-12-16',
           4: 'Limitid',
           5: 'Limitid',
           6: 'Limitid'
-        }, {
+        },
+        {
           1: '1234561',
           2: 'MySQL',
           3: '2018-12-16',
           4: 'Limitid',
           5: 'Limitid',
           6: 'Limitid'
-        }, {
+        },
+        {
           1: '1234561',
           2: 'MySQL',
           3: '2018-12-16',

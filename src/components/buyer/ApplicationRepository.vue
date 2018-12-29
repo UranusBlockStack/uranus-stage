@@ -5,7 +5,9 @@
         <h1>我的应用仓库</h1>
       </el-col>
       <el-col class="record" :span="12">
-        <router-link :to="{path: '/apprecord'}"><p>部署应用记录></p></router-link>
+        <router-link :to="{path: '/apprecord'}">
+          <p>部署应用记录></p>
+        </router-link>
       </el-col>
     </el-row>
     <el-dialog title="确认要删除该应用吗?" :visible.sync="dialogVisible" width="30%" top="20%">
@@ -52,7 +54,9 @@
                   <el-col :span="10" :offset="6">
                     <p class="shops">{{app.shop}}</p>
                   </el-col>
-                  <router-link :to="{path: '/deployment'}"><el-button type="success">部署</el-button></router-link>
+                  <router-link :to="{path: '/deployment'}">
+                    <el-button type="success">部署</el-button>
+                  </router-link>
                 </el-row>
               </div>
             </div>

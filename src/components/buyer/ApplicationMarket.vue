@@ -52,7 +52,9 @@
                   <el-col :span="10" :offset="6">
                     <p class="downloads">123人下载</p>
                   </el-col>
-                  <router-link :to="{path: '/deployment'}"><el-button type="success">查看详情</el-button></router-link>
+                  <router-link :to="{path: '/deployment'}">
+                    <el-button type="success">查看详情</el-button>
+                  </router-link>
                 </el-row>
               </div>
             </div>

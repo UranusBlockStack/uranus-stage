@@ -16,6 +16,8 @@ import Deployment from '@/components/buyer/Deployment'
 import ResourceMarket from '@/components/buyer/ResourceMarket'
 import MyResource from '@/components/buyer/MyResource'
 import ResourcePool from '@/components/buyer/ResourcePool'
+import AppState from '@/components/buyer/AppState'
+import StateDetail from '@/components/buyer/StateDetail'
 
 // developer
 import Developer from '@/components/developer/Developer'
@@ -85,6 +87,14 @@ const routes = [
         path: 'resourcepool',
         component: ResourcePool,
         name: 'ResourcePool'
+      }, {
+        path: 'appstate',
+        component: AppState,
+        name: 'AppState'
+      }, {
+        path: 'statedetail',
+        component: StateDetail,
+        name: 'StateDetail'
       },
         
         // developer routes
