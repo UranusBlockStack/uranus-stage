@@ -1,12 +1,108 @@
 module.exports = {
-  login: {
-    title: 'login'
+  menu: {
+    index: '首页',
+    wallet: '钱包',
+    transfer: '转账',
+    setting: '系统设置',
+    // buyer
+    appMarket: '应用市场',
+    appRepository: '我的应用仓库',
+    resourceMarket: '资源市场',
+    myResource: '我的资源',
+    resourcePool1: '资源池1',
+    resourcePool2: '资源池2',
+    resourcePool3: '资源池3',
+    // seller
+    myHost: '我的主机',
+    myColony: '我的集群',
+    myColony1: '我的集群1',
+    myColony2: '我的集群2',
+    myColony3: '我的集群3',
+    // developer
+    uploadApplication: '上传应用',
+    myApplication: '我的应用'
+  },
+  map: {
+    register: 'Register User',
+    language: 'Language',
+    seller: 'Seller',
+    sellerText: 'Selling extra Uranpower，Earn extra fees',
+    buyer: 'Buyer',
+    buyerText: 'Buying Uranpower and application',
+    developer: 'Developer',
+    developerText: 'Upload application , Earn fees'
+  },
+  userCommon: {
+    EmailLogin: 'Email login',
+    mobileLogin: 'Phone login',
+    Email: 'Enter Email',
+    mobile: 'Enter phone number',
+    password: '6-16 digit password, case sensitive',
+    register: 'Sign up',
+    forgetPwd: 'Reset login password',
+    loginBtn: 'Sign In',
+    EmailRegister: 'Email Registration',
+    mobileRegister: 'Phone Registration',
+    confirmPwd: 'Confirm Password',
+    code: 'Please enter verification code.',
+    codeBtn: 'Get verification',
+    codeTime: 'Regain',
+    loginFgt: 'Already have an account ? Sign In',
+    registerBtn: 'Create Account',
+    EmailReset: 'Email reset password',
+    mobileReset: 'Phone reset password',
+    loginReset: 'Return to the login page',
+    confirm: 'Confirm',
+    passwordEmpty: 'Please enter password',
+    passwordInconsistent: "The passwords don't match, please re-enter",
+    codeEmpty: 'The verification code is invalid. Please re-acquire',
+    codeError: 'The verification code entered is incorrect. Please re-enter',
+    phoneError: 'Please enter phone number',
+    EmailError: 'Please enter Email',
+    passwordError: 'The account or password entered is incorrect. Please re-enter',
   },
   wallet: {
-    title: 'Wallet',
-    head: {
-      balance: '账户余额',
-      address: '我的地址'
-    }
+    title: 'My wallet',
+    balance: 'Balance:',
+    address: 'Address:',
+    button: 'Transfer',
+    transactionDetails: 'Transaction Details',
+    hash: 'TX hash',
+    time: 'Create Time',
+    from: 'From',
+    to: 'To',
+    value: 'Value',
+    fee: 'Fee',
+    status: 'Status',
+    success: 'Success',
+    fail: 'Fail',
+    processing: 'Processing',
+  },
+  transfer: {
+    transfer: 'Transfer',
+    balance: 'Balance:',
+    address: 'Address:',
+    addressIn: '输入收款人钱包地址',
+    value: 'Value:',
+    valueIn: '输入转账数量',
+    fee: 'Fee:',
+    feeIn: '参考手续费',
+    code: 'Verification Code:',
+    codeIn: '输入验证码',
+    button: 'Confirm',
+  },
+  setting: {
+    account: '账号ID：',
+    mail: '邮箱：',
+    modifyMail: {
+      click: '修改绑定邮箱',
+      email: 'Email'
+    },
+    phone: '手机：',
+    modifyPhone: '修改绑定手机',
+    password: '登录密码：',
+    modifyPassword: '修改密码',
+    codeSet: '验证码设置',
+    code: '转账交易接收验证码'
   }
 }

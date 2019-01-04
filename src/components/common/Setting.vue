@@ -19,7 +19,7 @@
       <el-col :span="8" :offset="4">
         <p>
           <el-button type="text" @click="mailOuterVisible = true">{{$t('setting.modifyMail.click')}}</el-button>
-          <el-dialog title="修改绑定邮箱" :visible.sync="mailOuterVisible" width="480px">
+          <el-dialog :title="$t('setting.modifyMail.click')" :visible.sync="mailOuterVisible" width="480px">
             <el-form
               :model="ruleForm"
               :rules="rules"
@@ -27,7 +27,7 @@
               label-width="115px"
               class="demo-ruleForm"
             >
-              <el-form-item label="Email:" prop="buyerEmail">
+              <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                 <el-input v-model="ruleForm.buyerEmail"></el-input>
               </el-form-item>
               <el-form-item label="请输入验证码:" prop="buyerPhone">
@@ -71,8 +71,8 @@
       </el-col>
       <el-col :span="8" :offset="4">
         <p>
-          <el-button type="text" @click="phoneOuterVisible = true">{{$t('setting.modifyPhone')}}</el-button>
-          <el-dialog title="修改绑定手机" :visible.sync="phoneOuterVisible" width="480px">
+          <el-button type="text" @click="phoneOuterVisible = true">{{$t('setting.modifyPhone.click')}}</el-button>
+          <el-dialog :title="$t('setting.modifyPhone.click')" :visible.sync="phoneOuterVisible" width="480px">
             <el-form
               :model="ruleForm"
               :rules="rules"
@@ -80,7 +80,7 @@
               label-width="115px"
               class="demo-ruleForm"
             >
-              <el-form-item label="Phone:" prop="buyerEmail">
+              <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
                 <el-input v-model="ruleForm.buyerEmail"></el-input>
               </el-form-item>
               <el-form-item label="请输入验证码:" prop="buyerPhone">
@@ -210,7 +210,7 @@ export default {
       mailOuterVisible: false,
       mailInnerVisible: false,
       ruleForm: {
-        buyerPhone: '13833334444',
+        buyerPhone: '',
         buyerEmail: ''
       },
       rules: {
@@ -234,7 +234,7 @@ export default {
         }
       ]
     }
-  },
+  }
 }
 </script>
 

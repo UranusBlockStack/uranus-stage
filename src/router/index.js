@@ -26,6 +26,10 @@ import MyApplication from '@/components/developer/MyApplication'
 
 // seller
 import Seller from '@/components/seller/Seller'
+import MyHost from '@/components/seller/MyHost'
+import MyColony from '@/components/seller/MyColony'
+import Colony from '@/components/seller/Colony'
+import ResourceRecord from '@/components/seller/ResourceRecord'
 
 // common
 import Wallet from '@/components/common/Wallet'
@@ -117,6 +121,22 @@ const routes = [
         path: 'seller',
         component: Seller,
         name: 'Seller'
+      }, {
+        path: 'myhost',
+        component: MyHost,
+        name: 'MyHost'
+      }, {
+        path: 'mycolony',
+        component: MyColony,
+        name: 'MyColony'
+      }, {
+        path: 'colony',
+        component: Colony,
+        name: 'Colony'
+      }, {
+        path: 'resourcerecord',
+        component: ResourceRecord,
+        name: 'ResourceRecord'
       },
 
         // common routes

@@ -146,58 +146,67 @@
 </template>
 
 <script>
-import "echarts-liquidfill";
+import 'echarts-liquidfill'
 
 export default {
-  name: "ResourcePool",
+  name: 'ResourcePool',
   methods: {
     initEchart() {
-      var myChart = this.$echarts.init(document.getElementById("restPool"));
+      var myChart = this.$echarts.init(document.getElementById('restPool'))
       var myChart1 = this.$echarts.init(
-        document.getElementById("restResource1")
-      );
+        document.getElementById('restResource1')
+      )
       var myChart2 = this.$echarts.init(
-        document.getElementById("restResource2")
-      );
+        document.getElementById('restResource2')
+      )
       var myChart3 = this.$echarts.init(
-        document.getElementById("restResource3")
-      );
+        document.getElementById('restResource3')
+      )
       var myChart4 = this.$echarts.init(
-        document.getElementById("restResource4")
-      );
+        document.getElementById('restResource4')
+      )
       var myChart5 = this.$echarts.init(
-        document.getElementById("restResource5")
-      );
+        document.getElementById('restResource5')
+      )
       myChart.setOption({
         series: [
           {
-            type: "liquidFill",
-            radius: "80%",
+            type: 'liquidFill',
+            radius: '85%',
             data: [
               {
                 value: 0.5,
-                direction: "left",
+                direction: 'left',
                 itemStyle: {
                   normal: {
-                    color: "#1890FF"
+                    color: '#1890FF'
                   }
                 }
               }
-            ]
+            ],
+            outline: {
+              show: false
+            },
+            backgroundStyle: {
+              borderColor: '#156ACF',
+              borderWidth: 1,
+              shadowColor: 'rgba(0, 0, 0, 0.4)',
+              shadowBlur: 20
+            }
           }
         ]
-      });
+      })
       myChart1.setOption({
         series: [
           {
-            name: "Cpu",
-            type: "pie",
-            radius: ["85%", "70%"],
+            name: 'Cpu',
+            type: 'pie',
+            radius: ['85%', '70%'],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#1890FF", "#f2f2f2"],
+            color: ['#1890FF', '#f2f2f2'],
             data: [
               {
                 value: 68,
@@ -205,22 +214,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|CPU}", "{b|68%}"].join("\n"),
+                    formatter: ['{a|CPU}', '{b|68%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#5d5d5d",
-                        fontSize: "14",
-                        lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
+                        color: '#5d5d5d',
+                        fontSize: '14',
+                        lineHeight: '22',
+                        fontFamily: 'PingFangSC-Regular'
                       },
                       b: {
-                        color: "rgba(0,0,0,.85)",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: 'rgba(0,0,0,.85)',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
-                    position: "center",
-                    textStyle: { align: "center" }
+                    position: 'center',
+                    textStyle: { align: 'center' }
                   }
                 }
               },
@@ -228,18 +237,18 @@ export default {
             ]
           }
         ]
-      });
+      })
       myChart2.setOption({
         series: [
           {
-            name: "Gpu",
-            type: "pie",
-            radius: ["85%", "70%"],
+            name: 'Gpu',
+            type: 'pie',
+            radius: ['85%', '70%'],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#7FD455", "#f2f2f2"],
+            color: ['#7FD455', '#f2f2f2'],
             data: [
               {
                 value: 88,
@@ -247,22 +256,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|CPU}", "{b|88%}"].join("\n"),
+                    formatter: ['{a|CPU}', '{b|88%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#5d5d5d",
-                        fontSize: "14",
-                        lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
+                        color: '#5d5d5d',
+                        fontSize: '14',
+                        lineHeight: '22',
+                        fontFamily: 'PingFangSC-Regular'
                       },
                       b: {
-                        color: "rgba(0,0,0,.85)",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: 'rgba(0,0,0,.85)',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
-                    position: "center",
-                    textStyle: { align: "center" }
+                    position: 'center',
+                    textStyle: { align: 'center' }
                   }
                 }
               },
@@ -270,18 +279,18 @@ export default {
             ]
           }
         ]
-      });
+      })
       myChart3.setOption({
         series: [
           {
-            name: "内存",
-            type: "pie",
-            radius: ["85%", "70%"],
+            name: '内存',
+            type: 'pie',
+            radius: ['85%', '70%'],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#FACC14", "#f2f2f2"],
+            color: ['#FACC14', '#f2f2f2'],
             data: [
               {
                 value: 62,
@@ -289,22 +298,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|内存}", "{b|62%}"].join("\n"),
+                    formatter: ['{a|内存}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#5d5d5d",
-                        fontSize: "14",
-                        lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
+                        color: '#5d5d5d',
+                        fontSize: '14',
+                        lineHeight: '22',
+                        fontFamily: 'PingFangSC-Regular'
                       },
                       b: {
-                        color: "rgba(0,0,0,.85)",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: 'rgba(0,0,0,.85)',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
-                    position: "center",
-                    textStyle: { align: "center" }
+                    position: 'center',
+                    textStyle: { align: 'center' }
                   }
                 }
               },
@@ -312,18 +321,18 @@ export default {
             ]
           }
         ]
-      });
+      })
       myChart4.setOption({
         series: [
           {
-            name: "硬盘",
-            type: "pie",
-            radius: ["85%", "70%"],
+            name: '硬盘',
+            type: 'pie',
+            radius: ['85%', '70%'],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#658FF7", "#f2f2f2"],
+            color: ['#658FF7', '#f2f2f2'],
             data: [
               {
                 value: 88,
@@ -331,22 +340,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|硬盘}", "{b|88%}"].join("\n"),
+                    formatter: ['{a|硬盘}', '{b|88%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#5d5d5d",
-                        fontSize: "14",
-                        lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
+                        color: '#5d5d5d',
+                        fontSize: '14',
+                        lineHeight: '22',
+                        fontFamily: 'PingFangSC-Regular'
                       },
                       b: {
-                        color: "rgba(0,0,0,.85)",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: 'rgba(0,0,0,.85)',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
-                    position: "center",
-                    textStyle: { align: "center" }
+                    position: 'center',
+                    textStyle: { align: 'center' }
                   }
                 }
               },
@@ -354,18 +363,18 @@ export default {
             ]
           }
         ]
-      });
+      })
       myChart5.setOption({
         series: [
           {
-            name: "网络",
-            type: "pie",
-            radius: ["85%", "70%"],
+            name: '网络',
+            type: 'pie',
+            radius: ['85%', '70%'],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#FB8D5B", "#f2f2f2"],
+            color: ['#FB8D5B', '#f2f2f2'],
             data: [
               {
                 value: 62,
@@ -373,22 +382,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|网络}", "{b|62%}"].join("\n"),
+                    formatter: ['{a|网络}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#5d5d5d",
-                        fontSize: "14",
-                        lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
+                        color: '#5d5d5d',
+                        fontSize: '14',
+                        lineHeight: '22',
+                        fontFamily: 'PingFangSC-Regular'
                       },
                       b: {
-                        color: "rgba(0,0,0,.85)",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: 'rgba(0,0,0,.85)',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
-                    position: "center",
-                    textStyle: { align: "center" }
+                    position: 'center',
+                    textStyle: { align: 'center' }
                   }
                 }
               },
@@ -396,21 +405,21 @@ export default {
             ]
           }
         ]
-      });
+      })
       window.onresize = function() {
-        myChart.resize();
-        myChart1.resize();
-        myChart2.resize();
-        myChart3.resize();
-        myChart4.resize();
-        myChart5.resize();
-      };
+        myChart.resize()
+        myChart1.resize()
+        myChart2.resize()
+        myChart3.resize()
+        myChart4.resize()
+        myChart5.resize()
+      }
     }
   },
   mounted() {
-    this.initEchart();
+    this.initEchart()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

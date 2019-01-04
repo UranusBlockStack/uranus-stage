@@ -5,8 +5,8 @@
         </div>
         <div class="loginContent">
             <div class="btnChoose">
-                <div class="btnMail" @click="chooseMail"><span :class="{chooseBtn:!phoneShow}">{{$t('login.title')}}</span></div>
-                <div class="btnPhone" @click="choosePhone"><span :class="{chooseBtn:phoneShow}">手机登录</span></div>
+                <div class="btnMail" @click="chooseMail"><span :class="{chooseBtn:!phoneShow}">{{$t('userCommon.EmailLogin')}}</span></div>
+                <div class="btnPhone" @click="choosePhone"><span :class="{chooseBtn:phoneShow}">{{$t('userCommon.mobileLogin')}}</span></div>
             </div>
             <div class="phoneRes" v-show="phoneShow">
                 <div class="input-group">
@@ -15,25 +15,23 @@
                         <span class="fa fa-caret-down"></span></button>
                     <ul class="dropdown-menu">
                         <li><a href="#">+87</a></li>
-                        <li><a href="#">Another action</a></li>
-                        <li><a href="#">Something else here</a></li>
+                        <li><a href="#">+88</a></li>
                         <li class="divider"></li>
-                        <li><a href="#">Separated link</a></li>
                     </ul>
                     </div>
-                    <input class="phoneIpt" type="text" v-model="phone" :placeholder="placeholderPhone">
+                    <input class="phoneIpt" type="text" v-model="phone" :placeholder="$t('userCommon.mobile')">
               </div>
             </div>
             <div class="mailRes" v-show="!phoneShow">
-                <input type="text" :placeholder="placeholderMail" v-model="mail">
+                <input type="text" :placeholder="$t('userCommon.Email')" v-model="mail">
             </div>
-            <input type="text" :placeholder="placeholderPassword" v-model="password">
-            <router-link class="register" :to="{ path: 'register'}">注册用户</router-link>
-            <router-link class="forgetPwd" :to="{ path: 'forgetPwd'}">忘记密码</router-link>
+            <input type="text" :placeholder="$t('userCommon.password')" v-model="password">
+            <router-link class="register" :to="{ path: 'register'}">{{$t('userCommon.register')}}</router-link>
+            <router-link class="forgetPwd" :to="{ path: 'forgetPwd'}">{{$t('userCommon.forgetPwd')}}</router-link>
             <div class="prompt">
                 {{prompt}}
             </div>
-            <button class="loginBtn" @click="userLogin">登录</button>
+            <button class="loginBtn" @click="userLogin">{{$t('userCommon.loginBtn')}}</button>
         </div>
     </section>
 </template>
@@ -43,9 +41,6 @@ export default {
   name: 'Login',
   data () {
     return {
-      placeholderPhone: '手机号',
-      placeholderMail: '邮箱',
-      placeholderPassword: '6-16位密码 区分大小写',
       phoneShow: 'true',
       prompt: '',
       phone: '',

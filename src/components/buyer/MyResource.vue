@@ -148,7 +148,7 @@ export default {
         series: [
           {
             type: 'liquidFill',
-            radius: '80%',
+            radius: '85%',
             data: [
               {
                 value: 0.3,
@@ -159,7 +159,16 @@ export default {
                   }
                 }
               }
-            ]
+            ],
+            outline: {
+              show: false
+            },
+            backgroundStyle: {
+              borderColor: '#156ACF',
+              borderWidth: 1,
+              shadowColor: 'rgba(0, 0, 0, 0.4)',
+              shadowBlur: 20
+            }
           }
         ]
       })

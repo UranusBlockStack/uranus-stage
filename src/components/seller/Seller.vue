@@ -325,7 +325,7 @@ export default {
             axisLine: {
               lineStyle: {
                 width: 10,
-                color: [[0.2, '#91c7ae'], [0.8, '#1890ff'], [1, '#c23531']]
+                color: [[0.2, '#1890ff'], [1, '#91c7ae']]
               } 
             }
           }
@@ -365,7 +365,7 @@ export default {
             axisLine: {
               lineStyle: {
                 width: 10,
-                color: [[0.2, '#91c7ae'], [0.8, '#1890ff'], [1, '#c23531']]
+                color: [[0.4, '#1890ff'], [1, '#91c7ae']]
               } 
             }
           }
@@ -405,7 +405,7 @@ export default {
             axisLine: {
               lineStyle: {
                 width: 10,
-                color: [[0.2, '#91c7ae'], [0.8, '#1890ff'], [1, '#c23531']]
+                color: [[0.5, '#1890ff'], [1, '#91c7ae']]
               } 
             }
           }
@@ -445,7 +445,7 @@ export default {
             axisLine: {
               lineStyle: {
                 width: 10,
-                color: [[0.2, '#91c7ae'], [0.8, '#1890ff'], [1, '#c23531']]
+                color: [[0.7, '#1890ff'], [1, '#91c7ae']]
               } 
             }
           }
@@ -485,7 +485,7 @@ export default {
             axisLine: {
               lineStyle: {
                 width: 10,
-                color: [[0.2, '#91c7ae'], [0.8, '#1890ff'], [1, '#c23531']]
+                color: [[0.9, '#1890ff'], [1, '#91c7ae']]
               } 
             }
           }

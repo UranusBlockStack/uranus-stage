@@ -17,7 +17,7 @@
           @row-click="$router.push({path: '/statedetail'})"
         >
           <el-table-column prop="1" :label="tableLabel[0]"></el-table-column>
-          <el-table-column prop="2" :label="tableLabel[1]" cellStyle="{color:red}"></el-table-column>
+          <el-table-column prop="2" :label="tableLabel[1]"></el-table-column>
           <el-table-column prop="3" :label="tableLabel[2]"></el-table-column>
           <el-table-column prop="4" :label="tableLabel[3]"></el-table-column>
           <el-table-column prop="5" :label="tableLabel[4]"></el-table-column>
@@ -32,43 +32,43 @@
 
 <script>
 export default {
-  name: "AppRecord",
+  name: 'AppRecord',
   data() {
     return {
-      tableLabel: ["状态", "名称", "镜像", "主机", "IP地址"],
+      tableLabel: ['状态', '名称', '镜像', '主机', 'IP地址'],
       tableData: [
         {
-          1: "运行中",
-          2: "wordpress-mdkyy-mariadb",
-          3: "docker.io/bitnami/mariadb.10.135-debian-9",
-          4: "host140",
-          5: "10.42.0.58"
+          1: '运行中',
+          2: 'wordpress-mdkyy-mariadb',
+          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
+          4: 'host140',
+          5: '10.42.0.58'
         },
         {
-          1: "运行中",
-          2: "wordpress-mdkyy-mariadb",
-          3: "docker.io/bitnami/mariadb.10.135-debian-9",
-          4: "host140",
-          5: "10.42.0.58"
+          1: '运行中',
+          2: 'wordpress-mdkyy-mariadb',
+          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
+          4: 'host140',
+          5: '10.42.0.58'
         },
         {
-          1: "运行中",
-          2: "wordpress-mdkyy-mariadb",
-          3: "docker.io/bitnami/mariadb.10.135-debian-9",
-          4: "host140",
-          5: "10.42.0.58"
+          1: '运行中',
+          2: 'wordpress-mdkyy-mariadb',
+          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
+          4: 'host140',
+          5: '10.42.0.58'
         },
         {
-          1: "运行中",
-          2: "wordpress-mdkyy-mariadb",
-          3: "docker.io/bitnami/mariadb.10.135-debian-9",
-          4: "host140",
-          5: "10.42.0.58"
+          1: '运行中',
+          2: 'wordpress-mdkyy-mariadb',
+          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
+          4: 'host140',
+          5: '10.42.0.58'
         }
       ]
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

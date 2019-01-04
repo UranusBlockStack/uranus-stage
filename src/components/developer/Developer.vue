@@ -84,12 +84,33 @@
         <div class="record-head">Record</div>
         <el-row>
           <el-col :span="24">
-            <el-table :data="tableData" border style="width: 100%">
-              <el-table-column prop="type" label="Type"></el-table-column>
-              <el-table-column prop="time" label="Order Time"></el-table-column>
-              <el-table-column prop="hash" label="Order Hash"></el-table-column>
-              <el-table-column prop="amount" label="Amount"></el-table-column>
-              <el-table-column prop="fee" label="Fee"></el-table-column>
+            <el-table :data="tableData" style="width: 100%">
+              <el-table-column label="Type">
+                <template slot-scope="scope">
+                  <i class="el-icon-time"></i>
+                  <span style="margin-left: 10px">{{ scope.row.type }}</span>
+                </template>
+              </el-table-column>
+              <el-table-column label="Order Time">
+                <template slot-scope="scope">
+                  <p>{{ scope.row.time }}</p>
+                </template>
+              </el-table-column>
+              <el-table-column label="Order Hash">
+                <template slot-scope="scope">
+                  <p>{{ scope.row.hash }}</p>
+                </template>
+              </el-table-column>
+              <el-table-column label="Amount">
+                <template slot-scope="scope">
+                  <p>{{ scope.row.amount }}</p>
+                </template>
+              </el-table-column>
+              <el-table-column label="Fee">
+                <template slot-scope="scope">
+                  <p>{{ scope.row.fee }}</p>
+                </template>
+              </el-table-column>
             </el-table>
           </el-col>
         </el-row>
@@ -331,7 +352,7 @@ export default {
 .Developer {
   background: #f2f2f2;
   width: 100%;
-    .el-button {
+  .el-button {
     background: #8eb357;
     border: none;
   }

@@ -29,40 +29,40 @@ export default {
   name: 'AppRecord',
   data() {
     return {
-      tableLabel: ['状态', '名称', '镜像', 'Pod伸缩', ],
+      tableLabel: ['状态', '名称', '镜像', 'Pod伸缩' ],
       tableData: [
         {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1',
-        },{
+          4: '1'
+        }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1',
-        },{
+          4: '1'
+        }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1',
-        },{
+          4: '1'
+        }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1',
-        },{
+          4: '1'
+        }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1',
-        },{
+          4: '1'
+        }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1',
-        },
-      ],
+          4: '1'
+        }
+      ]
     }
   }
 }

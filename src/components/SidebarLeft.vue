@@ -27,43 +27,43 @@
     <ul class="sidebar-menu" data-widget="tree">
       <!-- <li class="header">HEADER</li> -->
       <!-- Optionally, you can add icons to the links -->
-      <li class="treeview">
+      <li class="treeview" v-show="user===1">
         <router-link :to="{path: '/seller'}">
           <i class="fa fa-link"></i>
-          <span>{{$t('menu.index')}}S</span>
+          <span>{{$t('menu.index')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user===2">
         <router-link :to="{path: '/buyer'}">
           <i class="fa fa-link"></i>
-          <span>{{$t('menu.index')}}B</span>
+          <span>{{$t('menu.index')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user===3">
         <router-link :to="{path: '/developer'}">
           <i class="fa fa-link"></i>
-          <span>{{$t('menu.index')}}D</span>
+          <span>{{$t('menu.index')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user===2">
         <router-link :to="{path: '/applicationmarket'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.appMarket')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user===2">
         <router-link :to="{path: '/applicationrepository'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.appRepository')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user===2">
         <router-link :to="{path: '/resourcemarket'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.resourceMarket')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user===2">
         <router-link :to="{path: '/myresource'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.myResource')}}</span>
@@ -71,7 +71,7 @@
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </router-link>
-        <ul class="treeview-menu">
+        <ul class="treeview-menu" v-show="user===2">
           <li>
             <router-link :to="{path: '/resourcepool'}"><i class="fa fa-link"></i>{{$t('menu.resourcePool1')}}</router-link>
           </li>
@@ -83,39 +83,39 @@
           </li>
         </ul>
       </li>
-      <li class="treeview">
-        <router-link :to="{path: '/'}">
+      <li class="treeview"  v-show="user===1">
+        <router-link :to="{path: '/myhost'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.myHost')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
-        <router-link :to="{path: '/'}">
+      <li class="treeview"  v-show="user===1">
+        <router-link :to="{path: '/mycolony'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.myColony')}}</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </router-link>
-        <ul class="treeview-menu">
+        <ul class="treeview-menu"  v-show="user===1">
           <li>
-            <router-link :to="{path: '/'}"><i class="fa fa-link"></i>{{$t('menu.myColony1')}}</router-link>
+            <router-link :to="{path: '/colony'}"><i class="fa fa-link"></i>{{$t('menu.myColony1')}}</router-link>
           </li>
           <li>
-            <router-link :to="{path: '/'}"><i class="fa fa-link"></i>{{$t('menu.myColony2')}}</router-link>
+            <router-link :to="{path: '/colony'}"><i class="fa fa-link"></i>{{$t('menu.myColony2')}}</router-link>
           </li>
           <li>
-            <router-link :to="{path: '/'}"><i class="fa fa-link"></i>{{$t('menu.myColony3')}}</router-link>
+            <router-link :to="{path: '/colony'}"><i class="fa fa-link"></i>{{$t('menu.myColony3')}}</router-link>
           </li>
         </ul>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user===3">
         <router-link :to="{path: '/uploadapplication'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.uploadApplication')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user===3">
         <router-link :to="{path: '/myapplication'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.myApplication')}}</span>
@@ -147,7 +147,12 @@
 
 <script>
 export default {
-  name: 'SidebarLeft'
+  name: 'SidebarLeft',
+  data() {
+    return {
+      user: 2
+    }
+  }
 }
 </script>
 

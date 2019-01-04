@@ -127,9 +127,8 @@ export default {
   }
   .shop {
     background: #ffffff;
-    width: 95%;
     min-width: 1130px;
-    margin: 20px auto;
+    margin: 20px;
     padding: 15px;
     box-shadow: 0 1px 4px 0;
     .el-button {

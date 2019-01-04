@@ -1,40 +1,56 @@
 <template>
   <section class="Transfer">
+    <el-dialog :title="$t('transfer.check')" :visible.sync="outerVisible" width="660px">
+      <el-dialog width="660px" :visible.sync="innerVisible" append-to-body>
+        <p>{{$t('transfer.saveText')}}</p>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="outerVisible = true, innerVisible = false">{{$t('transfer.button1')}}</el-button>
+          <el-button type="primary" @click="innerVisible = false">{{$t('transfer.button2')}}</el-button>
+        </div>
+      </el-dialog>
+      <p>{{$t('transfer.checkAddress')}}0x461s2df65a4s6d1fa6s5d7f6as15df65a7dsf461</p>
+      <p>{{$t('transfer.checkValue')}}1000000021.232323 URAC</p>
+      <p>{{$t('transfer.fee')}}1000000021.232323 URAC</p>
+      <span>{{$t('transfer.checkText')}}</span>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="outerVisible = false, innerVisible = true">{{$t('transfer.button1')}}</el-button>
+        <el-button type="primary" @click="outerVisible = false">{{$t('transfer.button2')}}</el-button>
+      </div>
+    </el-dialog>
     <el-row class="transfer-head">
       <el-col :span="24">
         <p>{{$t('menu.transfer')}}</p>
       </el-col>
     </el-row>
-    <el-row class="transfer-body">
-      <el-col :span="6" :offset="16">
-        <p>{{$t('transfer.transfer')}}123</p>
-      </el-col>
-    </el-row>
     <el-row class="transfer-form">
-      <el-col :span="12" :offset="6">
+      <el-col :span="20">
+        <h2>{{$t('transfer.balance')}}123456</h2>
+      </el-col>
+      <el-col :span="12">
         <div class="formGroup">
-          <el-form label-position="right" label-width="100px" :model="formLabelAlign" :rules="rules">
+          <el-form label-position="left" label-width="100px" :model="formLabelAlign" :rules="rules">
             <el-form-item prop="name">
               <span slot="label">{{$t('transfer.address')}}</span>
-              <el-input v-model="formLabelAlign.address"></el-input>
+              <el-input v-model="formLabelAlign.address" :placeholder="$t('transfer.addressIn')"></el-input>
             </el-form-item>
             <el-form-item prop="region">
-              <span slot="label">{{$t('transfer.number')}}</span>
-              <el-input v-model="formLabelAlign.number"></el-input>
+              <span slot="label">{{$t('transfer.value')}}</span>
+              <el-input v-model="formLabelAlign.number" :placeholder="$t('transfer.valueIn')"></el-input>
             </el-form-item>
             <el-form-item prop="type">
-              <span slot="label">{{$t('transfer.poundage')}}</span>
-              <el-input v-model="formLabelAlign.poundage"></el-input>
+              <span slot="label">{{$t('transfer.fee')}}</span>
+              <el-input v-model="formLabelAlign.fee" :placeholder="$t('transfer.feeIn')"></el-input>
             </el-form-item>
-            <el-form-item prop="code">
+            <el-form-item prop="code" class="code">
               <span slot="label">{{$t('transfer.code')}}</span>
-              <el-input v-model="formLabelAlign.code"></el-input>
+              <el-input v-model="formLabelAlign.code" :placeholder="$t('transfer.codeIn')"></el-input>
+              <el-button>{{$t('transfer.codeBtn')}}</el-button>
             </el-form-item>
           </el-form>
         </div>
       </el-col>
-      <el-col :span="6" :offset="12">
-        <el-button type="success">{{$t('transfer.button')}}</el-button>
+      <el-col :span="8" :offset="6">
+        <el-button type="success" @click="outerVisible = true">{{$t('transfer.button')}}</el-button>
       </el-col>
     </el-row>
   </section>
@@ -47,14 +63,16 @@ export default {
     return {
       formLabelAlign: {
         address: '',
-        number: '',
-        poundage: '',
+        value: '',
+        fee: '',
         code: ''
       },
       rules: {
-        address: [{ min: 3, max: 5, message: '请输入正确地址', trigger: 'blur' }],
-        number: [{ min: 5, message: '余额不足,请重新输入', trigger: 'blur' }],
-        poundage: [{ min: 5, message: '手续费', trigger: 'change' }],
+        address: [
+          { min: 3, max: 5, message: '请输入正确地址', trigger: 'blur' }
+        ],
+        value: [{ min: 5, message: '余额不足,请重新输入', trigger: 'blur' }],
+        fee: [{ min: 5, message: '手续费', trigger: 'change' }],
         code: [
           {
             pattern: /^[A-Za-z0-9\u4e00-\u9fa5]+$/,
@@ -62,7 +80,9 @@ export default {
             trigger: 'blur'
           }
         ]
-      }
+      },
+      outerVisible: false,
+      innerVisible: false
     }
   }
 }
@@ -86,30 +106,62 @@ export default {
       text-align: left;
     }
   }
-  .transfer-body {
-    height: 60px;
-    margin: 20px;
-    background: #ffffff;
+  .el-dialog {
     p {
-      padding-top: 20px;
-      padding-left: 30px;
-      font-size: 18px;
-      color: #252525;
-      line-height: 30px;
+      font-family: PingFang-SC-Medium;
+      font-size: 16px;
+      color: #363636;
+      line-height: 24px;
       text-align: left;
+      padding-bottom: 20px;
     }
-    .el-button {
-      margin-top: 35px;
+    span {
+      font-family: PingFang-SC-Medium;
+      font-size: 14px;
+      color: #f54c46;
+      line-height: 20px;
+      text-align: left;
     }
   }
   .transfer-form {
     background: #ffffff;
     margin: 20px;
-    padding-top: 30px;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
+    border-radius: 2px;
+    h2 {
+      font-family: PingFang-SC-Bold;
+      font-size: 18px;
+      color: #252525;
+      line-height: 24px;
+      text-align: left;
+      padding-left: 30px;
+    }
+    .formGroup {
+      margin-left: 30px;
+    }
+    span {
+      font-family: PingFangSC-Regular;
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.65);
+      text-align: left;
+      line-height: 24px;
+    }
     .el-button {
       background: #8eb357;
       border: none;
       margin-bottom: 30px;
+    }
+    .code {
+      .el-input {
+        width: 75%;
+      }
+      .el-button {
+        width: 24%;
+        margin: 0;
+        background: #ffffff;
+        border: 1px solid #d9d9d9;
+        border-radius: 4px;
+      }
     }
   }
 }

@@ -1,12 +1,12 @@
 <template>
     <section class="register">
         <div class="registerHead">
-            <img src="/static/img/uranus/head.png" alt="">
+            <img src="/static/img/uranus/head.png">
         </div>
         <div class="registerContent">
             <div class="btnChoose">
-                <div class="btnMail" @click="chooseMail"><span :class="{chooseBtn:!phoneShow}">邮箱注册</span></div>
-                <div class="btnPhone" @click="choosePhone"><span :class="{chooseBtn:phoneShow}">手机注册</span></div>
+                <div class="btnMail" @click="chooseMail"><span :class="{chooseBtn:!phoneShow}">{{$t('userCommon.EmailRegister')}}</span></div>
+                <div class="btnPhone" @click="choosePhone"><span :class="{chooseBtn:phoneShow}">{{$t('userCommon.mobileRegister')}}</span></div>
             </div>
             <div class="phoneRes" v-show="phoneShow">
                 <div class="input-group">
@@ -21,18 +21,18 @@
                         <li><a href="#">Separated link</a></li>
                     </ul>
                     </div>
-                    <input class="phoneIpt" type="text" :placeholder="placeholderPhone">
+                    <input class="phoneIpt" type="text" :placeholder="$t('userCommon.mobile')" />
               </div>
             </div>
             <div class="mailRes" v-show="!phoneShow">
-                <input type="text" :placeholder="placeholderMail">
+                <input type="text" :placeholder="$t('userCommon.Email')">
             </div>
-            <input type="password" :placeholder="placeholderPassword">
-            <input type="password" :placeholder="placeholderSurePassword">
-            <input type="text" class="inputCode" :placeholder="placeholderCode">
+            <input type="password" :placeholder="$t('userCommon.password')">
+            <input type="password" :placeholder="$t('userCommon.confirmPwd')">
+            <input type="text" class="inputCode" :placeholder="$t('userCommon.code')">
             <button class="getCode" :class="{disabledGet: !this.canClick}" @click="countDown">{{content}}</button>
-            <router-link class="loginRes" :to="{ path: 'login'}">使用已有账户登录</router-link>
-            <button class="registerBtn">注册</button>
+            <router-link class="loginRes" :to="{ path: 'login'}">{{$t('userCommon.loginFgt')}}</router-link>
+            <button class="registerBtn">{{$t('userCommon.registerBtn')}}</button>
         </div>
     </section>
 </template>
@@ -42,15 +42,10 @@ export default {
   name: 'Register',
   data () {
     return {
-      placeholderPhone: '手机号',
-      placeholderMail: '邮箱',
-      placeholderPassword: '6-16位密码 区分大小写',
-      placeholderSurePassword: '确认密码',
-      placeholderCode: '输入验证码',
-      phoneShow: 'true',
+      phoneShow: true,
       totalTime: 10,
       canClick: true,
-      content: '发送验证码'
+      content: this.$t('userCommon.codeBtn'),
     }
   },
   methods: {
@@ -63,13 +58,13 @@ export default {
     countDown () {
       if (!this.canClick) return 
       this.canClick = false
-      this.content = this.totalTime + 's后重新发送'
+      this.content = this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
       let clock = window.setInterval(() => {
         this.totalTime--
-        this.content = this.totalTime + 's后重新发送'
+        this.content = this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
         if (this.totalTime < 0) {
           window.clearInterval(clock)
-          this.content = '重新发送'
+          this.content = this.$t('userCommon.codeTime')
           this.totalTime = 10
           this.canClick = true
         }

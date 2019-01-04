@@ -206,6 +206,7 @@ export default {
 <style lang="scss" scoped>
 .Buyer {
   background: #f2f2f2;
+  min-width: 1130px;
     .el-button {
     background: #8eb357;
     border: none;
@@ -234,11 +235,11 @@ export default {
     }
   }
   .content {
+    padding: 0;
     .shop {
       background: #ffffff;
-      width: 95%;
       min-width: 1130px;
-      margin: 20px auto;
+      margin: 20px;
       padding: 15px;
       box-shadow: 0 1px 4px 0;
       p {
@@ -319,12 +320,11 @@ export default {
       }
     }
     .power {
-      width: 95%;
       padding: 15px;
       min-width: 1130px;
       height: 400px;
       background: #ffffff;
-      margin: 20px auto;
+      margin: 20px;
       .powerTitle p {
         height: 40px;
         line-height: 40px;
