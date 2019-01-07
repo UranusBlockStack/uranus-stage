@@ -2,13 +2,13 @@
   <section class="resourcePool">
     <el-row class="poolHead">
       <el-col class="title" :span="12">
-        <h1>我的资源</h1>
+        <h1>{{$t('menu.myResource')}}</h1>
       </el-col>
     </el-row>
     <el-row class="poolBox">
       <el-row>
         <el-col class="title" :span="24">
-          <h1>资源池A</h1>
+          <h1>{{$t('buyer.resourcePool.pool')}}A</h1>
         </el-col>
       </el-row>
       <el-row class="rePool">
@@ -16,15 +16,15 @@
           <div id="restPool"></div>
         </el-col>
         <el-col :span="7" :offset="1">
-          <h3>部署资源剩余：4</h3>
-          <h3>剩余资源：68%</h3>
-          <h3>购买时间：2018/12/12 12:12:12</h3>
-          <h3>结束时间：2019/12/12 12:12:12</h3>
+          <h3>{{$t('buyer.resourcePool.number')}}4</h3>
+          <h3>{{$t('buyer.resourcePool.restResource')}}68%</h3>
+          <h3>{{$t('buyer.resourcePool.purchaseTime')}}2018/12/12 12:12:12</h3>
+          <h3>{{$t('buyer.resourcePool.endTime')}}2019/12/12 12:12:12</h3>
         </el-col>
         <el-col :span="8">
-          <h3 class="restTime">剩余使用时间：已到期
+          <h3 class="restTime">{{$t('buyer.resourcePool.countdownTime')}}{{$t('buyer.resourcePool.timeUp')}}
             <el-button type="success">
-              前往续费
+              {{$t('buyer.resourcePool.renewal')}}
               <i class="el-icon-arrow-right"></i>
             </el-button>
           </h3>
@@ -32,7 +32,7 @@
       </el-row>
       <el-row>
         <el-col :span="20">
-          <h2>各类资源剩余率</h2>
+          <h2>{{$t('buyer.resourcePool.restOne')}}</h2>
           <div class="restRes">
             <div id="restResource1"></div>
             <div id="restResource2"></div>
@@ -44,13 +44,13 @@
       </el-row>
       <el-row class="title">
         <el-col :span="6">
-          <h1>所属应用列表</h1>
+          <h1>{{$t('buyer.resourcePool.appList')}}</h1>
         </el-col>
         <el-col :span="6" :offset="6">
-          <el-input placeholder="输入商店/应用名称" prefix-icon="el-icon-search"></el-input>
+          <el-input :placeholder="$t('buyer.resourcePool.searchIn')" prefix-icon="el-icon-search"></el-input>
         </el-col>
         <el-col :span="4" :offset="2">
-          <el-button type="success">搜索</el-button>
+          <el-button type="success">{{$t('buyer.resourcePool.search')}}</el-button>
         </el-col>
       </el-row>
       <el-row class="rePool">
@@ -58,10 +58,10 @@
           <img src="/static/img/uranus/developer/app.png" alt="img">
         </el-col>
         <el-col :span="7" :offset="1">
-          <h3>Imagepuler</h3>
-          <h3>IP：111.111.11.1</h3>
-          <h3>端口：8080</h3>
-          <h3>部署时间：2018/01/02 12:20:12</h3>
+          <h3>{{$t('buyer.resourcePool.appName')}}Imagepuler</h3>
+          <h3>{{$t('buyer.resourcePool.appIp')}}111.111.11.1</h3>
+          <h3>{{$t('buyer.resourcePool.appPort')}}8080</h3>
+          <h3>{{$t('buyer.resourcePool.appTime')}}2018/01/02 12:20:12</h3>
         </el-col>
         <el-col :span="3" :offset="10">
           <el-dropdown trigger="click">
@@ -69,8 +69,30 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <router-link :to="{path: '/appstate'}"><el-dropdown-item>详情</el-dropdown-item></router-link>
-              <el-dropdown-item>删除</el-dropdown-item>
+              <router-link :to="{path: '/appstate'}"><el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item></router-link>
+              <el-dropdown-item>{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </el-col>
+      </el-row>
+      <el-row class="rePool">
+        <el-col :span="2" :offset="1">
+          <img src="/static/img/uranus/developer/app.png" alt="img">
+        </el-col>
+       <el-col :span="7" :offset="1">
+          <h3>{{$t('buyer.resourcePool.appName')}}Imagepuler</h3>
+          <h3>{{$t('buyer.resourcePool.appIp')}}111.111.11.1</h3>
+          <h3>{{$t('buyer.resourcePool.appPort')}}8080</h3>
+          <h3>{{$t('buyer.resourcePool.appTime')}}2018/01/02 12:20:12</h3>
+        </el-col>
+        <el-col :span="3" :offset="10">
+          <el-dropdown trigger="click">
+            <span class="el-dropdown-link">
+              <i class="el-icon-arrow-down el-icon--right"></i>
+            </span>
+            <el-dropdown-menu slot="dropdown">
+              <router-link :to="{path: '/appstate'}"><el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item></router-link>
+              <el-dropdown-item>{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -80,10 +102,10 @@
           <img src="/static/img/uranus/developer/app.png" alt="img">
         </el-col>
         <el-col :span="7" :offset="1">
-          <h3>Imagepuler</h3>
-          <h3>IP：111.111.11.1</h3>
-          <h3>端口：8080</h3>
-          <h3>部署时间：2018/01/02 12:20:12</h3>
+          <h3>{{$t('buyer.resourcePool.appName')}}Imagepuler</h3>
+          <h3>{{$t('buyer.resourcePool.appIp')}}111.111.11.1</h3>
+          <h3>{{$t('buyer.resourcePool.appPort')}}8080</h3>
+          <h3>{{$t('buyer.resourcePool.appTime')}}2018/01/02 12:20:12</h3>
         </el-col>
         <el-col :span="3" :offset="10">
           <el-dropdown trigger="click">
@@ -91,8 +113,8 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <router-link :to="{path: '/appstate'}"><el-dropdown-item>详情</el-dropdown-item></router-link>
-              <el-dropdown-item>删除</el-dropdown-item>
+              <router-link :to="{path: '/appstate'}"><el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item></router-link>
+              <el-dropdown-item>{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -102,10 +124,10 @@
           <img src="/static/img/uranus/developer/app.png" alt="img">
         </el-col>
         <el-col :span="7" :offset="1">
-          <h3>Imagepuler</h3>
-          <h3>IP：111.111.11.1</h3>
-          <h3>端口：8080</h3>
-          <h3>部署时间：2018/01/02 12:20:12</h3>
+          <h3>{{$t('buyer.resourcePool.appName')}}Imagepuler</h3>
+          <h3>{{$t('buyer.resourcePool.appIp')}}111.111.11.1</h3>
+          <h3>{{$t('buyer.resourcePool.appPort')}}8080</h3>
+          <h3>{{$t('buyer.resourcePool.appTime')}}2018/01/02 12:20:12</h3>
         </el-col>
         <el-col :span="3" :offset="10">
           <el-dropdown trigger="click">
@@ -113,30 +135,8 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <router-link :to="{path: '/appstate'}"><el-dropdown-item>详情</el-dropdown-item></router-link>
-              <el-dropdown-item>删除</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-col>
-      </el-row>
-      <el-row class="rePool">
-        <el-col :span="2" :offset="1">
-          <img src="/static/img/uranus/developer/app.png" alt="img">
-        </el-col>
-        <el-col :span="7" :offset="1">
-          <h3>Imagepuler</h3>
-          <h3>IP：111.111.11.1</h3>
-          <h3>端口：8080</h3>
-          <h3>部署时间：2018/01/02 12:20:12</h3>
-        </el-col>
-        <el-col :span="3" :offset="10">
-          <el-dropdown trigger="click">
-            <span class="el-dropdown-link">
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <router-link :to="{path: '/appstate'}"><el-dropdown-item>详情</el-dropdown-item></router-link>
-              <el-dropdown-item>删除</el-dropdown-item>
+              <router-link :to="{path: '/appstate'}"><el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item></router-link>
+              <el-dropdown-item>{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>

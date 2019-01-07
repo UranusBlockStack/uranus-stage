@@ -30,12 +30,12 @@
               <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                 <el-input v-model="ruleForm.buyerEmail"></el-input>
               </el-form-item>
-              <el-form-item label="请输入验证码:" prop="buyerPhone">
+              <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="ruleForm.buyerPhone" style="width:69%"></el-input>
-                <button style="width:28%">获取验证码</button>
+                <button style="width:28%">{{$t('setting.codeBtn')}}</button>
               </el-form-item>
             </el-form>
-            <el-dialog width="480px" title="绑定新邮箱" :visible.sync="mailInnerVisible" append-to-body>
+            <el-dialog width="480px" :title="$t('setting.mail')" :visible.sync="mailInnerVisible" append-to-body>
               <el-form
                 :model="ruleForm"
                 :rules="rules"
@@ -43,22 +43,22 @@
                 label-width="115px"
                 class="demo-ruleForm"
               >
-                <el-form-item label="Email:" prop="buyerEmail">
+                <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                   <span slot="label">{{$t('setting.mail')}}</span>
                   <el-input v-model="ruleForm.buyerEmail"></el-input>
                 </el-form-item>
-                <el-form-item label="请输入验证码:" prop="buyerPhone">
+                <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                   <el-input v-model="ruleForm.buyerPhone" style="width:69%"></el-input>
-                  <button style="width:28%">获取验证码</button>
+                  <button style="width:28%">{{$t('setting.codeBtn')}}</button>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
-                <el-button @click="mailOuterVisible = false,mailInnerVisible = false">确定</el-button>
+                <el-button @click="mailOuterVisible = false, mailInnerVisible = false">{{$t('setting.button2')}}</el-button>
               </div>
             </el-dialog>
             <div slot="footer" class="dialog-footer" center>
-              <el-button @click="mailOuterVisible = false">取 消</el-button>
-              <el-button type="primary" @click="mailOuterVisible = false,mailInnerVisible = true">下一步</el-button>
+              <el-button @click="mailOuterVisible = false">{{$t('setting.button1')}}</el-button>
+              <el-button type="primary" @click="mailOuterVisible = false,mailInnerVisible = true">{{$t('setting.button3')}}</el-button>
             </div>
           </el-dialog>
         </p>
@@ -83,12 +83,12 @@
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
                 <el-input v-model="ruleForm.buyerEmail"></el-input>
               </el-form-item>
-              <el-form-item label="请输入验证码:" prop="buyerPhone">
+              <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="ruleForm.buyerPhone" style="width:69%"></el-input>
-                <button style="width:28%">获取验证码</button>
+                <button style="width:28%">{{$t('setting.codeBtn')}}</button>
               </el-form-item>
             </el-form>
-            <el-dialog width="480px" title="绑定新手机" :visible.sync="phoneInnerVisible" append-to-body>
+            <el-dialog width="480px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" append-to-body>
               <el-form
                 :model="ruleForm"
                 :rules="rules"
@@ -96,21 +96,21 @@
                 label-width="115px"
                 class="demo-ruleForm"
               >
-                <el-form-item label="Phone:" prop="buyerEmail">
+                <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
                   <el-input v-model="ruleForm.buyerEmail"></el-input>
                 </el-form-item>
-                <el-form-item label="请输入验证码:" prop="buyerPhone">
+                <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                   <el-input v-model="ruleForm.buyerPhone" style="width:69%"></el-input>
-                  <button style="width:28%">获取验证码</button>
+                  <button style="width:28%">{{$t('setting.codeBtn')}}</button>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
-                <el-button @click="phoneOuterVisible = false,phoneInnerVisible = false">确定</el-button>
+                <el-button @click="phoneOuterVisible = false,phoneInnerVisible = false">{{$t('setting.button2')}}</el-button>
               </div>
             </el-dialog>
             <div slot="footer" class="dialog-footer" center>
-              <el-button @click="phoneOuterVisible = false">取 消</el-button>
-              <el-button type="primary" @click="phoneOuterVisible = false,phoneInnerVisible = true">下一步</el-button>
+              <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}</el-button>
+              <el-button type="primary" @click="phoneOuterVisible = false,phoneInnerVisible = true">{{$t('setting.button3')}}</el-button>
             </div>
           </el-dialog>
         </p>
@@ -123,8 +123,8 @@
       </el-col>
       <el-col :span="8" :offset="4">
         <p>
-          <el-button type="text" @click="pwdOuterVisible = true">{{$t('setting.modifyPassword')}}</el-button>
-          <el-dialog title="修改密码" :visible.sync="pwdOuterVisible" width="480px">
+          <el-button type="text" @click="pwdOuterVisible = true">{{$t('setting.modifyPassword.click')}}</el-button>
+          <el-dialog :title="$t('setting.modifyPassword.click')" :visible.sync="pwdOuterVisible" width="480px">
             <el-form
               :model="ruleForm"
               :rules="rules"
@@ -132,19 +132,19 @@
               label-width="115px"
               class="demo-ruleForm"
             >
-              <el-form-item label="旧密码:" prop="buyerEmail">
+              <el-form-item :label="$t('setting.modifyPassword.current')" prop="buyerEmail">
                 <el-input v-model="ruleForm.buyerEmail"></el-input>
               </el-form-item>
-              <el-form-item label="新密码:" prop="buyerEmail">
+              <el-form-item :label="$t('setting.modifyPassword.new')" prop="buyerEmail">
                 <el-input v-model="ruleForm.buyerEmail"></el-input>
               </el-form-item>
-              <el-form-item label="确认新密码:" prop="buyerEmail">
+              <el-form-item :label="$t('setting.modifyPassword.confirm')" prop="buyerEmail">
                 <el-input v-model="ruleForm.buyerEmail"></el-input>
               </el-form-item>
             </el-form>
             <div slot="footer" class="dialog-footer" center>
-              <el-button @click="pwdOuterVisible = false">取 消</el-button>
-              <el-button type="primary" @click="pwdOuterVisible = false">确定</el-button>
+              <el-button @click="pwdOuterVisible = false">{{$t('setting.button1')}}</el-button>
+              <el-button type="primary" @click="pwdOuterVisible = false">{{$t('setting.button2')}}</el-button>
             </div>
           </el-dialog>
         </p>
@@ -220,17 +220,17 @@ export default {
       phonenum: '12345678911',
       phoneOuterVisible: false,
       phoneInnerVisible: false,
-      code: '手机',
+      code: this.$t('setting.codePhone'),
       pwdOuterVisible: false,
       pwdInnerVisible: false,
       codes: [
         {
           value: '选项1',
-          label: '手机'
+          label: this.$t('setting.codeEmail')
         },
         {
           value: '选项2',
-          label: '邮箱'
+          label: this.$t('setting.codePhone')
         }
       ]
     }

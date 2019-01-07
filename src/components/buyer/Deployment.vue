@@ -1,12 +1,12 @@
 <template>
   <section class="deployment">
-    <el-dialog title="确认交易信息" :visible.sync="outerVisible" width="800px">
+    <el-dialog :title="$t('buyer.deploy.confirmTitle')" :visible.sync="outerVisible" width="800px">
       <el-table :data="gridData">
-        <el-table-column property="order" label="订单号"></el-table-column>
-        <el-table-column property="address" label="收款地址"></el-table-column>
-        <el-table-column property="number" label="转账数额"></el-table-column>
-        <el-table-column property="type" label="交易方式"></el-table-column>
-        <el-table-column label="手续费">
+        <el-table-column property="order" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
+        <el-table-column property="address" :label="$t('buyer.deploy.address')"></el-table-column>
+        <el-table-column property="number" :label="$t('buyer.deploy.value')"></el-table-column>
+        <el-table-column property="type" :label="$t('buyer.deploy.content')"></el-table-column>
+        <el-table-column :label="$t('buyer.deploy.fee')">
           <template slot-scope="scope">
             <el-input-number
               size="mini"
@@ -19,27 +19,27 @@
         </el-table-column>
       </el-table>
       <div class="code">
-        <span slot="label">验证码：</span>
-        <el-input placeholder="输入验证码"></el-input>
-        <el-button>获取验证码</el-button>
+        <span slot="label">{{$t('buyer.deploy.code')}}</span>
+        <el-input :placeholder="$t('buyer.deploy.codeIn')"></el-input>
+        <el-button>{{$t('buyer.deploy.codeBtn')}}</el-button>
       </div>
-      <p>确认后，您的URAC将通过区块链网络转账至相应地址，确认后订单不可撤销。</p>
-      <p>订单待支付时间为30分钟，若超过此时间，则视为自动取消订单。</p>
-      <el-dialog width="800px" :visible.sync="innerVisible" append-to-body>
-        <p>部署成功</p>
+      <p>{{$t('buyer.deploy.confirmText1')}}</p>
+      <p>{{$t('buyer.deploy.confirmText2')}}</p>
+      <el-dialog width="800px" :title="$t('buyer.deploy.confirmText3')" :visible.sync="innerVisible" append-to-body>
+        <p>{{$t('buyer.deploy.confirmText4')}}</p>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="innerVisible = false">确 定</el-button>
+          <el-button type="primary" @click="innerVisible = false">{{$t('buyer.deploy.button2')}}</el-button>
         </div>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="outerVisible = false">取 消</el-button>
-        <el-button type="primary" @click="outerVisible = false, innerVisible = true">确 定</el-button>
+        <el-button @click="outerVisible = false">{{$t('buyer.deploy.button1')}}</el-button>
+        <el-button type="primary" @click="outerVisible = false, innerVisible = true">{{$t('buyer.deploy.button2')}}</el-button>
       </div>
     </el-dialog>
     <el-row class="resourceBox">
       <el-row>
         <el-col class="title bg" :span="24">
-          <h1>应用部署</h1>
+          <h1>{{$t('buyer.deploy.application')}}</h1>
         </el-col>
       </el-row>
       <el-row class="detial">
@@ -47,43 +47,43 @@
           <img src="/static/img/uranus/buyer/appLogo.png" alt="应用">
         </el-col>
         <el-col :span="8" :offset="1">
-          <h2>Imagepuler</h2>
-          <p>简介:This catalog item is deprecated and to rancher item is deprecated and moved to is deprecated moved to rancher oved to rancher is oved to rancher item</p>
+          <h2>{{$t('buyer.deploy.name')}}Imagepuler</h2>
+          <p>{{$t('buyer.deploy.appDetail')}}This catalog item is deprecated and to rancher item is deprecated and moved to is deprecated moved to rancher oved to rancher is oved to rancher item</p>
         </el-col>
         <el-col class="border-col" :span="4" :offset="1">
-          <p>价格：免费</p>
-          <p>来源：商店A</p>
-          <p>下载量：16.8w</p>
+          <p>{{$t('buyer.deploy.price')}}免费</p>
+          <p>{{$t('buyer.deploy.from')}}商店A</p>
+          <p>{{$t('buyer.deploy.download')}}16.8w</p>
         </el-col>
         <el-col class="inf-col" :span="6" :offset="1">
-          <p>建议配置信息</p>
+          <p>{{$t('buyer.deploy.configuration')}}</p>
           <p>
-            <span class="left-span">CPU：xxx</span>
-            <span>内存：xxx</span>
-            <span>网络：xxx</span>
+            <span class="left-span">{{$t('buyer.deploy.cpu')}}xxx</span>
+            <span>{{$t('buyer.deploy.memoryCon')}}xxx</span>
+            <span>{{$t('buyer.deploy.networkCon')}}xxx</span>
           </p>
           <p>
-            <span class="left-span">GPU：xxx</span>
-            <span>磁盘：xxx</span>
+            <span class="left-span">{{$t('buyer.deploy.gpuCon')}}xxx</span>
+            <span>{{$t('buyer.deploy.diskCon')}}xxx</span>
           </p>
         </el-col>
       </el-row>
       <el-row class="border-line"></el-row>
       <el-row class="select">
         <el-col class="title" :span="24">
-          <h1>算力部署</h1>
+          <h1>{{$t('buyer.deploy.uracpower')}}</h1>
         </el-col>
         <el-col :span="1" :offset="1">
           <el-radio v-model="radio" lable="1"></el-radio>
         </el-col>
         <el-col class="resourceName" :span="8">
-          <span class="select-left">资源名称：</span>
-          <el-input class="input-margin" v-model="input" placeholder="创建资源名称"></el-input>
+          <span class="select-left">{{$t('buyer.deploy.newPool')}}</span>
+          <el-input class="input-margin" v-model="input" :placeholder="$t('buyer.deploy.renamePool')"></el-input>
         </el-col>
       </el-row>
       <el-row class="select">
         <el-col :span="6" :offset="2">
-          <span class="select-left">所属地区：</span>
+          <span class="select-left">{{$t('buyer.deploy.region')}}</span>
           <el-select v-model="value">
             <el-option
               v-for="item in options"
@@ -94,7 +94,7 @@
           </el-select>
         </el-col>
         <el-col :span="5" :offset="1">
-          <span class="select-left">CPU：</span>
+          <span class="select-left">{{$t('buyer.deploy.cpu')}}</span>
           <el-select v-model="value">
             <el-option
               v-for="item in options"
@@ -105,7 +105,7 @@
           </el-select>
         </el-col>
         <el-col :span="6" :offset="1">
-          <span class="select-left">硬盘大小：</span>
+          <span class="select-left">{{$t('buyer.deploy.disk')}}</span>
           <el-select v-model="value">
             <el-option
               v-for="item in options"
@@ -118,7 +118,7 @@
       </el-row>
       <el-row class="select">
         <el-col :span="6" :offset="2">
-          <span class="select-left">内存大小：</span>
+          <span class="select-left">{{$t('buyer.deploy.memory')}}</span>
           <el-select v-model="value">
             <el-option
               v-for="item in options"
@@ -129,7 +129,7 @@
           </el-select>
         </el-col>
         <el-col :span="5" :offset="1">
-          <span class="select-left">GPU：</span>
+          <span class="select-left">{{$t('buyer.deploy.gpu')}}</span>
           <el-select v-model="value">
             <el-option
               v-for="item in options"
@@ -140,7 +140,7 @@
           </el-select>
         </el-col>
         <el-col :span="6" :offset="1">
-          <span class="select-left">带宽大小：</span>
+          <span class="select-left">{{$t('buyer.deploy.network')}}</span>
           <el-select v-model="value">
             <el-option
               v-for="item in options"
@@ -153,10 +153,10 @@
       </el-row>
       <el-row class="select">
         <el-col :span="20" :offset="2">
-          <span class="select-left">时间筛选：</span>
-          <el-date-picker v-model="value1" type="date" placeholder="开始时间"></el-date-picker>
+          <span class="select-left">{{$t('buyer.deploy.timeScreening')}}</span>
+          <el-date-picker v-model="value1" type="date" :placeholder="$t('buyer.deploy.startingTime')"></el-date-picker>
           <span class="el-icon-arrow-right"></span>
-          <el-date-picker v-model="value1" type="date" placeholder="结束时间"></el-date-picker>
+          <el-date-picker v-model="value1" type="date" :placeholder="$t('buyer.deploy.endTime')"></el-date-picker>
         </el-col>
       </el-row>
       <el-row class="select" v-show="more">
@@ -164,7 +164,7 @@
           <el-radio v-model="radio" lable="2"></el-radio>
         </el-col>
         <el-col class="resourceName" :span="8">
-          <span class="select-left space-chose">选择已有资源空间：</span>
+          <span class="select-left space-chose">{{$t('buyer.deploy.choosePool')}}</span>
           <el-select v-model="value">
             <el-option
               v-for="item in options"
@@ -180,29 +180,29 @@
           <el-radio v-model="radio" lable="3"></el-radio>
         </el-col>
         <el-col class="resourceName" :span="8">
-          <span class="select-left">暂不部署</span>
+          <span class="select-left">{{$t('buyer.deploy.noDeploy')}}</span>
         </el-col>
       </el-row>
       <el-row class="more">
         <el-col :span="4" :offset="10" class="more-button" v-show="!more">
           <p @click="changeMore">
-            更多
+            {{$t('buyer.deploy.more')}}
             <i class="el-icon-arrow-down"></i>
           </p>
         </el-col>
         <el-col :span="4" :offset="10" class="more-button" v-show="more">
           <p @click="changeMore">
-            收起
+            {{$t('buyer.deploy.pick')}}
             <i class="el-icon-arrow-up"></i>
           </p>
         </el-col>
       </el-row>
       <el-row class="edition">
         <el-col class="title" :span="24">
-          <h1>模板版本</h1>
+          <h1>{{$t('buyer.deploy.version')}}</h1>
         </el-col>
         <el-col :span="20" :offset="1">
-          <span class="select-left">选择模板：</span>
+          <span class="select-left">{{$t('buyer.deploy.chooseVersion')}}</span>
           <el-select v-model="value">
             <el-option
               v-for="item in options"
@@ -215,25 +215,25 @@
       </el-row>
       <el-row class="newApp">
         <el-col class="title" :span="24">
-          <h1>新应用</h1>
+          <h1>{{$t('buyer.deploy.newApp')}}</h1>
         </el-col>
       </el-row>
       <el-row class="select">
         <el-col class="resourceName" :span="8" :offset="2">
-          <span class="select-left">应用命名：</span>
+          <span class="select-left">{{$t('buyer.deploy.nameApp')}}</span>
           <el-input class="input-margin" v-model="input" placeholder="默认作者上传名称"></el-input>
         </el-col>
       </el-row>
       <el-row class="select">
         <el-col class="resourceName" :span="8" :offset="2">
-          <span class="select-left">应用描述：</span>
+          <span class="select-left">{{$t('buyer.deploy.description')}}</span>
           <el-input class="input-margin" v-model="input" placeholder="默认作者上传名称"></el-input>
         </el-col>
       </el-row>
       <el-row class="border-line"></el-row>
       <el-row class="configuration">
         <el-col class="title" :span="24">
-          <h1>配置选项</h1>
+          <h1>{{$t('buyer.deploy.configurationOption')}}</h1>
         </el-col>
       </el-row>
       <el-row class="select">
@@ -252,7 +252,7 @@
       <el-row class="border-line"></el-row>
       <el-row>
         <el-col :span="4" :offset="10">
-          <el-button type="success" @click="outerVisible = true">部署</el-button>
+          <el-button type="success" @click="outerVisible = true">{{$t('buyer.deploy.deploy')}}</el-button>
         </el-col>
       </el-row>
     </el-row>
@@ -355,7 +355,7 @@ export default {
       display: flex;
       margin: 25px 150px;
       span {
-        width: 105px;
+        width: 155px;
         font-family: PingFang-SC-Medium;
         font-size: 16px;
         color: #363636;
@@ -457,8 +457,7 @@ export default {
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
         line-height: 24px;
-        min-width: 100px;
-        width: 100px;
+        width: 200px;
       }
       .space-chose {
         width: 150px;

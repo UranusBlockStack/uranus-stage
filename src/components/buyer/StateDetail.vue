@@ -2,19 +2,20 @@
   <section class="appRecord">
     <el-row class="recordHead">
       <el-col class="title" :span="20">
-        <h1 @click="$router.back(-1)">Imagepuler</h1>
+        <h1 @click="$router.back(-1)">wordpress-mdkyy-mariadb</h1>
       </el-col>
       <el-col :span="4">
-        <p>重命名</p>
+        <p>{{$t('buyer.stateDetail.rename')}}</p>
       </el-col>
     </el-row>
     <el-row class="recordBox">
       <el-col :span="24">
         <el-table :data="tableData" border style="width: 100%" @row-click="$router.push({path: '/statedetail'})">
-          <el-table-column prop="1" :label="tableLabel[0]"></el-table-column>
-          <el-table-column prop="2" :label="tableLabel[1]"></el-table-column>
-          <el-table-column prop="3" :label="tableLabel[2]"></el-table-column>
-          <el-table-column prop="4" :label="tableLabel[3]"></el-table-column>
+          <el-table-column prop="1" :label="$t('buyer.stateDetail.status')"></el-table-column>
+          <el-table-column prop="2" :label="$t('buyer.stateDetail.name')"></el-table-column>
+          <el-table-column prop="3" :label="$t('buyer.stateDetail.image')"></el-table-column>
+          <el-table-column prop="4" :label="$t('buyer.stateDetail.host')"></el-table-column>
+          <el-table-column prop="5" :label="$t('buyer.stateDetail.ip')"></el-table-column>
         </el-table>
       </el-col>
       <el-col :span="6" :offset="9" class="transaction-foot">
@@ -29,39 +30,38 @@ export default {
   name: 'AppRecord',
   data() {
     return {
-      tableLabel: ['状态', '名称', '镜像', 'Pod伸缩' ],
       tableData: [
         {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1'
+          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
+          4: 'host140',
+          5: '10.42.0.58',
         }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1'
+          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
+          4: 'host140',
+          5: '10.42.0.58',
         }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1'
+          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
+          4: 'host140',
+          5: '10.42.0.58',
         }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1'
+          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
+          4: 'host140',
+          5: '10.42.0.58',
         }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1'
-        }, {
-          1: '运行中',
-          2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9 选中1个Pod/创建于4days ago',
-          4: '1'
-        }
+          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
+          4: 'host140',
+          5: '10.42.0.58',
+        }, 
       ]
     }
   }

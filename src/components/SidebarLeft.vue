@@ -27,43 +27,43 @@
     <ul class="sidebar-menu" data-widget="tree">
       <!-- <li class="header">HEADER</li> -->
       <!-- Optionally, you can add icons to the links -->
-      <li class="treeview" v-show="user===1">
+      <li class="treeview">
         <router-link :to="{path: '/seller'}">
           <i class="fa fa-link"></i>
-          <span>{{$t('menu.index')}}</span>
+          <span>{{$t('menu.home')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user===2">
+      <li class="treeview">
         <router-link :to="{path: '/buyer'}">
           <i class="fa fa-link"></i>
-          <span>{{$t('menu.index')}}</span>
+          <span>{{$t('menu.home')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user===3">
+      <li class="treeview">
         <router-link :to="{path: '/developer'}">
           <i class="fa fa-link"></i>
-          <span>{{$t('menu.index')}}</span>
+          <span>{{$t('menu.home')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user===2">
+      <li class="treeview">
         <router-link :to="{path: '/applicationmarket'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.appMarket')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user===2">
+      <li class="treeview">
         <router-link :to="{path: '/applicationrepository'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.appRepository')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user===2">
+      <li class="treeview">
         <router-link :to="{path: '/resourcemarket'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.resourceMarket')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user===2">
+      <li class="treeview">
         <router-link :to="{path: '/myresource'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.myResource')}}</span>
@@ -71,7 +71,7 @@
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </router-link>
-        <ul class="treeview-menu" v-show="user===2">
+        <ul class="treeview-menu">
           <li>
             <router-link :to="{path: '/resourcepool'}"><i class="fa fa-link"></i>{{$t('menu.resourcePool1')}}</router-link>
           </li>
@@ -83,13 +83,13 @@
           </li>
         </ul>
       </li>
-      <li class="treeview"  v-show="user===1">
+      <li class="treeview">
         <router-link :to="{path: '/myhost'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.myHost')}}</span>
         </router-link>
       </li>
-      <li class="treeview"  v-show="user===1">
+      <li class="treeview">
         <router-link :to="{path: '/mycolony'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.myColony')}}</span>
@@ -97,7 +97,7 @@
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </router-link>
-        <ul class="treeview-menu"  v-show="user===1">
+        <ul class="treeview-menu">
           <li>
             <router-link :to="{path: '/colony'}"><i class="fa fa-link"></i>{{$t('menu.myColony1')}}</router-link>
           </li>
@@ -109,13 +109,13 @@
           </li>
         </ul>
       </li>
-      <li class="treeview" v-show="user===3">
+      <li class="treeview">
         <router-link :to="{path: '/uploadapplication'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.uploadApplication')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user===3">
+      <li class="treeview">
         <router-link :to="{path: '/myapplication'}">
           <i class="fa fa-link"></i>
           <span>{{$t('menu.myApplication')}}</span>

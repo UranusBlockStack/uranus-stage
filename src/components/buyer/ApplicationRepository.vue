@@ -2,28 +2,28 @@
   <section class="appRepository">
     <el-row class="repositoryHead">
       <el-col class="title" :span="12">
-        <h1>我的应用仓库</h1>
+        <h1>{{$t('menu.appRepository')}}</h1>
       </el-col>
       <el-col class="record" :span="12">
         <router-link :to="{path: '/apprecord'}">
-          <p>部署应用记录></p>
+          <p>{{$t('buyer.appRepository.deployRecord')}}>></p>
         </router-link>
       </el-col>
     </el-row>
-    <el-dialog title="确认要删除该应用吗?" :visible.sync="dialogVisible" width="30%" top="20%">
-      <span>删除后,我的应用仓库将没有该应用!</span>
+    <el-dialog :title="$t('buyer.appRepository.deleteSure')" :visible.sync="dialogVisible" width="30%" top="20%">
+      <span>{{$t('buyer.appRepository.deleteText')}}</span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button @click="dialogVisible = false">{{$t('buyer.appRepository.button1')}}</el-button>
+        <el-button type="primary" @click="dialogVisible = false">{{$t('buyer.appRepository.button2')}}</el-button>
       </span>
     </el-dialog>
     <div class="shop">
       <el-row>
         <el-col :span="8">
-          <el-input placeholder="输入商店/应用名称" prefix-icon="el-icon-search"></el-input>
+          <el-input :placeholder="$t('buyer.appRepository.searchIn')" prefix-icon="el-icon-search"></el-input>
         </el-col>
         <el-col :span="4" :offset="1">
-          <el-button type="success">搜索</el-button>
+          <el-button type="success">{{$t('buyer.appRepository.search')}}</el-button>
         </el-col>
       </el-row>
       <el-row class="shopBox" :gutter="20">
@@ -37,9 +37,9 @@
                   </span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
-                      <p @click="dialogVisible = true">删除</p>
+                      <p @click="dialogVisible = true">{{$t('buyer.appRepository.delete')}}</p>
                     </el-dropdown-item>
-                    <el-dropdown-item>查看详情</el-dropdown-item>
+                    <el-dropdown-item>{{$t('buyer.appRepository.detail')}}</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
                 <img src="/static/img/uranus/developer/app.png" alt="img">
@@ -49,13 +49,13 @@
                 >DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
                 <el-row :gutter="20">
                   <el-col :span="6" :offset="2">
-                    <p class="free">免费</p>
+                    <p class="free">{{$t('buyer.appRepository.free')}}</p>
                   </el-col>
                   <el-col :span="10" :offset="6">
                     <p class="shops">{{app.shop}}</p>
                   </el-col>
                   <router-link :to="{path: '/deployment'}">
-                    <el-button type="success">部署</el-button>
+                    <el-button type="success">{{$t('buyer.appRepository.deploy')}}</el-button>
                   </router-link>
                 </el-row>
               </div>

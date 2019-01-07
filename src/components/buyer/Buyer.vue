@@ -2,7 +2,7 @@
   <section class="Buyer">
     <el-row class="content-title">
       <el-col class="title" :span="12">
-        <h1>首页B</h1>
+        <h1>{{$t('menu.home')}}</h1>
       </el-col>
       <el-col class="record" :span="12">
         <p>余额:12121212</p>
@@ -14,10 +14,10 @@
       <div class="shop">
         <el-row>
           <el-col :span="12">
-            <p>应用商店</p>
+            <p>{{$t('buyer.home.store')}}</p>
           </el-col>
           <el-col :span="11">
-            <p class="more">查看更多>></p>
+            <p class="more">{{$t('buyer.home.more')}}>></p>
           </el-col>
         </el-row>
         <el-row class="shopBox" :gutter="20">
@@ -25,7 +25,7 @@
             <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
               <div class="resources">
                 <div>
-                  <p class="shops">{{app.shop}}</p>
+                  <p class="shops">{{$t('buyer.home.stores')}}{{app.shop}}</p>
                   <img src="/static/img/uranus/developer/app.png" alt="img">
                   <p class="name">Imagepuler</p>
                   <p
@@ -33,12 +33,12 @@
                   >DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
                   <el-row :gutter="20">
                     <el-col :span="6" :offset="2">
-                      <p class="free">免费</p>
+                      <p class="free">{{$t('buyer.home.free')}}</p>
                     </el-col>
                     <el-col :span="10" :offset="6">
-                      <p class="downloads">123人下载</p>
+                      <p class="downloads">{{$t('buyer.home.download')}}123</p>
                     </el-col>
-                    <el-button type="success">查看详情</el-button>
+                    <el-button type="success">{{$t('buyer.home.details')}}</el-button>
                   </el-row>
                 </div>
               </div>
@@ -49,29 +49,29 @@
       <div class="power">
         <el-row>
           <el-col class="powerTitle" :span="4">
-            <p>算力</p>
+            <p>{{$t('buyer.home.distribution')}}</p>
           </el-col>
           <el-col class="powerNet powerCon" :span="2">
             <p>
-              <span></span>全网算力
+              <span></span>{{$t('buyer.home.allPower')}}
             </p>
           </el-col>
           <el-col class="powerPurch powerCon" :span="2">
             <p>
-              <span></span>已购算力
+              <span></span>{{$t('buyer.home.buyPower')}}
             </p>
           </el-col>
           <el-col class="powerRest powerCon" :span="2">
             <p>
-              <span></span>剩余算力
+              <span></span>{{$t('buyer.home.restPower')}}
             </p>
           </el-col>
         </el-row>
         <div class="choosePower">
-          <span @click="powerYear(0)" :class="{active: this.indexPower == '0'}">全年</span>
-          <span @click="powerMounth(1)" :class="{active: indexPower == '1'}">本月</span>
-          <span @click="powerWeek(2)" :class="{active: indexPower == '2'}">本周</span>
-          <span @click="powerDay(3)" :class="{active: indexPower == '3'}">今天</span>
+          <span @click="powerYear(0)" :class="{active: this.indexPower == '0'}">{{$t('buyer.home.month')}}</span>
+          <span @click="powerMounth(1)" :class="{active: indexPower == '1'}">{{$t('buyer.home.week')}}</span>
+          <span @click="powerWeek(2)" :class="{active: indexPower == '2'}">{{$t('buyer.home.day')}}</span>
+          <span @click="powerDay(3)" :class="{active: indexPower == '3'}">{{$t('buyer.home.hour')}}</span>
         </div>
         <div id="myPower"></div>
       </div>
@@ -105,10 +105,10 @@ export default {
       },
       powerVal: {},
       appList: [
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '1', name: 'Imagepuller', shop: '商店2' },
-        { id: '1', name: 'Imagepuller', shop: '商店3' },
-        { id: '1', name: 'Imagepuller', shop: '商店4' }
+        { id: '1', name: 'Imagepuller', shop: '1' },
+        { id: '1', name: 'Imagepuller', shop: '2' },
+        { id: '1', name: 'Imagepuller', shop: '3' },
+        { id: '1', name: 'Imagepuller', shop: '4' }
       ]
     }
   },

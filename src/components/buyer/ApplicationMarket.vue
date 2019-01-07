@@ -2,21 +2,21 @@
   <section class="appMarket">
     <el-row class="marketHead">
       <el-col class="title" :span="12">
-        <h1>应用市场</h1>
+        <h1>{{$t('menu.appMarket')}}</h1>
       </el-col>
     </el-row>
     <div class="shop">
       <el-row>
         <el-col :span="8">
-          <el-input placeholder="输入商店/应用名称" prefix-icon="el-icon-search"></el-input>
+          <el-input :placeholder="$t('buyer.appMarket.searchIn')" prefix-icon="el-icon-search"></el-input>
         </el-col>
         <el-col :span="4" :offset="1">
-          <el-button type="success">搜索</el-button>
+          <el-button type="success">{{$t('buyer.appMarket.search')}}</el-button>
         </el-col>
         <el-col :span="4" :offset="1">
-          <el-select v-model="value" placeholder="所有分类">
+          <el-select v-model="value1" :placeholder="$t('buyer.appMarket.application')">
             <el-option
-              v-for="item in options"
+              v-for="item in options1"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -24,9 +24,9 @@
           </el-select>
         </el-col>
         <el-col :span="4" :offset="1">
-          <el-select v-model="value" placeholder="全部商店">
+          <el-select v-model="value2" :placeholder="$t('buyer.appMarket.storeAll')">
             <el-option
-              v-for="item in options"
+              v-for="item in options2"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -41,19 +41,19 @@
               <div>
                 <p class="shops">{{app.shop}}</p>
                 <img src="/static/img/uranus/developer/app.png" alt="img">
-                <p class="name">Imagepuler</p>
+                <p class="name">{{app.name}}</p>
                 <p
                   class="detail"
                 >DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
                 <el-row :gutter="20">
                   <el-col :span="6" :offset="2">
-                    <p class="free">免费</p>
+                    <p class="free">{{$t('buyer.appMarket.free')}}</p>
                   </el-col>
                   <el-col :span="10" :offset="6">
-                    <p class="downloads">123人下载</p>
+                    <p class="downloads">{{$t('buyer.appMarket.download')}}123</p>
                   </el-col>
                   <router-link :to="{path: '/deployment'}">
-                    <el-button type="success">查看详情</el-button>
+                    <el-button type="success">{{$t('buyer.appMarket.deploy')}}</el-button>
                   </router-link>
                 </el-row>
               </div>
@@ -75,7 +75,17 @@ export default {
   name: 'ApplicationMarket',
   data() {
     return {
-      options: [
+      options1: [
+        {
+          value: '选项1',
+          label: 'free'
+        },
+        {
+          value: '选项2',
+          label: 'paid'
+        },
+      ],
+      options2: [
         {
           value: '选项1',
           label: '选项1'
@@ -84,29 +94,18 @@ export default {
           value: '选项2',
           label: '选项2'
         },
-        {
-          value: '选项3',
-          label: '选项3'
-        },
-        {
-          value: '选项4',
-          label: '选项4'
-        },
-        {
-          value: '选项5',
-          label: '选项5'
-        }
       ],
-      value: '',
+      value1: '',
+      value2: '',
       appList: [
         { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Imagepuller', shop: '商店2' },
-        { id: '3', name: 'Imagepuller', shop: '商店3' },
-        { id: '4', name: 'Imagepuller', shop: '商店4' },
+        { id: '2', name: 'Vue', shop: '商店2' },
+        { id: '3', name: 'Node', shop: '商店3' },
+        { id: '4', name: 'Cloud', shop: '商店4' },
         { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Imagepuller', shop: '商店2' },
-        { id: '3', name: 'Imagepuller', shop: '商店3' },
-        { id: '4', name: 'Imagepuller', shop: '商店4' }
+        { id: '2', name: 'Vue', shop: '商店2' },
+        { id: '3', name: 'Node', shop: '商店3' },
+        { id: '4', name: 'Cloud', shop: '商店4' },
       ]
     }
   }

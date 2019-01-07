@@ -2,22 +2,22 @@
   <section class="myResource">
     <el-row class="myResourceHead">
       <el-col class="title" :span="12">
-        <h1>我的资源</h1>
+        <h1>{{$t('menu.myResource')}}</h1>
       </el-col>
     </el-row>
     <el-row class="myResourceBox">
       <el-row>
         <el-col class="title" :span="24">
-          <h1>资源剩余总览</h1>
+          <h1>{{$t('buyer.myResource.resourceAll')}}</h1>
         </el-col>
       </el-row>
       <el-row>
         <el-col :span="4">
-          <h2>总资源剩余率</h2>
-          <div id="restResource">123</div>
+          <h2>{{$t('buyer.myResource.restAll')}}</h2>
+          <div id="restResource"></div>
         </el-col>
         <el-col :span="19" :offset="1">
-          <h2>各类资源剩余率</h2>
+          <h2>{{$t('buyer.myResource.restOne')}}</h2>
           <div class="restRes">
             <div id="restResource1"></div>
             <div id="restResource2"></div>
@@ -29,7 +29,7 @@
       </el-row>
       <el-row>
         <el-col class="title" :span="24">
-          <h1>应用预览</h1>
+          <h1>{{$t('buyer.myResource.resourceOver')}}</h1>
         </el-col>
       </el-row>
       <el-row class="appResource">
@@ -37,22 +37,22 @@
           <div id="restResource6"></div>
         </el-col>
         <el-col :span="7" :offset="1">
-          <h3>部署资源剩余：4</h3>
-          <h3>剩余资源：68%</h3>
-          <h3>购买时间：2018/12/12 12:12:12</h3>
-          <h3>结束时间：2019/12/12 12:12:12</h3>
+          <h3>{{$t('buyer.myResource.number')}}4</h3>
+          <h3>{{$t('buyer.myResource.restResource')}}68%</h3>
+          <h3>{{$t('buyer.myResource.purchaseTime')}}2018/12/12 12:12:12</h3>
+          <h3>{{$t('buyer.myResource.endTime')}}2019/12/12 12:12:12</h3>
         </el-col>
         <el-col :span="8">
-          <h3 class="restTime">剩余使用时间：已到期
+          <h3 class="restTime">{{$t('buyer.myResource.countdownTime')}}{{$t('buyer.myResource.timeUp')}}
             <el-button type="success">
-              前往续费
+              {{$t('buyer.myResource.renewal')}}
               <i class="el-icon-arrow-right"></i>
             </el-button>
           </h3>
         </el-col>
         <el-col :span="3" :offset="1">
           <p @click="$router.push({path: '/resourcepool'})">
-            查看详情
+            {{$t('buyer.myResource.detail')}}
             <i class="el-icon-arrow-right"></i>
           </p>
         </el-col>
@@ -63,22 +63,22 @@
           <div id="restResource7"></div>
         </el-col>
         <el-col :span="7" :offset="1">
-          <h3>部署资源剩余：4</h3>
-          <h3>剩余资源：68%</h3>
-          <h3>购买时间：2018/12/12 12:12:12</h3>
-          <h3>结束时间：2019/12/12 12:12:12</h3>
+          <h3>{{$t('buyer.myResource.number')}}4</h3>
+          <h3>{{$t('buyer.myResource.restResource')}}68%</h3>
+          <h3>{{$t('buyer.myResource.purchaseTime')}}2018/12/12 12:12:12</h3>
+          <h3>{{$t('buyer.myResource.endTime')}}2019/12/12 12:12:12</h3>
         </el-col>
         <el-col :span="8">
-          <h3 class="restTime">剩余使用时间：已到期
+          <h3 class="restTime">{{$t('buyer.myResource.countdownTime')}}{{$t('buyer.myResource.timeUp')}}
             <el-button type="success">
-              前往续费
+              {{$t('buyer.myResource.renewal')}}
               <i class="el-icon-arrow-right"></i>
             </el-button>
           </h3>
         </el-col>
         <el-col :span="3" :offset="1">
-          <p>
-            查看详情
+          <p @click="$router.push({path: '/resourcepool'})">
+            {{$t('buyer.myResource.detail')}}
             <i class="el-icon-arrow-right"></i>
           </p>
         </el-col>
@@ -88,22 +88,22 @@
           <div id="restResource8"></div>
         </el-col>
         <el-col :span="7" :offset="1">
-          <h3>部署资源剩余：4</h3>
-          <h3>剩余资源：68%</h3>
-          <h3>购买时间：2018/12/12 12:12:12</h3>
-          <h3>结束时间：2019/12/12 12:12:12</h3>
+          <h3>{{$t('buyer.myResource.number')}}4</h3>
+          <h3>{{$t('buyer.myResource.restResource')}}68%</h3>
+          <h3>{{$t('buyer.myResource.purchaseTime')}}2018/12/12 12:12:12</h3>
+          <h3>{{$t('buyer.myResource.endTime')}}2019/12/12 12:12:12</h3>
         </el-col>
         <el-col :span="8">
-          <h3 class="restTime">剩余使用时间：已到期
+          <h3 class="restTime">{{$t('buyer.myResource.countdownTime')}}{{$t('buyer.myResource.timeUp')}}
             <el-button type="success">
-              前往续费
+              {{$t('buyer.myResource.renewal')}}
               <i class="el-icon-arrow-right"></i>
             </el-button>
           </h3>
         </el-col>
         <el-col :span="3" :offset="1">
-          <p>
-            查看详情
+          <p @click="$router.push({path: '/resourcepool'})">
+            {{$t('buyer.myResource.detail')}}
             <i class="el-icon-arrow-right"></i>
           </p>
         </el-col>
@@ -232,7 +232,7 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|CPU}', '{b|88%}'].join('\n'),
+                    formatter: ['{a|GPU}', '{b|88%}'].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',
@@ -259,7 +259,7 @@ export default {
       myChart3.setOption({
         series: [
           {
-            name: '内存',
+            name: 'memory',
             type: 'pie',
             radius: ['85%', '70%'],
             hoverAnimation: false,
@@ -274,7 +274,7 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|内存}', '{b|62%}'].join('\n'),
+                    formatter: ['{a|Memory}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',
@@ -301,7 +301,7 @@ export default {
       myChart4.setOption({
         series: [
           {
-            name: '硬盘',
+            name: 'disk',
             type: 'pie',
             radius: ['85%', '70%'],
             hoverAnimation: false,
@@ -316,7 +316,7 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|硬盘}', '{b|88%}'].join('\n'),
+                    formatter: ['{a|Disk}', '{b|88%}'].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',
@@ -343,7 +343,7 @@ export default {
       myChart5.setOption({
         series: [
           {
-            name: '网络',
+            name: 'network',
             type: 'pie',
             radius: ['85%', '70%'],
             hoverAnimation: false,
@@ -358,7 +358,7 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|网络}', '{b|62%}'].join('\n'),
+                    formatter: ['{a|Network}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',
@@ -385,7 +385,7 @@ export default {
       myChart6.setOption({
         series: [
           {
-            name: '资源池A',
+            name: 'pool',
             type: 'pie',
             radius: ['85%', '70%'],
             hoverAnimation: false,
@@ -400,7 +400,7 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|资源池A}', '{b|68%}'].join('\n'),
+                    formatter: ['{a|Pool A}', '{b|68%}'].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',
@@ -427,7 +427,7 @@ export default {
       myChart7.setOption({
         series: [
           {
-            name: 'Gpu',
+            name: 'pool',
             type: 'pie',
             radius: ['85%', '70%'],
             hoverAnimation: false,
@@ -442,7 +442,7 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|资源池B}', '{b|88%}'].join('\n'),
+                    formatter: ['{a|Pool B}', '{b|88%}'].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',
@@ -469,7 +469,7 @@ export default {
       myChart8.setOption({
         series: [
           {
-            name: '内存',
+            name: 'pool',
             type: 'pie',
             radius: ['85%', '70%'],
             hoverAnimation: false,
@@ -484,7 +484,7 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|资源池C}', '{b|62%}'].join('\n'),
+                    formatter: ['{a|Pool C}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',

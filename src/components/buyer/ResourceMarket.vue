@@ -1,12 +1,12 @@
 <template>
   <section class="resourceMarket">
-    <el-dialog title="确认交易信息" :visible.sync="outerVisible" width="800px">
+    <el-dialog :title="$t('buyer.resourceMarket.confirmTitle')" :visible.sync="outerVisible" width="800px">
       <el-table :data="gridData">
-        <el-table-column property="order" label="订单号"></el-table-column>
-        <el-table-column property="address" label="收款地址"></el-table-column>
-        <el-table-column property="number" label="转账数额"></el-table-column>
-        <el-table-column property="type" label="交易方式"></el-table-column>
-        <el-table-column label="手续费">
+        <el-table-column property="order" :label="$t('buyer.resourceMarket.orderNumber')"></el-table-column>
+        <el-table-column property="address" :label="$t('buyer.resourceMarket.address')"></el-table-column>
+        <el-table-column property="number" :label="$t('buyer.resourceMarket.value')"></el-table-column>
+        <el-table-column property="type" :label="$t('buyer.resourceMarket.content')"></el-table-column>
+        <el-table-column :label="$t('buyer.resourceMarket.fee')">
           <template slot-scope="scope">
             <el-input-number
               size="mini"
@@ -19,40 +19,40 @@
         </el-table-column>
       </el-table>
       <div class="code">
-        <span slot="label">验证码：</span>
-        <el-input placeholder="输入验证码"></el-input>
-        <el-button>获取验证码</el-button>
+        <span slot="label">{{$t('buyer.resourceMarket.code')}}</span>
+        <el-input :placeholder="$t('buyer.resourceMarket.codeIn')"></el-input>
+        <el-button>{{$t('buyer.resourceMarket.codeBtn')}}</el-button>
       </div>
-      <p>确认后，您的URAC将通过区块链网络转账至相应地址，确认后订单不可撤销。</p>
-      <p>订单待支付时间为30分钟，若超过此时间，则视为自动取消订单。</p>
-      <el-dialog width="800px" :visible.sync="innerVisible" append-to-body>
-        <p>部署成功</p>
+      <p>{{$t('buyer.resourceMarket.confirmText1')}}</p>
+      <p>{{$t('buyer.resourceMarket.confirmText2')}}</p>
+      <el-dialog :title="$t('buyer.resourceMarket.confirmText3')" width="800px" :visible.sync="innerVisible" append-to-body>
+        <p>{{$t('buyer.resourceMarket.confirmText4')}}</p>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="innerVisible = false">确 定</el-button>
+          <el-button type="primary" @click="innerVisible = false">{{$t('buyer.resourceMarket.button2')}}</el-button>
         </div>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="outerVisible = false">取 消</el-button>
-        <el-button type="primary" @click="outerVisible = false, innerVisible = true">确 定</el-button>
+        <el-button @click="outerVisible = false">{{$t('buyer.resourceMarket.button1')}}</el-button>
+        <el-button type="primary" @click="outerVisible = false, innerVisible = true">{{$t('buyer.resourceMarket.button2')}}</el-button>
       </div>
     </el-dialog>
     <el-row class="resourceHead">
       <el-col class="title" :span="24">
-        <h1>资源市场</h1>
+        <h1>{{$t('menu.resourceMarket')}}</h1>
       </el-col>
     </el-row>
     <el-row class="resourceBox">
       <el-row>
         <el-col class="title" :span="24">
-          <h1>资源市场</h1>
+          <h1>{{$t('buyer.resourceMarket.purchase')}}</h1>
         </el-col>
       </el-row>
       <el-row class="select">
         <el-col :span="6" :offset="2">
-          <span class="select-left">所属地区：</span>
-          <el-select v-model="value">
+          <span class="select-left">{{$t('buyer.resourceMarket.region')}}</span>
+          <el-select v-model="valueRegion">
             <el-option
-              v-for="item in options"
+              v-for="item in optionsRegion"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -60,10 +60,10 @@
           </el-select>
         </el-col>
         <el-col :span="5" :offset="2">
-          <span class="select-left">CPU：</span>
-          <el-select v-model="value">
+          <span class="select-left">CPU</span>
+          <el-select v-model="valueCpu">
             <el-option
-              v-for="item in options"
+              v-for="item in optionsCpu"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -71,10 +71,10 @@
           </el-select>
         </el-col>
         <el-col :span="6" :offset="2">
-          <span class="select-left">硬盘大小：</span>
-          <el-select v-model="value">
+          <span class="select-left">{{$t('buyer.resourceMarket.disk')}}</span>
+          <el-select v-model="valueDisk">
             <el-option
-              v-for="item in options"
+              v-for="item in optionsDisk"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -84,10 +84,10 @@
       </el-row>
       <el-row class="select">
         <el-col :span="6" :offset="2">
-          <span class="select-left">内存大小：</span>
-          <el-select v-model="value">
+          <span class="select-left">{{$t('buyer.resourceMarket.memory')}}</span>
+          <el-select v-model="valueMemory">
             <el-option
-              v-for="item in options"
+              v-for="item in optionsMemory"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -95,10 +95,10 @@
           </el-select>
         </el-col>
         <el-col :span="5" :offset="2">
-          <span class="select-left">GPU：</span>
-          <el-select v-model="value">
+          <span class="select-left">GPU</span>
+          <el-select v-model="valueGpu">
             <el-option
-              v-for="item in options"
+              v-for="item in optionsGpu"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -106,10 +106,10 @@
           </el-select>
         </el-col>
         <el-col :span="6" :offset="2">
-          <span class="select-left">带宽大小：</span>
-          <el-select v-model="value">
+          <span class="select-left">{{$t('buyer.resourceMarket.network')}}</span>
+          <el-select v-model="valueNetwork">
             <el-option
-              v-for="item in options"
+              v-for="item in optionsNetwork"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -119,21 +119,21 @@
       </el-row>
       <el-row class="select">
         <el-col :span="20" :offset="2">
-          <span class="select-left">时间筛选：</span>
-          <el-date-picker v-model="value1" type="date" placeholder="开始时间"></el-date-picker>
+          <span class="select-left">{{$t('buyer.resourceMarket.timeScreening')}}</span>
+          <el-date-picker v-model="time1" type="date" :placeholder="$t('buyer.resourceMarket.startingTime')"></el-date-picker>
           <span class="el-icon-arrow-right"></span>
-          <el-date-picker v-model="value1" type="date" placeholder="结束时间"></el-date-picker>
+          <el-date-picker v-model="time2" type="date" :placeholder="$t('buyer.resourceMarket.endTime')"></el-date-picker>
         </el-col>
       </el-row>
       <el-row class="select">
         <el-col class="resourceName" :span="8" :offset="2">
-          <span class="select-left">资源名称：</span>
-          <el-input class="input-margin" v-model="input" placeholder="创建资源名称"></el-input>
+          <span class="select-left">{{$t('buyer.resourceMarket.resourceName')}}</span>
+          <el-input class="input-margin" v-model="input" :placeholder="$t('buyer.resourceMarket.creatResource')"></el-input>
         </el-col>
       </el-row>
       <el-row class="button">
         <el-col :span="6" :offset="10">
-          <el-button type="success" @click="outerVisible = true">确认购买</el-button>
+          <el-button type="success" @click="outerVisible = true">{{$t('buyer.resourceMarket.confirm')}}</el-button>
         </el-col>
       </el-row>
     </el-row>
@@ -145,35 +145,95 @@ export default {
   name: "ResourceMarket",
   data() {
     return {
-      options: [
+      optionsRegion: [
         {
           value: "选项1",
-          label: "黄金糕"
+          label: "选项1"
         },
         {
           value: "选项2",
-          label: "双皮奶"
+          label: "选项2"
         },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
-        }
       ],
+      valueRegion: "",
+      optionsMemory: [
+        {
+          value: "选项1",
+          label: "选项1"
+        },
+        {
+          value: "选项2",
+          label: "选项2"
+        },
+      ],
+      valueMemory: "",
+      options: [
+        {
+          value: "选项1",
+          label: "选项1"
+        },
+        {
+          value: "选项2",
+          label: "选项2"
+        },
+      ],
+      valueCpu: "",
+      optionsCpu: [
+        {
+          value: "选项1",
+          label: "选项1"
+        },
+        {
+          value: "选项2",
+          label: "选项2"
+        },
+      ],
+      valueGpu: "",
+      optionsGpu: [
+        {
+          value: "选项1",
+          label: "选项1"
+        },
+        {
+          value: "选项2",
+          label: "选项2"
+        },
+      ],
+      valueDisk: "",
+      optionsDisk: [
+        {
+          value: "选项1",
+          label: "选项1"
+        },
+        {
+          value: "选项2",
+          label: "选项2"
+        },
+      ],
+      optionsNetwork: [
+        {
+          value: "选项1",
+          label: "选项1"
+        },
+        {
+          value: "选项2",
+          label: "选项2"
+        },
+      ],
+      valueNetwork: "",
       value: "",
-      value1: "",
-      value2: "",
+      time1: "",
+      time2: "",
       input: "",
-      num1: 1,
       outerVisible: false,
-      innerVisible: false
+      innerVisible: false,
+      gridData: [{
+          order: "214521236987",
+          address: "0x461s2df6…",
+          number: "1000021.23",
+          type: "购买应用",
+          charge: "0.11"
+        },],
     };
   }
 };
@@ -189,7 +249,7 @@ export default {
       display: flex;
       margin: 25px 150px;
       span {
-        width: 105px;
+        width: 165px;
         font-family: PingFang-SC-Medium;
         font-size: 16px;
         color: #363636;
@@ -252,8 +312,7 @@ export default {
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
         line-height: 24px;
-        min-width: 100px;
-        width: 100px;
+        width: 95px;
       }
       .input-margin {
         margin-left: -15px;
