@@ -2,39 +2,39 @@
   <section class="Seller">
     <el-row class="content-title">
       <el-col class="title" :span="12">
-        <h1>首页S</h1>
+        <h1>{{$t('menu.home')}}</h1>
       </el-col>
       <el-col class="record" :span="12">
-        <p>余额:12121212</p>
-        <p>收益:12121212</p>
+        <p>{{$t('seller.home.balance')}}12121212</p>
+        <p>{{$t('seller.home.earnings')}}12121212</p>
       </el-col>
     </el-row>
     <!-- Main content -->
     <div class="content container-fluid">
       <div class="my-content">
         <div class="consumption">
-          <p>我的资源</p>
+          <p>{{$t('seller.home.resource')}}</p>
           <div class="chooseCon">
-            <span @click="consumptionYear(0)" :class="{active: this.indexCon == '0'}">全年</span>
-            <span @click="consumptionMounth(1)" :class="{active: indexCon == '1'}">本月</span>
-            <span @click="consumptionWeek(2)" :class="{active: indexCon == '2'}">本周</span>
-            <span @click="consumptionDay(3)" :class="{active: indexCon == '3'}">今天</span>
+            <span @click="consumptionYear(0)" :class="{active: this.indexCon == '0'}">{{$t('seller.home.month')}}</span>
+            <span @click="consumptionMounth(1)" :class="{active: indexCon == '1'}">{{$t('seller.home.week')}}</span>
+            <span @click="consumptionWeek(2)" :class="{active: indexCon == '2'}">{{$t('seller.home.day')}}</span>
+            <span @click="consumptionDay(3)" :class="{active: indexCon == '3'}">{{$t('seller.home.hour')}}</span>
           </div>
           <div id="myConsumption"></div>
         </div>
         <div class="profit">
-          <p>我的收益</p>
+          <p>{{$t('seller.home.myEarnings')}}</p>
           <div class="choosePro">
-            <span @click="profitYear(0)" :class="{active: this.indexPro == '0'}">全年</span>
-            <span @click="profitMounth(1)" :class="{active: this.indexPro == '1'}">本月</span>
-            <span @click="profitWeek(2)" :class="{active: this.indexPro == '2'}">本周</span>
-            <span @click="profitDay(3)" :class="{active: this.indexPro == '3'}">今天</span>
+            <span @click="profitYear(0)" :class="{active: this.indexPro == '0'}">{{$t('seller.home.month')}}</span>
+            <span @click="profitMounth(1)" :class="{active: this.indexPro == '1'}">{{$t('seller.home.week')}}</span>
+            <span @click="profitWeek(2)" :class="{active: this.indexPro == '2'}">{{$t('seller.home.day')}}</span>
+            <span @click="profitDay(3)" :class="{active: this.indexPro == '3'}">{{$t('seller.home.hour')}}</span>
           </div>
           <div id="myProfit"></div>
         </div>
       </div>
       <div class="power">
-        <p>我的算力</p>
+        <p>{{$t('seller.home.power')}}</p>
         <div class="powerBox">
           <div id="Cpu">1</div>
           <div id="Memory">1</div>
@@ -44,15 +44,15 @@
         </div>
       </div>
       <div class="record">
-        <div class="record-head">Transaction Record</div>
+        <div class="record-head">{{$t('seller.home.record')}}</div>
         <el-row>
           <el-col :span="24">
             <el-table :data="tableData" border style="width: 100%">
-              <el-table-column prop="type" label="Type"></el-table-column>
-              <el-table-column prop="time" label="Order Time"></el-table-column>
-              <el-table-column prop="hash" label="Order Hash"></el-table-column>
-              <el-table-column prop="amount" label="Amount"></el-table-column>
-              <el-table-column prop="fee" label="Fee"></el-table-column>
+              <el-table-column prop="type" :label="$t('seller.home.type')"></el-table-column>
+              <el-table-column prop="time" :label="$t('seller.home.time')"></el-table-column>
+              <el-table-column prop="hash" :label="$t('seller.home.hash')"></el-table-column>
+              <el-table-column prop="amount" :label="$t('seller.home.amount')"></el-table-column>
+              <el-table-column prop="fee" :label="$t('seller.home.fee')"></el-table-column>
             </el-table>
           </el-col>
         </el-row>

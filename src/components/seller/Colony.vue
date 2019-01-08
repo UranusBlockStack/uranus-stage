@@ -2,23 +2,23 @@
   <section class="colony">
     <el-row class="colonyHead">
       <el-col class="title" :span="12">
-        <h1>我的集群</h1>
+        <h1>{{$t('menu.myColony')}}</h1>
       </el-col>
     </el-row>
-    <el-dialog title="设置资源参数" :visible.sync="dialogVisible" width="650px">
+    <el-dialog :title="$t('seller.group.settingTitle')" :visible.sync="dialogVisible" width="650px">
       <span>
         <el-form ref="form" :model="form" label-width="80px">
-          <el-form-item label="资源名称">
+          <el-form-item :label="$t('seller.group.settingName')">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
-          <el-form-item label="设置租金">
+          <el-form-item :label="$t('seller.group.setRent')">
             <el-input v-model="form.price"></el-input>
           </el-form-item>
-          <el-form-item label="设置时间">
+          <el-form-item :label="$t('seller.group.settingTime')">
             <el-col :span="8">
               <el-date-picker
                 type="date"
-                placeholder="开始时间"
+                :placeholder="$t('seller.group.startingTime')"
                 v-model="form.date1"
                 style="width: 100%;"
               ></el-date-picker>
@@ -29,42 +29,46 @@
             <el-col :span="8">
               <el-date-picker
                 type="date"
-                placeholder="结束时间"
+                :placeholder="$t('seller.group.endTime')"
                 v-model="form.date2"
                 style="width: 100%;"
               ></el-date-picker>
             </el-col>
           </el-form-item>
-          <el-form-item label="所属地区">
-            <el-select v-model="form.address" placeholder="请选择所属地区">
-              <el-option label="亚洲" value="shanghai"></el-option>
-              <el-option label="欧洲" value="beijing"></el-option>
+          <el-form-item :label="$t('seller.group.setRegion')">
+            <el-select v-model="form.address" :placeholder="$t('seller.group.setRegion')">
+               <el-option :label="$t('seller.group.asia')" value="asia"></el-option>
+              <el-option :label="$t('seller.group.europe')" value="europe"></el-option>
+              <el-option :label="$t('seller.group.africa')" value="africa"></el-option>
+              <el-option :label="$t('seller.group.south')" value="southAmerica"></el-option>
+              <el-option :label="$t('seller.group.north')" value="northAmerica"></el-option>
+              <el-option :label="$t('seller.group.oceania')" value="oceania"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item label="上架状态">
-            <el-select v-model="form.state" placeholder="请选择活动区域">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+          <el-form-item :label="$t('seller.group.setState')">
+            <el-select v-model="form.state" :placeholder="$t('seller.group.setState')">
+              <el-option :label="$t('seller.group.inSale')" value="inSale"></el-option>
+              <el-option :label="$t('seller.group.notSale')" value="notSale"></el-option>
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="dialogVisible = false">立即创建</el-button>
-            <el-button @click="dialogVisible = false">取消</el-button>
+            <el-button type="primary"  @click="dialogVisible = false">{{$t('seller.group.confirm')}}</el-button>
+            <el-button  @click="dialogVisible = false">{{$t('seller.group.cancel')}}</el-button>
           </el-form-item>
         </el-form>
       </span>
     </el-dialog>
     <el-dialog :visible.sync="outerVisible" width="480px">
-      <p>退出后，将解除与集群中的关系，且无法恢复相应数据，确定现在退出吗？</p>
+      <p>{{$t('seller.group.deleteSure')}}</p>
       <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
-        <p>主机已被占用，不可退出集群。</p>
+        <p>{{$t('seller.group.deleteText1')}}</p>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="innerVisible = false">确 定</el-button>
+          <el-button type="primary" @click="innerVisible = false">{{$t('seller.group.confirm')}}</el-button>
         </div>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="outerVisible = false">取 消</el-button>
-        <el-button type="primary" @click="outerVisible = false, innerVisible = true">确 定</el-button>
+        <el-button @click="outerVisible = false">{{$t('seller.group.cancel')}}</el-button>
+        <el-button type="primary" @click="outerVisible = false, innerVisible = true">{{$t('seller.group.confirm')}}</el-button>
       </div>
     </el-dialog>
     <el-row class="colonyBox">
@@ -78,31 +82,31 @@
           <div id="restPool"></div>
         </el-col>
         <el-col class="padding-top" :span="5" :offset="1">
-          <h4>盈利：888.86URAC</h4>
-          <p>价格：100URAC/天</p>
-          <p>所属地区：亚洲</p>
+          <h4>{{$t('seller.group.earnings')}}888.86URAC</h4>
+          <p>{{$t('seller.group.value')}}100URAC/天</p>
+          <p>{{$t('seller.group.region')}}{{$t('seller.group.asia')}}</p>
         </el-col>
         <el-col class="padding-top" :span="6">
-          <p>上架状态：出售中</p>
-          <p>运行状态：运行中</p>
-          <p>购买时间：2018/12/12 12:12:12</p>
-          <p>结束时间：2019/12/12 12:12:12</p>
+          <p>{{$t('seller.group.stateSale')}}{{$t('seller.group.inSale')}}</p>
+          <p>{{$t('seller.group.operatingStatus')}}{{$t('seller.group.running')}}</p>
+          <p>{{$t('seller.group.buyingTime')}}2018/12/12 12:12:12</p>
+          <p>{{$t('seller.group.endingTime')}}2019/12/12 12:12:12</p>
         </el-col>
         <el-col class="padding-top" :span="4">
-          <p>剩余时间：已到期</p>
+          <p>{{$t('seller.group.restTime')}}{{$t('seller.group.timeup')}}</p>
           <el-button type="success">
-            前往续费
+            {{$t('seller.group.renewal')}}
             <i class="el-icon-arrow-right"></i>
           </el-button>
         </el-col>
         <el-col :span="4">
-          <p class="setting" @click="dialogVisible = true">设置</p>
+          <p class="setting" @click="dialogVisible = true">{{$t('seller.group.setting')}}</p>
         </el-col>
         <el-col class="lineBox"></el-col>
       </el-row>
       <el-row>
         <el-col :span="20">
-          <h2>各类资源剩余率</h2>
+          <h2>{{$t('seller.group.restOne')}}</h2>
           <div class="restRes">
             <div id="restResource1"></div>
             <div id="restResource2"></div>
@@ -115,13 +119,13 @@
       <el-row class="myHostBox">
         <el-table :data="tableData" style="width: 100%">
           <template slot="empty">
-            <p class="empty-text">提示：系统未检测到设备中存在安装包，请点击右上角的下载包，安装后刷新此页面，进行第一次资源池的创建。</p>
+            <p class="empty-text">{{$t('seller.group.text')}}</p>
           </template>
           <el-table-column
             prop="state"
-            label="状态"
+            :label="$t('seller.group.state')"
             sortable
-            :filters="[{ text: '在线', value: '在线' }, { text: '离线', value: '离线' }]"
+            :filters="[{ text: this.$t('seller.group.online'), value: '在线' }, { text: this.$t('seller.group.offline'), value: '离线' }]"
             :filter-method="filterState"
           >
             <template slot-scope="scope">
@@ -131,15 +135,15 @@
               >{{scope.row.state}}</el-tag>
             </template>
           </el-table-column>
-          <el-table-column prop="number" label="主机编号"></el-table-column>
-          <el-table-column prop="cpu" label="剩余CPU"></el-table-column>
-          <el-table-column prop="gpu" label="剩余GPU"></el-table-column>
-          <el-table-column prop="memory" label="剩余内存"></el-table-column>
-          <el-table-column prop="disk" label="剩余硬盘"></el-table-column>
-          <el-table-column prop="network" label="剩余网络"></el-table-column>
+          <el-table-column prop="number" :label="$t('seller.group.number')"></el-table-column>
+          <el-table-column prop="cpu" label="CPU"></el-table-column>
+          <el-table-column prop="gpu" label="GPU"></el-table-column>
+          <el-table-column prop="memory" :label="$t('seller.group.memory')"></el-table-column>
+          <el-table-column prop="disk" :label="$t('seller.group.disk')"></el-table-column>
+          <el-table-column prop="network" :label="$t('seller.group.network')"></el-table-column>
           <el-table-column>
             <template>
-              <p style="color: #8eb357" @click="outerVisible = true">删除</p>
+              <p style="color: #8eb357" @click="outerVisible = true">{{$t('seller.group.deleteHost')}}</p>
             </template>
           </el-table-column>
         </el-table>

@@ -2,19 +2,19 @@
   <section class="myHost">
     <el-row class="myHostHead">
       <el-col class="title" :span="12">
-        <h1>我的主机</h1>
+        <h1>{{$t('menu.myHost')}}</h1>
       </el-col>
     </el-row>
     <el-row class="myHostBox">
       <el-table :data="tableData" style="width: 100%">
         <template slot="empty">
-          <p class="empty-text">提示：系统未检测到设备中存在安装包，请点击右上角的下载包，安装后刷新此页面，进行第一次资源池的创建。</p>
+          <p class="empty-text">{{$t('seller.host.text')}}</p>
         </template>
         <el-table-column
           prop="state"
-          label="状态"
+          :label="$t('seller.host.state')"
           sortable
-          :filters="[{ text: '在线', value: '在线' }, { text: '离线', value: '离线' }]"
+          :filters="[{ text: this.$t('seller.host.online'), value: this.$t('seller.host.online') }, { text: this.$t('seller.host.offline'), value: this.$t('seller.host.offline') }]"
           :filter-method="filterState"
         >
           <template slot-scope="scope">
@@ -24,17 +24,17 @@
             >{{scope.row.state}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="number" label="主机编号"></el-table-column>
-        <el-table-column prop="cpu" label="剩余CPU"></el-table-column>
-        <el-table-column prop="gpu" label="剩余GPU"></el-table-column>
-        <el-table-column prop="memory" label="剩余内存"></el-table-column>
-        <el-table-column prop="disk" label="剩余硬盘"></el-table-column>
-        <el-table-column prop="network" label="剩余网络"></el-table-column>
+        <el-table-column prop="number" :label="$t('seller.host.number')"></el-table-column>
+        <el-table-column prop="cpu" label="CPU"></el-table-column>
+        <el-table-column prop="gpu" label="GPU"></el-table-column>
+        <el-table-column prop="memory" :label="$t('seller.host.memory')"></el-table-column>
+        <el-table-column prop="disk" :label="$t('seller.host.disk')"></el-table-column>
+        <el-table-column prop="network" :label="$t('seller.host.network')"></el-table-column>
         <el-table-column
           prop="colony"
-          label="所属集群"
+          :label="$t('seller.host.ownGroup')"
           sortable
-          :filters="[{ text: '集群A', value: '集群A' }, { text: '集群B', value: '集群B' }, { text: '集群C', value: '集群C' }, { text: '集群E', value: '集群E' }]"
+          :filters="[{ text: this.$t('seller.host.group')+'A', value: this.$t('seller.host.group') + 'A' }, { text: this.$t('seller.host.group')+'B', value: this.$t('seller.host.group') + 'B' }, { text: this.$t('seller.host.group')+'C', value: this.$t('seller.host.group') + 'C' }, { text: this.$t('seller.host.group')+'E', value: this.$t('seller.host.group') + 'E' }]"
           :filter-method="filterColony"
         >
           <template slot-scope="scope">
@@ -53,54 +53,54 @@ export default {
     return {
       tableData: [
         {
-          state: '在线',
-          number: '主机A',
+          state: this.$t('seller.host.online'),
+          number: this.$t('seller.host.hosts') + 'A',
           cpu: '2核',
           gpu: '2G',
           memory: '2G',
           disk: '1T',
           network: '2M',
-          colony: '集群A'
+          colony: this.$t('seller.host.group') + 'A'
         },
         {
-          state: '离线',
+          state: this.$t('seller.host.offline'),
           number: '主机B',
           cpu: '1核',
           gpu: '2G',
           memory: '2G',
           disk: '1T',
           network: '2M',
-          colony: '集群C'
+          colony: this.$t('seller.host.group') + 'C'
         },
         {
-          state: '在线',
+          state: this.$t('seller.host.online'),
           number: '主机C',
           cpu: '3核',
           gpu: '2G',
           memory: '2G',
           disk: '1T',
           network: '2M',
-          colony: '集群D'
+          colony: this.$t('seller.host.group') + 'D'
         },
         {
-          state: '在线',
+          state: this.$t('seller.host.offline'),
           number: '主机D',
           cpu: '1核',
           gpu: '2G',
           memory: '2G',
           disk: '1T',
           network: '2M',
-          colony: '集群B'
+          colony: this.$t('seller.host.group') + 'B'
         },
         {
-          state: '离线',
+          state: this.$t('seller.host.online'),
           number: '主机E',
           cpu: '2核',
           gpu: '2G',
           memory: '2G',
           disk: '2T',
           network: '2M',
-          colony: '集群B'
+          colony: this.$t('seller.host.group') + 'B'
         }
       ]
     }

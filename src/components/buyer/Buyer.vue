@@ -5,8 +5,8 @@
         <h1>{{$t('menu.home')}}</h1>
       </el-col>
       <el-col class="record" :span="12">
-        <p>余额:12121212</p>
-        <p>收益:12121212</p>
+        <p>{{$t('buyer.home.balance')}}12121212</p>
+        <p>{{$t('buyer.home.earnings')}}12121212</p>
       </el-col>
     </el-row>
     <!-- Main content -->

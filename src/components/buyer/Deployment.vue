@@ -221,13 +221,13 @@
       <el-row class="select">
         <el-col class="resourceName" :span="8" :offset="2">
           <span class="select-left">{{$t('buyer.deploy.nameApp')}}</span>
-          <el-input class="input-margin" v-model="input" placeholder="默认作者上传名称"></el-input>
+          <el-input class="input-margin" v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
         </el-col>
       </el-row>
       <el-row class="select">
         <el-col class="resourceName" :span="8" :offset="2">
           <span class="select-left">{{$t('buyer.deploy.description')}}</span>
-          <el-input class="input-margin" v-model="input" placeholder="默认作者上传名称"></el-input>
+          <el-input class="input-margin" v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
         </el-col>
       </el-row>
       <el-row class="border-line"></el-row>
@@ -268,24 +268,12 @@ export default {
       options: [
         {
           value: "选项1",
-          label: "黄金糕"
+          label: "选项1"
         },
         {
           value: "选项2",
-          label: "双皮奶"
+          label: "选项2"
         },
-        {
-          value: "选项3",
-          label: "蚵仔煎"
-        },
-        {
-          value: "选项4",
-          label: "龙须面"
-        },
-        {
-          value: "选项5",
-          label: "北京烤鸭"
-        }
       ],
       value: "",
       value1: "",
