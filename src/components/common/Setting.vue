@@ -242,12 +242,13 @@ export default {
 .Setting {
   width: 100%;
   min-width: 1130px;
+  background: #f2f2f2;
   p {
     margin: 0;
   }
   .setting-head {
     background: #ffffff;
-    height: 64px;
+    height: 65px;
     p {
       font-family: PingFang-SC-Bold;
       padding-left: 30px;

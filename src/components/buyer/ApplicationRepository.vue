@@ -130,7 +130,6 @@ export default {
     min-width: 1130px;
     margin: 20px;
     padding: 15px;
-    box-shadow: 0 1px 4px 0;
     .el-button {
       background: #8eb357;
       border: none;

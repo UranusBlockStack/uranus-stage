@@ -76,7 +76,7 @@ export default {
         }, {
           value: '选项2',
           label: '选项2'
-        },
+        }
       ],
       value2: '',
       options2: [
@@ -86,7 +86,7 @@ export default {
         }, {
           value: '选项2',
           label: '选项2'
-        },
+        }
       ],
       dialogVisible: false,
       tableData: [

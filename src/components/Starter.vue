@@ -48,9 +48,7 @@ export default {
     SiderbarRight
   },
   data() {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+    return {}
   }
 }
 </script>

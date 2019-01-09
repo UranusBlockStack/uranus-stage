@@ -27,45 +27,45 @@
     <ul class="sidebar-menu" data-widget="tree">
       <!-- <li class="header">HEADER</li> -->
       <!-- Optionally, you can add icons to the links -->
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'seller'">
         <router-link :to="{path: '/seller'}">
-          <i class="fa fa-link"></i>
+          <i class="iconfont icon-home"></i>
           <span>{{$t('menu.home')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'buyer'">
         <router-link :to="{path: '/buyer'}">
-          <i class="fa fa-link"></i>
+          <i class="iconfont icon-home"></i>
           <span>{{$t('menu.home')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'developer'">
         <router-link :to="{path: '/developer'}">
-          <i class="fa fa-link"></i>
+          <i class="iconfont icon-home"></i>
           <span>{{$t('menu.home')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'buyer'">
         <router-link :to="{path: '/applicationmarket'}">
-          <i class="fa fa-link"></i>
+          <i class="iconfont icon-yingyongshichang"></i>
           <span>{{$t('menu.appMarket')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'buyer'">
         <router-link :to="{path: '/applicationrepository'}">
-          <i class="fa fa-link"></i>
+          <i class="iconfont icon-wodeyingyong3"></i>
           <span>{{$t('menu.appRepository')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'buyer'">
         <router-link :to="{path: '/resourcemarket'}">
-          <i class="fa fa-link"></i>
+          <i class="iconfont icon-Resource-market"></i>
           <span>{{$t('menu.resourceMarket')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'buyer'">
         <router-link :to="{path: '/myresource'}">
-          <i class="fa fa-link"></i>
+          <i class="iconfont icon-wodeziyuan"></i>
           <span>{{$t('menu.myResource')}}</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
@@ -73,25 +73,34 @@
         </router-link>
         <ul class="treeview-menu">
           <li>
-            <router-link :to="{path: '/resourcepool'}"><i class="fa fa-link"></i>{{$t('menu.resourcePool1')}}</router-link>
+            <router-link :to="{path: '/resourcepool'}">
+              <i class="iconfont icon-wodeziyuan"></i>
+              {{$t('menu.resourcePool1')}}
+            </router-link>
           </li>
           <li>
-            <router-link :to="{path: '/resourcepool'}"><i class="fa fa-link"></i>{{$t('menu.resourcePool2')}}</router-link>
+            <router-link :to="{path: '/resourcepool'}">
+              <i class="iconfont icon-wodeziyuan"></i>
+              {{$t('menu.resourcePool2')}}
+            </router-link>
           </li>
           <li>
-            <router-link :to="{path: '/resourcepool'}"><i class="fa fa-link"></i>{{$t('menu.resourcePool3')}}</router-link>
+            <router-link :to="{path: '/resourcepool'}">
+              <i class="iconfont icon-wodeziyuan"></i>
+              {{$t('menu.resourcePool3')}}
+            </router-link>
           </li>
         </ul>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'seller'">
         <router-link :to="{path: '/myhost'}">
-          <i class="fa fa-link"></i>
+          <i class="iconfont icon-zhuji2"></i>
           <span>{{$t('menu.myHost')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'seller'">
         <router-link :to="{path: '/mycolony'}">
-          <i class="fa fa-link"></i>
+          <i class="iconfont icon-jiqun"></i>
           <span>{{$t('menu.myColony')}}</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
@@ -99,43 +108,46 @@
         </router-link>
         <ul class="treeview-menu">
           <li>
-            <router-link :to="{path: '/colony'}"><i class="fa fa-link"></i>{{$t('menu.myColony1')}}</router-link>
+            <router-link :to="{path: '/colony'}">
+              <i class="iconfont icon-jiqun"></i>
+              {{$t('menu.myColony1')}}
+            </router-link>
           </li>
           <li>
-            <router-link :to="{path: '/colony'}"><i class="fa fa-link"></i>{{$t('menu.myColony2')}}</router-link>
+            <router-link :to="{path: '/colony'}">
+              <i class="iconfont icon-jiqun"></i>
+              {{$t('menu.myColony2')}}
+            </router-link>
           </li>
           <li>
-            <router-link :to="{path: '/colony'}"><i class="fa fa-link"></i>{{$t('menu.myColony3')}}</router-link>
+            <router-link :to="{path: '/colony'}">
+              <i class="iconfont icon-jiqun"></i>
+              {{$t('menu.myColony3')}}
+            </router-link>
           </li>
         </ul>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'developer'">
         <router-link :to="{path: '/uploadapplication'}">
-          <i class="fa fa-link"></i>
+         <i class="iconfont icon-shangchuan"></i>
           <span>{{$t('menu.uploadApplication')}}</span>
         </router-link>
       </li>
-      <li class="treeview">
+      <li class="treeview" v-show="user== 'developer'">
         <router-link :to="{path: '/myapplication'}">
-          <i class="fa fa-link"></i>
+        <i class="iconfont icon-wodeyingyong3"></i>
           <span>{{$t('menu.myApplication')}}</span>
         </router-link>
       </li>
       <li class="treeview">
         <router-link :to="{path: '/wallet'}">
-          <i class="fa fa-link"></i>
+          <i class="iconfont icon-qianbao2"></i>
           <span>{{$t('menu.wallet')}}</span>
         </router-link>
       </li>
       <li class="treeview">
-        <router-link :to="{path: '/transfer'}">
-          <i class="fa fa-link"></i>
-          <span>{{$t('menu.transfer')}}</span>
-        </router-link>
-      </li>
-      <li class="treeview">
         <router-link :to="{path: '/setting'}">
-          <i class="fa fa-link"></i>
+        <i class="iconfont icon-shezhi"></i>
           <span>{{$t('menu.setting')}}</span>
         </router-link>
       </li>
@@ -150,20 +162,34 @@ export default {
   name: 'SidebarLeft',
   data() {
     return {
-      user: 2
+      user: 'seller',
     }
-  }
+  },
+  created(){
+    console.log(this.$route.params)
+       this.getParams()
+    },
+    methods: {
+      getParams () {
+        // 取到路由带过来的参数 
+        var routerParams = this.$route.params.user
+        // 将数据放在当前组件的数据内
+        this.user = routerParams
+        console.log(this.user)
+      }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
 .sidebar {
   .sidebar-menu {
-    font-size:15px;
-    font-family:PingFang-SC-Heavy;
+    font-size: 15px;
+    font-family: PingFang-SC-Heavy;
     .treeview {
       a {
-        color:#8eb357;
+        color: #252525;
+        font-family:PingFang-SC-Medium;
       }
       .treeview-menu {
         background: #ffffff;
@@ -171,8 +197,8 @@ export default {
     }
     .menu-open {
       a {
-        color: #252525;
-      background: #f2f2f2;
+        color: #8eb357;
+        background: #f2f2f2;
       }
       .treeview-menu {
         background: #f2f2f2;
@@ -181,11 +207,10 @@ export default {
         }
       }
     }
-
     .treeview:hover {
       background: #f2f2f2;
       a {
-        color: #252525;
+        color: #8eb357;
         background: #f2f2f2;
       }
       .treeview-menu {

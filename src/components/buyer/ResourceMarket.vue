@@ -142,101 +142,101 @@
 
 <script>
 export default {
-  name: "ResourceMarket",
+  name: 'ResourceMarket',
   data() {
     return {
       optionsRegion: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
-        },
+          value: '选项2',
+          label: '选项2'
+        }
       ],
-      valueRegion: "",
+      valueRegion: '',
       optionsMemory: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
-        },
+          value: '选项2',
+          label: '选项2'
+        }
       ],
-      valueMemory: "",
+      valueMemory: '',
       options: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
-        },
+          value: '选项2',
+          label: '选项2'
+        }
       ],
-      valueCpu: "",
+      valueCpu: '',
       optionsCpu: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
-        },
+          value: '选项2',
+          label: '选项2'
+        }
       ],
-      valueGpu: "",
+      valueGpu: '',
       optionsGpu: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
-        },
+          value: '选项2',
+          label: '选项2'
+        }
       ],
-      valueDisk: "",
+      valueDisk: '',
       optionsDisk: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
-        },
+          value: '选项2',
+          label: '选项2'
+        }
       ],
       optionsNetwork: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
-        },
+          value: '选项2',
+          label: '选项2'
+        }
       ],
-      valueNetwork: "",
-      value: "",
-      time1: "",
-      time2: "",
-      input: "",
+      valueNetwork: '',
+      value: '',
+      time1: '',
+      time2: '',
+      input: '',
       outerVisible: false,
       innerVisible: false,
       gridData: [{
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
-          type: "购买应用",
-          charge: "0.11"
-        },],
-    };
+        order: '214521236987',
+        address: '0x461s2df6…',
+        number: '1000021.23',
+        type: '购买应用',
+        charge: '0.11'
+      }]
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -284,7 +284,6 @@ export default {
   }
   .resourceBox {
     background: #ffffff;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
     border-radius: 2px;
     height: 560px;
     margin: 20px;
@@ -329,9 +328,6 @@ export default {
         margin-top: 66px;
         border: none;
         background: #8eb357;
-        border-radius: 5px;
-        width: 200px;
-        height: 34px;
       }
     }
   }

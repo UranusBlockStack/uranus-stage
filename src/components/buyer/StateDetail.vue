@@ -36,32 +36,32 @@ export default {
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9',
           4: 'host140',
-          5: '10.42.0.58',
+          5: '10.42.0.58'
         }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9',
           4: 'host140',
-          5: '10.42.0.58',
+          5: '10.42.0.58'
         }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9',
           4: 'host140',
-          5: '10.42.0.58',
+          5: '10.42.0.58'
         }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9',
           4: 'host140',
-          5: '10.42.0.58',
+          5: '10.42.0.58'
         }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9',
           4: 'host140',
-          5: '10.42.0.58',
-        }, 
+          5: '10.42.0.58'
+        } 
       ]
     }
   }

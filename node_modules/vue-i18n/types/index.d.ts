@@ -10,43 +10,67 @@ declare namespace VueI18n {
   interface LocaleMessageArray { [index: number]: LocaleMessage; }
   interface LocaleMessages { [key: string]: LocaleMessageObject; }
   type TranslateResult = string | LocaleMessages;
-  interface DateTimeFormatOptions {
-    year?: string;
-    month?: string;
-    day?: string;
-    hour?: string;
-    minute?: string;
-    second?: string;
-    weekday?: string;
-    hour12?: boolean;
-    era?: string;
-    timeZone?: string;
-    timeZoneName?: string;
-    localeMatcher?: string;
-    formatMatcher?: string;
+
+  type LocaleMatcher = 'lookup' | 'best-fit';
+  type FormatMatcher = 'basic' | 'best-fit';
+
+  type DateTimeHumanReadable = 'long' | 'short' | 'narrow';
+  type DateTimeDigital = 'numeric' | '2-digit';
+
+  interface SpecificDateTimeFormatOptions extends Intl.DateTimeFormatOptions {
+    year?: DateTimeDigital;
+    month?: DateTimeDigital | DateTimeHumanReadable;
+    day?: DateTimeDigital;
+    hour?: DateTimeDigital;
+    minute?: DateTimeDigital;
+    second?: DateTimeDigital;
+    weekday?: DateTimeHumanReadable;
+    era?: DateTimeHumanReadable;
+    timeZoneName?: 'long' | 'short';
+    localeMatcher?: LocaleMatcher;
+    formatMatcher?: FormatMatcher;
   }
+
+  type DateTimeFormatOptions = Intl.DateTimeFormatOptions | SpecificDateTimeFormatOptions;
+
   interface DateTimeFormat { [key: string]: DateTimeFormatOptions; }
-  interface DateTimeFormats { [key: string]: DateTimeFormat; }
+  interface DateTimeFormats { [locale: string]: DateTimeFormat; }
   type DateTimeFormatResult = string;
-  interface NumberFormatOptions {
-    style?: string;
+
+  type CurrencyDisplay = 'symbol' | 'code' | 'name';
+
+  interface SpecificNumberFormatOptions extends Intl.NumberFormatOptions {
+    style?: 'decimal' | 'percent';
     currency?: string;
-    currencyDisplay?: string;
-    useGrouping?: boolean;
-    minimumIntegerDigits?: number;
-    minimumFractionDigits?: number;
-    maximumFractionDigits?: number;
-    minimumSignificantDigits?: number;
-    maximumSignificantDigits?: number;
-    localeMatcher?: string;
-    formatMatcher?: string;
+    currencyDisplay?: CurrencyDisplay;
+    localeMatcher?: LocaleMatcher;
+    formatMatcher?: FormatMatcher;
   }
+
+  interface CurrencyNumberFormatOptions extends Intl.NumberFormatOptions {
+    style: 'currency';
+    currency: string; // Obligatory if style is 'currency'
+    currencyDisplay?: CurrencyDisplay;
+    localeMatcher?: LocaleMatcher;
+    formatMatcher?: FormatMatcher;
+  }
+
+  type NumberFormatOptions = Intl.NumberFormatOptions | SpecificNumberFormatOptions | CurrencyNumberFormatOptions;
+
   interface NumberFormat { [key: string]: NumberFormatOptions; }
-  interface NumberFormats { [key: string]: NumberFormat; }
+  interface NumberFormats { [locale: string]: NumberFormat; }
   type NumberFormatResult = string;
+  type PluralizationRulesMap = {
+    /**
+     * @param choice {number} a choice index given by the input to $tc: `$tc('path.to.rule', choiceIndex)`
+     * @param choicesLength {number} an overall amount of available choices
+     * @returns a final choice index
+    */
+    [lang: string]: (choice: number, choicesLength: number) => number;
+  };
 
   interface Formatter {
-    interpolate(message: string, values?: Values): any[];
+    interpolate(message: string, values: Values | undefined, path: string): (any[] | null);
   }
 
   type MissingHandler = (locale: Locale, key: Path, vm?: Vue) => string | void;
@@ -68,6 +92,8 @@ declare namespace VueI18n {
     fallbackRoot?: boolean;
     sync?: boolean;
     silentTranslationWarn?: boolean;
+    pluralizationRules?: PluralizationRulesMap;
+    preserveDirectiveContent?: boolean;
   }
 }
 
@@ -103,6 +129,8 @@ export declare interface IVueI18n {
   missing: VueI18n.MissingHandler;
   formatter: VueI18n.Formatter;
   silentTranslationWarn: boolean;
+  pluralizationRules: VueI18n.PluralizationRulesMap;
+  preserveDirectiveContent: boolean;
 }
 
 declare class VueI18n {

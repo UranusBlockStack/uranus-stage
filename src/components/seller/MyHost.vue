@@ -10,35 +10,66 @@
         <template slot="empty">
           <p class="empty-text">{{$t('seller.host.text')}}</p>
         </template>
-        <el-table-column
-          prop="state"
-          :label="$t('seller.host.state')"
-          sortable
-          :filters="[{ text: this.$t('seller.host.online'), value: this.$t('seller.host.online') }, { text: this.$t('seller.host.offline'), value: this.$t('seller.host.offline') }]"
-          :filter-method="filterState"
-        >
+        <el-table-column width="150">
+          <template slot="header" slot-scope="scope">
+            <el-select v-model="state" :placeholder="$t('seller.host.state')">
+              <el-option :label="$t('seller.host.online')" value="在线"></el-option>
+              <el-option :label="$t('seller.host.offline')" value="离线"></el-option>
+            </el-select>
+          </template>
           <template slot-scope="scope">
             <el-tag
-              :type="scope.row.state === '在线' ? 'primary' : 'success'"
+              style="margin-left: 30px"
+              :type="scope.row.state === '离线' ? 'primary' : 'success'"
               disable-transitions
             >{{scope.row.state}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="number" :label="$t('seller.host.number')"></el-table-column>
-        <el-table-column prop="cpu" label="CPU"></el-table-column>
-        <el-table-column prop="gpu" label="GPU"></el-table-column>
-        <el-table-column prop="memory" :label="$t('seller.host.memory')"></el-table-column>
-        <el-table-column prop="disk" :label="$t('seller.host.disk')"></el-table-column>
-        <el-table-column prop="network" :label="$t('seller.host.network')"></el-table-column>
-        <el-table-column
-          prop="colony"
-          :label="$t('seller.host.ownGroup')"
-          sortable
-          :filters="[{ text: this.$t('seller.host.group')+'A', value: this.$t('seller.host.group') + 'A' }, { text: this.$t('seller.host.group')+'B', value: this.$t('seller.host.group') + 'B' }, { text: this.$t('seller.host.group')+'C', value: this.$t('seller.host.group') + 'C' }, { text: this.$t('seller.host.group')+'E', value: this.$t('seller.host.group') + 'E' }]"
-          :filter-method="filterColony"
-        >
+        <el-table-column width="100" prop="number" :label="$t('seller.host.number')"></el-table-column>
+        <el-table-column label="CPU">
           <template slot-scope="scope">
-            <p style="color: #8eb357">{{scope.row.colony}}</p>
+            <p style="color:#8c8c8c; font-size:10px; ">{{ scope.row.cpu }}{{$t('seller.host.usable')}}</p>
+            <el-progress :percentage="50" color="#f25954" :show-text="false"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; ">{{$t('seller.host.have')}}4核</p>
+          </template>
+        </el-table-column>
+        <el-table-column label="GPU">
+          <template slot-scope="scope">
+            <p style="color:#8c8c8c; font-size:10px; ">{{ scope.row.gpu }}{{$t('seller.host.usable')}}</p>
+            <el-progress :percentage="50" color="#f25954" :show-text="false"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; ">{{$t('seller.host.have')}}4核</p>
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('seller.host.memory')">
+          <template slot-scope="scope">
+            <p style="color:#8c8c8c; font-size:10px; ">{{ scope.row.memory }}{{$t('seller.host.usable')}}</p>
+            <el-progress :percentage="50" color="#f25954" :show-text="false"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; ">{{$t('seller.host.have')}}4核</p>
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('seller.host.disk')">
+          <template slot-scope="scope">
+            <p style="color:#8c8c8c; font-size:10px; ">{{ scope.row.disk }}{{$t('seller.host.usable')}}</p>
+            <el-progress :percentage="50" color="#f25954" :show-text="false"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; ">{{$t('seller.host.have')}}4核</p>
+          </template>
+        </el-table-column>
+        <el-table-column :label="$t('seller.host.network')">
+          <template slot-scope="scope">
+            <p style="color:#8c8c8c; font-size:10px; ">{{ scope.row.network }}{{$t('seller.host.usable')}}</p>
+            <el-progress :percentage="50" color="#f25954" :show-text="false"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; ">{{$t('seller.host.have')}}4核</p>
+          </template>
+        </el-table-column>
+        <el-table-column width="200">
+          <template slot="header" slot-scope="scope">
+            <el-select v-model="group" :placeholder="$t('seller.host.ownGroup')">
+              <el-option :label="$t('seller.host.group') + 'A'" value="集群A"></el-option>
+              <el-option :label="$t('seller.host.group') + 'B'" value="集群B"></el-option>
+            </el-select>
+          </template>
+          <template slot-scope="scope">
+            <p style="margin-left: 30px;">{{scope.row.colony}}</p>
           </template>
         </el-table-column>
       </el-table>
@@ -51,6 +82,8 @@ export default {
   name: 'MyHost',
   data() {
     return {
+      state: '',
+      group: '',
       tableData: [
         {
           state: this.$t('seller.host.online'),
@@ -135,11 +168,10 @@ export default {
   }
   .myHostBox {
     background: #ffffff;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
     border-radius: 2px;
     margin: 20px;
     padding: 15px;
-    min-height: 550PX;
+    min-height: 550px;
     .empty-text {
       width: 470px;
       margin: 30px auto;

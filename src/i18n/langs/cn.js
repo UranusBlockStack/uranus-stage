@@ -24,13 +24,14 @@ module.exports = {
   },
   map: {
     register: '注册用户',
-    language: '语言',
+    cn: '中文',
+    en: '英文',
     seller: '出售算力',
     sellerText: '出售多余算力，赚取额外费用',
-    buyer: '购买应用',
+    buyer: '购买产品',
     buyerText: '购买算力和应用',
-    developer: '应用上传',
-    developerText: '上传应用，赚取费用',
+    developer: '发布应用',
+    developerText: '上传应用，赚取费用'
   },
   buyer: {
     home: {
@@ -50,14 +51,14 @@ module.exports = {
       hour: '时',
       day: '天',
       week: '周',
-      month: '月',
+      month: '月'
     },
     appMarket: {
       searchIn: '输入关键字',
       search: '搜 索',
       application: '所有分类',
-      free: '免费应用',
-      paid: '付费应用',
+      free: '免费',
+      paid: '付费',
       storeAll: '全部商店',
       download: '下载量',
       deploy: '部 署',
@@ -87,7 +88,7 @@ module.exports = {
         fee: '手续费',
         ip: 'IP',
         port: '端口',
-        appHash: '交易哈希',
+        appHash: '交易哈希'
       },
       searchIn: '输入关键字',
       search: '搜 索',
@@ -101,7 +102,7 @@ module.exports = {
       choose: '选择',
       bought: '已购买',
       button1: '取 消',
-      button2: '确 定',
+      button2: '确 定'
     },
     resourceMarket: {
       purchase: '资源筛选',
@@ -132,7 +133,7 @@ module.exports = {
       button1: '取 消',
       button2: '确 定',
       confirmText3: '付款成功',
-      confirmText4: '可前往我的资源查看我所有的资源分配',
+      confirmText4: '可前往我的资源查看我所有的资源分配'
     },
     deploy: {
       application: '应用部署',
@@ -191,7 +192,7 @@ module.exports = {
       button1: '取 消',
       button2: '确 定',
       confirmText3: '付款成功',
-      confirmText4: '可前往我的应用仓库查看我已经部署的应用',
+      confirmText4: '可前往我的应用仓库查看我已经部署的应用'
     },
     myResource: {
       resourceAll: '资源总览',
@@ -210,7 +211,7 @@ module.exports = {
       countdownTime: '剩余时间倒计时：',
       timeUp: '已到期',
       renewal: '前往续费',
-      detail: '查看详情',
+      detail: '查看详情'
     },
     resourcePool: {
       list: '资源购买列表',
@@ -235,7 +236,7 @@ module.exports = {
       appIntroduction: '简介：',
       appParameter: '应用参数：',
       detail: '详情',
-      delete: '删除',
+      delete: '删除'
     },
     appState: {
       status: '状态',
@@ -249,7 +250,7 @@ module.exports = {
       redeploy: '重新部署',
       shell: '执行命令',
       view: '查看',
-      delete: '删除',
+      delete: '删除'
     },
     stateDetail: {
       rename: '修改应用名',
@@ -260,8 +261,8 @@ module.exports = {
       image: '镜像',
       host: '主机',
       ip: 'IP地址',
-      view: '查看',
-    },
+      view: '查看'
+    }
   },
   seller: {
     home: {
@@ -279,7 +280,7 @@ module.exports = {
       time: '交易时间',
       hash: '交易哈希',
       amount: '数量',
-      fee: '手续费',
+      fee: '手续费'
     },
     host: {
       list: '主机列表',
@@ -292,6 +293,8 @@ module.exports = {
       memory: '内存',
       disk: '硬盘',
       network: '网络',
+      usable: '可用',
+      have: '共',
       ownGroup: '所属集群',
       group: '集群',
       notJoined: '未加入',
@@ -302,7 +305,7 @@ module.exports = {
       newGroup: '新建集群',
       nameGroup: '命名新的集群',
       joinGroup: '加入已有集群',
-      confirm: '确 定',
+      confirm: '确 定'
     },
     groups: {
       list: '集群列表',
@@ -354,7 +357,7 @@ module.exports = {
       deleteText1: '主机已被占用，不可退出集群！',
       deleteText2: '主机已被租赁，不可退出集群！',
       deleteText3: '主机正在出售，不可退出集群！',
-      deleteSure: '退出后，将解除预计群的关系，且无法恢复相应数据，确定退出吗？',
+      deleteSure: '退出后，将解除预计群的关系，且无法恢复相应数据，确定退出吗？'
     },
     group: {
       restOne: '各类资源剩余',
@@ -414,7 +417,7 @@ module.exports = {
       deleteText2: '主机已被租赁，不可退出集群！',
       deleteText3: '主机正在出售，不可退出集群！',
       deleteSure: '退出后，将解除预计群的关系，且无法恢复相应数据，确定退出吗？',
-      text: '提示：系统未检测到设备中存在安装包，请点击右上角的下载包，安装后刷新此页面，进行第一次资源池的创建。',
+      text: '提示：系统未检测到设备中存在安装包，请点击右上角的下载包，安装后刷新此页面，进行第一次资源池的创建。'
     }
   },
   userCommon: {
@@ -424,6 +427,7 @@ module.exports = {
     mobile: '输入手机号',
     password: '6-16位密码 区分大小写',
     register: '注册用户',
+    home: '返回首页',
     forgetPwd: '忘记密码',
     loginBtn: '登 录',
     EmailRegister: '邮箱注册',
@@ -444,10 +448,10 @@ module.exports = {
     codeError: '验证码有误，请重新输入验证码',
     phoneError: '请输入手机号',
     EmailError: '请输入邮箱',
-    passwordError: '输入的账号或密码有误，请重新输入',
+    passwordError: '输入的账号或密码有误，请重新输入'
   },
   wallet: {
-    title: '我的钱包',
+    title: '钱包',
     balance: '账户余额：',
     address: '我的地址：',
     button: '转账',
@@ -461,7 +465,7 @@ module.exports = {
     status: '状态',
     success: '成功',
     fail: '失败',
-    processing: '进行中',
+    processing: '进行中'
   },
   transfer: {
     transfer: '转账：',
@@ -482,7 +486,7 @@ module.exports = {
     checkText: '确认后，您的URAC将通过区块链网络转账至地址XXX上，确认后订单不可撤销。是否确认交易？',
     saveText: '您已输入相关信息，点击后相关信息将不会被保存，确认离开吗？',
     button1: '取 消',
-    button2: '确 定',
+    button2: '确 定'
   },
   setting: {
     account: '账号ID',
@@ -494,7 +498,7 @@ module.exports = {
     phone: '绑定手机',
     modifyPhone: {
       click: '修改绑定手机',
-      phone: '手机',
+      phone: '手机'
     },
     password: '登录密码',
     modifyPassword: {
@@ -512,6 +516,6 @@ module.exports = {
     codeBtn: '获取验证码',
     button1: '取 消',
     button2: '确 定',
-    button3: '下一步',
+    button3: '下一步'
   }
 }

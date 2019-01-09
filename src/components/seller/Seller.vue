@@ -4,10 +4,6 @@
       <el-col class="title" :span="12">
         <h1>{{$t('menu.home')}}</h1>
       </el-col>
-      <el-col class="record" :span="12">
-        <p>{{$t('seller.home.balance')}}12121212</p>
-        <p>{{$t('seller.home.earnings')}}12121212</p>
-      </el-col>
     </el-row>
     <!-- Main content -->
     <div class="content container-fluid">
@@ -76,7 +72,7 @@ export default {
       dataConsumption: {
         day: {
           x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
-          y: [10, 20, 30, 40, 50, 60]
+          y: [50, 40, 30, 40, 50, 60, 50]
         },
         week: {
           x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
@@ -525,23 +521,11 @@ export default {
       line-height: 24px;
       padding-left: 30px;
     }
-    .record {
-      float: right;
-      margin-right: 15px;
-      margin-top: 4px;
-      height: 60px;
-      width: 105px;
-      p {
-        height: 30px;
-        line-height: 25px;
-        margin: 0;
-      }
-    }
   }
   .content {
     width: 100%;
+    padding: 20px;
     .my-content {
-      width: 95%;
       min-width: 1130px;
       height: 400px;
       margin: 0 auto;
@@ -553,7 +537,7 @@ export default {
       }
       .consumption {
         width: 49%;
-        min-width: 530px;
+        min-width: 550px;
         height: 400px;
         background: #ffffff;
         p {
@@ -581,7 +565,7 @@ export default {
       }
       .profit {
         width: 49%;
-        min-width: 530px;
+        min-width: 550px;
         height: 400px;
         background: #ffffff;
         p {
@@ -609,12 +593,10 @@ export default {
       }
     }
     .power {
-      width: 95%;
       min-width: 1130px;
       height: 360px;
-      margin: 20px auto;
+      margin-top: 20px;
       background: #ffffff;
-      box-shadow: 0 1px 4px 0;
       p {
         padding-left: 30px;
         padding-top: 20px;
@@ -637,7 +619,6 @@ export default {
     }
     .record {
       background: #ffffff;
-      width: 95%;
       min-width: 1130px;
       margin: 20px auto;
       padding: 30px;

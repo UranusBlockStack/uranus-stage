@@ -4,10 +4,6 @@
       <el-col class="title" :span="12">
         <h1>首页D</h1>
       </el-col>
-      <el-col class="record" :span="12">
-        <p>余额:12121212</p>
-        <p>收益:12121212</p>
-      </el-col>
     </el-row>
     <!-- Main content -->
     <div class="content container-fluid">
@@ -358,25 +354,13 @@ export default {
   }
   .content-title {
     background: #ffffff;
-    height: 64px;
+    height: 65px;
     h1 {
       font-family: PingFang-SC-Bold;
       font-size: 20px;
       color: #252525;
       line-height: 24px;
       padding-left: 30px;
-    }
-    .record {
-      float: right;
-      margin-right: 15px;
-      margin-top: 4px;
-      height: 60px;
-      width: 105px;
-      p {
-        height: 30px;
-        line-height: 25px;
-        margin: 0;
-      }
     }
   }
   .content {

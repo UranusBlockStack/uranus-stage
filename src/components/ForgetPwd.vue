@@ -73,30 +73,30 @@
 
 <script>
 export default {
-  name: "ForgetPwd",
+  name: 'ForgetPwd',
   data() {
     return {
       phoneShow: true,
       totalTime: 10,
       canClick: true,
       content: this.$t('userCommon.codeBtn'),
-      phone: "",
-      mail: "",
-      password: "",
-      surepwd: "",
-      prompt: ""
-    };
+      phone: '',
+      mail: '',
+      password: '',
+      surepwd: '',
+      prompt: ''
+    }
   },
   methods: {
     choosePhone() {
-      this.phoneShow = true;
+      this.phoneShow = true
     },
     chooseMail() {
-      this.phoneShow = false;
+      this.phoneShow = false
     },
     countDown() {
-      this.getCode();
-       if (!this.canClick) return 
+      this.getCode()
+      if (!this.canClick) return 
       this.canClick = false
       this.content = this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
       let clock = window.setInterval(() => {
@@ -111,32 +111,32 @@ export default {
       }, 1000)
     },
     getCode() {
-      if (this.phoneShow === false && this.mail === "") {
-        this.prompt = this.$t('userCommon.EmailError');
-      } else if (this.phoneShow === true && this.phone === "") {
-        this.prompt = this.$t('userCommon.phoneError');
+      if (this.phoneShow === false && this.mail === '') {
+        this.prompt = this.$t('userCommon.EmailError')
+      } else if (this.phoneShow === true && this.phone === '') {
+        this.prompt = this.$t('userCommon.phoneError')
       } else {
-        this.prompt = "";
+        this.prompt = ''
       }
     },
     checkPassword() {
-      if (this.password === "") {
-        this.prompt = this.$t('userCommon.passwordEmpty');
+      if (this.password === '') {
+        this.prompt = this.$t('userCommon.passwordEmpty')
       } else if (this.password.length < 6 || this.password.length > 12) {
-        this.prompt = this.$t('userCommon.password');
+        this.prompt = this.$t('userCommon.password')
       } else {
-        this.prompt = "";
+        this.prompt = ''
       }
     },
     surePassword() {
       if (this.surepwd !== this.password) {
-        this.prompt = this.$t("userCommon.passwordInconsistent");
+        this.prompt = this.$t('userCommon.passwordInconsistent')
       } else {
-        this.prompt = "";
+        this.prompt = ''
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

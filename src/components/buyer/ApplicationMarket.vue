@@ -83,7 +83,7 @@ export default {
         {
           value: '选项2',
           label: 'paid'
-        },
+        }
       ],
       options2: [
         {
@@ -93,7 +93,7 @@ export default {
         {
           value: '选项2',
           label: '选项2'
-        },
+        }
       ],
       value1: '',
       value2: '',
@@ -105,7 +105,7 @@ export default {
         { id: '1', name: 'Imagepuller', shop: '商店1' },
         { id: '2', name: 'Vue', shop: '商店2' },
         { id: '3', name: 'Node', shop: '商店3' },
-        { id: '4', name: 'Cloud', shop: '商店4' },
+        { id: '4', name: 'Cloud', shop: '商店4' }
       ]
     }
   }
@@ -134,7 +134,6 @@ export default {
     min-width: 1130px;
     margin: 20px;
     padding: 15px;
-    box-shadow: 0 1px 4px 0;
     .el-button {
       background: #8eb357;
       border: none;
@@ -169,7 +168,7 @@ export default {
           .name {
             font-weight: 600;
             padding: 5px 0 10px;
-            border-bottom: 2px solid #eee;
+            border-bottom: 1px solid #eee;
             font-family: PingFang-SC-Medium;
             font-size: 20px;
             color: #251e1c;
@@ -205,6 +204,7 @@ export default {
             letter-spacing: 0;
             text-align: center;
             line-height: 22px;
+            height: 22px;
           }
           .el-button {
             background: #8eb357;

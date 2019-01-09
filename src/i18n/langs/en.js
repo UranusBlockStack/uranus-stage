@@ -24,7 +24,8 @@ module.exports = {
   },
   map: {
     register: 'Register User',
-    language: 'Language',
+    cn: 'Chinese',
+    en: 'English',
     seller: 'Seller',
     sellerText: 'Selling extra Uranpower，Earn extra fees',
     buyer: 'Buyer',
@@ -50,7 +51,7 @@ module.exports = {
       hour: 'Hour',
       day: 'Day',
       week: 'Week',
-      month: 'Month',
+      month: 'Month'
     },
     appMarket: {
       searchIn: 'Enter keywords',
@@ -87,7 +88,7 @@ module.exports = {
         fee: 'Fee',
         ip: 'IP',
         port: 'Port',
-        appHash: 'TX hash',
+        appHash: 'TX hash'
       },
       searchIn: 'Enter keywords',
       search: 'Search',
@@ -101,7 +102,7 @@ module.exports = {
       choose: 'Choose',
       bought: 'Bought',
       button1: 'Cancel',
-      button2: 'Save',
+      button2: 'Save'
     },
     resourceMarket: {
       purchase: 'Purchase Urapower',
@@ -132,7 +133,7 @@ module.exports = {
       button1: 'Cancel',
       button2: 'Confirm',
       confirmText3: 'Successfully paid',
-      confirmText4: 'Go to my uracpower to see all of my uracpower',
+      confirmText4: 'Go to my uracpower to see all of my uracpower'
     },
     deploy: {
       application: 'Deploy application',
@@ -191,7 +192,7 @@ module.exports = {
       button1: 'Cancel',
       button2: 'Confirm',
       confirmText3: 'Successfully paid',
-      confirmText4: 'Go to my application to see the apps I have deployed.',
+      confirmText4: 'Go to my application to see the apps I have deployed.'
     },
     myResource: {
       resourceAll: 'All of my uracpower',
@@ -210,7 +211,7 @@ module.exports = {
       countdownTime: 'Countdown of remaining time:',
       timeUp: 'Time up',
       renewal: 'Renewal fee',
-      detail: 'View details',
+      detail: 'View details'
     },
     resourcePool: {
       list: 'Uracpower purchase list',
@@ -235,7 +236,7 @@ module.exports = {
       appIntroduction: 'Introduction:',
       appParameter: 'Application parameter:',
       detail: 'Detail',
-      delete: 'Delete',
+      delete: 'Delete'
     },
     appState: {
       status: 'Status',
@@ -248,7 +249,7 @@ module.exports = {
       redeploy: 'Redeploy',
       shell: 'Execute shell',
       view: 'View',
-      delete: 'Delete',
+      delete: 'Delete'
     },
     stateDetail: {
       rename: 'Rename',
@@ -259,8 +260,8 @@ module.exports = {
       image: 'Image',
       host: 'Host',
       ip: 'IP address',
-      view: 'View',
-    },
+      view: 'View'
+    }
   },
   seller: {
     home: {
@@ -278,7 +279,7 @@ module.exports = {
       time: 'Order Time',
       hash: 'Order Hash',
       amount: 'Amount',
-      fee: 'Order Fee',
+      fee: 'Order Fee'
     },
     host: {
       list: 'Hosts list',
@@ -291,6 +292,8 @@ module.exports = {
       memory: 'Memory',
       disk: 'Disk',
       network: 'Network',
+      usable: '可用',
+      have: '共',
       ownGroup: 'Own group',
       group: 'Group',
       notJoined: 'Not joined',
@@ -301,7 +304,7 @@ module.exports = {
       newGroup: 'Established group',
       nameGroup: 'Name group',
       joinGroup: 'Join group',
-      confirm: 'Confirm',
+      confirm: 'Confirm'
     },
     groups: {
       list: 'group list',
@@ -353,7 +356,7 @@ module.exports = {
       deleteText1: 'The host is already occupied and cannot be logged out of the group.',
       deleteText2: 'The host has been leased and cannot exit the group.',
       deleteText3: '主机正在出售，不可退出集群',
-      deleteSure: 'After exiting, the relationship of the predicted group will be released, and the corresponding data cannot be restored. Is the exit determined?',
+      deleteSure: 'After exiting, the relationship of the predicted group will be released, and the corresponding data cannot be restored. Is the exit determined?'
     },
     group: {
       restOne: '各类资源剩余',
@@ -412,7 +415,7 @@ module.exports = {
       deleteText1: 'The host is already occupied and cannot be logged out of the group.',
       deleteText2: 'The host has been leased and cannot exit the group.',
       deleteText3: '主机正在出售，不可退出集群',
-      deleteSure: 'After exiting, the relationship of the predicted group will be released, and the corresponding data cannot be restored. Is the exit determined?',
+      deleteSure: 'After exiting, the relationship of the predicted group will be released, and the corresponding data cannot be restored. Is the exit determined?'
     }
   },
   userCommon: {
@@ -442,10 +445,10 @@ module.exports = {
     codeError: 'The verification code entered is incorrect. Please re-enter',
     phoneError: 'Please enter phone number',
     EmailError: 'Please enter Email',
-    passwordError: 'The account or password entered is incorrect. Please re-enter',
+    passwordError: 'The account or password entered is incorrect. Please re-enter'
   },
   wallet: {
-    title: 'My wallet',
+    title: 'Wallet',
     balance: 'Balance:',
     address: 'Address:',
     button: 'Transfer',
@@ -459,7 +462,7 @@ module.exports = {
     status: 'Status',
     success: 'Success',
     fail: 'Fail',
-    processing: 'Processing',
+    processing: 'Processing'
   },
   transfer: {
     transfer: 'Transfer',
@@ -480,7 +483,7 @@ module.exports = {
     checkText: 'After confirmation, your URAC will be transferred to the address XXX by the blockchain , and the order will be irrevocable after confirmation.Whether to confirm the transaction?',
     saveText: 'You have entered the relevant information. After clicking, the relevant information will not be saved. Are you sure to leave?',
     button1: 'Cancel',
-    button2: 'Confirm',
+    button2: 'Confirm'
   },
   setting: {
     account: 'User ID',
@@ -492,7 +495,7 @@ module.exports = {
     phone: 'Link phone',
     modifyPhone: {
       click: 'Change',
-      phone: 'Phone',
+      phone: 'Phone'
     },
     password: 'Login password',
     modifyPassword: {
@@ -510,6 +513,6 @@ module.exports = {
     codeBtn: 'Get verification',
     button1: 'Cancel',
     button2: 'Save',
-    button3: 'Next',
+    button3: 'Next'
   }
 }

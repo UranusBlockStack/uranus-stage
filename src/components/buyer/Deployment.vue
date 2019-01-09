@@ -261,76 +261,76 @@
 
 <script>
 export default {
-  name: "Deployment",
+  name: 'Deployment',
   data() {
     return {
-      radio: "1",
+      radio: '1',
       options: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
-        },
+          value: '选项2',
+          label: '选项2'
+        }
       ],
-      value: "",
-      value1: "",
-      value2: "",
-      input: "",
+      value: '',
+      value1: '',
+      value2: '',
+      input: '',
       more: false,
       configurationList: [
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" },
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" }
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' },
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' }
       ],
       gridData: [
         {
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
-          type: "购买应用",
-          charge: "0.11"
+          order: '214521236987',
+          address: '0x461s2df6…',
+          number: '1000021.23',
+          type: '购买应用',
+          charge: '0.11'
         },
         {
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
-          type: "购买应用",
-          charge: "0.11"
+          order: '214521236987',
+          address: '0x461s2df6…',
+          number: '1000021.23',
+          type: '购买应用',
+          charge: '0.11'
         },
         {
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
-          type: "购买应用",
-          charge: "0.11"
+          order: '214521236987',
+          address: '0x461s2df6…',
+          number: '1000021.23',
+          type: '购买应用',
+          charge: '0.11'
         },
         {
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
-          type: "购买应用",
-          charge: "0.11"
+          order: '214521236987',
+          address: '0x461s2df6…',
+          number: '1000021.23',
+          type: '购买应用',
+          charge: '0.11'
         }
       ],
       num1: 1,
       outerVisible: false,
       innerVisible: false
-    };
+    }
   },
   methods: {
     changeMore() {
-      this.more = !this.more;
+      this.more = !this.more
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -365,7 +365,6 @@ export default {
   }
   .resourceBox {
     background: #ffffff;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
     border-radius: 2px;
     margin: 20px;
     .border-line {

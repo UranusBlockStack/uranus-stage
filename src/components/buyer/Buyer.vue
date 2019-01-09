@@ -4,10 +4,6 @@
       <el-col class="title" :span="12">
         <h1>{{$t('menu.home')}}</h1>
       </el-col>
-      <el-col class="record" :span="12">
-        <p>{{$t('buyer.home.balance')}}12121212</p>
-        <p>{{$t('buyer.home.earnings')}}12121212</p>
-      </el-col>
     </el-row>
     <!-- Main content -->
     <div class="content container-fluid">
@@ -56,11 +52,6 @@
               <span></span>{{$t('buyer.home.allPower')}}
             </p>
           </el-col>
-          <el-col class="powerPurch powerCon" :span="2">
-            <p>
-              <span></span>{{$t('buyer.home.buyPower')}}
-            </p>
-          </el-col>
           <el-col class="powerRest powerCon" :span="2">
             <p>
               <span></span>{{$t('buyer.home.restPower')}}
@@ -88,19 +79,23 @@ export default {
       dataPower: {
         day: {
           x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
-          y: [10, 20, 30, 40, 50, 60]
+          y: [10, 20, 30, 40, 50, 60],
+          line: [5,10,10,15,15,15],
         },
         week: {
           x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          y: [100, 200, 300, 400, 500, 600, 700]
+          y: [100, 200, 300, 400, 500, 600, 700],
+          line: [50, 100, 300, 200, 300, 600, 400],
         },
         mounth: {
           x: ['1', '5', '10', '15', '20', '25', '30'],
-          y: [1000, 520, 200, 334, 390, 330, 220]
+          y: [1000, 520, 200, 334, 390, 330, 220],
+          line: [50, 100, 300, 200, 300, 600, 400],
         },
         year: {
           x: ['1', '4', '7', '10', '12'],
-          y: [10000, 520, 200, 334, 390]
+          y: [10000, 520, 200, 334, 390],
+          line: [5000, 100, 100, 200, 300],
         }
       },
       powerVal: {},
@@ -137,16 +132,13 @@ export default {
       var myChart = this.$echarts.init(document.getElementById('myPower'))
       var myData = val
       myChart.setOption({
-        color: ['#1890ff', '#facc14', '#9bcc3d'],
+        color: ['#1890ff'],
         tooltip: {
           trigger: 'axis',
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
             type: 'line' // 默认为直线，可选为：'line' | 'shadow'
           }
-        },
-        legend: {
-          data: ['我的', '算力']
         },
         grid: {
           left: '3%',
@@ -173,22 +165,16 @@ export default {
         ],
         series: [
           {
-            name: 'uranus',
+            name: this.$t('buyer.home.allPower'),
             type: 'bar',
-            barWidth: '10%',
+            barWidth: '25%',
             data: myData.y
           },
           {
-            name: 'uranus-web',
-            type: 'bar',
-            barWidth: '10%',
-            data: myData.y
-          },
-          {
-            name: 'uranus-w',
-            type: 'bar',
-            barWidth: '10%',
-            data: myData.y
+            name: this.$t('buyer.home.restPower'),
+            type: 'line',
+            color: '#9bcc3d',
+            data: myData.line
           }
         ]
       })
@@ -221,18 +207,6 @@ export default {
       line-height: 24px;
       padding-left: 30px;
     }
-    .record {
-      float: right;
-      margin-right: 15px;
-      margin-top: 4px;
-      height: 60px;
-      width: 105px;
-      p {
-        height: 30px;
-        line-height: 25px;
-        margin: 0;
-      }
-    }
   }
   .content {
     padding: 0;
@@ -241,7 +215,6 @@ export default {
       min-width: 1130px;
       margin: 20px;
       padding: 15px;
-      box-shadow: 0 1px 4px 0;
       p {
         height: 40px;
         font-family: PingFang-SC-Bold;
@@ -346,16 +319,6 @@ export default {
           display: inline-block;
           width: 10px;
           background: #1890ff;
-          border-radius: 10px;
-          margin-right: 10px;
-        }
-      }
-      .powerPurch {
-        span {
-          height: 10px;
-          display: inline-block;
-          width: 10px;
-          background: #facc14;
           border-radius: 10px;
           margin-right: 10px;
         }

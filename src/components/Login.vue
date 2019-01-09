@@ -26,12 +26,12 @@
                 <input type="text" :placeholder="$t('userCommon.Email')" v-model="mail">
             </div>
             <input type="text" :placeholder="$t('userCommon.password')" v-model="password">
-            <router-link class="register" :to="{ path: 'register'}">{{$t('userCommon.register')}}</router-link>
-            <router-link class="forgetPwd" :to="{ path: 'forgetPwd'}">{{$t('userCommon.forgetPwd')}}</router-link>
+            <router-link class="register" :to="{ path: '/map'}">{{$t('userCommon.home')}}</router-link>
+            <router-link class="forgetPwd" :to="{ path: '/forgetPwd'}">{{$t('userCommon.forgetPwd')}}</router-link>
             <div class="prompt">
                 {{prompt}}
             </div>
-            <button class="loginBtn" @click="userLogin">{{$t('userCommon.loginBtn')}}</button>
+            <button class="loginBtn" @click="userLogin">**{{$t('userCommon.loginBtn')}}</button>
         </div>
     </section>
 </template>

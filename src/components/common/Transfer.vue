@@ -23,19 +23,19 @@
       </el-col>
     </el-row>
     <el-row class="transfer-form">
-      <el-col :span="20">
+      <el-col :span="10" :offset="6">
         <h2>{{$t('transfer.balance')}}123456</h2>
       </el-col>
       <el-col :span="12">
         <div class="formGroup">
           <el-form label-position="left" label-width="100px" :model="formLabelAlign" :rules="rules">
-            <el-form-item prop="name">
-              <span slot="label">{{$t('transfer.address')}}</span>
-              <el-input v-model="formLabelAlign.address" :placeholder="$t('transfer.addressIn')"></el-input>
-            </el-form-item>
             <el-form-item prop="region">
               <span slot="label">{{$t('transfer.value')}}</span>
               <el-input v-model="formLabelAlign.number" :placeholder="$t('transfer.valueIn')"></el-input>
+            </el-form-item>
+            <el-form-item prop="name">
+              <span slot="label">{{$t('transfer.address')}}</span>
+              <el-input v-model="formLabelAlign.address" :placeholder="$t('transfer.addressIn')"></el-input>
             </el-form-item>
             <el-form-item prop="type">
               <span slot="label">{{$t('transfer.fee')}}</span>
@@ -92,13 +92,15 @@ export default {
 .Transfer {
   height: 100%;
   min-width: 1130px;
+  background: #f2f2f2;
   p {
     margin: 0;
   }
   .transfer-head {
     background: #ffffff;
-    height: 64px;
+    height: 65px;
     p {
+      font-family: PingFang-SC-Bold;
       padding-left: 30px;
       font-size: 20px;
       color: #252525;
@@ -126,17 +128,17 @@ export default {
   .transfer-form {
     background: #ffffff;
     margin: 20px;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
     border-radius: 2px;
     h2 {
       font-family: PingFang-SC-Bold;
-      font-size: 18px;
+      font-size: 10px;
       color: #252525;
       line-height: 24px;
       text-align: left;
-      padding-left: 30px;
+      padding-left: 300px;
     }
     .formGroup {
+      margin-top: 30px;
       margin-left: 30px;
     }
     span {

@@ -39,18 +39,18 @@ export default {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9'+ this.$t('buyer.appState.choosePod'),
-          4: '1',
+          4: '1'
         }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9'+ this.$t('buyer.appState.choosePod'),
-          4: '1',
+          4: '1'
         }, {
           1: '运行中',
           2: 'wordpress-mdkyy-mariadb',
           3: 'docker.io/bitnami/mariadb.10.135-debian-9'+ this.$t('buyer.appState.choosePod'),
-          4: '1',
-        },
+          4: '1'
+        }
       ]
     }
   }

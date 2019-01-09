@@ -157,17 +157,15 @@ export default {
                   normal: {
                     color: '#1890FF'
                   }
-                }
+                },
               }
             ],
             outline: {
               show: false
             },
             backgroundStyle: {
-              borderColor: '#156ACF',
-              borderWidth: 1,
-              shadowColor: 'rgba(0, 0, 0, 0.4)',
-              shadowBlur: 20
+              borderColor: '#1890FF',
+              borderWidth: 3,
             }
           }
         ]
@@ -546,7 +544,6 @@ export default {
   }
   .myResourceBox {
     background: #ffffff;
-    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
     border-radius: 2px;
     margin: 20px;
     .title {

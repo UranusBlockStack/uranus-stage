@@ -31,7 +31,6 @@
             <input type="password" :placeholder="$t('userCommon.confirmPwd')">
             <input type="text" class="inputCode" :placeholder="$t('userCommon.code')">
             <button class="getCode" :class="{disabledGet: !this.canClick}" @click="countDown">{{content}}</button>
-            <router-link class="loginRes" :to="{ path: 'login'}">{{$t('userCommon.loginFgt')}}</router-link>
             <button class="registerBtn">{{$t('userCommon.registerBtn')}}</button>
         </div>
     </section>
@@ -45,7 +44,7 @@ export default {
       phoneShow: true,
       totalTime: 10,
       canClick: true,
-      content: this.$t('userCommon.codeBtn'),
+      content: this.$t('userCommon.codeBtn')
     }
   },
   methods: {
@@ -174,14 +173,6 @@ export default {
                 border-color: #ddd;
                 color:#57a3f3;
                 cursor: not-allowed; 
-            }
-
-            .loginRes {
-                font-size:14px;
-                color:#1890ff;
-                text-align:right;
-                line-height:22px;
-                margin-left: 265px;
             }
             .registerBtn {
                 background:#1890ff;
