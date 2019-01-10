@@ -26,9 +26,9 @@
       <el-col :span="10" :offset="6">
         <h2>{{$t('transfer.balance')}}123456</h2>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="16">
         <div class="formGroup">
-          <el-form label-position="left" label-width="100px" :model="formLabelAlign" :rules="rules">
+          <el-form label-position="right" label-width="160px" :model="formLabelAlign" :rules="rules">
             <el-form-item prop="region">
               <span slot="label">{{$t('transfer.value')}}</span>
               <el-input v-model="formLabelAlign.number" :placeholder="$t('transfer.valueIn')"></el-input>
@@ -132,10 +132,11 @@ export default {
     h2 {
       font-family: PingFang-SC-Bold;
       font-size: 10px;
-      color: #252525;
+      color: #606266;
       line-height: 24px;
-      text-align: left;
-      padding-left: 300px;
+      text-align: right;
+      padding-right: 50px;
+      margin-bottom: -25px;
     }
     .formGroup {
       margin-top: 30px;

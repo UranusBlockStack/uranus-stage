@@ -35,8 +35,6 @@ module.exports = {
   },
   buyer: {
     home: {
-      balance: '余额：',
-      earnings: '收益：',
       store: '应用商店',
       stores: '商店',
       more: '查看全部',
@@ -46,12 +44,13 @@ module.exports = {
       distribution: '算力分布',
       allPower: '全网算力',
       restPower: '剩余算力',
-      buyPower: '已购算力',
       time: '时间',
       hour: '时',
       day: '天',
       week: '周',
-      month: '月'
+      month: '月',
+      yName: '算力',
+      xName: '时间',
     },
     appMarket: {
       searchIn: '输入关键字',
@@ -454,6 +453,7 @@ module.exports = {
     title: '钱包',
     balance: '账户余额：',
     address: '我的地址：',
+    copy: '复制',
     button: '转账',
     transactionDetails: '交易详情',
     hash: '区块哈希',

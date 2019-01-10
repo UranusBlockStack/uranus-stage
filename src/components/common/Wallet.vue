@@ -6,9 +6,15 @@
       </el-col>
     </el-row>
     <el-row class="wallet-body">
-      <el-col :span="18">
+      <el-col :span="12">
         <p>{{$t('wallet.balance')}}100URC</p>
-        <p>{{$t('wallet.address')}}0xCB5A152cD01460e6AEfE15BF45F48542a49ecd1f</p>
+        <p>
+          {{$t('wallet.address')}}
+          {{address}}
+        </p>
+      </el-col>
+      <el-col :span="6">
+        <el-button type="success" style="margin-top:60px" @click="copy()">{{$t('wallet.copy')}}</el-button>
       </el-col>
       <el-col :span="6">
         <el-button type="success" @click="goTransfer">{{$t('wallet.button')}}</el-button>
@@ -17,18 +23,18 @@
     <el-row class="transaction">
       <el-col class="transaction-head">
         <p>{{$t('wallet.transactionDetails')}}</p>
-        <el-dialog title="交易详情" :visible.sync="dialogVisible" width="60%">
+        <el-dialog :title="$t('wallet.transactionDetails')" :visible.sync="dialogVisible" width="60%">
           <el-table :data="tableData1" style="width: 100%">
             <el-table-column prop="menu" width="190"></el-table-column>
-            <el-table-column prop="value" width="650"></el-table-column>
+            <el-table-column prop="value" width="630"></el-table-column>
           </el-table>
         </el-dialog>
       </el-col>
       <el-col :span="24">
         <el-table :data="tableData" border style="width: 100%" @row-click="dialogVisible = true">
-          <el-table-column prop="1" :label="$t('wallet.hash')" min-width="170"></el-table-column>
-          <el-table-column prop="2" :label="$t('wallet.time')" width="180"></el-table-column>
-          <el-table-column prop="3" :label="$t('wallet.from')" width="180"></el-table-column>
+          <el-table-column prop="1" :label="$t('wallet.hash')" min-width="130"></el-table-column>
+          <el-table-column prop="2" :label="$t('wallet.time')" width="150"></el-table-column>
+          <el-table-column prop="3" :label="$t('wallet.from')" width="120"></el-table-column>
           <el-table-column prop="4" :label="$t('wallet.to')" width="120"></el-table-column>
           <el-table-column prop="5" :label="$t('wallet.value')" width="180"></el-table-column>
           <el-table-column prop="6" :label="$t('wallet.fee')" width="120"></el-table-column>
@@ -44,133 +50,144 @@
 
 <script>
 export default {
-  name: 'Wallet',
+  name: "Wallet",
   data() {
     return {
+      address: "0xCB5A152cD01460e6AEfE15BF45F48542a49ecd123",
       dialogVisible: false,
       tableData: [
         {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66',
-          6: '13.21',
-          7: this.$t('wallet.success')
+          1: "548bc46caba···",
+          2: "2018-11-02 09:56",
+          3: "548bc46caba···",
+          4: "548bc46caba···",
+          5: "1234522678.66 URAC",
+          6: "13.21 URAC",
+          7: this.$t("wallet.success")
         },
         {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66',
-          6: '13.21',
-          7: this.$t('wallet.success')
+          1: "548bc46caba···",
+          2: "2018-11-02 09:56",
+          3: "548bc46caba···",
+          4: "548bc46caba···",
+          5: "1234522678.66 URAC",
+          6: "13.21 URAC",
+          7: this.$t("wallet.success")
         },
         {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66',
-          6: '13.21',
-          7: this.$t('wallet.fail')
+          1: "548bc46caba···",
+          2: "2018-11-02 09:56",
+          3: "548bc46caba···",
+          4: "548bc46caba···",
+          5: "1234522678.66 URAC",
+          6: "13.21 URAC",
+          7: this.$t("wallet.fail")
         },
         {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66',
-          6: '13.21',
-          7: this.$t('wallet.processing')
+          1: "548bc46caba···",
+          2: "2018-11-02 09:56",
+          3: "548bc46caba···",
+          4: "548bc46caba···",
+          5: "1234522678.66 URAC",
+          6: "13.21 URAC",
+          7: this.$t("wallet.processing")
         },
         {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66',
-          6: '13.21',
-          7: this.$t('wallet.success')
+          1: "548bc46caba···",
+          2: "2018-11-02 09:56",
+          3: "548bc46caba···",
+          4: "548bc46caba···",
+          5: "1234522678.66 URAC",
+          6: "13.21 URAC",
+          7: this.$t("wallet.success")
         },
         {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66',
-          6: '13.21',
-          7: this.$t('wallet.success')
+          1: "548bc46caba···",
+          2: "2018-11-02 09:56",
+          3: "548bc46caba···",
+          4: "548bc46caba···",
+          5: "1234522678.66 URAC",
+          6: "13.21 URAC",
+          7: this.$t("wallet.success")
         }
       ],
       tableData1: [
         {
-          menu: 'TxHash:',
+          menu: "TxHash:",
           value:
-            '0x3e98fd1224269fccaf4ee5194932c351a00eaaae6edc2a566a8966b8c253af67'
+            "0x3e98fd1224269fccaf4ee5194932c351a00eaaae6edc2a566a8966b8c253af67"
         },
         {
-          menu: 'TxReceipt Status:',
-          value: 'Success'
+          menu: "TxReceipt Status:",
+          value: "Success"
         },
         {
-          menu: 'Block Height:',
-          value: '6924205 (10 Block Confirmations)'
+          menu: "Block Height:",
+          value: "6924205 (10 Block Confirmations)"
         },
         {
-          menu: 'TimeStamp:',
-          value: '2 mins ago (Dec-21-2018 02:43:26 AM +UTC)'
+          menu: "TimeStamp:",
+          value: "2 mins ago (Dec-21-2018 02:43:26 AM +UTC)"
         },
         {
-          menu: 'From:',
-          value: '0x907a6d492e0765451ee2a066326f24f1164a5578'
+          menu: "From:",
+          value: "0x907a6d492e0765451ee2a066326f24f1164a5578"
         },
         {
-          menu: 'To:',
-          value: 'Contract 0x991c2e104dfa1e2f88fd91010ee65cfb2a60e255'
+          menu: "To:",
+          value: "Contract 0x991c2e104dfa1e2f88fd91010ee65cfb2a60e255"
         },
         {
-          menu: 'Value:',
-          value: '1 Ether ($116.41)'
+          menu: "Value:",
+          value: "1 Ether ($116.41)"
         },
         {
-          menu: 'Gas Limit:',
-          value: '41836'
+          menu: "Gas Limit:",
+          value: "41836"
         },
         {
-          menu: 'Gas Used By Transaction:',
-          value: '41836 (100%)'
+          menu: "Gas Used By Transaction:",
+          value: "41836 (100%)"
         },
         {
-          menu: 'Gas Price:',
-          value: '0.000000004199999999 Ether (4.199999999 Gwei)'
+          menu: "Gas Price:",
+          value: "0.000000004199999999 Ether (4.199999999 Gwei)"
         },
         {
-          menu: 'Actual Tx Cost/Fee:',
-          value: '0.00017571119995 Ether ($0.02)'
+          menu: "Actual Tx Cost/Fee:",
+          value: "0.00017571119995 Ether ($0.02)"
         },
         {
-          menu: 'Nonce & {Position}:',
-          value: '1422 | {191}'
+          menu: "Nonce & {Position}:",
+          value: "1422 | {191}"
         },
         {
-          menu: 'Input Data:',
-          value: 'Function: dbkDeposit() MethodID: 0xc1ba93e1'
+          menu: "Input Data:",
+          value: "Function: dbkDeposit() MethodID: 0xc1ba93e1"
         },
         {
-          menu: 'Private Note:',
-          value: '<To access the Private Note Feature, you must be Logged In>'
+          menu: "Private Note:",
+          value: "<To access the Private Note Feature, you must be Logged In>"
         }
       ]
-    }
+    };
   },
   methods: {
+    copy() {
+      const input = document.createElement("input");
+      document.body.appendChild(input);
+      input.setAttribute("value", this.address);
+      input.select();
+      if (document.execCommand("copy")) {
+        document.execCommand("copy");
+      }
+      document.body.removeChild(input);
+    },
     goTransfer() {
-      this.$router.push({ path: 'transfer' })
+      this.$router.push({ path: "transfer" });
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>

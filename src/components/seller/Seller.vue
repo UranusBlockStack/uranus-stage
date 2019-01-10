@@ -213,15 +213,28 @@ export default {
             data: myData1.x,
             axisTick: {
               alignWithLabel: true
-            }
+            },
+            axisLine: {
+              show: true,
+              symbol: ["none", "arrow"],
+              symbolSize: [10, 20],
+              symbolOffset: [0,15]
+            },
           }
         ],
         yAxis: [
           {
+            name: 'UracPower(U)',
             type: 'value',
             axisLabel: {
               formatter: '{value}'
-            }
+            },
+            axisLine: {
+              show: true,
+              symbol: ["none", "arrow"],
+              symbolSize: [10, 20],
+              symbolOffset: [0,15]
+            },
           }
         ],
         series: [
@@ -261,7 +274,13 @@ export default {
             data: myData2.x,
             axisTick: {
               alignWithLabel: true
-            }
+            },
+            xisLine: {
+              show: true,
+              symbol: ["none", "arrow"],
+              symbolSize: [10, 20],
+              symbolOffset: [0,15]
+            },
           }
         ],
         yAxis: [
@@ -269,7 +288,13 @@ export default {
             type: 'value',
             axisLabel: {
               formatter: '{value}'
-            }
+            },
+            xisLine: {
+              show: true,
+              symbol: ["none", "arrow"],
+              symbolSize: [10, 20],
+              symbolOffset: [0,15]
+            },
           }
         ],
         series: [

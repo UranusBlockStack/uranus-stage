@@ -1,5 +1,8 @@
 <template>
     <section class="register">
+        <div class="back">
+            <router-link :to="{path: '/map'}">Back</router-link>
+        </div>
         <div class="registerHead">
             <img src="/static/img/uranus/head.png">
         </div>
@@ -80,7 +83,14 @@ export default {
         background: no-repeat url(/static/img/uranus/bg.png);
         background-size: cover;
         text-align: center;
-
+        position: absolute;
+        .back {
+            position: relative;
+            height: 30px;
+            width: 50px;
+            left: 30px;
+            top: 50px;
+        }
         .registerHead {
             margin: 0 auto;
             width: 380px;

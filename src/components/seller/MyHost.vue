@@ -25,11 +25,11 @@
             >{{scope.row.state}}</el-tag>
           </template>
         </el-table-column>
-        <el-table-column width="100" prop="number" :label="$t('seller.host.number')"></el-table-column>
+        <el-table-column width="110" prop="number" :label="$t('seller.host.number')"></el-table-column>
         <el-table-column label="CPU">
           <template slot-scope="scope">
             <p style="color:#8c8c8c; font-size:10px; ">{{ scope.row.cpu }}{{$t('seller.host.usable')}}</p>
-            <el-progress :percentage="50" color="#f25954" :show-text="false"></el-progress>
+            <el-progress :percentage="50" :stroke-width="18" :text-inside="true" color="#f25954"></el-progress>
             <p style="color:#8c8c8c; font-size:10px; ">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
