@@ -8,7 +8,7 @@ export default new Vuex.Store({
   state: {
     isLoggedIn: false,
     // apiUrl: `${window.location.protocol}//${window.location.hostname}:3000/api`,
-    apiUrl: 'http://192.168.110.12:4000',
+    apiUrl: 'http://192.168.110.45:4000',
     // apiUrl: 'http://47.105.151.199:4000/',
     username: null,
     userId: null,
