@@ -37,7 +37,7 @@
           </el-form-item>
           <el-form-item :label="$t('seller.group.setRegion')">
             <el-select v-model="form.address" :placeholder="$t('seller.group.setRegion')">
-               <el-option :label="$t('seller.group.asia')" value="asia"></el-option>
+              <el-option :label="$t('seller.group.asia')" value="asia"></el-option>
               <el-option :label="$t('seller.group.europe')" value="europe"></el-option>
               <el-option :label="$t('seller.group.africa')" value="africa"></el-option>
               <el-option :label="$t('seller.group.south')" value="southAmerica"></el-option>
@@ -52,8 +52,8 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary"  @click="dialogVisible = false">{{$t('seller.group.confirm')}}</el-button>
-            <el-button  @click="dialogVisible = false">{{$t('seller.group.cancel')}}</el-button>
+            <el-button type="primary" @click="dialogVisible = false">{{$t('seller.group.confirm')}}</el-button>
+            <el-button @click="dialogVisible = false">{{$t('seller.group.cancel')}}</el-button>
           </el-form-item>
         </el-form>
       </span>
@@ -68,39 +68,38 @@
       </el-dialog>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false">{{$t('seller.group.cancel')}}</el-button>
-        <el-button type="primary" @click="outerVisible = false, innerVisible = true">{{$t('seller.group.confirm')}}</el-button>
+        <el-button
+          type="primary"
+          @click="outerVisible = false, innerVisible = true"
+        >{{$t('seller.group.confirm')}}</el-button>
       </div>
     </el-dialog>
     <el-row class="colonyBox">
       <el-row>
         <el-col class="title" :span="24">
-          <h1>集群A</h1>
+          <h1>{{$t('menu.myColony1')}}</h1>
         </el-col>
       </el-row>
       <el-row class="rePool">
         <el-col :span="4">
           <div id="restPool"></div>
         </el-col>
-        <el-col class="padding-top" :span="5" :offset="1">
+        <el-col class="padding-top" :span="7" :offset="1">
           <h4>{{$t('seller.group.earnings')}}888.86URAC</h4>
           <p>{{$t('seller.group.value')}}100URAC/天</p>
           <p>{{$t('seller.group.region')}}{{$t('seller.group.asia')}}</p>
-        </el-col>
-        <el-col class="padding-top" :span="6">
           <p>{{$t('seller.group.stateSale')}}{{$t('seller.group.inSale')}}</p>
+        </el-col>
+        <el-col class="padding-top" :span="8">
+          <h4>{{$t('seller.group.restTime')}}{{$t('seller.group.timeup')}}</h4>
           <p>{{$t('seller.group.operatingStatus')}}{{$t('seller.group.running')}}</p>
           <p>{{$t('seller.group.buyingTime')}}2018/12/12 12:12:12</p>
           <p>{{$t('seller.group.endingTime')}}2019/12/12 12:12:12</p>
         </el-col>
-        <el-col class="padding-top" :span="4">
-          <p>{{$t('seller.group.restTime')}}{{$t('seller.group.timeup')}}</p>
-          <el-button type="success">
-            {{$t('seller.group.renewal')}}
-            <i class="el-icon-arrow-right"></i>
-          </el-button>
-        </el-col>
         <el-col :span="4">
-          <p class="setting" @click="dialogVisible = true">{{$t('seller.group.setting')}}</p>
+          <p class="setting" @click="dialogVisible = true">
+            <i class="iconfont icon-setting"></i>
+          </p>
         </el-col>
         <el-col class="lineBox"></el-col>
       </el-row>
@@ -109,7 +108,6 @@
           <h2>{{$t('seller.group.restOne')}}</h2>
           <div class="restRes">
             <div id="restResource1"></div>
-            <div id="restResource2"></div>
             <div id="restResource3"></div>
             <div id="restResource4"></div>
             <div id="restResource5"></div>
@@ -137,13 +135,15 @@
           </el-table-column>
           <el-table-column prop="number" :label="$t('seller.group.number')"></el-table-column>
           <el-table-column prop="cpu" label="CPU"></el-table-column>
-          <el-table-column prop="gpu" label="GPU"></el-table-column>
           <el-table-column prop="memory" :label="$t('seller.group.memory')"></el-table-column>
           <el-table-column prop="disk" :label="$t('seller.group.disk')"></el-table-column>
           <el-table-column prop="network" :label="$t('seller.group.network')"></el-table-column>
           <el-table-column>
             <template>
-              <p style="color: #8eb357" @click="outerVisible = true">{{$t('seller.group.deleteHost')}}</p>
+              <p
+                style="color: #8eb357"
+                @click="outerVisible = true"
+              >{{$t('seller.group.deleteHost')}}</p>
             </template>
           </el-table-column>
         </el-table>
@@ -153,105 +153,97 @@
 </template>
 
 <script>
-import 'echarts-liquidfill'
+import "echarts-liquidfill";
 
 export default {
-  name: 'ResourcePool',
+  name: "ResourcePool",
   data() {
     return {
       tableData: [
         {
-          state: '在线',
-          number: '主机A',
-          cpu: '2核',
-          gpu: '2G',
-          memory: '2G',
-          disk: '1T',
-          network: '2M'
+          state: "在线",
+          number: "主机A",
+          cpu: "2核",
+          memory: "2G",
+          disk: "1T",
+          network: "2M"
         },
         {
-          state: '离线',
-          number: '主机B',
-          cpu: '1核',
-          gpu: '2G',
-          memory: '2G',
-          disk: '1T',
-          network: '2M'
+          state: "离线",
+          number: "主机B",
+          cpu: "1核",
+          memory: "2G",
+          disk: "1T",
+          network: "2M"
         },
         {
-          state: '在线',
-          number: '主机C',
-          cpu: '3核',
-          gpu: '2G',
-          memory: '2G',
-          disk: '1T',
-          network: '2M'
+          state: "在线",
+          number: "主机C",
+          cpu: "3核",
+          memory: "2G",
+          disk: "1T",
+          network: "2M"
         },
         {
-          state: '在线',
-          number: '主机D',
-          cpu: '1核',
-          gpu: '2G',
-          memory: '2G',
-          disk: '1T',
-          network: '2M'
+          state: "在线",
+          number: "主机D",
+          cpu: "1核",
+          memory: "2G",
+          disk: "1T",
+          network: "2M"
         },
         {
-          state: '离线',
-          number: '主机E',
-          cpu: '2核',
-          gpu: '2G',
-          memory: '2G',
-          disk: '2T',
-          network: '2M'
+          state: "离线",
+          number: "主机E",
+          cpu: "2核",
+          memory: "2G",
+          disk: "2T",
+          network: "2M"
         }
       ],
       dialogVisible: false,
       form: {
-        name: '',
-        price: '',
-        date1: '',
-        date2: '',
-        address: '',
-        state: ''
+        name: "",
+        price: "",
+        date1: "",
+        date2: "",
+        address: "",
+        state: ""
       },
       outerVisible: false,
       innerVisible: false
-    }
+    };
   },
   methods: {
     filterState(value, row) {
-      return row.state === value
+      return row.state === value;
     },
     initEchart() {
-      var myChart = this.$echarts.init(document.getElementById('restPool'))
+      var myChart = this.$echarts.init(document.getElementById("restPool"));
       var myChart1 = this.$echarts.init(
-        document.getElementById('restResource1')
-      )
-      var myChart2 = this.$echarts.init(
-        document.getElementById('restResource2')
-      )
+        document.getElementById("restResource1")
+      );
       var myChart3 = this.$echarts.init(
-        document.getElementById('restResource3')
-      )
+        document.getElementById("restResource3")
+      );
       var myChart4 = this.$echarts.init(
-        document.getElementById('restResource4')
-      )
+        document.getElementById("restResource4")
+      );
       var myChart5 = this.$echarts.init(
-        document.getElementById('restResource5')
-      )
+        document.getElementById("restResource5")
+      );
       myChart.setOption({
         series: [
           {
-            type: 'liquidFill',
-            radius: '85%',
+            type: "liquidFill",
+            radius: "85%",
             data: [
               {
                 value: 0.5,
-                direction: 'left',
+                direction: "left",
                 itemStyle: {
                   normal: {
-                    color: '#1890FF'
+                    color: "#1890FF"
                   }
                 }
               }
@@ -260,25 +252,25 @@ export default {
               show: false
             },
             backgroundStyle: {
-              borderColor: '#156ACF',
+              borderColor: "#156ACF",
               borderWidth: 1,
-              shadowColor: 'rgba(0, 0, 0, 0.4)',
+              shadowColor: "rgba(0, 0, 0, 0.4)",
               shadowBlur: 20
             }
           }
         ]
-      })
+      });
       myChart1.setOption({
         series: [
           {
-            name: 'Cpu',
-            type: 'pie',
-            radius: ['85%', '70%'],
+            name: "Cpu",
+            type: "pie",
+            radius: ["85%", "70%"],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#1890FF', '#f2f2f2'],
+            color: ["#1890FF", "#f2f2f2"],
             data: [
               {
                 value: 68,
@@ -286,22 +278,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|CPU}', '{b|68%}'].join('\n'),
+                    formatter: ["{a|CPU}", "{b|68%}"].join("\n"),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#5d5d5d",
+                        fontSize: "14",
+                        lineHeight: "22",
+                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "rgba(0,0,0,.85)",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
-                    position: 'center',
-                    textStyle: { align: 'center' }
+                    position: "center",
+                    textStyle: { align: "center" }
                   }
                 }
               },
@@ -309,60 +301,18 @@ export default {
             ]
           }
         ]
-      })
-      myChart2.setOption({
-        series: [
-          {
-            name: 'Gpu',
-            type: 'pie',
-            radius: ['85%', '70%'],
-            hoverAnimation: false,
-            legendHoverLink: false,
-            avoidLabelOverlap: false,
-            selectedOffset: 0,
-            color: ['#7FD455', '#f2f2f2'],
-            data: [
-              {
-                value: 88,
-                selected: false,
-                label: {
-                  normal: {
-                    show: true,
-                    formatter: ['{a|CPU}', '{b|88%}'].join('\n'),
-                    rich: {
-                      a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
-                      },
-                      b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
-                      }
-                    },
-                    position: 'center',
-                    textStyle: { align: 'center' }
-                  }
-                }
-              },
-              { value: 12 }
-            ]
-          }
-        ]
-      })
+      });
       myChart3.setOption({
         series: [
           {
-            name: '内存',
-            type: 'pie',
-            radius: ['85%', '70%'],
+            name: "内存",
+            type: "pie",
+            radius: ["85%", "70%"],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#FACC14', '#f2f2f2'],
+            color: ["#FACC14", "#f2f2f2"],
             data: [
               {
                 value: 62,
@@ -370,22 +320,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|内存}', '{b|62%}'].join('\n'),
+                    formatter: ["{a|内存}", "{b|62%}"].join("\n"),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#5d5d5d",
+                        fontSize: "14",
+                        lineHeight: "22",
+                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "rgba(0,0,0,.85)",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
-                    position: 'center',
-                    textStyle: { align: 'center' }
+                    position: "center",
+                    textStyle: { align: "center" }
                   }
                 }
               },
@@ -393,18 +343,18 @@ export default {
             ]
           }
         ]
-      })
+      });
       myChart4.setOption({
         series: [
           {
-            name: '硬盘',
-            type: 'pie',
-            radius: ['85%', '70%'],
+            name: "硬盘",
+            type: "pie",
+            radius: ["85%", "70%"],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#658FF7', '#f2f2f2'],
+            color: ["#658FF7", "#f2f2f2"],
             data: [
               {
                 value: 88,
@@ -412,22 +362,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|硬盘}', '{b|88%}'].join('\n'),
+                    formatter: ["{a|硬盘}", "{b|88%}"].join("\n"),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#5d5d5d",
+                        fontSize: "14",
+                        lineHeight: "22",
+                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "rgba(0,0,0,.85)",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
-                    position: 'center',
-                    textStyle: { align: 'center' }
+                    position: "center",
+                    textStyle: { align: "center" }
                   }
                 }
               },
@@ -435,18 +385,18 @@ export default {
             ]
           }
         ]
-      })
+      });
       myChart5.setOption({
         series: [
           {
-            name: '网络',
-            type: 'pie',
-            radius: ['85%', '70%'],
+            name: "网络",
+            type: "pie",
+            radius: ["85%", "70%"],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#FB8D5B', '#f2f2f2'],
+            color: ["#FB8D5B", "#f2f2f2"],
             data: [
               {
                 value: 62,
@@ -454,22 +404,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|网络}', '{b|62%}'].join('\n'),
+                    formatter: ["{a|网络}", "{b|62%}"].join("\n"),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#5d5d5d",
+                        fontSize: "14",
+                        lineHeight: "22",
+                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "rgba(0,0,0,.85)",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
-                    position: 'center',
-                    textStyle: { align: 'center' }
+                    position: "center",
+                    textStyle: { align: "center" }
                   }
                 }
               },
@@ -477,21 +427,20 @@ export default {
             ]
           }
         ]
-      })
+      });
       window.onresize = function() {
-        myChart.resize()
-        myChart1.resize()
-        myChart2.resize()
-        myChart3.resize()
-        myChart4.resize()
-        myChart5.resize()
-      }
+        myChart.resize();
+        myChart1.resize();
+        myChart3.resize();
+        myChart4.resize();
+        myChart5.resize();
+      };
     }
   },
   mounted() {
-    this.initEchart()
+    this.initEchart();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -546,6 +495,7 @@ export default {
         font-family: PingFang-SC-Bold;
         font-size: 16px;
         color: #363636;
+        font-weight: bold;
         line-height: 24px;
         text-align: left;
       }
@@ -561,9 +511,11 @@ export default {
         text-align: right;
         padding-right: 24px;
         font-family: PingFang-SC-Medium;
-        font-size: 16px;
         color: #8eb357;
         line-height: 24px;
+        i {
+          font-size: 25px;
+        }
       }
       #restPool {
         height: 190px;

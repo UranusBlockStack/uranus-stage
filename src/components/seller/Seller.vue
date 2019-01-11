@@ -32,11 +32,10 @@
       <div class="power">
         <p>{{$t('seller.home.power')}}</p>
         <div class="powerBox">
-          <div id="Cpu">1</div>
-          <div id="Memory">1</div>
-          <div id="Storage">1</div>
-          <div id="Network">1</div>
-          <div id="Gpu">1</div>
+          <div id="Cpu"></div>
+          <div id="Memory"></div>
+          <div id="Storage"></div>
+          <div id="Network"></div>
         </div>
       </div>
       <div class="record">
@@ -53,7 +52,7 @@
           </el-col>
         </el-row>
         <el-row :gutter="20" style="height: 50px">
-          <el-col :span="6" :offset="9">
+          <el-col :span="6" :offset="16">
             <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
           </el-col>
         </el-row>
@@ -189,7 +188,6 @@ export default {
       let myChart4 = this.$echarts.init(document.getElementById('Memory'))
       let myChart5 = this.$echarts.init(document.getElementById('Storage'))
       let myChart6 = this.$echarts.init(document.getElementById('Network'))
-      let myChart7 = this.$echarts.init(document.getElementById('Gpu'))
       let myData1 = val1
       let myData2 = val2
       myChart1.setOption({
@@ -209,6 +207,7 @@ export default {
         },
         xAxis: [
           {
+            name: 'T',
             type: 'category',
             data: myData1.x,
             axisTick: {
@@ -218,7 +217,7 @@ export default {
               show: true,
               symbol: ["none", "arrow"],
               symbolSize: [10, 20],
-              symbolOffset: [0,15]
+              symbolOffset: [0,5]
             },
           }
         ],
@@ -254,7 +253,7 @@ export default {
         ]
       })
       myChart2.setOption({
-        color: ['#3398DB'],
+       color: ['#3398DB'],
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -270,26 +269,28 @@ export default {
         },
         xAxis: [
           {
+            name: 'T',
             type: 'category',
             data: myData2.x,
             axisTick: {
               alignWithLabel: true
             },
-            xisLine: {
+            axisLine: {
               show: true,
               symbol: ["none", "arrow"],
               symbolSize: [10, 20],
-              symbolOffset: [0,15]
+              symbolOffset: [0,5]
             },
           }
         ],
         yAxis: [
           {
+            name: 'Earnings(Urac)',
             type: 'value',
             axisLabel: {
               formatter: '{value}'
             },
-            xisLine: {
+            axisLine: {
               show: true,
               symbol: ["none", "arrow"],
               symbolSize: [10, 20],
@@ -304,7 +305,8 @@ export default {
             barWidth: '25%',
             color: '#1890ff',
             data: myData2.y
-          }, {
+          },
+          {
             name: 'line',
             type: 'line',
             color: '#1890ff',
@@ -472,46 +474,6 @@ export default {
           }
         ]
       })
-      myChart7.setOption({
-        tooltip: {
-          formatter: '{a} <br/>{b} : {c}%'
-        },
-        series: [
-          {
-            name: '我的算力',
-            type: 'gauge',
-            title: {
-              show: true,
-              offsetCenter: [0, '60%'], // x, y，单位px
-              textStyle: {
-                color: '#979797',
-                fontSize: 14
-              }
-            },
-            detail: {
-              show: true,
-              formatter: '{value}%',
-              offsetCenter: [0, '90%'],
-              textStyle: {
-                color: '#5d5d5d',
-                fontSize: 24
-              }
-            },
-            data: [{ value: 90, name: 'GPU' }],
-            axisLabel: {
-              formatter: function(value) {
-                return ''
-              }
-            },
-            axisLine: {
-              lineStyle: {
-                width: 10,
-                color: [[0.9, '#1890ff'], [1, '#91c7ae']]
-              } 
-            }
-          }
-        ]
-      })
       window.onresize = function() {
         myChart1.resize()
         myChart2.resize()
@@ -519,7 +481,6 @@ export default {
         myChart4.resize()
         myChart5.resize()
         myChart6.resize()
-        myChart7.resize()
       }
     }
   },
@@ -635,7 +596,7 @@ export default {
         display: flex;
         justify-content: space-around;
         div {
-          width: 20%;
+          width: 25%;
           height: 300px;
           margin: 10px;
           color: #979797;
@@ -651,6 +612,9 @@ export default {
         height: 40px;
         font-family: PingFang-SC-Bold;
         font-size: 16px;
+      }
+      .el-pagination {
+        margin-top: 20px;
       }
     }
   }

@@ -5,7 +5,11 @@
         <h1>{{$t('menu.myColony')}}</h1>
       </el-col>
     </el-row>
-    <el-dialog :title="$t('seller.groups.settingTitle')" :visible.sync="dialogVisible" width="650px">
+    <el-dialog
+      :title="$t('seller.groups.settingTitle')"
+      :visible.sync="dialogVisible"
+      width="650px"
+    >
       <span>
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item :label="$t('seller.groups.settingName')">
@@ -52,83 +56,49 @@
             </el-select>
           </el-form-item>
           <el-form-item>
-            <el-button type="primary"  @click="dialogVisible = false">{{$t('seller.groups.confirm')}}</el-button>
-            <el-button  @click="dialogVisible = false">{{$t('seller.groups.cancel')}}</el-button>
+            <el-button type="primary" @click="dialogVisible = false">{{$t('seller.groups.confirm')}}</el-button>
+            <el-button @click="dialogVisible = false">{{$t('seller.groups.cancel')}}</el-button>
           </el-form-item>
         </el-form>
       </span>
     </el-dialog>
     <div class="shop">
-      <el-row>
-        <el-col :span="5">
+      <el-row style="padding-bottom: 10px;">
+        <el-col :span="4" :offset="16">
           <el-input :placeholder="$t('seller.groups.searchIn')" prefix-icon="el-icon-search"></el-input>
         </el-col>
-        <el-col :span="2" :offset="1">
-          <el-button type="success">{{$t('seller.groups.search')}}</el-button>
-        </el-col>
-        <el-col :span="2" :offset="2">
-          <p>
-            {{$t('seller.groups.value')}}
-            <i class="el-icon-d-caret"></i>
-          </p>
-        </el-col>
-        <el-col :span="2" :offset="1">
-          <p>
-            {{$t('seller.groups.startingTime')}}
-            <i class="el-icon-d-caret"></i>
-          </p>
-        </el-col>
-        <el-col :span="2" :offset="1">
-          <p>
-            {{$t('seller.groups.endTime')}}
-            <i class="el-icon-d-caret"></i>
-          </p>
-        </el-col>
-        <el-col :span="3" :offset="2">
-          <el-select v-model="value" :placeholder="$t('seller.groups.screen')">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+        <el-col :span="1" :offset="1">
+          <el-button type="success">
+            <i class="iconfont icon-view"></i>
+          </el-button>
         </el-col>
       </el-row>
       <el-row class="lineBox"></el-row>
       <el-row class="shopBox" v-for="(colony, index) in colonyList" :key="index">
         <el-col :span="4">
-          <Water :chartData="colony.value"/>
-          <h1>
-            <router-link :to="{path: '/colony'}">{{colony.colony}}</router-link>
-          </h1>
+          <router-link :to="{path: '/colony'}">
+            <Water :chartData="colony.value"/>
+            <h1>{{colony.colony}}</h1>
+          </router-link>
         </el-col>
-        <el-col class="padding-top" :span="5" :offset="1">
-          <h4>{{$t('seller.groups.earnings')}}888.86URAC</h4>
-          <p>{{$t('seller.groups.value')}}100URAC/天</p>
-          <p>{{$t('seller.groups.region')}}{{$t('seller.groups.asia')}}</p>
-        </el-col>
-        <el-col class="padding-top" :span="6">
-          <p>{{$t('seller.groups.stateSale')}}{{$t('seller.groups.inSale')}}</p>
-          <p>{{$t('seller.groups.operatingStatus')}}{{$t('seller.groups.running')}}</p>
-          <p>{{$t('seller.groups.buyingTime')}}2018/12/12 12:12:12</p>
-          <p>{{$t('seller.groups.endingTime')}}2019/12/12 12:12:12</p>
-        </el-col>
-        <el-col class="padding-top" :span="4">
-          <p>{{$t('seller.groups.restTime')}}{{$t('seller.groups.timeup')}}</p>
-          <el-button type="success">
-            {{$t('seller.groups.renewal')}}
-            <i class="el-icon-arrow-right"></i>
-          </el-button>
+        <el-col class="padding-top" :span="16">
+          <p>
+            <i class="iconfont icon-earnings"></i> 收益： 88888888.888888URAC
+          </p>
+          <p>
+            <i class="iconfont icon-shaloucountdown"></i> 倒计时： 222天22时22分22秒
+          </p>
         </el-col>
         <el-col :span="4">
-          <p class="setting" @click="dialogVisible = true">{{$t('seller.groups.setting')}}</p>
+          <p class="setting" @click="dialogVisible = true">
+            <i class="iconfont icon-set" style="font-size: 25px;"></i>
+          </p>
         </el-col>
         <el-col class="lineBox"></el-col>
       </el-row>
       <el-row>
-        <el-col :span="8" :offset="8">
-          <el-pagination layout="prev, pager, next" :total="1000"></el-pagination>
+        <el-col :span="8" :offset="16">
+          <el-pagination layout="prev, pager, next" :total="1000" style="padding-top: 15px;"></el-pagination>
         </el-col>
       </el-row>
     </div>
@@ -136,9 +106,9 @@
 </template>
 
 <script>
-import Water from './Water'
+import Water from "./Water";
 export default {
-  name: 'MyColony',
+  name: "MyColony",
   components: {
     Water
   },
@@ -146,46 +116,46 @@ export default {
     return {
       options: [
         {
-          value: '1',
-          label: '已上架集群'
+          value: "1",
+          label: "已上架集群"
         },
         {
-          value: '2',
-          label: '未上架集群'
+          value: "2",
+          label: "未上架集群"
         },
         {
-          value: '3',
-          label: '运行中集群'
+          value: "3",
+          label: "运行中集群"
         },
         {
-          value: '4',
-          label: '未运行集群'
+          value: "4",
+          label: "未运行集群"
         }
       ],
-      value: '',
+      value: "",
       colonyList: [
-        { id: '1', value: '0.50', colony: '集群A' },
-        { id: '2', value: '0.40', colony: '集群B' },
-        { id: '3', value: '0.60', colony: '集群C' },
-        { id: '4', value: '0.50', colony: '集群D' },
-        { id: '1', value: '0.50', colony: '集群E' },
-        { id: '2', value: '0.50', colony: '集群F' },
-        { id: '3', value: '0.50', colony: '集群G' },
-        { id: '4', value: '0.50', colony: '集群H' }
+        { id: "1", value: "0.50", colony: "集群A" },
+        { id: "2", value: "0.40", colony: "集群B" },
+        { id: "3", value: "0.60", colony: "集群C" },
+        { id: "4", value: "0.50", colony: "集群D" },
+        { id: "1", value: "0.50", colony: "集群E" },
+        { id: "2", value: "0.50", colony: "集群F" },
+        { id: "3", value: "0.50", colony: "集群G" },
+        { id: "4", value: "0.50", colony: "集群H" }
       ],
       dialogVisible: false,
       form: {
-        name: '',
-        price: '',
-        date1: '',
-        date2: '',
-        address: '',
-        state: ''
+        name: "",
+        price: "",
+        date1: "",
+        date2: "",
+        address: "",
+        state: ""
       }
-    }
+    };
   },
   methods: {}
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -222,9 +192,6 @@ export default {
       color: #252525;
       line-height: 24px;
       text-align: left;
-      i {
-        color: #d8d8d8;
-      }
     }
     .lineBox {
       border-bottom: 1px solid #e9e9e9;
@@ -233,32 +200,27 @@ export default {
       padding-top: 30px;
       .padding-top {
         padding-top: 35px;
+        p {
+          margin: 20px 150px;
+          font-size: 25px;
+          i {
+            font-size: 30px;
+          }
+        }
       }
       h1 {
         width: 100%;
-        text-align: center;
+        text-align: left;
         font-family: PingFang-SC-Medium;
         font-size: 16px;
         color: #363636;
+        padding-left: 105px;
         line-height: 24px;
-      }
-      h4 {
-        font-family: PingFang-SC-Bold;
-        font-size: 16px;
-        color: #363636;
-        line-height: 24px;
-        text-align: left;
-      }
-      p {
-        margin: 0;
       }
       .setting {
         text-align: right;
         padding-right: 24px;
-        font-family: PingFang-SC-Medium;
-        font-size: 16px;
         color: #8eb357;
-        line-height: 24px;
       }
     }
   }

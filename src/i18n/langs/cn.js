@@ -278,7 +278,7 @@ module.exports = {
       type: '交易类型',
       time: '交易时间',
       hash: '交易哈希',
-      amount: '数量',
+      amount: '数量 (Urac)',
       fee: '手续费'
     },
     host: {

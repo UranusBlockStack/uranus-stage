@@ -53,7 +53,7 @@
       </li>
       <li class="treeview" v-show="user== 'buyer'">
         <router-link :to="{path: '/applicationrepository'}">
-          <i class="iconfont icon-my-application"></i>
+          <i class="iconfont icon-My-application"></i>
           <span>{{$t('menu.appRepository')}}</span>
         </router-link>
       </li>
@@ -100,7 +100,7 @@
       </li>
       <li class="treeview" v-show="user== 'seller'">
         <router-link :to="{path: '/mycolony'}">
-          <i class="iconfont icon-my-colony"></i>
+          <i class="iconfont icon-cluster"></i>
           <span>{{$t('menu.myColony')}}</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
@@ -129,13 +129,13 @@
       </li>
       <li class="treeview" v-show="user== 'developer'">
         <router-link :to="{path: '/uploadapplication'}">
-          <i class="iconfont icon-shangchuan"></i>
+          <i class="iconfont icon-upload"></i>
           <span>{{$t('menu.uploadApplication')}}</span>
         </router-link>
       </li>
       <li class="treeview" v-show="user== 'developer'">
         <router-link :to="{path: '/myapplication'}">
-          <i class="iconfont icon-my-application"></i>
+          <i class="iconfont icon-My-application"></i>
           <span>{{$t('menu.myApplication')}}</span>
         </router-link>
       </li>
@@ -182,7 +182,7 @@ export default {
 <style lang="scss" scoped>
 .sidebar {
   .sidebar-menu {
-    font-size: 15px;
+    font-size: 16px;
     font-family: PingFang-SC-Heavy;
     .treeview {
       a {
@@ -190,7 +190,7 @@ export default {
         font-family: PingFang-SC-Medium;
         font-size:16px;
         i {
-          font-size: 35px;
+          font-size: 25px;
         }
       }
       .treeview-menu {
@@ -215,8 +215,8 @@ export default {
         color: #8eb357;
         background: #f2f2f2;
         i {
-          font-size: 50px;
-          transition: 2s;
+          font-size: 30px;
+          transition: 1.2s;
         }
       }
       .treeview-menu {

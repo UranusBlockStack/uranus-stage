@@ -15,9 +15,9 @@ module.exports = {
     // seller
     myHost: 'Host',
     myColony: 'Cluster',
-    myColony1: 'Cluster 1',
-    myColony2: 'Cluster 2',
-    myColony3: 'Cluster 3',
+    myColony1: 'Cluster A',
+    myColony2: 'Cluster B',
+    myColony3: 'Cluster C',
     // developer
     uploadApplication: '上传应用',
     myApplication: '我的应用'
@@ -277,7 +277,7 @@ module.exports = {
       type: 'Type',
       time: 'Time',
       hash: 'TX Hash',
-      amount: 'Amount',
+      amount: 'Value (Urac)',
       fee: 'Fee'
     },
     host: {
@@ -411,6 +411,7 @@ module.exports = {
       processing: 'Processing',
       creationTime: 'Order creation time',
       operating: 'Operating',
+      text: 'Please click on the installation package in the upper right corner to download the client.',
       deleteHost: 'Delete',
       deleteText1: 'The host is already occupied and cannot be logged out of the group.',
       deleteText2: 'The host has been leased and cannot exit the Cluster.',
