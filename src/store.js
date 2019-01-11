@@ -12,10 +12,15 @@ export default new Vuex.Store({
     // apiUrl: 'http://47.105.151.199:4000/',
     username: null,
     userId: null,
-    HashPowerStatus: {
-      notAdd: '未加入算力池',
-      normal: '正常状态',
-      waiting: '等待状态'
+    lang: {// 全部语言包列表
+      'zh-cn': 'zh-cn',
+      'en-us': 'en-us'
+    },
+    curlang: 'en-us' // 当前的语言包
+  },
+  getters: {
+    lang: state => {
+      return state.lang[state.curlang]
     }
   },
   mutations: {

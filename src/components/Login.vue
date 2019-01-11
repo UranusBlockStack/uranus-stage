@@ -15,35 +15,23 @@
           <span :class="{chooseBtn:phoneShow}">{{$t('userCommon.mobileLogin')}}</span>
         </div>
       </div>
+
       <div class="phoneRes" v-show="phoneShow">
         <div class="input-group">
           <div class="input-group-btn">
-            <button
-              type="button"
-              class="phoneHead btn btn-default dropdown-toggle"
-              data-toggle="dropdown"
-            >
-              +86
-              <span class="fa fa-caret-down"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li>
-                <a href="#">+87</a>
+            <button type="button" class="phoneHead btn btn-default dropdown-toggle" data-toggle="dropdown">
+              {{selectedRegion}}
+              <span class="fa fa-caret-down"></span></button>
+            <ul class="dropdown-menu" >
+              <li v-for="item in regions">
+                <a href="#" :id="item.prefix" @click="selectRegion(item.prefix)"> {{ item.fullName }}</a>
               </li>
-              <li>
-                <a href="#">+88</a>
-              </li>
-              <li class="divider"></li>
             </ul>
           </div>
-          <input
-            class="phoneIpt"
-            type="text"
-            v-model="phone"
-            :placeholder="$t('userCommon.mobile')"
-          >
+          <input class="phoneIpt" type="text" ref="mobileNumber" v-model="phone" :placeholder="$t('userCommon.mobile')"/>
         </div>
       </div>
+
       <div class="mailRes" v-show="!phoneShow">
         <input type="text" :placeholder="$t('userCommon.Email')" v-model="mail">
       </div>
@@ -56,35 +44,69 @@
 </template>
 
 <script>
+    import * as auth from '../services/AuthService'
+
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
-      phoneShow: "true",
-      prompt: "",
-      phone: "",
-      mail: "",
-      password: ""
-    };
+      phoneShow: 'true',
+      prompt: '',
+      phone: '',
+      mail: '',
+      password: '',
+      regions: [],
+      selectedRegion: '86'
+
+    }
   },
   methods: {
+    getRegionList2() {
+      auth.country(this.$store.getters.lang)
+              .then(resdata => {
+                this.regions = resdata.data.data
+              })
+    },
+    selectRegion (region) {
+      this.selectedRegion = region
+    },
     choosePhone() {
-      this.phoneShow = true;
+      this.phoneShow = true
     },
     chooseMail() {
-      this.phoneShow = false;
+      this.phoneShow = false
     },
     userLogin() {
-      if (this.phone === "" && this.mail === "") {
-        this.prompt = "请完善信息后登陆";
-      } else if (this.password === "") {
-        this.prompt = "请填写密码";
+      if (this.phone === '' && this.mail === '') {
+        this.prompt = '请完善信息后登陆'
+      } else if (this.password === '') {
+        this.prompt = '请填写密码'
       } else {
-        this.prompt = "";
+        this.prompt = ''
+          const logintype = this.phoneShow? 'mobile': 'email'
+          const user = {
+              loginName: this.phone,
+              password: this.password,
+              loginType: logintype
+          }
+
+        auth.login(this.$store.getters.lang, user)
+              .then(function (userinfo) {
+                //self.$router.push({ name: 'hashpower-config-finish' })
+              })
+              .catch(error => {
+                if (error) {
+                  alert('登录不成功')
+                }
+              })
       }
     }
-  }
-};
+  },
+    mounted() {
+      this.getRegionList2()
+    }
+
+}
 </script>
 
 <style lang="scss" scoped>

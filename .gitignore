@@ -43,4 +43,6 @@ nosetests.xml
 
 *._.DS_Store
 node_modules/*
+node_modules/.bin/webpack-dev-server
+
 

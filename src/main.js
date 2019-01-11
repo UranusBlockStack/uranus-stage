@@ -18,6 +18,8 @@ import 'font-awesome/css/font-awesome.css'
 import 'admin-lte/dist/css/AdminLTE.min.css'
 import 'admin-lte/dist/css/skins/_all-skins.min.css'
 
+import store from './store'
+
 Vue.use(VueRouter)
 Vue.use(VueI18n)
 Vue.use(ElementUI, { locale })
@@ -34,6 +36,7 @@ var router = new VueRouter({
 new Vue({
   el: '#app',
   router,
+  store,
   i18n,
   template: '<App/>',
   components: { App }
