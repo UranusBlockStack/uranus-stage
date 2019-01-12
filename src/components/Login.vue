@@ -20,7 +20,7 @@
         <div class="input-group">
           <div class="input-group-btn">
             <button type="button" class="phoneHead btn btn-default dropdown-toggle" data-toggle="dropdown">
-              {{selectedRegion}}
+              {{currentRegion}}
               <span class="fa fa-caret-down"></span></button>
             <ul class="dropdown-menu" >
               <li v-for="item in regions">
@@ -56,7 +56,7 @@ export default {
       mail: '',
       password: '',
       regions: [],
-      selectedRegion: '86'
+      currentRegion: '86'
 
     }
   },
@@ -68,10 +68,20 @@ export default {
               })
     },
     selectRegion (region) {
-      this.selectedRegion = region
+      this.currentRegion = region
+    },
+    getLoginName: function (logintype) {
+
+        let loginname = ''
+        if (logintype === 'mobile') {
+            loginname = this.currentRegion + this.phone
+        }else{
+            loginname = this.mail
+        }
+        return loginname
     },
     choosePhone() {
-      this.phoneShow = true
+        this.phoneShow = true
     },
     chooseMail() {
       this.phoneShow = false
@@ -83,16 +93,16 @@ export default {
         this.prompt = '请填写密码'
       } else {
         this.prompt = ''
-          const logintype = this.phoneShow? 'mobile': 'email'
-          const user = {
-              loginName: this.phone,
-              password: this.password,
-              loginType: logintype
-          }
+        const logintype = this.phoneShow? 'mobile': 'email'
+        const user = {
+          loginName: this.getLoginName(logintype),
+          password: this.password,
+          loginType: logintype
+        }
 
         auth.login(this.$store.getters.lang, user)
               .then(function (userinfo) {
-                //self.$router.push({ name: 'hashpower-config-finish' })
+                // self.$router.push({ name: 'hashpower-config-finish' })
               })
               .catch(error => {
                 if (error) {

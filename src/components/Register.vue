@@ -17,7 +17,7 @@
                 <div class="input-group">
                     <div class="input-group-btn">
                         <button type="button" class="phoneHead btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            {{selectedRegion}}
+                            {{currentRegion}}
                             <span class="fa fa-caret-down"></span></button>
                         <ul class="dropdown-menu" >
                             <li v-for="item in regions">
@@ -25,11 +25,11 @@
                             </li>
                         </ul>
                     </div>
-                    <input class="phoneIpt" type="text" ref="mobileNumber" :placeholder="$t('userCommon.mobile')"/>
+                    <input class="phoneIpt" type="text" ref="loginMobile" :placeholder="$t('userCommon.mobile')"/>
                 </div>
             </div>
             <div class="mailRes" v-show="!phoneShow">
-                <input type="text" :placeholder="$t('userCommon.Email')">
+                <input type="text" :placeholder="$t('userCommon.Email')" ref="loginEmail">
             </div>
             <input type="password" :placeholder="$t('userCommon.password')" ref="password">
             <input type="password" :placeholder="$t('userCommon.confirmPwd')">
@@ -52,12 +52,12 @@
           canClick: true,
           content: this.$t('userCommon.codeBtn'),
           regions: [],
-          selectedRegion: '86'
+          currentRegion: '86'
 
         }
       },
 
-      methods: {
+    methods: {
         getRegionList2() {
           auth.country(this.$store.getters.lang)
                     .then(resdata => {
@@ -65,7 +65,16 @@
                     })
         },
         selectRegion (region) {
-          this.selectedRegion = region
+          this.currentRegion = region
+        },
+        getLoginName: function (logintype) {
+            let loginname = ''
+            if (logintype === 'mobile') {
+                loginname = this.currentRegion + this.$refs.loginMobile.value
+            } else {
+                loginname = this.$refs.loginEmail.value
+            }
+            return loginname;
         },
         choosePhone() {
           this.phoneShow = true
@@ -75,17 +84,16 @@
         },
         registerUser() {
           const logintype = this.phoneShow? 'mobile': 'email'
-          const loginname = this.selectedRegion + this.$refs.mobileNumber.value
           const user = {
             'captcha': this.$refs.verifyCodeInput.value,
-            'loginName': loginname,
+            'loginName': this.getLoginName(logintype),
             'loginType': logintype,
             'password': this.$refs.password.value
           }
 
           auth.registerUser(this.$store.getters.lang, user)
         },
-        countDown(content) {
+        countDown() {
           if (!this.canClick) return
           this.canClick = false
           this.content = this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
@@ -102,16 +110,15 @@
 
           const param = {
             'captchaType': 0,
-            'receiver': this.selectedRegion + this.$refs.mobileNumber.value,
+            'receiver': this.currentRegion + this.$refs.mobileNumber.value,
             'senderType': 'mobile'
           }
           auth.captcha('zh-cn', param)
         }
-      },
+    },
       mounted() {
         this.getRegionList2()
       }
-
     }
 </script>
 
