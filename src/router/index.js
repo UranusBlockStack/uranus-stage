@@ -16,6 +16,7 @@ import Deployment from '@/components/buyer/Deployment'
 import ResourceMarket from '@/components/buyer/ResourceMarket'
 import MyResource from '@/components/buyer/MyResource'
 import ResourcePool from '@/components/buyer/ResourcePool'
+import UrapowerRecord from '@/components/buyer/UrapowerRecord'
 import AppState from '@/components/buyer/AppState'
 import StateDetail from '@/components/buyer/StateDetail'
 
@@ -91,6 +92,10 @@ const routes = [
         path: 'resourcepool',
         component: ResourcePool,
         name: 'ResourcePool'
+      }, {
+        path: 'urapowerrecord',
+        component: UrapowerRecord,
+        name: 'UrapowerRecord'
       }, {
         path: 'appstate',
         component: AppState,

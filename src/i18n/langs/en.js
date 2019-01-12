@@ -19,8 +19,8 @@ module.exports = {
     myColony2: 'Cluster B',
     myColony3: 'Cluster C',
     // developer
-    uploadApplication: '上传应用',
-    myApplication: '我的应用'
+    uploadApplication: 'UpLoad Application',
+    myApplication: 'My Application'
   },
   map: {
     register: 'Register User',
@@ -54,7 +54,6 @@ module.exports = {
     },
     appMarket: {
       searchIn: 'Search',
-      search: 'Search',
       application: 'All Application',
       free: 'Free',
       paid: 'Paid',
@@ -69,7 +68,6 @@ module.exports = {
       deployRecord: 'Records',
       deployPage: {
         searchIn: 'Search',
-        search: 'Search',
         time: 'Time',
         startTime: 'Start',
         endTime: 'End',
@@ -90,7 +88,6 @@ module.exports = {
         appHash: 'TX Hash'
       },
       searchIn: 'Search',
-      search: 'Search',
       delete: 'Delete',
       detail: 'View',
       free: 'Free',
@@ -171,7 +168,7 @@ module.exports = {
       newApp: 'New application',
       nameApp: 'Name',
       description: 'Description',
-      authorApp: '默认作者上传名称',
+      authorApp: 'Name of APP',
       configurationOption: 'Configuration Options',
       buy: 'Buy',
       deploy: 'Deploy',
@@ -181,7 +178,8 @@ module.exports = {
       address: 'Address',
       value: 'Value(URAC)',
       content: 'Type',
-      buyApp: '购买应用',
+      buyApp: 'Application',
+      buyPower: 'UraPower',
       fee: 'Fee',
       purchaseApp: 'Application',
       purchasePower: 'UraPower',
@@ -193,7 +191,7 @@ module.exports = {
       button1: 'Cancel',
       button2: 'OK',
       confirmText3: 'Successfully Paid',
-      confirmText4: '提示信息   不能删'
+      confirmText4: ''
     },
     myResource: {
       resourceAll: 'All UraPower',
@@ -309,7 +307,7 @@ module.exports = {
       confirm: 'OK'
     },
     groups: {
-      view: '集群交易记录',
+      view: 'Cluster Records',
       deployRecord: 'Records',
       deployPage: {
         searchIn: 'Search',
@@ -318,12 +316,12 @@ module.exports = {
         startTime: 'Start',
         endTime: 'End',
         pool: 'Pool',
-        title: '购买记录',
+        title: 'Records',
         number: 'ID',
         clusterName: 'Name',
         clusterTime: 'Deploy Time',
-        startingTime: 'Starting time',
-        endingTime: 'Ending time',
+        startingTime: 'Start',
+        endingTime: 'End',
         appGroup: 'Pool',
         appStore: 'Store',
         clusterValue: 'Value(URAC)',
@@ -336,22 +334,21 @@ module.exports = {
         port: 'Port',
         clusterHash: 'TX Hash'
       },
-      chooseGroup: '选择集群',
-      newGroup: '新建集群',
-      nameGroup: '给新集群命名',
-      joinGroup: '加入已有集群',
-      existingGroup: '已有集群',
+      chooseGroup: 'Choose Cluster',
+      newGroup: 'New Cluster',
+      nameGroup: 'Name Cluster',
+      joinGroup: 'Jion Cluster',
+      existingGroup: 'Existing Cluster',
       list: 'Cluster list',
-      allGroup: 'all group',
-      onlineGroup: 'online group',
-      offlineGroup: 'offline group',
-      runningGroup: 'Running group',
-      unrunningGroup: 'Unrunning group',
-      value: 'value',
-      startingTime: 'starting time',
-      endTime: 'ending time',
+      allGroup: 'All Cluster',
+      onlineGroup: 'Online Cluster',
+      offlineGroup: 'Offline Cluster',
+      runningGroup: 'Running Cluster',
+      unrunningGroup: 'Unrunning Cluster',
+      value: 'Value',
+      startingTime: 'Start',
+      endTime: 'End',
       search: 'Search',
-      searchIn: 'Search',
       screen: 'Screen',
       name: 'Name',
       usedPower: 'Used UraPower',
@@ -388,7 +385,7 @@ module.exports = {
       deleteHost: 'Delete',
       deleteText1: 'The host is already occupied and cannot be logged out of the group.',
       deleteText2: 'The host has been leased and cannot exit the Cluster.',
-      deleteText3: '主机正在出售，不可退出集群',
+      deleteText3: 'The host which cannot exit is on sale in the cluster',
       deleteSure: 'After exiting, the relationship of the predicted Cluster will be released, and the corresponding data cannot be restored. Is the exit determined?'
     },
     group: {
@@ -414,8 +411,8 @@ module.exports = {
       south: 'South America',
       north: 'North America',
       oceania: 'Oceania',
-      buyingTime: 'Starting Time',
-      endingTime: 'Ending Time',
+      buyingTime: 'Start',
+      endingTime: 'End',
       restTime: 'The Remaining Time:',
       timeup: 'Time up',
       renewal: 'Renewal Fee',
@@ -448,7 +445,7 @@ module.exports = {
       deleteHost: 'Delete',
       deleteText1: 'The host is already occupied and cannot be logged out of the group.',
       deleteText2: 'The host has been leased and cannot exit the Cluster.',
-      deleteText3: "Host is on sale which  is can't  exit in the cluster.",
+      deleteText3: "The host which is can't exit is on sale in the cluster.",
       deleteSure: 'After exiting, the relationship of the predicted Cluster will be released, and the corresponding data cannot be restored. Is the exit determined?'
     }
   },

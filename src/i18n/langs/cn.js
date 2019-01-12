@@ -15,9 +15,9 @@ module.exports = {
     // seller
     myHost: '我的主机',
     myColony: '我的集群',
-    myColony1: '我的集群1',
-    myColony2: '我的集群2',
-    myColony3: '我的集群3',
+    myColony1: '我的集群 A',
+    myColony2: '我的集群 B',
+    myColony3: '我的集群 C',
     // developer
     uploadApplication: '上传应用',
     myApplication: '我的应用'
@@ -54,7 +54,6 @@ module.exports = {
     },
     appMarket: {
       searchIn: '输入关键字',
-      search: '搜 索',
       application: '所有分类',
       free: '免费',
       paid: '付费',
@@ -69,7 +68,6 @@ module.exports = {
       deployRecord: '部署应用记录',
       deployPage: {
         searchIn: '输入关键字',
-        search: '搜 索',
         time: '布置时间筛选',
         startTime: '开始时间',
         endTime: '结束时间',
@@ -90,7 +88,6 @@ module.exports = {
         appHash: '交易哈希'
       },
       searchIn: '输入关键字',
-      search: '搜 索',
       delete: '删除',
       detail: '查看详情',
       free: '免费应用',
@@ -132,7 +129,7 @@ module.exports = {
       button1: '取 消',
       button2: '确 定',
       confirmText3: '付款成功',
-      confirmText4: '可前往我的资源查看我所有的资源分配'
+      confirmText4: ''
     },
     deploy: {
       application: '应用部署',

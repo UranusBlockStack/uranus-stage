@@ -1,5 +1,5 @@
 <template>
-  <section class="appRecord">
+  <section class="urapowerRecord">
     <el-row class="recordHead">
       <el-col class="title" :span="24">
         <h1>{{$t('buyer.appRepository.deployRecord')}}</h1>
@@ -54,7 +54,7 @@
           <el-table-column prop="6" :label="$t('buyer.appRepository.deployPage.appValur')"></el-table-column>
         </el-table>
       </el-col>
-      <el-col :span="8" :offset="16" class="transaction-foot">
+      <el-col :span="6" :offset="15" class="transaction-foot">
         <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
       </el-col>
     </el-row>
@@ -63,7 +63,7 @@
 
 <script>
 export default {
-  name: 'AppRecord',
+  name: 'urapowerRecord',
   data() {
     return {
       dateValue1: '',
@@ -211,7 +211,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.appRecord {
+.urapowerRecord {
   background: #f2f2f2;
   min-width: 1130px;
   .recordHead {

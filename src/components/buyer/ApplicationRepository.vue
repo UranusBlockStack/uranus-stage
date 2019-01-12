@@ -64,7 +64,7 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="8" :offset="8">
+        <el-col :span="8" :offset="16">
           <el-pagination layout="prev, pager, next" :total="1000"></el-pagination>
         </el-col>
       </el-row>
