@@ -1,5 +1,6 @@
 <template>
   <section class="resourceMarket">
+    <!-- Confirmation Information Bullet Box -->
     <el-dialog :title="$t('buyer.resourceMarket.confirmTitle')" :visible.sync="outerVisible" width="800px">
       <el-table :data="gridData">
         <el-table-column property="order" :label="$t('buyer.resourceMarket.orderNumber')"></el-table-column>
@@ -36,6 +37,7 @@
         <el-button type="primary" @click="outerVisible = false, innerVisible = true">{{$t('buyer.resourceMarket.button2')}}</el-button>
       </div>
     </el-dialog>
+    <!-- purchase -->
     <el-row class="resourceHead">
       <el-col class="title" :span="24">
         <h1>{{$t('menu.resourceMarket')}}</h1>
@@ -47,88 +49,121 @@
           <h1>{{$t('buyer.resourceMarket.purchase')}}</h1>
         </el-col>
       </el-row>
-      <el-row class="select">
-        <el-col :span="6" :offset="2">
-          <span class="select-left">{{$t('buyer.resourceMarket.region')}}</span>
-          <el-select v-model="valueRegion">
-            <el-option
-              v-for="item in optionsRegion"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="5" :offset="2">
-          <span class="select-left">CPU</span>
-          <el-select v-model="valueCpu">
-            <el-option
-              v-for="item in optionsCpu"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="6" :offset="2">
-          <span class="select-left">{{$t('buyer.resourceMarket.disk')}}</span>
-          <el-select v-model="valueDisk">
-            <el-option
-              v-for="item in optionsDisk"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-      </el-row>
-      <el-row class="select">
-        <el-col :span="6" :offset="2">
-          <span class="select-left">{{$t('buyer.resourceMarket.memory')}}</span>
-          <el-select v-model="valueMemory">
-            <el-option
-              v-for="item in optionsMemory"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="5" :offset="2">
-          <span class="select-left">GPU</span>
-          <el-select v-model="valueGpu">
-            <el-option
-              v-for="item in optionsGpu"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="6" :offset="2">
-          <span class="select-left">{{$t('buyer.resourceMarket.network')}}</span>
-          <el-select v-model="valueNetwork">
-            <el-option
-              v-for="item in optionsNetwork"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-      </el-row>
-      <el-row class="select">
-        <el-col :span="20" :offset="2">
-          <span class="select-left">{{$t('buyer.resourceMarket.timeScreening')}}</span>
-          <el-date-picker v-model="time1" type="date" :placeholder="$t('buyer.resourceMarket.startingTime')"></el-date-picker>
-          <span class="el-icon-arrow-right"></span>
-          <el-date-picker v-model="time2" type="date" :placeholder="$t('buyer.resourceMarket.endTime')"></el-date-picker>
-        </el-col>
-      </el-row>
-      <el-row class="select">
-        <el-col class="resourceName" :span="8" :offset="2">
-          <span class="select-left">{{$t('buyer.resourceMarket.resourceName')}}</span>
-          <el-input class="input-margin" v-model="input" :placeholder="$t('buyer.resourceMarket.creatResource')"></el-input>
+      <el-row class="margin-top">
+        <el-col :span="23" :offset="1">
+          <el-form label-width="80px">
+            <el-row class="margin-top">
+              <el-col :span="18">
+                <el-form-item :label="$t('buyer.deploy.newPool')">
+                  <el-input
+                    v-model="deployForm.name"
+                    style="width:350px;"
+                    :placeholder="$t('buyer.deploy.renamePool')"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.region')">
+                  <el-select v-model="deployForm.region">
+                    <el-option
+                      v-for="item in regionSel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.cpu')">
+                  <el-select v-model="deployForm.cpu">
+                    <el-option
+                      v-for="item in cpuSel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.disk')">
+                  <el-select v-model="deployForm.disk">
+                    <el-option
+                      v-for="item in diskSel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.memory')">
+                  <el-select v-model="deployForm.memory">
+                    <el-option
+                      v-for="item in memorySel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <!-- <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.gpu')">
+                  <el-select v-model="deployForm.gpu">
+                    <el-option label="区域一" value="shanghai"></el-option>
+                    <el-option label="区域二" value="beijing"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>-->
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.network')">
+                  <el-select v-model="deployForm.network">
+                    <el-option
+                      v-for="item in networkSel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item :label="$t('buyer.deploy.timeScreening')">
+                  <el-col :span="11">
+                    <el-date-picker
+                      type="date"
+                      :placeholder="$t('buyer.deploy.startingTime')"
+                      v-model="deployForm.startTime"
+                      style="width: 100%;"
+                    ></el-date-picker>
+                  </el-col>
+                  <el-col class="line" :span="2">
+                    <i class="el-icon-arrow-right"></i>
+                  </el-col>
+                  <el-col :span="11">
+                    <el-time-picker
+                      type="fixed-time"
+                      :placeholder="$t('buyer.deploy.endTime')"
+                      v-model="deployForm.endTime"
+                      style="width: 100%;"
+                    ></el-time-picker>
+                  </el-col>
+                </el-form-item>
+              </el-col>
+              <el-col :span="18">
+                <el-form-item :label="$t('buyer.deploy.newPool')">
+                  <el-input
+                    v-model="deployForm.name"
+                    style="width:350px;"
+                    :placeholder="$t('buyer.deploy.renamePool')"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
         </el-col>
       </el-row>
       <el-row class="button">
@@ -145,82 +180,66 @@ export default {
   name: 'ResourceMarket',
   data() {
     return {
-      optionsRegion: [
+      deployForm: {
+        name: "",
+        region: "Asia",
+        cpu: "4",
+        disk: "521G",
+        memory: "16",
+        network: "512G",
+        startTime: "",
+        endTime: ""
+      },
+      regionSel: [
         {
-          value: '选项1',
-          label: '选项1'
+          value: "选项1",
+          label: "亚洲"
         },
         {
-          value: '选项2',
-          label: '选项2'
+          value: "选项2",
+          label: "欧洲"
         }
       ],
-      valueRegion: '',
-      optionsMemory: [
+      cpuSel: [
         {
-          value: '选项1',
-          label: '选项1'
+          value: "选项1",
+          label: "8"
         },
         {
-          value: '选项2',
-          label: '选项2'
+          value: "选项2",
+          label: "4"
         }
       ],
-      valueMemory: '',
-      options: [
+      diskSel: [
         {
-          value: '选项1',
-          label: '选项1'
+          value: "选项1",
+          label: "256"
         },
         {
-          value: '选项2',
-          label: '选项2'
+          value: "选项2",
+          label: "512"
         }
       ],
-      valueCpu: '',
-      optionsCpu: [
+      memorySel: [
         {
-          value: '选项1',
-          label: '选项1'
+          value: "选项1",
+          label: "8"
         },
         {
-          value: '选项2',
-          label: '选项2'
+          value: "选项2",
+          label: "16"
         }
       ],
-      valueGpu: '',
-      optionsGpu: [
+      networkSel: [
         {
-          value: '选项1',
-          label: '选项1'
+          value: "选项1",
+          label: "258G"
         },
         {
-          value: '选项2',
-          label: '选项2'
+          value: "选项2",
+          label: "512G"
         }
-      ],
-      valueDisk: '',
-      optionsDisk: [
-        {
-          value: '选项1',
-          label: '选项1'
-        },
-        {
-          value: '选项2',
-          label: '选项2'
-        }
-      ],
-      optionsNetwork: [
-        {
-          value: '选项1',
-          label: '选项1'
-        },
-        {
-          value: '选项2',
-          label: '选项2'
-        }
-      ],
-      valueNetwork: '',
+      ], 
       value: '',
       time1: '',
       time2: '',
@@ -247,7 +266,7 @@ export default {
     .code {
       width: 500px;
       display: flex;
-      margin: 25px 150px;
+      margin: 25px;
       span {
         width: 165px;
         font-family: PingFang-SC-Medium;
@@ -300,32 +319,15 @@ export default {
         padding-left: 30px;
       }
     }
-    .select {
+    .margin-top {
       margin-top: 33px;
-      .el-select {
-        width: 150px;
-      }
-      .select-left {
-        font-family: PingFang-SC-Medium;
-        font-size: 16px;
-        color: rgba(0, 0, 0, 0.65);
-        text-align: left;
-        line-height: 24px;
-        width: 95px;
-      }
-      .input-margin {
-        margin-left: -15px;
-      }
-      .el-icon-arrow-right {
-        color: rgba(0, 0, 0, 0.25);
-      }
-      .resourceName {
-        display: flex;
+      .line {
+        text-align: center;
       }
     }
     .button {
       .el-button {
-        margin-top: 66px;
+        margin-top: 35px;
         border: none;
         background: #8eb357;
       }

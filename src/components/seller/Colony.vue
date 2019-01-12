@@ -5,6 +5,7 @@
         <h1>{{$t('menu.myColony')}}</h1>
       </el-col>
     </el-row>
+    <!-- Confirmation Information Bullet Box -->
     <el-dialog :title="$t('seller.group.settingTitle')" :visible.sync="dialogVisible" width="650px">
       <span>
         <el-form ref="form" :model="form" label-width="80px">
@@ -58,6 +59,7 @@
         </el-form>
       </span>
     </el-dialog>
+    <!-- delete text box -->
     <el-dialog :visible.sync="outerVisible" width="480px">
       <p>{{$t('seller.group.deleteSure')}}</p>
       <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
@@ -74,6 +76,7 @@
         >{{$t('seller.group.confirm')}}</el-button>
       </div>
     </el-dialog>
+    <!-- colony -->
     <el-row class="colonyBox">
       <el-row>
         <el-col class="title" :span="24">
@@ -115,39 +118,92 @@
         </el-col>
       </el-row>
       <el-row class="myHostBox">
-        <el-table :data="tableData" style="width: 100%">
-          <template slot="empty">
-            <p class="empty-text">{{$t('seller.group.text')}}</p>
+      <el-table :data="tableData" style="width: 100%">
+        <template slot="empty">
+          <p class="empty-text">{{$t('seller.host.text')}}</p>
+        </template>
+        <el-table-column width="70">
+          <template slot-scope="scope">
+            <div :class="scope.row.state == 'Offline' ? 'on' : 'off'">{{scope.row.state}}</div>
           </template>
-          <el-table-column
-            prop="state"
-            :label="$t('seller.group.state')"
-            sortable
-            :filters="[{ text: this.$t('seller.group.online'), value: '在线' }, { text: this.$t('seller.group.offline'), value: '离线' }]"
-            :filter-method="filterState"
-          >
+        </el-table-column>
+        <el-table-column width="150" prop="number">
+          <template slot="header" slot-scope="scope">
+            <p>
+              <i class="iconfont icon-resource-market"></i>
+              {{$t('seller.host.number')}}
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column width="200">
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-cpu1"></i> CPU
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >{{ scope.row.cpu }}{{$t('seller.host.usable')}}</p>
+            <el-progress :percentage="50" :stroke-width="18" :text-inside="true" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+          </template>
+        </el-table-column>
+        <el-table-column width="200">
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-cpu1"></i>
+              {{$t('seller.host.memory')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >{{ scope.row.memory }}{{$t('seller.host.usable')}}</p>
+            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+          </template>
+        </el-table-column>
+        <el-table-column width="200">
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-cpu1"></i>
+              {{$t('seller.host.disk')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >{{ scope.row.disk }}{{$t('seller.host.usable')}}</p>
+            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+          </template>
+        </el-table-column>
+        <el-table-column width="200">
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-cpu1"></i>
+              {{$t('seller.host.network')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >{{ scope.row.network }}{{$t('seller.host.usable')}}</p>
+            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+          </template>
+        </el-table-column>
+        <el-table-column>
             <template slot-scope="scope">
-              <el-tag
-                :type="scope.row.state === '在线' ? 'primary' : 'success'"
-                disable-transitions
-              >{{scope.row.state}}</el-tag>
-            </template>
-          </el-table-column>
-          <el-table-column prop="number" :label="$t('seller.group.number')"></el-table-column>
-          <el-table-column prop="cpu" label="CPU"></el-table-column>
-          <el-table-column prop="memory" :label="$t('seller.group.memory')"></el-table-column>
-          <el-table-column prop="disk" :label="$t('seller.group.disk')"></el-table-column>
-          <el-table-column prop="network" :label="$t('seller.group.network')"></el-table-column>
-          <el-table-column>
-            <template>
               <p
-                style="color: #8eb357"
+                style="color: #8eb357; text-align:center;"
                 @click="outerVisible = true"
               >{{$t('seller.group.deleteHost')}}</p>
             </template>
           </el-table-column>
-        </el-table>
-      </el-row>
+      </el-table>
+    </el-row>
     </el-row>
   </section>
 </template>
@@ -161,44 +217,49 @@ export default {
     return {
       tableData: [
         {
-          state: "在线",
-          number: "主机A",
+          state: this.$t("seller.host.online"),
+          number: this.$t("seller.host.hosts") + " A",
           cpu: "2核",
           memory: "2G",
           disk: "1T",
-          network: "2M"
+          network: "2M",
+          colony: this.$t("seller.host.group") + " A"
         },
         {
-          state: "离线",
-          number: "主机B",
+          state: this.$t("seller.host.offline"),
+          number: this.$t("seller.host.hosts") + " A",
           cpu: "1核",
           memory: "2G",
           disk: "1T",
-          network: "2M"
+          network: "2M",
+          colony: this.$t("seller.host.group") + " C"
         },
         {
-          state: "在线",
-          number: "主机C",
+          state: this.$t("seller.host.online"),
+          number: this.$t("seller.host.hosts") + " C",
           cpu: "3核",
           memory: "2G",
           disk: "1T",
-          network: "2M"
+          network: "2M",
+          colony: this.$t("seller.host.group") + " D"
         },
         {
-          state: "在线",
-          number: "主机D",
+          state: this.$t("seller.host.offline"),
+          number: this.$t("seller.host.hosts") + " D",
           cpu: "1核",
           memory: "2G",
           disk: "1T",
-          network: "2M"
+          network: "2M",
+          colony: this.$t("seller.host.group") + " B"
         },
         {
-          state: "离线",
-          number: "主机E",
+          state: this.$t("seller.host.online"),
+          number: this.$t("seller.host.hosts") + " E",
           cpu: "2核",
           memory: "2G",
           disk: "2T",
-          network: "2M"
+          network: "2M",
+          colony: this.$t("seller.host.group") + " B"
         }
       ],
       dialogVisible: false,
@@ -553,23 +614,54 @@ export default {
       margin: 20px;
       color: #8eb357;
     }
-    .myHostBox {
-      background: #ffffff;
-      box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.3);
-      border-radius: 2px;
-      margin: 20px;
-      padding: 15px;
-      min-height: 550px;
-      .empty-text {
-        width: 470px;
-        margin: 30px auto;
-        font-family: PingFang-SC-Medium;
-        font-size: 16px;
-        color: #5d5d5d;
-        text-align: left;
-        line-height: 24px;
-      }
+  .myHostBox {
+    background: #ffffff;
+    border-radius: 2px;
+    margin: 20px;
+    padding: 15px;
+    min-height: 550px;
+    p {
+      margin-bottom: 0;
+    }
+    .empty-text {
+      width: 470px;
+      margin: 30px auto;
+      font-family: PingFang-SC-Medium;
+      font-size: 16px;
+      color: #5d5d5d;
+      text-align: left;
+      line-height: 24px;
+    }
+    .el-progress /deep/ .el-progress-bar__outer {
+      background: #1890ff !important;
+      border-radius: 0;
+    }
+    .el-progress /deep/ .el-progress-bar__inner {
+      background: #f25954 !important;
+      border-radius: 0;
+    }
+    .on {
+      background: #9bcc3d;
+      border: 2px solid #dcdcdc;
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      float: right;
+    }
+    .off {
+      background: #f2f2f2;
+      border: 2px solid #dcdcdc;
+      width: 8px;
+      height: 8px;
+      border-radius: 100%;
+      float: right;
+    }
+    .table-head {
+      text-align: center;
+    }
+    .el-select /deep/ .el-input__suffix {
+      right: 10px;
     }
   }
-}
+}}
 </style>

@@ -2,36 +2,58 @@
   <section class="resourceRecord">
     <el-row class="recordHead">
       <el-col class="title" :span="24">
-        <h1>购买资源明细</h1>
+        <h1>{{$t('seller.groups.deployRecord')}}</h1>
       </el-col>
     </el-row>
     <el-row class="recordBox">
       <el-row>
-        <el-col class="123" :span="7">
-          <el-input placeholder="输入商店/应用名称" prefix-icon="el-icon-search"></el-input>
-          <el-button type="success">搜索</el-button>
-        </el-col>
-
-        <el-col :span="11" :offset="2">
-          <span class="time">布置时间筛选</span>
-          <el-date-picker v-model="dateValue1" type="date" placeholder="开始时间"></el-date-picker>
-          <span class="el-icon-arrow-right"></span>
-          <el-date-picker v-model="dateValue2" type="date" placeholder="结束时间"></el-date-picker>
-        </el-col>
-        <el-col :span="4">
-          <el-select v-model="value" placeholder="所属集群">
+        <el-col :span="6">
+          <el-select v-model="value1" :placeholder="$t('seller.groups.deployPage.pool')">
             <el-option
-              v-for="item in options"
+              v-for="item in options1"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+            ></el-option>
+          </el-select>
+          <el-select v-model="value2" :placeholder="$t('seller.groups.deployPage.appStore')">
+            <el-option
+              v-for="item in options2"
               :key="item.value"
               :label="item.label"
               :value="item.value"
             ></el-option>
           </el-select>
         </el-col>
+        <el-col :span="10">
+          <span class="time">{{$t('seller.groups.deployPage.time')}}</span>
+          <el-date-picker
+            v-model="dateValue1"
+            type="date"
+            :placeholder="$t('seller.groups.deployPage.startTime')"
+          ></el-date-picker>
+          <span class="el-icon-arrow-right"></span>
+          <el-date-picker
+            v-model="dateValue2"
+            type="date"
+            :placeholder="$t('seller.groups.deployPage.endTime')"
+          ></el-date-picker>
+        </el-col>
+        <el-col :span="7" :offset="1">
+          <el-input
+            :placeholder="$t('seller.groups.deployPage.searchIn')"
+            prefix-icon="el-icon-search"
+          ></el-input>
+          <el-button type="success"><i class="iconfont icon-view"></i></el-button>
+        </el-col>
       </el-row>
       <el-col class="record-head">
-        <el-dialog :visible.sync="dialogVisible" width="50%">
-          <el-table :data="tableData1" style="width: 100%">
+        <el-dialog
+          :title="$t('seller.groups.deployPage.title')"
+          :visible.sync="dialogVisible"
+          width="50%"
+        >
+          <el-table :data="tableData1" style="width: 100%; margin-top: -40px;">
             <el-table-column prop="menu" width="180"></el-table-column>
             <el-table-column prop="value" width="580"></el-table-column>
           </el-table>
@@ -39,15 +61,16 @@
       </el-col>
       <el-col :span="24">
         <el-table :data="tableData" border style="width: 100%" @row-click="dialogVisible = true">
-          <el-table-column prop="1" :label="tableLabel[0]"></el-table-column>
-          <el-table-column prop="2" :label="tableLabel[1]"></el-table-column>
-          <el-table-column prop="3" :label="tableLabel[2]"></el-table-column>
-          <el-table-column prop="4" :label="tableLabel[3]"></el-table-column>
-          <el-table-column prop="5" :label="tableLabel[4]"></el-table-column>
-          <el-table-column prop="6" :label="tableLabel[5]"></el-table-column>
+          <el-table-column prop="1" :label="$t('seller.groups.deployPage.number')"></el-table-column>
+          <el-table-column prop="2" :label="$t('seller.groups.deployPage.clusterName')"></el-table-column>
+          <el-table-column prop="3" :label="$t('seller.groups.deployPage.clusterTime')"></el-table-column>
+          <el-table-column prop="4" :label="$t('seller.groups.deployPage.startingTime')"></el-table-column>
+          <el-table-column prop="5" :label="$t('seller.groups.deployPage.endingTime')"></el-table-column>
+          <el-table-column prop="6" :label="$t('seller.groups.deployPage.clusterValue')"></el-table-column>
+          <el-table-column prop="7" :label="$t('seller.groups.deployPage.clusterHash')" width='270'></el-table-column>
         </el-table>
       </el-col>
-      <el-col :span="6" :offset="9" class="transaction-foot">
+      <el-col :span="6" :offset="15" class="transaction-foot">
         <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
       </el-col>
     </el-row>
@@ -56,133 +79,161 @@
 
 <script>
 export default {
-  name: 'ResourceRecord',
+  name: "ResourceRecord",
   data() {
     return {
-      dateValue1: '',
-      dateValue2: '',
-      value: '',
-      options: [
+      dateValue1: "",
+      dateValue2: "",
+      value1: "",
+      options1: [
         {
-          value: '选项1',
-          label: '集群A'
-        }, {
-          value: '选项2',
-          label: '集群B'
-        }, {
-          value: '选项3',
-          label: '集群C'
-        }, {
-          value: '选项4',
-          label: '集群D'
+          value: "选项1",
+          label: "选项1"
+        },
+        {
+          value: "选项2",
+          label: "选项2"
+        }
+      ],
+      value2: "",
+      options2: [
+        {
+          value: "选项1",
+          label: "选项1"
+        },
+        {
+          value: "选项2",
+          label: "选项2"
         }
       ],
       dialogVisible: false,
-      tableLabel: ['订单号', '资源名', '布置时间', '开始时间', '结束时间', '价格', '交易哈希'],
       tableData: [
         {
-          1: '1234561',
-          2: '集群A',
-          3: '2018-12-16',
-          4: '2018-12-16',
-          5: '2018-12-16',
-          6: '2.333URAC',
-          7: 'ox2a1d…'
-        }, {
-          1: '1234561',
-          2: '集群A',
-          3: '2018-12-16',
-          4: '2018-12-16',
-          5: '2018-12-16',
-          6: '2.333URAC',
-          7: 'ox2a1d…'
-        }, {
-          1: '1234561',
-          2: '集群A',
-          3: '2018-12-16',
-          4: '2018-12-16',
-          5: '2018-12-16',
-          6: '2.333URAC',
-          7: 'ox2a1d…'
-        }, {
-          1: '1234561',
-          2: '集群A',
-          3: '2018-12-16',
-          4: '2018-12-16',
-          5: '2018-12-16',
-          6: '2.333URAC',
-          7: 'ox2a1d…'
-        }, {
-          1: '1234561',
-          2: '集群A',
-          3: '2018-12-16',
-          4: '2018-12-16',
-          5: '2018-12-16',
-          6: '2.333URAC',
-          7: 'ox2a1d…'
-        }, {
-          1: '1234561',
-          2: '集群A',
-          3: '2018-12-16',
-          4: '2018-12-16',
-          5: '2018-12-16',
-          6: '2.333URAC',
-          7: 'ox2a1d…'
-        }, {
-          1: '1234561',
-          2: '集群A',
-          3: '2018-12-16',
-          4: '2018-12-16',
-          5: '2018-12-16',
-          6: '2.333URAC',
-          7: 'ox2a1d…'
+          1: "1234561",
+          2: "MySQL",
+          3: "2018-12-16",
+          4: "Limitid",
+          5: "Limitid",
+          6: "Limitid",
+          7: "0X16546167451sd54f6a5s1dfa68ds4"
+        },
+        {
+          1: "1234561",
+          2: "MySQL",
+          3: "2018-12-16",
+          4: "Limitid",
+          5: "Limitid",
+          6: "Limitid",
+          7: "0X16546167451sd54f6a5s1dfa68ds4"
+        },
+        {
+          1: "1234561",
+          2: "MySQL",
+          3: "2018-12-16",
+          4: "Limitid",
+          5: "Limitid",
+          6: "Limitid",
+          7: "0X16546167451sd54f6a5s1dfa68ds4"
+        },
+        {
+          1: "1234561",
+          2: "MySQL",
+          3: "2018-12-16",
+          4: "Limitid",
+          5: "Limitid",
+          6: "Limitid",
+          7: "0X16546167451sd54f6a5s1dfa68ds4"
+        },
+        {
+          1: "1234561",
+          2: "MySQL",
+          3: "2018-12-16",
+          4: "Limitid",
+          5: "Limitid",
+          6: "Limitid",
+          7: "0X16546167451sd54f6a5s1dfa68ds4"
+        },
+        {
+          1: "1234561",
+          2: "MySQL",
+          3: "2018-12-16",
+          4: "Limitid",
+          5: "Limitid",
+          6: "Limitid",
+          7: "0X16546167451sd54f6a5s1dfa68ds4"
+        },
+        {
+          1: "1234561",
+          2: "MySQL",
+          3: "2018-12-16",
+          4: "Limitid",
+          5: "Limitid",
+          6: "Limitid",
+          7: "0X16546167451sd54f6a5s1dfa68ds4"
+        },
+        {
+          1: "1234561",
+          2: "MySQL",
+          3: "2018-12-16",
+          4: "Limitid",
+          5: "Limitid",
+          6: "Limitid",
+          7: "0X16546167451sd54f6a5s1dfa68ds4"
         }
       ],
       tableData1: [
         {
-          menu: '订单号：',
-          value: '132156421846148451'
+          menu: this.$t("seller.groups.deployPage.number"),
+          value: "132156421846148451"
         },
         {
-          menu: '订单状态：',
-          value: '已完成'
+          menu: this.$t("seller.groups.deployPage.clusterStatus"),
+          value: "已完成"
         },
         {
-          menu: '订单创建时间：',
-          value: '2018-12-12 12:12'
+          menu: this.$t("seller.groups.deployPage.orderTime"),
+          value: "2018-12-12 12:12"
         },
         {
-          menu: '集群名：',
-          value: '木马人123'
+          menu: this.$t("seller.groups.deployPage.clusterName"),
+          value: "木马人123"
         },
         {
-          menu: '布置时间：',
-          value: '2018-12-12 12:12'
+          menu: this.$t("seller.groups.deployPage.clusterTime"),
+          value: "2018-12-12 12:12"
         },
         {
-          menu: '开始时间：',
-          value: '2018-12-12 12:12'
+          menu: this.$t("seller.groups.deployPage.startingTime"),
+          value: "2018-12-12 12:12"
         },
         {
-          menu: '结束时间：',
-          value: '2018-12-12 12:12'
+          menu: this.$t("seller.groups.deployPage.endingTime"),
+          value: "2018-12-12 12:12"
         },
         {
-          menu: '价格：:',
-          value: '8888888888.66URAC'
+          menu: this.$t("seller.groups.deployPage.clusterPrice"),
+          value: "8888888888.66URAC"
         },
         {
-          menu: '手续费：',
-          value: '88.88URAC'
+          menu: this.$t("seller.groups.deployPage.fee"),
+          value: "88.88URAC"
         },
         {
-          menu: '交易哈希：',
-          value: '0X16546167451sd54f6a5s1dfa68ds4'
+          menu: this.$t("seller.groups.deployPage.ip"),
+          value: "111.111.222.22"
+        },
+        {
+          menu: this.$t("seller.groups.deployPage.port"),
+          value: "8080"
+        },
+        {
+          menu: this.$t("seller.groups.deployPage.clusterHash"),
+          value: "0X16546167451sd54f6a5s1dfa68ds4"
         }
       ]
-    }
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -227,9 +278,9 @@ export default {
         font-family: PingFangSC-Regular;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.65);
-        text-align: left;
+        text-align: right;
         line-height: 40px;
-        width: 180px;
+        width: 120px;
         padding: 0 20px;
       }
     }

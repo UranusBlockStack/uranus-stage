@@ -1,5 +1,6 @@
 <template>
   <section class="deployment">
+    <!-- Confirmation Information Bullet Box -->
     <el-dialog :title="$t('buyer.deploy.confirmTitle')" :visible.sync="outerVisible" width="800px">
       <el-table :data="gridData">
         <el-table-column property="order" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
@@ -25,7 +26,12 @@
       </div>
       <p>{{$t('buyer.deploy.confirmText1')}}</p>
       <p>{{$t('buyer.deploy.confirmText2')}}</p>
-      <el-dialog width="800px" :title="$t('buyer.deploy.confirmText3')" :visible.sync="innerVisible" append-to-body>
+      <el-dialog
+        width="800px"
+        :title="$t('buyer.deploy.confirmText3')"
+        :visible.sync="innerVisible"
+        append-to-body
+      >
         <p>{{$t('buyer.deploy.confirmText4')}}</p>
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="innerVisible = false">{{$t('buyer.deploy.button2')}}</el-button>
@@ -33,7 +39,10 @@
       </el-dialog>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false">{{$t('buyer.deploy.button1')}}</el-button>
-        <el-button type="primary" @click="outerVisible = false, innerVisible = true">{{$t('buyer.deploy.button2')}}</el-button>
+        <el-button
+          type="primary"
+          @click="outerVisible = false, innerVisible = true"
+        >{{$t('buyer.deploy.button2')}}</el-button>
       </div>
     </el-dialog>
     <el-row class="resourceBox">
@@ -44,15 +53,15 @@
       </el-row>
       <el-row class="detial">
         <el-col :span="2" :offset="1">
-          <img src="/static/img/uranus/buyer/appLogo.png" alt="应用">
+          <img src="/static/img/uranus/buyer/appLogo.png">
         </el-col>
         <el-col :span="8" :offset="1">
           <h2>{{$t('buyer.deploy.name')}}Imagepuler</h2>
           <p>{{$t('buyer.deploy.appDetail')}}This catalog item is deprecated and to rancher item is deprecated and moved to is deprecated moved to rancher oved to rancher is oved to rancher item</p>
         </el-col>
         <el-col class="border-col" :span="4" :offset="1">
-          <p>{{$t('buyer.deploy.price')}}免费</p>
-          <p>{{$t('buyer.deploy.from')}}商店A</p>
+          <p>{{$t('buyer.deploy.price')}}{{$t('buyer.deploy.free')}}</p>
+          <p>{{$t('buyer.deploy.from')}}{{$t('buyer.deploy.store')}} A</p>
           <p>{{$t('buyer.deploy.download')}}16.8w</p>
         </el-col>
         <el-col class="inf-col" :span="6" :offset="1">
@@ -69,46 +78,127 @@
         </el-col>
       </el-row>
       <el-row class="border-line"></el-row>
-      <el-row class="select">
-        <el-col class="title" :span="24">
-          <h1>{{$t('buyer.deploy.uracpower')}}</h1>
+      <!-- deploy application -->
+      <el-row class="margin-top">
+        <el-col :span="23" :offset="1">
+          <el-radio v-model="radio" label="1">{{$t('buyer.deploy.application')}}</el-radio>
         </el-col>
-        <el-col :span="1" :offset="1">
-          <el-radio v-model="radio" lable="1"></el-radio>
-        </el-col>
-        <el-col class="resourceName" :span="8">
-          <span class="select-left">{{$t('buyer.deploy.newPool')}}</span>
-          <el-input class="input-margin" v-model="input" :placeholder="$t('buyer.deploy.renamePool')"></el-input>
+        <el-col :span="22" :offset="2">
+          <el-form label-width="80px">
+            <el-row class="margin-top">
+              <el-col :span="18">
+                <el-form-item :label="$t('buyer.deploy.newPool')">
+                  <el-input
+                    v-model="deployForm.name"
+                    style="width:350px;"
+                    :placeholder="$t('buyer.deploy.renamePool')"
+                  ></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.region')">
+                  <el-select v-model="deployForm.region">
+                    <el-option
+                      v-for="item in regionSel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.cpu')">
+                  <el-select v-model="deployForm.cpu">
+                    <el-option
+                      v-for="item in cpuSel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.disk')">
+                  <el-select v-model="deployForm.disk">
+                    <el-option
+                      v-for="item in diskSel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.memory')">
+                  <el-select v-model="deployForm.memory">
+                    <el-option
+                      v-for="item in memorySel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <!-- <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.gpu')">
+                  <el-select v-model="deployForm.gpu">
+                    <el-option label="区域一" value="shanghai"></el-option>
+                    <el-option label="区域二" value="beijing"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>-->
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.network')">
+                  <el-select v-model="deployForm.network">
+                    <el-option
+                      v-for="item in networkSel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="12">
+                <el-form-item :label="$t('buyer.deploy.timeScreening')">
+                  <el-col :span="11">
+                    <el-date-picker
+                      type="date"
+                      :placeholder="$t('buyer.deploy.startingTime')"
+                      v-model="deployForm.startTime"
+                      style="width: 100%;"
+                    ></el-date-picker>
+                  </el-col>
+                  <el-col class="line" :span="2">
+                    <i class="el-icon-arrow-right"></i>
+                  </el-col>
+                  <el-col :span="11">
+                    <el-time-picker
+                      type="fixed-time"
+                      :placeholder="$t('buyer.deploy.endTime')"
+                      v-model="deployForm.endTime"
+                      style="width: 100%;"
+                    ></el-time-picker>
+                  </el-col>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form>
         </el-col>
       </el-row>
-      <el-row class="select">
-        <el-col :span="6" :offset="2">
-          <span class="select-left">{{$t('buyer.deploy.region')}}</span>
-          <el-select v-model="value">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+      <!-- more choice -->
+      <el-row class="margin-top" v-show="more">
+        <el-col :span="2" :offset="1">
+          <el-radio v-model="radio" label="2">{{$t('buyer.deploy.choosePool')}}</el-radio>
         </el-col>
-        <el-col :span="5" :offset="1">
-          <span class="select-left">{{$t('buyer.deploy.cpu')}}</span>
-          <el-select v-model="value">
+        <el-col :span="20">
+          <el-select v-model="spaceValue">
             <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="6" :offset="1">
-          <span class="select-left">{{$t('buyer.deploy.disk')}}</span>
-          <el-select v-model="value">
-            <el-option
-              v-for="item in options"
+              v-for="item in spaceSel"
               :key="item.value"
               :label="item.label"
               :value="item.value"
@@ -116,71 +206,9 @@
           </el-select>
         </el-col>
       </el-row>
-      <el-row class="select">
-        <el-col :span="6" :offset="2">
-          <span class="select-left">{{$t('buyer.deploy.memory')}}</span>
-          <el-select v-model="value">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="5" :offset="1">
-          <span class="select-left">{{$t('buyer.deploy.gpu')}}</span>
-          <el-select v-model="value">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-        <el-col :span="6" :offset="1">
-          <span class="select-left">{{$t('buyer.deploy.network')}}</span>
-          <el-select v-model="value">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-      </el-row>
-      <el-row class="select">
-        <el-col :span="20" :offset="2">
-          <span class="select-left">{{$t('buyer.deploy.timeScreening')}}</span>
-          <el-date-picker v-model="value1" type="date" :placeholder="$t('buyer.deploy.startingTime')"></el-date-picker>
-          <span class="el-icon-arrow-right"></span>
-          <el-date-picker v-model="value1" type="date" :placeholder="$t('buyer.deploy.endTime')"></el-date-picker>
-        </el-col>
-      </el-row>
-      <el-row class="select" v-show="more">
-        <el-col :span="1" :offset="1">
-          <el-radio v-model="radio" lable="2"></el-radio>
-        </el-col>
-        <el-col class="resourceName" :span="8">
-          <span class="select-left space-chose">{{$t('buyer.deploy.choosePool')}}</span>
-          <el-select v-model="value">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-      </el-row>
-      <el-row class="select" v-show="more">
-        <el-col :span="1" :offset="1">
-          <el-radio v-model="radio" lable="3"></el-radio>
-        </el-col>
-        <el-col class="resourceName" :span="8">
-          <span class="select-left">{{$t('buyer.deploy.noDeploy')}}</span>
+      <el-row class="margin-top" v-show="more">
+        <el-col :span="2" :offset="1">
+          <el-radio v-model="radio" label="3">{{$t('buyer.deploy.noDeploy')}}</el-radio>
         </el-col>
       </el-row>
       <el-row class="more">
@@ -197,46 +225,49 @@
           </p>
         </el-col>
       </el-row>
-      <el-row class="edition">
-        <el-col class="title" :span="24">
-          <h1>{{$t('buyer.deploy.version')}}</h1>
-        </el-col>
-        <el-col :span="20" :offset="1">
-          <span class="select-left">{{$t('buyer.deploy.chooseVersion')}}</span>
-          <el-select v-model="value">
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-        </el-col>
-      </el-row>
-      <el-row class="newApp">
-        <el-col class="title" :span="24">
+      <!-- application setting -->
+      <el-row>
+        <el-col class="title" :span="12">
           <h1>{{$t('buyer.deploy.newApp')}}</h1>
         </el-col>
-      </el-row>
-      <el-row class="select">
-        <el-col class="resourceName" :span="8" :offset="2">
-          <span class="select-left">{{$t('buyer.deploy.nameApp')}}</span>
-          <el-input class="input-margin" v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
+        <el-col class="title" :span="12">
+          <h1>{{$t('buyer.deploy.version')}}</h1>
         </el-col>
       </el-row>
-      <el-row class="select">
-        <el-col class="resourceName" :span="8" :offset="2">
-          <span class="select-left">{{$t('buyer.deploy.description')}}</span>
-          <el-input class="input-margin" v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
-        </el-col>
+      <el-row class="margin-top">
+        <el-form label-width="80px">
+          <el-col :span="8" :offset="2">
+            <el-form-item :label="$t('buyer.deploy.nameApp')">
+              <el-input v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="10" :offset="4">
+            <el-form-item :label="$t('buyer.deploy.chooseVersion')">
+              <el-select v-model="versionValue">
+                <el-option
+                  v-for="item in versionSel"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+                ></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8" :offset="2">
+            <el-form-item :label="$t('buyer.deploy.description')">
+              <el-input v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-form>
       </el-row>
       <el-row class="border-line"></el-row>
+      <!-- configuration options -->
       <el-row class="configuration">
         <el-col class="title" :span="24">
           <h1>{{$t('buyer.deploy.configurationOption')}}</h1>
         </el-col>
       </el-row>
-      <el-row class="select">
+      <el-row class="margin-top">
         <el-col
           class="configuration-box"
           :span="8"
@@ -245,7 +276,7 @@
           :key="index"
         >
           <p class="configuration-name">CHECK_CPU_USAGE：</p>
-          <el-input class="input-margin" v-model="input"></el-input>
+          <el-input v-model="input"></el-input>
           <span>Enable CPU usage check</span>
         </el-col>
       </el-row>
@@ -261,76 +292,148 @@
 
 <script>
 export default {
-  name: 'Deployment',
+  name: "Deployment",
   data() {
     return {
-      radio: '1',
-      options: [
+      radio: "1",
+      deployForm: {
+        name: "",
+        region: "Asia",
+        cpu: "4",
+        disk: "521G",
+        memory: "16",
+        network: "512G",
+        startTime: "",
+        endTime: ""
+      },
+      regionSel: [
         {
-          value: '选项1',
-          label: '选项1'
+          value: "选项1",
+          label: "亚洲"
         },
         {
-          value: '选项2',
-          label: '选项2'
+          value: "选项2",
+          label: "欧洲"
         }
       ],
-      value: '',
-      value1: '',
-      value2: '',
-      input: '',
+      cpuSel: [
+        {
+          value: "选项1",
+          label: "8"
+        },
+        {
+          value: "选项2",
+          label: "4"
+        }
+      ],
+      diskSel: [
+        {
+          value: "选项1",
+          label: "256"
+        },
+        {
+          value: "选项2",
+          label: "512"
+        }
+      ],
+      memorySel: [
+        {
+          value: "选项1",
+          label: "8"
+        },
+        {
+          value: "选项2",
+          label: "16"
+        }
+      ],
+      networkSel: [
+        {
+          value: "选项1",
+          label: "258G"
+        },
+        {
+          value: "选项2",
+          label: "512G"
+        }
+      ], 
+      // existed
+      spaceSel: [
+        {
+          value: "选项1",
+          label: "0.1.7"
+        },
+        {
+          value: "选项2",
+          label: "0.0.2"
+        }
+      ],
+      spaceValue: '0.1.2',
+      // version
+      versionSel: [
+        {
+          value: "选项1",
+          label: "版本一"
+        },
+        {
+          value: "选项2",
+          label: "版本二"
+        }
+      ],
+      versionValue: "",
+      // new application name
+      input: "",
+      // more button status
       more: false,
       configurationList: [
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Imagepuller', shop: '商店2' },
-        { id: '3', name: 'Imagepuller', shop: '商店3' },
-        { id: '4', name: 'Imagepuller', shop: '商店4' },
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Imagepuller', shop: '商店2' },
-        { id: '3', name: 'Imagepuller', shop: '商店3' },
-        { id: '4', name: 'Imagepuller', shop: '商店4' }
+        { id: "1", name: "Imagepuller", shop: "商店1" },
+        { id: "2", name: "Imagepuller", shop: "商店2" },
+        { id: "3", name: "Imagepuller", shop: "商店3" },
+        { id: "4", name: "Imagepuller", shop: "商店4" },
+        { id: "1", name: "Imagepuller", shop: "商店1" },
+        { id: "2", name: "Imagepuller", shop: "商店2" },
+        { id: "3", name: "Imagepuller", shop: "商店3" },
+        { id: "4", name: "Imagepuller", shop: "商店4" }
       ],
       gridData: [
         {
-          order: '214521236987',
-          address: '0x461s2df6…',
-          number: '1000021.23',
-          type: '购买应用',
-          charge: '0.11'
+          order: "214521236987",
+          address: "0x461s2df6…",
+          number: "1000021.23",
+          type: this.$t('buyer.deploy.buyApp'),
+          charge: "0.11"
         },
         {
-          order: '214521236987',
-          address: '0x461s2df6…',
-          number: '1000021.23',
-          type: '购买应用',
-          charge: '0.11'
+          order: "214521236987",
+          address: "0x461s2df6…",
+          number: "1000021.23",
+          type: this.$t('buyer.deploy.buyApp'),
+          charge: "0.11"
         },
         {
-          order: '214521236987',
-          address: '0x461s2df6…',
-          number: '1000021.23',
-          type: '购买应用',
-          charge: '0.11'
+          order: "214521236987",
+          address: "0x461s2df6…",
+          number: "1000021.23",
+          type: this.$t('buyer.deploy.buyApp'),
+          charge: "0.11"
         },
         {
-          order: '214521236987',
-          address: '0x461s2df6…',
-          number: '1000021.23',
-          type: '购买应用',
-          charge: '0.11'
+          order: "214521236987",
+          address: "0x461s2df6…",
+          number: "1000021.23",
+          type: this.$t('buyer.deploy.buyApp'),
+          charge: "0.11"
         }
       ],
-      num1: 1,
       outerVisible: false,
       innerVisible: false
-    }
+    };
   },
   methods: {
     changeMore() {
-      this.more = !this.more
+      this.more = !this.more;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -341,9 +444,9 @@ export default {
     .code {
       width: 500px;
       display: flex;
-      margin: 25px 150px;
+      margin: 25px;
       span {
-        width: 155px;
+        width: 85px;
         font-family: PingFang-SC-Medium;
         font-size: 16px;
         color: #363636;
@@ -433,30 +536,10 @@ export default {
         }
       }
     }
-    .select {
+    .margin-top {
       margin-top: 33px;
-      .el-select {
-        width: 150px;
-      }
-      .select-left {
-        font-family: PingFang-SC-Medium;
-        font-size: 16px;
-        color: rgba(0, 0, 0, 0.65);
-        text-align: left;
-        line-height: 24px;
-        width: 200px;
-      }
-      .space-chose {
-        width: 150px;
-      }
-      .input-margin {
-        margin-left: -15px;
-      }
-      .el-icon-arrow-right {
-        color: rgba(0, 0, 0, 0.25);
-      }
-      .resourceName {
-        display: flex;
+      .line {
+        text-align: center;
       }
       .configuration-box {
         margin-bottom: 30px;
@@ -488,14 +571,6 @@ export default {
         color: #979797;
         line-height: 22px;
       }
-    }
-    .edition {
-      border-bottom: 1px solid #e9e9e9;
-      margin-bottom: 30px;
-      height: 150px;
-    }
-    .newApp {
-      margin-bottom: -30px;
     }
     .el-button {
       margin-bottom: 30px;

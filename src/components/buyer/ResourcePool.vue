@@ -11,31 +11,12 @@
           <h1>{{$t('buyer.resourcePool.pool')}}A</h1>
         </el-col>
       </el-row>
-      <el-row class="rePool">
-        <el-col :span="4">
-          <div id="restPool"></div>
-        </el-col>
-        <el-col :span="7" :offset="1">
-          <h3>{{$t('buyer.resourcePool.number')}}4</h3>
-          <h3>{{$t('buyer.resourcePool.restResource')}}68%</h3>
-          <h3>{{$t('buyer.resourcePool.purchaseTime')}}2018/12/12 12:12:12</h3>
-          <h3>{{$t('buyer.resourcePool.endTime')}}2019/12/12 12:12:12</h3>
-        </el-col>
-        <el-col :span="8">
-          <h3 class="restTime">{{$t('buyer.resourcePool.countdownTime')}}{{$t('buyer.resourcePool.timeUp')}}
-            <el-button type="success">
-              {{$t('buyer.resourcePool.renewal')}}
-              <i class="el-icon-arrow-right"></i>
-            </el-button>
-          </h3>
-        </el-col>
-      </el-row>
       <el-row>
         <el-col :span="20">
           <h2>{{$t('buyer.resourcePool.restOne')}}</h2>
           <div class="restRes">
             <div id="restResource1"></div>
-            <div id="restResource2"></div>
+            <!-- <div id="restResource2"></div> -->
             <div id="restResource3"></div>
             <div id="restResource4"></div>
             <div id="restResource5"></div>
@@ -46,11 +27,11 @@
         <el-col :span="6">
           <h1>{{$t('buyer.resourcePool.appList')}}</h1>
         </el-col>
-        <el-col :span="6" :offset="6">
+        <el-col :span="5" :offset="10">
           <el-input :placeholder="$t('buyer.resourcePool.searchIn')" prefix-icon="el-icon-search"></el-input>
         </el-col>
-        <el-col :span="4" :offset="2">
-          <el-button type="success">{{$t('buyer.resourcePool.search')}}</el-button>
+        <el-col :span="2" :offset="1">
+          <el-button type="success"><i class="iconfont icon-view"></i></el-button>
         </el-col>
       </el-row>
       <el-row class="rePool">
@@ -152,13 +133,12 @@ export default {
   name: 'ResourcePool',
   methods: {
     initEchart() {
-      var myChart = this.$echarts.init(document.getElementById('restPool'))
       var myChart1 = this.$echarts.init(
         document.getElementById('restResource1')
       )
-      var myChart2 = this.$echarts.init(
-        document.getElementById('restResource2')
-      )
+      // var myChart2 = this.$echarts.init(
+      //   document.getElementById('restResource2')
+      // )
       var myChart3 = this.$echarts.init(
         document.getElementById('restResource3')
       )
@@ -168,34 +148,6 @@ export default {
       var myChart5 = this.$echarts.init(
         document.getElementById('restResource5')
       )
-      myChart.setOption({
-        series: [
-          {
-            type: 'liquidFill',
-            radius: '85%',
-            data: [
-              {
-                value: 0.5,
-                direction: 'left',
-                itemStyle: {
-                  normal: {
-                    color: '#1890FF'
-                  }
-                }
-              }
-            ],
-            outline: {
-              show: false
-            },
-            backgroundStyle: {
-              borderColor: '#156ACF',
-              borderWidth: 1,
-              shadowColor: 'rgba(0, 0, 0, 0.4)',
-              shadowBlur: 20
-            }
-          }
-        ]
-      })
       myChart1.setOption({
         series: [
           {
@@ -238,48 +190,48 @@ export default {
           }
         ]
       })
-      myChart2.setOption({
-        series: [
-          {
-            name: 'Gpu',
-            type: 'pie',
-            radius: ['85%', '70%'],
-            hoverAnimation: false,
-            legendHoverLink: false,
-            avoidLabelOverlap: false,
-            selectedOffset: 0,
-            color: ['#7FD455', '#f2f2f2'],
-            data: [
-              {
-                value: 88,
-                selected: false,
-                label: {
-                  normal: {
-                    show: true,
-                    formatter: ['{a|CPU}', '{b|88%}'].join('\n'),
-                    rich: {
-                      a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
-                      },
-                      b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
-                      }
-                    },
-                    position: 'center',
-                    textStyle: { align: 'center' }
-                  }
-                }
-              },
-              { value: 12 }
-            ]
-          }
-        ]
-      })
+      // myChart2.setOption({
+      //   series: [
+      //     {
+      //       name: 'Gpu',
+      //       type: 'pie',
+      //       radius: ['85%', '70%'],
+      //       hoverAnimation: false,
+      //       legendHoverLink: false,
+      //       avoidLabelOverlap: false,
+      //       selectedOffset: 0,
+      //       color: ['#7FD455', '#f2f2f2'],
+      //       data: [
+      //         {
+      //           value: 88,
+      //           selected: false,
+      //           label: {
+      //             normal: {
+      //               show: true,
+      //               formatter: ['{a|CPU}', '{b|88%}'].join('\n'),
+      //               rich: {
+      //                 a: {
+      //                   color: '#5d5d5d',
+      //                   fontSize: '14',
+      //                   lineHeight: '22',
+      //                   fontFamily: 'PingFangSC-Regular'
+      //                 },
+      //                 b: {
+      //                   color: 'rgba(0,0,0,.85)',
+      //                   fontSize: '24',
+      //                   fontFamily: 'HelveticaNeue'
+      //                 }
+      //               },
+      //               position: 'center',
+      //               textStyle: { align: 'center' }
+      //             }
+      //           }
+      //         },
+      //         { value: 12 }
+      //       ]
+      //     }
+      //   ]
+      // })
       myChart3.setOption({
         series: [
           {
@@ -407,9 +359,8 @@ export default {
         ]
       })
       window.onresize = function() {
-        myChart.resize()
         myChart1.resize()
-        myChart2.resize()
+        // myChart2.resize()
         myChart3.resize()
         myChart4.resize()
         myChart5.resize()

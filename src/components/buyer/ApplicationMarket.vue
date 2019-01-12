@@ -7,13 +7,7 @@
     </el-row>
     <div class="shop">
       <el-row>
-        <el-col :span="8">
-          <el-input :placeholder="$t('buyer.appMarket.searchIn')" prefix-icon="el-icon-search"></el-input>
-        </el-col>
-        <el-col :span="4" :offset="1">
-          <el-button type="success">{{$t('buyer.appMarket.search')}}</el-button>
-        </el-col>
-        <el-col :span="4" :offset="1">
+        <el-col :span="4">
           <el-select v-model="value1" :placeholder="$t('buyer.appMarket.application')">
             <el-option
               v-for="item in options1"
@@ -32,6 +26,12 @@
               :value="item.value"
             ></el-option>
           </el-select>
+        </el-col>
+        <el-col :span="6" :offset="6">
+          <el-input :placeholder="$t('buyer.appMarket.searchIn')" prefix-icon="el-icon-search"></el-input>
+        </el-col>
+        <el-col :span="2" :offset="1">
+          <el-button type="success"><i class="iconfont icon-view"></i></el-button>
         </el-col>
       </el-row>
       <el-row class="shopBox" :gutter="20">
@@ -62,8 +62,8 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="8" :offset="8">
-          <el-pagination layout="prev, pager, next" :total="1000"></el-pagination>
+        <el-col :span="8" :offset="16">
+          <el-pagination layout="prev, pager, next" :total="1000" style="padding-bottom:15px"></el-pagination>
         </el-col>
       </el-row>
     </div>
@@ -200,6 +200,7 @@ export default {
           .downloads {
             font-family: PingFangSC-Regular;
             font-size: 14px;
+            padding: 10px 0;
             color: #5d5d5d;
             letter-spacing: 0;
             text-align: center;
@@ -209,6 +210,8 @@ export default {
           .el-button {
             background: #8eb357;
             border: none;
+            margin-top: 10px;
+            margin-right: 75px;
           }
         }
       }

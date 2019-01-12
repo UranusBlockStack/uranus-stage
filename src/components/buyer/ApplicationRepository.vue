@@ -19,11 +19,11 @@
     </el-dialog>
     <div class="shop">
       <el-row>
-        <el-col :span="8">
+        <el-col :span="6"  :offset="14">
           <el-input :placeholder="$t('buyer.appRepository.searchIn')" prefix-icon="el-icon-search"></el-input>
         </el-col>
-        <el-col :span="4" :offset="1">
-          <el-button type="success">{{$t('buyer.appRepository.search')}}</el-button>
+        <el-col :span="3" :offset="1">
+          <el-button type="success"><i class="iconfont icon-view"></i></el-button>
         </el-col>
       </el-row>
       <el-row class="shopBox" :gutter="20">
@@ -77,6 +77,7 @@ export default {
   name: 'Applicationmarket',
   data() {
     return {
+      letter: '123',
       dialogVisible: false,
       appList: [
         { id: '1', name: 'Imagepuller', shop: '商店1' },
@@ -203,6 +204,7 @@ export default {
           .shops {
             font-family: PingFangSC-Regular;
             font-size: 14px;
+            padding: 10px 0;
             color: #5d5d5d;
             letter-spacing: 0;
             text-align: center;

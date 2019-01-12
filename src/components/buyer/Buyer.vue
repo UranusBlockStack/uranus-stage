@@ -13,7 +13,7 @@
             <p>{{$t('buyer.home.store')}}</p>
           </el-col>
           <el-col :span="11">
-            <p class="more">{{$t('buyer.home.more')}}>></p>
+            <router-link :to="{path: '/applicationmarket'}"><p class="more">{{$t('buyer.home.more')}} <i class="iconfont icon-more"></i></p></router-link>
           </el-col>
         </el-row>
         <el-row class="shopBox" :gutter="20">
@@ -34,7 +34,7 @@
                     <el-col :span="10" :offset="6">
                       <p class="downloads">{{$t('buyer.home.download')}}123</p>
                     </el-col>
-                    <el-button type="success">{{$t('buyer.home.details')}}</el-button>
+                    <router-link  :to="{path: '/deployment'}"><el-button type="success" style="margin-top: -10px;">{{$t('buyer.home.details')}}</el-button></router-link>
                   </el-row>
                 </div>
               </div>
@@ -304,6 +304,7 @@ export default {
             .downloads {
               font-family: PingFangSC-Regular;
               font-size: 14px;
+              padding: 10px 0;
               color: #5d5d5d;
               letter-spacing: 0;
               text-align: center;

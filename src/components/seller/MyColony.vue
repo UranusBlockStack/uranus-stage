@@ -4,6 +4,9 @@
       <el-col class="title" :span="12">
         <h1>{{$t('menu.myColony')}}</h1>
       </el-col>
+      <el-col :span="4" :offset="8">
+        <router-link :to="{path: '/resourcerecord'}"><p>{{$t('seller.groups.view')}}</p></router-link>
+      </el-col>
     </el-row>
     <el-dialog
       :title="$t('seller.groups.settingTitle')"
@@ -64,7 +67,10 @@
     </el-dialog>
     <div class="shop">
       <el-row style="padding-bottom: 10px;">
-        <el-col :span="4" :offset="16">
+        <el-col :span="4">
+          <p>{{$t('seller.groups.list')}}</p>
+        </el-col>
+        <el-col :span="4" :offset="12">
           <el-input :placeholder="$t('seller.groups.searchIn')" prefix-icon="el-icon-search"></el-input>
         </el-col>
         <el-col :span="1" :offset="1">
@@ -78,18 +84,24 @@
         <el-col :span="4">
           <router-link :to="{path: '/colony'}">
             <Water :chartData="colony.value"/>
+          </router-link>
+        </el-col>
+        <el-col :span="4">
+          <router-link :to="{path: '/colony'}">
             <h1>{{colony.colony}}</h1>
           </router-link>
         </el-col>
-        <el-col class="padding-top" :span="16">
+        <el-col class="padding-top" :span="14">
           <p>
-            <i class="iconfont icon-earnings"></i> 收益： 88888888.888888URAC
+            <i class="iconfont icon-earnings"></i>
+            {{$t('seller.groups.earnings')}} 88888888.888888URAC
           </p>
           <p>
-            <i class="iconfont icon-shaloucountdown"></i> 倒计时： 222天22时22分22秒
+            <i class="iconfont icon-shaloucountdown"></i>
+            {{$t('seller.groups.restTime')}} 222d 22h 22m 22s
           </p>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="2">
           <p class="setting" @click="dialogVisible = true">
             <i class="iconfont icon-set" style="font-size: 25px;"></i>
           </p>
@@ -114,34 +126,16 @@ export default {
   },
   data() {
     return {
-      options: [
-        {
-          value: "1",
-          label: "已上架集群"
-        },
-        {
-          value: "2",
-          label: "未上架集群"
-        },
-        {
-          value: "3",
-          label: "运行中集群"
-        },
-        {
-          value: "4",
-          label: "未运行集群"
-        }
-      ],
       value: "",
       colonyList: [
-        { id: "1", value: "0.50", colony: "集群A" },
-        { id: "2", value: "0.40", colony: "集群B" },
-        { id: "3", value: "0.60", colony: "集群C" },
-        { id: "4", value: "0.50", colony: "集群D" },
-        { id: "1", value: "0.50", colony: "集群E" },
-        { id: "2", value: "0.50", colony: "集群F" },
-        { id: "3", value: "0.50", colony: "集群G" },
-        { id: "4", value: "0.50", colony: "集群H" }
+        { id: "1", value: "0.50", colony: this.$t("menu.myColony") + " A" },
+        { id: "2", value: "0.40", colony: this.$t("menu.myColony") + " B" },
+        { id: "3", value: "0.60", colony: this.$t("menu.myColony") + " C" },
+        { id: "4", value: "0.50", colony: this.$t("menu.myColony") + " D" },
+        { id: "1", value: "0.50", colony: this.$t("menu.myColony") + " E" },
+        { id: "2", value: "0.50", colony: this.$t("menu.myColony") + " F" },
+        { id: "3", value: "0.50", colony: this.$t("menu.myColony") + " G" },
+        { id: "4", value: "0.50", colony: this.$t("menu.myColony") + " H" }
       ],
       dialogVisible: false,
       form: {
@@ -175,6 +169,12 @@ export default {
         padding-left: 30px;
       }
     }
+    p {
+      text-align: center;
+      height: 60px;
+      line-height: 60px;
+      font-size: 16px;
+    }
   }
   .shop {
     background: #ffffff;
@@ -188,20 +188,20 @@ export default {
     p {
       height: 40px;
       font-family: PingFang-SC-Bold;
-      font-size: 16px;
+      font-size: 20px;
       color: #252525;
-      line-height: 24px;
+      line-height: 40px;
       text-align: left;
     }
     .lineBox {
       border-bottom: 1px solid #e9e9e9;
     }
     .shopBox {
-      padding-top: 30px;
+      padding-top: 20px;
       .padding-top {
-        padding-top: 35px;
+        padding-top: 20px;
         p {
-          margin: 20px 150px;
+          margin: 20px;
           font-size: 25px;
           i {
             font-size: 30px;
@@ -210,12 +210,12 @@ export default {
       }
       h1 {
         width: 100%;
-        text-align: left;
-        font-family: PingFang-SC-Medium;
-        font-size: 16px;
+        text-align: center;
+        font-family: PingFang-SC-Bold;
+        font-size: 26px;
         color: #363636;
-        padding-left: 105px;
-        line-height: 24px;
+        padding-top: 40px;
+        line-height: 40px;
       }
       .setting {
         text-align: right;
