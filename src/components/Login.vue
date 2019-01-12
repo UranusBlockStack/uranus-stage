@@ -100,9 +100,11 @@ export default {
           loginType: logintype
         }
 
+        const self = this
+
         auth.login(this.$store.getters.lang, user)
               .then(function (userinfo) {
-                // self.$router.push({ name: 'hashpower-config-finish' })
+                self.$router.push({ name: 'Map' })
               })
               .catch(error => {
                 if (error) {
