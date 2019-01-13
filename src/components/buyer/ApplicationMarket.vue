@@ -39,12 +39,11 @@
           <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
             <div class="resources">
               <div>
-                <p class="shops">{{app.shop}}</p>
-                <img src="/static/img/uranus/developer/app.png" alt="img">
+                <p class="shops">{{app.catalog}}</p>
+                <img :src='app.imageurl'  alt="img">
                 <p class="name">{{app.name}}</p>
                 <p
-                  class="detail"
-                >DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
+                  class="detail">{{app.description}}}</p>
                 <el-row :gutter="20">
                   <el-col :span="6" :offset="2">
                     <p class="free">{{$t('buyer.appMarket.free')}}</p>
@@ -71,44 +70,66 @@
 </template>
 
 <script>
+    import * as app from '../../services/RancherService'
 export default {
   name: 'ApplicationMarket',
   data() {
     return {
       options1: [
         {
-          value: '选项1',
-          label: 'free'
+          value: '1',
+          label: 'Free'
         },
         {
-          value: '选项2',
-          label: 'paid'
+          value: '2',
+          label: 'Paid'
         }
       ],
       options2: [
         {
-          value: '选项1',
-          label: '选项1'
+          value: 'library',
+          label: 'library'
         },
-        {
-          value: '选项2',
-          label: '选项2'
-        }
       ],
       value1: '',
       value2: '',
-      appList: [
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Vue', shop: '商店2' },
-        { id: '3', name: 'Node', shop: '商店3' },
-        { id: '4', name: 'Cloud', shop: '商店4' },
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Vue', shop: '商店2' },
-        { id: '3', name: 'Node', shop: '商店3' },
-        { id: '4', name: 'Cloud', shop: '商店4' }
-      ]
+      appList: [],
+      imageServerUrl: this.$store.state.imageServerUrl,
+      appType: 0,
+      catalogRid: 'library',
+      searchName: '',
+      page: 1,
+      pageSize: 8,
+      sort: 'download_times',
+      sortDesc: 'true'
+
     }
-  }
+  },
+  methods: {
+      // to do 分页的实现
+    getAppList() {
+      const searchData = {
+        'free': this.appType,
+        'name': this.searchName,
+        'page': this.page,
+        'pageSize': this.pageSize,
+        // 'sort': this.sort,
+        'sortDesc': this.sortDesc
+      }
+
+      app.appList(this.$store.getters.lang, searchData)
+          .then(respData => {
+            this.appList = respData.data.data.records
+            this.appList.map(imginfo => {
+              imginfo.imageurl = this.imageServerUrl + imginfo.rid + '/icon'
+              return imginfo
+            })
+          })
+    }
+  },
+    mounted() {
+      this.getAppList()
+    }
 }
 </script>
 

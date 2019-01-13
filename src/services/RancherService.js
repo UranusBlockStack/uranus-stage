@@ -1,5 +1,5 @@
 
-import { httpLang } from './HttpService'
+import {httpLang, imageServerHttp} from './HttpService'
 
 
 
@@ -85,4 +85,10 @@ export function rancherInfo (lang, id) {
 
 export function rancherModify (lang, id, newClusterInfo) {
   return httpLang(lang).put(`/rancher/ranchers/${id}`, newClusterInfo)
+}
+
+
+/** Rancher - AppController Service ***/
+export function appList (lang, queryData) {
+    return httpLang(lang).post('/rancher/apps/search', queryData)
 }

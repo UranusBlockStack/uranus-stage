@@ -8,15 +8,16 @@
           <el-button type="primary" @click="innerVisible = false">{{$t('transfer.button2')}}</el-button>
         </div>
       </el-dialog>
-      <p>{{$t('transfer.checkAddress')}}0x461s2df65a4s6d1fa6s5d7f6as15df65a7dsf461</p>
-      <p>{{$t('transfer.checkValue')}}1000000021.232323 URAC</p>
-      <p>{{$t('transfer.fee')}}1000000021.232323 URAC</p>
+      <p>{{$t('transfer.checkAddress')}} {{formLabelAlign.address}}</p>
+      <p>{{$t('transfer.checkValue')}}  {{formLabelAlign.value}}</p>
+      <p>{{$t('transfer.fee')}} {{formLabelAlign.fee}}</p>
       <span>{{$t('transfer.checkText')}}</span>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false, innerVisible = true">{{$t('transfer.button1')}}</el-button>
         <el-button type="primary" @click="outerVisible = false">{{$t('transfer.button2')}}</el-button>
       </div>
     </el-dialog>
+
     <el-row class="transfer-head">
       <el-col :span="24">
         <p>{{$t('menu.transfer')}}</p>
@@ -31,7 +32,7 @@
           <el-form label-position="right" label-width="160px" :model="formLabelAlign" :rules="rules">
             <el-form-item prop="region">
               <span slot="label">{{$t('transfer.value')}}</span>
-              <el-input v-model="formLabelAlign.number" :placeholder="$t('transfer.valueIn')"></el-input>
+              <el-input v-model="formLabelAlign.value" :placeholder="$t('transfer.valueIn')" ></el-input>
             </el-form-item>
             <el-form-item prop="name">
               <span slot="label">{{$t('transfer.address')}}</span>
@@ -39,24 +40,26 @@
             </el-form-item>
             <el-form-item prop="type">
               <span slot="label">{{$t('transfer.fee')}}</span>
-              <el-input v-model="formLabelAlign.fee" :placeholder="$t('transfer.feeIn')"></el-input>
+              <el-input v-model="formLabelAlign.fee" :placeholder="$t('transfer.feeIn')" ></el-input>
             </el-form-item>
             <el-form-item prop="code" class="code">
               <span slot="label">{{$t('transfer.code')}}</span>
-              <el-input v-model="formLabelAlign.code" :placeholder="$t('transfer.codeIn')"></el-input>
+              <el-input v-model="formLabelAlign.code" :placeholder="$t('transfer.codeIn')" ></el-input>
               <el-button>{{$t('transfer.codeBtn')}}</el-button>
             </el-form-item>
           </el-form>
         </div>
       </el-col>
       <el-col :span="8" :offset="6">
-        <el-button type="success" @click="outerVisible = true">{{$t('transfer.button')}}</el-button>
+        <el-button type="success" @click="startTransfer">{{$t('transfer.button')}}</el-button>
       </el-col>
     </el-row>
   </section>
 </template>
 
 <script>
+    import * as wallet from '../../services/WalletService'
+
 export default {
   name: 'Transfer',
   data() {
@@ -83,8 +86,24 @@ export default {
       },
       outerVisible: false,
       innerVisible: false
+
     }
-  }
+  },
+    methods: {
+      startTransfer() {
+        const transData = {
+          'code': this.formLabelAlign.code,
+          'fee': this.formLabelAlign.fee,
+          'to': this.formLabelAlign.address,
+          'value': this.formLabelAlign.value
+        }
+        wallet.walletTransfer(this.$store.getters.lang, transData)
+            .then(respData => {
+              this.outerVisible = true
+            })
+      }
+
+    }
 }
 </script>
 

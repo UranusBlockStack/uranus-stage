@@ -74,7 +74,7 @@ export default {
 
         let loginname = ''
         if (logintype === 'mobile') {
-            loginname = this.currentRegion + this.phone
+            loginname = this.currentRegion +this.phone
         }else{
             loginname = this.mail
         }
