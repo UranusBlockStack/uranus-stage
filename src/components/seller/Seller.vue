@@ -44,9 +44,9 @@
           <el-col :span="24">
             <el-table :data="tableData" border style="width: 100%">
               <el-table-column prop="type" :label="$t('seller.home.type')"></el-table-column>
-              <el-table-column prop="time" :label="$t('seller.home.time')"></el-table-column>
+              <el-table-column prop="createTime"  :formatter="formateDate" :label="$t('seller.home.time')"></el-table-column>
               <el-table-column prop="hash" :label="$t('seller.home.hash')"></el-table-column>
-              <el-table-column prop="amount" :label="$t('seller.home.amount')"></el-table-column>
+              <el-table-column prop="value" :label="$t('seller.home.amount')"></el-table-column>
               <el-table-column prop="fee" :label="$t('seller.home.fee')"></el-table-column>
             </el-table>
           </el-col>
@@ -62,6 +62,9 @@
 </template>
 
 <script>
+    import * as wallet from '../../services/WalletService'
+    import moment from 'moment'
+
 export default {
   name: 'Seller',
   data() {
@@ -137,8 +140,19 @@ export default {
       ]
     }
   },
+
   computed: {},
   methods: {
+
+      initTransactionRecords(){
+        wallet.getTradeLogCurrentUser(this.$store.getters.lang, 0, 1, 10)
+            .then(transList=>{
+                this.tableData = transList.data.data.records;
+            })
+      },
+      formateDate(row, column, cellValue){
+          return moment(cellValue).format("YYYY-MM-DD HH:mm:ss")
+      },
     consumptionDay(x) {
       this.consumptionVal = this.dataConsumption.day
       this.initEchart(this.consumptionVal, this.profitVal)
@@ -488,6 +502,7 @@ export default {
   mounted() {
     this.consumptionDay(3)
     this.profitDay(3)
+    this.initTransactionRecords()
   }
 }
 </script>

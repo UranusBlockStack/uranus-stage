@@ -11,7 +11,11 @@ export function login (lang, user) {
   return httpLang(lang).post('/auth/users/signin', user)
     .then(res => {
       if (res) {
-        setToken(res.data.data.token)
+        const  loginInfo = {
+            userName: user.loginName,
+            userId  : res.data.data.id
+        }
+        setToken(res.data.data.token, loginInfo)
       }
     })
 }
@@ -21,9 +25,9 @@ export function logout () {
   store.dispatch('authenticate')
 }
 
-function setToken (token) {
+function setToken (token, user) {
   localStorage.setItem('token', token)
-  store.dispatch('authenticate')
+  store.dispatch('authenticate', user)
 }
 
 export function getToken () {

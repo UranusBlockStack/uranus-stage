@@ -11,9 +11,8 @@ export default new Vuex.Store({
       // apiUrl: 'http://192.168.110.45:4000',
     apiUrl: 'http://47.105.151.199:4000/',
     imageServerUrl: 'http://47.105.151.199:3300/rancher-img/',
-    username: null,
-    // userId: null,
-    userId: 62,
+    username: '8613716252314',
+    userId: '60',
     lang: {// 全部语言包列表
       'zh-cn': 'zh-cn',
       'en-us': 'en-us'
@@ -26,20 +25,28 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    authenticate (state) {
+    authenticate (state, user) {
       state.isLoggedIn = auth.isLoggedIn()
+
       if (state.isLoggedIn) {
         state.username = auth.getUsername()
         state.userId = auth.getUserId()
+
+          if(!state.username)
+              state.username=user.userName
+          if(!state.userId)
+              state.userId = user.userId
+        console.log(state.username, state.userId)
       } else {
         state.userId = null
         state.username = null
       }
+
     }
   },
   actions: {
-    authenticate (context) {
-      context.commit('authenticate')
+    authenticate (context, user) {
+      context.commit('authenticate', user)
     }
   }
 })

@@ -25,13 +25,13 @@
         <p>{{$t('wallet.transactionDetails')}}</p>
         <el-dialog :title="$t('wallet.transactionDetails')" :visible.sync="dialogVisible" width="60%">
           <el-table :data="tableData1" style="width: 100%">
-            <el-table-column prop="menu" width="190"></el-table-column>
+            <el-table-column prop="title" width="190"></el-table-column>
             <el-table-column prop="value" width="630"></el-table-column>
           </el-table>
         </el-dialog>
       </el-col>
       <el-col :span="24">
-        <el-table :data="tableData" border style="width: 100%" @row-click="dialogVisible = true">
+        <el-table :data="tableData" border style="width: 100%" @row-click="viewDetail">
           <el-table-column prop="hash" :label="$t('wallet.hash')" min-width="130"></el-table-column>
           <el-table-column prop="createTime" :label="$t('wallet.time')" width="150"></el-table-column>
           <el-table-column prop="from" :label="$t('wallet.from')" width="120"></el-table-column>
@@ -62,60 +62,6 @@ export default {
       dialogVisible: false,
 
       tableData: [
-        {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66 URAC',
-          6: '13.21 URAC',
-          7: this.$t('wallet.orderstatus[1]')
-        },
-        {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66 URAC',
-          6: '13.21 URAC',
-          7: this.$t('wallet.success')
-        },
-        {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66 URAC',
-          6: '13.21 URAC',
-          7: this.$t('wallet.fail')
-        },
-        {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66 URAC',
-          6: '13.21 URAC',
-          7: this.$t('wallet.processing')
-        },
-        {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66 URAC',
-          6: '13.21 URAC',
-          7: this.$t('wallet.success')
-        },
-        {
-          1: '548bc46caba···',
-          2: '2018-11-02 09:56',
-          3: '548bc46caba···',
-          4: '548bc46caba···',
-          5: '1234522678.66 URAC',
-          6: '13.21 URAC',
-          7: this.$t('wallet.success')
-        }
       ],
       tableData1: [
         {
@@ -205,6 +151,20 @@ export default {
             .then(tradeList=>{
                 this.tableData = tradeList.data.data.records
             })
+      },
+      viewDetail(row){
+            console.log(row)
+          let transDetail = []
+          const fields = Object.keys(row)
+          fields.map(field=>{
+              const fieldData = {
+                  title: field,
+                  value : row[field]
+              }
+              transDetail.push(fieldData)
+          })
+          this.tableData1 = transDetail
+          this.dialogVisible = true
       }
 
   },

@@ -45,7 +45,7 @@
             <el-form-item prop="code" class="code">
               <span slot="label">{{$t('transfer.code')}}</span>
               <el-input v-model="formLabelAlign.code" :placeholder="$t('transfer.codeIn')" ></el-input>
-              <el-button>{{$t('transfer.codeBtn')}}</el-button>
+              <el-button @click="getConfirmCode">{{$t('transfer.codeBtn')}}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -90,19 +90,25 @@ export default {
     }
   },
     methods: {
-      startTransfer() {
-        const transData = {
-          'code': this.formLabelAlign.code,
-          'fee': this.formLabelAlign.fee,
-          'to': this.formLabelAlign.address,
-          'value': this.formLabelAlign.value
+        startTransfer() {
+            const transData = {
+              'code': this.formLabelAlign.code,
+              'fee': this.formLabelAlign.fee,
+              'to': this.formLabelAlign.address,
+              'value': this.formLabelAlign.value
+            }
+            wallet.walletTransfer(this.$store.getters.lang, transData)
+                .then(respData => {
+                  this.outerVisible = true
+                })
+        },
+        getConfirmCode() {
+            console.log(this.$store.state)
+            wallet.walletConfirmCode(this.$store.getters.lang, this.$store.state.username)
+                .then(sendResult=>{
+                    console.log(sendResult.data)
+                })
         }
-        wallet.walletTransfer(this.$store.getters.lang, transData)
-            .then(respData => {
-              this.outerVisible = true
-            })
-      }
-
     }
 }
 </script>

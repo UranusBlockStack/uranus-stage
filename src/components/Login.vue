@@ -104,7 +104,7 @@ export default {
 
         auth.login(this.$store.getters.lang, user)
               .then(function (userinfo) {
-                self.$router.push({ name: 'Map' })
+                //self.$router.push({ name: 'Map' })
               })
               .catch(error => {
                 if (error) {
@@ -112,10 +112,13 @@ export default {
                 }
               })
       }
-    }
+    },viewstore(){
+          console.log(this.$store.state)
+      }
   },
     mounted() {
       this.getRegionList2()
+        this.viewstore()
     }
 
 }
