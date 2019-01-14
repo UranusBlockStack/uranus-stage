@@ -8,7 +8,7 @@
     <el-row class="userId">
       <el-col :span="24">
         <p>{{$t('setting.account')}}</p>
-        <p class="contentUn">12345678911</p>
+        <p class="contentUn">{{id}}</p>
       </el-col>
     </el-row>
     <el-row class="mail-box">
@@ -18,20 +18,10 @@
       </el-col>
       <el-col :span="8" :offset="4">
         <p>
-          <el-button type="text" @click="mailOuterVisible = true">{{$t('setting.modifyMail.click')}}</el-button>
-          <el-dialog
-            :title="$t('setting.modifyMail.click')"
-            :visible.sync="mailOuterVisible"
-            :close-on-click-modal="false"
-            width="580px"
-          >
-            <el-form
-              :model="ruleForm"
-              :rules="rules"
-              ref="ruleForm"
-              label-width="140px"
-              class="demo-ruleForm"
-            >
+          <el-button type="text" @click="setMail()">{{$t('setting.modifyMail.click')}}111</el-button>
+          <el-dialog :title="$t('setting.modifyMail.click')" :visible.sync="mailOuterVisible" :close-on-click-modal="false"
+            width="580px">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                 <el-input v-model="ruleForm.buyerEmail"></el-input>
               </el-form-item>
@@ -40,20 +30,9 @@
                 <button style="width:28%">{{$t('setting.codeBtn')}}</button>
               </el-form-item>
             </el-form>
-            <el-dialog
-              width="580px"
-              :close-on-click-modal="false"
-              :title="$t('setting.mail')"
-              :visible.sync="mailInnerVisible"
-              append-to-body
-            >
-              <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="140px"
-                class="demo-ruleForm"
-              >
+            <el-dialog width="580px" :close-on-click-modal="false" :title="$t('setting.mail')" :visible.sync="mailInnerVisible"
+              append-to-body>
+              <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
                 <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                   <span slot="label">{{$t('setting.mail')}}</span>
                   <el-input v-model="ruleForm.buyerEmail"></el-input>
@@ -64,17 +43,16 @@
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
-                <el-button
-                  @click="mailOuterVisible = false, mailInnerVisible = false"
-                >{{$t('setting.button2')}}</el-button>
+                <el-button @click="mailOuterVisible = false, mailInnerVisible = false">
+                  {{$t('setting.button2')}}
+                </el-button>
               </div>
             </el-dialog>
             <div slot="footer" class="dialog-footer" center>
               <el-button @click="mailOuterVisible = false">{{$t('setting.button1')}}</el-button>
-              <el-button
-                type="primary"
-                @click="mailOuterVisible = false,mailInnerVisible = true"
-              >{{$t('setting.button3')}}</el-button>
+              <el-button type="primary" @click="mailOuterVisible = false,mailInnerVisible = true">
+                {{$t('setting.button3')}}
+              </el-button>
             </div>
           </el-dialog>
         </p>
@@ -87,65 +65,42 @@
       </el-col>
       <el-col :span="8" :offset="4">
         <p>
-          <el-button
-            type="text"
-            @click="phoneOuterVisible = true"
-          >{{$t('setting.modifyPhone.click')}}</el-button>
-          <el-dialog
-            :title="$t('setting.modifyPhone.click')"
-            :visible.sync="phoneOuterVisible"
-            width="580px"
-            :close-on-click-modal="false"
-          >
-            <el-form
-              :model="ruleForm"
-              :rules="rules"
-              ref="ruleForm"
-              label-width="140px"
-              class="demo-ruleForm"
-            >
+          <el-button type="text" @click="phoneOuterVisible = true">
+            {{$t('setting.modifyPhone.click')}}
+          </el-button>
+          <el-dialog :title="$t('setting.modifyPhone.click')" :visible.sync="phoneOuterVisible" width="580px"
+            :close-on-click-modal="false">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
-                <el-input v-model="ruleForm.buyerEmail"></el-input>
+                <el-input v-model="sourceNum"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
-                <el-input v-model="ruleForm.buyerPhone" style="width:69%"></el-input>
-                <button style="width:28%">{{$t('setting.codeBtn')}}</button>
+                <el-input v-model="captcha" style="width:69%"></el-input>
+                <el-button style="width:28%" @click="sendCode(sourceNum)">{{$t('setting.codeBtn')}}</el-button>
               </el-form-item>
             </el-form>
-            <el-dialog
-              width="580px"
-              :title="$t('setting.phone')"
-              :visible.sync="phoneInnerVisible"
-              append-to-body
-              :close-on-click-modal="false"
-            >
-              <el-form
-                :model="ruleForm"
-                :rules="rules"
-                ref="ruleForm"
-                label-width="140px"
-                class="demo-ruleForm"
-              >
+            <el-dialog width="580px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" append-to-body
+              :close-on-click-modal="false">
+              <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
                 <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
-                  <el-input v-model="ruleForm.buyerEmail"></el-input>
+                  <el-input v-model="newPhoneNum"></el-input>
                 </el-form-item>
                 <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
-                  <el-input v-model="ruleForm.buyerPhone" style="width:69%"></el-input>
-                  <button style="width:28%">{{$t('setting.codeBtn')}}</button>
+                  <el-input v-model="bindCaptcha" style="width:69%"></el-input>
+                  <el-button style="width:28%" @click="sendCode(newPhoneNum)">{{$t('setting.codeBtn')}}66</el-button>
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
-                <el-button
-                  @click="phoneOuterVisible = false,phoneInnerVisible = false"
-                >{{$t('setting.button2')}}</el-button>
+                <el-button @click="userBind('mobile')">
+                  {{$t('setting.button2')}}111
+                </el-button>
               </div>
             </el-dialog>
             <div slot="footer" class="dialog-footer" center>
-              <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}</el-button>
-              <el-button
-                type="primary"
-                @click="phoneOuterVisible = false,phoneInnerVisible = true"
-              >{{$t('setting.button3')}}</el-button>
+              <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}222</el-button>
+              <el-button type="primary" @click="checkCaptcha()">
+                {{$t('setting.button3')}}333
+              </el-button>
             </div>
           </el-dialog>
         </p>
@@ -158,23 +113,10 @@
       </el-col>
       <el-col :span="8" :offset="4">
         <p>
-          <el-button
-            type="text"
-            @click="pwdOuterVisible = true"
-          >{{$t('setting.modifyPassword.click')}}</el-button>
-          <el-dialog
-            :title="$t('setting.modifyPassword.click')"
-            :visible.sync="pwdOuterVisible"
-            width="580px"
-            :close-on-click-modal="false"
-          >
-            <el-form
-              :model="ruleForm"
-              :rules="rules"
-              ref="ruleForm"
-              label-width="140px"
-              class="demo-ruleForm"
-            >
+          <el-button type="text" @click="pwdOuterVisible = true">{{$t('setting.modifyPassword.click')}}</el-button>
+          <el-dialog :title="$t('setting.modifyPassword.click')" :visible.sync="pwdOuterVisible" width="580px"
+            :close-on-click-modal="false">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPassword.current')" prop="buyerEmail">
                 <el-input v-model="ruleForm.buyerEmail"></el-input>
               </el-form-item>
@@ -222,6 +164,9 @@
 </template>
 
 <script>
+    import * as account from '../../services/AccountService'
+    import * as auth from '../../services/AuthService'
+
 export default {
   name: "Setting",
   data() {
@@ -256,10 +201,16 @@ export default {
       }, 100);
     };
     return {
-      mail: "123456789",
-      mailOuterVisible: false,
-      mailInnerVisible: false,
-      ruleForm: {
+        id:"",
+        mail: "",
+        phonenum: "",//用户信息手机号
+        sourceNum:"",//用户原手机号
+        newPhoneNum:"",
+        captcha:"",//初次验证原手机验证码
+        bindCaptcha:"",//解绑验证码
+        mailOuterVisible: false,
+        mailInnerVisible: false,
+        ruleForm: {
         buyerPhone: "",
         buyerEmail: ""
       },
@@ -267,15 +218,91 @@ export default {
         buyerPhone: [{ validator: checkPhone, trigger: "blur" }],
         buyerEmail: [{ validator: checkEmail, trigger: "blur" }]
       },
-      phonenum: "12345678911",
       phoneOuterVisible: false,
       phoneInnerVisible: false,
       code: this.$t("setting.codePhone"),
       pwdOuterVisible: false,
       pwdInnerVisible: false,
       dialogVisible: false
-    };
-  }
+    }
+  },
+    methods: {
+        userInfo(){
+            //获取用户信息
+        account.userInfo(this.$store.getters.lang,68)
+            .then(data => {
+                this.id=data.data.data.id
+                this.phonenum=data.data.data.mobile
+                this.mail=data.data.data.email
+                this.sourceNum=this.phonenum
+
+                console.log(data)
+            })
+       },
+        sendCode(receiver){
+            //发送验证码至原手机/邮箱
+            const param = {
+                'captchaType': 0,
+                'receiver': receiver,
+                'senderType': 'mobile'
+            }
+            auth.captcha(this.$store.getters.lang,param)
+                .then(data=>{
+                    if(!data.data.success){
+                        console.log("验证码发送失败")
+                    }else {
+                        console.log("验证码发送成功")
+                    }
+                })
+        },
+        checkCaptcha(){
+            //校验原手机/邮箱验证码是否正确
+            console.log("校验中。。。。")
+           // var sourceNum=this.$refs.sourceNum
+            //console.log("原手机邮箱号码"+sourceNum)
+            this.phoneOuterVisible = false
+            this.phoneInnerVisible = true
+        },
+        userBind(bindType){
+            console.log("新手机/邮箱:"+this.newPhoneNum)
+            //绑定手机号/邮箱
+            var param={
+                'captcha': this.bindCaptcha,
+                'id': this.id,
+                'loginName': this.newPhoneNum
+            }
+            account.userBind(this.$store.getters.lang,bindType,param).then(data=>{
+                console.log("解绑中。。。。")
+                console.log(data)
+                if(data.data.success){
+                    //成功
+                    phoneOuterVisible = false
+                    phoneInnerVisible = false
+                }else{
+                    //失败
+                    alert("解绑失败")
+                }
+            })
+        },
+        setMail(){
+
+           //this.mailOuterVisible = true
+            if(this.mail==null||this.mail==''){
+                //this.mailOuterVisible = false
+                this.mailInnerVisible=true
+                alert()
+            }else{
+                this.mailOuterVisible = true
+                //this.mailInnerVisible=false
+            }
+
+        }
+
+
+    },
+    mounted() {
+        this.userInfo()
+    }
 };
 </script>
 
