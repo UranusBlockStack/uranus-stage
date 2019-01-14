@@ -110,7 +110,7 @@
 
           const param = {
             'captchaType': 0,
-            'receiver': this.currentRegion + this.$refs.mobileNumber.value,
+            'receiver': this.currentRegion + this.$refs.loginMobile.value,
             'senderType': 'mobile'
           }
           auth.captcha('zh-cn', param)

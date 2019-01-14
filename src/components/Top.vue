@@ -32,7 +32,7 @@
               <!-- The user image in the menu -->
               <li class="user-header">
                 <img src="/static/img/uranus/starter/user.jpg" class="img-circle" alt="User Image">
-
+                <button @click="logout"> Logout </button>
                 <p>
                   Alexander Pierce - Web Developer
                   <small>Member since Nov. 2012</small>
@@ -75,8 +75,17 @@
 </template>
 
 <script>
+    import * as auth from '../services/AuthService'
+
 export default {
-  name: 'Head'
+  name: 'Head',
+    methods: {
+      logout(){
+          auth.logout()
+          if(!this.$store.state.userName)
+              this.$router.push({ name: 'Map' })
+      }
+    }
 
 }
 </script>

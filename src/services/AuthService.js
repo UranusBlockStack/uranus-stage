@@ -12,8 +12,12 @@ export function login (lang, user) {
     .then(res => {
       if (res) {
         const  loginInfo = {
-            userName: user.loginName,
-            userId  : res.data.data.id
+            userName        : user.loginName,
+            userId          : res.data.data.id,
+            loginType       : '',
+            loginRole       : '',
+            loginLanguage   : '',
+            userAddress     : ''
         }
         setToken(res.data.data.token, loginInfo)
       }
@@ -39,7 +43,7 @@ export function getUsername () {
   if (!token) {
     return null
   }
-  return token.user.username
+  return token.user.userName
 }
 
 export function getUserId () {

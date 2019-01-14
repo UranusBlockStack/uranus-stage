@@ -104,7 +104,7 @@ export default {
         },
         getConfirmCode() {
             console.log(this.$store.state)
-            wallet.walletConfirmCode(this.$store.getters.lang, this.$store.state.username)
+            wallet.walletConfirmCode(this.$store.getters.lang, this.$store.state.userName)
                 .then(sendResult=>{
                     console.log(sendResult.data)
                 })

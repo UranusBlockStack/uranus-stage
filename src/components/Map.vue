@@ -65,69 +65,79 @@
       </div>
     </div>
     <div class="mapCon">
-      <router-link :to="{name: 'Seller', params: {user: 'seller'}}" class="seller">
+      <a @click.prevent="LoginPage('seller')"  class="seller">
         <span>
           <img src="/static/img/uranus/seller.png">
           {{$t('map.seller')}}
           <i class="el-icon-arrow-right"></i>
         </span>
         <p>{{$t('map.sellerText')}}</p>
-      </router-link>
-      <router-link :to="{name: 'Buyer', params: {user: 'buyer'}}" class="buyer">
+      </a>
+      <a @click.prevent="LoginPage('buyer')" class="buyer">
         <span>
           <img src="/static/img/uranus/buyer.png">
           {{$t('map.buyer')}}
           <i class="el-icon-arrow-right"></i>
         </span>
         <p>{{$t('map.buyerText')}}</p>
-      </router-link>
-      <router-link :to="{name: 'Developer', params: {user: 'developer'}}" class="developer">
+      </a>
+      <a @click.prevent="LoginPage('developer')" class="developer">
         <span>
           <img src="/static/img/uranus/developer.png">
           {{$t('map.developer')}}
           <i class="el-icon-arrow-right"></i>
         </span>
         <p>{{$t('map.developerText')}}</p>
-      </router-link>
+      </a>
     </div>
   </section>
 </template>
 
 <script>
-import "../../static/js/world.js";
+import '../../static/js/world.js'
 
 export default {
-  name: "Map",
+  name: 'Map',
   data() {
     return {
-      lang: "中文"
-    };
+        lang: '中文',
+        langCode : 'zh-cn',
+        role: ''
+    }
   },
   methods: {
     chooseCn() {
-      this.lang = "中文";
-      this.$i18n.locale = "cn";
+      this.lang = '中文'
+        this.langCode = 'zh-cn'
+      this.$i18n.locale = 'cn'
     },
     chooseEn() {
-      this.lang = "English";
-      this.$i18n.locale = "en";
+      this.lang = 'English'
+        this.langCode = 'en-us'
+      this.$i18n.locale = 'en'
     },
+      LoginPage(userRole) {
+        this.$store.dispatch('setRole', userRole)
+        this.$store.dispatch('setLang', this.langCode)
+          this.$router.push({name: 'Login'})
+      },
+
     initEchart() {
       // 绘制地图
-      let myChartMap2 = this.$echarts.init(document.getElementById("mapWorld"));
+      let myChartMap2 = this.$echarts.init(document.getElementById('mapWorld'))
       // 地图上数据
       let myData = [
-        { name: "分点1", value: [121.15, 31.89, 9] },
-        { name: "分点2", value: [89.781327, 39.608266, 120] },
-        { name: "分点3", value: [120.38, 37.35, 142] },
-        { name: "分点4", value: [22.207216, 29.985295, 123] },
-        { name: "分点5", value: [110.245672, 30.7787677, 566] }
-      ];
+        { name: '分点1', value: [121.15, 31.89, 9] },
+        { name: '分点2', value: [89.781327, 39.608266, 120] },
+        { name: '分点3', value: [120.38, 37.35, 142] },
+        { name: '分点4', value: [22.207216, 29.985295, 123] },
+        { name: '分点5', value: [110.245672, 30.7787677, 566] }
+      ]
 
       myChartMap2.setOption({
         // 新建一个地理坐标系 geo ，
         geo: {
-          map: "world", // 地图类型为世界地图
+          map: 'world', // 地图类型为世界地图
           roam: true,
           zoom: 1,
           scaleLimit: { min: 1, max: 2 },
@@ -135,47 +145,47 @@ export default {
             // 定义样式
             normal: {
               // 普通状态下的样式
-              areaColor: "#6699CC",
-              borderColor: "#fff"
+              areaColor: '#6699CC',
+              borderColor: '#fff'
             },
             emphasis: {
               // 高亮状态下的样式
-              areaColor: "lightgreen"
+              areaColor: 'lightgreen'
             }
           }
         },
         // hover显示目标数据
         tooltip: {
-          trigger: "item",
+          trigger: 'item',
           textStyle: {
-            align: "left"
+            align: 'left'
           }
         },
         // 图表背景色
-        backgroundColor: "#ffffff",
+        backgroundColor: '#ffffff',
         // 标志颜色
-        color: "green",
+        color: 'green',
         // 新建散点图series
         series: [
           {
-            name: "", // series名称
-            type: "scatter", // 为散点类型
-            coordinateSystem: "geo", // series坐标系类型
+            name: '', // series名称
+            type: 'scatter', // 为散点类型
+            coordinateSystem: 'geo', // series坐标系类型
             data: myData,
-            symbol: "pin",
+            symbol: 'pin',
             symbolSize: [20, 20]
           }
         ]
-      });
+      })
       window.onresize = function() {
-        myChartMap2.resize();
-      };
+        myChartMap2.resize()
+      }
     }
   },
   mounted() {
-    this.initEchart();
+    this.initEchart()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
