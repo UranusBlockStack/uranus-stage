@@ -5,9 +5,12 @@
         <h1>{{$t('menu.myColony')}}</h1>
       </el-col>
       <el-col :span="4" :offset="8">
-        <router-link :to="{path: '/resourcerecord'}"><p>{{$t('seller.groups.view')}}</p></router-link>
+        <router-link :to="{path: '/resourcerecord'}">
+          <p>{{$t('seller.groups.view')}}</p>
+        </router-link>
       </el-col>
     </el-row>
+    <!-- Setting Information Bullet Box -->
     <el-dialog
       :title="$t('seller.groups.settingTitle')"
       :visible.sync="dialogVisible"
@@ -80,33 +83,35 @@
         </el-col>
       </el-row>
       <el-row class="lineBox"></el-row>
-      <el-row class="shopBox" v-for="(colony, index) in colonyList" :key="index">
-        <el-col :span="4">
-          <router-link :to="{path: '/colony'}">
-            <Water :chartData="colony.value"/>
-          </router-link>
+      <!-- Cluster List -->
+      <el-row class="shopBox">
+        <el-col :span="12" v-for="(colony, index) in colonyList" :key="index">
+          <el-row style="border: 1px solid #e9e9e9; margin:10px;">
+            <el-col :span="6">
+              <router-link :to="{path: '/colony'}">
+                <Water :chartData="colony.value"/>
+                <h1>{{colony.colony}}</h1>
+              </router-link>
+            </el-col>
+            <el-col class="padding-top" :span="15">
+              <h2>
+                <i class="iconfont icon-earnings"></i>
+                {{$t('seller.groups.earnings')}}
+                <p>88888888.888888URAC</p>
+              </h2>
+              <h2>
+                <i class="iconfont icon-shaloucountdown"></i>
+                {{$t('seller.groups.restTime')}}
+                <p> 222d 22h 22m 22s </p>
+              </h2>
+            </el-col>
+            <el-col :span="2" :offset="1">
+              <h2 class="setting" @click="dialogVisible = true">
+                <i class="iconfont icon-set" style="font-size: 25px;"></i>
+              </h2>
+            </el-col>
+          </el-row>
         </el-col>
-        <el-col :span="4">
-          <router-link :to="{path: '/colony'}">
-            <h1>{{colony.colony}}</h1>
-          </router-link>
-        </el-col>
-        <el-col class="padding-top" :span="14">
-          <p>
-            <i class="iconfont icon-earnings"></i>
-            {{$t('seller.groups.earnings')}} 88888888.888888URAC
-          </p>
-          <p>
-            <i class="iconfont icon-shaloucountdown"></i>
-            {{$t('seller.groups.restTime')}} 222d 22h 22m 22s
-          </p>
-        </el-col>
-        <el-col :span="2">
-          <p class="setting" @click="dialogVisible = true">
-            <i class="iconfont icon-set" style="font-size: 25px;"></i>
-          </p>
-        </el-col>
-        <el-col class="lineBox"></el-col>
       </el-row>
       <el-row>
         <el-col :span="8" :offset="16">
@@ -118,7 +123,8 @@
 </template>
 
 <script>
-import Water from "./Water";
+import Water from "@/components/modules/Water";
+
 export default {
   name: "MyColony",
   components: {
@@ -200,11 +206,15 @@ export default {
       padding-top: 20px;
       .padding-top {
         padding-top: 20px;
-        p {
-          margin: 20px;
-          font-size: 25px;
+        h2 {
+          margin: 22px;
+          font-size: 16px;
           i {
-            font-size: 30px;
+            font-size: 20px;
+          }
+          p {
+              font-size: 16px;
+              margin-left: 30px;
           }
         }
       }
@@ -212,10 +222,10 @@ export default {
         width: 100%;
         text-align: center;
         font-family: PingFang-SC-Bold;
-        font-size: 26px;
+        font-size: 16px;
         color: #363636;
-        padding-top: 40px;
-        line-height: 40px;
+        margin-top: 0;
+        line-height: 22px;
       }
       .setting {
         text-align: right;

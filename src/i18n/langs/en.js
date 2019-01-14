@@ -348,7 +348,7 @@ module.exports = {
       value: 'Value',
       startingTime: 'Start',
       endTime: 'End',
-      search: 'Search',
+      searchIn: 'Search',
       screen: 'Screen',
       name: 'Name',
       usedPower: 'Used UraPower',

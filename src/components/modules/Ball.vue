@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: 'EchartsComponents',
+  name: 'EchartsBall',
   props: {
     chartData: {}
   },
@@ -15,31 +15,31 @@ export default {
       myChart.setOption({
         series: [
           {
-            type: 'liquidFill',
-            radius: '85%',
+            name: "pool",
+            type: "pie",
+            radius: ["85%", "70%"],
+            hoverAnimation: false,
+            legendHoverLink: false,
+            avoidLabelOverlap: false,
+            selectedOffset: 0,
+            color: ["#1890FF", "#f2f2f2"],
             data: [
               {
                 value: this.chartData,
-                direction: 'left',
-                itemStyle: {
+                selected: false,
+                label: {
                   normal: {
-                    color: '#1890FF'
+                    show: true,
+                    formatter: ["Pool",  this.chartData + "%",].join("\n"),
+                    position: "center",
+                    textStyle: { align: "center", color: "#1890FF", fontSize: "20"}
                   }
                 }
-              }
-            ],
-            outline: {
-              show: false
-            },
-            backgroundStyle: {
-              borderColor: '#156ACF',
-              borderWidth: 1,
-              shadowColor: 'rgba(0, 0, 0, 0.4)',
-              shadowBlur: 20
-            }
+              },
+              { value: 100-this.chartData }
+            ]
           }
         ]
-        
       })
       window.onresize = function() {
         myChart.resize()

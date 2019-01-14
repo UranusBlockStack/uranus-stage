@@ -2,7 +2,10 @@
   <section class="Buyer">
     <el-row class="content-title">
       <el-col class="title" :span="12">
-        <h1><i class="iconfont icon-home"></i>{{$t('menu.home')}}</h1>
+        <h1>
+          <i class="iconfont icon-home"></i>
+          {{$t('menu.home')}}
+        </h1>
       </el-col>
     </el-row>
     <!-- Main content -->
@@ -13,7 +16,12 @@
             <p>{{$t('buyer.home.store')}}</p>
           </el-col>
           <el-col :span="11">
-            <router-link :to="{path: '/applicationmarket'}"><p class="more">{{$t('buyer.home.more')}} <i class="iconfont icon-more"></i></p></router-link>
+            <router-link :to="{path: '/applicationmarket'}">
+              <p class="more">
+                {{$t('buyer.home.more')}}
+                <i class="iconfont icon-more"></i>
+              </p>
+            </router-link>
           </el-col>
         </el-row>
         <el-row class="shopBox" :gutter="20">
@@ -34,7 +42,12 @@
                     <el-col :span="10" :offset="6">
                       <p class="downloads">{{$t('buyer.home.download')}}123</p>
                     </el-col>
-                    <router-link  :to="{path: '/deployment'}"><el-button type="success" style="margin-top: -10px;">{{$t('buyer.home.details')}}</el-button></router-link>
+                    <router-link :to="{path: '/deployment'}">
+                      <el-button
+                        type="success"
+                        style="margin-top: -10px;"
+                      >{{$t('buyer.home.details')}}</el-button>
+                    </router-link>
                   </el-row>
                 </div>
               </div>
@@ -59,19 +72,28 @@
               {{$t('buyer.home.restPower')}}
             </p>
           </el-col>
+          <el-col :span="16">
+            <div class="choosePower">
+              <span
+                @click="powerYear(0)"
+                :class="{active: this.indexPower == '0'}"
+              >{{$t('buyer.home.month')}}</span>
+              <span
+                @click="powerMounth(1)"
+                :class="{active: indexPower == '1'}"
+              >{{$t('buyer.home.week')}}</span>
+              <span
+                @click="powerWeek(2)"
+                :class="{active: indexPower == '2'}"
+              >{{$t('buyer.home.day')}}</span>
+              <span
+                @click="powerDay(3)"
+                :class="{active: indexPower == '3'}"
+              >{{$t('buyer.home.hour')}}</span>
+            </div>
+          </el-col>
         </el-row>
-        <div class="choosePower">
-          <span
-            @click="powerYear(0)"
-            :class="{active: this.indexPower == '0'}"
-          >{{$t('buyer.home.month')}}</span>
-          <span
-            @click="powerMounth(1)"
-            :class="{active: indexPower == '1'}"
-          >{{$t('buyer.home.week')}}</span>
-          <span @click="powerWeek(2)" :class="{active: indexPower == '2'}">{{$t('buyer.home.day')}}</span>
-          <span @click="powerDay(3)" :class="{active: indexPower == '3'}">{{$t('buyer.home.hour')}}</span>
-        </div>
+
         <div id="myPower"></div>
       </div>
     </div>
@@ -156,7 +178,7 @@ export default {
         },
         xAxis: [
           {
-            name:  this.$t("buyer.home.xName"),
+            name: this.$t("buyer.home.xName"),
             type: "category",
             data: myData.x,
             axisLine: {
@@ -171,17 +193,17 @@ export default {
         ],
         yAxis: [
           {
-            name:  this.$t("buyer.home.yName") + ' (U)',
+            name: this.$t("buyer.home.yName") + " (U)",
             type: "value",
             axisLine: {
               show: true,
               symbol: ["none", "arrow"],
               symbolSize: [10, 20],
-              symbolOffset: [0,15]
+              symbolOffset: [0, 15]
             },
             axisLabel: {
               formatter: "{value}"
-            },
+            }
           }
         ],
         series: [
@@ -220,13 +242,19 @@ export default {
   }
   .content-title {
     background: #ffffff;
-    height: 64px;
+    height: 50px;
     h1 {
-      font-family: PingFang-SC-Bold;
-      font-size: 20px;
+      font-family: Source-Sans-Pro-Bold;
+      font-size: 16px;
       color: #252525;
-      line-height: 24px;
+      line-height: 50px;
+      margin: 0;
+      padding: 0;
       padding-left: 30px;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
     }
   }
   .content {
@@ -234,18 +262,19 @@ export default {
     .shop {
       background: #ffffff;
       min-width: 1130px;
-      margin: 20px;
-      padding: 15px;
+      margin: 10px;
+      padding: 30px;
       p {
         height: 40px;
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
+        font-weight: 500;
         font-size: 16px;
         color: #252525;
         line-height: 24px;
         text-align: left;
       }
       .more {
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #8eb357;
         line-height: 24px;
@@ -256,7 +285,7 @@ export default {
         min-width: 1130px;
         .resources {
           text-align: center;
-          padding: 20px;
+          padding: 10px;
           div {
             cursor: pointer;
             .shops {
@@ -273,7 +302,8 @@ export default {
               font-weight: 600;
               padding: 5px 0 10px;
               border-bottom: 2px solid #eee;
-              font-family: PingFang-SC-Medium;
+              font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
               font-size: 20px;
               color: #251e1c;
               text-align: center;
@@ -284,7 +314,7 @@ export default {
               height: 66px;
               overflow: hidden;
               box-sizing: content-box;
-              font-family: PingFangSC-Regular;
+              font-family: Source-Sans-Pro-Bold;
               font-size: 14px;
               color: rgba(0, 0, 0, 0.45);
               text-align: center;
@@ -294,7 +324,8 @@ export default {
             .free {
               font-weight: 600;
               padding: 10px 0;
-              font-family: PingFangSC-Regular;
+              font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
               font-size: 14px;
               color: #1890ff;
               letter-spacing: 0;
@@ -302,7 +333,8 @@ export default {
               text-align: left;
             }
             .downloads {
-              font-family: PingFangSC-Regular;
+              font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
               font-size: 14px;
               padding: 10px 0;
               color: #5d5d5d;
@@ -319,17 +351,17 @@ export default {
       min-width: 1130px;
       height: 400px;
       background: #ffffff;
-      margin: 20px;
+      margin: 10px;
       .powerTitle p {
         height: 40px;
         line-height: 40px;
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
+        font-weight: 500;
         font-size: 16px;
         color: #252525;
         text-align: left;
       }
       .powerCon p {
-        font-family: PingFangSC-Regular;
         font-size: 14px;
         color: rgba(0, 0, 0, 0.65);
         line-height: 40px;
@@ -356,16 +388,18 @@ export default {
         }
       }
       .choosePower {
-        height: 30px;
+        height: 40px;
         span {
+          z-index: 10;
           float: right;
           margin: 3px 10px;
-          height: 30px;
+          height: 40px;
+          line-height: 40px;
           width: 55px;
           cursor: pointer;
         }
         .active {
-          color: green;
+          color: #81a028;
           font-weight: bolder;
         }
       }

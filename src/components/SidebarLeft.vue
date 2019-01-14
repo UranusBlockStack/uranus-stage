@@ -129,7 +129,7 @@
       </li>
       <li class="treeview" v-show="user== 'developer'">
         <router-link :to="{path: '/uploadapplication'}">
-          <i class="iconfont icon-upload"></i>
+          <i class="iconfont icon-upload-application"></i>
           <span>{{$t('menu.uploadApplication')}}</span>
         </router-link>
       </li>
@@ -158,11 +158,13 @@
 </template>
 
 <script>
+import * as auth from '../services/AuthService'
+
 export default {
   name: "SidebarLeft",
   data() {
     return {
-      user: "seller"
+      user: 'seller',
     };
   },
   created() {
@@ -171,7 +173,7 @@ export default {
   methods: {
     getParams() {
       // 取到路由带过来的参数
-      var routerParams = this.$route.params.user;
+      var routerParams = auth.getUserBaseInfo().loginRole;
       // 将数据放在当前组件的数据内
       this.user = routerParams;
     }
@@ -183,14 +185,18 @@ export default {
 .sidebar {
   .sidebar-menu {
     font-size: 16px;
-    font-family: PingFang-SC-Heavy;
     .treeview {
       a {
         color: #252525;
-        font-family: PingFang-SC-Medium;
         font-size:16px;
+        font-family: Source-Sans-Pro-Bold;
+        font-weight: 500;
+        padding: 12px 5px;
         i {
-          font-size: 25px;
+          font-size: 28px;
+        }
+        span {
+            padding-left: 5px;
         }
       }
       .treeview-menu {
@@ -215,7 +221,7 @@ export default {
         color: #8eb357;
         background: #f2f2f2;
         i {
-          font-size: 30px;
+          font-size: 35px;
           transition: 1.2s;
         }
       }

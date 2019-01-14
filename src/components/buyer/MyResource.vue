@@ -4,7 +4,7 @@
       <el-col class="title" :span="12">
         <h1>{{$t('menu.myResource')}}</h1>
       </el-col>
-       <el-col class="record" :span="12">
+      <el-col class="record" :span="12">
         <router-link :to="{path: '/urapowerrecord'}">
           <p>{{$t('buyer.appRepository.deployRecord')}}>></p>
         </router-link>
@@ -18,7 +18,6 @@
       </el-row>
       <el-row>
         <el-col :span="4">
-          <h2>{{$t('buyer.myResource.restAll')}}</h2>
           <div id="restResource"></div>
         </el-col>
         <el-col :span="19" :offset="1">
@@ -38,70 +37,38 @@
         </el-col>
       </el-row>
       <el-row class="appResource">
-        <el-col :span="4">
-          <div id="restResource6"></div>
-        </el-col>
-        <el-col :span="7" :offset="1">
-          <h3>{{$t('buyer.myResource.number')}}4</h3>
-        </el-col>
-        <el-col :span="8">
-          <h3 class="restTime">{{$t('buyer.myResource.countdownTime')}}{{$t('buyer.myResource.timeUp')}}
-            <el-button type="success">
-              {{$t('buyer.myResource.renewal')}}
-              <i class="el-icon-arrow-right"></i>
-            </el-button>
-          </h3>
-        </el-col>
-        <el-col :span="3" :offset="1">
-          <p @click="$router.push({path: '/resourcepool'})">
-            {{$t('buyer.myResource.detail')}}
-            <i class="el-icon-arrow-right"></i>
-          </p>
-        </el-col>
-      </el-row>
-
-      <el-row class="appResource">
-        <el-col :span="4">
-          <div id="restResource7"></div>
-        </el-col>
-        <el-col :span="7" :offset="1">
-          <h3>{{$t('buyer.myResource.number')}}4</h3>
-        </el-col>
-        <el-col :span="8">
-          <h3 class="restTime">{{$t('buyer.myResource.countdownTime')}}{{$t('buyer.myResource.timeUp')}}
-            <el-button type="success">
-              {{$t('buyer.myResource.renewal')}}
-              <i class="el-icon-arrow-right"></i>
-            </el-button>
-          </h3>
-        </el-col>
-        <el-col :span="3" :offset="1">
-          <p @click="$router.push({path: '/resourcepool'})">
-            {{$t('buyer.myResource.detail')}}
-            <i class="el-icon-arrow-right"></i>
-          </p>
-        </el-col>
-      </el-row>
-      <el-row class="appResource">
-        <el-col :span="4">
-          <div id="restResource8"></div>
-        </el-col>
-        <el-col :span="7" :offset="1">
-          <h3>{{$t('buyer.myResource.number')}}4</h3>
-        </el-col>
-        <el-col :span="8">
-          <h3 class="restTime">{{$t('buyer.myResource.countdownTime')}}{{$t('buyer.myResource.timeUp')}}
-            <el-button type="success">
-              {{$t('buyer.myResource.renewal')}}
-              <i class="el-icon-arrow-right"></i>
-            </el-button>
-          </h3>
-        </el-col>
-        <el-col :span="3" :offset="1">
-          <p @click="$router.push({path: '/resourcepool'})">
-            {{$t('buyer.myResource.detail')}}
-            <i class="el-icon-arrow-right"></i>
-          </p>
+        <el-col :span="12" v-for="(pool, index) in poolList" :key="index">
+          <el-row style="border: 1px solid #e9e9e9; margin:10px;">
+            <el-col :span="8" style="margin-bottom: 15px;">
+              <Ball :chartData="62"/>
+            </el-col>
+            <el-col :span="12">
+              <h3>{{$t('buyer.myResource.number')}} {{pool.id}}</h3>
+              <div class="timeText">
+                <p>倒计时</p>
+                <RestTime endTime="2020-1-14 16:14:50"/>
+              </div>
+            </el-col>
+            <el-col :span="3" :offset="1">
+              <el-dropdown trigger="click" style="margin-top: 30px;">
+                <span class="el-dropdown-link">
+                  <i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item>
+                    {{$t('buyer.myResource.renewal')}}
+                    <i class="el-icon-arrow-right"></i>
+                  </el-dropdown-item>
+                  <el-dropdown-item>
+                    <p @click="$router.push({path: '/resourcepool'})">
+                      {{$t('buyer.myResource.detail')}}
+                      <i class="el-icon-arrow-right"></i>
+                    </p>
+                  </el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </el-col>
+          </el-row>
         </el-col>
       </el-row>
     </el-row>
@@ -109,74 +76,83 @@
 </template>
 
 <script>
-import 'echarts-liquidfill'
+import "echarts-liquidfill";
+import Ball from "@/components/modules/Ball";
+import RestTime from "@/components/modules/RestTime";
 
 export default {
-  name: 'MyResource',
+  name: "MyResource",
+  components: {
+    Ball,
+    RestTime
+  },
+  data() {
+    return {
+      poolList: [
+        { id: "1", value: "50", time: "2019-1-14 16:15:50" },
+        { id: "2", value: "50", time: "2019-1-15 16:14:50" },
+        { id: "3", value: "50", time: "2019-5-15 16:14:50" },
+        { id: "4", value: "50", time: "2019-6-14 16:04:50" },
+        { id: "5", value: "50", time: "2029-1-14 16:14:50" }
+      ]
+    };
+  },
   methods: {
     initEchart() {
-      var myChart = this.$echarts.init(document.getElementById('restResource'))
+      var myChart = this.$echarts.init(document.getElementById("restResource"));
       var myChart1 = this.$echarts.init(
-        document.getElementById('restResource1')
-      )
+        document.getElementById("restResource1")
+      );
       // var myChart2 = this.$echarts.init(
       //   document.getElementById('restResource2')
       // )
       var myChart3 = this.$echarts.init(
-        document.getElementById('restResource3')
-      )
+        document.getElementById("restResource3")
+      );
       var myChart4 = this.$echarts.init(
-        document.getElementById('restResource4')
-      )
+        document.getElementById("restResource4")
+      );
       var myChart5 = this.$echarts.init(
-        document.getElementById('restResource5')
-      )
-      var myChart6 = this.$echarts.init(
-        document.getElementById('restResource6')
-      )
-      var myChart7 = this.$echarts.init(
-        document.getElementById('restResource7')
-      )
-      var myChart8 = this.$echarts.init(
-        document.getElementById('restResource8')
-      )
+        document.getElementById("restResource5")
+      );
+
       myChart.setOption({
         series: [
           {
-            type: 'liquidFill',
-            radius: '85%',
+            type: "liquidFill",
+            radius: "85%",
             data: [
               {
                 value: 0.3,
-                direction: 'right',
+                direction: "right",
                 itemStyle: {
                   normal: {
-                    color: '#1890FF'
+                    color: "#1890FF"
                   }
-                },
+                }
               }
             ],
             outline: {
               show: false
             },
             backgroundStyle: {
-              borderColor: '#1890FF',
-              borderWidth: 3,
+              borderColor: "#1890FF",
+              borderWidth: 3
             }
           }
         ]
-      })
+      });
       myChart1.setOption({
         series: [
           {
-            name: 'Cpu',
-            type: 'pie',
-            radius: ['85%', '70%'],
+            name: "Cpu",
+            type: "pie",
+            radius: ["85%", "70%"],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#1890FF', '#f2f2f2'],
+            color: ["#1890FF", "#f2f2f2"],
             data: [
               {
                 value: 68,
@@ -184,22 +160,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|CPU}', '{b|68%}'].join('\n'),
+                    formatter: ["CPU", 68].join("\n"),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#5d5d5d",
+                        fontSize: "14",
+                        lineHeight: "22",
+                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "rgba(0,0,0,.85)",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
-                    position: 'center',
-                    textStyle: { align: 'center' }
+                    position: "center",
+                    textStyle: { align: "center" }
                   }
                 }
               },
@@ -207,7 +183,7 @@ export default {
             ]
           }
         ]
-      })
+      });
       // myChart2.setOption({
       //   series: [
       //     {
@@ -253,14 +229,14 @@ export default {
       myChart3.setOption({
         series: [
           {
-            name: 'memory',
-            type: 'pie',
-            radius: ['85%', '70%'],
+            name: "memory",
+            type: "pie",
+            radius: ["85%", "70%"],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#FACC14', '#f2f2f2'],
+            color: ["#FACC14", "#f2f2f2"],
             data: [
               {
                 value: 62,
@@ -268,22 +244,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|Memory}', '{b|62%}'].join('\n'),
+                    formatter: ["{a|Memory}", "{b|62%}"].join("\n"),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#5d5d5d",
+                        fontSize: "14",
+                        lineHeight: "22",
+                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "rgba(0,0,0,.85)",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
-                    position: 'center',
-                    textStyle: { align: 'center' }
+                    position: "center",
+                    textStyle: { align: "center" }
                   }
                 }
               },
@@ -291,18 +267,18 @@ export default {
             ]
           }
         ]
-      })
+      });
       myChart4.setOption({
         series: [
           {
-            name: 'disk',
-            type: 'pie',
-            radius: ['85%', '70%'],
+            name: "disk",
+            type: "pie",
+            radius: ["85%", "70%"],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#658FF7', '#f2f2f2'],
+            color: ["#658FF7", "#f2f2f2"],
             data: [
               {
                 value: 88,
@@ -310,22 +286,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|Disk}', '{b|88%}'].join('\n'),
+                    formatter: ["{a|Disk}", "{b|88%}"].join("\n"),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#5d5d5d",
+                        fontSize: "14",
+                        lineHeight: "22",
+                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "rgba(0,0,0,.85)",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
-                    position: 'center',
-                    textStyle: { align: 'center' }
+                    position: "center",
+                    textStyle: { align: "center" }
                   }
                 }
               },
@@ -333,18 +309,18 @@ export default {
             ]
           }
         ]
-      })
+      });
       myChart5.setOption({
         series: [
           {
-            name: 'network',
-            type: 'pie',
-            radius: ['85%', '70%'],
+            name: "network",
+            type: "pie",
+            radius: ["85%", "70%"],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#FB8D5B', '#f2f2f2'],
+            color: ["#FB8D5B", "#f2f2f2"],
             data: [
               {
                 value: 62,
@@ -352,22 +328,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|Network}', '{b|62%}'].join('\n'),
+                    formatter: ["{a|Network}", "{b|62%}"].join("\n"),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#5d5d5d",
+                        fontSize: "14",
+                        lineHeight: "22",
+                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "rgba(0,0,0,.85)",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
-                    position: 'center',
-                    textStyle: { align: 'center' }
+                    position: "center",
+                    textStyle: { align: "center" }
                   }
                 }
               },
@@ -375,150 +351,21 @@ export default {
             ]
           }
         ]
-      })
-      myChart6.setOption({
-        series: [
-          {
-            name: 'pool',
-            type: 'pie',
-            radius: ['85%', '70%'],
-            hoverAnimation: false,
-            legendHoverLink: false,
-            avoidLabelOverlap: false,
-            selectedOffset: 0,
-            color: ['#1890FF', '#f2f2f2'],
-            data: [
-              {
-                value: 68,
-                selected: false,
-                label: {
-                  normal: {
-                    show: true,
-                    formatter: ['{a|Pool A}', '{b|68%}'].join('\n'),
-                    rich: {
-                      a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
-                      },
-                      b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
-                      }
-                    },
-                    position: 'center',
-                    textStyle: { align: 'center' }
-                  }
-                }
-              },
-              { value: 32 }
-            ]
-          }
-        ]
-      })
-      myChart7.setOption({
-        series: [
-          {
-            name: 'pool',
-            type: 'pie',
-            radius: ['85%', '70%'],
-            hoverAnimation: false,
-            legendHoverLink: false,
-            avoidLabelOverlap: false,
-            selectedOffset: 0,
-            color: ['#7FD455', '#f2f2f2'],
-            data: [
-              {
-                value: 88,
-                selected: false,
-                label: {
-                  normal: {
-                    show: true,
-                    formatter: ['{a|Pool B}', '{b|88%}'].join('\n'),
-                    rich: {
-                      a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
-                      },
-                      b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
-                      }
-                    },
-                    position: 'center',
-                    textStyle: { align: 'center' }
-                  }
-                }
-              },
-              { value: 12 }
-            ]
-          }
-        ]
-      })
-      myChart8.setOption({
-        series: [
-          {
-            name: 'pool',
-            type: 'pie',
-            radius: ['85%', '70%'],
-            hoverAnimation: false,
-            legendHoverLink: false,
-            avoidLabelOverlap: false,
-            selectedOffset: 0,
-            color: ['#FACC14', '#f2f2f2'],
-            data: [
-              {
-                value: 62,
-                selected: false,
-                label: {
-                  normal: {
-                    show: true,
-                    formatter: ['{a|Pool C}', '{b|62%}'].join('\n'),
-                    rich: {
-                      a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
-                      },
-                      b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
-                      }
-                    },
-                    position: 'center',
-                    textStyle: { align: 'center' }
-                  }
-                }
-              },
-              { value: 38 }
-            ]
-          }
-        ]
-      })
+      });
       window.onresize = function() {
-        myChart.resize()
-        myChart1.resize()
+        myChart.resize();
+        myChart1.resize();
         // myChart2.resize()
-        myChart3.resize()
-        myChart4.resize()
-        myChart5.resize()
-        myChart6.resize()
-        myChart7.resize()
-        myChart8.resize()
-      }
+        myChart3.resize();
+        myChart4.resize();
+        myChart5.resize();
+      };
     }
   },
   mounted() {
-    this.initEchart()
+    this.initEchart();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -604,32 +451,16 @@ export default {
         color: #363636;
         line-height: 24px;
         text-align: left;
-        margin: 15px 20px;
+        margin: 25px 20px;
       }
-      #restResource6,
-      #restResource7,
-      #restResource8 {
-        height: 190px;
-        width: 100%;
-        padding-left: 30px;
-      }
-      .restTime {
-        margin-top: 60px;
-        .el-button {
-          background: #8eb357;
-          border: none;
-          margin-left: 30px;
-        }
+      .timeText {
+          padding: 5px 20px; 
       }
       p {
         font-family: PingFang-SC-Medium;
         font-size: 16px;
-        color: #8eb357;
-        text-align: right;
+        text-align: left;
         line-height: 24px;
-        padding-right: 30px;
-        margin-top: 30px;
-        cursor: pointer;
       }
     }
   }
