@@ -58,6 +58,7 @@
 </template>
 
 <script>
+    import * as auth from '../../services/AuthService'
     import * as wallet from '../../services/WalletService'
 
 export default {
@@ -85,7 +86,8 @@ export default {
         ]
       },
       outerVisible: false,
-      innerVisible: false
+      innerVisible: false,
+      curUserInfo: auth.getUserBaseInfo()
 
     }
   },
@@ -104,7 +106,7 @@ export default {
         },
         getConfirmCode() {
             console.log(this.$store.state)
-            wallet.walletConfirmCode(this.$store.getters.lang, this.$store.state.userName)
+            wallet.walletConfirmCode(this.$store.getters.lang, this.curUserInfo.userName)
                 .then(sendResult=>{
                     console.log(sendResult.data)
                 })

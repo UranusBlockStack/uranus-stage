@@ -7,20 +7,23 @@ export function isLoggedIn () {
   return token != null
 }
 
-export function login (lang, user) {
-  return httpLang(lang).post('/auth/users/signin', user)
+export function login (lang, userLoginfo) {
+  return httpLang(lang).post('/auth/users/signin', userLoginfo)
     .then(res => {
-      if (res) {
-        const  loginInfo = {
-            userName        : user.loginName,
-            userId          : res.data.data.id,
-            loginType       : '',
-            loginRole       : '',
-            loginLanguage   : '',
-            userAddress     : ''
+        const userdata = res.data.data
+        if (res) {
+            const  curLoginUserInfo = {
+                userName        : userLoginfo.loginName,
+                userId          : userdata.id,
+                loginType       : userLoginfo.loginType,
+                loginRole       : store.state.curRole,
+                loginLanguage   : store.state.curLang,
+                userAddress     : userdata.accountAddress
+            }
+            setToken(userdata.token, curLoginUserInfo)
+            localStorage.setItem('currentUserStatus', JSON.stringify(curLoginUserInfo))
+            return curLoginUserInfo
         }
-        setToken(res.data.data.token, loginInfo)
-      }
     })
 }
 
@@ -37,6 +40,13 @@ function setToken (token, user) {
 export function getToken () {
   return localStorage.getItem('token')
 }
+
+
+export function getUserBaseInfo() {
+    const curUserState = localStorage.getItem('currentUserStatus')
+    return JSON.parse(curUserState)
+}
+
 
 export function getUsername () {
   const token = decodeToken()

@@ -33,7 +33,7 @@
       <el-col :span="24">
         <el-table :data="tableData" border style="width: 100%" @row-click="viewDetail">
           <el-table-column prop="hash" :label="$t('wallet.hash')" min-width="130"></el-table-column>
-          <el-table-column prop="createTime" :label="$t('wallet.time')" width="150"></el-table-column>
+          <el-table-column prop="createTime"  :formatter="formateDate" :label="$t('wallet.time')" width="150"></el-table-column>
           <el-table-column prop="from" :label="$t('wallet.from')" width="120"></el-table-column>
           <el-table-column prop="to" :label="$t('wallet.to')" width="120"></el-table-column>
           <el-table-column prop="value" :label="$t('wallet.value')" width="180"></el-table-column>
@@ -51,8 +51,11 @@
 </template>
 
 <script>
+    import * as auth from '../../services/AuthService'
     import * as account from '../../services/AccountService'
     import * as wallet from '../../services/WalletService'
+
+    import moment from 'moment'
 
 export default {
   name: 'Wallet',
@@ -60,72 +63,16 @@ export default {
     return {
       address: '',
       dialogVisible: false,
-
-      tableData: [
-      ],
-      tableData1: [
-        {
-          menu: 'TxHash:',
-          value:
-            '0x3e98fd1224269fccaf4ee5194932c351a00eaaae6edc2a566a8966b8c253af67'
-        },
-        {
-          menu: 'TxReceipt Status:',
-          value: 'Success'
-        },
-        {
-          menu: 'Block Height:',
-          value: '6924205 (10 Block Confirmations)'
-        },
-        {
-          menu: 'TimeStamp:',
-          value: '2 mins ago (Dec-21-2018 02:43:26 AM +UTC)'
-        },
-        {
-          menu: 'From:',
-          value: '0x907a6d492e0765451ee2a066326f24f1164a5578'
-        },
-        {
-          menu: 'To:',
-          value: 'Contract 0x991c2e104dfa1e2f88fd91010ee65cfb2a60e255'
-        },
-        {
-          menu: 'Value:',
-          value: '1 Ether ($116.41)'
-        },
-        {
-          menu: 'Gas Limit:',
-          value: '41836'
-        },
-        {
-          menu: 'Gas Used By Transaction:',
-          value: '41836 (100%)'
-        },
-        {
-          menu: 'Gas Price:',
-          value: '0.000000004199999999 Ether (4.199999999 Gwei)'
-        },
-        {
-          menu: 'Actual Tx Cost/Fee:',
-          value: '0.00017571119995 Ether ($0.02)'
-        },
-        {
-          menu: 'Nonce & {Position}:',
-          value: '1422 | {191}'
-        },
-        {
-          menu: 'Input Data:',
-          value: 'Function: dbkDeposit() MethodID: 0xc1ba93e1'
-        },
-        {
-          menu: 'Private Note:',
-          value: '<To access the Private Note Feature, you must be Logged In>'
-        }
-      ],
-      curLang: this.$store.getters.lang
+      tableData: [],
+      tableData1: [],
+      curLang: this.$store.getters.lang,
+      curUserInfo: auth.getUserBaseInfo()
     }
   },
   methods: {
+      formateDate(row, column, cellValue){
+          return moment(cellValue).format("YYYY-MM-DD HH:mm:ss")
+      },
     copy() {
       const input = document.createElement('input')
       document.body.appendChild(input)
@@ -140,20 +87,20 @@ export default {
       this.$router.push({ path: 'transfer' })
     },
     getUserInfo() {
-      const userInfo =  account.userInfo(this.curLang, this.$store.state.userId)
-          .then((userInfo)=>{
+      const userInfo = account.userInfo(this.curLang, this.curUserInfo.userId)
+          .then((userInfo) => {
               this.address = userInfo.data.data.accountAddress
           })
 
     },
       getTradeFrom () {
-        wallet.getTradeListFromUser(this.curLang, this.$store.state.userId, 1, 10)
-            .then(tradeList=>{
+        wallet.getTradeListFromUser(this.curLang, this.curUserInfo.userId, 1, 10)
+            .then(tradeList => {
                 this.tableData = tradeList.data.data.records
             })
       },
       viewDetail(row){
-            console.log(row)
+          console.log(row)
           let transDetail = []
           const fields = Object.keys(row)
           fields.map(field=>{

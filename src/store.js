@@ -12,8 +12,6 @@ export default new Vuex.Store({
       // apiUrl: 'http://192.168.110.45:4000',
     apiUrl: 'http://47.105.151.199:4000/',
     imageServerUrl: 'http://47.105.151.199:3300/rancher-img/',
-    userName: '8613716252314',
-    userId: '60',
     lang: {// 全部语言包列表
       'zh-cn': 'zh-cn',
       'en-us': 'en-us'
@@ -34,21 +32,6 @@ export default new Vuex.Store({
   mutations: {
     authenticate (state, user) {
       state.isLoggedIn = auth.isLoggedIn()
-
-      if (state.isLoggedIn) {
-        state.userName = auth.getUsername()
-        state.userId = auth.getUserId()
-
-          if(!state.userName)
-              state.userName=user.userName
-          if(!state.userId)
-              state.userId = user.userId
-        console.log(state.userName, state.userId)
-      } else {
-        state.userId = null
-        state.userName = null
-      }
-
     },
       setLang(state, lang) {
         state.curLang = lang

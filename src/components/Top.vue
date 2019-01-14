@@ -82,8 +82,7 @@ export default {
     methods: {
       logout(){
           auth.logout()
-          if(!this.$store.state.userName)
-              this.$router.push({ name: 'Map' })
+          this.$router.push({ name: 'Map' })
       }
     }
 

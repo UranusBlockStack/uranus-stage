@@ -94,7 +94,7 @@ export default {
       } else {
         this.prompt = ''
         const logintype = this.phoneShow? 'mobile': 'email'
-        const user = {
+        const userLoginfo = {
           loginName: this.getLoginName(logintype),
           password: this.password,
           loginType: logintype
@@ -102,23 +102,21 @@ export default {
 
         const self = this
 
-        auth.login(this.$store.getters.lang, user)
-              .then(function (userinfo) {
-                //self.$router.push({ name: 'Map' })
+        auth.login(this.$store.getters.lang, userLoginfo)
+              .then(function (curLoginUserInfo) {
+                  self.$router.push({ path: curLoginUserInfo.loginRole })
               })
-              .catch(error => {
-                if (error) {
-                  alert('登录不成功')
-                }
-              })
+              // .catch(error => {
+              //   if (error) {
+              //     alert('登录不成功')
+              //   }
+              // })
+        const globalUserinfo = auth.getUserBaseInfo()
       }
-    },viewstore(){
-          console.log(this.$store.state)
-      }
+    }
   },
     mounted() {
       this.getRegionList2()
-        this.viewstore()
     }
 
 }
