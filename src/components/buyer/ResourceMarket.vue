@@ -1,7 +1,13 @@
 <template>
   <section class="resourceMarket">
     <!-- Confirmation Information Bullet Box -->
-    <el-dialog :title="$t('buyer.resourceMarket.confirmTitle')" :visible.sync="outerVisible" width="800px">
+    <el-dialog
+      :title="$t('buyer.resourceMarket.confirmTitle')"
+      :close-on-click-modal="false"
+      :visible.sync="outerVisible"
+      width="800px"
+    >
+      <RestTime style="margin-left: 250px;" endTime="2019-1-15 16:31:15"/>
       <el-table :data="gridData">
         <el-table-column property="order" :label="$t('buyer.resourceMarket.orderNumber')"></el-table-column>
         <el-table-column property="address" :label="$t('buyer.resourceMarket.address')"></el-table-column>
@@ -26,21 +32,32 @@
       </div>
       <p>{{$t('buyer.resourceMarket.confirmText1')}}</p>
       <p>{{$t('buyer.resourceMarket.confirmText2')}}</p>
-      <el-dialog :title="$t('buyer.resourceMarket.confirmText3')" width="800px" :visible.sync="innerVisible" append-to-body>
+      <el-dialog
+        :title="$t('buyer.resourceMarket.confirmText3')"
+        width="800px"
+        :visible.sync="innerVisible"
+        append-to-body
+      >
         <p>{{$t('buyer.resourceMarket.confirmText4')}}</p>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="innerVisible = false">{{$t('buyer.resourceMarket.button2')}}</el-button>
+          <el-button
+            type="primary"
+            @click="innerVisible = false"
+          >{{$t('buyer.resourceMarket.button2')}}</el-button>
         </div>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false">{{$t('buyer.resourceMarket.button1')}}</el-button>
-        <el-button type="primary" @click="outerVisible = false, innerVisible = true">{{$t('buyer.resourceMarket.button2')}}</el-button>
+        <el-button
+          type="primary"
+          @click="outerVisible = false, innerVisible = true"
+        >{{$t('buyer.resourceMarket.button2')}}</el-button>
       </div>
     </el-dialog>
     <!-- purchase -->
     <el-row class="resourceHead">
       <el-col class="title" :span="24">
-        <h1>{{$t('menu.resourceMarket')}}</h1>
+        <h1><i class="iconfont icon-resource-market"></i>{{$t('menu.resourceMarket')}}</h1>
       </el-col>
     </el-row>
     <el-row class="resourceBox">
@@ -144,22 +161,13 @@
                     <i class="el-icon-arrow-right"></i>
                   </el-col>
                   <el-col :span="11">
-                    <el-time-picker
-                      type="fixed-time"
+                    <el-date-picker
+                      type="date"
                       :placeholder="$t('buyer.deploy.endTime')"
                       v-model="deployForm.endTime"
                       style="width: 100%;"
-                    ></el-time-picker>
+                    ></el-date-picker>
                   </el-col>
-                </el-form-item>
-              </el-col>
-              <el-col :span="18">
-                <el-form-item :label="$t('buyer.deploy.newPool')">
-                  <el-input
-                    v-model="deployForm.name"
-                    style="width:350px;"
-                    :placeholder="$t('buyer.deploy.renamePool')"
-                  ></el-input>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -168,7 +176,10 @@
       </el-row>
       <el-row class="button">
         <el-col :span="6" :offset="10">
-          <el-button type="success" @click="outerVisible = true">{{$t('buyer.resourceMarket.confirm')}}</el-button>
+          <el-button
+            type="success"
+            @click="outerVisible = true"
+          >{{$t('buyer.resourceMarket.confirm')}}</el-button>
         </el-col>
       </el-row>
     </el-row>
@@ -176,8 +187,13 @@
 </template>
 
 <script>
+import RestTime from "@/components/modules/RestTime";
+
 export default {
-  name: 'ResourceMarket',
+  name: "ResourceMarket",
+  components: {
+    RestTime
+  },
   data() {
     return {
       deployForm: {
@@ -239,23 +255,25 @@ export default {
           value: "选项2",
           label: "512G"
         }
-      ], 
-      value: '',
-      time1: '',
-      time2: '',
-      input: '',
+      ],
+      value: "",
+      time1: "",
+      time2: "",
+      input: "",
       outerVisible: false,
       innerVisible: false,
-      gridData: [{
-        order: '214521236987',
-        address: '0x461s2df6…',
-        number: '1000021.23',
-        type: '购买应用',
-        charge: '0.11'
-      }]
-    }
+      gridData: [
+        {
+          order: "214521236987",
+          address: "0x461s2df6…",
+          number: "1000021.23",
+          type: "购买应用",
+          charge: "0.11"
+        }
+      ]
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -269,7 +287,7 @@ export default {
       margin: 25px;
       span {
         width: 165px;
-        font-family: PingFang-SC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #363636;
         line-height: 40px;
@@ -282,7 +300,7 @@ export default {
     p {
       margin: 15px auto;
       text-align: center;
-      font-family: PingFang-SC-Medium;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
       color: #f54c46;
       line-height: 20px;
@@ -290,14 +308,20 @@ export default {
   }
   .resourceHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
-        font-size: 20px;
+        font-family: Source-Sans-Pro-Bold;
+        font-size: 16px;
         color: #252525;
-        line-height: 24px;
+        line-height: 50px;
+        margin: 0;
+        padding: 0;
         padding-left: 30px;
+        i {
+          font-size: 26px;
+          margin-right: 10px;
+        }
       }
     }
   }
@@ -305,13 +329,13 @@ export default {
     background: #ffffff;
     border-radius: 2px;
     height: 560px;
-    margin: 20px;
+    margin: 10px;
     .title {
       background: #fafafa;
       border-radius: 4px 4px 0 0;
       height: 54px;
       h1 {
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.65);
         text-align: left;

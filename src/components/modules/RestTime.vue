@@ -85,9 +85,9 @@ export default {
     display: inline-block;
     text-align: center;
     line-height: 30px;
-    width: 30px;
+    width: 50px;
     height: 30px;
-    background: #f54c46;
+    background: #8eb357;
     border-radius: 3px;
     font-family: SourceSansPro-Bold;
     font-size: 20px;
@@ -99,9 +99,9 @@ export default {
     display: inline-block;
     text-align: center;
     line-height: 30px;
-    width: 30px;
+    width: 50px;
     height: 30px;
-    background: #8eb357;
+    background: #f54c46;
     border-radius: 3px;
     font-family: SourceSansPro-Bold;
     font-size: 20px;

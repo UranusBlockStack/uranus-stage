@@ -389,10 +389,10 @@ export default {
                 fontSize: 24
               }
             },
-            data: [{ value: myData1, name: "CPU" }],
+            data: [{ value: 20, name: "CPU" }],
             axisLabel: {
               formatter: function(value) {
-                return value+ '123';
+                return '';
               }
             },
             axisLine: {

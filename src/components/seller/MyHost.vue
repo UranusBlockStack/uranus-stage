@@ -164,7 +164,7 @@ export default {
         name: "",
         cluster: ""
       },
-      groupJoin: "1",
+      groupJoin: this.$t('seller.groups.newGroup'),
       state: "",
       group: "",
       tableData: [

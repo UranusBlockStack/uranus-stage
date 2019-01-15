@@ -2,7 +2,7 @@
   <section class="myResource">
     <el-row class="myResourceHead">
       <el-col class="title" :span="12">
-        <h1>{{$t('menu.myResource')}}</h1>
+        <h1><i class="iconfont icon-my-resource"></i>{{$t('menu.myResource')}}</h1>
       </el-col>
       <el-col class="record" :span="12">
         <router-link :to="{path: '/urapowerrecord'}">
@@ -45,12 +45,12 @@
             <el-col :span="12">
               <h3>{{$t('buyer.myResource.number')}} {{pool.id}}</h3>
               <div class="timeText">
-                <p>倒计时</p>
-                <RestTime endTime="2019-1-15 10:46:00"/>
+                <p>{{$t('buyer.myResource.countdownTime')}}</p>
+                <RestTime endTime="2021-1-15 16:31:15"/>
               </div>
             </el-col>
             <el-col :span="3" :offset="1">
-              <el-dropdown trigger="click" style="margin-top: 30px;">
+              <el-dropdown trigger="click" style="margin-top: 10px; margin-left: 20px;">
                 <span class="el-dropdown-link">
                   <i class="el-icon-arrow-down el-icon--right"></i>
                 </span>
@@ -76,9 +76,9 @@
 </template>
 
 <script>
-import "echarts-liquidfill";
-import Ball from "@/components/modules/Ball";
-import RestTime from "@/components/modules/RestTime";
+import "echarts-liquidfill"
+import Ball from "@/components/modules/Ball"
+import RestTime from "@/components/modules/RestTime"
 
 export default {
   name: "MyResource",
@@ -377,7 +377,7 @@ export default {
     height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #252525;
         line-height: 50px;
@@ -453,10 +453,7 @@ export default {
         color: #363636;
         line-height: 24px;
         text-align: left;
-        margin: 25px 20px;
-      }
-      .timeText {
-          padding: 5px 20px; 
+        margin-top: 40px;
       }
       p {
         font-family: Source-Sans-Pro-Bold;

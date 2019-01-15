@@ -2,7 +2,7 @@
   <section class="appRecord">
     <el-row class="recordHead">
       <el-col class="title" :span="20">
-        <h1 @click="$router.back(-1)">wordpress-mdkyy-mariadb</h1>
+        <h1 @click="$router.back(-1)"><i class="iconfont icon-zhongmingming"></i> wordpress-mdkyy-mariadb</h1>
       </el-col>
       <el-col :span="4">
         <p>{{$t('buyer.stateDetail.rename')}}</p>
@@ -13,12 +13,12 @@
         <el-table :data="tableData" border style="width: 100%" @row-click="$router.push({path: '/statedetail'})">
           <el-table-column prop="1" :label="$t('buyer.stateDetail.status')"></el-table-column>
           <el-table-column prop="2" :label="$t('buyer.stateDetail.name')"></el-table-column>
-          <el-table-column prop="3" :label="$t('buyer.stateDetail.image')"></el-table-column>
+          <el-table-column prop="3" :label="$t('buyer.stateDetail.image')" width="320"></el-table-column>
           <el-table-column prop="4" :label="$t('buyer.stateDetail.host')"></el-table-column>
           <el-table-column prop="5" :label="$t('buyer.stateDetail.ip')"></el-table-column>
         </el-table>
       </el-col>
-      <el-col :span="6" :offset="9" class="transaction-foot">
+      <el-col :span="8" :offset="16" class="transaction-foot">
         <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
       </el-col>
     </el-row>
@@ -74,29 +74,34 @@ export default {
   min-width: 1130px;
   .recordHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
-        font-size: 20px;
+        font-family: Source-Sans-Pro-Bold;
+        font-size: 16px;
         color: #252525;
-        line-height: 24px;
-        padding-left: 30px;
-        cursor: pointer;
+        line-height: 50px;
+      margin: 0;
+      padding: 0;
+      padding-left: 30px;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
       }
     }
     p {
-      font-family: PingFang-SC-Bold;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
       color: #8eb357;
       text-align: center;
-      line-height: 65px;
+      line-height: 50px;
     }
   }
   .recordBox {
     height: 630px;
     min-width: 1130px;
-    margin: 20px;
+    margin: 10px;
     background: #ffffff;
     overflow: hidden;
     padding: 30px;
@@ -115,7 +120,6 @@ export default {
         line-height: 40px;
       }
       .time {
-        font-family: PingFangSC-Regular;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
@@ -127,7 +131,7 @@ export default {
     .record-head {
       height: 50px;
       p {
-        font-family: PingFangSC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.85);
         line-height: 50px;

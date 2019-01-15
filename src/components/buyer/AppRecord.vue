@@ -2,7 +2,7 @@
   <section class="appRecord">
     <el-row class="recordHead">
       <el-col class="title" :span="24">
-        <h1>{{$t('buyer.appRepository.deployRecord')}}</h1>
+        <h1><i class="iconfont icon-zhongmingming"></i>{{$t('buyer.appRepository.deployRecord')}}</h1>
       </el-col>
     </el-row>
     <el-row class="recordBox">
@@ -216,21 +216,27 @@ export default {
   min-width: 1130px;
   .recordHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
-        font-size: 20px;
+        font-family: Source-Sans-Pro-Bold;
+        font-size: 16px;
         color: #252525;
-        line-height: 24px;
+        line-height: 50px;
+        margin: 0;
+      padding: 0;
         padding-left: 30px;
+        i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
       }
     }
   }
   .recordBox {
     height: 630px;
     min-width: 1130px;
-    margin: 20px;
+    margin: 10px;
     background: #ffffff;
     overflow: hidden;
     padding: 30px;

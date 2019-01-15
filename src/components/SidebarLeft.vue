@@ -204,27 +204,32 @@ export default {
       }
     }
     .menu-open {
-      a {
+     > a {
         color: #8eb357;
         background: #f2f2f2;
       }
       .treeview-menu {
-        background: #f2f2f2;
+          padding-left: 30px;
+          li:hover {
+              >a {
+                  color: #8eb357;
+                  background: #f2f2f2;
+              }
+          }
       }
+      
     }
     .treeview:hover {
       background: #f2f2f2;
-      a {
+      > a {
         color: #8eb357;
         background: #f2f2f2;
-        i {
-          font-size: 35px;
-          transition: 1.2s;
-        }
+        // i {
+        //   font-size: 35px;
+        //   transition: 1.2s;
+        // }
       }
-      .treeview-menu {
-        background: #f2f2f2;
-      }
+
     }
   }
 }

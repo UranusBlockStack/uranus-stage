@@ -2,7 +2,7 @@
   <section class="Setting">
     <el-row class="setting-head">
       <el-col :span="24">
-        <p>{{$t('menu.setting')}}</p>
+        <p><i class="iconfont icon-set"></i>{{$t('menu.setting')}}</p>
       </el-col>
     </el-row>
     <el-row class="userId">
@@ -21,7 +21,7 @@
           <el-button type="text" @click="setMail()">{{$t('setting.modifyMail.click')}}</el-button>
           <el-dialog :title="$t('setting.modifyMail.click')" :visible.sync="mailOuterVisible" :close-on-click-modal="false"
             width="580px">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                 <el-input v-model="mail"></el-input>
               </el-form-item>
@@ -39,7 +39,7 @@
           </el-dialog>
           <el-dialog width="580px" :close-on-click-modal="false" :title="$t('setting.mail')" :visible.sync="mailInnerVisible"
               append-to-body>
-              <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
+              <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
                 <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                   <span slot="label">{{$t('setting.mail')}}</span>
                   <el-input v-model="newEmail"></el-input>
@@ -70,7 +70,7 @@
           </el-button>
           <el-dialog :title="$t('setting.modifyPhone.click')" :visible.sync="phoneOuterVisible" width="580px"
             :close-on-click-modal="false">
-            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
+            <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
                 <el-input v-model="sourceNum"></el-input>
               </el-form-item>
@@ -88,7 +88,7 @@
           </el-dialog>
            <el-dialog width="580px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" append-to-body
               :close-on-click-modal="false">
-              <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
+              <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
                 <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
                   <el-input v-model="newPhoneNum"></el-input>
                 </el-form-item>
@@ -346,14 +346,18 @@ export default {
   }
   .setting-head {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     p {
-      font-family: PingFang-SC-Bold;
+      font-family: Source-Sans-Pro-Bold;
       padding-left: 30px;
-      font-size: 20px;
+      font-size: 16px;
       color: #252525;
-      line-height: 60px;
+      line-height: 50px;
       text-align: left;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
     }
   }
   .userId {
@@ -363,7 +367,7 @@ export default {
     margin-bottom: 0;
     border-bottom: 1px #e9e9e9 solid;
     p {
-      font-family: PingFangSC-Medium;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
       color: rgba(0, 0, 0, 0.85);
       line-height: 50px;
@@ -371,7 +375,7 @@ export default {
       padding-left: 32px;
     }
     .contentUn {
-      font-family: HelveticaNeue;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
       color: rgba(0, 0, 0, 0.65);
       line-height: 22px;
@@ -392,10 +396,10 @@ export default {
       line-height: 50px;
       text-align: left;
       padding-left: 32px;
-      font-family: PingFangSC-Medium;
+      font-family: Source-Sans-Pro-Bold;
     }
     .contentUn {
-      font-family: HelveticaNeue;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
       color: rgba(0, 0, 0, 0.65);
       line-height: 22px;

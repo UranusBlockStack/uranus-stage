@@ -2,7 +2,7 @@
   <section class="resourcePool">
     <el-row class="poolHead">
       <el-col class="title" :span="12">
-        <h1>{{$t('menu.myResource')}}</h1>
+        <h1><i class="iconfont icon-my-resource"></i>{{$t('menu.myResource')}}</h1>
       </el-col>
     </el-row>
     <el-row class="poolBox">
@@ -379,31 +379,39 @@ export default {
   min-width: 1130px;
   .poolHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
-        font-size: 20px;
-        color: #252525;
-        line-height: 24px;
-        padding-left: 30px;
+        font-family: Source-Sans-Pro-Bold;
+      font-size: 16px;
+      color: #252525;
+      line-height: 50px;
+      margin: 0;
+      padding: 0;
+      padding-left: 30px;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
       }
     }
   }
   .poolBox {
     background: #ffffff;
     border-radius: 2px;
-    margin: 20px;
+    margin: 10px;
     .title {
       background: #fafafa;
       border-radius: 4px 4px 0 0;
-      height: 54px;
+      height: 50px;
       h1 {
         font-family: PingFang-SC-Bold;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
-        line-height: 24px;
+        line-height: 50px;
+         margin: 0;
+      padding: 0;
         padding-left: 30px;
       }
       .el-input, .el-button{

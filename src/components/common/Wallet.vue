@@ -10,7 +10,7 @@
     </el-row>
     <el-row class="wallet-body">
       <el-col :span="12">
-        <p>{{$t('wallet.balance')}}100URC</p>
+        <p>{{$t('wallet.balance')}}100 URAC</p>
         <p>
           {{$t('wallet.address')}}
           {{address}}

@@ -8,9 +8,9 @@
           <el-button type="primary" @click="innerVisible = false">{{$t('transfer.button2')}}</el-button>
         </div>
       </el-dialog>
-      <p><b>{{$t('transfer.checkAddress')}}</b>{{formLabelAlign.address}}</p>
-      <p><b>{{$t('transfer.checkValue')}}</b>{{formLabelAlign.value}}</p>
-      <p><b>{{$t('transfer.fee')}}</b>{{formLabelAlign.fee}}</p>
+      <p><b>{{$t('transfer.checkAddress')}}</b>  {{formLabelAlign.address}}</p>
+      <p><b>{{$t('transfer.checkValue')}}</b>  {{formLabelAlign.value}}</p>
+      <p><b>{{$t('transfer.fee')}}</b>  {{formLabelAlign.fee}}</p>
       <span>{{$t('transfer.checkText')}}</span>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false, innerVisible = true">{{$t('transfer.button1')}}</el-button>
