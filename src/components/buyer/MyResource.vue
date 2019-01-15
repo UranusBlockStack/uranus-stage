@@ -152,7 +152,7 @@ export default {
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#1890FF", "#f2f2f2"],
+            color: ["#9BCC3D", "#f2f2f2"],
             data: [
               {
                 value: 68,
@@ -160,7 +160,7 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["CPU", 68].join("\n"),
+                    formatter: ['{a|GPU}', '{b|88%}'].join("\n"),
                     rich: {
                       a: {
                         color: "#5d5d5d",

@@ -1,7 +1,7 @@
 <template>
   <section class="login">
     <div class="back">
-      <router-link :to="{path: '/map'}">Back</router-link>
+      <router-link :to="{path: '/map'}"><i class="iconfont icon-back"></i></router-link>
     </div>
     <div class="loginHead">
       <img src="/static/img/uranus/head.png" alt>
@@ -132,12 +132,16 @@ export default {
   position: absolute;
   .back {
     position: relative;
-    height: 30px;
+    height: 60px;
     width: 50px;
-    left: 30px;
+    left: 50px;
     top: 50px;
     a {
         color: #1890ff;
+        font-size: 18px;
+        i {
+            font-size: 28px;
+        }
     }
   }
   .loginHead {
@@ -156,7 +160,6 @@ export default {
     height: 420px;
     width: 380px;
     margin: 0 auto;
-    font-family: PingFangSC-Regular;
 
     .btnChoose {
       width: 380px;
@@ -178,12 +181,17 @@ export default {
           text-align: center;
         }
         .chooseBtn {
-          font-family: PingFang-SC-Heavy;
+          font-family: Source-Sans-Pro-Bold;
+          font-weight: 500;
           border-bottom: 2px solid #81a028;
           color: #81a028;
           transition: all 0.5s;
         }
       }
+    }
+    input::-webkit-input-placeholder {
+        color: #c8c8c8;
+        font-family: Source-Sans-Pro-Regular;
     }
     .phoneRes {
       width: 380px;

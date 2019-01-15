@@ -210,9 +210,6 @@ export default {
       }
       .treeview-menu {
         background: #f2f2f2;
-        a {
-          padding-left: 65px;
-        }
       }
     }
     .treeview:hover {

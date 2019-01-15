@@ -30,7 +30,14 @@
                 <button style="width:28%">{{$t('setting.codeBtn')}}</button>
               </el-form-item>
             </el-form>
-            <el-dialog width="580px" :close-on-click-modal="false" :title="$t('setting.mail')" :visible.sync="mailInnerVisible"
+            <div slot="footer" class="dialog-footer" center>
+              <el-button @click="mailOuterVisible = false">{{$t('setting.button1')}}</el-button>
+              <el-button type="primary" @click="mailOuterVisible = false,mailInnerVisible = true">
+                {{$t('setting.button3')}}
+              </el-button>
+            </div>
+          </el-dialog>
+          <el-dialog width="580px" :close-on-click-modal="false" :title="$t('setting.mail')" :visible.sync="mailInnerVisible"
               append-to-body>
               <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
                 <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
@@ -48,13 +55,6 @@
                 </el-button>
               </div>
             </el-dialog>
-            <div slot="footer" class="dialog-footer" center>
-              <el-button @click="mailOuterVisible = false">{{$t('setting.button1')}}</el-button>
-              <el-button type="primary" @click="mailOuterVisible = false,mailInnerVisible = true">
-                {{$t('setting.button3')}}
-              </el-button>
-            </div>
-          </el-dialog>
         </p>
       </el-col>
     </el-row>
@@ -79,7 +79,14 @@
                 <el-button style="width:28%" @click="sendCode(sourceNum)">{{$t('setting.codeBtn')}}</el-button>
               </el-form-item>
             </el-form>
-            <el-dialog width="580px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" append-to-body
+            <div slot="footer" class="dialog-footer" center>
+              <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}222</el-button>
+              <el-button type="primary" @click="checkCaptcha()">
+                {{$t('setting.button3')}}333
+              </el-button>
+            </div>
+          </el-dialog>
+           <el-dialog width="580px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" append-to-body
               :close-on-click-modal="false">
               <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
                 <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
@@ -96,13 +103,6 @@
                 </el-button>
               </div>
             </el-dialog>
-            <div slot="footer" class="dialog-footer" center>
-              <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}222</el-button>
-              <el-button type="primary" @click="checkCaptcha()">
-                {{$t('setting.button3')}}333
-              </el-button>
-            </div>
-          </el-dialog>
         </p>
       </el-col>
     </el-row>
@@ -204,7 +204,7 @@ export default {
         id:"",
         mail: "",
         phonenum: "",//用户信息手机号
-        sourceNum:"",//用户原手机号
+        sourceNum:"123",//用户原手机号
         newPhoneNum:"",
         captcha:"",//初次验证原手机验证码
         bindCaptcha:"",//解绑验证码
