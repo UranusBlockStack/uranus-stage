@@ -3,7 +3,7 @@
       <!-- Logo -->
       <router-link :to="{path : '/map'}" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><img src="/static/img/uranus/urans_icon.png" alt=""></span>
+        <span class="logo-mini"><img src="/static/img/uranus/uranus_mini.png" alt=""></span>
         <!-- logo for regular state and mobile devices -->
         <span class="logo-lg"><img src="/static/img/uranus/head.png" alt=""></span>
       </router-link>
@@ -97,7 +97,8 @@ export default {
         img {
           display: block;
           height: 30px;
-          margin-top: 10px; 
+          margin-top: 10px;
+          margin-left: 10px;
         }
       }
       .logo-lg {

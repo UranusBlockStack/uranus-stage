@@ -132,7 +132,7 @@ export default {
   position: absolute;
   .back {
     position: relative;
-    height: 60px;
+    height: 50px;
     width: 50px;
     left: 50px;
     top: 50px;

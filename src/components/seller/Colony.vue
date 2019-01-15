@@ -138,7 +138,7 @@
         <el-table-column width="200">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
-              <i class="iconfont icon-cpu1"></i> CPU
+              <i class="iconfont icon-cpu"></i> CPU
             </p>
           </template>
           <template slot-scope="scope">
@@ -152,7 +152,7 @@
         <el-table-column width="200">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
-              <i class="iconfont icon-cpu1"></i>
+              <i class="iconfont icon-memory"></i>
               {{$t('seller.host.memory')}}
             </p>
           </template>
@@ -167,7 +167,7 @@
         <el-table-column width="200">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
-              <i class="iconfont icon-cpu1"></i>
+              <i class="iconfont icon-disk"></i>
               {{$t('seller.host.disk')}}
             </p>
           </template>
@@ -182,7 +182,7 @@
         <el-table-column width="200">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
-              <i class="iconfont icon-cpu1"></i>
+              <i class="iconfont icon-network"></i>
               {{$t('seller.host.network')}}
             </p>
           </template>
@@ -345,12 +345,10 @@ export default {
                         color: "#5d5d5d",
                         fontSize: "14",
                         lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
                         color: "rgba(0,0,0,.85)",
                         fontSize: "24",
-                        fontFamily: "HelveticaNeue"
                       }
                     },
                     position: "center",
@@ -387,12 +385,10 @@ export default {
                         color: "#5d5d5d",
                         fontSize: "14",
                         lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
                         color: "rgba(0,0,0,.85)",
                         fontSize: "24",
-                        fontFamily: "HelveticaNeue"
                       }
                     },
                     position: "center",
@@ -429,12 +425,10 @@ export default {
                         color: "#5d5d5d",
                         fontSize: "14",
                         lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
                         color: "rgba(0,0,0,.85)",
                         fontSize: "24",
-                        fontFamily: "HelveticaNeue"
                       }
                     },
                     position: "center",
@@ -471,12 +465,10 @@ export default {
                         color: "#5d5d5d",
                         fontSize: "14",
                         lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
                       },
                       b: {
                         color: "rgba(0,0,0,.85)",
                         fontSize: "24",
-                        fontFamily: "HelveticaNeue"
                       }
                     },
                     position: "center",
@@ -510,14 +502,20 @@ export default {
   min-width: 1130px;
   .colonyHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
-        font-size: 20px;
-        color: #252525;
-        line-height: 24px;
-        padding-left: 30px;
+        font-family: Source-Sans-Pro-Bold;
+      font-size: 16px;
+      color: #252525;
+      line-height: 50px;
+      margin: 0;
+      padding: 0;
+      padding-left: 30px;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
       }
     }
   }
@@ -530,7 +528,7 @@ export default {
       border-radius: 4px 4px 0 0;
       height: 54px;
       h1 {
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
@@ -547,13 +545,13 @@ export default {
       h1 {
         width: 100%;
         text-align: center;
-        font-family: PingFang-SC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #363636;
         line-height: 24px;
       }
       h4 {
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #363636;
         font-weight: bold;
@@ -561,7 +559,7 @@ export default {
         text-align: left;
       }
       p {
-        font-family: PingFang-SC-Medium;
+       font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #363636;
         letter-spacing: 0;
@@ -571,7 +569,7 @@ export default {
       .setting {
         text-align: right;
         padding-right: 24px;
-        font-family: PingFang-SC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         color: #8eb357;
         line-height: 24px;
         i {
@@ -585,7 +583,7 @@ export default {
       }
     }
     h2 {
-      font-family: PingFang-SC-Medium;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
       color: #363636;
       line-height: 24px;
@@ -626,7 +624,7 @@ export default {
     .empty-text {
       width: 470px;
       margin: 30px auto;
-      font-family: PingFang-SC-Medium;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
       color: #5d5d5d;
       text-align: left;

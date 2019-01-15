@@ -46,7 +46,7 @@
               <h3>{{$t('buyer.myResource.number')}} {{pool.id}}</h3>
               <div class="timeText">
                 <p>倒计时</p>
-                <RestTime endTime="2020-1-14 16:14:50"/>
+                <RestTime endTime="2019-1-15 10:46:00"/>
               </div>
             </el-col>
             <el-col :span="3" :offset="1">
@@ -374,13 +374,15 @@ export default {
   min-width: 1130px;
   .myResourceHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
         font-family: PingFang-SC-Bold;
-        font-size: 20px;
+        font-size: 16px;
         color: #252525;
-        line-height: 24px;
+        line-height: 50px;
+        margin: 0;
+        padding: 0;
         padding-left: 30px;
       }
     }
@@ -388,13 +390,13 @@ export default {
       float: right;
       margin-right: 15px;
       margin-top: 4px;
-      height: 60px;
+      height: 50px;
       width: 125px;
       p {
-        height: 60px;
-        line-height: 60px;
+        height: 45px;
+        line-height: 45px;
         margin: 0;
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #8eb357;
       }
@@ -403,13 +405,13 @@ export default {
   .myResourceBox {
     background: #ffffff;
     border-radius: 2px;
-    margin: 20px;
+    margin: 10px;
     .title {
       background: #fafafa;
       border-radius: 4px 4px 0 0;
       height: 54px;
       h1 {
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
@@ -418,7 +420,7 @@ export default {
       }
     }
     h2 {
-      font-family: PingFang-SC-Bold;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
       color: #363636;
       text-align: center;
@@ -446,7 +448,7 @@ export default {
     .appResource {
       border-bottom: 1px solid #f2f2f2;
       h3 {
-        font-family: PingFang-SC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #363636;
         line-height: 24px;
@@ -457,7 +459,7 @@ export default {
           padding: 5px 20px; 
       }
       p {
-        font-family: PingFang-SC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         text-align: left;
         line-height: 24px;

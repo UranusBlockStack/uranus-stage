@@ -1,7 +1,9 @@
 <template>
   <section class="forgetPwd">
     <div class="back">
-      <router-link :to="{path: '/map'}">Back</router-link>
+      <router-link :to="{path: '/map'}">
+        <i class="iconfont icon-back"></i>
+      </router-link>
     </div>
     <div class="forgetPwdHead">
       <img src="/static/img/uranus/head.png" alt>
@@ -16,21 +18,32 @@
         </div>
       </div>
 
-        <div class="phoneRes" v-show="phoneShow">
-            <div class="input-group">
-                <div class="input-group-btn">
-                    <button type="button" class="phoneHead btn btn-default dropdown-toggle" data-toggle="dropdown">
-                        {{currentRegion}}
-                        <span class="fa fa-caret-down"></span></button>
-                    <ul class="dropdown-menu" >
-                        <li v-for="item in regions">
-                            <a href="#" :id="item.prefix" @click="selectRegion(item.prefix)"> {{ item.fullName }}</a>
-                        </li>
-                    </ul>
-                </div>
-                <input class="phoneIpt" type="text" ref="loginMobile" :placeholder="$t('userCommon.mobile')" v-model="phone"/>
-            </div>
+      <div class="phoneRes" v-show="phoneShow">
+        <div class="input-group">
+          <div class="input-group-btn">
+            <button
+              type="button"
+              class="phoneHead btn btn-default dropdown-toggle"
+              data-toggle="dropdown"
+            >
+              {{currentRegion}}
+              <span class="fa fa-caret-down"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li v-for="item in regions">
+                <a href="#" :id="item.prefix" @click="selectRegion(item.prefix)">{{ item.fullName }}</a>
+              </li>
+            </ul>
+          </div>
+          <input
+            class="phoneIpt"
+            type="text"
+            ref="loginMobile"
+            :placeholder="$t('userCommon.mobile')"
+            v-model="phone"
+          >
         </div>
+      </div>
 
       <div class="mailRes" v-show="!phoneShow">
         <input type="text" :placeholder="$t('userCommon.Email')" ref="loginEmail">
@@ -47,7 +60,12 @@
         v-model="surepwd"
         @blur="surePassword"
       >
-      <input type="text" class="inputCode" ref="verifyCodeInput" :placeholder="$t('userCommon.code')">
+      <input
+        type="text"
+        class="inputCode"
+        ref="verifyCodeInput"
+        :placeholder="$t('userCommon.code')"
+      >
       <button class="getCode" :class="{disabledGet: !this.canClick}" @click="countDown">{{content}}</button>
       <div class="prompt">{{prompt}}</div>
       <button class="registerBtn" @click="resetPassword">{{$t('userCommon.confirm')}}</button>
@@ -56,118 +74,116 @@
 </template>
 
 <script>
-    import * as auth from '../services/AuthService'
+import * as auth from "../services/AuthService";
 
 export default {
-    name: 'ForgetPwd',
-    data() {
-        return {
-          phoneShow: true,
-          totalTime: 10,
-          canClick: true,
-          content: this.$t('userCommon.codeBtn'),
-          phone: '',
-          mail: '',
-          password: '',
-          surepwd: '',
-          prompt: '',
-          regions: [],
-          currentRegion: '86'
-        }
+  name: "ForgetPwd",
+  data() {
+    return {
+      phoneShow: true,
+      totalTime: 10,
+      canClick: true,
+      content: this.$t("userCommon.codeBtn"),
+      phone: "",
+      mail: "",
+      password: "",
+      surepwd: "",
+      prompt: "",
+      regions: [],
+      currentRegion: "86"
+    };
+  },
+  methods: {
+    getRegionList2() {
+      auth.country(this.$store.getters.lang).then(resdata => {
+        this.regions = resdata.data.data;
+      });
     },
-    methods: {
-        getRegionList2() {
-            auth.country(this.$store.getters.lang)
-                .then(resdata => {
-                    this.regions = resdata.data.data
-                })
-        },
-        selectRegion (region) {
-            this.currentRegion = region
-        },
-        getLoginName: function (logintype) {
-
-            let loginname = ''
-            if (logintype === 'mobile') {
-                loginname = this.currentRegion + this.phone
-            }else{
-                loginname = this.mail
-            }
-            return loginname
-        },
-        resetPassword(){
-            const logintype = this.phoneShow? 'mobile': 'email'
-            const user = {
-                'captcha': this.$refs.verifyCodeInput.value,
-                'loginName': this.getLoginName(logintype),
-                'loginType': logintype,
-                'password': this.password
-            }
-
-            auth.resetPassword(this.$store.getters.lang, user)
-        },
-        choosePhone() {
-          this.phoneShow = true
-        },
-        chooseMail() {
-          this.phoneShow = false
-        },
-        countDown() {
-            this.getCode()
-            if (!this.canClick) return
-            this.canClick = false
-            this.content =
-                    this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
-            let clock = window.setInterval(() => {
-            this.totalTime--
-            this.content =
-                      this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
-            if (this.totalTime < 0) {
-              window.clearInterval(clock)
-              this.content = this.$t('userCommon.codeTime')
-              this.totalTime = 10
-              this.canClick = true
-            }
-            }, 1000)
-
-            const param = {
-                'captchaType': 0,
-                'receiver': this.currentRegion + this.$refs.loginMobile.value,
-                'senderType': 'mobile'
-            }
-            auth.captcha('zh-cn', param)
-        },
-        getCode() {
-          if (this.phoneShow === false && this.mail === '') {
-            this.prompt = this.$t('userCommon.EmailError')
-          } else if (this.phoneShow === true && this.phone === '') {
-            this.prompt = this.$t('userCommon.phoneError')
-          } else {
-            this.prompt = ''
-          }
-        },
-        checkPassword() {
-          if (this.password === '') {
-            this.prompt = this.$t('userCommon.passwordEmpty')
-          } else if (this.password.length < 6 || this.password.length > 12) {
-            this.prompt = this.$t('userCommon.password')
-          } else {
-            this.prompt = ''
-          }
-        },
-        surePassword() {
-          if (this.surepwd !== this.password) {
-            this.prompt = this.$t('userCommon.passwordInconsistent')
-          } else {
-            this.prompt = ''
-          }
-        }
+    selectRegion(region) {
+      this.currentRegion = region;
     },
+    getLoginName: function(logintype) {
+      let loginname = "";
+      if (logintype === "mobile") {
+        loginname = this.currentRegion + this.phone;
+      } else {
+        loginname = this.mail;
+      }
+      return loginname;
+    },
+    resetPassword() {
+      const logintype = this.phoneShow ? "mobile" : "email";
+      const user = {
+        captcha: this.$refs.verifyCodeInput.value,
+        loginName: this.getLoginName(logintype),
+        loginType: logintype,
+        password: this.password
+      };
 
-    mounted() {
-      this.getRegionList2()
+      auth.resetPassword(this.$store.getters.lang, user);
+    },
+    choosePhone() {
+      this.phoneShow = true;
+    },
+    chooseMail() {
+      this.phoneShow = false;
+    },
+    countDown() {
+      this.getCode();
+      if (!this.canClick) return;
+      this.canClick = false;
+      this.content =
+        this.$t("userCommon.codeTime") + "(" + this.totalTime + "s)";
+      let clock = window.setInterval(() => {
+        this.totalTime--;
+        this.content =
+          this.$t("userCommon.codeTime") + "(" + this.totalTime + "s)";
+        if (this.totalTime < 0) {
+          window.clearInterval(clock);
+          this.content = this.$t("userCommon.codeTime");
+          this.totalTime = 10;
+          this.canClick = true;
+        }
+      }, 1000);
+
+      const param = {
+        captchaType: 0,
+        receiver: this.currentRegion + this.$refs.loginMobile.value,
+        senderType: "mobile"
+      };
+      auth.captcha("zh-cn", param);
+    },
+    getCode() {
+      if (this.phoneShow === false && this.mail === "") {
+        this.prompt = this.$t("userCommon.EmailError");
+      } else if (this.phoneShow === true && this.phone === "") {
+        this.prompt = this.$t("userCommon.phoneError");
+      } else {
+        this.prompt = "";
+      }
+    },
+    checkPassword() {
+      if (this.password === "") {
+        this.prompt = this.$t("userCommon.passwordEmpty");
+      } else if (this.password.length < 6 || this.password.length > 12) {
+        this.prompt = this.$t("userCommon.password");
+      } else {
+        this.prompt = "";
+      }
+    },
+    surePassword() {
+      if (this.surepwd !== this.password) {
+        this.prompt = this.$t("userCommon.passwordInconsistent");
+      } else {
+        this.prompt = "";
+      }
     }
-}
+  },
+
+  mounted() {
+    this.getRegionList2();
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -180,10 +196,16 @@ export default {
   position: absolute;
   .back {
     position: relative;
-    height: 30px;
+    height: 50px;
     width: 50px;
-    left: 30px;
+    left: 50px;
     top: 50px;
+    a {
+      color: #1890ff;
+      i {
+        font-size: 35px;
+      }
+    }
   }
   .forgetPwdHead {
     margin: 0 auto;
@@ -202,7 +224,6 @@ export default {
     height: 420px;
     width: 380px;
     margin: 0 auto;
-    font-family: PingFangSC-Regular;
 
     .btnChoose {
       width: 380px;
@@ -224,7 +245,8 @@ export default {
           text-align: center;
         }
         .chooseBtn {
-          font-family: PingFang-SC-Heavy;
+          font-family: Source-Sans-Pro-Bold;
+          font-weight: 500;
           border-bottom: 2px solid #81a028;
           color: #81a028;
           transition: all 0.5s;

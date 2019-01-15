@@ -165,14 +165,20 @@ export default {
   min-width: 1130px;
   .myColonyHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
-        font-size: 20px;
-        color: #252525;
-        line-height: 24px;
-        padding-left: 30px;
+        font-family: Source-Sans-Pro-Bold;
+      font-size: 16px;
+      color: #252525;
+      line-height: 50px;
+      margin: 0;
+      padding: 0;
+      padding-left: 30px;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
       }
     }
     p {
@@ -193,7 +199,7 @@ export default {
     }
     p {
       height: 40px;
-      font-family: PingFang-SC-Bold;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 20px;
       color: #252525;
       line-height: 40px;
@@ -221,7 +227,7 @@ export default {
       h1 {
         width: 100%;
         text-align: center;
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #363636;
         margin-top: 0;

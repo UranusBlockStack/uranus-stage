@@ -74,19 +74,19 @@
         <ul class="treeview-menu">
           <li>
             <router-link :to="{path: '/resourcepool'}">
-              <i class="iconfont icon-my-resource"></i>
+              <i class="iconfont icon-host1"></i>
               {{$t('menu.resourcePool1')}}
             </router-link>
           </li>
           <li>
             <router-link :to="{path: '/resourcepool'}">
-              <i class="iconfont icon-my-resource"></i>
+              <i class="iconfont icon-host1"></i>
               {{$t('menu.resourcePool2')}}
             </router-link>
           </li>
           <li>
             <router-link :to="{path: '/resourcepool'}">
-              <i class="iconfont icon-my-resource"></i>
+              <i class="iconfont icon-host1"></i>
               {{$t('menu.resourcePool3')}}
             </router-link>
           </li>

@@ -242,14 +242,20 @@ export default {
   min-width: 1130px;
   .recordHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
-        font-size: 20px;
+        font-family: Source-Sans-Pro-Bold;
+        font-size: 16px;
         color: #252525;
-        line-height: 24px;
-        padding-left: 30px;
+        line-height: 50px;
+      margin: 0;
+      padding: 0;
+      padding-left: 30px;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
       }
     }
   }
@@ -275,7 +281,7 @@ export default {
         line-height: 40px;
       }
       .time {
-        font-family: PingFangSC-Regular;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.65);
         text-align: right;
@@ -287,7 +293,7 @@ export default {
     .record-head {
       height: 50px;
       p {
-        font-family: PingFangSC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.85);
         line-height: 50px;

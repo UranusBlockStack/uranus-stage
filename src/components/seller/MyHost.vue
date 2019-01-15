@@ -32,7 +32,7 @@
     <!-- Host -->
     <el-row class="myHostHead">
       <el-col class="title" :span="12">
-        <h1>{{$t('menu.myHost')}}</h1>
+        <h1><i class="iconfont icon-host"></i>{{$t('menu.myHost')}}</h1>
       </el-col>
     </el-row>
     <el-row class="myHostBox">
@@ -40,12 +40,11 @@
         <template slot="empty">
           <p class="empty-text">{{$t('seller.host.text')}}</p>
         </template>
-        <el-table-column width="70">
+        <el-table-column width="50">
           <template slot-scope="scope">
-            <div :class="scope.row.state == 'Offline' ? 'on' : 'off'">{{scope.row.state}}</div>
-          </template>
+            <div :class="scope.row.state == 'Offline' ? 'on' : 'off'"></div>          </template>
         </el-table-column>
-        <el-table-column width="150" prop="number">
+        <el-table-column width="120" prop="number">
           <template slot="header" slot-scope="scope">
             <p>
               <i class="iconfont icon-resource-market"></i>
@@ -53,10 +52,10 @@
             </p>
           </template>
         </el-table-column>
-        <el-table-column width="200">
+        <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
-              <i class="iconfont icon-cpu1"></i> CPU
+              <i class="iconfont icon-cpu"></i> CPU
             </p>
           </template>
           <template slot-scope="scope">
@@ -72,10 +71,10 @@
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
-        <el-table-column width="200">
+        <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
-              <i class="iconfont icon-cpu1"></i>
+              <i class="iconfont icon-memory"></i>
               {{$t('seller.host.memory')}}
             </p>
           </template>
@@ -92,10 +91,10 @@
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
-        <el-table-column width="200">
+        <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
-              <i class="iconfont icon-cpu1"></i>
+              <i class="iconfont icon-disk"></i>
               {{$t('seller.host.disk')}}
             </p>
           </template>
@@ -112,10 +111,10 @@
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
-        <el-table-column width="200">
+        <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
-              <i class="iconfont icon-cpu1"></i>
+              <i class="iconfont icon-network"></i>
               {{$t('seller.host.network')}}
             </p>
           </template>
@@ -132,7 +131,7 @@
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
-        <el-table-column width="230">
+        <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <el-select v-model="group" :placeholder="$t('seller.host.ownGroup')">
               <el-option :label="$t('seller.host.group') + 'A'" value="集群A"></el-option>
@@ -228,21 +227,27 @@ export default {
   min-width: 1130px;
   .myHostHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
-        font-size: 20px;
+        font-family: Source-Sans-Pro-Bold;
+        font-size: 16px;
         color: #252525;
-        line-height: 24px;
-        padding-left: 30px;
+        line-height: 50px;
+      margin: 0;
+      padding: 0;
+      padding-left: 30px;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+        }
       }
     }
   }
   .myHostBox {
     background: #ffffff;
     border-radius: 2px;
-    margin: 20px;
+    margin: 10px;
     padding: 15px;
     min-height: 550px;
     p {
@@ -251,7 +256,7 @@ export default {
     .empty-text {
       width: 470px;
       margin: 30px auto;
-      font-family: PingFang-SC-Medium;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
       color: #5d5d5d;
       text-align: left;
@@ -268,16 +273,16 @@ export default {
     .on {
       background: #9bcc3d;
       border: 2px solid #dcdcdc;
-      width: 8px;
-      height: 8px;
+      width: 20px;
+      height: 20px;
       border-radius: 100%;
       float: right;
     }
     .off {
       background: #f2f2f2;
       border: 2px solid #dcdcdc;
-      width: 8px;
-      height: 8px;
+      width: 20px;
+      height: 20px;
       border-radius: 100%;
       float: right;
     }

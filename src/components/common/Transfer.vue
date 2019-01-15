@@ -8,9 +8,9 @@
           <el-button type="primary" @click="innerVisible = false">{{$t('transfer.button2')}}</el-button>
         </div>
       </el-dialog>
-      <p>{{$t('transfer.checkAddress')}} {{formLabelAlign.address}}</p>
-      <p>{{$t('transfer.checkValue')}}  {{formLabelAlign.value}}</p>
-      <p>{{$t('transfer.fee')}} {{formLabelAlign.fee}}</p>
+      <p><b>{{$t('transfer.checkAddress')}}</b>{{formLabelAlign.address}}</p>
+      <p><b>{{$t('transfer.checkValue')}}</b>{{formLabelAlign.value}}</p>
+      <p><b>{{$t('transfer.fee')}}</b>{{formLabelAlign.fee}}</p>
       <span>{{$t('transfer.checkText')}}</span>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false, innerVisible = true">{{$t('transfer.button1')}}</el-button>
@@ -20,12 +20,12 @@
 
     <el-row class="transfer-head">
       <el-col :span="24">
-        <p>{{$t('menu.transfer')}}</p>
+        <p><i class="iconfont icon-pay"></i>{{$t('menu.transfer')}}</p>
       </el-col>
     </el-row>
     <el-row class="transfer-form">
       <el-col :span="10" :offset="6">
-        <h2>{{$t('transfer.balance')}}123456</h2>
+        <h2>{{$t('transfer.balance')}}123456(URAC)</h2>
       </el-col>
       <el-col :span="16">
         <div class="formGroup">
@@ -125,27 +125,37 @@ export default {
   }
   .transfer-head {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     p {
-      font-family: PingFang-SC-Bold;
+      font-family: Source-Sans-Pro-Bold;
       padding-left: 30px;
-      font-size: 20px;
+      font-size: 16px;
       color: #252525;
-      line-height: 60px;
+      line-height: 50px;
       text-align: left;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
     }
   }
   .el-dialog {
     p {
-      font-family: PingFang-SC-Medium;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
       color: #363636;
       line-height: 24px;
       text-align: left;
       padding-bottom: 20px;
+      b {
+          font-weight: 400;
+          display: inline-block;
+          text-align: right;
+          width: 150px;
+      }
     }
     span {
-      font-family: PingFang-SC-Medium;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
       color: #f54c46;
       line-height: 20px;
@@ -157,12 +167,12 @@ export default {
     margin: 20px;
     border-radius: 2px;
     h2 {
-      font-family: PingFang-SC-Bold;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 10px;
-      color: #606266;
+      color: #3d74e2;
       line-height: 24px;
       text-align: right;
-      padding-right: 50px;
+      padding-right: 30px;
       margin-bottom: -25px;
     }
     .formGroup {
@@ -170,7 +180,6 @@ export default {
       margin-left: 30px;
     }
     span {
-      font-family: PingFangSC-Regular;
       font-size: 16px;
       color: rgba(0, 0, 0, 0.65);
       text-align: left;

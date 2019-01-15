@@ -76,7 +76,12 @@
                 :formatter="formateDate"
                 :label="$t('seller.home.time')"
               ></el-table-column>
-              <el-table-column prop="hash" :label="$t('seller.home.hash')"></el-table-column>
+              <el-table-column prop="hash" :label="$t('seller.home.hash')">
+                  <template slot-scope="scope">
+            <p style="color:red; font-size:10px; margin-left:35px;"
+            >{{ scope.row.hash }}</p>
+          </template>
+              </el-table-column>
               <el-table-column prop="amount" :label="$t('seller.home.amount')"></el-table-column>
               <el-table-column prop="fee" :label="$t('seller.home.fee')"></el-table-column>
             </el-table>
@@ -384,10 +389,10 @@ export default {
                 fontSize: 24
               }
             },
-            data: [{ value: 20, name: "CPU" }],
+            data: [{ value: myData1, name: "CPU" }],
             axisLabel: {
               formatter: function(value) {
-                return "";
+                return value+ '123';
               }
             },
             axisLine: {
