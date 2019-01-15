@@ -29,7 +29,7 @@
               <span class="fa fa-caret-down"></span>
             </button>
             <ul class="dropdown-menu">
-              <li v-for="item in regions">
+              <li v-for="(item,index) in regions" :key="index">
                 <a href="#" :id="item.prefix" @click="selectRegion(item.prefix)">{{ item.fullName }}</a>
               </li>
             </ul>
