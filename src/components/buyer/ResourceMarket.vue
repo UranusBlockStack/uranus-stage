@@ -188,6 +188,9 @@
 
 <script>
 import RestTime from "@/components/modules/RestTime";
+import * as auth from '../../services/AuthService'
+import * as rancher from '../../services/RancherService'
+import { ServerConfigData, AddUnit, WrapDropDownData } from '../../store/rancher_info'
 
 export default {
   name: "ResourceMarket",
@@ -200,62 +203,17 @@ export default {
         name: "",
         region: "Asia",
         cpu: "4",
-        disk: "521G",
+        disk: "512G",
         memory: "16",
         network: "512G",
         startTime: "",
         endTime: ""
       },
-      regionSel: [
-        {
-          value: "选项1",
-          label: "亚洲"
-        },
-        {
-          value: "选项2",
-          label: "欧洲"
-        }
-      ],
-      cpuSel: [
-        {
-          value: "选项1",
-          label: "8"
-        },
-        {
-          value: "选项2",
-          label: "4"
-        }
-      ],
-      diskSel: [
-        {
-          value: "选项1",
-          label: "256"
-        },
-        {
-          value: "选项2",
-          label: "512"
-        }
-      ],
-      memorySel: [
-        {
-          value: "选项1",
-          label: "8"
-        },
-        {
-          value: "选项2",
-          label: "16"
-        }
-      ],
-      networkSel: [
-        {
-          value: "选项1",
-          label: "258G"
-        },
-        {
-          value: "选项2",
-          label: "512G"
-        }
-      ],
+      regionSel: [],
+      cpuSel: [],
+      diskSel: [],
+      memorySel: [],
+      networkSel: [],
       value: "",
       time1: "",
       time2: "",
@@ -272,7 +230,48 @@ export default {
         }
       ]
     };
-  }
+  },
+    created () {
+        this.getRegionList()
+        this.setConfigSelector()
+    },
+    methods:{
+        setConfigSelector() {
+            const CpuData = ServerConfigData.CPU.paramVals[auth.curLang()]
+            this.cpuSel = WrapDropDownData(CpuData)
+            this.deployForm.cpu = this.cpuSel[0].value
+            console.log(this.cpuSel[0]);
+
+            const HdData = ServerConfigData.HD.paramVals
+            this.diskSel =  WrapDropDownData(HdData)
+            this.deployForm.disk = this.diskSel[0].value
+
+            const MemData = ServerConfigData.Mem.paramVals
+            this.memorySel =  WrapDropDownData(MemData)
+            this.deployForm.memory = this.memorySel[0].value
+
+            const NetworData = ServerConfigData.Network.paramVals
+            this.networkSel =  WrapDropDownData(NetworData)
+            this.deployForm.network = this.networkSel[0].value
+
+        },
+        getRegionList() {
+            rancher.rancherList(auth.curLang())
+                .then(respData => {
+                    this.rancherServer = respData.data.data
+                    let regionData = []
+                    this.rancherServer.map(rancher => {
+                        const region = {
+                            value: auth.curLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
+                            label: auth.curLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
+                        }
+                        regionData.push(region)
+                    })
+
+                    this.regionSel = regionData
+                })
+        }
+    }
 };
 </script>
 

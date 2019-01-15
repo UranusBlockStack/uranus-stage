@@ -95,7 +95,7 @@ export default {
       } else {
         loginname = this.$refs.loginEmail.value;
       }
-      return loginname;
+      return loginname
     },
     choosePhone() {
       this.phoneShow = true;
@@ -104,15 +104,24 @@ export default {
       this.phoneShow = false;
     },
     registerUser() {
-      const logintype = this.phoneShow ? "mobile" : "email";
-      const user = {
+      const logintype = this.phoneShow ? "mobile" : "email"
+        const user = {
         captcha: this.$refs.verifyCodeInput.value,
         loginName: this.getLoginName(logintype),
         loginType: logintype,
         password: this.$refs.password.value
       };
 
-      auth.registerUser(this.$store.getters.lang, user);
+      var self = this
+      auth.registerUser(this.$store.getters.lang, user)
+          .then(regResp => {
+              if(regResp.data.success)
+                    self.$router.push({name: 'Map'})
+              else
+                    self.$alert('error', 'Message', {
+                  confirmButtonText: 'Message'
+              })
+          })
     },
     countDown() {
       if (!this.canClick) return;
@@ -131,12 +140,13 @@ export default {
         }
       }, 1000);
 
-      const param = {
+      const logintype = this.phoneShow ? "mobile" : "email"
+        const param = {
         captchaType: 0,
-        receiver: this.currentRegion + this.$refs.loginMobile.value,
-        senderType: "mobile"
+        receiver: this.getLoginName(logintype),
+        senderType: logintype
       };
-      auth.captcha("zh-cn", param);
+      auth.captcha('zh-cn', param)
     }
   },
   mounted() {

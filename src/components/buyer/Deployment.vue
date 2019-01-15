@@ -310,21 +310,17 @@ export default {
         name: '',
         region: 'Asia',
         cpu: '',
-        disk: '521G',
+        disk: '512G',
         memory: '16',
         network: '512G',
         startTime: '',
         endTime: ''
       },
       regionSel: [],
-      cpuSel: [
-      ],
-      diskSel: [
-      ],
-      memorySel: [
-      ],
-      networkSel: [
-      ], 
+      cpuSel: [],
+      diskSel: [],
+      memorySel: [],
+      networkSel: [],
       // existed
       spaceSel: [
         {
