@@ -47,7 +47,15 @@ export function getUserBaseInfo() {
     return JSON.parse(curUserState)
 }
 
+export function curLang() {
+    const curUserState = localStorage.getItem('currentUserStatus')
+    return JSON.parse(curUserState).loginLanguage
+}
 
+export function curRole() {
+    const curUserState = localStorage.getItem('currentUserStatus')
+    return JSON.parse(curUserState).loginRole
+}
 export function getUsername () {
   const token = decodeToken()
   if (!token) {

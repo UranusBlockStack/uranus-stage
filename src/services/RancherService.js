@@ -64,31 +64,39 @@ export function hostModify (lang, id, newClusterInfo) {
 
 /** Rancher - RancherServer Service ***/
 export function rancherAdd (lang, rancherInfo) {
-  return httpLang(lang).post('/rancher/ranchers', rancherInfo)
+  return httpLang(lang).post('/rancher/rancher_servers', rancherInfo)
 }
 
 export function rancherList (lang) {
-  return httpLang(lang).get('/rancher/ranchers')
+  return httpLang(lang).get('/rancher/rancher_servers/')
 }
 
 export function rancherSearch (lang, queryData) {
-  return httpLang(lang).post('/rancher/ranchers/search', queryData)
+  return httpLang(lang).post('/rancher/rancher_servers/search', queryData)
 }
 
 export function rancherDelete (lang, id) {
-  return httpLang(lang).delete(`/rancher/ranchers/${id}`)
+  return httpLang(lang).delete(`/rancher/rancher_servers/${id}`)
 }
 
 export function rancherInfo (lang, id) {
-  return httpLang(lang).get(`/rancher/ranchers/${id}`)
+  return httpLang(lang).get(`/rancher/rancher_servers/${id}`)
 }
 
 export function rancherModify (lang, id, newClusterInfo) {
-  return httpLang(lang).put(`/rancher/ranchers/${id}`, newClusterInfo)
+  return httpLang(lang).put(`/rancher/rancher_servers/${id}`, newClusterInfo)
 }
 
 
 /** Rancher - AppController Service ***/
 export function appList (lang, queryData) {
     return httpLang(lang).post('/rancher/apps/search', queryData)
+}
+
+export function appDetail (lang, appId) {
+    return httpLang(lang).get(`/rancher/apps/${appId}`)
+}
+
+export function appVersion (lang, appId, version) {
+    return httpLang(lang).get(`/rancher/apps/${appId}/versions/${version}`)
 }

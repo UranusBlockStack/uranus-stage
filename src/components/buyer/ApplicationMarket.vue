@@ -39,11 +39,11 @@
           <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
             <div class="resources">
               <div>
-                <p class="shops">{{app.catalog}}</p>
+                <p class="shops">{{app.catalog}} </p>
                 <img :src='app.imageurl'  alt="img">
                 <p class="name">{{app.name}}</p>
                 <p
-                  class="detail">{{app.description}}}</p>
+                  class="detail">{{app.description}} </p>
                 <el-row :gutter="20">
                   <el-col :span="6" :offset="2">
                     <p class="free">{{$t('buyer.appMarket.free')}}</p>
@@ -51,9 +51,9 @@
                   <el-col :span="10" :offset="6">
                     <p class="downloads">{{$t('buyer.appMarket.download')}}123</p>
                   </el-col>
-                  <router-link :to="{path: '/deployment'}">
+                  <a @click.prevent="deployApp(app.id, app.rid, app.defaultVersion, app.catalog)">
                     <el-button type="success">{{$t('buyer.appMarket.deploy')}}</el-button>
-                  </router-link>
+                  </a>
                 </el-row>
               </div>
             </div>
@@ -71,6 +71,7 @@
 
 <script>
     import * as app from '../../services/RancherService'
+
 export default {
   name: 'ApplicationMarket',
   data() {
@@ -89,7 +90,7 @@ export default {
         {
           value: 'library',
           label: 'library'
-        },
+        }
       ],
       value1: '',
       value2: '',
@@ -125,7 +126,10 @@ export default {
               return imginfo
             })
           })
-    }
+    },
+        deployApp (appId, appRid, versionId, catalog) {
+          this.$router.push({path: '/deployment', query: {appId: appId, appRid: appRid, versionId: versionId, catalog: catalog}})
+        }
   },
     mounted() {
       this.getAppList()

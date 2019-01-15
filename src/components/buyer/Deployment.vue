@@ -45,6 +45,7 @@
         >{{$t('buyer.deploy.button2')}}</el-button>
       </div>
     </el-dialog>
+
     <el-row class="resourceBox">
       <el-row>
         <el-col class="title bg" :span="24">
@@ -56,8 +57,8 @@
           <img src="/static/img/uranus/buyer/appLogo.png">
         </el-col>
         <el-col :span="8" :offset="1">
-          <h2>{{$t('buyer.deploy.name')}}Imagepuler</h2>
-          <p>{{$t('buyer.deploy.appDetail')}}This catalog item is deprecated and to rancher item is deprecated and moved to is deprecated moved to rancher oved to rancher is oved to rancher item</p>
+          <h2>{{$t('buyer.deploy.name')}} Imagepuler</h2>
+          <p>{{$t('buyer.deploy.appDetail')}}</p>
         </el-col>
         <el-col class="border-col" :span="4" :offset="1">
           <p>{{$t('buyer.deploy.price')}}{{$t('buyer.deploy.free')}}</p>
@@ -78,6 +79,7 @@
         </el-col>
       </el-row>
       <el-row class="border-line"></el-row>
+
       <!-- deploy application -->
       <el-row class="margin-top">
         <el-col :span="23" :offset="1">
@@ -225,6 +227,7 @@
           </p>
         </el-col>
       </el-row>
+
       <!-- application setting -->
       <el-row>
         <el-col class="title" :span="12">
@@ -238,7 +241,7 @@
         <el-form label-width="80px">
           <el-col :span="8" :offset="2">
             <el-form-item :label="$t('buyer.deploy.nameApp')">
-              <el-input v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
+              <el-input v-model="appDetail.name" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="10" :offset="4">
@@ -261,6 +264,7 @@
         </el-form>
       </el-row>
       <el-row class="border-line"></el-row>
+
       <!-- configuration options -->
       <el-row class="configuration">
         <el-col class="title" :span="24">
@@ -287,153 +291,215 @@
         </el-col>
       </el-row>
     </el-row>
+
   </section>
 </template>
 
 <script>
+    import * as app from '../../services/RancherService'
+    import * as auth from '../../services/AuthService'
+    import * as rancher from '../../services/RancherService'
+    import { ServerConfigData, AddUnit, WrapDropDownData } from '../../store/rancher_info'
+
 export default {
-  name: "Deployment",
+  name: 'Deployment',
   data() {
     return {
-      radio: "1",
+      radio: '1',
       deployForm: {
-        name: "",
-        region: "Asia",
-        cpu: "4",
-        disk: "521G",
-        memory: "16",
-        network: "512G",
-        startTime: "",
-        endTime: ""
+        name: '',
+        region: 'Asia',
+        cpu: '',
+        disk: '521G',
+        memory: '16',
+        network: '512G',
+        startTime: '',
+        endTime: ''
       },
-      regionSel: [
-        {
-          value: "选项1",
-          label: "亚洲"
-        },
-        {
-          value: "选项2",
-          label: "欧洲"
-        }
-      ],
+      regionSel: [],
       cpuSel: [
-        {
-          value: "选项1",
-          label: "8"
-        },
-        {
-          value: "选项2",
-          label: "4"
-        }
       ],
       diskSel: [
-        {
-          value: "选项1",
-          label: "256"
-        },
-        {
-          value: "选项2",
-          label: "512"
-        }
       ],
       memorySel: [
-        {
-          value: "选项1",
-          label: "8"
-        },
-        {
-          value: "选项2",
-          label: "16"
-        }
       ],
       networkSel: [
-        {
-          value: "选项1",
-          label: "258G"
-        },
-        {
-          value: "选项2",
-          label: "512G"
-        }
       ], 
       // existed
       spaceSel: [
         {
-          value: "选项1",
-          label: "0.1.7"
+          value: '选项1',
+          label: '0.1.7'
         },
         {
-          value: "选项2",
-          label: "0.0.2"
+          value: '选项2',
+          label: '0.0.2'
         }
       ],
       spaceValue: '0.1.2',
       // version
-      versionSel: [
-        {
-          value: "选项1",
-          label: "版本一"
-        },
-        {
-          value: "选项2",
-          label: "版本二"
-        }
-      ],
-      versionValue: "",
+      versionSel: [],
+      versionValue: '',
       // new application name
-      input: "",
+      input: '',
       // more button status
       more: false,
       configurationList: [
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" },
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" }
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' },
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' }
       ],
+      appId: 0,
+      appRid: '',
+      versionId: '',
+      catalog: '',
+      appDetail: {},
+      appVersionDetail: {},
+      stackData: {
+        hostType: 1,
+        name: '',
+        description: '',
+        startOnCreate: true
+      },
       gridData: [
         {
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
+          order: '214521236987',
+          address: '0x461s2df6…',
+          number: '1000021.23',
           type: this.$t('buyer.deploy.buyApp'),
-          charge: "0.11"
+          charge: '0.11'
         },
         {
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
+          order: '214521236987',
+          address: '0x461s2df6…',
+          number: '1000021.23',
           type: this.$t('buyer.deploy.buyApp'),
-          charge: "0.11"
+          charge: '0.11'
         },
         {
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
+          order: '214521236987',
+          address: '0x461s2df6…',
+          number: '1000021.23',
           type: this.$t('buyer.deploy.buyApp'),
-          charge: "0.11"
+          charge: '0.11'
         },
         {
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
+          order: '214521236987',
+          address: '0x461s2df6…',
+          number: '1000021.23',
           type: this.$t('buyer.deploy.buyApp'),
-          charge: "0.11"
+          charge: '0.11'
         }
       ],
       outerVisible: false,
-      innerVisible: false
-    };
+      innerVisible: false,
+      curUserInfo: auth.getUserBaseInfo(),
+      rancherServer: []
+    }
   },
+    created () {
+      if (typeof this.$route.query.appId !== 'undefined') {
+        this.appId = this.$route.query.appId
+        this.appRid = this.$route.query.appRid
+        this.versionId = this.$route.query.versionId
+        this.catalog = this.$route.query.catalog
+        this.getAppDetail(this.appId)
+        this.getAppVersionDetail(this.appId, this.versionId)
+        this.getRegionList()
+        this.setConfigSelector()
+      }
+    },
   methods: {
     changeMore() {
-      this.more = !this.more;
-    }
+      this.more = !this.more
+    },
+
+      setConfigSelector() {
+          const CpuData = ServerConfigData.CPU.paramVals[auth.curLang()]
+          this.cpuSel = WrapDropDownData(CpuData)
+          this.deployForm.cpu = this.cpuSel[0].value
+          console.log(this.cpuSel[0]);
+
+          const HdData = ServerConfigData.HD.paramVals
+          this.diskSel =  WrapDropDownData(HdData)
+          this.deployForm.disk = this.diskSel[0].value
+
+          const MemData = ServerConfigData.Mem.paramVals
+          this.memorySel =  WrapDropDownData(MemData)
+          this.deployForm.memory = this.memorySel[0].value
+
+          const NetworData = ServerConfigData.Network.paramVals
+          this.networkSel =  WrapDropDownData(NetworData)
+          this.deployForm.network = this.networkSel[0].value
+
+      },
+        getRegionList() {
+          rancher.rancherList(auth.curLang())
+            .then(respData => {
+              this.rancherServer = respData.data.data
+              let regionData = []
+              this.rancherServer.map(rancher => {
+                const region = {
+                  value: auth.curLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
+                  label: auth.curLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
+                }
+                regionData.push(region)
+              })
+
+              this.regionSel = regionData
+            })
+        },
+        getAppDetail (appid) {
+          app.appDetail(auth.curLang(), appid).then(respData => {
+            if (respData.data.success) {
+              const appInfo = respData.data.data
+              this.appDetail = appInfo
+              this.stackData.name = appInfo.name.replace(/\s+/g, '-')
+              const versions = JSON.parse(this.appDetail.versionLinks)
+              this.appDetail.versionlinks = []
+
+              for (var key in versions) {
+                var versionLink = versions[key]
+                var versionId = versionLink.substr(versionLink.lastIndexOf('/') + 1)
+                this.appDetail.versionlinks.push({label: key, value: versionId})
+              }
+              this.versionSel = this.appDetail.versionlinks
+              this.versionValue = this.appDetail.versionlinks[0].label
+            } else {
+                  // this.$alert(respData.message, this.$t('common.messages.alert'), {
+                  //     confirmButtonText: this.$t('common.messages.confirm')
+                  // })
+            }
+          })
+        },
+        getAppVersionDetail (appId, version) {
+          app.appVersion(auth.curLang(), appId, version).then(respon => {
+            if (respon.success) {
+              console.log('app respon', respon.data)
+              this.appVersionDetail = respon.data
+              let files = JSON.parse(respon.data.files)
+              this.appVersionDetail.files = files
+              this.appVersionDetail.readMe = files['README.md']
+              this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
+              this.appVersionDetail.questions.map(question => {
+                var key = question.variable
+                var value = question.defaultValue
+                this.environment[key] = value
+              })
+            } else {
+                  // this.$alert(respon.message, this.$t('common.messages.alert'), {
+                  //     confirmButtonText: this.$t('common.messages.confirm')
+                  // })
+            }
+          })
+        }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
