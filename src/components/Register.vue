@@ -1,7 +1,7 @@
 <template>
   <section class="register">
     <div class="back">
-      <router-link :to="{path: '/map'}">
+      <router-link :to="{path: '/'}">
         <i class="iconfont icon-back"></i>
       </router-link>
     </div>

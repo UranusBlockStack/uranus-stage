@@ -503,7 +503,7 @@ module.exports = {
     password: 'Password',
     modifyPassword: {
       click: 'Change',
-      current: 'Current Passwrod',
+      current: 'Current Password',
       new: 'New Password',
       confirm: 'Confirm',
       forgot: 'Forgot current password'
@@ -545,7 +545,8 @@ module.exports = {
     codeError: 'The verification code entered is incorrect. Please re-enter',
     phoneError: 'Please enter phone number',
     EmailError: 'Please enter Email',
-    passwordError: 'The account or password entered is incorrect. Please re-enter'
+    passwordError: 'The account or password entered is incorrect. Please re-enter',
+    download: 'Download package',
   },
   module: {
     day: 'D',

@@ -513,7 +513,8 @@ module.exports = {
     codeError: '验证码有误，请重新输入验证码',
     phoneError: '请输入手机号',
     EmailError: '请输入邮箱',
-    passwordError: '输入的账号或密码有误，请重新输入'
+    passwordError: '输入的账号或密码有误，请重新输入',
+    download: '下载包',
   },
   module: {
     day: '天',

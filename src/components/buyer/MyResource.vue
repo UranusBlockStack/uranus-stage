@@ -384,6 +384,10 @@ export default {
         margin: 0;
         padding: 0;
         padding-left: 30px;
+        i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
       }
     }
     .record {

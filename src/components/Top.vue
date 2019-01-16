@@ -24,7 +24,7 @@
       </div>
       <!-- Download button -->
       <div class="download">
-          <span>下载包</span>
+          <span>{{$t('userCommon.download')}}</span>
       </div>
     </nav>
   </section>
@@ -75,6 +75,9 @@ export default {
           background: #252525;
           border: none;
           color: #8eb357;
+          :hover {
+              color: #f54c46;
+          }
       }
     }
     .download {

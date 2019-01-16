@@ -2,11 +2,11 @@
   <section class="colony">
     <el-row class="colonyHead">
       <el-col class="title" :span="12">
-        <h1>{{$t('menu.myColony')}}</h1>
+        <h1><i class="iconfont icon-host1"></i>{{$t('menu.myColony')}}</h1>
       </el-col>
     </el-row>
     <!-- Confirmation Information Bullet Box -->
-    <el-dialog :title="$t('seller.group.settingTitle')" :visible.sync="dialogVisible" width="650px">
+    <el-dialog :title="$t('seller.group.settingTitle')" :close-on-click-modal = false :visible.sync="dialogVisible" width="650px">
       <span>
         <el-form ref="form" :model="form" label-width="80px">
           <el-form-item :label="$t('seller.group.settingName')">
@@ -59,8 +59,9 @@
         </el-form>
       </span>
     </el-dialog>
+
     <!-- delete text box -->
-    <el-dialog :visible.sync="outerVisible" width="480px">
+    <el-dialog :close-on-click-modal = false :visible.sync="outerVisible" width="480px">
       <p>{{$t('seller.group.deleteSure')}}</p>
       <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
         <p>{{$t('seller.group.deleteText1')}}</p>
@@ -76,6 +77,7 @@
         >{{$t('seller.group.confirm')}}</el-button>
       </div>
     </el-dialog>
+
     <!-- colony -->
     <el-row class="colonyBox">
       <el-row>
@@ -85,19 +87,19 @@
       </el-row>
       <el-row class="rePool">
         <el-col :span="4">
-          <div id="restPool"></div>
+          <Water :chartData="0.5"/>
         </el-col>
         <el-col class="padding-top" :span="7" :offset="1">
-          <h4>{{$t('seller.group.earnings')}}888.86URAC</h4>
-          <p>{{$t('seller.group.value')}}100URAC/天</p>
-          <p>{{$t('seller.group.region')}}{{$t('seller.group.asia')}}</p>
-          <p>{{$t('seller.group.stateSale')}}{{$t('seller.group.inSale')}}</p>
+          <h4>{{$t('seller.group.earnings')}} 888.86 URAC</h4>
+          <p>{{$t('seller.group.value')}} 100URAC/天</p>
+          <p>{{$t('seller.group.region')}} {{$t('seller.group.asia')}}</p>
+          <p>{{$t('seller.group.stateSale')}} {{$t('seller.group.inSale')}}</p>
         </el-col>
         <el-col class="padding-top" :span="8">
-          <h4>{{$t('seller.group.restTime')}}{{$t('seller.group.timeup')}}</h4>
-          <p>{{$t('seller.group.operatingStatus')}}{{$t('seller.group.running')}}</p>
-          <p>{{$t('seller.group.buyingTime')}}2018/12/12 12:12:12</p>
-          <p>{{$t('seller.group.endingTime')}}2019/12/12 12:12:12</p>
+          <h4>{{$t('seller.group.restTime')}} {{$t('seller.group.timeup')}}</h4>
+          <p>{{$t('seller.group.operatingStatus')}} {{$t('seller.group.running')}}</p>
+          <p>{{$t('seller.group.buyingTime')}} 2018/12/12 12:12:12</p>
+          <p>{{$t('seller.group.endingTime')}} 2019/12/12 12:12:12</p>
         </el-col>
         <el-col :span="4">
           <p class="setting" @click="dialogVisible = true">
@@ -124,7 +126,7 @@
         </template>
         <el-table-column width="70">
           <template slot-scope="scope">
-            <div :class="scope.row.state == 'Offline' ? 'on' : 'off'">{{scope.row.state}}</div>
+            <div :class="scope.row.state == 'Offline' ? 'on' : 'off'"></div>
           </template>
         </el-table-column>
         <el-table-column width="150" prop="number">
@@ -209,10 +211,13 @@
 </template>
 
 <script>
-import "echarts-liquidfill";
+import Water from "@/components/modules/Water"
 
 export default {
   name: "ResourcePool",
+  components: {
+      Water
+  },
   data() {
     return {
       tableData: [
@@ -280,7 +285,6 @@ export default {
       return row.state === value;
     },
     initEchart() {
-      var myChart = this.$echarts.init(document.getElementById("restPool"));
       var myChart1 = this.$echarts.init(
         document.getElementById("restResource1")
       );
@@ -293,34 +297,6 @@ export default {
       var myChart5 = this.$echarts.init(
         document.getElementById("restResource5")
       );
-      myChart.setOption({
-        series: [
-          {
-            type: "liquidFill",
-            radius: "85%",
-            data: [
-              {
-                value: 0.5,
-                direction: "left",
-                itemStyle: {
-                  normal: {
-                    color: "#1890FF"
-                  }
-                }
-              }
-            ],
-            outline: {
-              show: false
-            },
-            backgroundStyle: {
-              borderColor: "#156ACF",
-              borderWidth: 1,
-              shadowColor: "rgba(0, 0, 0, 0.4)",
-              shadowBlur: 20
-            }
-          }
-        ]
-      });
       myChart1.setOption({
         series: [
           {
@@ -482,7 +458,6 @@ export default {
         ]
       });
       window.onresize = function() {
-        myChart.resize();
         myChart1.resize();
         myChart3.resize();
         myChart4.resize();
@@ -522,17 +497,19 @@ export default {
   .colonyBox {
     background: #ffffff;
     border-radius: 2px;
-    margin: 20px;
+    margin: 10px;
     .title {
       background: #fafafa;
       border-radius: 4px 4px 0 0;
-      height: 54px;
+      height: 50px;
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
+        margin: 0;
+        padding: 0;
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
-        line-height: 24px;
+        line-height: 50px;
         padding-left: 30px;
       }
     }
@@ -641,16 +618,16 @@ export default {
     .on {
       background: #9bcc3d;
       border: 2px solid #dcdcdc;
-      width: 8px;
-      height: 8px;
+      width: 20px;
+      height: 20px;
       border-radius: 100%;
       float: right;
     }
     .off {
       background: #f2f2f2;
       border: 2px solid #dcdcdc;
-      width: 8px;
-      height: 8px;
+      width: 20px;
+      height: 20px;
       border-radius: 100%;
       float: right;
     }

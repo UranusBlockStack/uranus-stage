@@ -65,7 +65,7 @@
       </div>
     </div>
     <div class="mapCon">
-      <a @click.prevent="LoginPage('seller')"  class="seller">
+      <a @click.prevent="LoginPage('Seller')"  class="seller">
         <span>
           <img src="/static/img/uranus/seller.png">
           {{$t('map.seller')}}
@@ -73,7 +73,7 @@
         </span>
         <p>{{$t('map.sellerText')}}</p>
       </a>
-      <a @click.prevent="LoginPage('buyer')" class="buyer">
+      <a @click.prevent="LoginPage('Buyer')" class="buyer">
         <span>
           <img src="/static/img/uranus/buyer.png">
           {{$t('map.buyer')}}
@@ -81,7 +81,7 @@
         </span>
         <p>{{$t('map.buyerText')}}</p>
       </a>
-      <a @click.prevent="LoginPage('developer')" class="developer">
+      <a @click.prevent="LoginPage('Developer')" class="developer">
         <span>
           <img src="/static/img/uranus/developer.png">
           {{$t('map.developer')}}
@@ -328,7 +328,7 @@ export default {
 }
 .mapCon {
   height: 150px;
-  min-width: 800px;
+  min-width: 820px;
   width: 70%;
   position: fixed;
   left: 15%;
@@ -336,9 +336,9 @@ export default {
   display: flex;
   justify-content: center;
   a {
-    width: 25%;
+    width: 30%;
     height: 50%;
-    min-width: 220px;
+    min-width: 250px;
     min-height: 150px;
     border-radius: 15px;
     margin: 15px;

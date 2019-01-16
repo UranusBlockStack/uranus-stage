@@ -2,7 +2,10 @@
   <section class="appMarket">
     <el-row class="marketHead">
       <el-col class="title" :span="12">
-        <h1>{{$t('menu.appMarket')}}</h1>
+        <h1>
+          <i class="iconfont icon-application-market"></i>
+          {{$t('menu.appMarket')}}
+        </h1>
       </el-col>
     </el-row>
     <div class="shop">
@@ -27,23 +30,26 @@
             ></el-option>
           </el-select>
         </el-col>
-        <el-col :span="6" :offset="6">
+        <el-col :span="6" :offset="7">
           <el-input :placeholder="$t('buyer.appMarket.searchIn')" prefix-icon="el-icon-search"></el-input>
         </el-col>
-        <el-col :span="2" :offset="1">
-          <el-button type="success"><i class="iconfont icon-view"></i></el-button>
+        <el-col :span="2">
+          <el-button style="margin-left:10px;" type="success">
+            <i class="iconfont icon-search"></i>
+          </el-button>
         </el-col>
       </el-row>
       <el-row class="shopBox" :gutter="20">
         <el-col :span="6" v-for="(app, index) in appList" :key="index" style="margin-bottom:40px">
-          <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
+          <el-card :body-style="{ padding: '0px', height:'380px'}" shadow="hover">
             <div class="resources">
               <div>
-                <p class="shops">{{app.catalog}} </p>
-                <img :src='app.imageurl'  alt="img">
+                <p class="shops">{{app.catalog}}</p>
+                <div class="imgBox">
+                  <img :src="app.imageurl" alt="img">
+                </div>
                 <p class="name">{{app.name}}</p>
-                <p
-                  class="detail">{{app.description}} </p>
+                <p class="detail">{{app.description}}</p>
                 <el-row :gutter="20">
                   <el-col :span="6" :offset="2">
                     <p class="free">{{$t('buyer.appMarket.free')}}</p>
@@ -52,7 +58,10 @@
                     <p class="downloads">{{$t('buyer.appMarket.download')}}123</p>
                   </el-col>
                   <a @click.prevent="deployApp(app.id, app.rid, app.defaultVersion, app.catalog)">
-                    <el-button type="success">{{$t('buyer.appMarket.deploy')}}</el-button>
+                    <el-button
+                      style="margin-bottom:10px;"
+                      type="success"
+                    >{{$t('buyer.appMarket.deploy')}}</el-button>
                   </a>
                 </el-row>
               </div>
@@ -70,71 +79,77 @@
 </template>
 
 <script>
-    import * as app from '../../services/RancherService'
+import * as app from "../../services/RancherService";
 
 export default {
-  name: 'ApplicationMarket',
+  name: "ApplicationMarket",
   data() {
     return {
       options1: [
         {
-          value: '1',
-          label: 'Free'
+          value: "1",
+          label: "Free"
         },
         {
-          value: '2',
-          label: 'Paid'
+          value: "2",
+          label: "Paid"
         }
       ],
       options2: [
         {
-          value: 'library',
-          label: 'library'
+          value: "library",
+          label: "library"
         }
       ],
-      value1: '',
-      value2: '',
+      value1: "",
+      value2: "",
       appList: [],
       imageServerUrl: this.$store.state.imageServerUrl,
       appType: 0,
-      catalogRid: 'library',
-      searchName: '',
+      catalogRid: "library",
+      searchName: "",
       page: 1,
       pageSize: 8,
-      sort: 'download_times',
-      sortDesc: 'true'
-
-    }
+      sort: "download_times",
+      sortDesc: "true"
+    };
   },
   methods: {
-      // to do 分页的实现
+    // to do 分页的实现
     getAppList() {
       const searchData = {
-        'free': this.appType,
-        'name': this.searchName,
-        'page': this.page,
-        'pageSize': this.pageSize,
+        free: this.appType,
+        name: this.searchName,
+        page: this.page,
+        pageSize: this.pageSize,
         // 'sort': this.sort,
-        'sortDesc': this.sortDesc
-      }
+        sortDesc: this.sortDesc
+      };
 
-      app.appList(this.$store.getters.lang, searchData)
-          .then(respData => {
-            this.appList = respData.data.data.records
-            this.appList.map(imginfo => {
-              imginfo.imageurl = this.imageServerUrl + imginfo.rid + '/icon'
-              return imginfo
-            })
-          })
+      app.appList(this.$store.getters.lang, searchData).then(respData => {
+        this.appList = respData.data.data.records;
+        this.appList.map(imginfo => {
+          imginfo.imageurl = this.imageServerUrl + imginfo.rid + "/icon";
+          return imginfo;
+        });
+      });
     },
-        deployApp (appId, appRid, versionId, catalog) {
-          this.$router.push({path: '/deployment', query: {appId: appId, appRid: appRid, versionId: versionId, catalog: catalog}})
+    deployApp(appId, appRid, versionId, catalog) {
+      this.$router.push({
+        path: "/deployment",
+        query: {
+          appId: appId,
+          appRid: appRid,
+          versionId: versionId,
+          catalog: catalog
         }
-  },
-    mounted() {
-      this.getAppList()
+      });
     }
-}
+  },
+  mounted() {
+    this.getAppList();
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -143,21 +158,27 @@ export default {
   min-width: 1160px;
   .marketHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
-        font-size: 20px;
+        font-family: Source-Sans-Pro-Bold;
+        font-size: 16px;
         color: #252525;
-        line-height: 24px;
+        line-height: 50px;
+        margin: 0;
+        padding: 0;
         padding-left: 30px;
+        i {
+          font-size: 26px;
+          margin-right: 10px;
+        }
       }
     }
   }
   .shop {
     background: #ffffff;
     min-width: 1130px;
-    margin: 20px;
+    margin: 10px;
     padding: 15px;
     .el-button {
       background: #8eb357;
@@ -165,7 +186,7 @@ export default {
     }
     p {
       height: 40px;
-      font-family: PingFang-SC-Bold;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
       color: #252525;
       line-height: 24px;
@@ -182,19 +203,29 @@ export default {
           cursor: default;
           .shops {
             height: 30px;
-            margin-bottom: -20px;
+            margin-bottom: -10px;
             text-align: right;
           }
-          img {
-            width: 110px;
-            height: 105px;
-            display: inline-block;
+          .imgBox {
+            width: 130px;
+            height: 110px;
+            margin: 0 auto;
+            img {
+              min-width: 100px;
+              min-height: 80px;
+              max-width: 130px;
+              max-height: 110px;
+              width: auto;
+              height: auto;
+              margin: 0 auto;
+              display: block;
+            }
           }
           .name {
             font-weight: 600;
             padding: 5px 0 10px;
             border-bottom: 1px solid #eee;
-            font-family: PingFang-SC-Medium;
+            font-family: Source-Sans-Pro-Bold;
             font-size: 20px;
             color: #251e1c;
             text-align: center;
@@ -205,7 +236,6 @@ export default {
             height: 66px;
             overflow: hidden;
             box-sizing: content-box;
-            font-family: PingFangSC-Regular;
             font-size: 14px;
             color: rgba(0, 0, 0, 0.45);
             text-align: center;
@@ -215,7 +245,6 @@ export default {
           .free {
             font-weight: 600;
             padding: 10px 0;
-            font-family: PingFangSC-Regular;
             font-size: 14px;
             color: #1890ff;
             letter-spacing: 0;
@@ -223,7 +252,6 @@ export default {
             text-align: left;
           }
           .downloads {
-            font-family: PingFangSC-Regular;
             font-size: 14px;
             padding: 10px 0;
             color: #5d5d5d;

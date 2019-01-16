@@ -2,7 +2,7 @@
   <section class="resourceRecord">
     <el-row class="recordHead">
       <el-col class="title" :span="24">
-        <h1>{{$t('seller.groups.deployRecord')}}</h1>
+        <h1><i class="iconfont icon-zhongmingming"></i>{{$t('seller.groups.deployRecord')}}</h1>
       </el-col>
     </el-row>
     <el-row class="recordBox">
@@ -262,7 +262,7 @@ export default {
   .recordBox {
     height: 630px;
     min-width: 1130px;
-    margin: 20px;
+    margin: 10px;
     background: #ffffff;
     overflow: hidden;
     padding: 30px;

@@ -27,43 +27,43 @@
     <ul class="sidebar-menu" data-widget="tree">
       <!-- <li class="header">HEADER</li> -->
       <!-- Optionally, you can add icons to the links -->
-      <li class="treeview" v-show="user== 'seller'">
+      <li class="treeview" v-show="user== 'Seller'">
         <router-link :to="{path: '/seller'}">
           <i class="iconfont icon-home"></i>
           <span>{{$t('menu.home')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user== 'buyer'">
+      <li class="treeview" v-show="user== 'Buyer'">
         <router-link :to="{path: '/buyer'}">
           <i class="iconfont icon-home"></i>
           <span>{{$t('menu.home')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user== 'developer'">
+      <li class="treeview" v-show="user== 'Developer'">
         <router-link :to="{path: '/developer'}">
           <i class="iconfont icon-home"></i>
           <span>{{$t('menu.home')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user== 'buyer'">
+      <li class="treeview" v-show="user== 'Buyer'">
         <router-link :to="{path: '/applicationmarket'}">
           <i class="iconfont icon-application-market"></i>
           <span>{{$t('menu.appMarket')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user== 'buyer'">
+      <li class="treeview" v-show="user== 'Buyer'">
         <router-link :to="{path: '/applicationrepository'}">
           <i class="iconfont icon-My-application"></i>
           <span>{{$t('menu.appRepository')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user== 'buyer'">
+      <li class="treeview" v-show="user== 'Buyer'">
         <router-link :to="{path: '/resourcemarket'}">
           <i class="iconfont icon-resource-market"></i>
           <span>{{$t('menu.resourceMarket')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user== 'buyer'">
+      <li class="treeview" v-show="user== 'Buyer'">
         <router-link :to="{path: '/myresource'}">
           <i class="iconfont icon-my-resource"></i>
           <span>{{$t('menu.myResource')}}</span>
@@ -92,13 +92,13 @@
           </li>
         </ul>
       </li>
-      <li class="treeview" v-show="user== 'seller'">
+      <li class="treeview" v-show="user== 'Seller'">
         <router-link :to="{path: '/myhost'}">
           <i class="iconfont icon-host"></i>
           <span>{{$t('menu.myHost')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user== 'seller'">
+      <li class="treeview" v-show="user== 'Seller'">
         <router-link :to="{path: '/mycolony'}">
           <i class="iconfont icon-cluster"></i>
           <span>{{$t('menu.myColony')}}</span>
@@ -127,13 +127,13 @@
           </li>
         </ul>
       </li>
-      <li class="treeview" v-show="user== 'developer'">
+      <li class="treeview" v-show="user== 'Developer'">
         <router-link :to="{path: '/uploadapplication'}">
           <i class="iconfont icon-upload-application"></i>
           <span>{{$t('menu.uploadApplication')}}</span>
         </router-link>
       </li>
-      <li class="treeview" v-show="user== 'developer'">
+      <li class="treeview" v-show="user== 'Developer'">
         <router-link :to="{path: '/myapplication'}">
           <i class="iconfont icon-My-application"></i>
           <span>{{$t('menu.myApplication')}}</span>
@@ -164,18 +164,15 @@ export default {
   name: "SidebarLeft",
   data() {
     return {
-      user: 'seller',
+      user: '',
     };
   },
   created() {
-    this.getParams();
+    this.getUser();
   },
   methods: {
-    getParams() {
-      // 取到路由带过来的参数
-      var routerParams = auth.getUserBaseInfo().loginRole;
-      // 将数据放在当前组件的数据内
-      this.user = routerParams;
+    getUser() {
+      this.user = auth.getUserBaseInfo().loginRole;
     }
   }
 };
