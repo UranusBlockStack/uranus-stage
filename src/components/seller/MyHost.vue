@@ -21,6 +21,8 @@
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>
     </el-dialog>
+
+
     <!-- Host -->
     <el-row class="myHostHead">
       <el-col class="title" :span="12">
@@ -34,20 +36,21 @@
         </template>
         <el-table-column width="50">
           <template slot-scope="scope">
-            <div :class="scope.row.state == 'Offline' ? 'on' : 'off'"></div>          </template>
+            <div :class="scope.row.state == 'Offline' ? 'on' : 'off'"></div>
+          </template>
         </el-table-column>
         <el-table-column width="120" prop="number">
           <template slot="header" slot-scope="scope">
             <p>
               <i class="iconfont icon-resource-market"></i>
-              {{$t('seller.host.number')}}
+              {{$t('seller.host.number')}}1
             </p>
           </template>
         </el-table-column>
         <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
-              <i class="iconfont icon-cpu"></i> CPU
+              <i class="iconfont icon-cpu"></i> CPU2
             </p>
           </template>
           <template slot-scope="scope">
@@ -60,16 +63,18 @@
             </p>
           </template>
         </el-table-column>
+
         <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-memory"></i>
-              {{$t('seller.host.memory')}}
+              {{$t('seller.host.memory')}}3
             </p>
           </template>
+
           <template slot-scope="scope">
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
-              {{ scope.row.memory }}{{$t('seller.host.usable')}}
+              {{ scope.row.memory }}{{$t('seller.host.usable')}}4
             </p>
             <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;">
             </el-progress>
@@ -78,11 +83,12 @@
             </p>
           </template>
         </el-table-column>
+
         <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-disk"></i>
-              {{$t('seller.host.disk')}}
+              {{$t('seller.host.disk')}}5
             </p>
           </template>
           <template slot-scope="scope">
@@ -93,11 +99,12 @@
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
+
         <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-network"></i>
-              {{$t('seller.host.network')}}
+              {{$t('seller.host.network')}}6
             </p>
           </template>
           <template slot-scope="scope">
@@ -108,11 +115,12 @@
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
+
         <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <el-select v-model="group" :placeholder="$t('seller.host.ownGroup')">
-              <el-option :label="$t('seller.host.group') + 'A'" value="集群A"></el-option>
-              <el-option :label="$t('seller.host.group') + 'B'" value="集群B"></el-option>
+              <el-option :label="$t('seller.host.group') + 'A1'" value="集群A"></el-option>
+              <el-option :label="$t('seller.host.group') + 'B1'" value="集群B"></el-option>
             </el-select>
           </template>
           <template slot-scope="scope">
@@ -130,69 +138,80 @@
 </template>
 
 <script>
+    import * as rancher from '../../services/RancherService'
+
 export default {
-  name: "MyHost",
-  data() {
-    return {
-      dialogVisible: false,
-      form: {
-        name: "",
-        cluster: ""
-      },
-      groupJoin: this.$t('seller.groups.newGroup'),
-      state: "",
-      group: "",
-      tableData: [
-        {
-          state: this.$t("seller.host.online"),
-          number: this.$t("seller.host.hosts") + " A",
-          cpu: "2核",
-          memory: "2G",
-          disk: "1T",
-          network: "2M",
-          colony: this.$t("seller.host.group") + " A"
-        },
-        {
-          state: this.$t("seller.host.offline"),
-          number: this.$t("seller.host.hosts") + " A",
-          cpu: "1核",
-          memory: "2G",
-          disk: "1T",
-          network: "2M",
-          colony: this.$t("seller.host.group") + " C"
-        },
-        {
-          state: this.$t("seller.host.online"),
-          number: this.$t("seller.host.hosts") + " C",
-          cpu: "3核",
-          memory: "2G",
-          disk: "1T",
-          network: "2M",
-          colony: this.$t("seller.host.group") + " D"
-        },
-        {
-          state: this.$t("seller.host.offline"),
-          number: this.$t("seller.host.hosts") + " D",
-          cpu: "1核",
-          memory: "2G",
-          disk: "1T",
-          network: "2M",
-          colony: this.$t("seller.host.group") + " B"
-        },
-        {
-          state: this.$t("seller.host.online"),
-          number: this.$t("seller.host.hosts") + " E",
-          cpu: "2核",
-          memory: "2G",
-          disk: "2T",
-          network: "2M",
-          colony: this.$t("seller.host.group") + " B"
+    name: "MyHost",
+    data() {
+        return {
+          dialogVisible: false,
+          form: {
+            name: "",
+            cluster: ""
+          },
+          groupJoin: this.$t('seller.groups.newGroup'),
+          state: "",
+          group: "",
+            tableData:[]
+          /*tableData: [
+            {
+              state: this.$t("seller.host.online"),
+              number: this.$t("seller.host.hosts") + " A",
+              cpu: "2核",
+              memory: "2G",
+              disk: "1T",
+              network: "2M",
+              colony: this.$t("seller.host.group") + " A"
+            },
+            {
+              state: this.$t("seller.host.offline"),
+              number: this.$t("seller.host.hosts") + " A",
+              cpu: "1核",
+              memory: "2G",
+              disk: "1T",
+              network: "2M",
+              colony: this.$t("seller.host.group") + " C"
+            },
+            {
+              state: this.$t("seller.host.online"),
+              number: this.$t("seller.host.hosts") + " C",
+              cpu: "3核",
+              memory: "2G",
+              disk: "1T",
+              network: "2M",
+              colony: this.$t("seller.host.group") + " D"
+            },
+            {
+              state: this.$t("seller.host.offline"),
+              number: this.$t("seller.host.hosts") + " D",
+              cpu: "1核",
+              memory: "2G",
+              disk: "1T",
+              network: "2M",
+              colony: this.$t("seller.host.group") + " B"
+            },
+            {
+              state: this.$t("seller.host.online"),
+              number: this.$t("seller.host.hosts") + " E",
+              cpu: "2核",
+              memory: "2G",
+              disk: "2T",
+              network: "2M",
+              colony: this.$t("seller.host.group") + " B"
+            }
+          ]*/
+        };
+    },
+    methods: {
+        getHostList(){
+            rancher.hostList(this.$store.getters.lang).then(data=>{
+                console.log("结果是："+data)
+            })
         }
-      ]
-    };
-  },
-  methods: {
-  }
+    },
+    mounted() {
+        this.getHostList()
+    }
 };
 </script>
 
