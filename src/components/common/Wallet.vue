@@ -44,13 +44,13 @@
             prop="createTime"
             :formatter="formateDate"
             :label="$t('wallet.time')"
-            width="150"
+            width="160"
           ></el-table-column>
-          <el-table-column prop="from" :label="$t('wallet.from')" width="120"></el-table-column>
-          <el-table-column prop="to" :label="$t('wallet.to')" width="120"></el-table-column>
-          <el-table-column prop="value" :label="$t('wallet.value')" width="180"></el-table-column>
-          <el-table-column prop="fee" :label="$t('wallet.fee')" width="120"></el-table-column>
-          <el-table-column prop="status" :label="$t('wallet.status')" width="180"></el-table-column>
+          <el-table-column prop="from" :label="$t('wallet.from')" min-width="150"></el-table-column>
+          <el-table-column prop="to" :label="$t('wallet.to')" min-width="150"></el-table-column>
+          <el-table-column prop="value" :label="$t('wallet.value')" width="120"></el-table-column>
+          <el-table-column prop="fee" :label="$t('wallet.fee')"></el-table-column>
+          <el-table-column prop="status" :label="$t('wallet.status')"></el-table-column>
         </el-table>
       </el-col>
       <el-col :span="6" :offset="15" class="transaction-foot">
@@ -182,10 +182,8 @@ export default {
     }
   }
   .transaction {
-    height: 510px;
     margin: 10px;
     background: #ffffff;
-    overflow: hidden;
     .el-col {
       padding: 0 30px;
     }

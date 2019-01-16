@@ -1,7 +1,9 @@
 <template>
   <section class="login">
     <div class="back">
-      <router-link :to="{path: '/map'}"><i class="iconfont icon-back"></i></router-link>
+      <router-link :to="{path: '/'}">
+        <i class="iconfont icon-back"></i>
+      </router-link>
     </div>
     <div class="loginHead">
       <img src="/static/img/uranus/head.png" alt>
@@ -19,107 +21,131 @@
       <div class="phoneRes" v-show="phoneShow">
         <div class="input-group">
           <div class="input-group-btn">
-            <button type="button" class="phoneHead btn btn-default dropdown-toggle" data-toggle="dropdown">
+            <button
+              type="button"
+              class="phoneHead btn btn-default dropdown-toggle"
+              data-toggle="dropdown"
+            >
               {{currentRegion}}
-              <span class="fa fa-caret-down"></span></button>
-            <ul class="dropdown-menu" >
+              <span class="fa fa-caret-down"></span>
+            </button>
+            <ul class="dropdown-menu">
               <li v-for="(item,index) in regions" :key="index">
-                <a href="#" :id="item.prefix" @click="selectRegion(item.prefix)"> {{ item.fullName }}</a>
+                <a href="#" :id="item.prefix" @click="selectRegion(item.prefix)">{{ item.fullName }}</a>
               </li>
             </ul>
           </div>
-          <input class="phoneIpt" type="text" ref="mobileNumber" v-model="phone" :placeholder="$t('userCommon.mobile')"/>
+          <input
+            class="phoneIpt"
+            type="text"
+            ref="mobileNumber"
+            v-model="phone"
+            :placeholder="$t('userCommon.mobile')"
+          >
         </div>
       </div>
 
       <div class="mailRes" v-show="!phoneShow">
         <input type="text" :placeholder="$t('userCommon.Email')" v-model="mail">
       </div>
-      <input type="text" :placeholder="$t('userCommon.password')" v-model="password">
+      <input type="password" :placeholder="$t('userCommon.password')" v-model="password">
       <router-link class="forgetPwd" :to="{ path: '/forgetPwd'}">{{$t('userCommon.forgetPwd')}}</router-link>
       <div class="prompt">{{prompt}}</div>
-      <button class="loginBtn" @click="userLogin">**{{$t('userCommon.loginBtn')}}</button>
+      <button class="loginBtn" @click="userLogin">{{user}} {{$t('userCommon.loginBtn')}}</button>
     </div>
   </section>
 </template>
 
 <script>
-    import * as auth from '../services/AuthService'
+import * as auth from "../services/AuthService";
 
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
-      phoneShow: 'true',
-      prompt: '',
-      phone: '',
-      mail: '',
-      password: '',
+      phoneShow: "true",
+      // 用户身份
+      user: "",
+      // 提示信息
+      prompt: "",
+      // 用户登录信息
+      phone: "",
+      mail: "",
+      password: "",
+      // 地区代码
       regions: [],
-      currentRegion: '86'
-
-    }
+      currentRegion: "86"
+    };
   },
   methods: {
-    getRegionList2() {
-      auth.country(this.$store.getters.lang)
-              .then(resdata => {
-                this.regions = resdata.data.data
-              })
-    },
-    selectRegion (region) {
-      this.currentRegion = region
-    },
-    getLoginName: function (logintype) {
+      getUser() {
+          const userStatus = auth.getUserBaseInfo()
+          if(!userStatus){
+              userStatus =  auth.getDefaultUserStatus()
+              auth.setCurRole(userStatus.loginRole)
+              this.user = userStatus.loginRole
+          }
 
-        let loginname = ''
-        if (logintype === 'mobile') {
-            loginname = this.currentRegion +this.phone
-        }else{
-            loginname = this.mail
-        }
-        return loginname
+          this.user = auth.getCurRole()
+      },
+    getRegionList2() {
+      auth.country(this.$store.getters.lang).then(resdata => {
+        this.regions = resdata.data.data;
+      });
+    },
+    selectRegion(region) {
+      this.currentRegion = region;
+    },
+    getLoginName: function(logintype) {
+      let loginname = "";
+      if (logintype === "mobile") {
+        loginname = this.currentRegion + this.phone;
+      } else {
+        loginname = this.mail;
+      }
+      return loginname;
     },
     choosePhone() {
-        this.phoneShow = true
+      this.phoneShow = true;
     },
     chooseMail() {
-      this.phoneShow = false
+      this.phoneShow = false;
     },
     userLogin() {
-      if (this.phone === '' && this.mail === '') {
-        this.prompt = '请完善信息后登陆'
-      } else if (this.password === '') {
-        this.prompt = '请填写密码'
+      if (this.phone === "" && this.mail === "") {
+        this.prompt = "请完善信息后登陆";
+      } else if (this.password === "") {
+        this.prompt = "请填写密码";
       } else {
-        this.prompt = ''
-        const logintype = this.phoneShow? 'mobile': 'email'
+        this.prompt = "";
+        const logintype = this.phoneShow ? "mobile" : "email";
         const userLoginfo = {
           loginName: this.getLoginName(logintype),
           password: this.password,
           loginType: logintype
-        }
+        };
 
-        const self = this
+        const self = this;
 
-        auth.login(this.$store.getters.lang, userLoginfo)
-              .then(function (curLoginUserInfo) {
-                  self.$router.push({ path: curLoginUserInfo.loginRole })
-              })
-              // .catch(error => {
-              //   if (error) {
-              //     alert('登录不成功')
-              //   }
-              // })
-        const globalUserinfo = auth.getUserBaseInfo()
+        auth
+          .login(auth.getCurLang(), userLoginfo)
+          .then(function(curLoginUserInfo) {
+            self.$router.push({ path: curLoginUserInfo.loginRole });
+          });
+        // .catch(error => {
+        //   if (error) {
+        //     alert('登录不成功')
+        //   }
+        // })
+        const globalUserinfo = auth.getUserBaseInfo();
       }
     }
   },
-    mounted() {
-      this.getRegionList2()
-    }
-
-}
+  mounted() {
+    this.getRegionList2()
+    this.getUser()
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -137,11 +163,11 @@ export default {
     left: 50px;
     top: 50px;
     a {
-        color: #1890ff;
-        font-size: 18px;
-        i {
-            font-size: 28px;
-        }
+      color: #1890ff;
+      font-size: 18px;
+      i {
+        font-size: 28px;
+      }
     }
   }
   .loginHead {
@@ -190,8 +216,8 @@ export default {
       }
     }
     input::-webkit-input-placeholder {
-        color: #c8c8c8;
-        font-family: Source-Sans-Pro-Regular;
+      color: #c8c8c8;
+      font-family: Source-Sans-Pro-Regular;
     }
     .phoneRes {
       width: 380px;

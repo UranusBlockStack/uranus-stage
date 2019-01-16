@@ -12,17 +12,18 @@ export default new Vuex.Store({
       // apiUrl: 'http://192.168.110.45:4000',
     apiUrl: 'http://47.105.151.199:4000/',
     imageServerUrl: 'http://47.105.151.199:3300/rancher-img/',
+    walletServerUrl: 'http://47.105.148.84',
     lang: {// 全部语言包列表
       'zh-cn': 'zh-cn',
       'en-us': 'en-us'
     },
     curLang: 'en-us', // 当前的语言包
-      userRoles: {
-          1: 'seller',
-          2: 'buyer',
-          3: 'developer'
-      },
-      curRole: ''
+    userRoles: {
+      1: 'seller',
+      2: 'buyer',
+      3: 'developer'
+    },
+    curRole: ''
   },
   getters: {
     lang: state => {
@@ -33,22 +34,22 @@ export default new Vuex.Store({
     authenticate (state, user) {
       state.isLoggedIn = auth.isLoggedIn()
     },
-      setLang(state, lang) {
-        state.curLang = lang
-      },
-      setRole(state, role) {
-        state.curRole = role
-      }
+    setLang(state, lang) {
+      state.curLang = lang
+    },
+    setRole(state, role) {
+      state.curRole = role
+    }
   },
   actions: {
     authenticate (context, user) {
       context.commit('authenticate', user)
     },
-      setLang(context, lang){
-        context.commit('setLang', lang)
-      },
-      setRole(context, role){
-        context.commit('setRole', role)
-      }
+    setLang(context, lang) {
+      context.commit('setLang', lang)
+    },
+    setRole(context, role) {
+      context.commit('setRole', role)
+    }
   }
 })

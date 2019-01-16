@@ -2,7 +2,7 @@
   <section class="resourcePool">
     <el-row class="poolHead">
       <el-col class="title" :span="12">
-        <h1><i class="iconfont icon-my-resource"></i>{{$t('menu.myResource')}}</h1>
+        <h1><i class="iconfont icon-host1"></i>{{$t('menu.myResource')}}</h1>
       </el-col>
     </el-row>
     <el-row class="poolBox">
@@ -31,7 +31,7 @@
           <el-input :placeholder="$t('buyer.resourcePool.searchIn')" prefix-icon="el-icon-search"></el-input>
         </el-col>
         <el-col :span="2" :offset="1">
-          <el-button type="success"><i class="iconfont icon-view"></i></el-button>
+          <el-button type="success"><i class="iconfont icon-search"></i></el-button>
         </el-col>
       </el-row>
       <el-row class="rePool">

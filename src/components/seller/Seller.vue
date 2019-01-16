@@ -72,17 +72,17 @@
             <el-table :data="tableData" border style="width: 100%">
               <el-table-column prop="type" :label="$t('seller.home.type')"></el-table-column>
               <el-table-column
-                prop="time"
+                prop="createTime"
                 :formatter="formateDate"
                 :label="$t('seller.home.time')"
               ></el-table-column>
               <el-table-column prop="hash" :label="$t('seller.home.hash')">
                   <template slot-scope="scope">
-            <p style="color:red; font-size:10px; margin-left:35px;"
-            >{{ scope.row.hash }}</p>
-          </template>
+                    <p style="color:red; font-size:10px; margin-left:35px;"
+                    >{{ scope.row.hash }}</p>
+                  </template>
               </el-table-column>
-              <el-table-column prop="amount" :label="$t('seller.home.amount')"></el-table-column>
+              <el-table-column prop="value" :label="$t('seller.home.amount')"></el-table-column>
               <el-table-column prop="fee" :label="$t('seller.home.fee')"></el-table-column>
             </el-table>
           </el-col>
@@ -98,83 +98,61 @@
 </template>
 
 <script>
-import * as wallet from "../../services/WalletService";
-import moment from "moment";
+import * as wallet from '../../services/WalletService'
+import moment from 'moment'
 
 export default {
-  name: "Seller",
+  name: 'Seller',
   data() {
     return {
-      indexCon: "3",
-      indexPro: "3",
+      indexCon: '3',
+      indexPro: '3',
       dataConsumption: {
         day: {
-          x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
+          x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
           y: [50, 40, 30, 40, 50, 60, 50]
         },
         week: {
-          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
           y: [100, 200, 300, 400, 500, 600, 700]
         },
         mounth: {
-          x: ["1", "3", "5", "7", "9", "11", "12"],
+          x: ['1', '3', '5', '7', '9', '11', '12'],
           y: [1000, 520, 200, 334, 390, 330, 220]
         },
         year: {
-          x: ["13", "15", "16", "17", "18", "19"],
+          x: ['13', '15', '16', '17', '18', '19'],
           y: [10000, 520, 200, 334, 390, 330]
         }
       },
       consumptionVal: {
-        x: "",
-        y: ""
+        x: '',
+        y: ''
       },
       dataProfit: {
         day: {
-          x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
+          x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
           y: [10, 20, 30, 40, 50, 60]
         },
         week: {
-          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
           y: [100, 200, 300, 400, 500, 600, 700]
         },
         mounth: {
-          x: ["1", "3", "5", "7", "9", "11", "12"],
+          x: ['1', '3', '5', '7', '9', '11', '12'],
           y: [1000, 520, 200, 334, 390, 330, 220]
         },
         year: {
-          x: ["13", "15", "16", "17", "18", "19"],
+          x: ['13', '15', '16', '17', '18', '19'],
           y: [10000, 520, 200, 334, 390, 330]
         }
       },
       profitVal: {
-        x: "",
-        y: ""
+        x: '',
+        y: ''
       },
-      tableData: [
-        {
-          type: "Receive",
-          time: "2018-11-02 09:56",
-          hash: "0xb2ddddc25f1375bo693e6",
-          amount: "0.63367",
-          fee: "0.000378"
-        },
-        {
-          type: "Receive",
-          time: "2018-11-02 09:56",
-          hash: "0xb2ddddc25f1375bo693e6",
-          amount: "0.63367",
-          fee: "0.000378"
-        },
-        {
-          type: "Receive",
-          time: "2018-11-02 09:56",
-          hash: "0xb2ddddc25f1375bo693e6",
-          amount: "0.63367",
-          fee: "0.000378"
-        }
-      ]
-    };
+      tableData: []
+    }
   },
 
   computed: {},
@@ -183,89 +161,91 @@ export default {
       wallet
         .getTradeLogCurrentUser(this.$store.getters.lang, 0, 1, 10)
         .then(transList => {
-          this.tableData = transList.data.data.records;
-        });
+          this.tableData = transList.data.data.records
+          console.log(this.tableData)
+        })
     },
     formateDate(row, column, cellValue) {
-      return moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
+        // return moment(cellValue).format("YYYY-MM-DD HH:mm:ss")
+        return cellValue
     },
     consumptionDay(x) {
-      this.consumptionVal = this.dataConsumption.day;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexCon = x;
+      this.consumptionVal = this.dataConsumption.day
+      this.initEchart(this.consumptionVal, this.profitVal)
+      this.indexCon = x
     },
     consumptionWeek(x) {
-      this.consumptionVal = this.dataConsumption.week;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexCon = x;
+      this.consumptionVal = this.dataConsumption.week
+      this.initEchart(this.consumptionVal, this.profitVal)
+      this.indexCon = x
     },
     consumptionMounth(x) {
-      this.consumptionVal = this.dataConsumption.mounth;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexCon = x;
+      this.consumptionVal = this.dataConsumption.mounth
+      this.initEchart(this.consumptionVal, this.profitVal)
+      this.indexCon = x
     },
     consumptionYear(x) {
-      this.consumptionVal = this.dataConsumption.year;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexCon = x;
+      this.consumptionVal = this.dataConsumption.year
+      this.initEchart(this.consumptionVal, this.profitVal)
+      this.indexCon = x
     },
     profitDay(x) {
-      this.profitVal = this.dataProfit.day;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexPro = x;
+      this.profitVal = this.dataProfit.day
+      this.initEchart(this.consumptionVal, this.profitVal)
+      this.indexPro = x
     },
     profitWeek(x) {
-      this.profitVal = this.dataProfit.week;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexPro = x;
+      this.profitVal = this.dataProfit.week
+      this.initEchart(this.consumptionVal, this.profitVal)
+      this.indexPro = x
     },
     profitMounth(x) {
-      this.profitVal = this.dataProfit.mounth;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexPro = x;
+      this.profitVal = this.dataProfit.mounth
+      this.initEchart(this.consumptionVal, this.profitVal)
+      this.indexPro = x
     },
     profitYear(x) {
-      this.profitVal = this.dataProfit.year;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexPro = x;
+      this.profitVal = this.dataProfit.year
+      this.initEchart(this.consumptionVal, this.profitVal)
+      this.indexPro = x
     },
     initEchart(val1, val2) {
       let myChart1 = this.$echarts.init(
-        document.getElementById("myConsumption")
-      );
-      let myChart2 = this.$echarts.init(document.getElementById("myProfit"));
-      let myChart3 = this.$echarts.init(document.getElementById("Cpu"));
-      let myChart4 = this.$echarts.init(document.getElementById("Memory"));
-      let myChart5 = this.$echarts.init(document.getElementById("Storage"));
-      let myChart6 = this.$echarts.init(document.getElementById("Network"));
-      let myData1 = val1;
-      let myData2 = val2;
+        document.getElementById('myConsumption')
+      )
+      let myChart2 = this.$echarts.init(document.getElementById('myProfit'))
+      let myChart3 = this.$echarts.init(document.getElementById('Cpu'))
+      let myChart4 = this.$echarts.init(document.getElementById('Memory'))
+      let myChart5 = this.$echarts.init(document.getElementById('Storage'))
+      let myChart6 = this.$echarts.init(document.getElementById('Network'))
+      let myData1 = val1
+      let myData2 = val2
       myChart1.setOption({
-        color: ["#3398DB"],
+        color: ['#3398DB'],
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "line" // 默认为直线，可选为：'line' | 'shadow'
+            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
           }
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            name: "T",
-            type: "category",
+            name: 'T',
+            type: 'category',
             data: myData1.x,
             axisTick: {
               alignWithLabel: true
             },
             axisLine: {
               show: true,
-              symbol: ["none", "arrow"],
+              symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               symbolOffset: [0, 5]
             }
@@ -273,14 +253,14 @@ export default {
         ],
         yAxis: [
           {
-            name: "UracPower(U)",
-            type: "value",
+            name: 'UracPower(U)',
+            type: 'value',
             axisLabel: {
-              formatter: "{value}"
+              formatter: '{value}'
             },
             axisLine: {
               show: true,
-              symbol: ["none", "arrow"],
+              symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               symbolOffset: [0, 15]
             }
@@ -288,46 +268,46 @@ export default {
         ],
         series: [
           {
-            name: "uranus",
-            type: "bar",
-            barWidth: "30%",
-            color: "#1890ff",
+            name: 'uranus',
+            type: 'bar',
+            barWidth: '30%',
+            color: '#1890ff',
             data: myData1.y
           },
           {
-            name: "line",
-            type: "line",
-            color: "#1890ff",
+            name: 'line',
+            type: 'line',
+            color: '#1890ff',
             data: myData1.y
           }
         ]
-      });
+      })
       myChart2.setOption({
-        color: ["#3398DB"],
+        color: ['#3398DB'],
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "line" // 默认为直线，可选为：'line' | 'shadow'
+            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
           }
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            name: "T",
-            type: "category",
+            name: 'T',
+            type: 'category',
             data: myData2.x,
             axisTick: {
               alignWithLabel: true
             },
             axisLine: {
               show: true,
-              symbol: ["none", "arrow"],
+              symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               symbolOffset: [0, 5]
             }
@@ -335,14 +315,14 @@ export default {
         ],
         yAxis: [
           {
-            name: "Earnings(Urac)",
-            type: "value",
+            name: 'Earnings(Urac)',
+            type: 'value',
             axisLabel: {
-              formatter: "{value}"
+              formatter: '{value}'
             },
             axisLine: {
               show: true,
-              symbol: ["none", "arrow"],
+              symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               symbolOffset: [0, 15]
             }
@@ -350,196 +330,196 @@ export default {
         ],
         series: [
           {
-            name: "uranus",
-            type: "bar",
-            barWidth: "30%",
-            color: "#1890ff",
+            name: 'uranus',
+            type: 'bar',
+            barWidth: '30%',
+            color: '#1890ff',
             data: myData2.y
           },
           {
-            name: "line",
-            type: "line",
-            color: "#1890ff",
+            name: 'line',
+            type: 'line',
+            color: '#1890ff',
             data: myData2.y
           }
         ]
-      });
+      })
       myChart3.setOption({
         tooltip: {
-          formatter: "{a} <br/>{b} : {c}%"
+          formatter: '{a} <br/>{b} : {c}%'
         },
         series: [
           {
-            name: "我的算力",
-            type: "gauge",
+            name: '我的算力',
+            type: 'gauge',
             title: {
               show: true,
-              offsetCenter: [0, "60%"], // x, y，单位px
+              offsetCenter: [0, '60%'], // x, y，单位px
               textStyle: {
-                color: "#5d5d5d",
+                color: '#5d5d5d',
                 fontSize: 15
               }
             },
             detail: {
               show: true,
-              formatter: "{value}%",
-              offsetCenter: [0, "90%"],
+              formatter: '{value}%',
+              offsetCenter: [0, '90%'],
               textStyle: {
-                color: "#363636",
+                color: '#363636',
                 fontSize: 24
               }
             },
-            data: [{ value: 20, name: "CPU" }],
+            data: [{ value: 20, name: 'CPU' }],
             axisLabel: {
               formatter: function(value) {
-                return '';
+                return ''
               }
             },
             axisLine: {
               lineStyle: {
                 width: 10,
-                color: [[0.2, "#1890ff"], [1, "#dcdcdc"]]
+                color: [[0.2, '#1890ff'], [1, '#dcdcdc']]
               }
             }
           }
         ]
-      });
+      })
       myChart4.setOption({
         tooltip: {
-          formatter: "{a} <br/>{b} : {c}%"
+          formatter: '{a} <br/>{b} : {c}%'
         },
         series: [
           {
-            name: "我的算力",
-            type: "gauge",
+            name: '我的算力',
+            type: 'gauge',
             title: {
               show: true,
-              offsetCenter: [0, "60%"], // x, y，单位px
+              offsetCenter: [0, '60%'], // x, y，单位px
               textStyle: {
-                color: "#5d5d5d",
+                color: '#5d5d5d',
                 fontSize: 14
               }
             },
             detail: {
               show: true,
-              formatter: "{value}%",
-              offsetCenter: [0, "90%"],
+              formatter: '{value}%',
+              offsetCenter: [0, '90%'],
               textStyle: {
-                color: "#363636",
+                color: '#363636',
                 fontSize: 24
               }
             },
-            data: [{ value: 40, name: "MEMORY" }],
+            data: [{ value: 40, name: 'MEMORY' }],
             axisLabel: {
               formatter: function(value) {
-                return "";
+                return ''
               }
             },
             axisLine: {
               lineStyle: {
                 width: 10,
-                color: [[0.4, "#1890ff"], [1, "#dcdcdc"]]
+                color: [[0.4, '#1890ff'], [1, '#dcdcdc']]
               }
             }
           }
         ]
-      });
+      })
       myChart5.setOption({
         tooltip: {
-          formatter: "{a} <br/>{b} : {c}%"
+          formatter: '{a} <br/>{b} : {c}%'
         },
         series: [
           {
-            name: "我的算力",
-            type: "gauge",
+            name: '我的算力',
+            type: 'gauge',
             title: {
               show: true,
-              offsetCenter: [0, "60%"], // x, y，单位px
+              offsetCenter: [0, '60%'], // x, y，单位px
               textStyle: {
-                color: "#5d5d5d",
+                color: '#5d5d5d',
                 fontSize: 14
               }
             },
             detail: {
               show: true,
-              formatter: "{value}%",
-              offsetCenter: [0, "90%"],
+              formatter: '{value}%',
+              offsetCenter: [0, '90%'],
               textStyle: {
-                color: "#363636",
+                color: '#363636',
                 fontSize: 24
               }
             },
-            data: [{ value: 50, name: "STORAGE" }],
+            data: [{ value: 50, name: 'STORAGE' }],
             axisLabel: {
               formatter: function(value) {
-                return "";
+                return ''
               }
             },
             axisLine: {
               lineStyle: {
                 width: 10,
-                color: [[0.5, "#1890ff"], [1, "#dcdcdc"]]
+                color: [[0.5, '#1890ff'], [1, '#dcdcdc']]
               }
             }
           }
         ]
-      });
+      })
       myChart6.setOption({
         tooltip: {
-          formatter: "{a} <br/>{b} : {c}%"
+          formatter: '{a} <br/>{b} : {c}%'
         },
         series: [
           {
-            name: "我的算力",
-            type: "gauge",
+            name: '我的算力',
+            type: 'gauge',
             title: {
               show: true,
-              offsetCenter: [0, "60%"], // x, y，单位px
+              offsetCenter: [0, '60%'], // x, y，单位px
               textStyle: {
-                color: "#5d5d5d",
+                color: '#5d5d5d',
                 fontSize: 14
               }
             },
             detail: {
               show: true,
-              formatter: "{value}%",
-              offsetCenter: [0, "90%"],
+              formatter: '{value}%',
+              offsetCenter: [0, '90%'],
               textStyle: {
-                color: "#363636",
+                color: '#363636',
                 fontSize: 24
               }
             },
-            data: [{ value: 70, name: "NETWORK" }],
+            data: [{ value: 70, name: 'NETWORK' }],
             axisLabel: {
               formatter: function(value) {
-                return "";
+                return ''
               }
             },
             axisLine: {
               lineStyle: {
                 width: 10,
-                color: [[0.7, "#1890ff"], [1, "#dcdcdc"]]
+                color: [[0.7, '#1890ff'], [1, '#dcdcdc']]
               }
             }
           }
         ]
-      });
+      })
       window.onresize = function() {
-        myChart1.resize();
-        myChart2.resize();
-        myChart3.resize();
-        myChart4.resize();
-        myChart5.resize();
-        myChart6.resize();
-      };
+        myChart1.resize()
+        myChart2.resize()
+        myChart3.resize()
+        myChart4.resize()
+        myChart5.resize()
+        myChart6.resize()
+      }
     }
   },
   mounted() {
-    this.consumptionDay(3);
-    this.profitDay(3);
-    this.initTransactionRecords();
+    this.consumptionDay(3)
+    this.profitDay(3)
+    this.initTransactionRecords()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

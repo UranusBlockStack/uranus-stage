@@ -27,7 +27,7 @@ export default {
                   }
                 },
                 label: {
-                    formatter: ["Rest",  this.chartData + "%",].join("\n"),
+                    formatter: ["Rest",  this.chartData*100 + "%",].join("\n"),
                     fontSize: "22",
                 }
               }

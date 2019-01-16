@@ -39,7 +39,7 @@ import Setting from '@/components/common/Setting'
 
 const routes = [
   {
-    path: '/map',
+    path: '/',
     name: 'Map',
     component: Map
   }, {
@@ -55,106 +55,106 @@ const routes = [
     name: 'ForgetPwd',
     component: ForgetPwd
   }, {
-    path: '/',
+    path: '',
     name: 'Starter',
     component: Starter,
     children: [
         // buyer routes
       {
-        path: 'buyer',
+        path: '/buyer',
         component: Buyer,
         name: 'Buyer'
       }, {
-        path: 'applicationmarket',
+        path: '/applicationmarket',
         component: ApplicationMarket,
         name: 'ApplicationMarket'
       }, {
-        path: 'applicationrepository',
+        path: '/applicationrepository',
         component: ApplicationRepository,
         name: 'ApplicationRepository'
       }, {
-        path: 'deployment',
+        path: '/deployment',
         component: Deployment,
         name: 'Deployment'
       }, {
-        path: 'apprecord',
+        path: '/apprecord',
         component: AppRecord,
         name: 'AppRecord'
       }, {
-        path: 'resourcemarket',
+        path: '/resourcemarket',
         component: ResourceMarket,
         name: 'ResourceMarket'
       }, {
-        path: 'myresource',
+        path: '/myresource',
         component: MyResource,
         name: 'MyResource'
       }, {
-        path: 'resourcepool',
+        path: '/resourcepool',
         component: ResourcePool,
         name: 'ResourcePool'
       }, {
-        path: 'urapowerrecord',
+        path: '/urapowerrecord',
         component: UrapowerRecord,
         name: 'UrapowerRecord'
       }, {
-        path: 'appstate',
+        path: '/appstate',
         component: AppState,
         name: 'AppState'
       }, {
-        path: 'statedetail',
+        path: '/statedetail',
         component: StateDetail,
         name: 'StateDetail'
       },
         
         // developer routes
       {
-        path: 'developer',
+        path: '/developer',
         component: Developer,
         name: 'Developer'
       }, {
-        path: 'uploadapplication',
+        path: '/uploadapplication',
         component: UploadApplication,
         name: 'UploadApplication'
       }, {
-        path: 'myapplication',
+        path: '/myapplication',
         component: MyApplication,
         name: 'MyApplication'
       },
         
         // seller routes
       {
-        path: 'seller',
+        path: '/seller',
         component: Seller,
         name: 'Seller'
       }, {
-        path: 'myhost',
+        path: '/myhost',
         component: MyHost,
         name: 'MyHost'
       }, {
-        path: 'mycolony',
+        path: '/mycolony',
         component: MyColony,
         name: 'MyColony'
       }, {
-        path: 'colony',
+        path: '/colony',
         component: Colony,
         name: 'Colony'
       }, {
-        path: 'resourcerecord',
+        path: '/resourcerecord',
         component: ResourceRecord,
         name: 'ResourceRecord'
       },
 
         // common routes
       {
-        path: 'wallet',
+        path: '/wallet',
         component: Wallet,
         name: 'Wallet'
       }, {
-        path: 'setting',
+        path: '/setting',
         component: Setting,
         name: 'Setting'
       }, {
-        path: 'transfer',
+        path: '/transfer',
         component: Transfer,
         name: 'Transfer'
       }
