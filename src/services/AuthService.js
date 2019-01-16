@@ -16,9 +16,9 @@ export function login (lang, userLoginfo) {
                 userName        : userLoginfo.loginName,
                 userId          : userdata.id,
                 loginType       : userLoginfo.loginType,
-                loginRole       : store.state.curRole,
-                loginLanguage   : store.state.curLang,
-                userAddress     : userdata.accountAddress
+                userAddress     : userdata.accountAddress,
+                loginRole       : '',
+                loginLanguage   : 'en-us',
             }
             setToken(userdata.token, curLoginUserInfo)
             localStorage.setItem('currentUserStatus', JSON.stringify(curLoginUserInfo))
@@ -32,6 +32,8 @@ export function logout () {
   store.dispatch('authenticate')
 }
 
+
+/// / Conversation State Manage  Functions
 function setToken (token, user) {
   localStorage.setItem('token', token)
   store.dispatch('authenticate', user)
@@ -47,12 +49,31 @@ export function getUserBaseInfo() {
     return JSON.parse(curUserState)
 }
 
-export function curLang() {
+export function setCurLang(lang) {
+    updatePropValue('loginLanguage', lang)
+}
+
+export function getCurLang() {
     const curUserState = localStorage.getItem('currentUserStatus')
     return JSON.parse(curUserState).loginLanguage
 }
 
-export function curRole() {
+export function setCurRole(role) {
+    updatePropValue('loginRole', role)
+}
+
+function updatePropValue(propName, value) {
+    const userData = getUserBaseInfo()
+
+    if(userData) {
+        userData[propName] = value
+    }
+    else userData[propName] = value
+
+    localStorage.setItem('currentUserStatus', JSON.stringify(userData))
+}
+
+export function getCurRole() {
     const curUserState = localStorage.getItem('currentUserStatus')
     return JSON.parse(curUserState).loginRole
 }
@@ -71,6 +92,10 @@ export function getUserId () {
   }
   return token.user.id
 }
+
+
+
+/// / Auth API Wraps
 
 export function registerUser (lang, user) {
   return httpLang(lang).post('/auth/users/signup', user)

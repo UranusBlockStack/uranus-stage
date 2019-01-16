@@ -237,7 +237,7 @@ export default {
     },
     methods:{
         setConfigSelector() {
-            const CpuData = ServerConfigData.CPU.paramVals[auth.curLang()]
+            const CpuData = ServerConfigData.CPU.paramVals[auth.getCurLang()]
             this.cpuSel = WrapDropDownData(CpuData)
             this.deployForm.cpu = this.cpuSel[0].value
             console.log(this.cpuSel[0]);
@@ -256,14 +256,14 @@ export default {
 
         },
         getRegionList() {
-            rancher.rancherList(auth.curLang())
+            rancher.rancherList(auth.getCurLang())
                 .then(respData => {
                     this.rancherServer = respData.data.data
                     let regionData = []
                     this.rancherServer.map(rancher => {
                         const region = {
-                            value: auth.curLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
-                            label: auth.curLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
+                            value: auth.getCurLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
+                            label: auth.getCurLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
                         }
                         regionData.push(region)
                     })

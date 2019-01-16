@@ -416,7 +416,7 @@ export default {
     },
 
       setConfigSelector() {
-          const CpuData = ServerConfigData.CPU.paramVals[auth.curLang()]
+          const CpuData = ServerConfigData.CPU.paramVals[auth.getCurLang()]
           this.cpuSel = WrapDropDownData(CpuData)
           this.deployForm.cpu = this.cpuSel[0].value
           console.log(this.cpuSel[0]);
@@ -435,14 +435,14 @@ export default {
 
       },
         getRegionList() {
-          rancher.rancherList(auth.curLang())
+          rancher.rancherList(auth.getCurLang())
             .then(respData => {
               this.rancherServer = respData.data.data
               let regionData = []
               this.rancherServer.map(rancher => {
                 const region = {
-                  value: auth.curLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
-                  label: auth.curLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
+                  value: auth.getCurLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
+                  label: auth.getCurLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
                 }
                 regionData.push(region)
               })
@@ -451,7 +451,7 @@ export default {
             })
         },
         getAppDetail (appid) {
-          app.appDetail(auth.curLang(), appid).then(respData => {
+          app.appDetail(auth.getCurLang(), appid).then(respData => {
             if (respData.data.success) {
               const appInfo = respData.data.data
               this.appDetail = appInfo
@@ -474,7 +474,7 @@ export default {
           })
         },
         getAppVersionDetail (appId, version) {
-          app.appVersion(auth.curLang(), appId, version).then(respon => {
+          app.appVersion(auth.getCurLang(), appId, version).then(respon => {
             if (respon.success) {
               console.log('app respon', respon.data)
               this.appVersionDetail = respon.data
