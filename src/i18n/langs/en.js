@@ -421,7 +421,7 @@ module.exports = {
       settingName: 'Name',
       settingTime: 'Time',
       rent: 'Recommended Rent',
-      setRent: 'Rent',
+      setRent: 'Rent(URAC)',
       setRegion: 'Region',
       setState: 'State',
       cancel: 'Cancel',
@@ -469,6 +469,7 @@ module.exports = {
   },
   transfer: {
     transfer: 'Transfer',
+    countdown: 'Payment Countdown: ',
     balance: 'Balance:',
     address: 'Address:',
     addressIn: 'Enter address',
@@ -490,19 +491,18 @@ module.exports = {
   },
   setting: {
     account: 'User ID',
+    clickLink: 'Link',
+    clickChange: 'Change',
     mail: 'Email',
     modifyMail: {
-      click: 'Change',
       email: 'Email'
     },
     phone: 'Phone',
     modifyPhone: {
-      click: 'Change',
       phone: 'Phone'
     },
     password: 'Password',
     modifyPassword: {
-      click: 'Change',
       current: 'Current Password',
       new: 'New Password',
       confirm: 'Confirm',

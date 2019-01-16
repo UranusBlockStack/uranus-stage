@@ -82,7 +82,7 @@ module.exports = {
         completedStatus: '已完成',
         orderTime: '订单创建时间',
         appPrice: '购买应用价格',
-        fee: '手续费',
+        fee: '手续费（URAC）',
         ip: 'IP',
         port: '端口',
         appHash: '交易哈希'
@@ -118,7 +118,7 @@ module.exports = {
       address: '地址',
       value: '数额',
       content: '交易方式',
-      fee: '手续费',
+      fee: '手续费(URAC)',
       purchaseApp: '购买应用',
       purchasePower: '购买算力',
       code: '支付验证码',
@@ -177,7 +177,7 @@ module.exports = {
       address: '地址',
       value: '数额',
       content: '交易方式',
-      fee: '手续费',
+      fee: '手续费(URAC)',
       purchaseApp: '购买应用',
       purchasePower: '购买算力',
       code: '支付验证码',
@@ -275,8 +275,8 @@ module.exports = {
       type: '交易类型',
       time: '交易时间',
       hash: '交易哈希',
-      amount: '数量 (Urac)',
-      fee: '手续费'
+      amount: '数量 (URAC)',
+      fee: '手续费(URAC)'
     },
     host: {
       list: '主机列表',
@@ -428,7 +428,7 @@ module.exports = {
     from: '发起方',
     to: '接收方',
     value: '交易额',
-    fee: '手续费',
+    fee: '手续费(URAC)',
     status: '状态',
     success: '成功',
     fail: '失败',
@@ -436,6 +436,7 @@ module.exports = {
   },
   transfer: {
     transfer: '转账：',
+    countdown: '支付倒计时： ',
     balance: '余额(URAC)：',
     address: '地址码：',
     addressIn: '输入收款人钱包地址',

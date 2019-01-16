@@ -105,8 +105,8 @@ export default {
   name: 'Map',
   data() {
     return {
-      lang: '中文',
-      langCode: 'zh-cn',
+      lang: 'English',
+      langCode: 'en-us',
       role: '',
       BlockData: [],
       TranscationData: []

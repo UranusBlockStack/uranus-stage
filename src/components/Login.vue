@@ -144,7 +144,7 @@ export default {
   mounted() {
     this.getRegionList2()
     this.getUser()
-  }
+  },
 };
 </script>
 

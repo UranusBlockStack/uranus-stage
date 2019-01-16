@@ -1,5 +1,6 @@
 <template>
   <section class="Transfer">
+      <!-- Information confirmation prompt box -->
     <el-dialog :title="$t('transfer.check')" :visible.sync="outerVisible" width="660px">
       <el-dialog width="660px" :visible.sync="innerVisible" append-to-body>
         <p>{{$t('transfer.saveText')}}</p>
@@ -8,6 +9,7 @@
           <el-button type="primary" @click="innerVisible = false">{{$t('transfer.button2')}}</el-button>
         </div>
       </el-dialog>
+        <div class="timeOver">{{$t('transfer.countdown')}}<TimeOver style="display: inline-block"/></div>
       <p><b>{{$t('transfer.checkAddress')}}</b>  {{formLabelAlign.address}}</p>
       <p><b>{{$t('transfer.checkValue')}}</b>  {{formLabelAlign.value}}</p>
       <p><b>{{$t('transfer.fee')}}</b>  {{formLabelAlign.fee}}</p>
@@ -60,9 +62,13 @@
 <script>
     import * as auth from '../../services/AuthService'
     import * as wallet from '../../services/WalletService'
+    import TimeOver from "@/components/modules/TimeOver"
 
 export default {
   name: 'Transfer',
+  components: {
+      TimeOver
+    },
   data() {
     return {
       formLabelAlign: {
@@ -85,7 +91,7 @@ export default {
           }
         ]
       },
-      outerVisible: false,
+      outerVisible: true,
       innerVisible: false,
       curUserInfo: auth.getUserBaseInfo()
 
@@ -140,6 +146,11 @@ export default {
     }
   }
   .el-dialog {
+      .timeOver {
+          font-family: Source-Sans-Pro-Bold;
+          width: 300px;
+          margin: 0 auto;
+      }
     p {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
