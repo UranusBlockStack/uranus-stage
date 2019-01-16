@@ -136,6 +136,11 @@ export function captcha (lang, userinfo) {
   return httpLang(lang).post('/auth/captcha', userinfo)
 }
 
+//检查手机或邮箱验证码是否正确
+export function checkCaptcha (lang, receiver,captcha) {
+    return httpLang(lang).get('/auth/captcha/{receiver}/{captcha}')
+}
+
 export function country (lang) {
   return httpLang(lang).get('/auth/country')
 }
