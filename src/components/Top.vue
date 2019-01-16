@@ -1,7 +1,7 @@
 <template>
   <section class="Head">
     <!-- Logo -->
-    <router-link :to="{path : '/map'}" class="logo">
+    <router-link :to="{path : '/'}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini">
         <img src="/static/img/uranus/uranus_mini.png" alt>

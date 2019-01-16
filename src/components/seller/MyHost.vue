@@ -1,24 +1,28 @@
 <template>
   <section class="myHost">
     <!-- Confirmation Information Bullet Box -->
-    <el-dialog :title="$t('seller.groups.chooseGroup')" :visible.sync="dialogVisible" width="550px">
+    <el-dialog :title="$t('seller.host.chooseGroup')" :visible.sync="dialogVisible" width="550px">
       <el-form :model="form">
-        <el-radio v-model="groupJoin" :label="$t('seller.groups.newGroup')"></el-radio>
+        <el-radio v-model="groupJoin" :label="$t('seller.host.newGroup')"></el-radio>
         <el-form-item>
-          <el-input v-model="form.name" autocomplete="off" :placeholder="$t('seller.groups.nameGroup')" style="width: 517px">
+          <el-input v-model="form.name" autocomplete="off" :placeholder="$t('seller.host.nameGroup')" style="width: 515px">
           </el-input>
+           <el-select style="width: 515px; margin-top:15px;" v-model="form.cluster" :placeholder="$t('seller.host.existingGroup')">
+            <el-option label="Cluster A" value="A"></el-option>
+            <el-option label="Cluster B" value="B"></el-option>
+          </el-select>
         </el-form-item>
-        <el-radio v-model="groupJoin" :label="$t('seller.groups.joinGroup')"></el-radio>
+        <el-radio v-model="groupJoin" :label="$t('seller.host.joinGroup')"></el-radio>
         <el-form-item>
-          <el-select style="width: 517px" v-model="form.cluster" :placeholder="$t('seller.groups.existingGroup')">
+          <el-select style="width: 515px" v-model="form.cluster" :placeholder="$t('seller.host.existingGroup')">
             <el-option label="Cluster A" value="A"></el-option>
             <el-option label="Cluster B" value="B"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+        <el-button @click="dialogVisible = false">{{$t('seller.host.cancel')}}</el-button>
+        <el-button type="primary" @click="dialogVisible = false">{{$t('seller.host.confirm')}}</el-button>
       </span>
     </el-dialog>
 
@@ -154,12 +158,12 @@ export default {
     name: "MyHost",
     data() {
         return {
-          dialogVisible: false,
+          dialogVisible: true,
           form: {
             name: "",
             cluster: ""
           },
-          groupJoin: this.$t('seller.groups.newGroup'),
+          groupJoin: this.$t('seller.host.newGroup'),
           state: "",
           group: "",
             tableData:[]

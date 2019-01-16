@@ -25,6 +25,7 @@
           <el-form-item :label="$t('seller.groups.settingName')">
             <el-input v-model="form.name"></el-input>
           </el-form-item>
+          <p class="rent">{{$t('seller.groups.rent')}} 100 U/{{$t('seller.groups.day')}}</p>
           <el-form-item :label="$t('seller.groups.setRent')">
             <el-input v-model="form.rent"></el-input>
           </el-form-item>
@@ -175,6 +176,12 @@ export default {
   background: #f2f2f2;
   width: 100%;
   min-width: 1130px;
+  .rent {
+      color: #8eb357;
+      text-align: right;
+      font-size: 12px;
+      margin-bottom: -5px;
+  }
   .myColonyHead {
     background: #ffffff;
     height: 50px;

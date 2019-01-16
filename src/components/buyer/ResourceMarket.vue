@@ -7,7 +7,7 @@
       :visible.sync="outerVisible"
       width="800px"
     >
-      <RestTime style="margin-left: 250px;" endTime="2019-1-15 16:31:15"/>
+      <TimeOver style="margin-left: 250px;"/>
       <el-table :data="gridData">
         <el-table-column property="order" :label="$t('buyer.resourceMarket.orderNumber')"></el-table-column>
         <el-table-column property="address" :label="$t('buyer.resourceMarket.address')"></el-table-column>
@@ -187,7 +187,7 @@
 </template>
 
 <script>
-import RestTime from "@/components/modules/RestTime";
+import TimeOver from "@/components/modules/TimeOver";
 import * as auth from '../../services/AuthService'
 import * as rancher from '../../services/RancherService'
 import { ServerConfigData, AddUnit, WrapDropDownData } from '../../store/rancher_info'
@@ -195,7 +195,7 @@ import { ServerConfigData, AddUnit, WrapDropDownData } from '../../store/rancher
 export default {
   name: "ResourceMarket",
   components: {
-    RestTime
+    TimeOver
   },
   data() {
     return {
@@ -225,7 +225,14 @@ export default {
           order: "214521236987",
           address: "0x461s2df6…",
           number: "1000021.23",
-          type: "购买应用",
+          type: this.$t('buyer.resourceMarket.purchaseApp'),
+          charge: "0.11"
+        },
+        {
+          order: "214521236987",
+          address: "0x461s2df6…",
+          number: "1000021.23",
+          type: this.$t('buyer.resourceMarket.purchasePower'),
           charge: "0.11"
         }
       ]
