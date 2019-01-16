@@ -39,80 +39,90 @@
             <div :class="scope.row.state == 'Offline' ? 'on' : 'off'"></div>
           </template>
         </el-table-column>
-        <el-table-column width="120" prop="number">
+        <el-table-column width="120" prop="name">
+            <!--主机名称 name-->
           <template slot="header" slot-scope="scope">
             <p>
               <i class="iconfont icon-resource-market"></i>
-              {{$t('seller.host.number')}}1
-            </p>
-          </template>
-        </el-table-column>
-        <el-table-column width="180">
-          <template slot="header" slot-scope="scope">
-            <p class="table-head">
-              <i class="iconfont icon-cpu"></i> CPU2
-            </p>
-          </template>
-          <template slot-scope="scope">
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
-              {{ scope.row.cpu }}{{$t('seller.host.usable')}}
-            </p>
-            <el-progress :percentage="50" :stroke-width="18" :text-inside="true" style="margin-left:35px;"></el-progress>
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
-              {{$t('seller.host.have')}}4核
+              {{$t('seller.host.number')}}
             </p>
           </template>
         </el-table-column>
 
         <el-table-column width="180">
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-cpu"></i> CPU
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{ scope.row.cpuKernelUsed }}{{$t('seller.host.usable')}}
+                <!--已用核数-->
+            </p>
+            <el-progress :percentage="getPercentNumber(scope.row.cpuKernelUsed,scope.row.cpuKernel)" :stroke-width="18" :text-inside="true" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+                {{ scope.row.cpuKernel }}{{$t('seller.host.have')}}
+                <!--总核数-->
+            </p>
+          </template>
+        </el-table-column>
+
+        <el-table-column width="180">
+            <!--内存-->
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-memory"></i>
-              {{$t('seller.host.memory')}}3
+              {{$t('seller.host.memory')}}
             </p>
           </template>
-
           <template slot-scope="scope">
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
-              {{ scope.row.memory }}{{$t('seller.host.usable')}}4
+              {{ scope.row.memUsed}}{{$t('seller.host.usable')}}
             </p>
-            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;">
+            <el-progress :percentage="getPercentNumber(scope.row.memUsed,scope.row.mem)" :stroke-width="18" :show-text="false" style="margin-left:35px;">
             </el-progress>
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
-              {{$t('seller.host.have')}}4核
+                {{ scope.row.mem}}{{$t('seller.host.have')}}
             </p>
           </template>
         </el-table-column>
 
         <el-table-column width="180">
+            <!--硬盘-->
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-disk"></i>
-              {{$t('seller.host.disk')}}5
+              {{$t('seller.host.disk')}}
             </p>
           </template>
           <template slot-scope="scope">
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
-              {{ scope.row.disk }}{{$t('seller.host.usable')}}
+              {{ scope.row.diskUsed }}{{$t('seller.host.usable')}}
             </p>
-            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+            <el-progress :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+                {{ scope.row.disk }} {{$t('seller.host.have')}}
+            </p>
           </template>
         </el-table-column>
 
         <el-table-column width="180">
+            <!--宽带(M)-->
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-network"></i>
-              {{$t('seller.host.network')}}6
+              {{$t('seller.host.network')}}
             </p>
           </template>
           <template slot-scope="scope">
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
-              {{ scope.row.network }}{{$t('seller.host.usable')}}
+              {{ scope.row.networkUsed }}{{$t('seller.host.usable')}}
             </p>
-            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+            <el-progress :percentage="getPercentNumber(scope.row.networkUsed,scope.row.network)" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+                {{ scope.row.network }}{{$t('seller.host.have')}}
+            </p>
           </template>
         </el-table-column>
 
@@ -125,7 +135,7 @@
           </template>
           <template slot-scope="scope">
             <p style="margin-left: 30px; text-align: center;">
-              <span v-show="scope.row.colony != $t('seller.host.group') + ' B'">{{scope.row.colony}}</span>
+              <span v-show="scope.row.colony != $t('seller.host.group') + ' B'">{{scope.row.clusterName}}</span>
               <el-button style="margin-left: 10px;" @click="dialogVisible = true" v-show="scope.row.colony == $t('seller.host.group') + ' B'">
                 join
               </el-button>
@@ -153,60 +163,24 @@ export default {
           state: "",
           group: "",
             tableData:[]
-          /*tableData: [
-            {
-              state: this.$t("seller.host.online"),
-              number: this.$t("seller.host.hosts") + " A",
-              cpu: "2核",
-              memory: "2G",
-              disk: "1T",
-              network: "2M",
-              colony: this.$t("seller.host.group") + " A"
-            },
-            {
-              state: this.$t("seller.host.offline"),
-              number: this.$t("seller.host.hosts") + " A",
-              cpu: "1核",
-              memory: "2G",
-              disk: "1T",
-              network: "2M",
-              colony: this.$t("seller.host.group") + " C"
-            },
-            {
-              state: this.$t("seller.host.online"),
-              number: this.$t("seller.host.hosts") + " C",
-              cpu: "3核",
-              memory: "2G",
-              disk: "1T",
-              network: "2M",
-              colony: this.$t("seller.host.group") + " D"
-            },
-            {
-              state: this.$t("seller.host.offline"),
-              number: this.$t("seller.host.hosts") + " D",
-              cpu: "1核",
-              memory: "2G",
-              disk: "1T",
-              network: "2M",
-              colony: this.$t("seller.host.group") + " B"
-            },
-            {
-              state: this.$t("seller.host.online"),
-              number: this.$t("seller.host.hosts") + " E",
-              cpu: "2核",
-              memory: "2G",
-              disk: "2T",
-              network: "2M",
-              colony: this.$t("seller.host.group") + " B"
-            }
-          ]*/
         };
     },
     methods: {
         getHostList(){
             rancher.hostList(this.$store.getters.lang).then(data=>{
-                console.log("结果是："+data)
+                console.log("结果是：",data)
+                this.tableData=data.data.data.records
             })
+        }
+
+    },
+    computed:{
+        getPercentNumber(){
+            //计算百分比 a/b
+            return function(a,b){
+                var n=Number(a/b*100).toFixed(2)
+                return Number(n)
+            }
         }
     },
     mounted() {
