@@ -10,20 +10,20 @@ export function isLoggedIn () {
 export function login (lang, userLoginfo) {
   return httpLang(lang).post('/auth/users/signin', userLoginfo)
     .then(res => {
-        const userdata = res.data.data
-        if (res) {
-            const  curLoginUserInfo = {
-                userName        : userLoginfo.loginName,
-                userId          : userdata.id,
-                loginType       : userLoginfo.loginType,
-                userAddress     : userdata.accountAddress,
-                loginRole       : '',
-                loginLanguage   : 'en-us',
-            }
-            setToken(userdata.token, curLoginUserInfo)
-            localStorage.setItem('currentUserStatus', JSON.stringify(curLoginUserInfo))
-            return curLoginUserInfo
+      const userdata = res.data.data
+      if (res) {
+        const curLoginUserInfo = {
+          userName: userLoginfo.loginName,
+          userId: userdata.id,
+          loginType: userLoginfo.loginType,
+          userAddress: userdata.accountAddress,
+          loginRole: getCurRole(),
+          loginLanguage: 'en-us'
         }
+        setToken(userdata.token, curLoginUserInfo)
+        localStorage.setItem('currentUserStatus', JSON.stringify(curLoginUserInfo))
+        return curLoginUserInfo
+      }
     })
 }
 
@@ -31,7 +31,6 @@ export function logout () {
   localStorage.clear()
   store.dispatch('authenticate')
 }
-
 
 /// / Conversation State Manage  Functions
 function setToken (token, user) {
@@ -43,39 +42,53 @@ export function getToken () {
   return localStorage.getItem('token')
 }
 
-
 export function getUserBaseInfo() {
-    const curUserState = localStorage.getItem('currentUserStatus')
-    return JSON.parse(curUserState)
+  const curUserState = localStorage.getItem('currentUserStatus')
+  return JSON.parse(curUserState)
 }
 
 export function setCurLang(lang) {
-    updatePropValue('loginLanguage', lang)
+  updatePropValue('loginLanguage', lang)
 }
 
 export function getCurLang() {
-    const curUserState = localStorage.getItem('currentUserStatus')
-    return JSON.parse(curUserState).loginLanguage
+  const curUserState = localStorage.getItem('currentUserStatus')
+  return JSON.parse(curUserState).loginLanguage
 }
 
 export function setCurRole(role) {
-    updatePropValue('loginRole', role)
+  updatePropValue('loginRole', role)
+}
+
+const defaultUserStatus =
+  {
+    userName: '',
+    userId: '',
+    loginType: 'mobile',
+    userAddress: '',
+    loginRole: 'Seller',
+    loginLanguage: 'en-us'
+  }
+
+export function getDefaultUserStatus () {
+  return  defaultUserStatus
 }
 
 function updatePropValue(propName, value) {
-    const userData = getUserBaseInfo()
+  const userData = getUserBaseInfo()
 
-    if(userData) {
-        userData[propName] = value
-    }
-    else userData[propName] = value
+  let userTmpVar = defaultUserStatus
+  if (userData) {
+    userTmpVar = userData
+    userTmpVar[propName] = value
+  }
 
-    localStorage.setItem('currentUserStatus', JSON.stringify(userData))
+  localStorage.setItem('currentUserStatus', JSON.stringify(userTmpVar))
 }
 
 export function getCurRole() {
-    const curUserState = localStorage.getItem('currentUserStatus')
-    return JSON.parse(curUserState).loginRole
+  const curUserState = localStorage.getItem('currentUserStatus')
+  return JSON.parse(curUserState).loginRole
 }
 export function getUsername () {
   const token = decodeToken()
@@ -92,8 +105,6 @@ export function getUserId () {
   }
   return token.user.id
 }
-
-
 
 /// / Auth API Wraps
 

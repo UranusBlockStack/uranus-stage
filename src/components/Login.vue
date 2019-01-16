@@ -79,7 +79,14 @@ export default {
   },
   methods: {
       getUser() {
-          this.user = this.$store.state.curRole
+          const userStatus = auth.getUserBaseInfo()
+          if(!userStatus){
+              userStatus =  auth.getDefaultUserStatus()
+              auth.setCurRole(userStatus.loginRole)
+              this.user = userStatus.loginRole
+          }
+
+          this.user = auth.getCurRole()
       },
     getRegionList2() {
       auth.country(this.$store.getters.lang).then(resdata => {
@@ -121,7 +128,7 @@ export default {
         const self = this;
 
         auth
-          .login(this.$store.getters.lang, userLoginfo)
+          .login(auth.getCurLang(), userLoginfo)
           .then(function(curLoginUserInfo) {
             self.$router.push({ path: curLoginUserInfo.loginRole });
           });
