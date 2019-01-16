@@ -1,5 +1,6 @@
 <template>
   <section class="resourceMarket">
+
     <!-- Confirmation Information Bullet Box -->
     <el-dialog
       :title="$t('buyer.resourceMarket.confirmTitle')"
@@ -54,6 +55,7 @@
         >{{$t('buyer.resourceMarket.button2')}}</el-button>
       </div>
     </el-dialog>
+
     <!-- purchase -->
     <el-row class="resourceHead">
       <el-col class="title" :span="24">
@@ -178,7 +180,7 @@
         <el-col :span="6" :offset="10">
           <el-button
             type="success"
-            @click="outerVisible = true"
+            @click="purchaseUraPower"
           >{{$t('buyer.resourceMarket.confirm')}}</el-button>
         </el-col>
       </el-row>
@@ -190,34 +192,34 @@
 import TimeOver from "@/components/modules/TimeOver";
 import * as auth from '../../services/AuthService'
 import * as rancher from '../../services/RancherService'
-import { ServerConfigData, AddUnit, WrapDropDownData } from '../../store/rancher_info'
+import { ServerConfigData, WrapDropDownData } from '../../store/rancher_info'
 
 export default {
-  name: "ResourceMarket",
+  name: 'ResourceMarket',
   components: {
     TimeOver
   },
   data() {
     return {
       deployForm: {
-        name: "",
-        region: "Asia",
-        cpu: "4",
-        disk: "512G",
-        memory: "16",
-        network: "512G",
-        startTime: "",
-        endTime: ""
+        name: '',
+        region: 'Asia',
+        cpu: '4',
+        disk: '512G',
+        memory: '16',
+        network: '512G',
+        startTime: '',
+        endTime: ''
       },
       regionSel: [],
       cpuSel: [],
       diskSel: [],
       memorySel: [],
       networkSel: [],
-      value: "",
-      time1: "",
-      time2: "",
-      input: "",
+      value: '',
+      time1: '',
+      time2: '',
+      input: '',
       outerVisible: false,
       innerVisible: false,
       gridData: [
@@ -236,50 +238,53 @@ export default {
           charge: "0.11"
         }
       ]
-    };
-  },
-    created () {
-        this.getRegionList()
-        this.setConfigSelector()
-    },
-    methods:{
-        setConfigSelector() {
-            const CpuData = ServerConfigData.CPU.paramVals[auth.getCurLang()]
-            this.cpuSel = WrapDropDownData(CpuData)
-            this.deployForm.cpu = this.cpuSel[0].value
-            console.log(this.cpuSel[0]);
-
-            const HdData = ServerConfigData.HD.paramVals
-            this.diskSel =  WrapDropDownData(HdData)
-            this.deployForm.disk = this.diskSel[0].value
-
-            const MemData = ServerConfigData.Mem.paramVals
-            this.memorySel =  WrapDropDownData(MemData)
-            this.deployForm.memory = this.memorySel[0].value
-
-            const NetworData = ServerConfigData.Network.paramVals
-            this.networkSel =  WrapDropDownData(NetworData)
-            this.deployForm.network = this.networkSel[0].value
-
-        },
-        getRegionList() {
-            rancher.rancherList(auth.getCurLang())
-                .then(respData => {
-                    this.rancherServer = respData.data.data
-                    let regionData = []
-                    this.rancherServer.map(rancher => {
-                        const region = {
-                            value: auth.getCurLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
-                            label: auth.getCurLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
-                        }
-                        regionData.push(region)
-                    })
-
-                    this.regionSel = regionData
-                })
-        }
     }
-};
+  },
+  created () {
+    this.getRegionList()
+    this.setConfigSelector()
+  },
+  methods: {
+    setConfigSelector() {
+      const CpuData = ServerConfigData.CPU.paramVals[auth.getCurLang()]
+      this.cpuSel = WrapDropDownData(CpuData)
+      this.deployForm.cpu = this.cpuSel[0].value
+
+      const HdData = ServerConfigData.HD.paramVals
+      this.diskSel = WrapDropDownData(HdData)
+      this.deployForm.disk = this.diskSel[0].value
+
+      const MemData = ServerConfigData.Mem.paramVals
+      this.memorySel = WrapDropDownData(MemData)
+      this.deployForm.memory = this.memorySel[0].value
+
+      const NetworData = ServerConfigData.Network.paramVals
+      this.networkSel = WrapDropDownData(NetworData)
+      this.deployForm.network = this.networkSel[0].value
+    },
+    getRegionList() {
+      rancher.rancherList(auth.getCurLang())
+                .then(respData => {
+                  this.rancherServer = respData.data.data
+                  let regionData = []
+                  this.rancherServer.map(rancher => {
+                    const region = {
+                      value: auth.getCurLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
+                      label: auth.getCurLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
+                    }
+                    regionData.push(region)
+                  })
+
+                  this.regionSel = regionData
+                })
+    },
+    purchaseUraPower() {
+        console.log(this.deployForm)
+        // outerVisible = true
+    }
+
+  }
+}
 </script>
 
 <style lang="scss" scoped>

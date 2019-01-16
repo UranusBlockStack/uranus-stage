@@ -10,6 +10,7 @@
         </router-link>
       </el-col>
     </el-row>
+
     <el-dialog :title="$t('buyer.appRepository.deleteSure')" :visible.sync="dialogVisible" width="30%" top="20%">
       <span>{{$t('buyer.appRepository.deleteText')}}</span>
       <span slot="footer" class="dialog-footer">
@@ -17,13 +18,14 @@
         <el-button type="primary" @click="dialogVisible = false">{{$t('buyer.appRepository.button2')}}</el-button>
       </span>
     </el-dialog>
+
     <div class="shop">
       <el-row>
         <el-col :span="6"  :offset="14">
-          <el-input :placeholder="$t('buyer.appRepository.searchIn')" prefix-icon="el-icon-search"></el-input>
+          <el-input :placeholder="$t('buyer.appRepository.searchIn')" prefix-icon="el-icon-search" v-model="searchName"> </el-input>
         </el-col>
         <el-col :span="3" :offset="1">
-          <el-button type="success"><i class="iconfont icon-view"></i></el-button>
+          <el-button type="success" @click="searchMyApp"><i class="iconfont icon-view"></i></el-button>
         </el-col>
       </el-row>
       <el-row class="shopBox" :gutter="20">
@@ -42,11 +44,11 @@
                     <el-dropdown-item>{{$t('buyer.appRepository.detail')}}</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-                <img src="/static/img/uranus/developer/app.png" alt="img">
-                <p class="name">Imagepuler</p>
+                <img :src="app.imageurl" alt="img">
+                <p class="name">{{app.name}}</p>
                 <p
                   class="detail"
-                >DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
+                >{{app.description}}</p>
                 <el-row :gutter="20">
                   <el-col :span="6" :offset="2">
                     <p class="free">{{$t('buyer.appRepository.free')}}</p>
@@ -73,24 +75,51 @@
 </template>
 
 <script>
+    import * as app from '../../services/RancherService'
+    import * as auth from '../../services/AuthService'
+
 export default {
   name: 'Applicationmarket',
   data() {
     return {
       letter: '123',
       dialogVisible: false,
-      appList: [
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Imagepuller', shop: '商店2' },
-        { id: '3', name: 'Imagepuller', shop: '商店3' },
-        { id: '4', name: 'Imagepuller', shop: '商店4' },
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Imagepuller', shop: '商店2' },
-        { id: '3', name: 'Imagepuller', shop: '商店3' },
-        { id: '4', name: 'Imagepuller', shop: '商店4' }
-      ]
+      imageServerUrl: this.$store.state.imageServerUrl,
+      appList: [],
+      searchName: '',
+      page: 1,
+      pageSize: 8,
+      sort: 'download_times',
+      sortDesc: 'true'
     }
-  }
+  },
+  methods: {
+    getAppList() {
+      const queryData = {
+        name: this.searchName,
+        page: this.page,
+        pageSize: this.pageSize,
+        sort: this.sort,
+        sortDesc: this.sortDesc
+      }
+
+      app.appByUser(auth.getCurLang(), queryData).then(respData => {
+        this.appList = respData.data.data.records
+        this.appList.map(imginfo => {
+          imginfo.imageurl = this.imageServerUrl + imginfo.rid + '/icon'
+          return imginfo
+        })
+      })
+    },
+        searchMyApp() {
+            this.getAppList()
+        }
+
+  },
+    created() {
+      this.getAppList()
+    }
+
 }
 </script>
 

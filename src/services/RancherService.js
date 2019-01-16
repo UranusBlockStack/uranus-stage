@@ -100,3 +100,7 @@ export function appDetail (lang, appId) {
 export function appVersion (lang, appId, version) {
     return httpLang(lang).get(`/rancher/apps/${appId}/versions/${version}`)
 }
+
+export function appByUser (lang, queryData) {
+    return httpLang(lang).post('/rancher/app_users/search', queryData)
+}

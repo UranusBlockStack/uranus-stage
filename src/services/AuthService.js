@@ -80,8 +80,8 @@ function updatePropValue(propName, value) {
   let userTmpVar = defaultUserStatus
   if (userData) {
     userTmpVar = userData
-    userTmpVar[propName] = value
   }
+  userTmpVar[propName] = value
 
   localStorage.setItem('currentUserStatus', JSON.stringify(userTmpVar))
 }

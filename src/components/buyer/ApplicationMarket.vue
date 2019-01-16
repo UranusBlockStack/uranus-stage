@@ -11,7 +11,7 @@
     <div class="shop">
       <el-row>
         <el-col :span="4">
-          <el-select v-model="value1" :placeholder="$t('buyer.appMarket.application')">
+          <el-select v-model="appType" :placeholder="$t('buyer.appMarket.application')" @change="setAppType">
             <el-option
               v-for="item in options1"
               :key="item.value"
@@ -21,7 +21,7 @@
           </el-select>
         </el-col>
         <el-col :span="4" :offset="1">
-          <el-select v-model="value2" :placeholder="$t('buyer.appMarket.storeAll')">
+          <el-select v-model="catalogRid" :placeholder="$t('buyer.appMarket.storeAll')">
             <el-option
               v-for="item in options2"
               :key="item.value"
@@ -31,11 +31,11 @@
           </el-select>
         </el-col>
         <el-col :span="6" :offset="7">
-          <el-input :placeholder="$t('buyer.appMarket.searchIn')" prefix-icon="el-icon-search"></el-input>
+          <el-input :placeholder="$t('buyer.appMarket.searchIn')" v-model="searchName" prefix-icon="el-icon-search"></el-input>
         </el-col>
         <el-col :span="2">
           <el-button style="margin-left:10px;" type="success">
-            <i class="iconfont icon-search"></i>
+            <i class="iconfont icon-search" @click="searchApps"></i>
           </el-button>
         </el-col>
       </el-row>
@@ -79,77 +79,90 @@
 </template>
 
 <script>
-import * as app from "../../services/RancherService";
+import * as app from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
 
 export default {
-  name: "ApplicationMarket",
+  name: 'ApplicationMarket',
   data() {
     return {
       options1: [
         {
-          value: "1",
-          label: "Free"
+          value: '1',
+          label: 'Free'
         },
         {
-          value: "2",
-          label: "Paid"
+          value: '2',
+          label: 'Paid'
+        },
+        {value: '0',
+          label: 'All'
         }
       ],
       options2: [
         {
-          value: "library",
-          label: "library"
+          value: 'library',
+          label: 'library'
         }
       ],
-      value1: "",
-      value2: "",
+      value1: '',
+      value2: '',
       appList: [],
       imageServerUrl: this.$store.state.imageServerUrl,
-      appType: 0,
-      catalogRid: "library",
-      searchName: "",
+      appType: 'All',
+      appTypeSelected: 0,
+      catalogRid: 'library',
+      searchName: '',
       page: 1,
       pageSize: 8,
-      sort: "download_times",
-      sortDesc: "true"
-    };
+      sort: 'download_times',
+      sortDesc: 'true'
+    }
   },
   methods: {
     // to do 分页的实现
     getAppList() {
       const searchData = {
-        free: this.appType,
+        free: this.appTypeSelected,
         name: this.searchName,
         page: this.page,
         pageSize: this.pageSize,
         // 'sort': this.sort,
         sortDesc: this.sortDesc
-      };
+      }
+      console.log(searchData)
 
-      app.appList(this.$store.getters.lang, searchData).then(respData => {
-        this.appList = respData.data.data.records;
+      app.appList(auth.getCurLang(), searchData).then(respData => {
+        this.appList = respData.data.data.records
         this.appList.map(imginfo => {
-          imginfo.imageurl = this.imageServerUrl + imginfo.rid + "/icon";
-          return imginfo;
-        });
-      });
+          imginfo.imageurl = this.imageServerUrl + imginfo.rid + '/icon'
+          return imginfo
+        })
+      })
     },
     deployApp(appId, appRid, versionId, catalog) {
       this.$router.push({
-        path: "/deployment",
+        path: '/deployment',
         query: {
           appId: appId,
           appRid: appRid,
           versionId: versionId,
           catalog: catalog
         }
-      });
+      })
+    },
+    searchApps() {
+      console.log('click search')
+      this.getAppList()
+    },
+    setAppType(select) {
+      this.appTypeSelected = select
     }
   },
-  mounted() {
-    this.getAppList();
+  created() {
+    this.getAppList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
