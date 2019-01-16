@@ -5,20 +5,12 @@
       <el-form :model="form">
         <el-radio v-model="groupJoin" :label="$t('seller.groups.newGroup')"></el-radio>
         <el-form-item>
-          <el-input
-            v-model="form.name"
-            autocomplete="off"
-            :placeholder="$t('seller.groups.nameGroup')"
-            style="width: 517px"
-          ></el-input>
+          <el-input v-model="form.name" autocomplete="off" :placeholder="$t('seller.groups.nameGroup')" style="width: 517px">
+          </el-input>
         </el-form-item>
         <el-radio v-model="groupJoin" :label="$t('seller.groups.joinGroup')"></el-radio>
         <el-form-item>
-          <el-select
-            style="width: 517px"
-            v-model="form.cluster"
-            :placeholder="$t('seller.groups.existingGroup')"
-          >
+          <el-select style="width: 517px" v-model="form.cluster" :placeholder="$t('seller.groups.existingGroup')">
             <el-option label="Cluster A" value="A"></el-option>
             <el-option label="Cluster B" value="B"></el-option>
           </el-select>
@@ -59,16 +51,13 @@
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.cpu }}{{$t('seller.host.usable')}}</p>
-            <el-progress
-              :percentage="50"
-              :stroke-width="18"
-              :text-inside="true"
-              style="margin-left:35px;"
-            ></el-progress>
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{ scope.row.cpu }}{{$t('seller.host.usable')}}
+            </p>
+            <el-progress :percentage="50" :stroke-width="18" :text-inside="true" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{$t('seller.host.have')}}4核
+            </p>
           </template>
         </el-table-column>
         <el-table-column width="180">
@@ -79,16 +68,14 @@
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.memory }}{{$t('seller.host.usable')}}</p>
-            <el-progress
-              :percentage="50"
-              :stroke-width="18"
-              :show-text="false"
-              style="margin-left:35px;"
-            ></el-progress>
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{ scope.row.memory }}{{$t('seller.host.usable')}}
+            </p>
+            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;">
+            </el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{$t('seller.host.have')}}4核
+            </p>
           </template>
         </el-table-column>
         <el-table-column width="180">
@@ -99,15 +86,10 @@
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.disk }}{{$t('seller.host.usable')}}</p>
-            <el-progress
-              :percentage="50"
-              :stroke-width="18"
-              :show-text="false"
-              style="margin-left:35px;"
-            ></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{ scope.row.disk }}{{$t('seller.host.usable')}}
+            </p>
+            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
@@ -119,15 +101,10 @@
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.network }}{{$t('seller.host.usable')}}</p>
-            <el-progress
-              :percentage="50"
-              :stroke-width="18"
-              :show-text="false"
-              style="margin-left:35px;"
-            ></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{ scope.row.network }}{{$t('seller.host.usable')}}
+            </p>
+            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
@@ -141,11 +118,9 @@
           <template slot-scope="scope">
             <p style="margin-left: 30px; text-align: center;">
               <span v-show="scope.row.colony != $t('seller.host.group') + ' B'">{{scope.row.colony}}</span>
-              <el-button
-                style="margin-left: 10px;"
-                @click="dialogVisible = true"
-                v-show="scope.row.colony == $t('seller.host.group') + ' B'"
-              >join</el-button>
+              <el-button style="margin-left: 10px;" @click="dialogVisible = true" v-show="scope.row.colony == $t('seller.host.group') + ' B'">
+                join
+              </el-button>
             </p>
           </template>
         </el-table-column>
