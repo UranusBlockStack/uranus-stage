@@ -98,10 +98,10 @@ export default {
       return loginname
     },
     choosePhone() {
-      this.phoneShow = true;
+      this.phoneShow = true
     },
     chooseMail() {
-      this.phoneShow = false;
+      this.phoneShow = false
     },
     registerUser() {
       const logintype = this.phoneShow ? "mobile" : "email"
@@ -113,7 +113,8 @@ export default {
       };
 
       var self = this
-      auth.registerUser(this.$store.getters.lang, user)
+
+        auth.registerUser(this.$store.getters.lang, user)
           .then(regResp => {
               if(regResp.data.success)
                     self.$router.push({name: 'Map'})
@@ -150,7 +151,8 @@ export default {
     }
   },
   mounted() {
-    this.getRegionList2();
+    this.getRegionList2()
+      console.log(auth.getCurLang())
   }
 };
 </script>

@@ -17,32 +17,34 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <router-link :to="{path: 'register'}" class="register">{{$t('map.register')}}</router-link>
+      <a @click.prevent = "userRegister" class="register">{{$t('map.register')}}</a>
     </header>
+
     <div id="mapWorld"></div>
+
     <div class="right">
       <div class="head-block">
         <b>Head Block:</b>
-        <p>4277862</p>
+        <p>{{BlockData[0].height}}</p>
         <b>Head Block Producer:</b>
-        <p>copernicus</p>
+        <p>{{BlockData[0].miner}}</p>
         <b>Head Block Timestamp:</b>
-        <p>Jan 9, 2019, 11:01:49</p>
+        <p>{{BlockData[0].timestamp}}</p>
       </div>
       <div class="block">
         <h3>
           <i class="iconfont icon-zhongmingming"></i> Block
         </h3>
         <div class="text" id="show">
-          <p>Block 4277862</p>
-          <p>>8 seconds ago</p>
-          <p>mined by cope…</p>
-          <p>0 transactionssssssssssssssssssssssssssss</p>
+          <p>Block {{BlockData[0].height}}</p>
+          <p>>{{BlockData[0].timestamp}}</p>
+          <p>mined by {{BlockData[0].miner}}</p>
+          <p>0 transactions</p>
         </div>
         <div class="text">
-          <p>Block 4277862</p>
-          <p>>9 seconds ago</p>
-          <p>mined by cope…</p>
+          <p>Block {{BlockData[1].height}}</p>
+          <p>>{{BlockData[0].timestamp}}o</p>
+          <p>mined by {{BlockData[0].miner}}</p>
           <p>0 transactions</p>
         </div>
       </div>
@@ -95,32 +97,37 @@
 
 <script>
 import '../../static/js/world.js'
+import * as auth from "../services/AuthService"
+import * as block from '../services/BlockService'
+import moment from "moment";
 
 export default {
   name: 'Map',
   data() {
     return {
-        lang: '中文',
-        langCode : 'zh-cn',
-        role: ''
+      lang: '中文',
+      langCode: 'zh-cn',
+      role: '',
+      BlockData: [],
+      TranscationData: []
     }
   },
   methods: {
     chooseCn() {
       this.lang = '中文'
-        this.langCode = 'zh-cn'
+      this.langCode = 'zh-cn'
       this.$i18n.locale = 'cn'
     },
     chooseEn() {
       this.lang = 'English'
-        this.langCode = 'en-us'
+      this.langCode = 'en-us'
       this.$i18n.locale = 'en'
     },
-      LoginPage(userRole) {
-        this.$store.dispatch('setRole', userRole)
-        this.$store.dispatch('setLang', this.langCode)
-          this.$router.push({name: 'Login'})
-      },
+    LoginPage(userRole) {
+      auth.setCurRole(userRole)
+      auth.setCurLang(this.langCode)
+      this.$router.push({name: 'Login'})
+    },
 
     initEchart() {
       // 绘制地图
@@ -180,11 +187,60 @@ export default {
       window.onresize = function() {
         myChartMap2.resize()
       }
-    }
+    },
+    userRegister() {
+        auth.setCurLang(this.langCode)
+        this.$router.push({name: 'Register'})
+    },
+    lastedBlock() {
+      // block.getLastedBlock(this.$store.getters.lang, {'height': -1})
+      //         .then(blockData => {
+      //           if (!blockData.data.errCode) {
+      //             // const blockData = blockData.data.data
+      //             console.log(blockData)
+      //
+      //               block.getLastedBlock(this.$store.getters.lang, {'height': blockData.height-1})
+      //                   .then(blockData => {
+      //                       if (!blockData.data.errCode) {
+      //                           // const blockData = blockData.data.data
+      //                           console.log(blockData)
+      //
+      //                       }
+      //                   })
+      //           }
+      //         })
+      const blockData1 = {
+        hash: '0xab8a7055f1dfec7aa5c2b5deb465f0ca3acad685cd8a99e7108c55061aced63d',
+        parentHash: '0x8f24fe7598f0a3e50c2631fa7b8658a562eb537a4060b229ca3857cd59e00f7a',
+        height: 214931,
+        timestamp: moment(1547605437 * 1000).format("YYYY-MM-DD HH:mm:ss"),
+        gasLimit: 5000000,
+        gasUsed: 0,
+          transactions:[
+
+          ],
+        miner: '0x83f1caadabeec2945b73087f803d404f054cc2b7'
+      }
+      this.BlockData.push(blockData1)
+
+      const blockData2 = {
+        'hash': '0x8f24fe7598f0a3e50c2631fa7b8658a562eb537a4060b229ca3857cd59e00f7a',
+        'parentHash': '0x48eaf603e8c9ef1f9842db93a04f619e151a5ee7e1dea596a37409d2ac7c9613',
+        'height': 214930,
+        'timestamp': moment(1547605437 * 1000).format("YYYY-MM-DD HH:mm:ss"),
+        'gasLimit': 5000000,
+        'gasUsed': 0,
+        'miner': '0x83f1caadabeec2945b73087f803d404f054cc2b7'
+      }
+      this.BlockData.push(blockData2)
+    },
   },
   mounted() {
     this.initEchart()
-  }
+  },
+    created() {
+        this.lastedBlock()
+    }
 }
 </script>
 
