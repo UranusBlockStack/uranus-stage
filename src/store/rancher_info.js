@@ -43,8 +43,8 @@ export const WrapDropDownData = (param) => {
   const paramkeys = Object.keys(param)
   paramkeys.map(key => {
     const itemData = {
-      lable: key,
-      value: param[key]
+        value: key,
+        label: param[key]
     }
     dropdownData.push(itemData)
   })
