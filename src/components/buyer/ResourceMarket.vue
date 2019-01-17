@@ -83,7 +83,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item :label="$t('buyer.deploy.region')">
-                  <el-select v-model="deployForm.region">
+                  <el-select v-model="deployForm.rancherId" @change="setRegionSelectValue">
                     <el-option
                       v-for="item in regionSel"
                       :key="item.value"
@@ -95,7 +95,7 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item :label="$t('buyer.deploy.cpu')">
-                  <el-select v-model="deployForm.cpu">
+                  <el-select v-model="deployForm.cpuKernel" @change="setParamCPU">
                     <el-option
                       v-for="item in cpuSel"
                       :key="item.value"
@@ -106,7 +106,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.disk')">
+                <el-form-item :label="$t('buyer.deploy.disk')" @change="setParamHD">
                   <el-select v-model="deployForm.disk">
                     <el-option
                       v-for="item in diskSel"
@@ -118,8 +118,8 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.memory')">
-                  <el-select v-model="deployForm.memory">
+                <el-form-item :label="$t('buyer.deploy.memory')" @change="setParamRAM">
+                  <el-select v-model="deployForm.mem">
                     <el-option
                       v-for="item in memorySel"
                       :key="item.value"
@@ -138,7 +138,7 @@
                 </el-form-item>
               </el-col>-->
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.network')">
+                <el-form-item :label="$t('buyer.deploy.network')" @change="setParamNet">
                   <el-select v-model="deployForm.network">
                     <el-option
                       v-for="item in networkSel"
@@ -151,22 +151,13 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item :label="$t('buyer.deploy.timeScreening')">
-                  <el-col :span="11">
+                  <el-col :span="18">
                     <el-date-picker
-                      type="date"
-                      :placeholder="$t('buyer.deploy.startingTime')"
-                      v-model="deployForm.startTime"
-                      style="width: 100%;"
-                    ></el-date-picker>
-                  </el-col>
-                  <el-col class="line" :span="2">
-                    <i class="el-icon-arrow-right"></i>
-                  </el-col>
-                  <el-col :span="11">
-                    <el-date-picker
-                      type="date"
-                      :placeholder="$t('buyer.deploy.endTime')"
-                      v-model="deployForm.endTime"
+                       type="daterange"
+                      :start-placeholder="$t('buyer.deploy.startingTime')"
+                      :end-placeholder="$t('buyer.deploy.endTime')"
+                      range-separator="-"
+                      v-model="deployForm.dateRange"
                       style="width: 100%;"
                     ></el-date-picker>
                   </el-col>
@@ -202,14 +193,13 @@ export default {
   data() {
     return {
       deployForm: {
-        name: '',
-        region: 'Asia',
-        cpu: '4',
+        projectName: '',
+        rancherId: 2,
+        cpuKernel: '4',
         disk: '512G',
-        memory: '16',
+        mem: '16',
         network: '512G',
-        startTime: '',
-        endTime: ''
+        dateRange: ''
       },
       regionSel: [],
       cpuSel: [],
@@ -248,7 +238,7 @@ export default {
     setConfigSelector() {
       const CpuData = ServerConfigData.CPU.paramVals[auth.getCurLang()]
       this.cpuSel = WrapDropDownData(CpuData)
-      this.deployForm.cpu = this.cpuSel[0].value
+      this.deployForm.cpuKernel = this.cpuSel[0].value
 
       const HdData = ServerConfigData.HD.paramVals
       this.diskSel = WrapDropDownData(HdData)
@@ -256,12 +246,29 @@ export default {
 
       const MemData = ServerConfigData.Mem.paramVals
       this.memorySel = WrapDropDownData(MemData)
-      this.deployForm.memory = this.memorySel[0].value
+      this.deployForm.mem = this.memorySel[0].value
 
       const NetworData = ServerConfigData.Network.paramVals
       this.networkSel = WrapDropDownData(NetworData)
       this.deployForm.network = this.networkSel[0].value
     },
+
+    setRegionSelectValue(region) {
+      this.deployForm.rancherId = region
+    },
+    setParamCPU(value) {
+      this.deployForm.cpuKernel = value
+    },
+    setParamHD(value) {
+      this.deployForm.disk = value
+    },
+    setParamRAM(value) {
+      this.deployForm.mem = value
+    },
+    setParamNet(value) {
+      this.deployForm.network = value
+    },
+
     getRegionList() {
       rancher.rancherList(auth.getCurLang())
                 .then(respData => {
@@ -278,9 +285,23 @@ export default {
                   this.regionSel = regionData
                 })
     },
+
+
     purchaseUraPower() {
+        // console.log(this.deployForm.dateRange[0])
+        this.deployForm.beginTime  = this.deployForm.dateRange[0]
+        this.deployForm.endTime    = this.deployForm.dateRange[1]
+
         console.log(this.deployForm)
-        // outerVisible = true
+        order.orderResource(auth.getCurLang(), this.deployForm)
+            .then(purcheStatus => {
+              const purchStausData = purcheStatus.data
+                console.log(purchStausData)
+                if(purchStausData.success)
+                    this.gridData = purchStausData.data
+                    this.outerVisible = true
+            })
+
     }
 
   }

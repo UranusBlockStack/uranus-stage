@@ -553,7 +553,7 @@ export default {
         margin: 0;
         padding: 0;
         i {
-          font-size: 26px;
+          font-size: 22px;
         }
       }
       .el-pagination {

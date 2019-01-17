@@ -18,10 +18,42 @@
           style="width: 100%"
           @row-click="$router.push({path: '/statedetail'})"
         >
-          <el-table-column prop="1" :label="$t('buyer.appState.status')"></el-table-column>
-          <el-table-column prop="2" :label="$t('buyer.appState.name')"></el-table-column>
-          <el-table-column prop="3" :label="$t('buyer.appState.image')" width="320"></el-table-column>
-          <el-table-column prop="4" :label="$t('buyer.appState.pod')"></el-table-column>
+          <el-table-column prop="1" :label="$t('buyer.appState.status')">
+            <template slot="header" slot-scope="scope" min-width="250">
+              <p class="table-head">
+                <i class="iconfont icon-state"></i>
+                {{$t('buyer.appState.status')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="2" :label="$t('buyer.appState.name')">
+            <template slot="header" slot-scope="scope" min-width="250">
+              <p class="table-head">
+                <i class="iconfont icon-hash"></i>
+                {{$t('buyer.appState.name')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column width="320">
+            <template slot="header" slot-scope="scope" min-width="250">
+              <p class="table-head">
+                <i class="iconfont icon-hash"></i>
+                {{$t('buyer.appState.image')}}
+              </p>
+            </template>
+            <template slot-scope="scope">
+              <p class="overflow">{{ scope.row.image[0] }}</p>
+              <p class="overflow">{{ scope.row.image[1] }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="4" :label="$t('buyer.appState.pod')">
+            <template slot="header" slot-scope="scope" min-width="250">
+              <p class="table-head">
+                <i class="iconfont icon-hash"></i>
+                {{$t('buyer.appState.pod')}}
+              </p>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="8" :offset="16" class="transaction-foot">
@@ -38,27 +70,30 @@ export default {
     return {
       tableData: [
         {
-          1: "运行中",
+          1: "on",
           2: "wordpress-mdkyy-mariadb",
-          3:
-            "docker.io/bitnami/mariadb.10.135-debian-9" +
-            this.$t("buyer.appState.choosePod"),
+          image: [
+            "docker.io/bitnami/mariadb.10.135-debian-9",
+            this.$t("buyer.appState.choosePod")
+          ],
           4: "1"
         },
         {
-          1: "运行中",
+          1: "on",
           2: "wordpress-mdkyy-mariadb",
-          3:
-            "docker.io/bitnami/mariadb.10.135-debian-9" +
-            this.$t("buyer.appState.choosePod"),
+          image: [
+            "docker.io/bitnami/mariadb.10.135-debian-9",
+            this.$t("buyer.appState.choosePod")
+          ],
           4: "1"
         },
         {
-          1: "运行中",
+          1: "on",
           2: "wordpress-mdkyy-mariadb",
-          3:
-            "docker.io/bitnami/mariadb.10.135-debian-9" +
-            this.$t("buyer.appState.choosePod"),
+          image: [
+            "docker.io/bitnami/mariadb.10.135-debian-9",
+            this.$t("buyer.appState.choosePod")
+          ],
           4: "1"
         }
       ]
@@ -91,7 +126,7 @@ export default {
       }
     }
     p {
-      font-family: PingFang-SC-Bold;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
       color: #8eb357;
       text-align: center;
@@ -105,6 +140,22 @@ export default {
     background: #ffffff;
     overflow: hidden;
     padding: 30px;
+    .table-head {
+      color: #363636;
+      font-weight: 500;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      i {
+        font-size: 22px;
+      }
+    }
+    .overflow {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
+    }
     .el-col {
       display: flex;
       .el-button {
@@ -120,7 +171,6 @@ export default {
         line-height: 40px;
       }
       .time {
-        font-family: PingFangSC-Regular;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.65);
         text-align: left;
@@ -132,7 +182,7 @@ export default {
     .record-head {
       height: 50px;
       p {
-        font-family: PingFangSC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.85);
         line-height: 50px;

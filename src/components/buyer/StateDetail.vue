@@ -2,7 +2,9 @@
   <section class="appRecord">
     <el-row class="recordHead">
       <el-col class="title" :span="20">
-        <h1 @click="$router.back(-1)"><i class="iconfont icon-zhongmingming"></i> wordpress-mdkyy-mariadb</h1>
+        <h1 @click="$router.back(-1)">
+          <i class="iconfont icon-zhongmingming"></i> wordpress-mdkyy-mariadb
+        </h1>
       </el-col>
       <el-col :span="4">
         <p>{{$t('buyer.stateDetail.rename')}}</p>
@@ -10,12 +12,56 @@
     </el-row>
     <el-row class="recordBox">
       <el-col :span="24">
-        <el-table :data="tableData" border style="width: 100%" @row-click="$router.push({path: '/statedetail'})">
-          <el-table-column prop="1" :label="$t('buyer.stateDetail.status')"></el-table-column>
-          <el-table-column prop="2" :label="$t('buyer.stateDetail.name')"></el-table-column>
-          <el-table-column prop="3" :label="$t('buyer.stateDetail.image')" width="320"></el-table-column>
-          <el-table-column prop="4" :label="$t('buyer.stateDetail.host')"></el-table-column>
-          <el-table-column prop="5" :label="$t('buyer.stateDetail.ip')"></el-table-column>
+        <el-table
+          :data="tableData"
+          border
+          style="width: 100%"
+          @row-click="$router.push({path: '/statedetail'})"
+        >
+          <el-table-column prop="1">
+            <template slot="header" slot-scope="scope" min-width="250">
+              <p class="table-head">
+                <i class="iconfont icon-state"></i>
+                {{$t('buyer.stateDetail.status')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="2">
+            <template slot="header" slot-scope="scope" min-width="250">
+              <p class="table-head">
+                <i class="iconfont icon-hash"></i>
+                {{$t('buyer.stateDetail.name')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column width="320">
+            <template slot="header" slot-scope="scope" min-width="250">
+              <p class="table-head">
+                <i class="iconfont icon-hash"></i>
+                {{$t('buyer.stateDetail.image')}}
+              </p>
+            </template>
+            <template slot-scope="scope">
+              <p class="overflow">{{ scope.row.image[0] }}</p>
+              <p class="overflow">{{ scope.row.image[1] }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="4">
+            <template slot="header" slot-scope="scope" min-width="250">
+              <p class="table-head">
+                <i class="iconfont icon-host1"></i>
+                {{$t('buyer.stateDetail.host')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="5">
+            <template slot="header" slot-scope="scope" min-width="250">
+              <p class="table-head">
+                <i class="iconfont icon-hash"></i>
+                {{$t('buyer.stateDetail.ip')}}
+              </p>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="8" :offset="16" class="transaction-foot">
@@ -27,45 +73,64 @@
 
 <script>
 export default {
-  name: 'AppRecord',
+  name: "AppRecord",
   data() {
     return {
       tableData: [
         {
-          1: '运行中',
-          2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
-          4: 'host140',
-          5: '10.42.0.58'
-        }, {
-          1: '运行中',
-          2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
-          4: 'host140',
-          5: '10.42.0.58'
-        }, {
-          1: '运行中',
-          2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
-          4: 'host140',
-          5: '10.42.0.58'
-        }, {
-          1: '运行中',
-          2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
-          4: 'host140',
-          5: '10.42.0.58'
-        }, {
-          1: '运行中',
-          2: 'wordpress-mdkyy-mariadb',
-          3: 'docker.io/bitnami/mariadb.10.135-debian-9',
-          4: 'host140',
-          5: '10.42.0.58'
-        } 
+          1: "on",
+          2: "wordpress-mdkyy-mariadb",
+          image: [
+            "docker.io/bitnami/mariadb.10.135-debian-9",
+            this.$t("buyer.appState.choosePod")
+          ],
+          4: "host140",
+          5: "10.42.0.58"
+        },
+        {
+          1: "on",
+          2: "wordpress-mdkyy-mariadb",
+          image: [
+            "docker.io/bitnami/mariadb.10.135-debian-9",
+            this.$t("buyer.appState.choosePod")
+          ],
+          4: "host140",
+          5: "10.42.0.58"
+        },
+        {
+          1: "on",
+          2: "wordpress-mdkyy-mariadb",
+          image: [
+            "docker.io/bitnami/mariadb.10.135-debian-9",
+            this.$t("buyer.appState.choosePod")
+          ],
+          4: "host140",
+          5: "10.42.0.58"
+        },
+        {
+          1: "on",
+          2: "wordpress-mdkyy-mariadb",
+          image: [
+            "docker.io/bitnami/mariadb.10.135-debian-9",
+            this.$t("buyer.appState.choosePod")
+          ],
+          4: "host140",
+          5: "10.42.0.58"
+        },
+        {
+          1: "on",
+          2: "wordpress-mdkyy-mariadb",
+          image: [
+            "docker.io/bitnami/mariadb.10.135-debian-9",
+            this.$t("buyer.appState.choosePod")
+          ],
+          4: "host140",
+          5: "10.42.0.58"
+        }
       ]
-    }
+    };
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -81,13 +146,13 @@ export default {
         font-size: 16px;
         color: #252525;
         line-height: 50px;
-      margin: 0;
-      padding: 0;
-      padding-left: 30px;
-      i {
-        font-size: 26px;
-        margin-right: 10px;
-      }
+        margin: 0;
+        padding: 0;
+        padding-left: 30px;
+        i {
+          font-size: 26px;
+          margin-right: 10px;
+        }
       }
     }
     p {
@@ -105,6 +170,16 @@ export default {
     background: #ffffff;
     overflow: hidden;
     padding: 30px;
+    .table-head {
+      color: #363636;
+      font-weight: 500;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      i {
+        font-size: 22px;
+      }
+    }
     .el-col {
       display: flex;
       .el-button {

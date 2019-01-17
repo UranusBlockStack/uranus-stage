@@ -9,15 +9,13 @@
       </el-col>
     </el-row>
     <el-row class="wallet-body">
-      <el-col :span="12">
+      <el-col :span="18">
         <p>{{$t('wallet.balance')}}100 URAC</p>
         <p>
           {{$t('wallet.address')}}
           {{address}}
+          <u class="copy" @click="copy()">{{$t('wallet.copy')}}</u>
         </p>
-      </el-col>
-      <el-col :span="6">
-        <u class="copy" style="margin-top:60px" @click="copy()">{{$t('wallet.copy')}}</u>
       </el-col>
       <el-col :span="6">
         <el-button type="success" @click="goTransfer">{{$t('wallet.button')}}</el-button>
@@ -231,9 +229,9 @@ export default {
     }
     .copy {
       color: #409eff;
-      display: block;
+      display: inline-block;
       cursor: pointer;
-      padding-top: 20px;
+      padding-left: 30px;
     }
     .el-button {
       margin-top: 35px;
