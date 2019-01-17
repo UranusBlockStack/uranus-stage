@@ -158,7 +158,7 @@ export default {
     name: "MyHost",
     data() {
         return {
-          dialogVisible: true,
+          dialogVisible: false,
           form: {
             name: "",
             cluster: ""

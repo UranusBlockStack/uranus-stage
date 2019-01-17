@@ -30,14 +30,14 @@
                             <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                                 <el-input v-model="mailCaptcha" style="width:69%"></el-input>
                                 <el-button style="width:28%" @click="sendCode('email',mail)">
-                                    {{$t('setting.codeBtn')}}
+                                    {{$t('setting.codeBtn')}}222
                                 </el-button>
                             </el-form-item>
                         </el-form>
                         <div slot="footer" class="dialog-footer" center>
                             <el-button @click="mailOuterVisible = false">{{$t('setting.button1')}}</el-button>
-                            <el-button type="primary" @click="mailOuterVisible = false,mailInnerVisible = true,checkCaptcha()">
-                                {{$t('setting.button3')}}
+                            <el-button type="primary" @click="checkCaptcha('email',mail,mailCaptcha)">
+                                {{$t('setting.button3')}}n
                             </el-button>
                         </div>
                     </el-dialog>
@@ -80,13 +80,13 @@
                             <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                                 <el-input v-model="captcha" style="width:69%"></el-input>
                                 <el-button style="width:28%" @click="sendCode('mobile',sourceNum)">
-                                    {{$t('setting.codeBtn')}}
+                                    {{$t('setting.codeBtn')}}p1
                                 </el-button>
                             </el-form-item>
                         </el-form>
                         <div slot="footer" class="dialog-footer" center>
                             <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}</el-button>
-                            <el-button type="primary" @click="checkCaptcha()">{{$t('setting.button3')}}</el-button>
+                            <el-button type="primary" @click="checkCaptcha('mobile',sourceNum,captcha)">{{$t('setting.button3')}}n</el-button>
                         </div>
                     </el-dialog>
                     <el-dialog width="580px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" append-to-body
@@ -98,7 +98,7 @@
                             <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                                 <el-input v-model="bindCaptcha" style="width:69%"></el-input>
                                 <el-button style="width:28%" @click="sendCode('mobile',newPhoneNum)">
-                                    {{$t('setting.codeBtn')}}
+                                    {{$t('setting.codeBtn')}}p2
                                 </el-button>
                             </el-form-item>
                         </el-form>
@@ -286,15 +286,25 @@
                 });
             },
 
-            checkCaptcha(receiver,captcha) {
+            checkCaptcha(type,receiver,captcha) {
                 //校验原手机/邮箱验证码是否正确
-                console.log("校验中。。。。")
+                console.log("校验中。。。。"+receiver+"=="+captcha)
+                auth.checkCaptcha(auth.getCurLang(),receiver,captcha).then(data=>{
+                    console.log("校验结果：",data.data.success)
+                   /* if(data.data.success){
+                        if(type=='email'){
+                            this.mailOuterVisible = false
+                            this.mailInnerVisible = true
+                        }else if(type=='mobile'){
+                            this.phoneOuterVisible = false
+                            this.phoneInnerVisible = true
+                        }
+                    }else{
+                        alert("验证码错误，请重新输入")
+                    }*/
 
-             /*   auth.checkCaptcha(this.$store.getters.lang,receiver,captcha).then(data=>{
-                    console.log("校验结果：",data);
-                })*/
-                this.phoneOuterVisible = false
-                this.phoneInnerVisible = true
+                })
+
             },
 
             userBind(bindType, bindNum, bindCap) {
