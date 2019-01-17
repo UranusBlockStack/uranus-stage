@@ -116,6 +116,8 @@ export default {
         this.prompt = "请完善信息后登陆";
       } else if (this.password === "") {
         this.prompt = "请填写密码";
+      } else if (this.password .length < 6 || this.password.length > 12) {
+        this.prompt = "密码应是大于6位，小于12位";
       } else {
         this.prompt = "";
         const logintype = this.phoneShow ? "mobile" : "email";

@@ -38,15 +38,27 @@
             class="phoneIpt"
             type="text"
             ref="loginMobile"
+            v-model="phone"
             :placeholder="$t('userCommon.mobile')"
           >
         </div>
       </div>
       <div class="mailRes" v-show="!phoneShow">
-        <input type="text" :placeholder="$t('userCommon.Email')" ref="loginEmail">
+        <input type="text" v-model="mail" :placeholder="$t('userCommon.Email')" ref="loginEmail">
       </div>
-      <input type="password" :placeholder="$t('userCommon.password')" ref="password">
-      <input type="password" :placeholder="$t('userCommon.confirmPwd')">
+      <input
+        type="password"
+        v-model="password"
+        :placeholder="$t('userCommon.password')"
+        ref="password"
+        @blur="checkPassword"
+      >
+      <input
+        type="password"
+        v-model="surepwd"
+        :placeholder="$t('userCommon.confirmPwd')"
+        @blur="surePassword"
+      >
       <input
         type="text"
         class="inputCode"
@@ -58,6 +70,7 @@
         :class="{disabledGet: !this.canClick}"
         @click="countDown(content)"
       >{{content}}</button>
+      <div class="prompt">{{prompt}}</div>
       <button class="registerBtn" @click="registerUser">{{$t('userCommon.registerBtn')}}</button>
     </div>
   </section>
@@ -74,6 +87,11 @@ export default {
       totalTime: 10,
       canClick: true,
       content: this.$t("userCommon.codeBtn"),
+      phone: "",
+      mail: "",
+      password: "",
+      surepwd: "",
+      prompt: "",
       regions: [],
       currentRegion: "86"
     };
@@ -95,37 +113,65 @@ export default {
       } else {
         loginname = this.$refs.loginEmail.value;
       }
-      return loginname
+      return loginname;
     },
     choosePhone() {
-      this.phoneShow = true
+      this.phoneShow = true;
     },
     chooseMail() {
-      this.phoneShow = false
+      this.phoneShow = false;
+    },
+    // Input box validation
+    checkPassword() {
+      if (this.password === "") {
+        this.prompt = this.$t("userCommon.passwordEmpty");
+      } else if (this.password.length < 6 || this.password.length > 12) {
+        this.prompt = this.$t("userCommon.password");
+      } else {
+        this.prompt = "";
+      }
+    },
+    surePassword() {
+      if (this.surepwd.length < 6 || this.surepwd.length > 12) {
+        this.prompt = this.$t("userCommon.password");
+      } else if (this.surepwd !== this.password) {
+        this.prompt = this.$t("userCommon.passwordInconsistent");
+      } else {
+        this.prompt = "";
+      }
     },
     registerUser() {
-      const logintype = this.phoneShow ? "mobile" : "email"
+      if (this.phone === "" && this.mail === "") {
+        this.prompt = "请完善信息后注册";
+      } else if (this.password === "") {
+        this.prompt = "请填写密码";
+      } else if (this.password.length < 6 || this.password.length > 12) {
+        this.prompt = "密码应是大于6位，小于12位";
+      } else {
+        const logintype = this.phoneShow ? "mobile" : "email";
         const user = {
-        captcha: this.$refs.verifyCodeInput.value,
-        loginName: this.getLoginName(logintype),
-        loginType: logintype,
-        password: this.$refs.password.value
-      };
+          captcha: this.$refs.verifyCodeInput.value,
+          loginName: this.getLoginName(logintype),
+          loginType: logintype,
+          password: this.$refs.password.value
+        };
 
-      var self = this
+        var self = this;
 
-        auth.registerUser(this.$store.getters.lang, user)
-          .then(regResp => {
-              if(regResp.data.success)
-                    self.$router.push({name: 'Map'})
-              else
-                    self.$alert('error', 'Message', {
-                  confirmButtonText: 'Message'
-              })
-          })
+        auth.registerUser(this.$store.getters.lang, user).then(regResp => {
+          if (regResp.data.success) self.$router.push({ name: "Map" });
+          else
+            self.$alert("error", "Message", {
+              confirmButtonText: "Message"
+            });
+        });
+      }
     },
     countDown() {
       if (!this.canClick) return;
+      if (this.phone === "" && this.mail === "") {
+        this.prompt = "请完善信息后发送";
+      }
       this.canClick = false;
       this.content =
         this.$t("userCommon.codeTime") + "(" + this.totalTime + "s)";
@@ -141,18 +187,17 @@ export default {
         }
       }, 1000);
 
-      const logintype = this.phoneShow ? "mobile" : "email"
-        const param = {
+      const logintype = this.phoneShow ? "mobile" : "email";
+      const param = {
         captchaType: 0,
         receiver: this.getLoginName(logintype),
         senderType: logintype
       };
-      auth.captcha('zh-cn', param)
+      auth.captcha("zh-cn", param);
     }
   },
   mounted() {
-    this.getRegionList2()
-      console.log(auth.getCurLang())
+    this.getRegionList2();
   }
 };
 </script>
@@ -284,6 +329,11 @@ export default {
       font-size: 16px;
       color: #ffffff;
       line-height: 24px;
+    }
+    .prompt {
+      text-align: left;
+      padding-left: 20px;
+      color: red;
     }
   }
 }

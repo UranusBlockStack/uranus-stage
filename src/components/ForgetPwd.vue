@@ -52,7 +52,7 @@
         type="password"
         :placeholder="$t('userCommon.password')"
         v-model="password"
-        @blur="checkPassword()"
+        @blur="checkPassword"
       >
       <input
         type="password"
@@ -162,6 +162,7 @@ export default {
         this.prompt = "";
       }
     },
+    // Input box validation
     checkPassword() {
       if (this.password === "") {
         this.prompt = this.$t("userCommon.passwordEmpty");
