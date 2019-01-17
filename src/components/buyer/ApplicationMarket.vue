@@ -55,7 +55,7 @@
                     <p class="free">{{$t('buyer.appMarket.free')}}</p>
                   </el-col>
                   <el-col :span="10" :offset="6">
-                    <p class="downloads">{{$t('buyer.appMarket.download')}}123</p>
+                    <p class="downloads">{{$t('buyer.appMarket.download')}} {{app.downloadTimes}}</p>
                   </el-col>
                   <a @click.prevent="deployApp(app.id, app.rid, app.defaultVersion, app.catalog)">
                     <el-button

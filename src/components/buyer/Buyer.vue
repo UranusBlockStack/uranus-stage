@@ -29,7 +29,7 @@
             <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
               <div class="resources">
                 <div>
-                  <p class="shops">{{$t('buyer.home.stores')}}{{app.shop}}</p>
+                  <p class="shops">{{$t('buyer.home.stores')}} {{app.shop}}</p>
                   <img src="/static/img/uranus/developer/app.png" alt="img">
                   <p class="name">Imagepuler</p>
                   <p
@@ -101,89 +101,106 @@
 </template>
 
 <script>
+    import * as app from '../../services/RancherService'
+    import * as auth from '../../services/AuthService'
+
 export default {
-  name: "Buyer",
+  name: 'Buyer',
   data() {
     return {
-      indexPower: "",
+      page: 1,
+      pageSize: 4,
+      indexPower: '',
       dataPower: {
         day: {
-          x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
+          x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
           y: [10, 20, 30, 40, 50, 60],
           line: [5, 10, 10, 15, 15, 15]
         },
         week: {
-          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+          x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
           y: [100, 200, 300, 400, 500, 600, 700],
           line: [50, 100, 300, 200, 300, 600, 400]
         },
         mounth: {
-          x: ["1", "5", "10", "15", "20", "25", "30"],
+          x: ['1', '5', '10', '15', '20', '25', '30'],
           y: [1000, 520, 200, 334, 390, 330, 220],
           line: [50, 100, 300, 200, 300, 600, 400]
         },
         year: {
-          x: ["1", "4", "7", "10", "12"],
+          x: ['1', '4', '7', '10', '12'],
           y: [10000, 520, 200, 334, 390],
           line: [5000, 100, 100, 200, 300]
         }
       },
       powerVal: {},
-      appList: [
-        { id: "1", name: "Imagepuller", shop: "1" },
-        { id: "1", name: "Imagepuller", shop: "2" },
-        { id: "1", name: "Imagepuller", shop: "3" },
-        { id: "1", name: "Imagepuller", shop: "4" }
-      ]
-    };
+      appList: [ ]
+    }
   },
   methods: {
+
+    getAppList() {
+      const searchData = {
+        page: this.page,
+        pageSize: this.pageSize,
+              // 'sort': this.sort,
+        sortDesc: this.sortDesc
+      }
+
+      app.appList(auth.getCurLang(), searchData).then(respData => {
+        this.appList = respData.data.data.records
+        this.appList.map(imginfo => {
+          imginfo.imageurl = this.imageServerUrl + imginfo.rid + '/icon'
+          return imginfo
+        })
+      })
+    },
     powerDay(x) {
-      this.powerVal = this.dataPower.day;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.powerVal = this.dataPower.day
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     powerWeek(x) {
-      this.powerVal = this.dataPower.week;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.powerVal = this.dataPower.week
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     powerMounth(x) {
-      this.powerVal = this.dataPower.mounth;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.powerVal = this.dataPower.mounth
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     powerYear(x) {
-      this.powerVal = this.dataPower.year;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.powerVal = this.dataPower.year
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     initEchart(val) {
-      var myChart = this.$echarts.init(document.getElementById("myPower"));
-      var myData = val;
+      var myChart = this.$echarts.init(document.getElementById('myPower'))
+      var myData = val
       myChart.setOption({
-        color: ["#1890ff"],
+        color: ['#1890ff'],
         //  backgroundColor:'rgba(128, 128, 128, 0.1)', //rgba设置透明度0.1
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
-            type: "line"
+            type: 'line'
           }
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            name: this.$t("buyer.home.xName"),
-            type: "category",
+            name: this.$t('buyer.home.xName'),
+            type: 'category',
             data: myData.x,
             axisLine: {
               show: true,
-              symbol: ["none", "arrow"],
+              symbol: ['none', 'arrow'],
               symbolSize: [10, 20]
             },
             axisTick: {
@@ -193,43 +210,46 @@ export default {
         ],
         yAxis: [
           {
-            name: this.$t("buyer.home.yName") + " (U)",
-            type: "value",
+            name: this.$t('buyer.home.yName') + ' (U)',
+            type: 'value',
             axisLine: {
               show: true,
-              symbol: ["none", "arrow"],
+              symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               symbolOffset: [0, 15]
             },
             axisLabel: {
-              formatter: "{value}"
+              formatter: '{value}'
             }
           }
         ],
         series: [
           {
-            name: this.$t("buyer.home.allPower"),
-            type: "bar",
-            barWidth: "25%",
+            name: this.$t('buyer.home.allPower'),
+            type: 'bar',
+            barWidth: '25%',
             data: myData.y
           },
           {
-            name: this.$t("buyer.home.restPower"),
-            type: "line",
-            color: "#9bcc3d",
+            name: this.$t('buyer.home.restPower'),
+            type: 'line',
+            color: '#9bcc3d',
             data: myData.line
           }
         ]
-      });
+      })
       window.onresize = function() {
-        myChart.resize();
-      };
+        myChart.resize()
+      }
     }
   },
   mounted() {
-    this.powerDay(3);
+    this.powerDay(3)
+  },
+  created() {
+    this.getAppList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

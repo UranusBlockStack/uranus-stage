@@ -111,9 +111,20 @@ export default {
         })
       })
     },
-        searchMyApp() {
-            this.getAppList()
+    deployApp(appId, appRid, versionId, catalog) {
+      this.$router.push({
+        path: '/deployment',
+        query: {
+          appId: appId,
+          appRid: appRid,
+          versionId: versionId,
+          catalog: catalog
         }
+      })
+    },
+    searchMyApp() {
+      this.getAppList()
+    }
 
   },
     created() {
