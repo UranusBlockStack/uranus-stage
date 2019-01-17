@@ -54,29 +54,30 @@
       </el-row>
       <el-row class="detial">
         <el-col :span="2" :offset="1">
-          <img src="/static/img/uranus/buyer/appLogo.png">
+          <img :src="imgsrc">
         </el-col>
         <el-col :span="8" :offset="1">
-          <h2>{{$t('buyer.deploy.name')}} Imagepuler</h2>
-          <p>{{$t('buyer.deploy.appDetail')}}</p>
+          <h2>{{$t('buyer.deploy.name')}} {{appDetail.name}}</h2>
+          <p>{{$t('buyer.deploy.appDetail')}} {{appDetail.description}}</p>
         </el-col>
         <el-col class="border-col" :span="4" :offset="1">
-          <p>{{$t('buyer.deploy.price')}}{{$t('buyer.deploy.free')}}</p>
-          <p>{{$t('buyer.deploy.from')}}{{$t('buyer.deploy.store')}} A</p>
-          <p>{{$t('buyer.deploy.download')}}16.8w</p>
+          <p>{{$t('buyer.deploy.price')}} {{price}}</p>
+          <p>{{$t('buyer.deploy.from')}} {{$t('buyer.deploy.store')}} {{appDetail.catalog}}</p>
+          <p>{{$t('buyer.deploy.download')}} {{appDetail.downloadTimes}}</p>
         </el-col>
-        <el-col class="inf-col" :span="6" :offset="1">
-          <p>{{$t('buyer.deploy.configuration')}}</p>
-          <p>
-            <span class="left-span">{{$t('buyer.deploy.cpu')}}xxx</span>
-            <span>{{$t('buyer.deploy.memoryCon')}}xxx</span>
-            <span>{{$t('buyer.deploy.networkCon')}}xxx</span>
-          </p>
-          <p>
-            <span class="left-span">{{$t('buyer.deploy.gpuCon')}}xxx</span>
-            <span>{{$t('buyer.deploy.diskCon')}}xxx</span>
-          </p>
-        </el-col>
+
+        <!--<el-col class="inf-col" :span="6" :offset="1">-->
+          <!--<p>{{$t('buyer.deploy.configuration')}}</p>-->
+          <!--<p>-->
+            <!--<span class="left-span">{{$t('buyer.deploy.cpu')}}xxx</span>-->
+            <!--<span>{{$t('buyer.deploy.memoryCon')}}xxx</span>-->
+            <!--<span>{{$t('buyer.deploy.networkCon')}}xxx</span>-->
+          <!--</p>-->
+          <!--<p>-->
+            <!--<span class="left-span">{{$t('buyer.deploy.gpuCon')}}xxx</span>-->
+            <!--<span>{{$t('buyer.deploy.diskCon')}}xxx</span>-->
+          <!--</p>-->
+        <!--</el-col>-->
       </el-row>
       <el-row class="border-line"></el-row>
 
@@ -316,6 +317,9 @@ export default {
         startTime: '',
         endTime: ''
       },
+      imageServerUrl: this.$store.state.imageServerUrl,
+      imgsrc: '',
+      price: '',
       regionSel: [],
       cpuSel: [],
       diskSel: [],
@@ -415,25 +419,23 @@ export default {
       this.more = !this.more
     },
 
-      setConfigSelector() {
+        setConfigSelector() {
           const CpuData = ServerConfigData.CPU.paramVals[auth.getCurLang()]
           this.cpuSel = WrapDropDownData(CpuData)
           this.deployForm.cpu = this.cpuSel[0].value
-          console.log(this.cpuSel[0]);
 
           const HdData = ServerConfigData.HD.paramVals
-          this.diskSel =  WrapDropDownData(HdData)
+          this.diskSel = WrapDropDownData(HdData)
           this.deployForm.disk = this.diskSel[0].value
 
           const MemData = ServerConfigData.Mem.paramVals
-          this.memorySel =  WrapDropDownData(MemData)
+          this.memorySel = WrapDropDownData(MemData)
           this.deployForm.memory = this.memorySel[0].value
 
           const NetworData = ServerConfigData.Network.paramVals
-          this.networkSel =  WrapDropDownData(NetworData)
+          this.networkSel = WrapDropDownData(NetworData)
           this.deployForm.network = this.networkSel[0].value
-
-      },
+        },
         getRegionList() {
           rancher.rancherList(auth.getCurLang())
             .then(respData => {
@@ -458,7 +460,9 @@ export default {
               this.stackData.name = appInfo.name.replace(/\s+/g, '-')
               const versions = JSON.parse(this.appDetail.versionLinks)
               this.appDetail.versionlinks = []
-
+              console.log(this.appDetail)
+              this.imgsrc = this.imageServerUrl + this.appDetail.rid + '/icon'
+              this.price = this.appDetail.free ? this.$t('buyer.deploy.free'): this.price
               for (var key in versions) {
                 var versionLink = versions[key]
                 var versionId = versionLink.substr(versionLink.lastIndexOf('/') + 1)

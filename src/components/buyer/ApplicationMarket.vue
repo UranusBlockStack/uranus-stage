@@ -130,11 +130,10 @@ export default {
         // 'sort': this.sort,
         sortDesc: this.sortDesc
       }
-      console.log(searchData)
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
         this.appList = respData.data.data.records
-        this.appList.map(imginfo => {
+          this.appList.map(imginfo => {
           imginfo.imageurl = this.imageServerUrl + imginfo.rid + '/icon'
           return imginfo
         })

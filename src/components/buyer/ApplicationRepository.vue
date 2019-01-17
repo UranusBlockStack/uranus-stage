@@ -56,9 +56,9 @@
                   <el-col :span="10" :offset="6">
                     <p class="shops">{{app.shop}}</p>
                   </el-col>
-                  <router-link :to="{path: '/deployment'}">
+                  <a @click.prevent="deployApp(app.appId, app.rid, app.defaultVersion, app.catalog)">
                     <el-button type="success">{{$t('buyer.appRepository.deploy')}}</el-button>
-                  </router-link>
+                  </a>
                 </el-row>
               </div>
             </div>
