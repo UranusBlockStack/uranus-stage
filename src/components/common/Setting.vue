@@ -50,7 +50,7 @@
               <el-button @click="mailOuterVisible = false">{{$t('setting.button1')}}</el-button>
               <el-button
                 type="primary"
-                @click="mailOuterVisible = false,mailInnerVisible = true,checkCaptcha()"
+                @click="checkCaptcha('email',mail,mailCaptcha)"
               >{{$t('setting.button3')}}next</el-button>
             </div>
           </el-dialog>
@@ -123,7 +123,7 @@
             </el-form>
             <div slot="footer" class="dialog-footer" center>
               <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}</el-button>
-              <el-button type="primary" @click="checkCaptcha()">{{$t('setting.button3')}}</el-button>
+              <el-button type="primary" @click="checkCaptcha('mobile',sourceNum,captcha)">{{$t('setting.button3')}}</el-button>
             </div>
           </el-dialog>
           <el-dialog
@@ -351,8 +351,9 @@
                 //校验原手机/邮箱验证码是否正确
                 console.log("校验中。。。。"+receiver+"=="+captcha)
                 auth.checkCaptcha(auth.getCurLang(),receiver,captcha).then(data=>{
-                    console.log("校验结果：",data.data.success)
-                   /* if(data.data.success){
+                    console.log("校验结果：",data)
+                    console.log("校验结果："+data.data.success)
+                    if(data.data.success){
                         if(type=='email'){
                             this.mailOuterVisible = false
                             this.mailInnerVisible = true
@@ -362,7 +363,7 @@
                         }
                     }else{
                         alert("验证码错误，请重新输入")
-                    }*/
+                    }
 
                 })
 
@@ -449,31 +450,32 @@
         margin-right: 10px;
     }
   }
-  .userId {
+
+  }
+.userId {
     background: #ffffff;
     height: 100px;
     margin: 10px;
     margin-bottom: 0;
     border-bottom: 1px #e9e9e9 solid;
-    p {
-        font-family: Source-Sans-Pro-Bold;
-        font-size: 16px;
-        color: rgba(0, 0, 0, 0.85);
-        line-height: 50px;
-        text-align: left;
-        padding-left: 32px;
-    }
+p {
+    font-family: Source-Sans-Pro-Bold;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.85);
+    line-height: 50px;
+    text-align: left;
+    padding-left: 32px;
+}
 
-    .contentUn {
-        font-family: Source-Sans-Pro-Bold;
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.65);
-        line-height: 22px;
-        text-align: left;
-    }
+.contentUn {
+    font-family: Source-Sans-Pro-Bold;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.65);
+    line-height: 22px;
+    text-align: left;
+}
 
-    }
-  }
+}
   .mail-box,
   .phone-box,
   .pwd-box,
