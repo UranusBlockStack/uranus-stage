@@ -9,7 +9,6 @@
           <el-button type="primary" @click="innerVisible = false">{{$t('transfer.button2')}}</el-button>
         </div>
       </el-dialog>
-        <div class="timeOver">{{$t('transfer.countdown')}}<TimeOver style="display: inline-block"/></div>
       <p><b>{{$t('transfer.checkAddress')}}</b>  {{formLabelAlign.address}}</p>
       <p><b>{{$t('transfer.checkValue')}}</b>  {{formLabelAlign.value}}</p>
       <p><b>{{$t('transfer.fee')}}</b>  {{formLabelAlign.fee}}</p>
@@ -22,7 +21,7 @@
 
     <el-row class="transfer-head">
       <el-col :span="24">
-        <p><i class="iconfont icon-pay"></i>{{$t('menu.transfer')}}</p>
+        <h1><i class="iconfont icon-pay"></i>{{$t('menu.transfer')}}</h1>
       </el-col>
     </el-row>
     <el-row class="transfer-form">
@@ -62,13 +61,9 @@
 <script>
     import * as auth from '../../services/AuthService'
     import * as wallet from '../../services/WalletService'
-    import TimeOver from "@/components/modules/TimeOver"
 
 export default {
   name: 'Transfer',
-  components: {
-      TimeOver
-    },
   data() {
     return {
       formLabelAlign: {
@@ -91,7 +86,7 @@ export default {
           }
         ]
       },
-      outerVisible: true,
+      outerVisible: false,
       innerVisible: false,
       curUserInfo: auth.getUserBaseInfo()
 
@@ -132,8 +127,10 @@ export default {
   .transfer-head {
     background: #ffffff;
     height: 50px;
-    p {
+    h1 {
       font-family: Source-Sans-Pro-Bold;
+      margin: 0;
+      padding: 0;
       padding-left: 30px;
       font-size: 16px;
       color: #252525;
@@ -146,11 +143,6 @@ export default {
     }
   }
   .el-dialog {
-      .timeOver {
-          font-family: Source-Sans-Pro-Bold;
-          width: 300px;
-          margin: 0 auto;
-      }
     p {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;

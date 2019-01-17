@@ -167,10 +167,7 @@
       </el-col>
       <el-col :span="8" :offset="4">
         <p>
-          <el-button
-            type="text"
-            @click="pwdOuterVisible = true"
-          >{{$t('setting.clickChange')}}</el-button>
+          <el-button type="text" @click="pwdOuterVisible = true">{{$t('setting.clickChange')}}</el-button>
           <el-dialog
             :title="$t('setting.clickChange')"
             :visible.sync="pwdOuterVisible"
@@ -223,136 +220,136 @@
               <el-button @click="dialogVisible = false">取 消</el-button>
               <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
             </span>
-                </el-dialog>
-                </p>
-            </el-col>
-        </el-row>
-    </section>
+          </el-dialog>
+        </p>
+      </el-col>
+    </el-row>
+  </section>
 </template>
 
 <script>
-    import * as account from "../../services/AccountService";
-    import * as auth from "../../services/AuthService";
+import * as account from "../../services/AccountService";
+import * as auth from "../../services/AuthService";
 
-    export default {
-        name: "Setting",
-        data() {
-            var checkPhone = (rule, value, callback) => {
-                const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
-                if (!value) {
-                    return callback(new Error("电话号码不能为空"));
-                }
-                setTimeout(() => {
-                    if (!Number.isInteger(+value)) {
-                        callback(new Error("请输入数字值"));
-                    } else {
-                        if (phoneReg.test(value)) {
-                            callback();
-                        } else {
-                            callback(new Error("电话号码格式不正确"));
-                        }
-                    }
-                }, 100);
-            };
-            var checkEmail = (rule, value, callback) => {
-                const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
-                if (!value) {
-                    return callback(new Error("邮箱不能为空"));
-                }
-                setTimeout(() => {
-                    if (mailReg.test(value)) {
-                        callback();
-                    } else {
-                        callback(new Error("请输入正确的邮箱格式"));
-                    }
-                }, 100);
-            };
-            return {
-                id: '',
-                mail: '',//用户邮箱
-                newEmail: '',//绑定新邮箱
-                mailCaptcha: '',//初次输入框邮箱验证码
-                bindMailCaptcha: '',//绑定输入框邮箱验证码
-                buttonClick: this.$t('setting.clickLink'),
-                phonenum: '', //用户信息手机号
-                sourceNum: '', //用户原手机号
-                newPhoneNum: '',
-                captcha: '', //初次验证原手机验证码
-                bindCaptcha: '', //解绑验证码
-                mailOuterVisible: false,
-                mailInnerVisible: false,
-                currentPassword: '', //输入框当前密码
-                newPassword: '', //输入框新密码
-                confirmPassword: '', //输入框确认密码
-                phoneOuterVisible: false,
-                phoneInnerVisible: false,
-                ruleForm: {
-                    buyerPhone: '',
-                    buyerEmail: '',
-                },
-                rules: {
-                    buyerPhone: [{validator: checkPhone, trigger: "blur"}],
-                    buyerEmail: [{validator: checkEmail, trigger: "blur"}]
-                },
-                code: this.$t("setting.codePhone"),
-                pwdOuterVisible: false,
-                pwdInnerVisible: false,
-                dialogVisible: false
-            };
-        },
-        methods: {
-            userInfo() {
-                //获取用户信息
-                var user=auth.getUserBaseInfo()
-                account.userInfo(this.$store.getters.lang, user.userId).then(data => {
-                    this.id = data.data.data.id;
-                    this.phonenum = data.data.data.mobile;
-                    this.mail = data.data.data.email;
-                    this.sourceNum = this.phonenum;
+export default {
+  name: "Setting",
+  data() {
+    var checkPhone = (rule, value, callback) => {
+      const phoneReg = /^1[3|4|5|7|8][0-9]{9}$/;
+      if (!value) {
+        return callback(new Error("电话号码不能为空"));
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(+value)) {
+          callback(new Error("请输入数字值"));
+        } else {
+          if (phoneReg.test(value)) {
+            callback();
+          } else {
+            callback(new Error("电话号码格式不正确"));
+          }
+        }
+      }, 100);
+    };
+    var checkEmail = (rule, value, callback) => {
+      const mailReg = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/;
+      if (!value) {
+        return callback(new Error("邮箱不能为空"));
+      }
+      setTimeout(() => {
+        if (mailReg.test(value)) {
+          callback();
+        } else {
+          callback(new Error("请输入正确的邮箱格式"));
+        }
+      }, 100);
+    };
+    return {
+      id: "",
+      mail: "", //用户邮箱
+      newEmail: "", //绑定新邮箱
+      mailCaptcha: "", //初次输入框邮箱验证码
+      bindMailCaptcha: "", //绑定输入框邮箱验证码
+      buttonClick: this.$t("setting.clickLink"),
+      phonenum: "", //用户信息手机号
+      sourceNum: "", //用户原手机号
+      newPhoneNum: "",
+      captcha: "", //初次验证原手机验证码
+      bindCaptcha: "", //解绑验证码
+      mailOuterVisible: false,
+      mailInnerVisible: false,
+      currentPassword: "", //输入框当前密码
+      newPassword: "", //输入框新密码
+      confirmPassword: "", //输入框确认密码
+      phoneOuterVisible: false,
+      phoneInnerVisible: false,
+      ruleForm: {
+        buyerPhone: "",
+        buyerEmail: ""
+      },
+      rules: {
+        buyerPhone: [{ validator: checkPhone, trigger: "blur" }],
+        buyerEmail: [{ validator: checkEmail, trigger: "blur" }]
+      },
+      code: this.$t("setting.codePhone"),
+      pwdOuterVisible: false,
+      pwdInnerVisible: false,
+      dialogVisible: false
+    };
+  },
+  methods: {
+    userInfo() {
+      //获取用户信息
+      var user = auth.getUserBaseInfo();
+      account.userInfo(this.$store.getters.lang, user.userId).then(data => {
+        this.id = data.data.data.id;
+        this.phonenum = data.data.data.mobile;
+        this.mail = data.data.data.email;
+        this.sourceNum = this.phonenum;
 
-                    console.log(data);
-                });
-            },
+        console.log(data);
+      });
+    },
 
-            resetPassword() {
-                //修改密码
-                var param = {
-                    id: this.id,
-                    newPassword: this.newPassword,
-                    oldPassword: this.currentPassword
-                };
-                auth.resetPassword(this.$store.getters.lang, param).then(data => {
-                    console.log(data)
-                    if (data.data.success) {
-                        this.pwdOuterVisible = false
-                    } else {
-                        alert("修改失败");
-                    }
-                });
-            },
+    resetPassword() {
+      //修改密码
+      var param = {
+        id: this.id,
+        newPassword: this.newPassword,
+        oldPassword: this.currentPassword
+      };
+      auth.resetPassword(this.$store.getters.lang, param).then(data => {
+        console.log(data);
+        if (data.data.success) {
+          this.pwdOuterVisible = false;
+        } else {
+          alert("修改失败");
+        }
+      });
+    },
 
-            sendCode(senderType, receiver) {
-                //发送验证码至原手机/邮箱
-                const param = {
-                    captchaType: 0,
-                    receiver: receiver,
-                    senderType: senderType
-                };
-                auth.captcha(this.$store.getters.lang, param).then(data => {
-                    if (!data.data.success) {
-                        console.log("验证码发送失败")
-                    } else {
-                        console.log("验证码发送成功")
-                    }
-                });
-            },
+    sendCode(senderType, receiver) {
+      //发送验证码至原手机/邮箱
+      const param = {
+        captchaType: 0,
+        receiver: receiver,
+        senderType: senderType
+      };
+      auth.captcha(this.$store.getters.lang, param).then(data => {
+        if (!data.data.success) {
+          console.log("验证码发送失败");
+        } else {
+          console.log("验证码发送成功");
+        }
+      });
+    },
 
-            checkCaptcha(type,receiver,captcha) {
-                //校验原手机/邮箱验证码是否正确
-                console.log("校验中。。。。"+receiver+"=="+captcha)
-                auth.checkCaptcha(auth.getCurLang(),receiver,captcha).then(data=>{
-                    console.log("校验结果：",data.data.success)
-                   /* if(data.data.success){
+    checkCaptcha(type, receiver, captcha) {
+      //校验原手机/邮箱验证码是否正确
+      console.log("校验中。。。。" + receiver + "==" + captcha);
+      auth.checkCaptcha(auth.getCurLang(), receiver, captcha).then(data => {
+        console.log("校验结果：", data.data.success);
+        /* if(data.data.success){
                         if(type=='email'){
                             this.mailOuterVisible = false
                             this.mailInnerVisible = true
@@ -363,66 +360,63 @@
                     }else{
                         alert("验证码错误，请重新输入")
                     }*/
+      });
+    },
 
-                })
+    userBind(bindType, bindNum, bindCap) {
+      /**
+       * 绑定手机号/邮箱
+       * bindType :mobile/email
+       * bindNum: 邮箱或手机号码
+       * bindCap：验证码
+       * **/
 
-            },
-
-            userBind(bindType, bindNum, bindCap) {
-                /**
-                 * 绑定手机号/邮箱
-                 * bindType :mobile/email
-                 * bindNum: 邮箱或手机号码
-                 * bindCap：验证码
-                 * **/
-
-                var param = {
-                    captcha: bindCap,
-                    id: this.id,
-                    loginName: bindNum
-                };
-                account.userBind(this.$store.getters.lang, bindType, param).then(data => {
-                    console.log("解绑中。。。。")
-                    console.log(data)
-                    if (data.data.success) {
-                        //成功
-                        if (bindType == "email") {
-                            this.mailOuterVisible = false
-                            this.mailInnerVisible = false
-                        } else if (bindType == "mobile") {
-                            this.phoneOuterVisible = false
-                            this.phoneInnerVisible = false
-                        }
-                    } else {
-                        //失败
-                        alert("解绑失败")
-                    }
-                });
-            },
-            setMail() {
-
-                //change mail 按钮控制逻辑
-                if (this.mail == null || this.mail == "") {
-                    this.mailInnerVisible = true
-                } else {
-                    this.mailOuterVisible = true
-                    this.buttonClick = this.$t('setting.clickChange')
-                }
-            },
-            setPhone() {
-                //change phone 按钮控制逻辑
-                if (this.phonenum == null || this.phonenum == "") {
-                    this.phoneInnerVisible = true
-                } else {
-                    this.phoneOuterVisible = true
-                    this.buttonClick = this.$t('setting.clickChange')
-                }
-            }
-        },
-        mounted() {
-            this.userInfo()
+      var param = {
+        captcha: bindCap,
+        id: this.id,
+        loginName: bindNum
+      };
+      account.userBind(this.$store.getters.lang, bindType, param).then(data => {
+        console.log("解绑中。。。。");
+        console.log(data);
+        if (data.data.success) {
+          //成功
+          if (bindType == "email") {
+            this.mailOuterVisible = false;
+            this.mailInnerVisible = false;
+          } else if (bindType == "mobile") {
+            this.phoneOuterVisible = false;
+            this.phoneInnerVisible = false;
+          }
+        } else {
+          //失败
+          alert("解绑失败");
         }
-    };
+      });
+    },
+    setMail() {
+      //change mail 按钮控制逻辑
+      if (this.mail == null || this.mail == "") {
+        this.mailInnerVisible = true;
+      } else {
+        this.mailOuterVisible = true;
+        this.buttonClick = this.$t("setting.clickChange");
+      }
+    },
+    setPhone() {
+      //change phone 按钮控制逻辑
+      if (this.phonenum == null || this.phonenum == "") {
+        this.phoneInnerVisible = true;
+      } else {
+        this.phoneOuterVisible = true;
+        this.buttonClick = this.$t("setting.clickChange");
+      }
+    }
+  },
+  mounted() {
+    this.userInfo();
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -447,6 +441,7 @@
       i {
         font-size: 26px;
         margin-right: 10px;
+      }
     }
   }
   .userId {
@@ -456,22 +451,19 @@
     margin-bottom: 0;
     border-bottom: 1px #e9e9e9 solid;
     p {
-        font-family: Source-Sans-Pro-Bold;
-        font-size: 16px;
-        color: rgba(0, 0, 0, 0.85);
-        line-height: 50px;
-        text-align: left;
-        padding-left: 32px;
+      font-family: Source-Sans-Pro-Bold;
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.85);
+      line-height: 50px;
+      text-align: left;
+      padding-left: 32px;
     }
-
     .contentUn {
-        font-family: Source-Sans-Pro-Bold;
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.65);
-        line-height: 22px;
-        text-align: left;
-    }
-
+      font-family: Source-Sans-Pro-Bold;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.65);
+      line-height: 22px;
+      text-align: left;
     }
   }
   .mail-box,
@@ -483,35 +475,32 @@
     margin: 0 10px;
     border-bottom: 1px #e9e9e9 solid;
     p {
-        font-size: 16px;
-        color: rgba(0, 0, 0, 0.85);
-        line-height: 50px;
-        text-align: left;
-        padding-left: 32px;
-        font-family: Source-Sans-Pro-Bold;
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.85);
+      line-height: 50px;
+      text-align: left;
+      padding-left: 32px;
+      font-family: Source-Sans-Pro-Bold;
     }
 
     .contentUn {
-        font-family: Source-Sans-Pro-Bold;
-        font-size: 14px;
-        color: rgba(0, 0, 0, 0.65);
-        line-height: 22px;
-        text-align: left;
+      font-family: Source-Sans-Pro-Bold;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.65);
+      line-height: 22px;
+      text-align: left;
     }
 
     p > .el-button {
-        color: #8eb357;
-        margin-top: 45px;
+      color: #8eb357;
+      margin-top: 45px;
     }
-
-    }
-    .code-box {
-
+  }
+  .code-box {
     .el-select {
-        width: 100px;
-        margin-top: 30px;
+      width: 100px;
+      margin-top: 30px;
     }
-
-    }
-    }
+  }
+}
 </style>
