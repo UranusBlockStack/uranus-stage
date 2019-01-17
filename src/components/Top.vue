@@ -84,6 +84,7 @@ export default {
         width: 150px;
         float: right;
         color: #8eb357;
+        cursor: pointer;
         span {
             height: 50px;
             line-height: 50px;
