@@ -7,9 +7,13 @@
         <el-form-item>
           <el-input v-model="form.name" autocomplete="off" :placeholder="$t('seller.host.nameGroup')" style="width: 515px">
           </el-input>
-           <el-select style="width: 515px; margin-top:15px;" v-model="form.cluster" :placeholder="$t('seller.host.existingGroup')">
-            <el-option label="Cluster A" value="A"></el-option>
-            <el-option label="Cluster B" value="B"></el-option>
+           <el-select style="width: 515px; margin-top:15px;" v-model="form.region" :placeholder="$t('seller.host.region')">
+            <el-option :label="$t('seller.host.asia')" value="A"></el-option>
+            <el-option :label="$t('seller.host.europe')" value="B"></el-option>
+            <el-option :label="$t('seller.host.africa')" value="C"></el-option>
+            <el-option :label="$t('seller.host.south')" value="D"></el-option>
+            <el-option :label="$t('seller.host.north')" value="E"></el-option>
+            <el-option :label="$t('seller.host.oceania')" value="F"></el-option>
           </el-select>
         </el-form-item>
         <el-radio v-model="groupJoin" :label="$t('seller.host.joinGroup')"></el-radio>
@@ -43,17 +47,22 @@
             <div :class="scope.row.state == 'Offline' ? 'on' : 'off'"></div>
           </template>
         </el-table-column>
-        <el-table-column width="120" prop="name">
+        <el-table-column min-width="120">
             <!--主机名称 name-->
           <template slot="header" slot-scope="scope">
-            <p>
+            <p class="table-head" style="text-align:left;">
               <i class="iconfont icon-resource-market"></i>
               {{$t('seller.host.number')}}
             </p>
           </template>
+          <template slot-scope="scope">
+            <p class="overflow">
+              {{ scope.row.name}}
+            </p>
+          </template>
         </el-table-column>
 
-        <el-table-column width="180">
+        <el-table-column width="170">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-cpu"></i> CPU
@@ -72,7 +81,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="180">
+        <el-table-column width="170">
             <!--内存-->
           <template slot="header" slot-scope="scope">
             <p class="table-head">
@@ -92,7 +101,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="180">
+        <el-table-column width="170">
             <!--硬盘-->
           <template slot="header" slot-scope="scope">
             <p class="table-head">
@@ -111,7 +120,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="180">
+        <el-table-column width="170">
             <!--宽带(M)-->
           <template slot="header" slot-scope="scope">
             <p class="table-head">
@@ -130,7 +139,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="180">
+        <el-table-column width="200">
           <template slot="header" slot-scope="scope">
             <el-select v-model="group" :placeholder="$t('seller.host.ownGroup')">
               <el-option :label="$t('seller.host.group') + 'A1'" value="集群A"></el-option>
@@ -160,8 +169,9 @@ export default {
         return {
           dialogVisible: false,
           form: {
-            name: "",
-            cluster: ""
+            name: '',
+            region: '',
+            cluster: '',
           },
           groupJoin: this.$t('seller.host.newGroup'),
           state: "",
@@ -225,6 +235,12 @@ export default {
     p {
       margin-bottom: 0;
     }
+    .overflow {
+          overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+      }
     .empty-text {
       width: 470px;
       margin: 30px auto;
@@ -260,6 +276,15 @@ export default {
     }
     .table-head {
       text-align: center;
+      color: #363636;
+        font-weight: 500;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        i {
+          font-size: 26px;
+        }
+
     }
     .el-select /deep/ .el-input__suffix {
       right: 10px;

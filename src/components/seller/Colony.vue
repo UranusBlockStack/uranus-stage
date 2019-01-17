@@ -131,13 +131,13 @@
         </el-table-column>
         <el-table-column width="150" prop="number">
           <template slot="header" slot-scope="scope">
-            <p>
+            <p class="table-head" style="text-align: left;">
               <i class="iconfont icon-resource-market"></i>
               {{$t('seller.host.number')}}
             </p>
           </template>
         </el-table-column>
-        <el-table-column width="200">
+        <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-cpu"></i> CPU
@@ -151,7 +151,7 @@
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
-        <el-table-column width="200">
+        <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-memory"></i>
@@ -166,7 +166,7 @@
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
-        <el-table-column width="200">
+        <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-disk"></i>
@@ -181,7 +181,7 @@
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
           </template>
         </el-table-column>
-        <el-table-column width="200">
+        <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-network"></i>
@@ -632,7 +632,15 @@ export default {
       float: right;
     }
     .table-head {
-      text-align: center;
+      color: #363636;
+        font-weight: 500;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+        i {
+            font-size: 26px;
+        }
     }
     .el-select /deep/ .el-input__suffix {
       right: 10px;

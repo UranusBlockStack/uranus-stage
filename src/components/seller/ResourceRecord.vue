@@ -2,7 +2,10 @@
   <section class="resourceRecord">
     <el-row class="recordHead">
       <el-col class="title" :span="24">
-        <h1><i class="iconfont icon-zhongmingming"></i>{{$t('seller.groups.deployRecord')}}</h1>
+        <h1>
+          <i class="iconfont icon-zhongmingming"></i>
+          {{$t('seller.groups.deployRecord')}}
+        </h1>
       </el-col>
     </el-row>
     <el-row class="recordBox">
@@ -44,14 +47,16 @@
             :placeholder="$t('seller.groups.deployPage.searchIn')"
             prefix-icon="el-icon-search"
           ></el-input>
-          <el-button type="success"><i class="iconfont icon-view"></i></el-button>
+          <el-button type="success">
+            <i class="iconfont icon-search"></i>
+          </el-button>
         </el-col>
       </el-row>
       <el-col class="record-head">
         <el-dialog
           :title="$t('seller.groups.deployPage.title')"
           :visible.sync="dialogVisible"
-          width="50%"
+          width="850px"
         >
           <el-table :data="tableData1" style="width: 100%; margin-top: -40px;">
             <el-table-column prop="menu" width="180"></el-table-column>
@@ -61,13 +66,65 @@
       </el-col>
       <el-col :span="24">
         <el-table :data="tableData" border style="width: 100%" @row-click="dialogVisible = true">
-          <el-table-column prop="1" :label="$t('seller.groups.deployPage.number')"></el-table-column>
-          <el-table-column prop="2" :label="$t('seller.groups.deployPage.clusterName')"></el-table-column>
-          <el-table-column prop="3" :label="$t('seller.groups.deployPage.clusterTime')"></el-table-column>
-          <el-table-column prop="4" :label="$t('seller.groups.deployPage.startingTime')"></el-table-column>
-          <el-table-column prop="5" :label="$t('seller.groups.deployPage.endingTime')"></el-table-column>
-          <el-table-column prop="6" :label="$t('seller.groups.deployPage.clusterValue')"></el-table-column>
-          <el-table-column prop="7" :label="$t('seller.groups.deployPage.clusterHash')" width='270'></el-table-column>
+          <el-table-column prop="1">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-id"></i>
+                {{$t('seller.groups.deployPage.number')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="2">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-lines"></i>
+                {{$t('seller.groups.deployPage.clusterName')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="3" min-width="100">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-hangshishichang"></i>
+                {{$t('seller.groups.deployPage.clusterTime')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="4">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-start-time"></i>
+                {{$t('seller.groups.deployPage.startingTime')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="5">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-finish-time"></i>
+                {{$t('seller.groups.deployPage.endingTime')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="6" min-width="110">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-turnover"></i>
+                {{$t('seller.groups.deployPage.clusterValue')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="hash" width="270">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-hash"></i>
+                {{$t('seller.groups.deployPage.clusterHash')}}
+              </p>
+            </template>
+            <template slot-scope="scope">
+                  <p class="overflow">{{ scope.row.hash }}</p>
+                </template>
+          </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="6" :offset="15" class="transaction-foot">
@@ -115,7 +172,7 @@ export default {
           4: "Limitid",
           5: "Limitid",
           6: "Limitid",
-          7: "0X16546167451sd54f6a5s1dfa68ds4"
+          hash: "0X16546167451sd54f6a5s1dfa68ds4"
         },
         {
           1: "1234561",
@@ -124,7 +181,7 @@ export default {
           4: "Limitid",
           5: "Limitid",
           6: "Limitid",
-          7: "0X16546167451sd54f6a5s1dfa68ds4"
+          hash: "0X16546167451sd54f6a5s1dfa68ds4"
         },
         {
           1: "1234561",
@@ -133,53 +190,8 @@ export default {
           4: "Limitid",
           5: "Limitid",
           6: "Limitid",
-          7: "0X16546167451sd54f6a5s1dfa68ds4"
+          hash: "0X16546167451sd54f6a5s1dfa68ds4"
         },
-        {
-          1: "1234561",
-          2: "MySQL",
-          3: "2018-12-16",
-          4: "Limitid",
-          5: "Limitid",
-          6: "Limitid",
-          7: "0X16546167451sd54f6a5s1dfa68ds4"
-        },
-        {
-          1: "1234561",
-          2: "MySQL",
-          3: "2018-12-16",
-          4: "Limitid",
-          5: "Limitid",
-          6: "Limitid",
-          7: "0X16546167451sd54f6a5s1dfa68ds4"
-        },
-        {
-          1: "1234561",
-          2: "MySQL",
-          3: "2018-12-16",
-          4: "Limitid",
-          5: "Limitid",
-          6: "Limitid",
-          7: "0X16546167451sd54f6a5s1dfa68ds4"
-        },
-        {
-          1: "1234561",
-          2: "MySQL",
-          3: "2018-12-16",
-          4: "Limitid",
-          5: "Limitid",
-          6: "Limitid",
-          7: "0X16546167451sd54f6a5s1dfa68ds4"
-        },
-        {
-          1: "1234561",
-          2: "MySQL",
-          3: "2018-12-16",
-          4: "Limitid",
-          5: "Limitid",
-          6: "Limitid",
-          7: "0X16546167451sd54f6a5s1dfa68ds4"
-        }
       ],
       tableData1: [
         {
@@ -249,13 +261,13 @@ export default {
         font-size: 16px;
         color: #252525;
         line-height: 50px;
-      margin: 0;
-      padding: 0;
-      padding-left: 30px;
-      i {
-        font-size: 26px;
-        margin-right: 10px;
-      }
+        margin: 0;
+        padding: 0;
+        padding-left: 30px;
+        i {
+          font-size: 26px;
+          margin-right: 10px;
+        }
       }
     }
   }
@@ -298,6 +310,22 @@ export default {
         color: rgba(0, 0, 0, 0.85);
         line-height: 50px;
       }
+    }
+    .table-head {
+      color: #363636;
+      font-weight: 500;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      i {
+        font-size: 26px;
+      }
+    }
+    .overflow {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 100%;
     }
     .transaction-foot {
       margin-top: 30px;

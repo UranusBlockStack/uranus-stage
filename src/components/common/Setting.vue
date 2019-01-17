@@ -1,164 +1,225 @@
 <template>
-    <section class="Setting">
-        <el-row class="setting-head">
-            <el-col :span="24">
-                <p>
-                    <i class="iconfont icon-set"></i>
-                    {{$t('menu.setting')}}
-                </p>
-            </el-col>
-        </el-row>
-        <el-row class="userId">
-            <el-col :span="24">
-                <p>{{$t('setting.account')}}</p>
-                <p class="contentUn">{{id}}</p>
-            </el-col>
-        </el-row>
-        <el-row class="mail-box">
-            <el-col :span="12">
-                <p>{{$t('setting.mail')}}</p>
-                <p class="contentUn">{{mail}}</p>
-            </el-col>
-            <el-col :span="8" :offset="4">
-                <p>
-                    <el-button type="text" @click="setMail()">{{buttonClick}}</el-button>
-                    <el-dialog :title="this.buttonClick" :visible.sync="mailOuterVisible" :close-on-click-modal="false" width="580px">
-                        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
-                            <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
-                                <el-input v-model="mail"></el-input>
-                            </el-form-item>
-                            <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
-                                <el-input v-model="mailCaptcha" style="width:69%"></el-input>
-                                <el-button style="width:28%" @click="sendCode('email',mail)">
-                                    {{$t('setting.codeBtn')}}222
-                                </el-button>
-                            </el-form-item>
-                        </el-form>
-                        <div slot="footer" class="dialog-footer" center>
-                            <el-button @click="mailOuterVisible = false">{{$t('setting.button1')}}</el-button>
-                            <el-button type="primary" @click="checkCaptcha('email',mail,mailCaptcha)">
-                                {{$t('setting.button3')}}n
-                            </el-button>
-                        </div>
-                    </el-dialog>
-                    <el-dialog width="580px" :close-on-click-modal="false" :title="$t('setting.mail')" :visible.sync="mailInnerVisible" append-to-body>
-                        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
-                            <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
-                                <span slot="label">{{$t('setting.mail')}}</span>
-                                <el-input v-model="newEmail"></el-input>
-                            </el-form-item>
-                            <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
-                                <el-input v-model="bindMailCaptcha" style="width:69%"></el-input>
-                                <el-button style="width:28%" @click="sendCode('email',newEmail)">
-                                    {{$t('setting.codeBtn')}}111
-                                </el-button>
-                            </el-form-item>
-                        </el-form>
-                        <div slot="footer" class="dialog-footer">
-                            <el-button @click="userBind('email',newEmail,bindMailCaptcha)">
-                                {{$t('setting.button2')}}
-                            </el-button>
-                        </div>
-                    </el-dialog>
-                </p>
-            </el-col>
-        </el-row>
-        <el-row class="phone-box">
-            <el-col :span="12">
-                <p>{{$t('setting.phone')}}</p>
-                <p class="contentUn">{{phonenum}}</p>
-            </el-col>
-            <el-col :span="8" :offset="4">
-                <p>
-                    <el-button type="text" @click="setPhone()">{{buttonClick}}</el-button>
-                    <el-dialog :title="this.buttonClick" :visible.sync="phoneOuterVisible" width="580px"
-                               :close-on-click-modal="false">
-                        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
-                            <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
-                                <el-input v-model="sourceNum"></el-input>
-                            </el-form-item>
-                            <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
-                                <el-input v-model="captcha" style="width:69%"></el-input>
-                                <el-button style="width:28%" @click="sendCode('mobile',sourceNum)">
-                                    {{$t('setting.codeBtn')}}p1
-                                </el-button>
-                            </el-form-item>
-                        </el-form>
-                        <div slot="footer" class="dialog-footer" center>
-                            <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}</el-button>
-                            <el-button type="primary" @click="checkCaptcha('mobile',sourceNum,captcha)">{{$t('setting.button3')}}n</el-button>
-                        </div>
-                    </el-dialog>
-                    <el-dialog width="580px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" append-to-body
-                            :close-on-click-modal="false">
-                        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="80px" class="demo-ruleForm">
-                            <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
-                                <el-input v-model="newPhoneNum"></el-input>
-                            </el-form-item>
-                            <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
-                                <el-input v-model="bindCaptcha" style="width:69%"></el-input>
-                                <el-button style="width:28%" @click="sendCode('mobile',newPhoneNum)">
-                                    {{$t('setting.codeBtn')}}p2
-                                </el-button>
-                            </el-form-item>
-                        </el-form>
-                        <div slot="footer" class="dialog-footer">
-                            <el-button @click="userBind('mobile',newPhoneNum,bindCaptcha)">
-                                {{$t('setting.button2')}}
-                            </el-button>
-                        </div>
-                    </el-dialog>
-                </p>
-            </el-col>
-        </el-row>
-        <el-row class="pwd-box">
-            <el-col :span="12">
-                <p>{{$t('setting.password')}}</p>
-                <p class="contentUn">******</p>
-            </el-col>
-            <el-col :span="8" :offset="4">
-                <p>
-                    <el-button type="text" @click="pwdOuterVisible = true">
-                        {{$t('setting.clickChange')}}
-                    </el-button>
-                    <el-dialog :title="$t('setting.clickChange')" :visible.sync="pwdOuterVisible" width="580px" :close-on-click-modal="false">
-                        <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="140px" class="demo-ruleForm">
-                            <el-form-item :label="$t('setting.modifyPassword.current')" prop="buyerEmail">
-                                <el-input v-model="currentPassword"></el-input>
-                            </el-form-item>
-                            <el-form-item :label="$t('setting.modifyPassword.new')" prop="buyerEmail">
-                                <el-input v-model="newPassword"></el-input>
-                            </el-form-item>
-                            <el-form-item :label="$t('setting.modifyPassword.confirm')" prop="buyerEmail">
-                                <el-input v-model="confirmPassword"></el-input>
-                            </el-form-item>
-                        </el-form>
-                        <div slot="footer" class="dialog-footer" center>
-                            <el-button @click="pwdOuterVisible = false">{{$t('setting.button1')}}</el-button>
-                            <el-button type="primary" @click="resetPassword()">{{$t('setting.button2')}}</el-button>
-                        </div>
-                    </el-dialog>
-                </p>
-            </el-col>
-        </el-row>
-        <el-row class="code-box">
-            <el-col :span="12">
-                <p>{{$t('setting.codeSet')}}</p>
-                <p class="contentUn">{{$t('setting.code')}}</p>
-            </el-col>
-            <el-col :span="8" :offset="4">
-                <p>
-                    <el-select v-model="code">
-                        <el-option :value="$t('setting.codePhone')">
-                <p @click="dialogVisible = true">{{$t('setting.codePhone')}}</p>
-                </el-option>
-                <el-option :value="$t('setting.codeEmail')">
-                    <p style="width:100%" @click="dialogVisible = true">{{$t('setting.codeEmail')}}</p>
-                </el-option>
-                </el-select>
-                <el-dialog title="提示" :visible.sync="dialogVisible" width="580px">
-                    <span>如果继续此项操作，交易时所需要获取验证码将会改变，确定继续此操作吗？</span>
-                    <span slot="footer" class="dialog-footer">
+  <section class="Setting">
+    <el-row class="setting-head">
+      <el-col :span="24">
+        <h1>
+          <i class="iconfont icon-setting"></i>
+          {{$t('menu.setting')}}
+        </h1>
+      </el-col>
+    </el-row>
+    <el-row class="userId">
+      <el-col :span="24">
+        <p>{{$t('setting.account')}}</p>
+        <p class="contentUn">{{id}}</p>
+      </el-col>
+    </el-row>
+    <el-row class="mail-box">
+      <el-col :span="12">
+        <p>{{$t('setting.mail')}}</p>
+        <p class="contentUn">{{mail}}</p>
+      </el-col>
+      <el-col :span="8" :offset="4">
+        <p>
+          <el-button type="text" @click="setMail()">{{buttonClick}}</el-button>
+          <el-dialog
+            :title="this.buttonClick"
+            :visible.sync="mailOuterVisible"
+            :close-on-click-modal="false"
+            width="580px"
+          >
+            <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              label-width="80px"
+              class="demo-ruleForm"
+            >
+              <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
+                <el-input v-model="mail"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
+                <el-input v-model="mailCaptcha" style="width:69%"></el-input>
+                <el-button
+                  style="width:28%"
+                  @click="sendCode('email',mail)"
+                >{{$t('setting.codeBtn')}}</el-button>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer" center>
+              <el-button @click="mailOuterVisible = false">{{$t('setting.button1')}}</el-button>
+              <el-button
+                type="primary"
+                @click="mailOuterVisible = false,mailInnerVisible = true,checkCaptcha()"
+              >{{$t('setting.button3')}}next</el-button>
+            </div>
+          </el-dialog>
+          <el-dialog
+            width="580px"
+            :close-on-click-modal="false"
+            :title="$t('setting.mail')"
+            :visible.sync="mailInnerVisible"
+            append-to-body
+          >
+            <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              label-width="80px"
+              class="demo-ruleForm"
+            >
+              <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
+                <span slot="label">{{$t('setting.mail')}}</span>
+                <el-input v-model="newEmail"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
+                <el-input v-model="bindMailCaptcha" style="width:69%"></el-input>
+                <el-button
+                  style="width:28%"
+                  @click="sendCode('email',newEmail)"
+                >{{$t('setting.codeBtn')}}</el-button>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button
+                @click="userBind('email',newEmail,bindMailCaptcha)"
+              >{{$t('setting.button2')}}</el-button>
+            </div>
+          </el-dialog>
+        </p>
+      </el-col>
+    </el-row>
+    <el-row class="phone-box">
+      <el-col :span="12">
+        <p>{{$t('setting.phone')}}</p>
+        <p class="contentUn">{{phonenum}}</p>
+      </el-col>
+      <el-col :span="8" :offset="4">
+        <p>
+          <el-button type="text" @click="setPhone()">{{buttonClick}}</el-button>
+          <el-dialog
+            :title="this.buttonClick"
+            :visible.sync="phoneOuterVisible"
+            width="580px"
+            :close-on-click-modal="false"
+          >
+            <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              label-width="80px"
+              class="demo-ruleForm"
+            >
+              <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
+                <el-input v-model="sourceNum"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
+                <el-input v-model="captcha" style="width:69%"></el-input>
+                <el-button
+                  style="width:28%"
+                  @click="sendCode('mobile',sourceNum)"
+                >{{$t('setting.codeBtn')}}</el-button>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer" center>
+              <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}</el-button>
+              <el-button type="primary" @click="checkCaptcha()">{{$t('setting.button3')}}</el-button>
+            </div>
+          </el-dialog>
+          <el-dialog
+            width="580px"
+            :title="$t('setting.phone')"
+            :visible.sync="phoneInnerVisible"
+            append-to-body
+            :close-on-click-modal="false"
+          >
+            <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              label-width="80px"
+              class="demo-ruleForm"
+            >
+              <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
+                <el-input v-model="newPhoneNum"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
+                <el-input v-model="bindCaptcha" style="width:69%"></el-input>
+                <el-button
+                  style="width:28%"
+                  @click="sendCode('mobile',newPhoneNum)"
+                >{{$t('setting.codeBtn')}}</el-button>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer">
+              <el-button
+                @click="userBind('mobile',newPhoneNum,bindCaptcha)"
+              >{{$t('setting.button2')}}</el-button>
+            </div>
+          </el-dialog>
+        </p>
+      </el-col>
+    </el-row>
+    <el-row class="pwd-box">
+      <el-col :span="12">
+        <p>{{$t('setting.password')}}</p>
+        <p class="contentUn">******</p>
+      </el-col>
+      <el-col :span="8" :offset="4">
+        <p>
+          <el-button
+            type="text"
+            @click="pwdOuterVisible = true"
+          >{{$t('setting.clickChange')}}</el-button>
+          <el-dialog
+            :title="$t('setting.clickChange')"
+            :visible.sync="pwdOuterVisible"
+            width="580px"
+            :close-on-click-modal="false"
+          >
+            <el-form
+              :model="ruleForm"
+              :rules="rules"
+              ref="ruleForm"
+              label-width="140px"
+              class="demo-ruleForm"
+            >
+              <el-form-item :label="$t('setting.modifyPassword.current')" prop="buyerEmail">
+                <el-input v-model="currentPassword"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('setting.modifyPassword.new')" prop="buyerEmail">
+                <el-input v-model="newPassword"></el-input>
+              </el-form-item>
+              <el-form-item :label="$t('setting.modifyPassword.confirm')" prop="buyerEmail">
+                <el-input v-model="confirmPassword"></el-input>
+              </el-form-item>
+            </el-form>
+            <div slot="footer" class="dialog-footer" center>
+              <el-button @click="pwdOuterVisible = false">{{$t('setting.button1')}}</el-button>
+              <el-button type="primary" @click="resetPassword()">{{$t('setting.button2')}}</el-button>
+            </div>
+          </el-dialog>
+        </p>
+      </el-col>
+    </el-row>
+    <el-row class="code-box">
+      <el-col :span="12">
+        <p>{{$t('setting.codeSet')}}</p>
+        <p class="contentUn">{{$t('setting.code')}}</p>
+      </el-col>
+      <el-col :span="8" :offset="4">
+        <p>
+          <el-select v-model="code">
+            <el-option :value="$t('setting.codePhone')">
+              <p @click="dialogVisible = true">{{$t('setting.codePhone')}}</p>
+            </el-option>
+            <el-option :value="$t('setting.codeEmail')">
+              <p style="width:100%" @click="dialogVisible = true">{{$t('setting.codeEmail')}}</p>
+            </el-option>
+          </el-select>
+          <el-dialog title="提示" :visible.sync="dialogVisible" width="580px">
+            <span>如果继续此项操作，交易时所需要获取验证码将会改变，确定继续此操作吗？</span>
+            <span slot="footer" class="dialog-footer">
               <el-button @click="dialogVisible = false">取 消</el-button>
               <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
             </span>
@@ -365,41 +426,35 @@
 </script>
 
 <style lang="scss" scoped>
-    .Setting {
-        width: 100%;
-        min-width: 1130px;
-        background: #f2f2f2;
-
-    p {
-        margin: 0;
-    }
-
-    .setting-head {
-        background: #ffffff;
-        height: 50px;
-
-    p {
-        font-family: Source-Sans-Pro-Bold;
-        padding-left: 30px;
-        font-size: 16px;
-        color: #252525;
-        line-height: 50px;
-        text-align: left;
-
-    i {
+.Setting {
+  width: 100%;
+  min-width: 1130px;
+  background: #f2f2f2;
+  p {
+    margin: 0;
+  }
+  .setting-head {
+    background: #ffffff;
+    height: 50px;
+    h1 {
+      font-family: Source-Sans-Pro-Bold;
+      font-size: 16px;
+      color: #252525;
+      line-height: 50px;
+      margin: 0;
+      padding: 0;
+      padding-left: 30px;
+      i {
         font-size: 26px;
         margin-right: 10px;
     }
-
-    }
-    }
-    .userId {
-        background: #ffffff;
-        height: 100px;
-        margin: 20px;
-        margin-bottom: 0;
-        border-bottom: 1px #e9e9e9 solid;
-
+  }
+  .userId {
+    background: #ffffff;
+    height: 100px;
+    margin: 10px;
+    margin-bottom: 0;
+    border-bottom: 1px #e9e9e9 solid;
     p {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
@@ -418,15 +473,15 @@
     }
 
     }
-    .mail-box,
-    .phone-box,
-    .pwd-box,
-    .code-box {
-        background: #ffffff;
-        height: 100px;
-        margin: 0 20px;
-        border-bottom: 1px #e9e9e9 solid;
-
+  }
+  .mail-box,
+  .phone-box,
+  .pwd-box,
+  .code-box {
+    background: #ffffff;
+    height: 100px;
+    margin: 0 10px;
+    border-bottom: 1px #e9e9e9 solid;
     p {
         font-size: 16px;
         color: rgba(0, 0, 0, 0.85);

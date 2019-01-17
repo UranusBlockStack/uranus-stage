@@ -2,10 +2,10 @@
   <section class="Wallet">
     <el-row class="wallet-head">
       <el-col :span="24">
-        <p>
+        <h1>
           <i class="iconfont icon-wallet"></i>
           {{$t('wallet.title')}}
-        </p>
+        </h1>
       </el-col>
     </el-row>
     <el-row class="wallet-body">
@@ -29,28 +29,87 @@
         <el-dialog
           :title="$t('wallet.transactionDetails')"
           :visible.sync="dialogVisible"
-          width="60%"
+          width="820px"
         >
-          <el-table :data="tableData1" style="width: 100%">
+          <el-table :data="tableData1" style="width: 820px">
             <el-table-column prop="title" width="190"></el-table-column>
-            <el-table-column prop="value" width="630"></el-table-column>
+            <el-table-column prop="value" width="580"></el-table-column>
           </el-table>
         </el-dialog>
       </el-col>
       <el-col :span="24">
         <el-table :data="tableData" border style="width: 100%" @row-click="viewDetail">
-          <el-table-column prop="hash" :label="$t('wallet.hash')" min-width="130"></el-table-column>
-          <el-table-column
-            prop="createTime"
-            :formatter="formateDate"
-            :label="$t('wallet.time')"
-            width="160"
-          ></el-table-column>
-          <el-table-column prop="from" :label="$t('wallet.from')" min-width="150"></el-table-column>
-          <el-table-column prop="to" :label="$t('wallet.to')" min-width="150"></el-table-column>
-          <el-table-column prop="value" :label="$t('wallet.value')" width="120"></el-table-column>
-          <el-table-column prop="fee" :label="$t('wallet.fee')"></el-table-column>
-          <el-table-column prop="status" :label="$t('wallet.status')"></el-table-column>
+          <el-table-column min-width="150">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-hash"></i>
+                {{$t('wallet.hash')}}
+              </p>
+            </template>
+             <template slot-scope="scope">
+            <p class="overflow">
+              {{ scope.row.hash}}
+            </p>
+          </template>
+          </el-table-column>
+          <el-table-column prop="createTime" :formatter="formateDate" min-width="160">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-start-time"></i>
+                {{$t('wallet.time')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column min-width="150">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-send"></i>
+                {{$t('wallet.from')}}
+              </p>
+            </template>
+            <template slot-scope="scope">
+            <p class="overflow">
+              {{ scope.row.from}}
+            </p>
+          </template>
+          </el-table-column>
+          <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-receive"></i>
+                {{$t('wallet.to')}}
+              </p>
+            </template>
+            <template slot-scope="scope">
+            <p class="overflow">
+              {{ scope.row.to}}
+            </p>
+          </template>
+          </el-table-column>
+          <el-table-column prop="value" :label="$t('wallet.value')" min-width="150">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-turnover"></i>
+                {{$t('wallet.value')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="fee" :label="$t('wallet.fee')">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-lines"></i>
+                {{$t('wallet.fee')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="status" :label="$t('wallet.status')" min-width="110">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-state"></i>
+                {{$t('wallet.status')}}
+              </p>
+            </template>
+          </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="6" :offset="15" class="transaction-foot">
@@ -144,13 +203,14 @@ export default {
   .wallet-head {
     background: #ffffff;
     height: 50px;
-    p {
+    h1 {
       font-family: Source-Sans-Pro-Bold;
-      padding-left: 30px;
       font-size: 16px;
       color: #252525;
       line-height: 50px;
-      text-align: left;
+      margin: 0;
+      padding: 0;
+      padding-left: 30px;
       i {
         font-size: 26px;
         margin-right: 10px;
@@ -186,6 +246,22 @@ export default {
     background: #ffffff;
     .el-col {
       padding: 0 30px;
+      .overflow {
+          overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+      }
+      .table-head{
+        color: #363636;
+        font-weight: 500;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        i {
+            font-size: 26px;
+        }
+      }
     }
     .transaction-head {
       height: 50px;

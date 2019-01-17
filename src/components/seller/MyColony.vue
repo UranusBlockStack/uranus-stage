@@ -219,7 +219,7 @@ export default {
     p {
       height: 40px;
       font-family: Source-Sans-Pro-Bold;
-      font-size: 20px;
+      font-size: 16px;
       color: #252525;
       line-height: 40px;
       text-align: left;

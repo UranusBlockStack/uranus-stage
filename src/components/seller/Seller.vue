@@ -59,10 +59,18 @@
       <div class="power">
         <p>{{$t('seller.home.power')}}</p>
         <div class="powerBox">
-          <div id="Cpu"><Oil :chartData="{value: 20, type: 'CPU'}"/></div>
-          <div id="Memory"><Oil :chartData="{value: 20, type: 'Memory'}"/></div>
-          <div id="Storage"><Oil :chartData="{value: 20, type: 'Storage'}"/></div>
-          <div id="Network"><Oil :chartData="{value: 20, type: 'Network'}"/></div>
+          <div id="Cpu">
+            <Oil :chartData="{value: 20, type: 'CPU'}"/>
+          </div>
+          <div id="Memory">
+            <Oil :chartData="{value: 20, type: 'Memory'}"/>
+          </div>
+          <div id="Storage">
+            <Oil :chartData="{value: 20, type: 'Storage'}"/>
+          </div>
+          <div id="Network">
+            <Oil :chartData="{value: 20, type: 'Network'}"/>
+          </div>
         </div>
       </div>
       <div class="record">
@@ -70,19 +78,49 @@
         <el-row>
           <el-col :span="24">
             <el-table :data="tableData" border style="width: 100%">
-              <el-table-column prop="type" :label="$t('seller.home.type')"></el-table-column>
-              <el-table-column
-                prop="createTime"
-                :formatter="formateDate"
-                :label="$t('seller.home.time')"
-              ></el-table-column>
-              <el-table-column prop="hash" :label="$t('seller.home.hash')">
-                <template slot-scope="scope">
-                  <p style="color:red; font-size:10px; margin-left:35px;">{{ scope.row.hash }}</p>
+              <el-table-column prop="type">
+                <template slot="header" slot-scope="scope">
+                  <p class="table-head">
+                    <i class="iconfont icon-resource-market"></i>
+                    {{$t('seller.home.type')}}
+                  </p>
                 </template>
               </el-table-column>
-              <el-table-column prop="value" :label="$t('seller.home.amount')"></el-table-column>
-              <el-table-column prop="fee" :label="$t('seller.home.fee')"></el-table-column>
+              <el-table-column prop="createTime" :formatter="formateDate">
+                <template slot="header" slot-scope="scope">
+                  <p class="table-head">
+                    <i class="iconfont icon-Point-in-time"></i>
+                    {{$t('seller.home.time')}}
+                  </p>
+                </template>
+              </el-table-column>
+              <el-table-column prop="hash">
+                <template slot="header" slot-scope="scope" min-width="250">
+                  <p class="table-head">
+                    <i class="iconfont icon-hash"></i>
+                    {{$t('seller.home.hash')}}
+                  </p>
+                </template>
+                <template slot-scope="scope">
+                  <p class="overflow">{{ scope.row.hash }}</p>
+                </template>
+              </el-table-column>
+              <el-table-column prop="value">
+                <template slot="header" slot-scope="scope">
+                  <p class="table-head">
+                    <i class="iconfont icon-turnover"></i>
+                    {{$t('seller.home.amount')}}
+                  </p>
+                </template>
+              </el-table-column>
+              <el-table-column prop="fee">
+                <template slot="header" slot-scope="scope">
+                  <p class="table-head">
+                    <i class="iconfont icon-lines"></i>
+                    {{$t('seller.home.fee')}}
+                  </p>
+                </template>
+              </el-table-column>
             </el-table>
           </el-col>
         </el-row>
@@ -97,14 +135,14 @@
 </template>
 
 <script>
-import * as wallet from "../../services/WalletService"
-import moment from "moment"
-import Oil from "@/components/modules/Oil"
+import * as wallet from "../../services/WalletService";
+import moment from "moment";
+import Oil from "@/components/modules/Oil";
 
 export default {
   name: "Seller",
   components: {
-      Oil,
+    Oil
   },
   data() {
     return {
@@ -499,12 +537,24 @@ export default {
         font-weight: 500;
         font-size: 16px;
       }
+      .overflow {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        width: 100%;
+      }
       .el-table {
         color: #363636;
       }
-      .el-table /deep/ th {
+      .table-head {
         color: #363636;
         font-weight: 500;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        i {
+          font-size: 26px;
+        }
       }
       .el-pagination {
         margin-top: 20px;
