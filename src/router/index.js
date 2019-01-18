@@ -89,7 +89,7 @@ const routes = [
         component: MyResource,
         name: 'MyResource'
       }, {
-        path: '/resourcepool',
+        path: '/resourcepool/:poolid',
         component: ResourcePool,
         name: 'ResourcePool'
       }, {
@@ -135,7 +135,7 @@ const routes = [
         component: MyColony,
         name: 'MyColony'
       }, {
-        path: '/colony',
+        path: '/colony/:resid',
         component: Colony,
         name: 'Colony'
       }, {

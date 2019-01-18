@@ -372,7 +372,6 @@ export default {
                   object['time'] = moment(data.endTime).format('YYYY-MM-DD hh:mm:ss')
                   this.poolList.push(object)
                 }
-                  console.log('maxl', this.poolList);
               })
     }
   },

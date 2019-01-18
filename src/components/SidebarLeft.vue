@@ -72,22 +72,10 @@
           </span>
         </router-link>
         <ul class="treeview-menu">
-          <li>
-            <router-link :to="{path: '/resourcepool'}">
+          <li v-for="item in uraPowerList">
+            <router-link :to="{path: '/resourcepool/'+item.id}">
               <i class="iconfont icon-host1"></i>
-              {{$t('menu.resourcePool1')}}
-            </router-link>
-          </li>
-          <li>
-            <router-link :to="{path: '/resourcepool'}">
-              <i class="iconfont icon-host1"></i>
-              {{$t('menu.resourcePool2')}}
-            </router-link>
-          </li>
-          <li>
-            <router-link :to="{path: '/resourcepool'}">
-              <i class="iconfont icon-host1"></i>
-              {{$t('menu.resourcePool3')}}
+              {{item.projectName}}
             </router-link>
           </li>
         </ul>
