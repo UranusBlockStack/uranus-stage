@@ -30,7 +30,7 @@
               <div class="resources">
                 <div>
                   <p class="shops">{{$t('buyer.home.stores')}} {{app.catalog}}</p>
-                  <img src="/static/img/uranus/developer/app.png" alt="img">
+                  <img :src='app.imageurl' alt="img">
                   <p class="name">{{app.name}}</p>
                   <p
                     class="detail"
@@ -134,7 +134,8 @@ export default {
         }
       },
       powerVal: {},
-      appList: [ ]
+      appList: [],
+      imageServerUrl: this.$store.state.imageServerUrl
     }
   },
   methods: {
