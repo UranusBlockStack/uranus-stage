@@ -159,23 +159,40 @@
 
 <script>
 import * as auth from '../services/AuthService'
+import * as project from '../services/RancherService'
 
 export default {
-  name: "SidebarLeft",
+  name: 'SidebarLeft',
   data() {
     return {
       user: '',
-    };
+      uraPowerList: [],
+      projectQuertData: {
+        'page': 0,
+        'pageSize': 0,
+        'projectName': '',
+        'sort': '',
+        'sortDesc': true
+      }
+    }
   },
   created() {
-    this.getUser();
+    this.getUser()
+    this.getUraPowerPoolLIst()
   },
   methods: {
     getUser() {
-      this.user = auth.getUserBaseInfo().loginRole;
+      this.user = auth.getUserBaseInfo().loginRole
+    },
+    getUraPowerPoolLIst() {
+      project.projectList(this.$store.getters.lang, this.projectQuertData)
+                .then(respData => {
+                  const data = respData.data.data.records
+                  this.uraPowerList = data
+                })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

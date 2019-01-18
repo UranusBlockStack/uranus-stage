@@ -104,3 +104,10 @@ export function appVersion (lang, appId, version) {
 export function appByUser (lang, queryData) {
     return httpLang(lang).post('/rancher/app_users/search', queryData)
 }
+
+
+
+/** Rancher - Project Controller Service ***/
+export function projectList (lang, queryData) {
+    return httpLang(lang).post('/rancher/projects/search', queryData)
+}
