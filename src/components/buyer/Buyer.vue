@@ -29,25 +29,25 @@
             <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
               <div class="resources">
                 <div>
-                  <p class="shops">{{$t('buyer.home.stores')}} {{app.shop}}</p>
+                  <p class="shops">{{$t('buyer.home.stores')}} {{app.catalog}}</p>
                   <img src="/static/img/uranus/developer/app.png" alt="img">
-                  <p class="name">Imagepuler</p>
+                  <p class="name">{{app.name}}</p>
                   <p
                     class="detail"
-                  >DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
+                  >{{app.description}}</p>
                   <el-row :gutter="20">
                     <el-col :span="6" :offset="2">
-                      <p class="free">{{$t('buyer.home.free')}}</p>
+                      <p class="free">{{$t('buyer.home.free')}} </p>
                     </el-col>
                     <el-col :span="10" :offset="6">
-                      <p class="downloads">{{$t('buyer.home.download')}}123</p>
+                      <p class="downloads">{{$t('buyer.home.download')}} {{app.downloadTimes}}</p>
                     </el-col>
-                    <router-link :to="{path: '/deployment'}">
+                      <a @click.prevent="deployApp(app.id, app.rid, app.defaultVersion, app.catalog)">
                       <el-button
                         type="success"
                         style="margin-top: -10px;"
                       >{{$t('buyer.home.details')}}</el-button>
-                    </router-link>
+                    </a>
                   </el-row>
                 </div>
               </div>
@@ -149,10 +149,22 @@ export default {
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
         this.appList = respData.data.data.records
-        this.appList.map(imginfo => {
-          imginfo.imageurl = this.imageServerUrl + imginfo.rid + '/icon'
-          return imginfo
+        this.appList.map(appitem => {
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.computedPrice = appitem.free? this.$t('buyer.deploy.free'):appitem.price
+          return appitem
         })
+      })
+    },
+    deployApp(appId, appRid, versionId, catalog) {
+      this.$router.push({
+        path: '/deployment',
+        query: {
+          appId: appId,
+          appRid: appRid,
+          versionId: versionId,
+          catalog: catalog
+        }
       })
     },
     powerDay(x) {

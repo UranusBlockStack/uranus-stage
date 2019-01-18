@@ -34,8 +34,8 @@
           <el-input :placeholder="$t('buyer.appMarket.searchIn')" v-model="searchName" prefix-icon="el-icon-search"></el-input>
         </el-col>
         <el-col :span="2">
-          <el-button style="margin-left:10px;" type="success">
-            <i class="iconfont icon-search" @click="searchApps"></i>
+          <el-button style="margin-left:10px;" type="success" @click="searchApps">
+            <i class="iconfont icon-search"></i>
           </el-button>
         </el-col>
       </el-row>
@@ -52,7 +52,7 @@
                 <p class="detail">{{app.description}}</p>
                 <el-row :gutter="20">
                   <el-col :span="6" :offset="2">
-                    <p class="free">{{$t('buyer.appMarket.free')}}</p>
+                    <p class="free">{{app.computedPrice}} </p>
                   </el-col>
                   <el-col :span="10" :offset="6">
                     <p class="downloads">{{$t('buyer.appMarket.download')}} {{app.downloadTimes}}</p>
@@ -88,14 +88,14 @@ export default {
     return {
       options1: [
         {
-          value: '1',
+          value: 1,
           label: 'Free'
         },
         {
-          value: '2',
+          value: 2,
           label: 'Paid'
         },
-        {value: '0',
+        {value: 0,
           label: 'All'
         }
       ],
@@ -133,9 +133,10 @@ export default {
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
         this.appList = respData.data.data.records
-          this.appList.map(imginfo => {
-          imginfo.imageurl = this.imageServerUrl + imginfo.rid + '/icon'
-          return imginfo
+        this.appList.map(appitem => {
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.computedPrice = appitem.free? this.$t('buyer.deploy.free'):appitem.price
+          return appitem
         })
       })
     },
@@ -151,7 +152,6 @@ export default {
       })
     },
     searchApps() {
-      console.log('click search')
       this.getAppList()
     },
     setAppType(select) {

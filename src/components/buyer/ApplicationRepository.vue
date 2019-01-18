@@ -51,7 +51,7 @@
                 >{{app.description}}</p>
                 <el-row :gutter="20">
                   <el-col :span="6" :offset="2">
-                    <p class="free">{{$t('buyer.appRepository.free')}}</p>
+                    <p class="free">{{app.computedPrice}}</p>
                   </el-col>
                   <el-col :span="10" :offset="6">
                     <p class="shops">{{app.shop}}</p>
@@ -105,9 +105,10 @@ export default {
 
       app.appByUser(auth.getCurLang(), queryData).then(respData => {
         this.appList = respData.data.data.records
-        this.appList.map(imginfo => {
-          imginfo.imageurl = this.imageServerUrl + imginfo.rid + '/icon'
-          return imginfo
+        this.appList.map(appitem => {
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.computedPrice = appitem.free? this.$t('buyer.deploy.free'):appitem.price
+          return appitem
         })
       })
     },
