@@ -25,26 +25,26 @@
     <div class="right">
       <div class="head-block">
         <b>Head Block:</b>
-        <p>{{BlockData[0].height}}</p>
+        <p>{{BlockData.length == 0 ? placeHolder : BlockData[0].height}}</p>
         <b>Head Block Producer:</b>
-        <p>{{BlockData[0].miner}}</p>
+        <p>{{BlockData.length == 0 ? placeHolder : BlockData[0].miner}}</p>
         <b>Head Block Timestamp:</b>
-        <p>{{BlockData[0].timestamp}}</p>
+        <p>{{BlockData.length == 0 ? placeHolder : BlockData[0].timestamp}}</p>
       </div>
       <div class="block">
         <h3>
           <i class="iconfont icon-zhongmingming"></i> Block
         </h3>
         <div class="text" id="show">
-          <p>Block {{BlockData[0].height}}</p>
-          <p>>{{BlockData[0].timestamp}}</p>
-          <p>mined by {{BlockData[0].miner}}</p>
+          <p>Block {{BlockData.length == 0 ? placeHolder : BlockData[0].height}}</p>
+          <p>{{BlockData.length == 0 ? placeHolder : BlockData[0].timestamp}}</p>
+          <p>mined by {{BlockData.length == 0 ? placeHolder : BlockData[0].miner}}</p>
           <p>0 transactions</p>
         </div>
         <div class="text">
-          <p>Block {{BlockData[1].height}}</p>
-          <p>>{{BlockData[0].timestamp}}o</p>
-          <p>mined by {{BlockData[0].miner}}</p>
+          <p>Block {{BlockData.length <= 1 ? placeHolder : BlockData[1].height}}</p>
+          <p>{{BlockData.length <= 1 ? placeHolder : BlockData[1].timestamp}}</p>
+          <p>mined by {{BlockData.length <= 1 ? placeHolder : BlockData[1].miner}}</p>
           <p>0 transactions</p>
         </div>
       </div>
@@ -53,16 +53,16 @@
           <i class="iconfont icon-zhongmingming"></i> Transactions
         </h3>
         <div class="text" id="show">
-          <p>TX hash:d1fe3…</p>
-          <p>>from: 6f4d1f6dfg…</p>
-          <p>to: d1h4fe2d3ju…</p>
-          <p>value:121URAC</p>
+          <p>TX hash: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].hash}}</p>
+          <p>from: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].from}}</p>
+          <p>to: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].to}}</p>
+          <p>value: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].value}} URAC</p>
         </div>
         <div class="text">
-          <p>TX hash:d1fe3…</p>
-          <p>>from: 6f4d1f6dfg…</p>
-          <p>to: d1h4fe2d3ju…</p>
-          <p>value:121URAC</p>
+            <p>TX hash: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].hash}}</p>
+            <p>from: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].from}}</p>
+            <p>to: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].to}}</p>
+            <p>value: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].value}} URAC</p>
         </div>
       </div>
     </div>
@@ -96,55 +96,56 @@
 </template>
 
 <script>
-import "../../static/js/world.js";
-import * as auth from "../services/AuthService";
-import * as block from "../services/BlockService";
-import moment from "moment";
+import '../../static/js/world.js'
+import * as auth from '../services/AuthService'
+import * as block from '../services/BlockService'
+import moment from 'moment'
 
 export default {
-  name: "Map",
+  name: 'Map',
   data() {
     return {
-      lang: "English",
-      langCode: "en-us",
-      role: "",
+      lang: 'English',
+      langCode: 'en-us',
+      role: '',
+      placeHolder: '--',
       BlockData: [],
       TranscationData: []
-    };
+    }
   },
   methods: {
     chooseCn() {
-      this.lang = "中文";
-      this.langCode = "zh-cn";
-      this.$i18n.locale = "cn";
+      this.lang = '中文'
+      this.langCode = 'zh-cn'
+      this.$i18n.locale = 'cn'
     },
     chooseEn() {
-      this.lang = "English";
-      this.langCode = "en-us";
-      this.$i18n.locale = "en";
+      this.lang = 'English'
+      this.langCode = 'en-us'
+      this.$i18n.locale = 'en'
     },
     LoginPage(userRole) {
-      auth.setCurRole(userRole);
-      auth.setCurLang(this.langCode);
-      this.$router.push({ name: "Login" });
+      auth.setCurRole(userRole)
+      auth.setCurLang(this.langCode)
+      this.$router.push({ name: 'Login' })
     },
 
     initEchart() {
       // 绘制地图
-      let myChartMap2 = this.$echarts.init(document.getElementById("mapWorld"));
+      let myChartMap2 = this.$echarts.init(document.getElementById('mapWorld'))
       // 地图上数据
       let myData = [
-        { name: "分点1", value: [121.15, 31.89, 9] },
-        { name: "分点2", value: [89.781327, 39.608266, 120] },
-        { name: "分点3", value: [120.38, 37.35, 142] },
-        { name: "分点4", value: [22.207216, 29.985295, 123] },
-        { name: "分点5", value: [110.245672, 30.7787677, 566] }
-      ];
+        { name: '分点1', value: [121.15, 31.89, 9] },
+        { name: '分点2', value: [89.781327, 39.608266, 120] },
+        { name: '分点3', value: [120.38, 37.35, 142] },
+        { name: '分点4', value: [22.207216, 29.985295, 123] },
+        { name: '分点5', value: [110.245672, 30.7787677, 566] }
+      ]
 
       myChartMap2.setOption({
         // 新建一个地理坐标系 geo ，
         geo: {
-          map: "world", // 地图类型为世界地图
+          map: 'world', // 地图类型为世界地图
           roam: true,
           zoom: 1,
           scaleLimit: { min: 1, max: 2 },
@@ -152,98 +153,73 @@ export default {
             // 定义样式
             normal: {
               // 普通状态下的样式
-              areaColor: "#6699CC",
-              borderColor: "#fff"
+              areaColor: '#6699CC',
+              borderColor: '#fff'
             },
             emphasis: {
               // 高亮状态下的样式
-              areaColor: "lightgreen"
+              areaColor: 'lightgreen'
             }
           }
         },
         // hover显示目标数据
         tooltip: {
-          trigger: "item",
+          trigger: 'item',
           textStyle: {
-            align: "left"
+            align: 'left'
           }
         },
         // 图表背景色
-        backgroundColor: "#ffffff",
+        backgroundColor: '#ffffff',
         // 标志颜色
-        color: "green",
+        color: 'green',
         // 新建散点图series
         series: [
           {
-            name: "", // series名称
-            type: "scatter", // 为散点类型
-            coordinateSystem: "geo", // series坐标系类型
+            name: '', // series名称
+            type: 'scatter', // 为散点类型
+            coordinateSystem: 'geo', // series坐标系类型
             data: myData,
-            symbol: "pin",
+            symbol: 'pin',
             symbolSize: [20, 20]
           }
         ]
-      });
+      })
       window.onresize = function() {
-        myChartMap2.resize();
-      };
+        myChartMap2.resize()
+      }
     },
     userRegister() {
-      auth.setCurLang(this.langCode);
-      this.$router.push({ name: "Register" });
+      auth.setCurLang(this.langCode)
+      this.$router.push({ name: 'Register' })
     },
     lastedBlock() {
-      // block.getLastedBlock(this.$store.getters.lang, {'height': -1})
-      //         .then(blockData => {
-      //           if (!blockData.data.errCode) {
-      //             // const blockData = blockData.data.data
-      //             console.log(blockData)
-      //
-      //               block.getLastedBlock(this.$store.getters.lang, {'height': blockData.height-1})
-      //                   .then(blockData => {
-      //                       if (!blockData.data.errCode) {
-      //                           // const blockData = blockData.data.data
-      //                           console.log(blockData)
-      //
-      //                       }
-      //                   })
-      //           }
-      //         })
-      const blockData1 = {
-        hash:
-          "0xab8a7055f1dfec7aa5c2b5deb465f0ca3acad685cd8a99e7108c55061aced63d",
-        parentHash:
-          "0x8f24fe7598f0a3e50c2631fa7b8658a562eb537a4060b229ca3857cd59e00f7a",
-        height: 214931,
-        timestamp: moment(1547605437 * 1000).format("YYYY-MM-DD HH:mm:ss"),
-        gasLimit: 5000000,
-        gasUsed: 0,
-        transactions: [],
-        miner: "0x83f1caadabeec2945b73087f803d404f054cc2b7"
-      };
-      this.BlockData.push(blockData1);
-
-      const blockData2 = {
-        hash:
-          "0x8f24fe7598f0a3e50c2631fa7b8658a562eb537a4060b229ca3857cd59e00f7a",
-        parentHash:
-          "0x48eaf603e8c9ef1f9842db93a04f619e151a5ee7e1dea596a37409d2ac7c9613",
-        height: 214930,
-        timestamp: moment(1547605437 * 1000).format("YYYY-MM-DD HH:mm:ss"),
-        gasLimit: 5000000,
-        gasUsed: 0,
-        miner: "0x83f1caadabeec2945b73087f803d404f054cc2b7"
-      };
-      this.BlockData.push(blockData2);
+      block.getLastedBlock(this.$store.getters.lang, {'height': -1})
+              .then(blockData => {
+                if (blockData.data.success) {
+                  const data = blockData.data.data
+                  this.BlockData.push(data)
+                  this.TranscationData = data.transactions
+                  block.getLastedBlock(this.$store.getters.lang, {'height': data.height-1})
+                        .then(blockData => {
+                          if (blockData.data.success) {
+                            this.BlockData.push(blockData.data.data)
+                          }
+                        })
+                }
+              })
+    },
+    getTranscationData() {
+      return this.TranscationData
     }
   },
   mounted() {
-    this.initEchart();
+    this.initEchart()
   },
   created() {
-    this.lastedBlock();
+    this.lastedBlock()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -312,6 +288,12 @@ export default {
     font-size: 14px;
     color: #5d5d5d;
     text-align: left;
+    p {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: 135px;
+    }
   }
   .block {
     background: #ffffff;
