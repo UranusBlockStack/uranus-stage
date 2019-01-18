@@ -43,7 +43,7 @@
               <Ball :chartData="62"/>
             </el-col>
             <el-col :span="12">
-              <h3>{{$t('buyer.myResource.number')}} {{pool.id}}</h3>
+              <h3>{{$t('buyer.myResource.number')}} {{pool.value}}</h3>
               <div class="timeText">
                 <p>{{$t('buyer.myResource.countdownTime')}}</p>
                 <RestTime endTime="2021-1-15 16:31:15"/>
@@ -76,58 +76,61 @@
 </template>
 
 <script>
-import "echarts-liquidfill"
-import Ball from "@/components/modules/Ball"
-import RestTime from "@/components/modules/RestTime"
+import 'echarts-liquidfill'
+import moment from 'moment'
+import Ball from '@/components/modules/Ball'
+import RestTime from '@/components/modules/RestTime'
+import * as project from '../../services/RancherService'
 
 export default {
-  name: "MyResource",
+  name: 'MyResource',
   components: {
     Ball,
     RestTime
   },
   data() {
     return {
-      poolList: [
-        { id: "1", value: "50", time: "2019-1-14 16:15:50" },
-        { id: "2", value: "50", time: "2019-1-15 16:14:50" },
-        { id: "3", value: "50", time: "2019-5-15 16:14:50" },
-        { id: "4", value: "50", time: "2019-6-14 16:04:50" },
-        { id: "5", value: "50", time: "2029-1-14 16:14:50" }
-      ]
-    };
+      poolList: [],
+      projectQuertData: {
+        'page': 0,
+        'pageSize': 0,
+        'projectName': '',
+        'sort': '',
+        'sortDesc': true
+      }
+    }
   },
   methods: {
     initEchart() {
-      var myChart = this.$echarts.init(document.getElementById("restResource"));
+      var myChart = this.$echarts.init(document.getElementById('restResource'))
       var myChart1 = this.$echarts.init(
-        document.getElementById("restResource1")
-      );
+        document.getElementById('restResource1')
+      )
       // var myChart2 = this.$echarts.init(
       //   document.getElementById('restResource2')
       // )
       var myChart3 = this.$echarts.init(
-        document.getElementById("restResource3")
-      );
+        document.getElementById('restResource3')
+      )
       var myChart4 = this.$echarts.init(
-        document.getElementById("restResource4")
-      );
+        document.getElementById('restResource4')
+      )
       var myChart5 = this.$echarts.init(
-        document.getElementById("restResource5")
-      );
+        document.getElementById('restResource5')
+      )
 
       myChart.setOption({
         series: [
           {
-            type: "liquidFill",
-            radius: "85%",
+            type: 'liquidFill',
+            radius: '85%',
             data: [
               {
                 value: 0.3,
-                direction: "right",
+                direction: 'right',
                 itemStyle: {
                   normal: {
-                    color: "#1890FF"
+                    color: '#1890FF'
                   }
                 }
               }
@@ -136,23 +139,23 @@ export default {
               show: false
             },
             backgroundStyle: {
-              borderColor: "#1890FF",
+              borderColor: '#1890FF',
               borderWidth: 3
             }
           }
         ]
-      });
+      })
       myChart1.setOption({
         series: [
           {
-            name: "Cpu",
-            type: "pie",
-            radius: ["85%", "70%"],
+            name: 'Cpu',
+            type: 'pie',
+            radius: ['85%', '70%'],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#9BCC3D", "#f2f2f2"],
+            color: ['#9BCC3D', '#f2f2f2'],
             data: [
               {
                 value: 68,
@@ -160,22 +163,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|GPU}', '{b|88%}'].join("\n"),
+                    formatter: ['{a|GPU}', '{b|88%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#5d5d5d",
-                        fontSize: "14",
-                        lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
+                        color: '#5d5d5d',
+                        fontSize: '14',
+                        lineHeight: '22',
+                        fontFamily: 'PingFangSC-Regular'
                       },
                       b: {
-                        color: "rgba(0,0,0,.85)",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: 'rgba(0,0,0,.85)',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
-                    position: "center",
-                    textStyle: { align: "center" }
+                    position: 'center',
+                    textStyle: { align: 'center' }
                   }
                 }
               },
@@ -183,7 +186,7 @@ export default {
             ]
           }
         ]
-      });
+      })
       // myChart2.setOption({
       //   series: [
       //     {
@@ -229,14 +232,14 @@ export default {
       myChart3.setOption({
         series: [
           {
-            name: "memory",
-            type: "pie",
-            radius: ["85%", "70%"],
+            name: 'memory',
+            type: 'pie',
+            radius: ['85%', '70%'],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#FACC14", "#f2f2f2"],
+            color: ['#FACC14', '#f2f2f2'],
             data: [
               {
                 value: 62,
@@ -244,22 +247,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|Memory}", "{b|62%}"].join("\n"),
+                    formatter: ['{a|Memory}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#5d5d5d",
-                        fontSize: "14",
-                        lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
+                        color: '#5d5d5d',
+                        fontSize: '14',
+                        lineHeight: '22',
+                        fontFamily: 'PingFangSC-Regular'
                       },
                       b: {
-                        color: "rgba(0,0,0,.85)",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: 'rgba(0,0,0,.85)',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
-                    position: "center",
-                    textStyle: { align: "center" }
+                    position: 'center',
+                    textStyle: { align: 'center' }
                   }
                 }
               },
@@ -267,18 +270,18 @@ export default {
             ]
           }
         ]
-      });
+      })
       myChart4.setOption({
         series: [
           {
-            name: "disk",
-            type: "pie",
-            radius: ["85%", "70%"],
+            name: 'disk',
+            type: 'pie',
+            radius: ['85%', '70%'],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#658FF7", "#f2f2f2"],
+            color: ['#658FF7', '#f2f2f2'],
             data: [
               {
                 value: 88,
@@ -286,22 +289,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|Disk}", "{b|88%}"].join("\n"),
+                    formatter: ['{a|Disk}', '{b|88%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#5d5d5d",
-                        fontSize: "14",
-                        lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
+                        color: '#5d5d5d',
+                        fontSize: '14',
+                        lineHeight: '22',
+                        fontFamily: 'PingFangSC-Regular'
                       },
                       b: {
-                        color: "rgba(0,0,0,.85)",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: 'rgba(0,0,0,.85)',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
-                    position: "center",
-                    textStyle: { align: "center" }
+                    position: 'center',
+                    textStyle: { align: 'center' }
                   }
                 }
               },
@@ -309,18 +312,18 @@ export default {
             ]
           }
         ]
-      });
+      })
       myChart5.setOption({
         series: [
           {
-            name: "network",
-            type: "pie",
-            radius: ["85%", "70%"],
+            name: 'network',
+            type: 'pie',
+            radius: ['85%', '70%'],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#FB8D5B", "#f2f2f2"],
+            color: ['#FB8D5B', '#f2f2f2'],
             data: [
               {
                 value: 62,
@@ -328,22 +331,22 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|Network}", "{b|62%}"].join("\n"),
+                    formatter: ['{a|Network}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#5d5d5d",
-                        fontSize: "14",
-                        lineHeight: "22",
-                        fontFamily: "PingFangSC-Regular"
+                        color: '#5d5d5d',
+                        fontSize: '14',
+                        lineHeight: '22',
+                        fontFamily: 'PingFangSC-Regular'
                       },
                       b: {
-                        color: "rgba(0,0,0,.85)",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: 'rgba(0,0,0,.85)',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
-                    position: "center",
-                    textStyle: { align: "center" }
+                    position: 'center',
+                    textStyle: { align: 'center' }
                   }
                 }
               },
@@ -351,21 +354,38 @@ export default {
             ]
           }
         ]
-      });
+      })
       window.onresize = function() {
-        myChart.resize();
-        myChart1.resize();
+        myChart.resize()
+        myChart1.resize()
         // myChart2.resize()
-        myChart3.resize();
-        myChart4.resize();
-        myChart5.resize();
-      };
+        myChart3.resize()
+        myChart4.resize()
+        myChart5.resize()
+      }
+    },
+    getUraPowerPoolLIst() {
+      project.projectList(this.$store.getters.lang, this.projectQuertData)
+              .then(respData => {
+                const data = respData.data.data.records
+                for (let i = 0; i < data.length; i++) {
+                  let object = {}
+                  object['id'] = data[i].id
+                  object['value'] = '2' // data[i].id
+                  object['time'] = moment(data.endTime).format('YYYY-MM-DD hh:mm:ss')
+                  this.poolList.push(object)
+                }
+                  console.log('maxl', this.poolList);
+              })
     }
   },
   mounted() {
-    this.initEchart();
+    this.initEchart()
+  },
+  created() {
+    this.getUraPowerPoolLIst()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
