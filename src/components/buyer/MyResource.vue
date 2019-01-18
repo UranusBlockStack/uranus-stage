@@ -2,89 +2,99 @@
   <section class="myResource">
     <el-row class="myResourceHead">
       <el-col class="title" :span="12">
-        <h1><i class="iconfont icon-my-resource"></i>{{$t('menu.myResource')}}</h1>
+        <h1>
+          <i class="iconfont icon-my-resource"></i>
+          {{$t('menu.myResource')}}
+        </h1>
       </el-col>
       <el-col class="record" :span="12">
         <router-link :to="{path: '/urapowerrecord'}">
-          <p>{{$t('buyer.appRepository.deployRecord')}}>></p>
+          <p>{{$t('buyer.appRepository.deployRecord')}}<i class="iconfont icon-more"></i></p>
         </router-link>
       </el-col>
     </el-row>
     <el-row class="myResourceBox">
-      <el-row>
-        <el-col class="title" :span="24">
-          <h1>{{$t('buyer.myResource.resourceAll')}}</h1>
-        </el-col>
+      <el-row class="boxshadow">
+        <el-row>
+          <el-col class="title" :span="24">
+            <h1>{{$t('buyer.myResource.resourceAll')}}</h1>
+          </el-col>
+        </el-row>
+        <el-row>
+          <el-col :span="4">
+            <div id="restResource">
+              <Water :chartData="0.3" style="margin:40px auto"/>
+            </div>
+          </el-col>
+          <el-col :span="19" :offset="1">
+            <h2>{{$t('buyer.myResource.restOne')}}</h2>
+            <div class="restRes">
+              <div id="restResource1"></div>
+              <!-- <div id="restResource2"></div> -->
+              <div id="restResource3"></div>
+              <div id="restResource4"></div>
+              <div id="restResource5"></div>
+            </div>
+          </el-col>
+        </el-row>
       </el-row>
-      <el-row>
-        <el-col :span="4">
-          <div id="restResource"></div>
-        </el-col>
-        <el-col :span="19" :offset="1">
-          <h2>{{$t('buyer.myResource.restOne')}}</h2>
-          <div class="restRes">
-            <div id="restResource1"></div>
-            <!-- <div id="restResource2"></div> -->
-            <div id="restResource3"></div>
-            <div id="restResource4"></div>
-            <div id="restResource5"></div>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col class="title" :span="24">
-          <h1>{{$t('buyer.myResource.resourceOver')}}</h1>
-        </el-col>
-      </el-row>
-      <el-row class="appResource">
-        <el-col :span="12" v-for="(pool, index) in poolList" :key="index">
-          <el-row style="border: 1px solid #e9e9e9; margin:10px;">
-            <el-col :span="8" style="margin-bottom: 15px;">
-              <Ball :chartData="62"/>
-            </el-col>
-            <el-col :span="12">
-              <h3>{{$t('buyer.myResource.number')}} {{pool.value}}</h3>
-              <div class="timeText">
-                <p>{{$t('buyer.myResource.countdownTime')}}</p>
-                <RestTime endTime="2021-1-15 16:31:15"/>
-              </div>
-            </el-col>
-            <el-col :span="3" :offset="1">
-              <el-dropdown trigger="click" style="margin-top: 10px; margin-left: 20px;">
-                <span class="el-dropdown-link">
-                  <i class="el-icon-arrow-down el-icon--right"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item>
-                    {{$t('buyer.myResource.renewal')}}
-                    <i class="el-icon-arrow-right"></i>
-                  </el-dropdown-item>
-                  <el-dropdown-item>
-                    <p @click="$router.push({path: '/resourcepool'})">
-                      {{$t('buyer.myResource.detail')}}
+      <el-row class="boxshadow" style="margin-top:10px;">
+        <el-row>
+          <el-col class="title" :span="24">
+            <h1>{{$t('buyer.myResource.resourceOver')}}</h1>
+          </el-col>
+        </el-row>
+        <el-row class="appResource">
+          <el-col :span="12" v-for="(pool, index) in poolList" :key="index">
+            <el-row style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius:4px; margin:10px;">
+              <el-col :span="8" style="margin-bottom: 15px;">
+                <Ball :chartData="62"/>
+              </el-col>
+              <el-col :span="12">
+                <h3>{{$t('buyer.myResource.number')}} {{pool.id}}</h3>
+                <div class="timeText">
+                  <p>{{$t('buyer.myResource.countdownTime')}}</p>
+                  <RestTime endTime="2021-1-15 16:31:15"/>
+                </div>
+              </el-col>
+              <el-col :span="3" :offset="1">
+                <el-dropdown trigger="click" style="margin-top: 10px; margin-left: 20px;">
+                  <span class="el-dropdown-link">
+                    <i class="iconfont icon-set" style="color:#ffffff;"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown"  style="background: rgba(101, 143, 247, 0);">
+                    <el-dropdown-item>
+                      {{$t('buyer.myResource.renewal')}}
                       <i class="el-icon-arrow-right"></i>
-                    </p>
-                  </el-dropdown-item>
-                </el-dropdown-menu>
-              </el-dropdown>
-            </el-col>
-          </el-row>
-        </el-col>
+                    </el-dropdown-item>
+                    <el-dropdown-item>
+                      <p @click="$router.push({path: '/resourcepool'})">
+                        {{$t('buyer.myResource.detail')}}
+                        <i class="el-icon-arrow-right"></i>
+                      </p>
+                    </el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+              </el-col>
+            </el-row>
+          </el-col>
+        </el-row>
       </el-row>
     </el-row>
   </section>
 </template>
 
 <script>
-import 'echarts-liquidfill'
 import moment from 'moment'
-import Ball from '@/components/modules/Ball'
-import RestTime from '@/components/modules/RestTime'
 import * as project from '../../services/RancherService'
+import Water from "@/components/modules/Water";
+import Ball from "@/components/modules/Ball";
+import RestTime from "@/components/modules/RestTime";
 
 export default {
   name: 'MyResource',
   components: {
+    Water,
     Ball,
     RestTime
   },
@@ -102,7 +112,6 @@ export default {
   },
   methods: {
     initEchart() {
-      var myChart = this.$echarts.init(document.getElementById('restResource'))
       var myChart1 = this.$echarts.init(
         document.getElementById('restResource1')
       )
@@ -119,32 +128,6 @@ export default {
         document.getElementById('restResource5')
       )
 
-      myChart.setOption({
-        series: [
-          {
-            type: 'liquidFill',
-            radius: '85%',
-            data: [
-              {
-                value: 0.3,
-                direction: 'right',
-                itemStyle: {
-                  normal: {
-                    color: '#1890FF'
-                  }
-                }
-              }
-            ],
-            outline: {
-              show: false
-            },
-            backgroundStyle: {
-              borderColor: '#1890FF',
-              borderWidth: 3
-            }
-          }
-        ]
-      })
       myChart1.setOption({
         series: [
           {
@@ -155,7 +138,12 @@ export default {
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#9BCC3D', '#f2f2f2'],
+            color: ["#2463FF", "#f2f2f2"],
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
             data: [
               {
                 value: 68,
@@ -163,18 +151,17 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|GPU}', '{b|88%}'].join('\n'),
+                    formatter: ["{a|GPU}", "{b|88%}"].join("\n"),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#f2f2f2",
+                        fontSize: "14",
+                        lineHeight: "22"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "#ffffff",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
                     position: 'center',
@@ -211,7 +198,6 @@ export default {
       //                   color: '#5d5d5d',
       //                   fontSize: '14',
       //                   lineHeight: '22',
-      //                   fontFamily: 'PingFangSC-Regular'
       //                 },
       //                 b: {
       //                   color: 'rgba(0,0,0,.85)',
@@ -239,7 +225,12 @@ export default {
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#FACC14', '#f2f2f2'],
+            color: ["#FFC032", "#f2f2f2"],
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
             data: [
               {
                 value: 62,
@@ -250,15 +241,14 @@ export default {
                     formatter: ['{a|Memory}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#f2f2f2",
+                        fontSize: "14",
+                        lineHeight: "22"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "#ffffff",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
                     position: 'center',
@@ -281,7 +271,12 @@ export default {
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#658FF7', '#f2f2f2'],
+            color: ["#6AB52B", "#f2f2f2"],
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
             data: [
               {
                 value: 88,
@@ -292,15 +287,14 @@ export default {
                     formatter: ['{a|Disk}', '{b|88%}'].join('\n'),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#f2f2f2",
+                        fontSize: "14",
+                        lineHeight: "22"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "#ffffff",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
                     position: 'center',
@@ -323,7 +317,12 @@ export default {
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#FB8D5B', '#f2f2f2'],
+            color: ["#FF4942", "#f2f2f2"],
+            labelLine: {
+              normal: {
+                show: false
+              }
+            },
             data: [
               {
                 value: 62,
@@ -334,15 +333,14 @@ export default {
                     formatter: ['{a|Network}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
-                        color: '#5d5d5d',
-                        fontSize: '14',
-                        lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
+                        color: "#f2f2f2",
+                        fontSize: "14",
+                        lineHeight: "22"
                       },
                       b: {
-                        color: 'rgba(0,0,0,.85)',
-                        fontSize: '24',
-                        fontFamily: 'HelveticaNeue'
+                        color: "#ffffff",
+                        fontSize: "24",
+                        fontFamily: "HelveticaNeue"
                       }
                     },
                     position: 'center',
@@ -356,8 +354,7 @@ export default {
         ]
       })
       window.onresize = function() {
-        myChart.resize()
-        myChart1.resize()
+        myChart1.resize();
         // myChart2.resize()
         myChart3.resize()
         myChart4.resize()
@@ -390,24 +387,34 @@ export default {
 
 <style lang="scss" scoped>
 .myResource {
-  background: #f2f2f2;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   min-width: 1130px;
+  padding-top: 10px;
+  .boxshadow {
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
+  }
   .myResourceHead {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
+    margin: 0 10px;
     height: 50px;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #252525;
+        color: #ffffff;
         line-height: 50px;
         margin: 0;
         padding: 0;
         padding-left: 30px;
         i {
-        font-size: 26px;
-        margin-right: 10px;
-      }
+          font-size: 26px;
+          margin-right: 10px;
+        }
       }
     }
     .record {
@@ -422,22 +429,23 @@ export default {
         margin: 0;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #8eb357;
+        color: #0084FF;
+        background: #0084FF;
       }
     }
   }
   .myResourceBox {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
     border-radius: 2px;
     margin: 10px;
     .title {
-      background: #fafafa;
-      border-radius: 4px 4px 0 0;
+      background: rgba(101, 143, 247, 0);
+      border-radius: 2px;
       height: 54px;
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: rgba(0, 0, 0, 0.65);
+        color: #ffffff;
         text-align: left;
         line-height: 24px;
         padding-left: 30px;
@@ -446,18 +454,18 @@ export default {
     h2 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #363636;
+      color: #ffffff;
       text-align: center;
       line-height: 24px;
     }
     #restResource {
       padding-left: 30px;
-      height: 250px;
+      height: 200px;
       width: 100%;
     }
     .restRes {
-      border-left: 3px solid #fafafa;
-      height: 250px;
+      border-left: 1px solid rgba(255, 255, 255, .2);
+      height: 200px;
       display: flex;
       padding-left: 50px;
       #restResource1,
@@ -465,16 +473,15 @@ export default {
       #restResource3,
       #restResource4,
       #restResource5 {
-        height: 250px;
+        height: 200px;
         width: 20%;
       }
     }
     .appResource {
-      border-bottom: 1px solid #f2f2f2;
       h3 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #363636;
+        color: #ffffff;
         line-height: 24px;
         text-align: left;
         margin-top: 40px;
@@ -484,6 +491,9 @@ export default {
         font-size: 16px;
         text-align: left;
         line-height: 24px;
+      }
+      .timeText {
+          color: #ffffff;
       }
     }
   }

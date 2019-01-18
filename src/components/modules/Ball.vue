@@ -23,6 +23,11 @@ export default {
             avoidLabelOverlap: false,
             selectedOffset: 0,
             color: ["#1890FF", "#f2f2f2"],
+            labelLine: {
+                normal: {
+                    show: false
+                }
+            },
             data: [
               {
                 value: this.chartData,

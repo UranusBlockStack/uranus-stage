@@ -201,7 +201,7 @@ export default {
     font-size: 16px;
     .treeview {
       a {
-        color: #252525;
+        color: #ffffff;
         font-size:16px;
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
@@ -214,30 +214,30 @@ export default {
         }
       }
       .treeview-menu {
-        background: #ffffff;
+        background: rgba(101, 143, 247, 0);
       }
     }
     .menu-open {
      > a {
         color: #8eb357;
-        background: #f2f2f2;
+        background: rgba(101, 143, 247, 0);
       }
       .treeview-menu {
           padding-left: 30px;
           li:hover {
               >a {
                   color: #8eb357;
-                  background: #f2f2f2;
+                  background: rgba(101, 143, 247, 0);
               }
           }
       }
       
     }
     .treeview:hover {
-      background: #f2f2f2;
+      background: rgba(101, 143, 247, 0);
       > a {
         color: #8eb357;
-        background: #f2f2f2;
+        background: rgba(101, 143, 247, 0);
         // i {
         //   font-size: 35px;
         //   transition: 1.2s;

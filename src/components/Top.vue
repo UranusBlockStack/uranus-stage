@@ -47,7 +47,8 @@ export default {
 <style lang="scss" scoped>
 .Head {
   .logo {
-    background: #252525;
+    background:rgba(101,143,247,0.00);
+box-shadow:inset 0 0 22px 0 rgba(36,99,255,0.50);
     .logo-mini {
       img {
         display: block;
@@ -64,17 +65,18 @@ export default {
     }
   }
   .navbar {
-    background: #252525;
+    background:rgba(101,143,247,0.00);
+box-shadow:inset 0 0 22px 0 rgba(36,99,255,0.50);
     .userInformation {
         width: 200px;
-        color: #8eb357;
+        color: #ffffff;
         float: right;
         height: 50px;
         line-height: 50px;
       .el-button {
-          background: #252525;
+          background:rgba(101,143,247,0.00);
           border: none;
-          color: #8eb357;
+          color: #ffffff;
           :hover {
               color: #f54c46;
           }
@@ -83,7 +85,7 @@ export default {
     .download {
         width: 150px;
         float: right;
-        color: #8eb357;
+        color: #ffffff;
         cursor: pointer;
         span {
             height: 50px;
