@@ -8,32 +8,32 @@
     <el-row class="recordBox">
       <el-row>
         <el-col class="123" :span="7">
-          <el-input :placeholder="$t('buyer.appRepository.deployPage.searchIn')" prefix-icon="el-icon-search"></el-input>
-          <el-button type="success"><i class="iconfont icon-view"></i></el-button>
+          <el-input :placeholder="$t('buyer.appRepository.deployPage.searchIn')" prefix-icon="el-icon-search" v-model="appName"></el-input>
+          <el-button type="success" @click="searchApp"><i class="iconfont icon-view"></i></el-button>
         </el-col>
-        <el-col :span="11">
-          <span class="time">{{$t('buyer.appRepository.deployPage.time')}}</span>
-          <el-date-picker v-model="dateValue1" type="date" :placeholder="$t('buyer.appRepository.deployPage.startTime')"></el-date-picker>
-          <span class="el-icon-arrow-right"></span>
-          <el-date-picker v-model="dateValue2" type="date" :placeholder="$t('buyer.appRepository.deployPage.endTime')"></el-date-picker>
-        </el-col>
+        <!--<el-col :span="11">-->
+          <!--<span class="time">{{$t('buyer.appRepository.deployPage.time')}}</span>-->
+          <!--<el-date-picker v-model="dateValue1" type="date" :placeholder="$t('buyer.appRepository.deployPage.startTime')"></el-date-picker>-->
+          <!--<span class="el-icon-arrow-right"></span>-->
+          <!--<el-date-picker v-model="dateValue2" type="date" :placeholder="$t('buyer.appRepository.deployPage.endTime')"></el-date-picker>-->
+        <!--</el-col>-->
         <el-col :span="6">
-          <el-select v-model="value1" :placeholder="$t('buyer.appRepository.deployPage.pool')">
-            <el-option
-              v-for="item in options1"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
-          <el-select v-model="value2" :placeholder="$t('buyer.appRepository.deployPage.appStore')">
-            <el-option
-              v-for="item in options2"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            ></el-option>
-          </el-select>
+          <!--<el-select v-model="value1" :placeholder="$t('buyer.appRepository.deployPage.pool')">-->
+            <!--<el-option-->
+              <!--v-for="item in options1"-->
+              <!--:key="item.value"-->
+              <!--:label="item.label"-->
+              <!--:value="item.value"-->
+            <!--&gt;</el-option>-->
+          <!--</el-select>-->
+          <!--<el-select v-model="value2" :placeholder="$t('buyer.appRepository.deployPage.appStore')">-->
+            <!--<el-option-->
+              <!--v-for="item in options2"-->
+              <!--:key="item.value"-->
+              <!--:label="item.label"-->
+              <!--:value="item.value"-->
+            <!--&gt;</el-option>-->
+          <!--</el-select>-->
         </el-col>
       </el-row>
       <el-col class="record-head">
@@ -45,13 +45,13 @@
         </el-dialog>
       </el-col>
       <el-col :span="24">
-        <el-table :data="tableData" border style="width: 100%" @row-click="dialogVisible = true">
-          <el-table-column prop="1" :label="$t('buyer.appRepository.deployPage.number')"></el-table-column>
-          <el-table-column prop="2" :label="$t('buyer.appRepository.deployPage.appName')"></el-table-column>
-          <el-table-column prop="3" :label="$t('buyer.appRepository.deployPage.appTime')"></el-table-column>
-          <el-table-column prop="4" :label="$t('buyer.appRepository.deployPage.appGroup')"></el-table-column>
-          <el-table-column prop="5" :label="$t('buyer.appRepository.deployPage.appStore')"></el-table-column>
-          <el-table-column prop="6" :label="$t('buyer.appRepository.deployPage.appValur')"></el-table-column>
+        <el-table :data="tableData" border style="width: 100%" @row-click="deployDetail">
+          <el-table-column prop="orderNo" :label="$t('buyer.appRepository.deployPage.number')"></el-table-column>
+          <el-table-column prop="name" :label="$t('buyer.appRepository.deployPage.appName')"></el-table-column>
+          <el-table-column prop="createTime" :label="$t('buyer.appRepository.deployPage.appTime')"></el-table-column>
+          <el-table-column prop="projectId" :label="$t('buyer.appRepository.deployPage.appGroup')"></el-table-column>
+          <el-table-column prop="catalog" :label="$t('buyer.appRepository.deployPage.appStore')"></el-table-column>
+          <el-table-column prop="orderAmount" :label="$t('buyer.appRepository.deployPage.appValur')"></el-table-column>
         </el-table>
       </el-col>
       <el-col :span="8" :offset="16" class="transaction-foot">
@@ -62,12 +62,17 @@
 </template>
 
 <script>
+    import * as app from '../../services/RancherService'
+    import * as auth from '../../services/AuthService'
+    import moment from 'moment'
+
 export default {
   name: 'AppRecord',
   data() {
     return {
       dateValue1: '',
       dateValue2: '',
+      appName: '',
       value1: '',
       options1: [
         {
@@ -89,72 +94,7 @@ export default {
         }
       ],
       dialogVisible: false,
-      tableData: [
-        {
-          1: '1234561',
-          2: 'MySQL',
-          3: '2018-12-16',
-          4: 'Limitid',
-          5: 'Limitid',
-          6: 'Limitid'
-        },
-        {
-          1: '1234561',
-          2: 'MySQL',
-          3: '2018-12-16',
-          4: 'Limitid',
-          5: 'Limitid',
-          6: 'Limitid'
-        },
-        {
-          1: '1234561',
-          2: 'MySQL',
-          3: '2018-12-16',
-          4: 'Limitid',
-          5: 'Limitid',
-          6: 'Limitid'
-        },
-        {
-          1: '1234561',
-          2: 'MySQL',
-          3: '2018-12-16',
-          4: 'Limitid',
-          5: 'Limitid',
-          6: 'Limitid'
-        },
-        {
-          1: '1234561',
-          2: 'MySQL',
-          3: '2018-12-16',
-          4: 'Limitid',
-          5: 'Limitid',
-          6: 'Limitid'
-        },
-        {
-          1: '1234561',
-          2: 'MySQL',
-          3: '2018-12-16',
-          4: 'Limitid',
-          5: 'Limitid',
-          6: 'Limitid'
-        },
-        {
-          1: '1234561',
-          2: 'MySQL',
-          3: '2018-12-16',
-          4: 'Limitid',
-          5: 'Limitid',
-          6: 'Limitid'
-        },
-        {
-          1: '1234561',
-          2: 'MySQL',
-          3: '2018-12-16',
-          4: 'Limitid',
-          5: 'Limitid',
-          6: 'Limitid'
-        }
-      ],
+      tableData: [ ],
       tableData1: [
         {
           menu: this.$t('buyer.appRepository.deployPage.number'),
@@ -206,6 +146,48 @@ export default {
         }
       ]
     }
+  },
+  methods: {
+    getAppDeployRecords() {
+      const queryData = {
+        name: this.appName,
+        page: 0,
+        pageSize: 0,
+        projectId: 0,
+        sort: 'string',
+        sortDesc: true
+      }
+      app.appInstanceSearch(auth.getCurLang(), queryData)
+          .then(appList => {
+            console.log('dep applist', appList.data.data.records)
+            this.tableData = appList.data.data.records
+          })
+    },
+    fillDetailData(data) {
+        this.tableData1[0].value = data.orderNo
+        this.tableData1[1].value = data.orderStatus
+        this.tableData1[2].value = moment(data.createTime).format('YYYY-MM-DD hh:mm')
+        this.tableData1[3].value = data.orderStatus
+        this.tableData1[4].value = data.catalog
+        this.tableData1[5].value = moment(data.updateTime).format('YYYY-MM-DD hh:mm')
+        this.tableData1[6].value = data.projectId
+        this.tableData1[7].value = data.orderAmount
+        this.tableData1[8].value = data.free
+        this.tableData1[9].value = data.ipAddress
+        this.tableData1[10].value = data.port
+        this.tableData1[11].value = data.orderHash
+    },
+    deployDetail(rowdata) {
+      console.log(rowdata)
+      this.fillDetailData(rowdata)
+      this.dialogVisible = true
+    },
+    searchApp() {
+      this.getAppDeployRecords()
+    }
+    },
+  created() {
+        this.getAppDeployRecords()
   }
 }
 </script>
