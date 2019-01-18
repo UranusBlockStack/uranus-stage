@@ -68,7 +68,7 @@
                       <i class="el-icon-arrow-right"></i>
                     </el-dropdown-item>
                     <el-dropdown-item>
-                      <p @click="$router.push({path: '/resourcepool'})">
+                      <p @click="$router.push({path: '/resourcepool/'+pool.id})">
                         {{$t('buyer.myResource.detail')}}
                         <i class="el-icon-arrow-right"></i>
                       </p>
