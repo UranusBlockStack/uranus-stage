@@ -34,81 +34,15 @@
           <el-button type="success"><i class="iconfont icon-search"></i></el-button>
         </el-col>
       </el-row>
-      <el-row class="rePool">
+      <el-row class="rePool" v-for="item in appList">
         <el-col :span="2" :offset="1">
           <img src="/static/img/uranus/developer/app.png" alt="img">
         </el-col>
         <el-col :span="7" :offset="1">
-          <h3>{{$t('buyer.resourcePool.appName')}}Imagepuler</h3>
-          <h3>{{$t('buyer.resourcePool.appIp')}}111.111.11.1</h3>
-          <h3>{{$t('buyer.resourcePool.appPort')}}8080</h3>
-          <h3>{{$t('buyer.resourcePool.appTime')}}2018/01/02 12:20:12</h3>
-        </el-col>
-        <el-col :span="3" :offset="10">
-          <el-dropdown trigger="click">
-            <span class="el-dropdown-link">
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <router-link :to="{path: '/appstate'}"><el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item></router-link>
-              <el-dropdown-item>{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-col>
-      </el-row>
-      <el-row class="rePool">
-        <el-col :span="2" :offset="1">
-          <img src="/static/img/uranus/developer/app.png" alt="img">
-        </el-col>
-       <el-col :span="7" :offset="1">
-          <h3>{{$t('buyer.resourcePool.appName')}}Imagepuler</h3>
-          <h3>{{$t('buyer.resourcePool.appIp')}}111.111.11.1</h3>
-          <h3>{{$t('buyer.resourcePool.appPort')}}8080</h3>
-          <h3>{{$t('buyer.resourcePool.appTime')}}2018/01/02 12:20:12</h3>
-        </el-col>
-        <el-col :span="3" :offset="10">
-          <el-dropdown trigger="click">
-            <span class="el-dropdown-link">
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <router-link :to="{path: '/appstate'}"><el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item></router-link>
-              <el-dropdown-item>{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-col>
-      </el-row>
-      <el-row class="rePool">
-        <el-col :span="2" :offset="1">
-          <img src="/static/img/uranus/developer/app.png" alt="img">
-        </el-col>
-        <el-col :span="7" :offset="1">
-          <h3>{{$t('buyer.resourcePool.appName')}}Imagepuler</h3>
-          <h3>{{$t('buyer.resourcePool.appIp')}}111.111.11.1</h3>
-          <h3>{{$t('buyer.resourcePool.appPort')}}8080</h3>
-          <h3>{{$t('buyer.resourcePool.appTime')}}2018/01/02 12:20:12</h3>
-        </el-col>
-        <el-col :span="3" :offset="10">
-          <el-dropdown trigger="click">
-            <span class="el-dropdown-link">
-              <i class="el-icon-arrow-down el-icon--right"></i>
-            </span>
-            <el-dropdown-menu slot="dropdown">
-              <router-link :to="{path: '/appstate'}"><el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item></router-link>
-              <el-dropdown-item>{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
-            </el-dropdown-menu>
-          </el-dropdown>
-        </el-col>
-      </el-row>
-      <el-row class="rePool">
-        <el-col :span="2" :offset="1">
-          <img src="/static/img/uranus/developer/app.png" alt="img">
-        </el-col>
-        <el-col :span="7" :offset="1">
-          <h3>{{$t('buyer.resourcePool.appName')}}Imagepuler</h3>
-          <h3>{{$t('buyer.resourcePool.appIp')}}111.111.11.1</h3>
-          <h3>{{$t('buyer.resourcePool.appPort')}}8080</h3>
-          <h3>{{$t('buyer.resourcePool.appTime')}}2018/01/02 12:20:12</h3>
+          <h3>{{$t('buyer.resourcePool.appName')}} {{item.name}}</h3>
+          <h3>{{$t('buyer.resourcePool.appIp')}} {{item.ipAddress}}</h3>
+          <h3>{{$t('buyer.resourcePool.appPort')}} {{item.port}}</h3>
+          <h3>{{$t('buyer.resourcePool.appTime')}} {{item.createTime}}</h3>
         </el-col>
         <el-col :span="3" :offset="10">
           <el-dropdown trigger="click">
@@ -128,9 +62,15 @@
 
 <script>
 import 'echarts-liquidfill'
+import * as project from '../../services/RancherService'
 
 export default {
   name: 'ResourcePool',
+  data() {
+    return {
+      appList: []
+    }
+  },
   methods: {
     initEchart() {
       var myChart1 = this.$echarts.init(
@@ -365,10 +305,20 @@ export default {
         myChart4.resize()
         myChart5.resize()
       }
+    },
+    getAppList() {
+      project.apptListByProjectId(this.$store.getters.lang, this.$route.params.poolid)
+              .then(respData => {
+                this.appList = respData.data.data.records
+                console.log('maxl', this.appList)
+              })
     }
   },
   mounted() {
     this.initEchart()
+  },
+  created() {
+    this.getAppList()
   }
 }
 </script>

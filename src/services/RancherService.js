@@ -106,6 +106,10 @@ export function projectList (lang, queryData) {
     return httpLang(lang).post('/rancher/projects/search', queryData)
 }
 
+export function apptListByProjectId (lang, projectId) {
+    return httpLang(lang).get(`/rancher/projects/${projectId}/apps`)
+}
+
 /** Rancher - App Instance Controller Service ***/
 export function appInstanceSearch (lang, queryData) {
     // console.log(httpLang2)
