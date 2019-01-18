@@ -202,7 +202,7 @@
             </el-option>
           </el-select>
           <el-dialog title="提示" :visible.sync="dialogVisible" width="580px">
-            <span>{{setting.codeText}}</span>
+            <span>{{$t('setting.codeText')}}</span>
             <span slot="footer" class="dialog-footer">
               <el-button @click="dialogVisible = false">{{$t('setting.button1')}}</el-button>
               <el-button type="primary" @click="dialogVisible = false">{{$t('setting.button2')}}</el-button>
