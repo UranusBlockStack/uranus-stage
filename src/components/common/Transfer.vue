@@ -26,7 +26,7 @@
     </el-row>
     <el-row class="transfer-form">
       <el-col :span="10" :offset="6">
-        <h2>{{$t('transfer.balance')}}123456(URAC)</h2>
+        <h2>{{$t('transfer.balance')}} {{balance}} (URAC)</h2>
       </el-col>
       <el-col :span="16">
         <div class="formGroup">
@@ -61,6 +61,7 @@
 <script>
     import * as auth from '../../services/AuthService'
     import * as wallet from '../../services/WalletService'
+    import * as account from '../../services/AccountService'
 
 export default {
   name: 'Transfer',
@@ -88,30 +89,45 @@ export default {
       },
       outerVisible: false,
       innerVisible: false,
-      curUserInfo: auth.getUserBaseInfo()
+      curUserInfo: auth.getUserBaseInfo(),
+      balance: 0
 
     }
   },
     methods: {
-        startTransfer() {
-            const transData = {
-              'code': this.formLabelAlign.code,
-              'fee': this.formLabelAlign.fee,
-              'to': this.formLabelAlign.address,
-              'value': this.formLabelAlign.value
-            }
-            wallet.walletTransfer(this.$store.getters.lang, transData)
+      startTransfer() {
+        const transData = {
+          'code': this.formLabelAlign.code,
+          'fee': this.formLabelAlign.fee,
+          'to': this.formLabelAlign.address,
+          'value': this.formLabelAlign.value
+        }
+        wallet.walletTransfer(this.$store.getters.lang, transData)
                 .then(respData => {
                   this.outerVisible = true
                 })
-        },
-        getConfirmCode() {
-            console.log(this.$store.state)
-            wallet.walletConfirmCode(this.$store.getters.lang, this.curUserInfo.userName)
-                .then(sendResult=>{
-                    console.log(sendResult.data)
+      },
+      getConfirmCode() {
+        wallet.walletConfirmCode(this.$store.getters.lang, this.curUserInfo.userName)
+                .then(sendResult => {
                 })
-        }
+      },
+      getFee() {
+        wallet.walletReferenceFee(this.$store.getters.lang)
+                .then(respData => {
+                  this.formLabelAlign.fee = respData.data.data
+                })
+      },
+      getBalance() {
+        account.userBalcnce(this.$store.getters.lang)
+                .then(respData => {
+                  this.balcnce = respData.data.data.balcnce
+                })
+      }
+    },
+    created() {
+      this.getFee()
+      this.getBalance()
     }
 }
 </script>

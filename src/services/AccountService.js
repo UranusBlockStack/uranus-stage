@@ -18,3 +18,7 @@ export function userBind (lang, bindType, bindReq) {
 export function userInfo (lang, id) {
   return httpLang(lang).get(`/accounts/users/${id}`)
 }
+
+export function userBalcnce (lang) {
+    return httpLang(lang).get('/accounts/users/balance')
+}
