@@ -36,13 +36,13 @@
       </el-row>
       <el-row class="rePool" v-for="item in appList">
         <el-col :span="2" :offset="1">
-          <img src="/static/img/uranus/developer/app.png" alt="img">
+          <img :src= 'getImage(item.rid)'  alt="img">
         </el-col>
         <el-col :span="7" :offset="1">
           <h3>{{$t('buyer.resourcePool.appName')}} {{item.name}}</h3>
           <h3>{{$t('buyer.resourcePool.appIp')}} {{item.ipAddress}}</h3>
           <h3>{{$t('buyer.resourcePool.appPort')}} {{item.port}}</h3>
-          <h3>{{$t('buyer.resourcePool.appTime')}} {{item.createTime}}</h3>
+          <h3>{{$t('buyer.resourcePool.appTime')}} {{formateDate(item.createTime)}}</h3>
         </el-col>
         <el-col :span="3" :offset="10">
           <el-dropdown trigger="click">
@@ -63,12 +63,14 @@
 <script>
 import 'echarts-liquidfill'
 import * as project from '../../services/RancherService'
+import moment from 'moment'
 
 export default {
   name: 'ResourcePool',
   data() {
     return {
-      appList: []
+      appList: [],
+      imageServerUrl: this.$store.state.imageServerUrl
     }
   },
   methods: {
@@ -310,8 +312,13 @@ export default {
       project.apptListByProjectId(this.$store.getters.lang, this.$route.params.poolid)
               .then(respData => {
                 this.appList = respData.data.data.records
-                console.log('maxl', this.appList)
               })
+    },
+    formateDate(time) {
+      return moment(time).format('YYYY-MM-DD HH:mm:ss')
+    },
+    getImage(rid) {
+      return this.imageServerUrl + rid + '/icon'
     }
   },
   mounted() {
