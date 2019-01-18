@@ -35,13 +35,13 @@
         <h3>
           <i class="iconfont icon-zhongmingming"></i> Block
         </h3>
-        <div class="text" id="show">
+        <div class="text">
           <p>Block {{BlockData.length == 0 ? placeHolder : BlockData[0].height}}</p>
           <p>{{BlockData.length == 0 ? placeHolder : BlockData[0].timestamp}}</p>
           <p>mined by {{BlockData.length == 0 ? placeHolder : BlockData[0].miner}}</p>
-          <p>0 transactions</p>
+          <p>{{BlockData.length == 0 ? 0 : TranscationData.length}} transactions</p>
         </div>
-        <div class="text">
+        <div class="text" id="show">
           <p>Block {{BlockData.length <= 1 ? placeHolder : BlockData[1].height}}</p>
           <p>{{BlockData.length <= 1 ? placeHolder : BlockData[1].timestamp}}</p>
           <p>mined by {{BlockData.length <= 1 ? placeHolder : BlockData[1].miner}}</p>
@@ -52,13 +52,13 @@
         <h3>
           <i class="iconfont icon-zhongmingming"></i> Transactions
         </h3>
-        <div class="text" id="show">
+        <div class="text">
           <p>TX hash: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].hash}}</p>
           <p>from: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].from}}</p>
           <p>to: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].to}}</p>
           <p>value: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].value}} URAC</p>
         </div>
-        <div class="text">
+        <div class="text" id="show">
             <p>TX hash: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].hash}}</p>
             <p>from: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].from}}</p>
             <p>to: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].to}}</p>
@@ -194,6 +194,7 @@ export default {
       this.$router.push({ name: 'Register' })
     },
     lastedBlock() {
+      this.BlockData = []
       block.getLastedBlock(this.$store.getters.lang, {'height': -1})
               .then(blockData => {
                 if (blockData.data.success) {
@@ -211,6 +212,11 @@ export default {
     },
     getTranscationData() {
       return this.TranscationData
+    },
+    refushBlockData() {
+      setInterval(() => {
+        this.lastedBlock()
+      }, 5000)
     }
   },
   mounted() {
@@ -218,6 +224,7 @@ export default {
   },
   created() {
     this.lastedBlock()
+    this.refushBlockData()
   }
 }
 </script>
