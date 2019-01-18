@@ -57,6 +57,9 @@ export default {
 .wrapper {
   background: #f2f2f2;
 }
+.content-wrapper {
+    background: #f2f2f2;
+}
 .main-sidebar {
   background: #ffffff;
   box-shadow: 2px 0 6px 0 rgba(0, 0, 0, 0.2);

@@ -44,14 +44,13 @@
           >
         </div>
       </div>
-
       <div class="mailRes" v-show="!phoneShow">
         <input type="text" :placeholder="$t('userCommon.Email')" v-model="mail">
       </div>
       <input type="password" :placeholder="$t('userCommon.password')" v-model="password">
       <router-link class="forgetPwd" :to="{ path: '/forgetPwd'}">{{$t('userCommon.forgetPwd')}}</router-link>
       <div class="prompt">{{prompt}}</div>
-      <button class="loginBtn" @click="userLogin">{{user}} {{$t('userCommon.loginBtn')}}</button>
+      <el-button class="loginBtn" @click="userLogin">{{user}} {{$t('userCommon.loginBtn')}}</el-button>
     </div>
   </section>
 </template>
@@ -63,7 +62,7 @@ export default {
   name: "Login",
   data() {
     return {
-      phoneShow: "true",
+      phoneShow: true,
       // 用户身份
       user: "",
       // 提示信息
@@ -78,16 +77,16 @@ export default {
     };
   },
   methods: {
-      getUser() {
-          const userStatus = auth.getUserBaseInfo()
-          if(!userStatus){
-              userStatus =  auth.getDefaultUserStatus()
-              auth.setCurRole(userStatus.loginRole)
-              this.user = userStatus.loginRole
-          }
+    getUser() {
+      const userStatus = auth.getUserBaseInfo();
+      if (!userStatus) {
+        userStatus = auth.getDefaultUserStatus();
+        auth.setCurRole(userStatus.loginRole);
+        this.user = userStatus.loginRole;
+      }
 
-          this.user = auth.getCurRole()
-      },
+      this.user = auth.getCurRole();
+    },
     getRegionList2() {
       auth.country(this.$store.getters.lang).then(resdata => {
         this.regions = resdata.data.data;
@@ -112,41 +111,74 @@ export default {
       this.phoneShow = false;
     },
     userLogin() {
-      if (this.phone === "" && this.mail === "") {
-        this.prompt = "请完善信息后登陆";
-      } else if (this.password === "") {
-        this.prompt = "请填写密码";
-      } else if (this.password .length < 6 || this.password.length > 12) {
-        this.prompt = "密码应是大于6位，小于12位";
-      } else {
-        this.prompt = "";
-        const logintype = this.phoneShow ? "mobile" : "email";
-        const userLoginfo = {
-          loginName: this.getLoginName(logintype),
-          password: this.password,
-          loginType: logintype
-        };
+      if (this.phoneShow == true) {
+        if (this.phone === "") {
+          this.prompt = this.$t('userCommon.phoneError');
+        } else if (this.password === "") {
+          this.prompt = this.$t('userCommon.passwordEmpty');
+        } else if (this.password.length < 6 || this.password.length > 12) {
+          this.prompt = this.$t('userCommon.password');
+        } else {
+          this.prompt = "";
+          const logintype = this.phoneShow ? "mobile" : "email";
+          const userLoginfo = {
+            loginName: this.getLoginName(logintype),
+            password: this.password,
+            loginType: logintype
+          };
 
-        const self = this;
+          const self = this;
 
-        auth
-          .login(auth.getCurLang(), userLoginfo)
-          .then(function(curLoginUserInfo) {
-            self.$router.push({ path: curLoginUserInfo.loginRole });
-          });
-        // .catch(error => {
-        //   if (error) {
-        //     alert('登录不成功')
-        //   }
-        // })
-        const globalUserinfo = auth.getUserBaseInfo();
+          auth
+            .login(auth.getCurLang(), userLoginfo)
+            .then(function(curLoginUserInfo) {
+              self.$router.push({ path: curLoginUserInfo.loginRole });
+            });
+          // .catch(error => {
+          //   if (error) {
+          //     alert('登录不成功')
+          //   }
+          // })
+          const globalUserinfo = auth.getUserBaseInfo();
+        }
+      }
+      if (this.phoneShow == false) {
+        if (this.mail === "") {
+          this.prompt = this.$t('userCommon.EmailError');
+        } else if (this.password === "") {
+          this.prompt = this.$t('userCommon.passwordEmpty');
+        } else if (this.password.length < 6 || this.password.length > 12) {
+          this.prompt = this.$t('userCommon.password');
+        } else {
+          this.prompt = "";
+          const logintype = this.phoneShow ? "mobile" : "email";
+          const userLoginfo = {
+            loginName: this.getLoginName(logintype),
+            password: this.password,
+            loginType: logintype
+          };
+
+          const self = this;
+
+          auth
+            .login(auth.getCurLang(), userLoginfo)
+            .then(function(curLoginUserInfo) {
+              self.$router.push({ path: curLoginUserInfo.loginRole });
+            });
+          // .catch(error => {
+          //   if (error) {
+          //     alert('登录不成功')
+          //   }
+          // })
+          const globalUserinfo = auth.getUserBaseInfo();
+        }
       }
     }
   },
   mounted() {
-    this.getRegionList2()
-    this.getUser()
-  },
+    this.getRegionList2();
+    this.getUser();
+  }
 };
 </script>
 

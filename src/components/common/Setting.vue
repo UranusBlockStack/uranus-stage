@@ -14,6 +14,7 @@
         <p class="contentUn">{{id}}</p>
       </el-col>
     </el-row>
+    <!-- mail -->
     <el-row class="mail-box">
       <el-col :span="12">
         <p>{{$t('setting.mail')}}</p>
@@ -22,6 +23,7 @@
       <el-col :span="8" :offset="4">
         <p>
           <el-button type="text" @click="setMail()">{{buttonClick}}</el-button>
+          <!-- change mail -->
           <el-dialog
             :title="this.buttonClick"
             :visible.sync="mailOuterVisible"
@@ -49,12 +51,12 @@
               >{{$t('setting.button3')}}next</el-button>
             </div>
           </el-dialog>
+          <!-- new mail -->
           <el-dialog
             width="580px"
             :close-on-click-modal="false"
             :title="$t('setting.mail')"
             :visible.sync="mailInnerVisible"
-            append-to-body
           >
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
@@ -79,6 +81,7 @@
         </p>
       </el-col>
     </el-row>
+    <!-- phone -->
     <el-row class="phone-box">
       <el-col :span="12">
         <p>{{$t('setting.phone')}}</p>
@@ -87,6 +90,7 @@
       <el-col :span="8" :offset="4">
         <p>
           <el-button type="text" @click="setPhone()">{{buttonClick}}</el-button>
+          <!-- change phone -->
           <el-dialog
             :title="this.buttonClick"
             :visible.sync="phoneOuterVisible"
@@ -95,7 +99,7 @@
           >
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
-                <el-input v-model="sourceNum"></el-input>
+                <el-input v-model="sourceNum" disabled="disabled"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="captcha" style="width:69%"></el-input>
@@ -114,11 +118,11 @@
               >{{$t('setting.button3')}}</el-button>
             </div>
           </el-dialog>
+          <!-- new phone -->
           <el-dialog
             width="580px"
             :title="$t('setting.phone')"
             :visible.sync="phoneInnerVisible"
-            append-to-body
             :close-on-click-modal="false"
           >
             <el-form label-width="80px" class="demo-ruleForm">
@@ -144,6 +148,7 @@
       </el-col>
     </el-row>
     <el-row class="pwd-box">
+      <!-- password -->
       <el-col :span="12">
         <p>{{$t('setting.password')}}</p>
         <p class="contentUn">******</p>
@@ -159,17 +164,17 @@
           >
             <el-form label-width="140px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPassword.current')" prop="buyerEmail">
-                <el-input v-model="currentPassword" type="password"></el-input>
+                <el-input v-model.trim="currentPassword" type="password"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.modifyPassword.new')" prop="buyerEmail">
-                <el-input type="password" v-model="newPassword" @blur="checkPassword"></el-input>
+                <el-input type="password" v-model.trim="newPassword" @blur="checkPassword"></el-input>
               </el-form-item>
               <el-form-item
                 :label="$t('setting.modifyPassword.confirm')"
                 prop="buyerEmail"
                 @blur="surePassword"
               >
-                <el-input type="password" v-model="confirmPassword"></el-input>
+                <el-input type="password" v-model.trim="confirmPassword"></el-input>
               </el-form-item>
               <div class="prompt">{{pwdprompt}}</div>
             </el-form>
@@ -197,10 +202,10 @@
             </el-option>
           </el-select>
           <el-dialog title="提示" :visible.sync="dialogVisible" width="580px">
-            <span>如果继续此项操作，交易时所需要获取验证码将会改变，确定继续此操作吗？</span>
+            <span>{{setting.codeText}}</span>
             <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogVisible = false">取 消</el-button>
-              <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
+              <el-button @click="dialogVisible = false">{{$t('setting.button1')}}</el-button>
+              <el-button type="primary" @click="dialogVisible = false">{{$t('setting.button2')}}</el-button>
             </span>
           </el-dialog>
         </p>
@@ -227,7 +232,7 @@ export default {
       sourceNum: "", //用户原手机号
       newPhoneNum: "",
       captcha: "", //初次验证原手机验证码
-      bindCaptcha: "", //解绑验证码
+      bindCaptcha: "", //绑定新手机验证码
       mailOuterVisible: false,
       mailInnerVisible: false,
       currentPassword: "", //输入框当前密码
@@ -236,19 +241,18 @@ export default {
       phoneOuterVisible: false,
       phoneInnerVisible: false,
       code: this.$t("setting.codePhone"),
-      pwdOuterVisible: true,
-      pwdInnerVisible: true,
+      pwdOuterVisible: false,
       dialogVisible: false,
-      mailprompt: "mail", //提示信息
-      phoneprompt: "phone",
-      pwdprompt: "pwd"
+      mailprompt: "", //提示信息
+      phoneprompt: "",
+      pwdprompt: ""
     };
   },
   methods: {
     // Input box validation
     checkPassword() {
       if (this.newPassword === "" || this.newPassword == null) {
-        this.pwdprompt = "请输入新密码";
+        this.pwdprompt = this.$t("userCommon.passwordEmpty");
       } else if (this.newPassword.length < 6 || this.newPassword.length > 12) {
         this.pwdprompt = this.$t("userCommon.password");
       } else {
@@ -292,14 +296,17 @@ export default {
         oldPassword: this.currentPassword
       };
       if (this.currentPassword === "" || this.currentPassword == null) {
-        this.pwdprompt = "请输入当前密码"
+        this.pwdprompt = this.$t("userCommon.passwordEmpty");
+      } else if (this.confirmPassword === "" || this.confirmPassword == null) {
+        this.pwdprompt = this.$t("userCommon.newpasswordEmpty");
       } else {
+        this.pwdprompt = "";
         auth.resetPassword(this.$store.getters.lang, param).then(data => {
           console.log(data);
           if (data.data.success) {
             this.pwdOuterVisible = false;
           } else {
-              this.pwdprompt = '当前密码输入错误'
+            this.pwdprompt = "当前密码输入错误";
             alert("修改失败");
           }
         });
@@ -312,40 +319,116 @@ export default {
         receiver: receiver,
         senderType: senderType
       };
-      if (this.mail === "") {
-        this.mailprompt = "请完善信息后登陆";
-      } else {
-        auth.captcha(this.$store.getters.lang, param).then(data => {
-          if (!data.data.success) {
-            console.log("验证码发送失败");
-          } else {
-            console.log("验证码发送成功");
-          }
-        });
+    //   phone
+      if (this.phoneOuterVisible == true) {
+        if (this.sourceNum === "") {
+          this.phoneprompt = this.$t("userCommon.phoneError");
+        } else {
+          this.phoneprompt = "";
+          auth.captcha(this.$store.getters.lang, param).then(data => {
+            if (!data.data.success) {
+              console.log("验证码发送失败");
+            } else {
+              console.log("验证码发送成功");
+            }
+          });
+        }
+      }
+    //   new phone
+      if (this.phoneInnerVisible == true) {
+        if (this.newPhoneNum === "") {
+          this.phoneprompt = this.$t("userCommon.phoneError");
+        } else {
+          this.phoneprompt = "";
+          auth.captcha(this.$store.getters.lang, param).then(data => {
+            if (!data.data.success) {
+              console.log("验证码发送失败");
+            } else {
+              console.log("验证码发送成功");
+            }
+          });
+        }
+      }
+    //   mail
+      if (this.mailOuterVisible == true) {
+        if (this.mail === "") {
+          this.mailprompt = this.$t("userCommon.EmailError");
+        } else {
+          this.mailprompt = "";
+          auth.captcha(this.$store.getters.lang, param).then(data => {
+            if (!data.data.success) {
+              console.log("验证码发送失败");
+            } else {
+              console.log("验证码发送成功");
+            }
+          });
+        }
+      }
+    //   new mail
+      if (this.mailInnerVisible == true) {
+        if (this.newEmail === "") {
+          this.mailprompt = this.$t("userCommon.EmailError");
+        } else {
+          this.mailprompt = "";
+          auth.captcha(this.$store.getters.lang, param).then(data => {
+            if (!data.data.success) {
+              console.log("验证码发送失败");
+            } else {
+              console.log("验证码发送成功");
+            }
+          });
+        }
       }
     },
     checkCaptcha(type, receiver, captcha) {
-      if (this.mailCaptcha == "" || this.mailCaptcha == null) {
-        this.mailprompt = "请输入验证码";
-      } else {
-        this.mailprompt = "";
-        //校验原手机/邮箱验证码是否正确
-        console.log("校验中。。。。" + receiver + "==" + captcha);
-        auth.checkCaptcha(auth.getCurLang(), receiver, captcha).then(data => {
-          console.log("校验结果：", data);
-          console.log("校验结果：" + data.data.success);
-          if (data.data.success) {
-            if (type == "email") {
-              this.mailOuterVisible = false;
-              this.mailInnerVisible = true;
-            } else if (type == "mobile") {
-              this.phoneOuterVisible = false;
-              this.phoneInnerVisible = true;
+      console.log(123);
+      if (this.mailOuterVisible == true) {
+        if (this.mailCaptcha == "" || this.mailCaptcha == null) {
+          this.mailprompt = this.$t("userCommon.code");
+        } else {
+          this.mailprompt = "";
+          //校验原手机/邮箱验证码是否正确
+          console.log("校验中。。。。" + receiver + "==" + captcha);
+          auth.checkCaptcha(auth.getCurLang(), receiver, captcha).then(data => {
+            console.log("校验结果：", data);
+            console.log("校验结果：" + data.data.success);
+            if (data.data.success) {
+              if (type == "email") {
+                this.mailOuterVisible = false;
+                this.mailInnerVisible = true;
+              } else if (type == "mobile") {
+                this.phoneOuterVisible = false;
+                this.phoneInnerVisible = true;
+              }
+            } else {
+              alert("验证码错误，请重新输入");
             }
-          } else {
-            alert("验证码错误，请重新输入");
-          }
-        });
+          });
+        }
+      }
+      if (this.phoneOuterVisible == true) {
+        if (this.captcha == "" || this.captcha == null) {
+          this.phoneprompt = this.$t("userCommon.code");
+        } else {
+          this.mailprompt = "";
+          //校验原手机/邮箱验证码是否正确
+          console.log("校验中。。。。" + receiver + "==" + captcha);
+          auth.checkCaptcha(auth.getCurLang(), receiver, captcha).then(data => {
+            console.log("校验结果：", data);
+            console.log("校验结果：" + data.data.success);
+            if (data.data.success) {
+              if (type == "email") {
+                this.mailOuterVisible = false;
+                this.mailInnerVisible = true;
+              } else if (type == "mobile") {
+                this.phoneOuterVisible = false;
+                this.phoneInnerVisible = true;
+              }
+            } else {
+              alert("验证码错误，请重新输入");
+            }
+          });
+        }
       }
     },
 
@@ -356,29 +439,71 @@ export default {
        * bindNum: 邮箱或手机号码
        * bindCap：验证码
        * **/
-
       var param = {
         captcha: bindCap,
         id: this.id,
         loginName: bindNum
       };
-      account.userBind(this.$store.getters.lang, bindType, param).then(data => {
-        console.log("解绑中。。。。");
-        console.log(data);
-        if (data.data.success) {
-          //成功
-          if (bindType == "email") {
-            this.mailOuterVisible = false;
-            this.mailInnerVisible = false;
-          } else if (bindType == "mobile") {
-            this.phoneOuterVisible = false;
-            this.phoneInnerVisible = false;
-          }
+    //   mail
+      if (this.mailInnerVisible == true) {
+        if (this.newEmail == "" || this.newEmail == null) {
+          this.mailprompt = this.$t("userCommon.newEmailError");
+        } else if (this.bindMailCaptcha == "" || this.bindMailCaptcha == null) {
+          this.mailprompt = this.$t("userCommon.code");
         } else {
-          //失败
-          alert("解绑失败");
+          this.mailprompt = "";
+          account
+            .userBind(this.$store.getters.lang, bindType, param)
+            .then(data => {
+              console.log("解绑中。。。。");
+              console.log(data);
+              if (data.data.success) {
+                //成功
+                this.mailprompt = "";
+                if (bindType == "email") {
+                  this.mailOuterVisible = false;
+                  this.mailInnerVisible = false;
+                } else if (bindType == "mobile") {
+                  this.phoneOuterVisible = false;
+                  this.phoneInnerVisible = false;
+                }
+              } else {
+                //失败
+                alert("解绑失败");
+              }
+            });
         }
-      });
+      }
+    //   phone
+      if (this.phoneInnerVisible == true) {
+        if (this.bindCaptcha == "" || this.bindCaptcha == null) {
+          this.phoneprompt = this.$t("userCommon.newphoneError");
+        } else if (this.bindCaptcha == "" || this.bindCaptcha == null) {
+          this.phoneprompt = "请输入验证码";
+        } else {
+          this.phoneprompt = "";
+          account
+            .userBind(this.$store.getters.lang, bindType, param)
+            .then(data => {
+              console.log("解绑中。。。。");
+              console.log(data);
+              if (data.data.success) {
+                //成功
+                this.phoneprompt = "";
+                if (bindType == "email") {
+                  this.mailOuterVisible = false;
+                  this.mailInnerVisible = false;
+                } else if (bindType == "mobile") {
+                  this.phoneOuterVisible = false;
+                  this.phoneInnerVisible = false;
+                }
+              } else {
+                //失败
+                alert("解绑失败");
+              }
+            });
+        }
+      }
     },
     setMail() {
       //change mail 按钮控制逻辑

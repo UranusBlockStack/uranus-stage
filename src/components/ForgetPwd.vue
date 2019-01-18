@@ -46,7 +46,7 @@
       </div>
 
       <div class="mailRes" v-show="!phoneShow">
-        <input type="text" :placeholder="$t('userCommon.Email')" ref="loginEmail">
+        <input type="text" :placeholder="$t('userCommon.Email')" ref="loginEmail" v-model="mail">
       </div>
       <input
         type="password"
@@ -63,6 +63,7 @@
       <input
         type="text"
         class="inputCode"
+        v-model="code"
         ref="verifyCodeInput"
         :placeholder="$t('userCommon.code')"
       >
@@ -88,6 +89,7 @@ export default {
       mail: "",
       password: "",
       surepwd: "",
+      code: "",
       prompt: "",
       regions: [],
       currentRegion: "86"
@@ -112,15 +114,46 @@ export default {
       return loginname;
     },
     resetPassword() {
-      const logintype = this.phoneShow ? "mobile" : "email";
-      const user = {
-        captcha: this.$refs.verifyCodeInput.value,
-        loginName: this.getLoginName(logintype),
-        loginType: logintype,
-        password: this.password
-      };
-
-      auth.resetPassword(this.$store.getters.lang, user);
+      if (this.phoneShow == false) {
+        if (this.mail === "") {
+          this.prompt = this.$t("userCommon.EmailError");
+        } else if (this.password === "") {
+          this.prompt = this.$t("userCommon.passwordEmpty");
+        } else if (this.password.length < 6 || this.password.length > 12) {
+          this.prompt = this.$t("userCommon.password");
+        } else if (this.code == "") {
+          this.prompt = this.$t("userCommon.code");
+        } else {
+          const logintype = this.phoneShow ? "mobile" : "email";
+          const user = {
+            captcha: this.$refs.verifyCodeInput.value,
+            loginName: this.getLoginName(logintype),
+            loginType: logintype,
+            password: this.password
+          };
+          auth.resetPassword(this.$store.getters.lang, user);
+        }
+      }
+      if (this.phoneShow == true) {
+        if (this.phone == "") {
+          this.prompt = this.$t("userCommon.phoneError");
+        } else if (this.password == "") {
+          this.prompt = this.$t("userCommon.passwordEmpty");
+        } else if (this.password.length < 6 || this.password.length > 12) {
+          this.prompt = this.$t("userCommon.password");
+        } else if (this.code == "") {
+          this.prompt = this.$t("userCommon.code");
+        } else {
+          const logintype = this.phoneShow ? "mobile" : "email";
+          const user = {
+            captcha: this.$refs.verifyCodeInput.value,
+            loginName: this.getLoginName(logintype),
+            loginType: logintype,
+            password: this.password
+          };
+          auth.resetPassword(this.$store.getters.lang, user);
+        }
+      }
     },
     choosePhone() {
       this.phoneShow = true;

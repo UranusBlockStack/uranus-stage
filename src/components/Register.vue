@@ -141,36 +141,76 @@ export default {
       }
     },
     registerUser() {
-      if (this.phone === "" && this.mail === "") {
-        this.prompt = "请完善信息后注册";
-      } else if (this.password === "") {
-        this.prompt = "请填写密码";
-      } else if (this.password.length < 6 || this.password.length > 12) {
-        this.prompt = "密码应是大于6位，小于12位";
-      } else {
-        const logintype = this.phoneShow ? "mobile" : "email";
-        const user = {
-          captcha: this.$refs.verifyCodeInput.value,
-          loginName: this.getLoginName(logintype),
-          loginType: logintype,
-          password: this.$refs.password.value
-        };
+      if (this.phoneShow == true) {
+        if (this.phone === "") {
+          this.prompt = this.$t("userCommon.phoneError");
+        } else if (this.password === "") {
+          this.prompt = this.$t("userCommon.passwordEppty");
+        } else if (this.password.length < 6 || this.password.length > 12) {
+          this.prompt = this.$t("userCommon.password");
+        } else if (this.code == "") {
+          this.prompt = this.$t("userCommon.code");
+        } else {
+          const logintype = this.phoneShow ? "mobile" : "email";
+          const user = {
+            captcha: this.$refs.verifyCodeInput.value,
+            loginName: this.getLoginName(logintype),
+            loginType: logintype,
+            password: this.$refs.password.value
+          };
 
-        var self = this;
+          var self = this;
 
-        auth.registerUser(this.$store.getters.lang, user).then(regResp => {
-          if (regResp.data.success) self.$router.push({ name: "Map" });
-          else
-            self.$alert("error", "Message", {
-              confirmButtonText: "Message"
-            });
-        });
+          auth.registerUser(this.$store.getters.lang, user).then(regResp => {
+            if (regResp.data.success) self.$router.push({ name: "Map" });
+            else
+              self.$alert("error", "Message", {
+                confirmButtonText: "Message"
+              });
+          });
+        }
+      }
+      if (this.phoneShow == false) {
+        if (this.mail === "") {
+          this.prompt = this.$t("userCommon.EmailError");
+        } else if (this.password === "") {
+          this.prompt = this.$t("userCommon.passwordEppty");
+        } else if (this.password.length < 6 || this.password.length > 12) {
+          this.prompt = this.$t("userCommon.password");
+        } else if (this.code == "") {
+          this.prompt = this.$t("userCommon.code");
+        } else {
+          const logintype = this.phoneShow ? "mobile" : "email";
+          const user = {
+            captcha: this.$refs.verifyCodeInput.value,
+            loginName: this.getLoginName(logintype),
+            loginType: logintype,
+            password: this.$refs.password.value
+          };
+
+          var self = this;
+
+          auth.registerUser(this.$store.getters.lang, user).then(regResp => {
+            if (regResp.data.success) self.$router.push({ name: "Map" });
+            else
+              self.$alert("error", "Message", {
+                confirmButtonText: "Message"
+              });
+          });
+        }
       }
     },
     countDown() {
       if (!this.canClick) return;
-      if (this.phone === "" && this.mail === "") {
-        this.prompt = "请完善信息后发送";
+      if (this.phoneShow == true) {
+        if (this.phone === "") {
+          this.prompt = this.$t("userCommon.phoneError");
+        }
+      }
+      if (this.phoneShow == false) {
+        if (this.mail === "") {
+          this.prompt = this.$t("userCommon.EmailError");
+        }
       }
       this.canClick = false;
       this.content =
