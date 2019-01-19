@@ -112,25 +112,21 @@ export default {
         day: {
           x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
           y: [10, 20, 30, 40, 50, 60],
-          y2: [5, 10, 10, 15, 15, 15],
           line: [5, 10, 10, 15, 15, 15]
         },
         week: {
           x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
           y: [100, 200, 300, 400, 500, 600, 700],
-          y2: [50, 100, 300, 200, 300, 600, 400],
           line: [50, 100, 300, 200, 300, 600, 400]
         },
         mounth: {
           x: ["1", "5", "10", "15", "20", "25", "30"],
           y: [1000, 520, 200, 334, 390, 330, 220],
-          y2: [50, 100, 300, 200, 300, 600, 400],
           line: [50, 100, 300, 200, 300, 600, 400]
         },
         year: {
           x: ["1", "4", "7", "10", "12"],
           y: [10000, 520, 200, 334, 390],
-          y2: [5000, 100, 100, 200, 300],
           line: [5000, 100, 100, 200, 300]
         }
       },
@@ -262,16 +258,10 @@ export default {
           },
           {
             name: this.$t("buyer.home.restPower"),
-            type: "bar",
-            color: "#51a906",
-            barWidth: "20%",
-            data: myData.y2
-          },
-          {
             type: "line",
-            color: "#9bcc3d",
+            color: "#51a906",
             data: myData.line
-          }
+          },
         ]
       });
       window.onresize = function() {
@@ -293,6 +283,7 @@ export default {
   background: rgba(101, 143, 247, 0);
   border-radius: 2px;
   min-width: 1130px;
+  width: 100%;
   .content-title {
     background: rgba(101, 143, 247, 0);
     box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);

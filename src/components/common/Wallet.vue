@@ -31,17 +31,17 @@
           :visible.sync="dialogVisible"
           width="820px"
         >
-          <el-table :data="tableData1" style="width: 820px">
+          <el-table :data="tableData1" style="width: 820px; margin-top:-40px;">
             <el-table-column prop="title" width="190"></el-table-column>
             <el-table-column prop="value" width="580"></el-table-column>
           </el-table>
         </el-dialog>
       </el-col>
-      <el-col :span="24">
-        <el-table :data="tableData" border style="width: 100%" @row-click="viewDetail">
-            <template slot="empty">
-          <p class="empty-text">No Transaction</p>
-        </template>
+      <el-col class="blue-box" :span="24">
+        <el-table :data="tableData" style="width: 100%" @row-click="viewDetail">
+          <template slot="empty">
+            <p class="empty-text">No Transaction</p>
+          </template>
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
@@ -110,113 +110,103 @@
         </el-table>
       </el-col>
       <el-col :span="6" :offset="15" class="transaction-foot">
-        <el-pagination
-                layout="prev, pager, next"
-                :current-page.sync="currentPage"
-                :page-size="pageSize"
-                :total="totalRecords"
-                @current-change="handleCurrentChange">
-        </el-pagination>
+        <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
       </el-col>
     </el-row>
   </section>
 </template>
 
 <script>
-import * as auth from '../../services/AuthService'
-import * as account from '../../services/AccountService'
-import * as wallet from '../../services/WalletService'
-import moment from 'moment'
+import * as auth from "../../services/AuthService";
+import * as account from "../../services/AccountService";
+import * as wallet from "../../services/WalletService";
+import moment from "moment";
 
 export default {
-  name: 'Wallet',
+  name: "Wallet",
   data() {
     return {
-      address: '',
+      address: "",
       dialogVisible: false,
       tableData: [],
       tableData1: [],
       curLang: this.$store.getters.lang,
-      curUserInfo: auth.getUserBaseInfo(),
-      currentPage: 1,
-      pageSize: this.$store.state.defaultPageSize,
-      totalRecords: 0
-    }
+      curUserInfo: auth.getUserBaseInfo()
+    };
   },
   methods: {
     formateDate(row, column, cellValue) {
-      return moment(cellValue).format('YYYY-MM-DD HH:mm:ss')
+      return moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
     },
     copy() {
-      console.log(123)
-      const input = document.createElement('input')
-      document.body.appendChild(input)
-      input.setAttribute('value', this.address)
-      input.select()
-      if (document.execCommand('copy')) {
-        document.execCommand('copy')
+      console.log(123);
+      const input = document.createElement("input");
+      document.body.appendChild(input);
+      input.setAttribute("value", this.address);
+      input.select();
+      if (document.execCommand("copy")) {
+        document.execCommand("copy");
       }
-      document.body.removeChild(input)
+      document.body.removeChild(input);
     },
     goTransfer() {
-      this.$router.push({ path: 'transfer' })
+      this.$router.push({ path: "transfer" });
     },
     getUserInfo() {
       const userInfo = account
         .userInfo(this.curLang, this.curUserInfo.userId)
         .then(userInfo => {
-          this.address = userInfo.data.data.accountAddress
-        })
+          this.address = userInfo.data.data.accountAddress;
+        });
     },
     getTradeFrom() {
       wallet
-        .getTradeListFromUser(this.curLang, this.curUserInfo.userId, this.currentPage, this.pageSize)
+        .getTradeListFromUser(this.curLang, this.curUserInfo.userId, 1, 10)
         .then(tradeList => {
-          this.tableData = tradeList.data.data.records
-          this.totalRecords = tradeList.data.data.total
-        })
+          this.tableData = tradeList.data.data.records;
+        });
     },
     viewDetail(row) {
-      console.log(row)
-      let transDetail = []
-      const fields = Object.keys(row)
+      console.log(row);
+      let transDetail = [];
+      const fields = Object.keys(row);
       fields.map(field => {
         const fieldData = {
           title: field,
           value: row[field]
-        }
-        transDetail.push(fieldData)
-      })
-      this.tableData1 = transDetail
-      this.dialogVisible = true
-    },
-    handleCurrentChange(val) {
-      this.currentPage = val
-      this.getTradeFrom()
+        };
+        transDetail.push(fieldData);
+      });
+      this.tableData1 = transDetail;
+      this.dialogVisible = true;
     }
   },
   mounted() {
-    this.getUserInfo()
-    this.getTradeFrom()
+    this.getUserInfo();
+    this.getTradeFrom();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .Wallet {
   height: 100%;
   min-width: 1130px;
-  background: #f2f2f2;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   p {
     margin: 0;
   }
   .wallet-head {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     height: 50px;
+    margin: 10px 10px 0;
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #252525;
+      color: #ffffff;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -230,12 +220,14 @@ export default {
   .wallet-body {
     height: 110px;
     margin: 10px;
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     p {
       padding-top: 20px;
       padding-left: 30px;
-      font-size: 18px;
-      color: #252525;
+      font-size: 16px;
+      color: #ffffff;
       line-height: 30px;
       text-align: left;
     }
@@ -247,13 +239,17 @@ export default {
     }
     .el-button {
       margin-top: 35px;
-      background: #8eb357;
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 #2463ff;
+      border-radius: 5px;
       border: none;
     }
   }
   .transaction {
     margin: 10px;
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     .el-col {
       padding: 0 30px;
       .overflow {
@@ -263,7 +259,7 @@ export default {
         width: 100%;
       }
       .table-head {
-        color: #363636;
+        color: #ffffff;
         font-weight: 500;
         font-size: 16px;
         margin: 0;
@@ -278,8 +274,26 @@ export default {
       p {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: rgba(0, 0, 0, 0.85);
+        color: #ffffff;
         line-height: 50px;
+      }
+    }
+    .blue-box {
+      .el-table {
+        color: #ffffff;
+        background-color: rgba(101, 143, 247, 0);
+      }
+      .el-table /deep/ tr:hover td {
+        background-color: rgba(101, 143, 247, 0.2) !important;
+      }
+      .el-table /deep/ th,
+      .el-table /deep/ tr {
+        background-color: rgba(101, 143, 247, 0);
+        border: none;
+      }
+      .el-table /deep/ td {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
       }
     }
     .transaction-foot {
@@ -287,6 +301,21 @@ export default {
       .el-pagination {
         height: 50px;
       }
+      .el-pagination /deep/ .btn-prev{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-next{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li.active{
+        color: #409eff;
+    }
     }
   }
 }

@@ -78,10 +78,10 @@
         <div class="record-head">{{$t('seller.home.record')}}</div>
         <el-row>
           <el-col :span="24">
-            <el-table :data="tableData" border style="width: 100%">
-                <template slot="empty">
-          <p class="empty-text">No Transaction</p>
-        </template>
+            <el-table :data="tableData" style="width: 100%">
+              <template slot="empty">
+                <p class="empty-text">No Transaction</p>
+              </template>
               <el-table-column prop="type">
                 <template slot="header" slot-scope="scope">
                   <p class="table-head">
@@ -289,7 +289,10 @@ export default {
               show: true,
               symbol: ["none", "arrow"],
               symbolSize: [10, 20],
-              symbolOffset: [0, 5]
+              symbolOffset: [0, 5],
+              lineStyle: {
+                color: "#ffffff"
+              }
             }
           }
         ],
@@ -304,7 +307,10 @@ export default {
               show: true,
               symbol: ["none", "arrow"],
               symbolSize: [10, 20],
-              symbolOffset: [0, 15]
+              symbolOffset: [0, 15],
+              lineStyle: {
+                color: "#ffffff"
+              }
             }
           }
         ],
@@ -354,7 +360,10 @@ export default {
               show: true,
               symbol: ["none", "arrow"],
               symbolSize: [10, 20],
-              symbolOffset: [0, 5]
+              symbolOffset: [0, 5],
+              lineStyle: {
+                color: "#ffffff"
+              }
             }
           }
         ],
@@ -369,7 +378,10 @@ export default {
               show: true,
               symbol: ["none", "arrow"],
               symbolSize: [10, 20],
-              symbolOffset: [0, 15]
+              symbolOffset: [0, 15],
+              lineStyle: {
+                color: "#ffffff"
+              }
             }
           }
         ],
@@ -407,16 +419,21 @@ export default {
 
 <style lang="scss" scoped>
 .Seller {
-  background: #f2f2f2;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
+  min-width: 1130px;
   width: 100%;
   min-width: 1160px;
   .content-title {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     height: 50px;
+    margin: 10px 10px 0;
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #252525;
+      color: #ffffff;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -445,7 +462,10 @@ export default {
         margin-right: 5px;
         min-width: 550px;
         height: 400px;
-        background: #ffffff;
+        background: rgba(101, 143, 247, 0);
+        box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+        border-radius: 2px;
+        color: #ffffff;
         p {
           padding-left: 30px;
           padding-top: 20px;
@@ -477,7 +497,10 @@ export default {
         margin-left: 5px;
         min-width: 550px;
         height: 400px;
-        background: #ffffff;
+        background: rgba(101, 143, 247, 0);
+        box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+        border-radius: 2px;
+        color: #ffffff;
         p {
           padding-left: 30px;
           padding-top: 20px;
@@ -508,7 +531,10 @@ export default {
     .power {
       min-width: 1130px;
       margin-top: 10px;
-      background: #ffffff;
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+      border-radius: 2px;
+      color: #ffffff;
       p {
         padding-left: 30px;
         padding-top: 20px;
@@ -531,7 +557,10 @@ export default {
       }
     }
     .record {
-      background: #ffffff;
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+      border-radius: 2px;
+      color: #ffffff;
       min-width: 1130px;
       margin: 10px auto;
       padding: 30px;
@@ -548,10 +577,10 @@ export default {
         width: 100%;
       }
       .el-table {
-        color: #363636;
+        color: #ffffff;
       }
       .table-head {
-        color: #363636;
+        color: #ffffff;
         font-weight: 500;
         font-size: 16px;
         margin: 0;
@@ -560,9 +589,40 @@ export default {
           font-size: 22px;
         }
       }
+      .el-table {
+        color: #ffffff;
+        background-color: rgba(101, 143, 247, 0);
+      }
+      .el-table /deep/ tr:hover td {
+        background-color: rgba(101, 143, 247, 0.2) !important;
+      }
+      .el-table /deep/ th,
+      .el-table /deep/ tr {
+        background-color: rgba(101, 143, 247, 0);
+        border: none;
+      }
+      .el-table /deep/ td {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
       .el-pagination {
         margin-top: 20px;
       }
+      .el-pagination /deep/ .btn-prev{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-next{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li.active{
+        color: #409eff;
+    }
     }
   }
 }
