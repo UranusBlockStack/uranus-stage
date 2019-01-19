@@ -122,7 +122,6 @@
                 :page-size="pageSize"
                 :total="totalRecords"
                 @current-change="handleCurrentChange">
-
         </el-pagination>
       </el-col>
     </el-row>
@@ -168,27 +167,27 @@ export default {
       tableData1: [
         {
           menu: this.$t('buyer.appRepository.deployPage.number'),
-          value: '132156421846148451'
+          value: ''
         },
         {
           menu: this.$t('buyer.appRepository.deployPage.appStatus'),
-          value: '已完成'
+          value: ''
         },
         {
           menu: this.$t('buyer.appRepository.deployPage.orderTime'),
-          value: '2018-12-12 12:12'
+          value: ''
         },
         {
           menu: this.$t('buyer.appRepository.deployPage.appName'),
-          value: '木马人123'
+          value: ''
         },
         {
           menu: this.$t('buyer.appRepository.deployPage.appStore'),
-          value: '321木马人'
+          value: ''
         },
         {
           menu: this.$t('buyer.appRepository.deployPage.appTime'),
-          value: '2018-12-12 12:12'
+          value: ''
         },
         {
           menu: this.$t('buyer.appRepository.deployPage.appGroup'),
@@ -212,7 +211,7 @@ export default {
         },
         {
           menu: this.$t('buyer.appRepository.deployPage.appHash'),
-          value: '0X16546167451sd54f6a5s1dfa68ds4'
+          value: ''
         }
       ],
       currentPage: 1,

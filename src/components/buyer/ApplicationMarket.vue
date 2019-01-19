@@ -79,7 +79,13 @@
       </el-row>
       <el-row>
         <el-col :span="8" :offset="16">
-          <el-pagination layout="prev, pager, next" :total="1000" style="padding-bottom:15px"></el-pagination>
+          <el-pagination
+                  layout="prev, pager, next"
+                  :current-page.sync="currentPage"
+                  :page-size="pageSize"
+                  :total="totalRecords"
+                  @current-change="handleCurrentChange" >
+          </el-pagination>
         </el-col>
       </el-row>
     </div>
@@ -87,43 +93,44 @@
 </template>
 
 <script>
-import * as app from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
+import * as app from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
 
 export default {
-  name: "ApplicationMarket",
+  name: 'ApplicationMarket',
   data() {
     return {
       options1: [
         {
           value: 1,
-          label: "Free"
+          label: 'Free'
         },
         {
           value: 2,
-          label: "Paid"
+          label: 'Paid'
         },
-        { value: 0, label: "All" }
+        { value: 0, label: 'All' }
       ],
       options2: [
         {
-          value: "library",
-          label: "library"
+          value: 'library',
+          label: 'library'
         }
       ],
-      value1: "",
-      value2: "",
+      value1: '',
+      value2: '',
       appList: [],
       imageServerUrl: this.$store.state.imageServerUrl,
-      appType: "All",
+      appType: 'All',
       appTypeSelected: 0,
-      catalogRid: "library",
-      searchName: "",
-      page: 1,
-      pageSize: 8,
-      sort: "download_times",
-      sortDesc: "true"
-    };
+      catalogRid: 'library',
+      searchName: '',
+      currentPage: 1,
+      pageSize: this.$store.state.defaultCardPageSize,
+      totalRecords: 0,
+      sort: 'download_times',
+      sortDesc: 'true'
+    }
   },
   methods: {
     // to do 分页的实现
@@ -131,45 +138,51 @@ export default {
       const searchData = {
         free: this.appTypeSelected,
         name: this.searchName,
-        page: this.page,
+        page: this.currentPage,
         pageSize: this.pageSize,
         // 'sort': this.sort,
         sortDesc: this.sortDesc
-      };
+      }
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
-        this.appList = respData.data.data.records;
+        this.appList = respData.data.data.records
+        this.totalRecords = respData.data.data.total
+
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon";
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
           appitem.computedPrice = appitem.free
-            ? this.$t("buyer.deploy.free")
-            : appitem.price;
-          return appitem;
-        });
-      });
+            ? this.$t('buyer.deploy.free')
+            : appitem.price
+          return appitem
+        })
+      })
     },
     deployApp(appId, appRid, versionId, catalog) {
       this.$router.push({
-        path: "/deployment",
+        path: '/deployment',
         query: {
           appId: appId,
           appRid: appRid,
           versionId: versionId,
           catalog: catalog
         }
-      });
+      })
     },
     searchApps() {
-      this.getAppList();
+      this.getAppList()
     },
     setAppType(select) {
-      this.appTypeSelected = select;
+      this.appTypeSelected = select
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.getAppList()
     }
   },
   created() {
-    this.getAppList();
+    this.getAppList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

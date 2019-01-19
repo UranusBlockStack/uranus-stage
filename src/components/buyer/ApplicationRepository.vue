@@ -86,7 +86,13 @@
       </el-row>
       <el-row>
         <el-col :span="8" :offset="16">
-          <el-pagination layout="prev, pager, next" :total="1000"></el-pagination>
+          <el-pagination
+                  layout="prev, pager, next"
+                  :current-page.sync="currentPage"
+                  :page-size="pageSize"
+                  :total="totalRecords"
+                  @current-change="handleCurrentChange">
+          </el-pagination>
         </el-col>
       </el-row>
     </div>
@@ -94,39 +100,42 @@
 </template>
 
 <script>
-import * as app from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
+import * as app from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
 
 export default {
-  name: "Applicationmarket",
+  name: 'Applicationmarket',
   data() {
     return {
-      letter: "123",
+      letter: '123',
       dialogVisible: false,
       imageServerUrl: this.$store.state.imageServerUrl,
       appList: [],
-      searchName: "",
-      page: 1,
-      pageSize: 8,
-      sort: "download_times",
-      sortDesc: "true"
+      searchName: '',
+      currentPage: 1,
+      pageSize: this.$store.state.defaultCardPageSize,
+      totalRecords: 0,
+      sort: 'download_times',
+      sortDesc: 'true'
     }
   },
   methods: {
     getAppList() {
       const queryData = {
         name: this.searchName,
-        page: this.page,
+        page: this.currentPage,
         pageSize: this.pageSize,
         sort: this.sort,
         sortDesc: this.sortDesc
       }
       app.appByUser(auth.getCurLang(), queryData).then(respData => {
-        this.appList = respData.data.data.records;
+        this.appList = respData.data.data.records
+        this.totalRecords = respData.data.data.total  
+
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon"
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
           appitem.computedPrice = appitem.free
-            ? this.$t("buyer.deploy.free")
+            ? this.$t('buyer.deploy.free')
             : appitem.price
           return appitem
         })
@@ -134,23 +143,27 @@ export default {
     },
     deployApp(appId, appRid, versionId, catalog) {
       this.$router.push({
-        path: "/deployment",
+        path: '/deployment',
         query: {
           appId: appId,
           appRid: appRid,
           versionId: versionId,
           catalog: catalog
         }
-      });
+      })
     },
     searchMyApp() {
+      this.getAppList()
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
       this.getAppList()
     }
   },
   created() {
     this.getAppList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
