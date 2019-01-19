@@ -9,7 +9,7 @@
       </el-col>
       <el-col :span="4" :offset="8">
         <router-link :to="{path: '/resourcerecord'}">
-          <p>{{$t('seller.groups.view')}}</p>
+          <p>{{$t('seller.groups.view')}}<i class="iconfont icon-more"></i></p>
         </router-link>
       </el-col>
     </el-row>
@@ -110,7 +110,7 @@
             </el-col>
             <el-col :span="2" :offset="1">
               <h2 class="setting" @click="dialogVisible = true">
-                <i class="iconfont icon-set" style="font-size: 25px;"></i>
+                <i class="iconfont icon-setting" style="font-size: 25px;"></i>
               </h2>
             </el-col>
           </el-row>
@@ -221,6 +221,7 @@ export default {
     }
     .shopBox {
       padding-top: 20px;
+      min-height: 250px;
       .padding-top {
         padding-top: 20px;
         h2 {

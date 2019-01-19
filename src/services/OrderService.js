@@ -13,10 +13,14 @@ export function orderInnerSearch (lang, orderNo) {
   return httpLang(lang).post(`/orders/inner/${orderNo}`)
 }
 
-export function orderSearch (lang, orderCond) {
-  return httpLang(lang).post('/order/orders/search', orderCond)
+export function orderSearch (lang, queryData) {
+  return httpLang(lang).post('/order/orders/search', queryData)
 }
 
 export function orderDelete (lang, orderNo) {
   return httpLang(lang).delete(`/order/orders/${orderNo}`)
+}
+
+export function orderResource(lang, queryData) {
+  return httpLang(lang).post('/order/orders/search', queryData)
 }

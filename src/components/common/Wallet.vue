@@ -14,7 +14,9 @@
         <p>
           {{$t('wallet.address')}}
           {{address}}
-          <u class="copy" @click="copy()">{{$t('wallet.copy')}}</u>
+          <el-tooltip class="item" effect="dark" content="Copy address" placement="right">
+            <u class="copy" @click="copy()">{{$t('wallet.copy')}}</u>
+          </el-tooltip>
         </p>
       </el-col>
       <el-col :span="6">
@@ -37,23 +39,24 @@
       </el-col>
       <el-col :span="24">
         <el-table :data="tableData" border style="width: 100%" @row-click="viewDetail">
+            <template slot="empty">
+          <p class="empty-text">No Transaction</p>
+        </template>
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-hash"></i>
+                <i class="iconfont icon-table-hash"></i>
                 {{$t('wallet.hash')}}
               </p>
             </template>
-             <template slot-scope="scope">
-            <p class="overflow">
-              {{ scope.row.hash}}
-            </p>
-          </template>
+            <template slot-scope="scope">
+              <p class="overflow">{{ scope.row.hash}}</p>
+            </template>
           </el-table-column>
           <el-table-column prop="createTime" :formatter="formateDate" min-width="160">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-start-time"></i>
+                <i class="iconfont icon-table-time"></i>
                 {{$t('wallet.time')}}
               </p>
             </template>
@@ -61,33 +64,29 @@
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-send"></i>
+                <i class="iconfont icon-table-from"></i>
                 {{$t('wallet.from')}}
               </p>
             </template>
             <template slot-scope="scope">
-            <p class="overflow">
-              {{ scope.row.from}}
-            </p>
-          </template>
+              <p class="overflow">{{ scope.row.from}}</p>
+            </template>
           </el-table-column>
           <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-receive"></i>
+                <i class="iconfont icon-table-to"></i>
                 {{$t('wallet.to')}}
               </p>
             </template>
             <template slot-scope="scope">
-            <p class="overflow">
-              {{ scope.row.to}}
-            </p>
-          </template>
+              <p class="overflow">{{ scope.row.to}}</p>
+            </template>
           </el-table-column>
           <el-table-column prop="value" :label="$t('wallet.value')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-turnover"></i>
+                <i class="iconfont icon-table-value"></i>
                 {{$t('wallet.value')}}
               </p>
             </template>
@@ -95,7 +94,7 @@
           <el-table-column prop="fee" :label="$t('wallet.fee')">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-lines"></i>
+                <i class="iconfont icon-table-fee"></i>
                 {{$t('wallet.fee')}}
               </p>
             </template>
@@ -103,7 +102,7 @@
           <el-table-column prop="status" :label="$t('wallet.status')" min-width="110">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-state"></i>
+                <i class="iconfont icon-table-state"></i>
                 {{$t('wallet.status')}}
               </p>
             </template>
@@ -121,7 +120,6 @@
 import * as auth from "../../services/AuthService";
 import * as account from "../../services/AccountService";
 import * as wallet from "../../services/WalletService";
-
 import moment from "moment";
 
 export default {
@@ -245,19 +243,19 @@ export default {
     .el-col {
       padding: 0 30px;
       .overflow {
-          overflow: hidden;
+        overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         width: 100%;
       }
-      .table-head{
+      .table-head {
         color: #363636;
         font-weight: 500;
         font-size: 16px;
         margin: 0;
         padding: 0;
         i {
-            font-size: 26px;
+          font-size: 23px;
         }
       }
     }

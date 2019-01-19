@@ -87,9 +87,8 @@ export default {
     line-height: 30px;
     width: 50px;
     height: 30px;
-    background: #8eb357;
+    background: #0084FF;
     border-radius: 3px;
-    font-family: SourceSansPro-Bold;
     font-size: 20px;
     color: #ffffff;
   }
@@ -103,7 +102,6 @@ export default {
     height: 30px;
     background: #f54c46;
     border-radius: 3px;
-    font-family: SourceSansPro-Bold;
     font-size: 20px;
     color: #ffffff;
   }

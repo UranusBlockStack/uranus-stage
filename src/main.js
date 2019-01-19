@@ -19,6 +19,7 @@ import 'admin-lte/dist/css/AdminLTE.min.css'
 import 'admin-lte/dist/css/skins/_all-skins.min.css'
 
 import store from './store'
+import * as auth from './services/AuthService'
 
 Vue.use(VueRouter)
 Vue.use(VueI18n)
@@ -30,6 +31,35 @@ Vue.config.productionTip = false
 var router = new VueRouter({
   routes,
   mode: 'history'
+})
+
+/// jump1 登录、注册、Map页已登录控制
+/// jump2 未登录自动跳转到map页
+/// jump3 部分页面，如重置密码，直接放行
+
+router.beforeEach(function (to, from, next) {
+  const nextRoute = ['/', '/login', '/register']
+  const thruRoute = ['/forgetPwd']
+
+  if (thruRoute.indexOf(to.path) >= 0) {  // 直接放行页
+    next()
+  } else {
+    const token = localStorage.getItem('token')
+
+    if (nextRoute.indexOf(to.path) >= 0) { // 在角色自动跳转列表中的
+      if (token == null || token === '') {
+        next()
+      } else {
+        next({path: auth.getCurRole()})
+      }
+    } else {
+      if (token == null || token === '') {
+        next({path: '/'})
+      } else {
+        next()
+      }
+    }
+  }
 })
 
 /* eslint-disable no-new */

@@ -55,13 +55,18 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  background: #f2f2f2;
+  background: url(/static/img/uranus/bg-blue.png) no-repeat;
+  background-size: cover;
+}
+.main-header {
+    background:rgba(101,143,247,0.00);
+box-shadow:inset 0 0 22px 0 rgba(36,99,255,0.50);
 }
 .content-wrapper {
-    background: #f2f2f2;
+    background:rgba(101,143,247,0.00);
 }
 .main-sidebar {
-  background: #ffffff;
-  box-shadow: 2px 0 6px 0 rgba(0, 0, 0, 0.2);
+  background:rgba(101,143,247,0.00);
+box-shadow:inset 0 0 22px 0 rgba(36,99,255,0.50);
 }
 </style>

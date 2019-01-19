@@ -2,30 +2,47 @@
   <section class="appRepository">
     <el-row class="repositoryHead">
       <el-col class="title" :span="12">
-        <h1>{{$t('menu.appRepository')}}</h1>
+        <h1>
+          <i class="iconfont icon-my-application"></i>
+          {{$t('menu.appRepository')}}
+        </h1>
       </el-col>
       <el-col class="record" :span="12">
         <router-link :to="{path: '/apprecord'}">
-          <p>{{$t('buyer.appRepository.deployRecord')}}>></p>
+          <p>{{$t('buyer.appRepository.deployRecord')}}<i class="iconfont icon-more"></i></p>
         </router-link>
       </el-col>
     </el-row>
-
-    <el-dialog :title="$t('buyer.appRepository.deleteSure')" :visible.sync="dialogVisible" width="30%" top="20%">
+    <!-- delete box -->
+    <el-dialog
+      :title="$t('buyer.appRepository.deleteSure')"
+      :visible.sync="dialogVisible"
+      width="30%"
+      top="20%"
+    >
       <span>{{$t('buyer.appRepository.deleteText')}}</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{$t('buyer.appRepository.button1')}}</el-button>
-        <el-button type="primary" @click="dialogVisible = false">{{$t('buyer.appRepository.button2')}}</el-button>
+        <el-button
+          type="primary"
+          @click="dialogVisible = false"
+        >{{$t('buyer.appRepository.button2')}}</el-button>
       </span>
     </el-dialog>
 
     <div class="shop">
       <el-row>
-        <el-col :span="6"  :offset="14">
-          <el-input :placeholder="$t('buyer.appRepository.searchIn')" prefix-icon="el-icon-search" v-model="searchName"> </el-input>
+        <el-col :span="6" :offset="16">
+          <el-input
+            :placeholder="$t('buyer.appRepository.searchIn')"
+            prefix-icon="el-icon-search"
+            v-model="searchName"
+          ></el-input>
         </el-col>
-        <el-col :span="3" :offset="1">
-          <el-button type="success" @click="searchMyApp"><i class="iconfont icon-view"></i></el-button>
+        <el-col :span="2">
+          <el-button type="success" @click="searchMyApp" style="margin-left:10px;">
+            <i class="iconfont icon-search"></i>
+          </el-button>
         </el-col>
       </el-row>
       <el-row class="shopBox" :gutter="20">
@@ -35,7 +52,7 @@
               <div>
                 <el-dropdown trigger="click">
                   <span class="el-dropdown-link">
-                    <span class="el-icon-arrow-down"></span>
+                    <span class="iconfont icon-menu"></span>
                   </span>
                   <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
@@ -44,11 +61,11 @@
                     <el-dropdown-item>{{$t('buyer.appRepository.detail')}}</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-                <img :src="app.imageurl" alt="img">
+                <div class="img-box">
+                    <img :src="app.imageurl" alt="img">
+                </div>
                 <p class="name">{{app.name}}</p>
-                <p
-                  class="detail"
-                >{{app.description}}</p>
+                <p class="detail">{{app.description}}</p>
                 <el-row :gutter="20">
                   <el-col :span="6" :offset="2">
                     <p class="free">{{app.computedPrice}}</p>
@@ -56,7 +73,9 @@
                   <el-col :span="10" :offset="6">
                     <p class="shops">{{app.shop}}</p>
                   </el-col>
-                  <a @click.prevent="deployApp(app.appId, app.rid, app.defaultVersion, app.catalog)">
+                  <a
+                    @click.prevent="deployApp(app.appId, app.rid, app.defaultVersion, app.catalog)"
+                  >
                     <el-button type="success">{{$t('buyer.appRepository.deploy')}}</el-button>
                   </a>
                 </el-row>
@@ -75,22 +94,22 @@
 </template>
 
 <script>
-    import * as app from '../../services/RancherService'
-    import * as auth from '../../services/AuthService'
+import * as app from "../../services/RancherService";
+import * as auth from "../../services/AuthService";
 
 export default {
-  name: 'Applicationmarket',
+  name: "Applicationmarket",
   data() {
     return {
-      letter: '123',
+      letter: "123",
       dialogVisible: false,
       imageServerUrl: this.$store.state.imageServerUrl,
       appList: [],
-      searchName: '',
+      searchName: "",
       page: 1,
       pageSize: 8,
-      sort: 'download_times',
-      sortDesc: 'true'
+      sort: "download_times",
+      sortDesc: "true"
     }
   },
   methods: {
@@ -102,37 +121,36 @@ export default {
         sort: this.sort,
         sortDesc: this.sortDesc
       }
-
       app.appByUser(auth.getCurLang(), queryData).then(respData => {
-        this.appList = respData.data.data.records
+        this.appList = respData.data.data.records;
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
-          appitem.computedPrice = appitem.free? this.$t('buyer.deploy.free'):appitem.price
+          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon"
+          appitem.computedPrice = appitem.free
+            ? this.$t("buyer.deploy.free")
+            : appitem.price
           return appitem
         })
       })
     },
     deployApp(appId, appRid, versionId, catalog) {
       this.$router.push({
-        path: '/deployment',
+        path: "/deployment",
         query: {
           appId: appId,
           appRid: appRid,
           versionId: versionId,
           catalog: catalog
         }
-      })
+      });
     },
     searchMyApp() {
       this.getAppList()
     }
-
   },
-    created() {
-      this.getAppList()
-    }
-
-}
+  created() {
+    this.getAppList()
+  }
+};
 </script>
 
 <style lang="scss" scoped>
@@ -141,27 +159,33 @@ export default {
   min-width: 1160px;
   .repositoryHead {
     background: #ffffff;
-    height: 65px;
+    height: 50px;
     .title {
       h1 {
-        font-family: PingFang-SC-Bold;
-        font-size: 20px;
+        font-family: Source-Sans-Pro-Bold;
+        font-size: 16px;
         color: #252525;
-        line-height: 24px;
+        line-height: 50px;
+        margin: 0;
+        padding: 0;
         padding-left: 30px;
+        i {
+          font-size: 26px;
+          margin-right: 10px;
+        }
       }
     }
     .record {
       float: right;
       margin-right: 15px;
       margin-top: 4px;
-      height: 60px;
+      height: 50px;
       width: 125px;
       p {
-        height: 60px;
-        line-height: 60px;
+        height: 0px;
+        line-height: 50px;
         margin: 0;
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #8eb357;
       }
@@ -170,7 +194,7 @@ export default {
   .shop {
     background: #ffffff;
     min-width: 1130px;
-    margin: 20px;
+    margin: 10px;
     padding: 15px;
     .el-button {
       background: #8eb357;
@@ -178,7 +202,7 @@ export default {
     }
     p {
       height: 40px;
-      font-family: PingFang-SC-Bold;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
       color: #252525;
       line-height: 24px;
@@ -188,6 +212,7 @@ export default {
       width: 100%;
       min-width: 1130px;
       margin-top: 15px;
+      min-height: 400px;
       .el-button {
         width: 120px;
       }
@@ -205,16 +230,26 @@ export default {
           .el-dropdown:hover {
             color: #8eb357;
           }
-          img {
-            width: 110px;
-            height: 105px;
-            display: inline-block;
-          }
+          .img-box {
+              height: 110px;
+              width: 130px;
+              margin: 10px auto;
+              img {
+                min-width: 100px;
+                min-height: 80px;
+                max-width: 130px;
+                max-height: 110px;
+                width: auto;
+                height: auto;
+                margin: 0 auto;
+                display: block;
+              }
+            }
           .name {
             font-weight: 600;
             padding: 5px 0 10px;
             border-bottom: 2px solid #eee;
-            font-family: PingFang-SC-Medium;
+            font-family: Source-Sans-Pro-Bold;
             font-size: 20px;
             color: #251e1c;
             text-align: center;
@@ -225,7 +260,6 @@ export default {
             height: 66px;
             overflow: hidden;
             box-sizing: content-box;
-            font-family: PingFangSC-Regular;
             font-size: 14px;
             color: rgba(0, 0, 0, 0.45);
             text-align: center;
@@ -235,7 +269,6 @@ export default {
           .free {
             font-weight: 600;
             padding: 10px 0;
-            font-family: PingFangSC-Regular;
             font-size: 14px;
             color: #1890ff;
             letter-spacing: 0;
@@ -243,7 +276,6 @@ export default {
             text-align: left;
           }
           .shops {
-            font-family: PingFangSC-Regular;
             font-size: 14px;
             padding: 10px 0;
             color: #5d5d5d;

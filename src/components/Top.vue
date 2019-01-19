@@ -19,12 +19,16 @@
       </div>
       <!-- User Sign out -->
       <div class="userInformation">
-          <span>Alexander Pierce</span>
-          <el-button @click="logout"><i class="iconfont icon-role"></i></el-button>
+        <span><i class="iconfont icon-user"></i> Alexander Pierce</span>
+        <el-tooltip class="item" effect="dark" content="Sign out" placement="bottom-start">
+    <el-button @click="logout">
+          <i class="iconfont icon-sign-out"></i>
+        </el-button>
+    </el-tooltip>
       </div>
       <!-- Download button -->
       <div class="download">
-          <span>{{$t('userCommon.download')}}</span>
+        <span>{{$t('userCommon.download')}}</span>
       </div>
     </nav>
   </section>
@@ -47,7 +51,8 @@ export default {
 <style lang="scss" scoped>
 .Head {
   .logo {
-    background: #252525;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
     .logo-mini {
       img {
         display: block;
@@ -64,31 +69,35 @@ export default {
     }
   }
   .navbar {
-    background: #252525;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
     .userInformation {
-        width: 200px;
-        color: #8eb357;
-        float: right;
-        height: 50px;
-        line-height: 50px;
+      width: 200px;
+      color: #ffffff;
+      float: right;
+      height: 50px;
+      line-height: 50px;
       .el-button {
-          background: #252525;
-          border: none;
-          color: #8eb357;
-          :hover {
-              color: #f54c46;
-          }
+        background: rgba(101, 143, 247, 0);
+        border: none;
+        color: #ffffff;
+        :hover {
+          color: #f54c46;
+        }
       }
     }
     .download {
-        width: 150px;
-        float: right;
-        color: #8eb357;
-        cursor: pointer;
-        span {
-            height: 50px;
-            line-height: 50px;
-        }
+      width: 150px;
+      float: right;
+      color: #ffffff;
+      cursor: pointer;
+      span {
+        height: 50px;
+        line-height: 50px;
+      }
+      :hover {
+          color: #f54c46;
+      }
     }
   }
 }

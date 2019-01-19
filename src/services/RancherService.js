@@ -1,7 +1,8 @@
 
-import {httpLang, imageServerHttp} from './HttpService'
+import {httpLang, httpLang2} from './HttpService'
 
-
+import axios from 'axios'
+import * as auth from './AuthService'
 
 /** Rancher - Cluster Service ***/
 
@@ -33,13 +34,6 @@ export function clusterRegistCluster (lang, rid) {
   return httpLang(lang).get(`/rancher/clusters/${rid}`)
 }
 
-//获取集群下的所有主机
-export function clusterHosts (lang, id) {
-    return httpLang(lang).get(`/rancher/clusters/${id}/hosts`)
-}
-
-
-
 /** Rancher - Host Service ***/
 export function hostAdd (lang, hostInfo) {
   return httpLang(lang).post('/rancher/hosts', hostInfo)
@@ -64,8 +58,6 @@ export function hostInfo (lang, id) {
 export function hostModify (lang, id, newClusterInfo) {
   return httpLang(lang).put(`/rancher/hosts/${id}`, newClusterInfo)
 }
-
-
 
 /** Rancher - RancherServer Service ***/
 export function rancherAdd (lang, rancherInfo) {
@@ -92,20 +84,34 @@ export function rancherModify (lang, id, newClusterInfo) {
   return httpLang(lang).put(`/rancher/rancher_servers/${id}`, newClusterInfo)
 }
 
-
 /** Rancher - AppController Service ***/
 export function appList (lang, queryData) {
-    return httpLang(lang).post('/rancher/apps/search', queryData)
+  return httpLang(lang).post('/rancher/apps/search', queryData)
 }
 
 export function appDetail (lang, appId) {
-    return httpLang(lang).get(`/rancher/apps/${appId}`)
+  return httpLang(lang).get(`/rancher/apps/${appId}`)
 }
 
 export function appVersion (lang, appId, version) {
-    return httpLang(lang).get(`/rancher/apps/${appId}/versions/${version}`)
+  return httpLang(lang).get(`/rancher/apps/${appId}/versions/${version}`)
 }
 
 export function appByUser (lang, queryData) {
     return httpLang(lang).post('/rancher/app_users/search', queryData)
+}
+
+/** Rancher - Project Controller Service ***/
+export function projectList (lang, queryData) {
+    return httpLang(lang).post('/rancher/projects/search', queryData)
+}
+
+export function apptListByProjectId (lang, projectId) {
+    return httpLang(lang).get(`/rancher/projects/${projectId}/apps`)
+}
+
+/** Rancher - App Instance Controller Service ***/
+export function appInstanceSearch (lang, queryData) {
+    // console.log(httpLang2)
+  return httpLang2(lang).post('/rancher/app_instances/search', queryData)
 }

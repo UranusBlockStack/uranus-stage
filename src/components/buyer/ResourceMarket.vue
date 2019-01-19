@@ -180,9 +180,10 @@
 </template>
 
 <script>
-import TimeOver from "@/components/modules/TimeOver";
+import TimeOver from '@/components/modules/TimeOver'
 import * as auth from '../../services/AuthService'
 import * as rancher from '../../services/RancherService'
+import * as order from '../../services/OrderService'
 import { ServerConfigData, WrapDropDownData } from '../../store/rancher_info'
 
 export default {
@@ -199,7 +200,8 @@ export default {
         disk: '512G',
         mem: '16',
         network: '512G',
-        dateRange: ''
+        dateRange: '',
+        deployStatus: ''
       },
       regionSel: [],
       cpuSel: [],
@@ -214,18 +216,18 @@ export default {
       innerVisible: false,
       gridData: [
         {
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
+          order: '214521236987',
+          address: '0x461s2df6…',
+          number: '1000021.23',
           type: this.$t('buyer.resourceMarket.purchaseApp'),
-          charge: "0.11"
+          charge: '0.11'
         },
         {
-          order: "214521236987",
-          address: "0x461s2df6…",
-          number: "1000021.23",
+          order: '214521236987',
+          address: '0x461s2df6…',
+          number: '1000021.23',
           type: this.$t('buyer.resourceMarket.purchasePower'),
-          charge: "0.11"
+          charge: '0.11'
         }
       ]
     }
@@ -286,22 +288,19 @@ export default {
                 })
     },
 
-
     purchaseUraPower() {
         // console.log(this.deployForm.dateRange[0])
-        this.deployForm.beginTime  = this.deployForm.dateRange[0]
-        this.deployForm.endTime    = this.deployForm.dateRange[1]
+      this.deployForm.beginTime = this.deployForm.dateRange[0]
+      this.deployForm.endTime = this.deployForm.dateRange[1]
 
-        console.log(this.deployForm)
-        order.orderResource(auth.getCurLang(), this.deployForm)
+      console.log(this.deployForm)
+      order.orderResource(auth.getCurLang(), this.deployForm)
             .then(purcheStatus => {
               const purchStausData = purcheStatus.data
-                console.log(purchStausData)
-                if(purchStausData.success)
-                    this.gridData = purchStausData.data
-                    this.outerVisible = true
+              console.log(purchStausData)
+              if (purchStausData.success) { this.gridData = purchStausData.data }
+              this.outerVisible = true
             })
-
     }
 
   }

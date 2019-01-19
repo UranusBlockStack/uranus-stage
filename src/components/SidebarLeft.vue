@@ -53,7 +53,7 @@
       </li>
       <li class="treeview" v-show="user== 'Buyer'">
         <router-link :to="{path: '/applicationrepository'}">
-          <i class="iconfont icon-My-application"></i>
+          <i class="iconfont icon-my-application"></i>
           <span>{{$t('menu.appRepository')}}</span>
         </router-link>
       </li>
@@ -65,29 +65,17 @@
       </li>
       <li class="treeview" v-show="user== 'Buyer'">
         <router-link :to="{path: '/myresource'}">
-          <i class="iconfont icon-my-resource"></i>
+          <i class="iconfont icon-resource"></i>
           <span>{{$t('menu.myResource')}}</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </router-link>
         <ul class="treeview-menu">
-          <li>
-            <router-link :to="{path: '/resourcepool'}">
-              <i class="iconfont icon-host1"></i>
-              {{$t('menu.resourcePool1')}}
-            </router-link>
-          </li>
-          <li>
-            <router-link :to="{path: '/resourcepool'}">
-              <i class="iconfont icon-host1"></i>
-              {{$t('menu.resourcePool2')}}
-            </router-link>
-          </li>
-          <li>
-            <router-link :to="{path: '/resourcepool'}">
-              <i class="iconfont icon-host1"></i>
-              {{$t('menu.resourcePool3')}}
+          <li v-for="(item,index) in uraPowerList" :key="index">
+            <router-link :to="{path: '/resourcepool/'+item.id}">
+              <i class="iconfont icon-resource"></i>
+              {{item.projectName}}
             </router-link>
           </li>
         </ul>
@@ -109,19 +97,19 @@
         <ul class="treeview-menu">
           <li>
             <router-link :to="{path: '/colony'}">
-              <i class="iconfont icon-colony"></i>
+              <i class="iconfont icon-cluster"></i>
               {{$t('menu.myColony1')}}
             </router-link>
           </li>
           <li>
             <router-link :to="{path: '/colony'}">
-              <i class="iconfont icon-colony"></i>
+              <i class="iconfont icon-cluster"></i>
               {{$t('menu.myColony2')}}
             </router-link>
           </li>
           <li>
             <router-link :to="{path: '/colony'}">
-              <i class="iconfont icon-colony"></i>
+              <i class="iconfont icon-cluster"></i>
               {{$t('menu.myColony3')}}
             </router-link>
           </li>
@@ -159,23 +147,40 @@
 
 <script>
 import * as auth from '../services/AuthService'
+import * as project from '../services/RancherService'
 
 export default {
-  name: "SidebarLeft",
+  name: 'SidebarLeft',
   data() {
     return {
       user: '',
-    };
+      uraPowerList: [],
+      projectQuertData: {
+        'page': 0,
+        'pageSize': 0,
+        'projectName': '',
+        'sort': '',
+        'sortDesc': true
+      }
+    }
   },
   created() {
-    this.getUser();
+    this.getUser()
+    this.getUraPowerPoolLIst()
   },
   methods: {
     getUser() {
-      this.user = auth.getUserBaseInfo().loginRole;
+      this.user = auth.getUserBaseInfo().loginRole
+    },
+    getUraPowerPoolLIst() {
+      project.projectList(this.$store.getters.lang, this.projectQuertData)
+                .then(respData => {
+                  const data = respData.data.data.records
+                  this.uraPowerList = data
+                })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -184,7 +189,7 @@ export default {
     font-size: 16px;
     .treeview {
       a {
-        color: #252525;
+        color: #ffffff;
         font-size:16px;
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
@@ -197,30 +202,30 @@ export default {
         }
       }
       .treeview-menu {
-        background: #ffffff;
+        background: rgba(101, 143, 247, 0);
       }
     }
     .menu-open {
      > a {
         color: #8eb357;
-        background: #f2f2f2;
+        background: rgba(101, 143, 247, 0);
       }
       .treeview-menu {
           padding-left: 30px;
           li:hover {
               >a {
                   color: #8eb357;
-                  background: #f2f2f2;
+                  background: rgba(101, 143, 247, 0);
               }
           }
       }
       
     }
     .treeview:hover {
-      background: #f2f2f2;
+      background: rgba(101, 143, 247, 0);
       > a {
         color: #8eb357;
-        background: #f2f2f2;
+        background: rgba(101, 143, 247, 0);
         // i {
         //   font-size: 35px;
         //   transition: 1.2s;
