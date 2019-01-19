@@ -76,7 +76,7 @@ export default {
     },
     methods: {
       getWorkLoads() {
-        apps.appInstanceWorkLoads(this.$store.getters.lang, 6)
+        apps.appInstanceWorkLoads(this.$store.getters.lang, this.$route.params.id)
               .then(respData => {
                 let dataList = respData.data.data.records
                 dataList.forEach((item, index) => {

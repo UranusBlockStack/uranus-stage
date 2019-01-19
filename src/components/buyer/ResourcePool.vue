@@ -34,7 +34,7 @@
           <el-button type="success"><i class="iconfont icon-search"></i></el-button>
         </el-col>
       </el-row>
-      <el-row class="rePool" v-for="(index, item) in appList">
+      <el-row class="rePool" v-for="(item, index) in appList" :key="index">
         <el-col :span="2" :offset="1">
           <img :src= 'getImage(item.rid)'  alt="img">
         </el-col>
@@ -50,7 +50,7 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <router-link :to="{path: '/appstate'}"><el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item></router-link>
+              <router-link :to="{path: '/appstate/' + item.id}"><el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item></router-link>
               <el-dropdown-item>{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
@@ -322,11 +322,11 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
-      project.apptListByProjectId(this.$store.getters.lang, to.params.poolid)
+    project.apptListByProjectId(this.$store.getters.lang, to.params.poolid)
           .then(respData => {
-              this.appList = respData.data.data.records
+            this.appList = respData.data.data.records
           })
-      next()
+    next()
   },
   mounted() {
     this.initEchart()
