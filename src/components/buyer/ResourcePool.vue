@@ -50,8 +50,10 @@
               <i class="el-icon-arrow-down el-icon--right"></i>
             </span>
             <el-dropdown-menu slot="dropdown">
-              <router-link :to="{path: '/appstate/' + item.id}"><el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item></router-link>
-              <el-dropdown-item>{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
+              <router-link :to="{path: '/appstate/' + item.id}">
+                  <el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item>
+              </router-link>
+              <el-dropdown-item @click.native="deleteApp(item.id)">{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </el-col>
@@ -319,6 +321,13 @@ export default {
     },
     getImage(rid) {
       return this.imageServerUrl + rid + '/icon'
+    },
+    deleteApp(appId) {
+      console.log('maxl', appId)
+      project.deleteAppById(appId)
+              .then(respData => {
+                  this.$message(respData.data)
+              })
     }
   },
   beforeRouteUpdate(to, from, next) {

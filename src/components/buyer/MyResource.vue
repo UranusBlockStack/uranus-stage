@@ -23,7 +23,7 @@
         <el-row>
           <el-col :span="4">
             <div id="restResource">
-              <Water :chartData="0.3" style="margin:40px auto"/>
+              <Water :chartData='statisObejct.urapowerUsd' style="margin:40px auto"/>
             </div>
           </el-col>
           <el-col :span="19" :offset="1">
@@ -51,7 +51,7 @@
                 <Ball :chartData="62"/>
               </el-col>
               <el-col :span="12">
-                  <h3>Pool: </h3>
+                  <h3>Pool: {{pool.name}}</h3>
                 <h3>{{$t('buyer.myResource.number')}} {{pool.appCount}}</h3>
                 <div class="timeText">
                   <p>{{$t('buyer.myResource.countdownTime')}}</p>
@@ -108,6 +108,13 @@ export default {
         'projectName': '',
         'sort': '',
         'sortDesc': true
+      },
+      statisObejct: {
+        'cpuUsd': 0,
+        'diskUsd': 0,
+        'memUsd': 0,
+        'networkUsd': 0,
+        'urapowerUsd': 0
       }
     }
   },
@@ -147,12 +154,12 @@ export default {
             },
             data: [
               {
-                value: 68,
+                value: this.statisObejct.cpuUsd,
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|GPU}', '{b|88%}'].join('\n'),
+                    formatter: ['{a|CPU}', this.statisObejct.cpuUsd].join('\n'),
                     rich: {
                       a: {
                         color: '#f2f2f2',
@@ -170,7 +177,7 @@ export default {
                   }
                 }
               },
-              { value: 32 }
+              { value: 100 - this.statisObejct.cpuUsd }
             ]
           }
         ]
@@ -234,12 +241,12 @@ export default {
             },
             data: [
               {
-                value: 62,
+                value: this.statisObejct.memUsd,
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|Memory}', '{b|62%}'].join('\n'),
+                    formatter: ['{a|Memory}', this.statisObejct.memUsd].join('\n'),
                     rich: {
                       a: {
                         color: '#f2f2f2',
@@ -257,7 +264,7 @@ export default {
                   }
                 }
               },
-              { value: 38 }
+              { value: 100 - this.statisObejct.memUsd }
             ]
           }
         ]
@@ -280,12 +287,12 @@ export default {
             },
             data: [
               {
-                value: 88,
+                value: this.statisObejct.diskUsd,
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|Disk}', '{b|88%}'].join('\n'),
+                    formatter: ['{a|Disk}', this.statisObejct.diskUsd].join('\n'),
                     rich: {
                       a: {
                         color: '#f2f2f2',
@@ -303,7 +310,7 @@ export default {
                   }
                 }
               },
-              { value: 12 }
+              { value: 100 - this.statisObejct.diskUsd }
             ]
           }
         ]
@@ -326,12 +333,12 @@ export default {
             },
             data: [
               {
-                value: 62,
+                value: this.statisObejct.networkUsd,
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|Network}', '{b|62%}'].join('\n'),
+                    formatter: ['{a|Network}', this.statisObejct.networkUsd].join('\n'),
                     rich: {
                       a: {
                         color: '#f2f2f2',
@@ -349,7 +356,7 @@ export default {
                   }
                 }
               },
-              { value: 38 }
+              { value: 100 - this.statisObejct.networkUsd }
             ]
           }
         ]
@@ -376,13 +383,31 @@ export default {
                   this.poolList.push(object)
                 }
               })
+    },
+    allStatisticsProjects() {
+      project.statisticsProjects()
+              .then(respData => {
+                const data = respData.data.data
+                this.statisObejct['cpuUsd'] = data.cpuKernelRatio * 100
+                this.statisObejct['diskUsd'] = data.diskRatio * 100
+                this.statisObejct['memUsd'] = data.memRatio * 100
+                this.statisObejct['networkUsd'] = data.networkRatio * 100
+                this.statisObejct['urapowerUsd'] = data.computeRatio
+                console.log('maxl', this.statisObejct)
+              })
     }
   },
   mounted() {
     this.initEchart()
   },
   created() {
+    this.allStatisticsProjects()
     this.getUraPowerPoolList()
+  },
+  watch: {
+    statisObejct() {
+      this.initEchart()
+    }
   }
 }
 </script>

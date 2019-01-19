@@ -123,3 +123,14 @@ export function appInstanceSearch (lang, queryData) {
 export function appInstanceWorkLoads (lang, appId) {
     return httpLang(lang).get(`/rancher/app_instances/${appId}/workloads`)
 }
+
+/**App User Controller Service ***/
+export function deleteAppById (lang, appId) {
+    return httpLang(lang).delete(`/rancher/app_users/${appId}`)
+}
+
+
+/** Statistics Controller Service ***/
+export function statisticsProjects (lang) {
+    return httpLang(lang).get('/rancher/statistics/projects')
+}
