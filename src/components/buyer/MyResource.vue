@@ -51,10 +51,10 @@
                 <Ball :chartData="62"/>
               </el-col>
               <el-col :span="12">
-                <h3>{{$t('buyer.myResource.number')}} {{pool.id}}</h3>
+                <h3>{{$t('buyer.myResource.number')}} {{pool.appCount}}</h3>
                 <div class="timeText">
                   <p>{{$t('buyer.myResource.countdownTime')}}</p>
-                  <RestTime endTime="2021-1-15 16:31:15"/>
+                  <RestTime :endTime= "pool.time" />
                 </div>
               </el-col>
               <el-col :span="3" :offset="1">
@@ -68,7 +68,7 @@
                       <i class="el-icon-arrow-right"></i>
                     </el-dropdown-item> -->
                     <el-dropdown-item>
-                      <p @click="$router.push({path: '/resourcepool/' + pool.id})">
+                      <p @click="$router.push({path: '/resourcepool/' + pool.id + '/' + pool.name})">
                         {{$t('buyer.myResource.detail')}}
                         <i class="el-icon-arrow-right"></i>
                       </p>
@@ -87,9 +87,9 @@
 <script>
 import moment from 'moment'
 import * as project from '../../services/RancherService'
-import Water from "@/components/modules/Water";
-import Ball from "@/components/modules/Ball";
-import RestTime from "@/components/modules/RestTime";
+import Water from '@/components/modules/Water'
+import Ball from '@/components/modules/Ball'
+import RestTime from '@/components/modules/RestTime'
 
 export default {
   name: 'MyResource',
@@ -138,7 +138,7 @@ export default {
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#2463FF", "#f2f2f2"],
+            color: ['#2463FF', '#f2f2f2'],
             labelLine: {
               normal: {
                 show: false
@@ -151,17 +151,17 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|GPU}", "{b|88%}"].join("\n"),
+                    formatter: ['{a|GPU}', '{b|88%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#f2f2f2",
-                        fontSize: "14",
-                        lineHeight: "22"
+                        color: '#f2f2f2',
+                        fontSize: '14',
+                        lineHeight: '22'
                       },
                       b: {
-                        color: "#ffffff",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: '#ffffff',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
                     position: 'center',
@@ -225,7 +225,7 @@ export default {
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#FFC032", "#f2f2f2"],
+            color: ['#FFC032', '#f2f2f2'],
             labelLine: {
               normal: {
                 show: false
@@ -241,14 +241,14 @@ export default {
                     formatter: ['{a|Memory}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#f2f2f2",
-                        fontSize: "14",
-                        lineHeight: "22"
+                        color: '#f2f2f2',
+                        fontSize: '14',
+                        lineHeight: '22'
                       },
                       b: {
-                        color: "#ffffff",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: '#ffffff',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
                     position: 'center',
@@ -271,7 +271,7 @@ export default {
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#6AB52B", "#f2f2f2"],
+            color: ['#6AB52B', '#f2f2f2'],
             labelLine: {
               normal: {
                 show: false
@@ -287,14 +287,14 @@ export default {
                     formatter: ['{a|Disk}', '{b|88%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#f2f2f2",
-                        fontSize: "14",
-                        lineHeight: "22"
+                        color: '#f2f2f2',
+                        fontSize: '14',
+                        lineHeight: '22'
                       },
                       b: {
-                        color: "#ffffff",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: '#ffffff',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
                     position: 'center',
@@ -317,7 +317,7 @@ export default {
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#FF4942", "#f2f2f2"],
+            color: ['#FF4942', '#f2f2f2'],
             labelLine: {
               normal: {
                 show: false
@@ -333,14 +333,14 @@ export default {
                     formatter: ['{a|Network}', '{b|62%}'].join('\n'),
                     rich: {
                       a: {
-                        color: "#f2f2f2",
-                        fontSize: "14",
-                        lineHeight: "22"
+                        color: '#f2f2f2',
+                        fontSize: '14',
+                        lineHeight: '22'
                       },
                       b: {
-                        color: "#ffffff",
-                        fontSize: "24",
-                        fontFamily: "HelveticaNeue"
+                        color: '#ffffff',
+                        fontSize: '24',
+                        fontFamily: 'HelveticaNeue'
                       }
                     },
                     position: 'center',
@@ -354,7 +354,7 @@ export default {
         ]
       })
       window.onresize = function() {
-        myChart1.resize();
+        myChart1.resize()
         // myChart2.resize()
         myChart3.resize()
         myChart4.resize()
@@ -364,12 +364,14 @@ export default {
     getUraPowerPoolLIst() {
       project.projectList(this.$store.getters.lang, this.projectQuertData)
               .then(respData => {
+                this.appList = {}
                 const data = respData.data.data.records
                 for (let i = 0; i < data.length; i++) {
                   let object = {}
                   object['id'] = data[i].id
-                  object['value'] = '2' // data[i].id
-                  object['time'] = moment(data.endTime).format('YYYY-MM-DD hh:mm:ss')
+                  object['name'] = data[i].projectName
+                  object['appCount'] = data[i].appCount
+                  object['time'] = moment(data[i].endTime).format('YYYY-MM-DD hh:mm:ss')
                   this.poolList.push(object)
                 }
               })

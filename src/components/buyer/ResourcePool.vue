@@ -8,7 +8,7 @@
     <el-row class="poolBox">
       <el-row>
         <el-col class="title" :span="24">
-          <h1>{{$t('buyer.resourcePool.pool')}}A</h1>
+          <h1>{{$t('buyer.resourcePool.pool')}}: {{this.$route.params.poolname}}</h1>
         </el-col>
       </el-row>
       <el-row>
@@ -34,7 +34,7 @@
           <el-button type="success"><i class="iconfont icon-search"></i></el-button>
         </el-col>
       </el-row>
-      <el-row class="rePool" v-for="item in appList">
+      <el-row class="rePool" v-for="(index, item) in appList">
         <el-col :span="2" :offset="1">
           <img :src= 'getImage(item.rid)'  alt="img">
         </el-col>
