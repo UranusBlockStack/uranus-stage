@@ -73,15 +73,19 @@
           </div>
         </div>
       </div>
+      <!-- transaction record -->
       <div class="record">
         <div class="record-head">{{$t('seller.home.record')}}</div>
         <el-row>
           <el-col :span="24">
             <el-table :data="tableData" border style="width: 100%">
+                <template slot="empty">
+          <p class="empty-text">No Transaction</p>
+        </template>
               <el-table-column prop="type">
                 <template slot="header" slot-scope="scope">
                   <p class="table-head">
-                    <i class="iconfont icon-resource-market"></i>
+                    <i class="iconfont icon-table-state"></i>
                     {{$t('seller.home.type')}}
                   </p>
                 </template>
@@ -89,7 +93,7 @@
               <el-table-column prop="createTime" :formatter="formateDate">
                 <template slot="header" slot-scope="scope">
                   <p class="table-head">
-                    <i class="iconfont icon-Point-in-time"></i>
+                    <i class="iconfont icon-table-date"></i>
                     {{$t('seller.home.time')}}
                   </p>
                 </template>
@@ -97,7 +101,7 @@
               <el-table-column prop="hash">
                 <template slot="header" slot-scope="scope" min-width="250">
                   <p class="table-head">
-                    <i class="iconfont icon-hash"></i>
+                    <i class="iconfont icon-table-hash"></i>
                     {{$t('seller.home.hash')}}
                   </p>
                 </template>
@@ -108,7 +112,7 @@
               <el-table-column prop="value">
                 <template slot="header" slot-scope="scope">
                   <p class="table-head">
-                    <i class="iconfont icon-turnover"></i>
+                    <i class="iconfont icon-table-value"></i>
                     {{$t('seller.home.amount')}}
                   </p>
                 </template>
@@ -116,7 +120,7 @@
               <el-table-column prop="fee">
                 <template slot="header" slot-scope="scope">
                   <p class="table-head">
-                    <i class="iconfont icon-lines"></i>
+                    <i class="iconfont icon-table-fee"></i>
                     {{$t('seller.home.fee')}}
                   </p>
                 </template>

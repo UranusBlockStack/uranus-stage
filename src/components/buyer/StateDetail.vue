@@ -3,12 +3,12 @@
     <el-row class="recordHead">
       <el-col class="title" :span="20">
         <h1 @click="$router.back(-1)">
-          <i class="iconfont icon-zhongmingming"></i> wordpress-mdkyy-mariadb
+          <i class="iconfont"></i> wordpress-mdkyy-mariadb
         </h1>
       </el-col>
-      <el-col :span="4">
+      <!-- <el-col :span="4">
         <p>{{$t('buyer.stateDetail.rename')}}</p>
-      </el-col>
+      </el-col> -->
     </el-row>
     <el-row class="recordBox">
       <el-col :span="24">
@@ -18,10 +18,13 @@
           style="width: 100%"
           @row-click="$router.push({path: '/statedetail'})"
         >
+        <template slot="empty">
+          <p class="empty-text">No Dtata</p>
+        </template>
           <el-table-column prop="1">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
-                <i class="iconfont icon-state"></i>
+                <i class="iconfont icon-table-state"></i>
                 {{$t('buyer.stateDetail.status')}}
               </p>
             </template>
@@ -29,7 +32,7 @@
           <el-table-column prop="2">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
-                <i class="iconfont icon-hash"></i>
+                <i class="iconfont icon-table-name"></i>
                 {{$t('buyer.stateDetail.name')}}
               </p>
             </template>
@@ -37,7 +40,7 @@
           <el-table-column width="320">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
-                <i class="iconfont icon-hash"></i>
+                <i class="iconfont icon-table-image"></i>
                 {{$t('buyer.stateDetail.image')}}
               </p>
             </template>
@@ -49,7 +52,7 @@
           <el-table-column prop="4">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
-                <i class="iconfont icon-host1"></i>
+                <i class="iconfont icon-table-host"></i>
                 {{$t('buyer.stateDetail.host')}}
               </p>
             </template>
@@ -57,7 +60,7 @@
           <el-table-column prop="5">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
-                <i class="iconfont icon-hash"></i>
+                <i class="iconfont icon-table-ip"></i>
                 {{$t('buyer.stateDetail.ip')}}
               </p>
             </template>

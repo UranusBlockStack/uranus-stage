@@ -47,7 +47,7 @@
             <div :class="scope.row.state == 'Offline' ? 'on' : 'off'"></div>
           </template>
         </el-table-column>
-        <el-table-column min-width="120">
+        <el-table-column width="160">
             <!--主机名称 name-->
           <template slot="header" slot-scope="scope">
             <p class="table-head" style="text-align:left;">
@@ -282,7 +282,7 @@ export default {
         margin: 0;
         padding: 0;
         i {
-          font-size: 26px;
+          font-size: 22px;
         }
 
     }

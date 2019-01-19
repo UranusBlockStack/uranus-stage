@@ -63,10 +63,10 @@
                     <i class="iconfont icon-menu" style="color:#ffffff;"></i>
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>
+                    <!-- <el-dropdown-item>
                       {{$t('buyer.myResource.renewal')}}
                       <i class="el-icon-arrow-right"></i>
-                    </el-dropdown-item>
+                    </el-dropdown-item> -->
                     <el-dropdown-item>
                       <p @click="$router.push({path: '/resourcepool/' + pool.id})">
                         {{$t('buyer.myResource.detail')}}

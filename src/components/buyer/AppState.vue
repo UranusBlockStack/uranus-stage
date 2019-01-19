@@ -3,12 +3,12 @@
     <el-row class="recordHead">
       <el-col class="title" :span="20">
         <h1 @click="$router.back(-1)">
-          <i class="iconfont icon-zhongmingming"></i> Imagepuler
+          <i class="iconfont"></i> Imagepuler
         </h1>
       </el-col>
-      <el-col :span="4">
+      <!-- <el-col :span="4">
         <p>{{$t('buyer.appState.rename')}}</p>
-      </el-col>
+      </el-col> -->
     </el-row>
     <el-row class="recordBox">
       <el-col :span="24">
@@ -17,11 +17,13 @@
           border
           style="width: 100%"
           @row-click="$router.push({path: '/statedetail'})"
-        >
+        ><template slot="empty">
+          <p class="empty-text">No Dtata</p>
+        </template>
           <el-table-column prop="1" :label="$t('buyer.appState.status')">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
-                <i class="iconfont icon-state"></i>
+                <i class="iconfont icon-table-state"></i>
                 {{$t('buyer.appState.status')}}
               </p>
             </template>
@@ -29,7 +31,7 @@
           <el-table-column prop="2" :label="$t('buyer.appState.name')">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
-                <i class="iconfont icon-hash"></i>
+                <i class="iconfont icon-table-name"></i>
                 {{$t('buyer.appState.name')}}
               </p>
             </template>
@@ -37,7 +39,7 @@
           <el-table-column width="320">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
-                <i class="iconfont icon-hash"></i>
+                <i class="iconfont icon-table-image"></i>
                 {{$t('buyer.appState.image')}}
               </p>
             </template>
@@ -49,7 +51,7 @@
           <el-table-column prop="4" :label="$t('buyer.appState.pod')">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
-                <i class="iconfont icon-hash"></i>
+                <i class="iconfont icon-table-scale"></i>
                 {{$t('buyer.appState.pod')}}
               </p>
             </template>

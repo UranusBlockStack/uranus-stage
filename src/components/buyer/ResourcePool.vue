@@ -2,7 +2,7 @@
   <section class="resourcePool">
     <el-row class="poolHead">
       <el-col class="title" :span="12">
-        <h1><i class="iconfont icon-host1"></i>{{$t('menu.myResource')}}</h1>
+        <h1><i class="iconfont icon-resource"></i>{{$t('menu.myResource')}}</h1>
       </el-col>
     </el-row>
     <el-row class="poolBox">

@@ -97,19 +97,19 @@
         <ul class="treeview-menu">
           <li>
             <router-link :to="{path: '/colony'}">
-              <i class="iconfont icon-colony"></i>
+              <i class="iconfont icon-cluster"></i>
               {{$t('menu.myColony1')}}
             </router-link>
           </li>
           <li>
             <router-link :to="{path: '/colony'}">
-              <i class="iconfont icon-colony"></i>
+              <i class="iconfont icon-cluster"></i>
               {{$t('menu.myColony2')}}
             </router-link>
           </li>
           <li>
             <router-link :to="{path: '/colony'}">
-              <i class="iconfont icon-colony"></i>
+              <i class="iconfont icon-cluster"></i>
               {{$t('menu.myColony3')}}
             </router-link>
           </li>
