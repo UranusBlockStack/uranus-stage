@@ -23,7 +23,8 @@ export default new Vuex.Store({
       2: 'buyer',
       3: 'developer'
     },
-    curRole: ''
+    curRole: '',
+    defaultPageSize: 20
   },
   getters: {
     lang: state => {
@@ -36,9 +37,6 @@ export default new Vuex.Store({
     },
     setLang(state, lang) {
       state.curLang = lang
-    },
-    setRole(state, role) {
-      state.curRole = role
     }
   },
   actions: {
@@ -47,9 +45,6 @@ export default new Vuex.Store({
     },
     setLang(context, lang) {
       context.commit('setLang', lang)
-    },
-    setRole(context, role) {
-      context.commit('setRole', role)
     }
   }
 })

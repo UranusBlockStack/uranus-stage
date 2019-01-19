@@ -90,6 +90,17 @@ export function getCurRole() {
   const curUserState = localStorage.getItem('currentUserStatus')
   return JSON.parse(curUserState).loginRole
 }
+
+export function getCurUserName() {
+    const curUserState = localStorage.getItem('currentUserStatus')
+    return JSON.parse(curUserState).userName
+}
+
+export function getCurUserId() {
+    const curUserState = localStorage.getItem('currentUserStatus')
+    return JSON.parse(curUserState).userId
+}
+
 export function getUsername () {
   const token = decodeToken()
   if (!token) {

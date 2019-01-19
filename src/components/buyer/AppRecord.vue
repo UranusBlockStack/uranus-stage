@@ -200,7 +200,10 @@ export default {
           menu: this.$t('buyer.appRepository.deployPage.appHash'),
           value: '0X16546167451sd54f6a5s1dfa68ds4'
         }
-      ]
+      ],
+      currentPage: 1,
+      pageSize: this.$store.state.defaultPageSize,
+      totalRecords: 0
     }
   },
   methods: {
@@ -214,21 +217,19 @@ export default {
         sortDesc: true
       }
       app.appInstanceSearch(auth.getCurLang(), queryData).then(appList => {
-        console.log('dep applist', appList.data.data.records)
         this.tableData = appList.data.data.records
+        this.tableData.map(row => {
+          row.createTime = moment(row.createTime).format('YYYY-MM-DD hh:mm')
+        })
       })
     },
     fillDetailData(data) {
       this.tableData1[0].value = data.orderNo
       this.tableData1[1].value = data.orderStatus
-      this.tableData1[2].value = moment(data.createTime).format(
-        'YYYY-MM-DD hh:mm'
-      )
+      this.tableData1[2].value = moment(data.createTime).format('YYYY-MM-DD hh:mm')
       this.tableData1[3].value = data.orderStatus
       this.tableData1[4].value = data.catalog
-      this.tableData1[5].value = moment(data.updateTime).format(
-        'YYYY-MM-DD hh:mm'
-      )
+      this.tableData1[5].value = moment(data.updateTime).format('YYYY-MM-DD hh:mm')
       this.tableData1[6].value = data.projectName
       this.tableData1[7].value = data.orderAmount
       this.tableData1[8].value = data.free
@@ -237,7 +238,6 @@ export default {
       this.tableData1[11].value = data.orderHash
     },
     deployDetail(rowdata) {
-      console.log(rowdata)
       this.fillDetailData(rowdata)
       this.dialogVisible = true
     },

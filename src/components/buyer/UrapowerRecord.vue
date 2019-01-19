@@ -47,7 +47,7 @@
             :placeholder="$t('buyer.appRepository.deployPage.searchIn')"
             prefix-icon="el-icon-search" v-model="appName"
           ></el-input>
-          <el-button type="success">
+          <el-button type="success" @click="searchUra">
             <i class="iconfont icon-search"></i>
           </el-button>
         </el-col>
@@ -61,7 +61,10 @@
         </el-dialog>
       </el-col>
       <el-col :span="24">
-        <el-table :data="tableData" border style="width: 100%" @row-click="dialogVisible = true">
+        <el-table :data="tableData" border style="width: 100%">
+            <template slot="empty">
+                <p class="empty-text">No Data</p >
+            </template>
           <el-table-column prop="orderNo" :label="$t('buyer.appRepository.deployPage.number')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
@@ -113,7 +116,14 @@
         </el-table>
       </el-col>
       <el-col :span="6" :offset="15" class="transaction-foot">
-        <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
+        <el-pagination
+                layout="prev, pager, next"
+                :current-page.sync="currentPage"
+                :page-size="pageSize"
+                :total="totalRecords"
+                @current-change="handleCurrentChange">
+
+        </el-pagination>
       </el-col>
     </el-row>
   </section>
@@ -154,8 +164,7 @@ export default {
         }
       ],
       dialogVisible: false,
-      tableData: [
-      ],
+      tableData: [],
       tableData1: [
         {
           menu: this.$t('buyer.appRepository.deployPage.number'),
@@ -205,24 +214,43 @@ export default {
           menu: this.$t('buyer.appRepository.deployPage.appHash'),
           value: '0X16546167451sd54f6a5s1dfa68ds4'
         }
-      ]
+      ],
+      currentPage: 1,
+      pageSize: this.$store.state.defaultPageSize,
+      totalRecords: 0
     }
   },
   methods: {
     getUraPowerPoolList() {
       const queryData = {
         name: this.appName,
-        page: 0,
-        pageSize: 0,
+        page: this.currentPage,
+        pageSize: this.pageSize,
         projectId: 0,
         sort: 'string',
         sortDesc: true,
         prodType: 'UraPower'
       }
+      console.log(queryData)
       order.orderSearch(auth.getCurLang(), queryData).then(appList => {
-        console.log('urapower list', appList.data.data.records)
         this.tableData = appList.data.data.records
+        this.totalRecords = appList.data.data.total
+
+        this.tableData.map(row => {
+          row.beginTime = moment(row.beginTime).format('YYYY-MM-DD hh:mm')
+        })
       })
+    },
+    deployDetail(rowdata) {
+      this.fillDetailData(rowdata)
+      this.dialogVisible = true
+    },
+    searchUra() {
+      this.getUraPowerPoolList()
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.getUraPowerPoolList()
     }
   },
   created() {
@@ -256,7 +284,6 @@ export default {
     }
   }
   .recordBox {
-    height: 630px;
     min-width: 1130px;
     margin: 10px;
     background: #ffffff;
