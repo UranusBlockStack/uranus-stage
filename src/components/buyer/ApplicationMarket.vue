@@ -11,7 +11,11 @@
     <div class="shop">
       <el-row>
         <el-col :span="4">
-          <el-select v-model="appType" :placeholder="$t('buyer.appMarket.application')" @change="setAppType">
+          <el-select
+            v-model="appType"
+            :placeholder="$t('buyer.appMarket.application')"
+            @change="setAppType"
+          >
             <el-option
               v-for="item in options1"
               :key="item.value"
@@ -31,7 +35,11 @@
           </el-select>
         </el-col>
         <el-col :span="6" :offset="7">
-          <el-input :placeholder="$t('buyer.appMarket.searchIn')" v-model="searchName" prefix-icon="el-icon-search"></el-input>
+          <el-input
+            :placeholder="$t('buyer.appMarket.searchIn')"
+            v-model="searchName"
+            prefix-icon="el-icon-search"
+          ></el-input>
         </el-col>
         <el-col :span="2">
           <el-button style="margin-left:10px;" type="success" @click="searchApps">
@@ -52,9 +60,9 @@
                 <p class="detail">{{app.description}}</p>
                 <el-row :gutter="20">
                   <el-col :span="6" :offset="2">
-                    <p class="free">{{app.computedPrice}} </p>
+                    <p class="free">{{app.computedPrice}}</p>
                   </el-col>
-                  <el-col :span="10" :offset="6">
+                  <el-col :span="11" :offset="5">
                     <p class="downloads">{{$t('buyer.appMarket.download')}} {{app.downloadTimes}}</p>
                   </el-col>
                   <a @click.prevent="deployApp(app.id, app.rid, app.defaultVersion, app.catalog)">
@@ -79,45 +87,43 @@
 </template>
 
 <script>
-import * as app from '../../services/RancherService'
-import * as auth from '../../services/AuthService'
+import * as app from "../../services/RancherService";
+import * as auth from "../../services/AuthService";
 
 export default {
-  name: 'ApplicationMarket',
+  name: "ApplicationMarket",
   data() {
     return {
       options1: [
         {
           value: 1,
-          label: 'Free'
+          label: "Free"
         },
         {
           value: 2,
-          label: 'Paid'
+          label: "Paid"
         },
-        {value: 0,
-          label: 'All'
-        }
+        { value: 0, label: "All" }
       ],
       options2: [
         {
-          value: 'library',
-          label: 'library'
+          value: "library",
+          label: "library"
         }
       ],
-      value1: '',
-      value2: '',
+      value1: "",
+      value2: "",
       appList: [],
       imageServerUrl: this.$store.state.imageServerUrl,
-      appType: 'All',
+      appType: "All",
       appTypeSelected: 0,
-      catalogRid: 'library',
-      searchName: '',
+      catalogRid: "library",
+      searchName: "",
       page: 1,
       pageSize: 8,
-      sort: 'download_times',
-      sortDesc: 'true'
-    }
+      sort: "download_times",
+      sortDesc: "true"
+    };
   },
   methods: {
     // to do 分页的实现
@@ -129,53 +135,59 @@ export default {
         pageSize: this.pageSize,
         // 'sort': this.sort,
         sortDesc: this.sortDesc
-      }
+      };
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
-        this.appList = respData.data.data.records
+        this.appList = respData.data.data.records;
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
-          appitem.computedPrice = appitem.free? this.$t('buyer.deploy.free'):appitem.price
-          return appitem
-        })
-      })
+          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon";
+          appitem.computedPrice = appitem.free
+            ? this.$t("buyer.deploy.free")
+            : appitem.price;
+          return appitem;
+        });
+      });
     },
     deployApp(appId, appRid, versionId, catalog) {
       this.$router.push({
-        path: '/deployment',
+        path: "/deployment",
         query: {
           appId: appId,
           appRid: appRid,
           versionId: versionId,
           catalog: catalog
         }
-      })
+      });
     },
     searchApps() {
-      this.getAppList()
+      this.getAppList();
     },
     setAppType(select) {
-      this.appTypeSelected = select
+      this.appTypeSelected = select;
     }
   },
   created() {
-    this.getAppList()
+    this.getAppList();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .appMarket {
-  background: #f2f2f2;
-  min-width: 1160px;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
+  min-width: 1130px;
   .marketHead {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
+    margin: 10px 10px 0;
     height: 50px;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #252525;
+        color: #ffffff;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -188,19 +200,50 @@ export default {
     }
   }
   .shop {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     min-width: 1130px;
     margin: 10px;
     padding: 15px;
     .el-button {
-      background: #8eb357;
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 #2463ff;
+      border-radius: 3px;
       border: none;
+    }
+    .el-select /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-input /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-prev{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-next{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li.active{
+        color: #409eff;
     }
     p {
       height: 40px;
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #252525;
+      color: #ffffff;
       line-height: 24px;
       text-align: left;
     }
@@ -209,12 +252,17 @@ export default {
       min-width: 1130px;
       margin-top: 15px;
       min-height: 400px;
+      .el-card {
+        background: rgba(101, 143, 247, 0);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
       .resources {
         text-align: center;
         padding: 20px;
         div {
           cursor: default;
           .shops {
+            font-size: 14px;
             height: 30px;
             margin-bottom: -10px;
             text-align: right;
@@ -239,8 +287,8 @@ export default {
             padding: 5px 0 10px;
             border-bottom: 1px solid #eee;
             font-family: Source-Sans-Pro-Bold;
-            font-size: 20px;
-            color: #251e1c;
+            font-size: 16px;
+            color: #ffffff;
             text-align: center;
             line-height: 24px;
           }
@@ -250,7 +298,7 @@ export default {
             overflow: hidden;
             box-sizing: content-box;
             font-size: 14px;
-            color: rgba(0, 0, 0, 0.45);
+            color: #ffffff;
             text-align: center;
             line-height: 22px;
             margin: 10px auto;
@@ -259,7 +307,7 @@ export default {
             font-weight: 600;
             padding: 10px 0;
             font-size: 14px;
-            color: #1890ff;
+            color: #8eb357;
             letter-spacing: 0;
             line-height: 22px;
             text-align: left;
@@ -267,14 +315,13 @@ export default {
           .downloads {
             font-size: 14px;
             padding: 10px 0;
-            color: #5d5d5d;
+            color: #ffffff;
             letter-spacing: 0;
             text-align: center;
             line-height: 22px;
             height: 22px;
           }
           .el-button {
-            background: #8eb357;
             border: none;
             margin-top: 10px;
             margin-right: 75px;

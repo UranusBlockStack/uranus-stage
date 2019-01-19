@@ -8,7 +8,6 @@
       :visible.sync="outerVisible"
       width="800px"
     >
-      <TimeOver style="margin-left: 250px;"/>
       <el-table :data="gridData">
         <el-table-column property="order" :label="$t('buyer.resourceMarket.orderNumber')"></el-table-column>
         <el-table-column property="address" :label="$t('buyer.resourceMarket.address')"></el-table-column>
@@ -47,6 +46,7 @@
           >{{$t('buyer.resourceMarket.button2')}}</el-button>
         </div>
       </el-dialog>
+      <TimeOver style="margin-left: 250px;"/>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false">{{$t('buyer.resourceMarket.button1')}}</el-button>
         <el-button
@@ -309,7 +309,8 @@ export default {
 
 <style lang="scss" scoped>
 .resourceMarket {
-  background: #f2f2f2;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   min-width: 1130px;
   .el-dialog {
     .code {
@@ -338,13 +339,16 @@ export default {
     }
   }
   .resourceHead {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
+    margin: 10px 10px 0;
     height: 50px;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #252525;
+        color: #ffffff;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -357,22 +361,50 @@ export default {
     }
   }
   .resourceBox {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
     border-radius: 2px;
     height: 560px;
     margin: 10px;
     .title {
-      background: #fafafa;
       border-radius: 4px 4px 0 0;
       height: 54px;
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: rgba(0, 0, 0, 0.65);
+        color: #ffffff;
         text-align: left;
         line-height: 24px;
         padding-left: 30px;
       }
+    }
+    .el-button {
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 #2463ff;
+      border-radius: 3px;
+      border: none;
+    }
+    .el-select /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-input /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-input__inner /deep/ input{
+      background: rgba(36, 99, 255, 0);
+      color: #ffffff;
     }
     .margin-top {
       margin-top: 33px;
@@ -384,7 +416,6 @@ export default {
       .el-button {
         margin-top: 35px;
         border: none;
-        background: #8eb357;
       }
     }
   }
