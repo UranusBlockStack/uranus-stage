@@ -59,6 +59,11 @@ export function hostModify (lang, id, newClusterInfo) {
   return httpLang(lang).put(`/rancher/hosts/${id}`, newClusterInfo)
 }
 
+//获取集群下的所有主机
+export function clusterHosts (lang, id) {
+    return httpLang(lang).get(`/rancher/clusters/${id}/hosts`)
+}
+
 /** Rancher - RancherServer Service ***/
 export function rancherAdd (lang, rancherInfo) {
   return httpLang(lang).post('/rancher/rancher_servers', rancherInfo)
