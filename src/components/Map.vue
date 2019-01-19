@@ -214,7 +214,7 @@ export default {
       return this.TranscationData
     },
     refushBlockData() {
-      setInterval(() => {
+      this.timer = setInterval(() => {
         this.lastedBlock()
       }, 5000)
     }
@@ -225,6 +225,11 @@ export default {
   created() {
     this.lastedBlock()
     this.refushBlockData()
+  },
+  beforeDestroy() {
+    if (this.timer) {
+      clearInterval(this.timer)
+    }
   }
 }
 </script>
