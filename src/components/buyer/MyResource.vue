@@ -51,6 +51,7 @@
                 <Ball :chartData="62"/>
               </el-col>
               <el-col :span="12">
+                  <h3>Pool: </h3>
                 <h3>{{$t('buyer.myResource.number')}} {{pool.appCount}}</h3>
                 <div class="timeText">
                   <p>{{$t('buyer.myResource.countdownTime')}}</p>
@@ -484,7 +485,7 @@ export default {
         color: #ffffff;
         line-height: 24px;
         text-align: left;
-        margin-top: 40px;
+        margin-top: 10px;
       }
       p {
         font-family: Source-Sans-Pro-Bold;
