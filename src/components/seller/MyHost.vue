@@ -2,23 +2,25 @@
   <section class="myHost">
     <!-- Confirmation Information Bullet Box -->
     <el-dialog :title="$t('seller.host.chooseGroup')" :visible.sync="dialogVisible" width="550px">
-      <el-form :model="form">
+      <el-form>
         <el-radio v-model="groupJoin" :label="$t('seller.host.newGroup')"></el-radio>
         <el-form-item>
-          <el-input v-model="form.name" autocomplete="off" :placeholder="$t('seller.host.nameGroup')" style="width: 515px">
+          <el-input  autocomplete="off" :placeholder="$t('seller.host.nameGroup')" style="width: 515px">
           </el-input>
-           <el-select style="width: 515px; margin-top:15px;" v-model="form.region" :placeholder="$t('seller.host.region')">
-            <el-option :label="$t('seller.host.asia')" value="A"></el-option>
-            <el-option :label="$t('seller.host.europe')" value="B"></el-option>
-            <el-option :label="$t('seller.host.africa')" value="C"></el-option>
-            <el-option :label="$t('seller.host.south')" value="D"></el-option>
-            <el-option :label="$t('seller.host.north')" value="E"></el-option>
-            <el-option :label="$t('seller.host.oceania')" value="F"></el-option>
+
+          <el-select style="width: 515px; margin-top:15px;" v-model="rancherId" :placeholder="$t('seller.host.region')">
+            <template v-if="language== 'zh-cn' ">
+              <el-option v-for="(item, index) in rancherLists" :key="index"   :label="item.region" :value="item.id"></el-option>
+            </template>
+            <template v-else>
+              <el-option v-for="(item, index) in rancherLists" :key="index"   :label="item.regionEnUs"  :value="item.id"></el-option>
+            </template>
           </el-select>
+
         </el-form-item>
         <el-radio v-model="groupJoin" :label="$t('seller.host.joinGroup')"></el-radio>
         <el-form-item>
-          <el-select style="width: 515px" v-model="form.cluster" :placeholder="$t('seller.host.existingGroup')">
+          <el-select style="width: 515px"  :placeholder="$t('seller.host.existingGroup')">
             <el-option label="Cluster A" value="A"></el-option>
             <el-option label="Cluster B" value="B"></el-option>
           </el-select>
@@ -26,7 +28,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{$t('seller.host.cancel')}}</el-button>
-        <el-button type="primary" @click="dialogVisible = false">{{$t('seller.host.confirm')}}</el-button>
+        <el-button type="primary" @click="dialogVisible = false,addHostToCluster()">{{$t('seller.host.confirm')}}</el-button>
       </span>
     </el-dialog>
 
@@ -44,9 +46,10 @@
         </template>
         <el-table-column width="50">
           <template slot-scope="scope">
-            <div :class="scope.row.state == 'Offline' ? 'on' : 'off'"></div>
+            <div :class="scope.row.state == 'Offline' ? 'off' : 'on'"></div>
           </template>
         </el-table-column>
+
         <el-table-column min-width="120">
             <!--主机名称 name-->
           <template slot="header" slot-scope="scope">
@@ -149,7 +152,7 @@
           <template slot-scope="scope">
             <p style="margin-left: 30px; text-align: center;">
               <span v-show="scope.row.colony != $t('seller.host.group') + ' B'">{{scope.row.clusterName}}</span>
-              <el-button style="margin-left: 10px;" @click="dialogVisible = true" v-show="scope.row.colony == $t('seller.host.group') + ' B'">
+              <el-button style="margin-left: 10px;" @click="dialogVisible = true" v-show="scope.row.clusterId ==''||scope.row.clusterId ==null">
                 join
               </el-button>
             </p>
@@ -162,28 +165,44 @@
 
 <script>
     import * as rancher from '../../services/RancherService'
+    import * as auth from "../../services/AuthService";
 
 export default {
     name: "MyHost",
     data() {
         return {
           dialogVisible: false,
-          form: {
-            name: '',
-            region: '',
-            cluster: '',
-          },
           groupJoin: this.$t('seller.host.newGroup'),
           state: "",
           group: "",
-            tableData:[]
+            tableData:[],
+            rancherLists:[],
+            language:'en-us',
+            rancherId: '',
+            clusterName:''
         };
     },
     methods: {
         getHostList(){
             rancher.hostList(this.$store.getters.lang).then(data=>{
-                console.log("结果是：",data)
+                console.log("hostList：",data)
                 this.tableData=data.data.data.records
+            })
+        },
+        rancherList(){
+            rancher.rancherList().then(data=>{
+                console.log("rancherList：",data)
+                this.rancherLists=data.data.data
+            })
+        },
+        addHostToCluster(){
+            alert(this.rancherId)
+            var param={
+                "name": "",
+                "rancherId": this.rancherId
+            }
+            rancher.clusterAdd(this.language,param).then(data=>{
+
             })
         }
 
@@ -199,6 +218,8 @@ export default {
     },
     mounted() {
         this.getHostList()
+        this.rancherList()
+        this.language=auth.getCurLang()
     }
 };
 </script>

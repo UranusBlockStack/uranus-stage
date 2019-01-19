@@ -33,6 +33,11 @@ export function clusterRegistCluster (lang, rid) {
   return httpLang(lang).get(`/rancher/clusters/${rid}`)
 }
 
+//获取集群下的所有主机
+export function clusterHosts (lang, id) {
+    return httpLang(lang).get(`/rancher/clusters/${id}/hosts`)
+}
+
 
 
 /** Rancher - Host Service ***/

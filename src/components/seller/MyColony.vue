@@ -15,11 +15,7 @@
     </el-row>
 
     <!-- Setting Information Bullet Box -->
-    <el-dialog
-      :title="$t('seller.groups.settingTitle')"
-      :visible.sync="dialogVisible"
-      width="650px"
-    >
+    <el-dialog :title="$t('seller.groups.settingTitle')" :visible.sync="dialogVisible" width="650px">
       <span>
         <el-form ref="form" :model="form" label-width="100px">
           <el-form-item :label="$t('seller.groups.settingName')">
@@ -31,12 +27,8 @@
           </el-form-item>
           <el-form-item :label="$t('seller.groups.settingTime')">
             <el-col :span="8">
-              <el-date-picker
-                type="date"
-                :placeholder="$t('seller.groups.startingTime')"
-                v-model="form.date1"
-                style="width: 100%;"
-              ></el-date-picker>
+              <el-date-picker type="date" :placeholder="$t('seller.groups.startingTime')" v-model="form.date1" style="width: 100%;">
+              </el-date-picker>
             </el-col>
             <el-col class="line" :span="1">
               <i class="el-icon-arrow-right"></i>
@@ -97,7 +89,7 @@
             <el-col :span="6">
               <router-link :to="{path: '/colony'}">
                 <Water :chartData="colony.value"/>
-                <h1>{{colony.colony}}</h1>
+                <h1>{{colony.colony}}名称</h1>
               </router-link>
             </el-col>
             <el-col class="padding-top" :span="15">

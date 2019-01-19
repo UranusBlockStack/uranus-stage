@@ -126,10 +126,12 @@
         </template>
         <el-table-column width="70">
           <template slot-scope="scope">
-            <div :class="scope.row.state == 'Offline' ? 'on' : 'off'"></div>
+            <div :class="scope.row.state == 'Offline' ? 'off' : 'on'"></div>
           </template>
         </el-table-column>
-        <el-table-column width="150" prop="number">
+
+        <!--主机名称-->
+        <el-table-column width="150" prop="name">
           <template slot="header" slot-scope="scope">
             <p class="table-head" style="text-align: left;">
               <i class="iconfont icon-resource-market"></i>
@@ -137,6 +139,7 @@
             </p>
           </template>
         </el-table-column>
+        <!--cpu-->
         <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
@@ -144,13 +147,18 @@
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.cpu }}{{$t('seller.host.usable')}}</p>
-            <el-progress :percentage="50" :stroke-width="18" :text-inside="true" style="margin-left:35px;"></el-progress>
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              <!--已用核数-->
+              {{ scope.row.cpuKernelUsed }}{{$t('seller.host.usable')}}
+            </p>
+            <el-progress :percentage="getPercentNumber(scope.row.cpuKernelUsed,scope.row.cpuKernel)" :stroke-width="18" :text-inside="true" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{ scope.row.cpuKernel }}{{$t('seller.host.have')}}
+              <!--总核数-->
+            </p>
           </template>
         </el-table-column>
+        <!--内存-->
         <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
@@ -159,13 +167,14 @@
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.memory }}{{$t('seller.host.usable')}}</p>
-            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{ scope.row.memUsed}}{{$t('seller.host.usable')}}
+            </p>
+            <el-progress :percentage="getPercentNumber(scope.row.memUsed,scope.row.mem)" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{ scope.row.mem}}{{$t('seller.host.have')}}</p>
           </template>
         </el-table-column>
+        <!--硬盘-->
         <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
@@ -174,13 +183,14 @@
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.disk }}{{$t('seller.host.usable')}}</p>
-            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{ scope.row.diskUsed }}{{$t('seller.host.usable')}}
+            </p>
+            <el-progress :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{ scope.row.disk }}{{$t('seller.host.have')}}</p>
           </template>
         </el-table-column>
+        <!--宽带(M)-->
         <el-table-column width="180">
           <template slot="header" slot-scope="scope">
             <p class="table-head">
@@ -189,19 +199,17 @@
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.network }}{{$t('seller.host.usable')}}</p>
-            <el-progress :percentage="50" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{$t('seller.host.have')}}4核</p>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{ scope.row.networkUsed }}{{$t('seller.host.usable')}}
+            </p>
+            <el-progress :percentage="getPercentNumber(scope.row.networkUsed,scope.row.network)" :stroke-width="18" :show-text="false" style="margin-left:35px;"></el-progress>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{ scope.row.networkUsed }}{{$t('seller.host.have')}}</p>
           </template>
         </el-table-column>
+        <!--删除-->
         <el-table-column>
             <template slot-scope="scope">
-              <p
-                style="color: #8eb357; text-align:center;"
-                @click="outerVisible = true"
-              >{{$t('seller.group.deleteHost')}}</p>
+              <p style="color: #8eb357; text-align:center;" @click="deleteHost(scope.row.id)">{{$t('seller.group.deleteHost')}}</p>
             </template>
           </el-table-column>
       </el-table>
@@ -211,7 +219,9 @@
 </template>
 
 <script>
-import Water from "@/components/modules/Water"
+    import * as rancher from '../../services/RancherService'
+    import * as auth from "../../services/AuthService";
+    import Water from "@/components/modules/Water"
 
 export default {
   name: "ResourcePool",
@@ -220,53 +230,7 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          state: this.$t("seller.host.online"),
-          number: this.$t("seller.host.hosts") + " A",
-          cpu: "2核",
-          memory: "2G",
-          disk: "1T",
-          network: "2M",
-          colony: this.$t("seller.host.group") + " A"
-        },
-        {
-          state: this.$t("seller.host.offline"),
-          number: this.$t("seller.host.hosts") + " A",
-          cpu: "1核",
-          memory: "2G",
-          disk: "1T",
-          network: "2M",
-          colony: this.$t("seller.host.group") + " C"
-        },
-        {
-          state: this.$t("seller.host.online"),
-          number: this.$t("seller.host.hosts") + " C",
-          cpu: "3核",
-          memory: "2G",
-          disk: "1T",
-          network: "2M",
-          colony: this.$t("seller.host.group") + " D"
-        },
-        {
-          state: this.$t("seller.host.offline"),
-          number: this.$t("seller.host.hosts") + " D",
-          cpu: "1核",
-          memory: "2G",
-          disk: "1T",
-          network: "2M",
-          colony: this.$t("seller.host.group") + " B"
-        },
-        {
-          state: this.$t("seller.host.online"),
-          number: this.$t("seller.host.hosts") + " E",
-          cpu: "2核",
-          memory: "2G",
-          disk: "2T",
-          network: "2M",
-          colony: this.$t("seller.host.group") + " B"
-        }
-      ],
+        tableData:[],
       dialogVisible: false,
       form: {
         name: "",
@@ -281,6 +245,24 @@ export default {
     };
   },
   methods: {
+
+      getHosts(){
+          //获取集群下的所有主机
+          rancher.clusterHosts(auth.getCurLang(),2).then(data=>{
+              console.log(data)
+              this.tableData=data.data.data.records
+          })
+      },
+
+      deleteHost(id){
+        //删除主机
+          rancher.hostDelete(auth.getCurLang()).then(data=>{
+              console.log(data)
+              //删除逻辑
+              this.outerVisible = true
+          })
+
+      },
     filterState(value, row) {
       return row.state === value;
     },
@@ -465,8 +447,18 @@ export default {
       };
     }
   },
+    computed:{
+        getPercentNumber(){
+            //计算百分比 a/b
+            return function(a,b){
+                var n=Number(a/b*100).toFixed(2)
+                return Number(n)
+            }
+        }
+    },
   mounted() {
     this.initEchart();
+      this.getHosts()
   }
 };
 </script>
