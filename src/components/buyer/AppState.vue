@@ -57,9 +57,9 @@
           </el-table-column>
         </el-table>
       </el-col>
-      <el-col :span="8" :offset="16" class="transaction-foot">
-        <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
-      </el-col>
+      <!--<el-col :span="8" :offset="16" class="transaction-foot">-->
+        <!--<el-pagination layout="prev, pager, next" :total="100"></el-pagination>-->
+      <!--</el-col>-->
     </el-row>
   </section>
 </template>
@@ -70,30 +70,29 @@
 export default {
     name: 'AppRecord',
     data() {
-    return {
-      workLoadList: []
-    }
+      return {
+        workLoadList: [],
+      }
     },
     methods: {
       getWorkLoads() {
         apps.appInstanceWorkLoads(this.$store.getters.lang, this.$route.params.id)
-              .then(respData => {
-                let dataList = respData.data.data.records
-                dataList.forEach((item, index) => {
-                  let object = {}
-                  object['status'] = item.state
-                  object['name'] = item.name
-                  JSON.parse(item.containers).forEach((item1, index) => {
-                    if (item1.hasOwnProperty('environment')) {
-                      object['image'] = item1.image
-                    }
-                  })
-                  object['scale'] = item.scale
-                  this.workLoadList.push(object)
-                })
-              })
+           .then(respData => {
+             let dataList = respData.data.data.records
+             dataList.forEach((item, index) => {
+               let object = {}
+               object['status'] = item.state
+               object['name'] = item.name
+               JSON.parse(item.containers).forEach((item1, index) => {
+                 if (item1.hasOwnProperty('environment')) {
+                   object['image'] = item1.image
+                 }
+               })
+               object['scale'] = item.scale
+               this.workLoadList.push(object)
+             })
+           })
       }
-
     },
     created() {
       this.getWorkLoads()

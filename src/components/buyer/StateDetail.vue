@@ -67,9 +67,9 @@
           </el-table-column>
         </el-table>
       </el-col>
-      <el-col :span="8" :offset="16" class="transaction-foot">
-        <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
-      </el-col>
+      <!--<el-col :span="8" :offset="16" class="transaction-foot">-->
+        <!--<el-pagination layout="prev, pager, next" :total="100"></el-pagination>-->
+      <!--</el-col>-->
     </el-row>
   </section>
 </template>
