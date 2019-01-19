@@ -1,5 +1,5 @@
 
-import {httpLang, httpLang2} from './HttpService'
+import {httpLang} from './HttpService'
 
 import axios from 'axios'
 import * as auth from './AuthService'
@@ -117,11 +117,9 @@ export function apptListByProjectId (lang, projectId) {
 
 /** Rancher - App Instance Controller Service ***/
 export function appInstanceSearch (lang, queryData) {
-    // console.log(httpLang2)
   return httpLang(lang).post('/rancher/app_instances/search', queryData)
 }
 
 export function appInstanceWorkLoads (lang, appId) {
-    // console.log(httpLang2)
-    return httpLang2(lang).get(`/rancher/app_instances/${appId}/workloads`)
+    return httpLang(lang).get(`/rancher/app_instances/${appId}/workloads`)
 }

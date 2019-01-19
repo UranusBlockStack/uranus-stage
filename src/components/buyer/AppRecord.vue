@@ -109,7 +109,13 @@
         </el-table>
       </el-col>
       <el-col :span="8" :offset="16" class="transaction-foot">
-        <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
+        <el-pagination
+                layout="prev, pager, next"
+                :current-page.sync="currentPage"
+                :page-size="pageSize"
+                :total="totalRecords"
+                @current-change="handleCurrentChange" >
+        </el-pagination>
       </el-col>
     </el-row>
   </section>
@@ -210,14 +216,16 @@ export default {
     getAppDeployRecords() {
       const queryData = {
         name: this.appName,
-        page: 0,
-        pageSize: 0,
+        page: this.currentPage,
+        pageSize: this.pageSize,
         projectId: 0,
         sort: 'string',
         sortDesc: true
       }
       app.appInstanceSearch(auth.getCurLang(), queryData).then(appList => {
         this.tableData = appList.data.data.records
+        this.totalRecords = appList.data.data.total
+
         this.tableData.map(row => {
           row.createTime = moment(row.createTime).format('YYYY-MM-DD hh:mm')
         })
@@ -242,6 +250,10 @@ export default {
       this.dialogVisible = true
     },
     searchApp() {
+      this.getAppDeployRecords()
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
       this.getAppDeployRecords()
     }
   },

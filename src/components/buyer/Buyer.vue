@@ -43,10 +43,7 @@
                       <p class="downloads">{{$t('buyer.home.download')}} {{app.downloadTimes}}</p>
                     </el-col>
                     <a @click.prevent="deployApp(app.id, app.rid, app.defaultVersion, app.catalog)">
-                      <el-button
-                        type="success"
-                        style="margin-top: -10px;"
-                      >{{$t('buyer.home.details')}}</el-button>
+                      <el-button type="success">{{$t('buyer.home.details')}}</el-button>
                     </a>
                   </el-row>
                 </div>
@@ -115,21 +112,25 @@ export default {
         day: {
           x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
           y: [10, 20, 30, 40, 50, 60],
+          y2: [5, 10, 10, 15, 15, 15],
           line: [5, 10, 10, 15, 15, 15]
         },
         week: {
           x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
           y: [100, 200, 300, 400, 500, 600, 700],
+          y2: [50, 100, 300, 200, 300, 600, 400],
           line: [50, 100, 300, 200, 300, 600, 400]
         },
         mounth: {
           x: ["1", "5", "10", "15", "20", "25", "30"],
           y: [1000, 520, 200, 334, 390, 330, 220],
+          y2: [50, 100, 300, 200, 300, 600, 400],
           line: [50, 100, 300, 200, 300, 600, 400]
         },
         year: {
           x: ["1", "4", "7", "10", "12"],
           y: [10000, 520, 200, 334, 390],
+          y2: [5000, 100, 100, 200, 300],
           line: [5000, 100, 100, 200, 300]
         }
       },
@@ -215,10 +216,18 @@ export default {
             axisLine: {
               show: true,
               symbol: ["none", "arrow"],
-              symbolSize: [10, 20]
+              symbolSize: [10, 20],
+              lineStyle: {
+                color: "#ffffff"
+              }
             },
             axisTick: {
               alignWithLabel: true
+            },
+            axisLabel: {
+              textStyle: {
+                color: "#ffffff"
+              }
             }
           }
         ],
@@ -230,10 +239,16 @@ export default {
               show: true,
               symbol: ["none", "arrow"],
               symbolSize: [10, 20],
-              symbolOffset: [0, 15]
+              symbolOffset: [0, 15],
+              lineStyle: {
+                color: "#ffffff"
+              }
             },
             axisLabel: {
-              formatter: "{value}"
+              formatter: "{value}",
+              textStyle: {
+                color: "#ffffff"
+              }
             }
           }
         ],
@@ -241,11 +256,18 @@ export default {
           {
             name: this.$t("buyer.home.allPower"),
             type: "bar",
-            barWidth: "25%",
+            color: "#2463ff",
+            barWidth: "20%",
             data: myData.y
           },
           {
             name: this.$t("buyer.home.restPower"),
+            type: "bar",
+            color: "#51a906",
+            barWidth: "20%",
+            data: myData.y2
+          },
+          {
             type: "line",
             color: "#9bcc3d",
             data: myData.line
@@ -268,19 +290,19 @@ export default {
 
 <style lang="scss" scoped>
 .Buyer {
-  background: #f2f2f2;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   min-width: 1130px;
-  .el-button {
-    background: #8eb357;
-    border: none;
-  }
   .content-title {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     height: 50px;
+    margin: 10px 10px 0;
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #252525;
+      color: #ffffff;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -294,7 +316,9 @@ export default {
   .content {
     padding: 0;
     .shop {
-      background: #ffffff;
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+      border-radius: 2px;
       min-width: 1130px;
       margin: 10px;
       padding: 30px;
@@ -303,7 +327,7 @@ export default {
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
         font-size: 16px;
-        color: #252525;
+        color: #ffffff;
         line-height: 24px;
         text-align: left;
       }
@@ -318,12 +342,17 @@ export default {
         width: 100%;
         min-width: 1130px;
         min-height: 400px;
+        .el-card {
+          background: rgba(101, 143, 247, 0);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        }
         .resources {
           text-align: center;
           padding: 10px;
           div {
             cursor: pointer;
             .shops {
+              font-size: 14px;
               height: 30px;
               margin-bottom: -20px;
               text-align: right;
@@ -343,15 +372,14 @@ export default {
                 display: block;
               }
             }
-
             .name {
               font-weight: 600;
               padding: 5px 0 10px;
               border-bottom: 2px solid #eee;
               font-family: Source-Sans-Pro-Bold;
               font-weight: 500;
-              font-size: 20px;
-              color: #251e1c;
+              font-size: 16px;
+              color: #ffffff;
               text-align: center;
               line-height: 24px;
             }
@@ -362,7 +390,7 @@ export default {
               box-sizing: content-box;
               font-family: Source-Sans-Pro-Bold;
               font-size: 14px;
-              color: rgba(0, 0, 0, 0.45);
+              color: #ffffff;
               text-align: center;
               line-height: 22px;
               margin: 10px auto;
@@ -373,7 +401,7 @@ export default {
               font-family: Source-Sans-Pro-Bold;
               font-weight: 500;
               font-size: 14px;
-              color: #1890ff;
+              color: #81a028;
               letter-spacing: 0;
               line-height: 22px;
               text-align: left;
@@ -383,10 +411,17 @@ export default {
               font-weight: 500;
               font-size: 14px;
               padding: 10px 0;
-              color: #5d5d5d;
+              color: #ffffff;
               letter-spacing: 0;
               text-align: center;
               line-height: 22px;
+            }
+            .el-button {
+              background: rgba(101, 143, 247, 0);
+              box-shadow: inset 0 0 22px 0 #2463ff;
+              border-radius: 5px;
+              border: none;
+              margin-top: -10px;
             }
           }
         }
@@ -396,7 +431,9 @@ export default {
       padding: 15px;
       min-width: 1130px;
       height: 400px;
-      background: #ffffff;
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+      border-radius: 2px;
       margin: 10px;
       .powerTitle p {
         height: 40px;
@@ -404,12 +441,12 @@ export default {
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
         font-size: 16px;
-        color: #252525;
+        color: #ffffff;
         text-align: left;
       }
       .powerCon p {
         font-size: 14px;
-        color: rgba(0, 0, 0, 0.65);
+        color: #ffffff;
         line-height: 40px;
         text-align: left;
       }
@@ -436,6 +473,7 @@ export default {
       .choosePower {
         height: 40px;
         span {
+          color: #ffffff;
           z-index: 10;
           float: right;
           margin: 3px 10px;

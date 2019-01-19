@@ -1,10 +1,10 @@
 <template>
   <section>
     <p class="false" v-show="flag == false">
-      <b>{{minute}}</b>--<b>{{second}}</b>
+      <b>{{minute}}</b><i class="iconfont icon-watch"></i><b>{{second}}</b>
     </p>
     <p class="true" v-show="flag == true">
-      <b>0</b>--<b>0</b>
+      <b>0</b>:<b>0</b>
     </p>
   </section>
 </template>

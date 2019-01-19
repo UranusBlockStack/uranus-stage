@@ -24,7 +24,8 @@ export default new Vuex.Store({
       3: 'developer'
     },
     curRole: '',
-    defaultPageSize: 20
+    defaultPageSize: 20,
+    defaultCardPageSize: 20
   },
   getters: {
     lang: state => {

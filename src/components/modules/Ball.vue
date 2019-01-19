@@ -35,7 +35,7 @@ export default {
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["Pool",  this.chartData + "%",].join("\n"),
+                    formatter: [this.chartData + "%",].join("\n"),
                     position: "center",
                     textStyle: { align: "center", color: "#1890FF", fontSize: "20"}
                   }

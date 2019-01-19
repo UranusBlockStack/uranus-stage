@@ -86,7 +86,13 @@
       </el-row>
       <el-row>
         <el-col :span="8" :offset="16">
-          <el-pagination layout="prev, pager, next" :total="1000"></el-pagination>
+          <el-pagination
+                  layout="prev, pager, next"
+                  :current-page.sync="currentPage"
+                  :page-size="pageSize"
+                  :total="totalRecords"
+                  @current-change="handleCurrentChange">
+          </el-pagination>
         </el-col>
       </el-row>
     </div>
@@ -94,39 +100,42 @@
 </template>
 
 <script>
-import * as app from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
+import * as app from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
 
 export default {
-  name: "Applicationmarket",
+  name: 'Applicationmarket',
   data() {
     return {
-      letter: "123",
+      letter: '123',
       dialogVisible: false,
       imageServerUrl: this.$store.state.imageServerUrl,
       appList: [],
-      searchName: "",
-      page: 1,
-      pageSize: 8,
-      sort: "download_times",
-      sortDesc: "true"
+      searchName: '',
+      currentPage: 1,
+      pageSize: this.$store.state.defaultCardPageSize,
+      totalRecords: 0,
+      sort: 'download_times',
+      sortDesc: 'true'
     }
   },
   methods: {
     getAppList() {
       const queryData = {
         name: this.searchName,
-        page: this.page,
+        page: this.currentPage,
         pageSize: this.pageSize,
         sort: this.sort,
         sortDesc: this.sortDesc
       }
       app.appByUser(auth.getCurLang(), queryData).then(respData => {
-        this.appList = respData.data.data.records;
+        this.appList = respData.data.data.records
+        this.totalRecords = respData.data.data.total  
+
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon"
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
           appitem.computedPrice = appitem.free
-            ? this.$t("buyer.deploy.free")
+            ? this.$t('buyer.deploy.free')
             : appitem.price
           return appitem
         })
@@ -134,37 +143,45 @@ export default {
     },
     deployApp(appId, appRid, versionId, catalog) {
       this.$router.push({
-        path: "/deployment",
+        path: '/deployment',
         query: {
           appId: appId,
           appRid: appRid,
           versionId: versionId,
           catalog: catalog
         }
-      });
+      })
     },
     searchMyApp() {
+      this.getAppList()
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
       this.getAppList()
     }
   },
   created() {
     this.getAppList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
 .appRepository {
-  background: #f2f2f2;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   min-width: 1160px;
   .repositoryHead {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
+    margin: 10px 10px 0;
     height: 50px;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #252525;
+        color: #ffffff;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -192,19 +209,44 @@ export default {
     }
   }
   .shop {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     min-width: 1130px;
     margin: 10px;
     padding: 15px;
     .el-button {
-      background: #8eb357;
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 #2463ff;
+      border-radius: 3px;
       border: none;
+    }
+    .el-input /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-prev{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-next{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li.active{
+        color: #409eff;
     }
     p {
       height: 40px;
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #252525;
+      color: #ffffff;
       line-height: 24px;
       text-align: left;
     }
@@ -216,6 +258,10 @@ export default {
       .el-button {
         width: 120px;
       }
+      .el-card {
+          background: rgba(101, 143, 247, 0);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+        }
       .resources {
         text-align: center;
         padding: 20px;
@@ -250,8 +296,8 @@ export default {
             padding: 5px 0 10px;
             border-bottom: 2px solid #eee;
             font-family: Source-Sans-Pro-Bold;
-            font-size: 20px;
-            color: #251e1c;
+            font-size: 16px;
+            color: #ffffff;
             text-align: center;
             line-height: 24px;
           }
@@ -261,7 +307,7 @@ export default {
             overflow: hidden;
             box-sizing: content-box;
             font-size: 14px;
-            color: rgba(0, 0, 0, 0.45);
+            color: #ffffff;
             text-align: center;
             line-height: 22px;
             margin: 10px auto;
@@ -270,7 +316,7 @@ export default {
             font-weight: 600;
             padding: 10px 0;
             font-size: 14px;
-            color: #1890ff;
+            color: #81a028;
             letter-spacing: 0;
             line-height: 22px;
             text-align: left;
@@ -278,14 +324,14 @@ export default {
           .shops {
             font-size: 14px;
             padding: 10px 0;
-            color: #5d5d5d;
+            color: #ffffff;
             letter-spacing: 0;
             text-align: center;
             line-height: 22px;
           }
           .el-button {
-            background: #8eb357;
             border: none;
+            margin-top: -10px;
           }
         }
       }
