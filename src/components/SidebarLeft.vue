@@ -53,7 +53,7 @@
       </li>
       <li class="treeview" v-show="user== 'Buyer'">
         <router-link :to="{path: '/applicationrepository'}">
-          <i class="iconfont icon-My-application"></i>
+          <i class="iconfont icon-my-application"></i>
           <span>{{$t('menu.appRepository')}}</span>
         </router-link>
       </li>
@@ -65,16 +65,16 @@
       </li>
       <li class="treeview" v-show="user== 'Buyer'">
         <router-link :to="{path: '/myresource'}">
-          <i class="iconfont icon-my-resource"></i>
+          <i class="iconfont icon-resource"></i>
           <span>{{$t('menu.myResource')}}</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </router-link>
         <ul class="treeview-menu">
-          <li v-for="item in uraPowerList">
+          <li v-for="(item,index) in uraPowerList" :key="index">
             <router-link :to="{path: '/resourcepool/'+item.id}">
-              <i class="iconfont icon-host1"></i>
+              <i class="iconfont icon-resource"></i>
               {{item.projectName}}
             </router-link>
           </li>

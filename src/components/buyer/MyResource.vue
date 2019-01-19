@@ -3,7 +3,7 @@
     <el-row class="myResourceHead">
       <el-col class="title" :span="12">
         <h1>
-          <i class="iconfont icon-my-resource"></i>
+          <i class="iconfont icon-resource"></i>
           {{$t('menu.myResource')}}
         </h1>
       </el-col>
@@ -60,9 +60,9 @@
               <el-col :span="3" :offset="1">
                 <el-dropdown trigger="click" style="margin-top: 10px; margin-left: 20px;">
                   <span class="el-dropdown-link">
-                    <i class="iconfont icon-set" style="color:#ffffff;"></i>
+                    <i class="iconfont icon-menu" style="color:#ffffff;"></i>
                   </span>
-                  <el-dropdown-menu slot="dropdown"  style="background: rgba(101, 143, 247, 0);">
+                  <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>
                       {{$t('buyer.myResource.renewal')}}
                       <i class="el-icon-arrow-right"></i>
@@ -429,7 +429,6 @@ export default {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #0084FF;
-        background: #0084FF;
       }
     }
   }

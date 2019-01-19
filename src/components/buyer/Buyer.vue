@@ -30,19 +30,19 @@
               <div class="resources">
                 <div>
                   <p class="shops">{{$t('buyer.home.stores')}} {{app.catalog}}</p>
-                  <img :src='app.imageurl' alt="img">
+                  <div class="img-box">
+                    <img :src="app.imageurl" alt="img">
+                  </div>
                   <p class="name">{{app.name}}</p>
-                  <p
-                    class="detail"
-                  >{{app.description}}</p>
+                  <p class="detail">{{app.description}}</p>
                   <el-row :gutter="20">
                     <el-col :span="6" :offset="2">
-                      <p class="free">{{$t('buyer.home.free')}} </p>
+                      <p class="free">{{$t('buyer.home.free')}}</p>
                     </el-col>
                     <el-col :span="10" :offset="6">
                       <p class="downloads">{{$t('buyer.home.download')}} {{app.downloadTimes}}</p>
                     </el-col>
-                      <a @click.prevent="deployApp(app.id, app.rid, app.defaultVersion, app.catalog)">
+                    <a @click.prevent="deployApp(app.id, app.rid, app.defaultVersion, app.catalog)">
                       <el-button
                         type="success"
                         style="margin-top: -10px;"
@@ -101,34 +101,34 @@
 </template>
 
 <script>
-    import * as app from '../../services/RancherService'
-    import * as auth from '../../services/AuthService'
+import * as app from "../../services/RancherService";
+import * as auth from "../../services/AuthService";
 
 export default {
-  name: 'Buyer',
+  name: "Buyer",
   data() {
     return {
       page: 1,
       pageSize: 4,
-      indexPower: '',
+      indexPower: "",
       dataPower: {
         day: {
-          x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
+          x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
           y: [10, 20, 30, 40, 50, 60],
           line: [5, 10, 10, 15, 15, 15]
         },
         week: {
-          x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
           y: [100, 200, 300, 400, 500, 600, 700],
           line: [50, 100, 300, 200, 300, 600, 400]
         },
         mounth: {
-          x: ['1', '5', '10', '15', '20', '25', '30'],
+          x: ["1", "5", "10", "15", "20", "25", "30"],
           y: [1000, 520, 200, 334, 390, 330, 220],
           line: [50, 100, 300, 200, 300, 600, 400]
         },
         year: {
-          x: ['1', '4', '7', '10', '12'],
+          x: ["1", "4", "7", "10", "12"],
           y: [10000, 520, 200, 334, 390],
           line: [5000, 100, 100, 200, 300]
         }
@@ -136,84 +136,85 @@ export default {
       powerVal: {},
       appList: [],
       imageServerUrl: this.$store.state.imageServerUrl
-    }
+    };
   },
   methods: {
-
     getAppList() {
       const searchData = {
         page: this.page,
         pageSize: this.pageSize,
-              // 'sort': this.sort,
+        // 'sort': this.sort,
         sortDesc: this.sortDesc
-      }
+      };
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
-        this.appList = respData.data.data.records
+        this.appList = respData.data.data.records;
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
-          appitem.computedPrice = appitem.free? this.$t('buyer.deploy.free'):appitem.price
-          return appitem
-        })
-      })
+          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon";
+          appitem.computedPrice = appitem.free
+            ? this.$t("buyer.deploy.free")
+            : appitem.price;
+          return appitem;
+        });
+      });
     },
     deployApp(appId, appRid, versionId, catalog) {
       this.$router.push({
-        path: '/deployment',
+        path: "/deployment",
         query: {
           appId: appId,
           appRid: appRid,
           versionId: versionId,
           catalog: catalog
         }
-      })
+      });
     },
     powerDay(x) {
-      this.powerVal = this.dataPower.day
-      this.initEchart(this.powerVal)
-      this.indexPower = x
+      this.powerVal = this.dataPower.day;
+      this.initEchart(this.powerVal);
+      this.indexPower = x;
     },
     powerWeek(x) {
-      this.powerVal = this.dataPower.week
-      this.initEchart(this.powerVal)
-      this.indexPower = x
+      this.powerVal = this.dataPower.week;
+      this.initEchart(this.powerVal);
+      this.indexPower = x;
     },
     powerMounth(x) {
-      this.powerVal = this.dataPower.mounth
-      this.initEchart(this.powerVal)
-      this.indexPower = x
+      this.powerVal = this.dataPower.mounth;
+      this.initEchart(this.powerVal);
+      this.indexPower = x;
     },
     powerYear(x) {
-      this.powerVal = this.dataPower.year
-      this.initEchart(this.powerVal)
-      this.indexPower = x
+      this.powerVal = this.dataPower.year;
+      this.initEchart(this.powerVal);
+      this.indexPower = x;
     },
     initEchart(val) {
-      var myChart = this.$echarts.init(document.getElementById('myPower'))
-      var myData = val
+      var myChart = this.$echarts.init(document.getElementById("myPower"));
+      var myData = val;
       myChart.setOption({
-        color: ['#1890ff'],
+        color: ["#1890ff"],
         //  backgroundColor:'rgba(128, 128, 128, 0.1)', //rgba设置透明度0.1
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'line'
+            type: "line"
           }
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
           containLabel: true
         },
         xAxis: [
           {
-            name: this.$t('buyer.home.xName'),
-            type: 'category',
+            name: this.$t("buyer.home.xName"),
+            type: "category",
             data: myData.x,
             axisLine: {
               show: true,
-              symbol: ['none', 'arrow'],
+              symbol: ["none", "arrow"],
               symbolSize: [10, 20]
             },
             axisTick: {
@@ -223,46 +224,46 @@ export default {
         ],
         yAxis: [
           {
-            name: this.$t('buyer.home.yName') + ' (U)',
-            type: 'value',
+            name: this.$t("buyer.home.yName") + " (U)",
+            type: "value",
             axisLine: {
               show: true,
-              symbol: ['none', 'arrow'],
+              symbol: ["none", "arrow"],
               symbolSize: [10, 20],
               symbolOffset: [0, 15]
             },
             axisLabel: {
-              formatter: '{value}'
+              formatter: "{value}"
             }
           }
         ],
         series: [
           {
-            name: this.$t('buyer.home.allPower'),
-            type: 'bar',
-            barWidth: '25%',
+            name: this.$t("buyer.home.allPower"),
+            type: "bar",
+            barWidth: "25%",
             data: myData.y
           },
           {
-            name: this.$t('buyer.home.restPower'),
-            type: 'line',
-            color: '#9bcc3d',
+            name: this.$t("buyer.home.restPower"),
+            type: "line",
+            color: "#9bcc3d",
             data: myData.line
           }
         ]
-      })
+      });
       window.onresize = function() {
-        myChart.resize()
-      }
+        myChart.resize();
+      };
     }
   },
   mounted() {
-    this.powerDay(3)
+    this.powerDay(3);
   },
   created() {
-    this.getAppList()
+    this.getAppList();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -316,6 +317,7 @@ export default {
       .shopBox {
         width: 100%;
         min-width: 1130px;
+        min-height: 400px;
         .resources {
           text-align: center;
           padding: 10px;
@@ -326,11 +328,22 @@ export default {
               margin-bottom: -20px;
               text-align: right;
             }
-            img {
-              width: 110px;
-              height: 105px;
-              display: inline-block;
+            .img-box {
+              height: 110px;
+              width: 130px;
+              margin: 10px auto;
+              img {
+                min-width: 100px;
+                min-height: 80px;
+                max-width: 130px;
+                max-height: 110px;
+                width: auto;
+                height: auto;
+                margin: 0 auto;
+                display: block;
+              }
             }
+
             .name {
               font-weight: 600;
               padding: 5px 0 10px;
