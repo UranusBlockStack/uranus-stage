@@ -321,6 +321,13 @@ export default {
       return this.imageServerUrl + rid + '/icon'
     }
   },
+  beforeRouteUpdate(to, from, next) {
+      project.apptListByProjectId(this.$store.getters.lang, to.params.poolid)
+          .then(respData => {
+              this.appList = respData.data.data.records
+          })
+      next()
+  },
   mounted() {
     this.initEchart()
   },

@@ -73,7 +73,7 @@
         </router-link>
         <ul class="treeview-menu">
           <li v-for="(item,index) in uraPowerList" :key="index">
-            <router-link :to="{path: '/resourcepool/'+item.id}">
+            <router-link :to="{path: '/resourcepool/' + item.id + '/' + item.projectName}">
               <i class="iconfont icon-resource"></i>
               {{item.projectName}}
             </router-link>

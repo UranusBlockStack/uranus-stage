@@ -89,7 +89,7 @@ const routes = [
         component: MyResource,
         name: 'MyResource'
       }, {
-        path: '/resourcepool/:poolid/:poolname',
+        path: '/resourcepool/:poolid?/:poolname?',
         component: ResourcePool,
         name: 'ResourcePool'
       }, {

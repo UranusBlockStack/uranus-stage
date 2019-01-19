@@ -13,14 +13,14 @@
     <el-row class="recordBox">
       <el-col :span="24">
         <el-table
-          :data="tableData"
+          :data="workLoadList"
           border
           style="width: 100%"
           @row-click="$router.push({path: '/statedetail'})"
         ><template slot="empty">
           <p class="empty-text">No Dtata</p>
         </template>
-          <el-table-column prop="1" :label="$t('buyer.appState.status')">
+          <el-table-column prop="status" :label="$t('buyer.appState.status')">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
                 <i class="iconfont icon-table-state"></i>
@@ -28,7 +28,7 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column prop="2" :label="$t('buyer.appState.name')">
+          <el-table-column prop="name" :label="$t('buyer.appState.name')">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
                 <i class="iconfont icon-table-name"></i>
@@ -36,7 +36,7 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column width="320">
+          <el-table-column prop="image" width="320">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
                 <i class="iconfont icon-table-image"></i>
@@ -44,11 +44,10 @@
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.image[0] }}</p>
-              <p class="overflow">{{ scope.row.image[1] }}</p>
+              <p class="overflow">{{ scope.row.image }}</p>
             </template>
           </el-table-column>
-          <el-table-column prop="4" :label="$t('buyer.appState.pod')">
+          <el-table-column prop="scale" :label="$t('buyer.appState.pod')">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
                 <i class="iconfont icon-table-scale"></i>
@@ -66,42 +65,40 @@
 </template>
 
 <script>
+    import * as apps from '../../services/RancherService'
+
 export default {
-  name: "AppRecord",
-  data() {
+    name: 'AppRecord',
+    data() {
     return {
-      tableData: [
-        {
-          1: "on",
-          2: "wordpress-mdkyy-mariadb",
-          image: [
-            "docker.io/bitnami/mariadb.10.135-debian-9",
-            this.$t("buyer.appState.choosePod")
-          ],
-          4: "1"
-        },
-        {
-          1: "on",
-          2: "wordpress-mdkyy-mariadb",
-          image: [
-            "docker.io/bitnami/mariadb.10.135-debian-9",
-            this.$t("buyer.appState.choosePod")
-          ],
-          4: "1"
-        },
-        {
-          1: "on",
-          2: "wordpress-mdkyy-mariadb",
-          image: [
-            "docker.io/bitnami/mariadb.10.135-debian-9",
-            this.$t("buyer.appState.choosePod")
-          ],
-          4: "1"
-        }
-      ]
-    };
-  }
-};
+      workLoadList: []
+    }
+    },
+    methods: {
+      getWorkLoads() {
+        apps.appInstanceWorkLoads(this.$store.getters.lang, 6)
+              .then(respData => {
+                let dataList = respData.data.data.records
+                dataList.forEach((item, index) => {
+                  let object = {}
+                  object['status'] = item.state
+                  object['name'] = item.name
+                  JSON.parse(item.containers).forEach((item1, index) => {
+                    if (item1.hasOwnProperty('environment')) {
+                      object['image'] = item1.image
+                    }
+                  })
+                  object['scale'] = item.scale
+                  this.workLoadList.push(object)
+                })
+              })
+      }
+
+    },
+    created() {
+      this.getWorkLoads()
+    }
+}
 </script>
 
 <style lang="scss" scoped>
