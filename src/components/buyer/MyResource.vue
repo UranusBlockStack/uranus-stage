@@ -361,7 +361,7 @@ export default {
         myChart5.resize()
       }
     },
-    getUraPowerPoolLIst() {
+    getUraPowerPoolList() {
       project.projectList(this.$store.getters.lang, this.projectQuertData)
               .then(respData => {
                 this.appList = {}
@@ -381,7 +381,7 @@ export default {
     this.initEchart()
   },
   created() {
-    this.getUraPowerPoolLIst()
+    this.getUraPowerPoolList()
   }
 }
 </script>

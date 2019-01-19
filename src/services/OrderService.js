@@ -21,6 +21,6 @@ export function orderDelete (lang, orderNo) {
   return httpLang(lang).delete(`/order/orders/${orderNo}`)
 }
 
-export function orderResource(lang, queryData) {
-  return httpLang(lang).post('/order/orders/search', queryData)
+export function orderResource(lang, orderData) {
+  return httpLang(lang).post('/order/orders/resource', orderData)
 }
