@@ -3,9 +3,10 @@
     <!-- Confirmation Information Bullet Box -->
     <el-dialog :title="$t('seller.host.chooseGroup')" :visible.sync="dialogVisible" width="550px">
       <el-form>
+
         <el-radio v-model="groupJoin" :label="$t('seller.host.newGroup')"></el-radio>
         <el-form-item>
-          <el-input  autocomplete="off" :placeholder="$t('seller.host.nameGroup')" style="width: 515px">
+          <el-input  autocomplete="off" :placeholder="$t('seller.host.nameGroup')" style="width: 515px" v-model="newClusterName">
           </el-input>
 
           <el-select style="width: 515px; margin-top:15px;" v-model="rancherId" :placeholder="$t('seller.host.region')">
@@ -16,19 +17,18 @@
               <el-option v-for="(item, index) in rancherLists" :key="index"   :label="item.regionEnUs"  :value="item.id"></el-option>
             </template>
           </el-select>
-
         </el-form-item>
+
         <el-radio v-model="groupJoin" :label="$t('seller.host.joinGroup')"></el-radio>
         <el-form-item>
-          <el-select style="width: 515px"  :placeholder="$t('seller.host.existingGroup')">
-            <el-option label="Cluster A" value="A"></el-option>
-            <el-option label="Cluster B" value="B"></el-option>
+          <el-select v-model="clusterId" style="width: 515px"  :placeholder="$t('seller.host.existingGroup')">
+            <el-option v-for="(item, index) in clusterLists"  :key="index" :label="item.name" :value="item.id"></el-option>
           </el-select>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">{{$t('seller.host.cancel')}}</el-button>
-        <el-button type="primary" @click="dialogVisible = false,addHostToCluster()">{{$t('seller.host.confirm')}}</el-button>
+        <el-button type="primary" @click="okButtonClick()">{{$t('seller.host.confirm')}}</el-button>
       </span>
     </el-dialog>
 
@@ -144,20 +144,22 @@
 
         <el-table-column width="200">
           <template slot="header" slot-scope="scope">
-            <el-select v-model="group" :placeholder="$t('seller.host.ownGroup')">
-              <el-option :label="$t('seller.host.group') + 'A1'" value="集群A"></el-option>
-              <el-option :label="$t('seller.host.group') + 'B1'" value="集群B"></el-option>
+            <el-select v-model="inCluster" placeholder="是否加入集群" @change="search()">
+              <el-option label="=请选择=" value=""></el-option>
+              <el-option label="是" value="true"></el-option>
+              <el-option label="否" value="false"></el-option>
             </el-select>
           </template>
           <template slot-scope="scope">
             <p style="margin-left: 30px; text-align: center;">
               <span v-show="scope.row.colony != $t('seller.host.group') + ' B'">{{scope.row.clusterName}}</span>
-              <el-button style="margin-left: 10px;" @click="dialogVisible = true" v-show="scope.row.clusterId ==''||scope.row.clusterId ==null">
+              <el-button style="margin-left: 10px;" @click="joinButtonClick(scope.row.id)" v-show="scope.row.clusterId ==''||scope.row.clusterId ==null">
                 join
               </el-button>
             </p>
           </template>
         </el-table-column>
+
       </el-table>
     </el-row>
   </section>
@@ -175,16 +177,22 @@ export default {
           groupJoin: this.$t('seller.host.newGroup'),
           state: "",
           group: "",
+            userId:'',
+            inCluster:'',
             tableData:[],
             rancherLists:[],
+            clusterLists:[],
             language:'en-us',
             rancherId: '',
-            clusterName:''
+            newClusterName:'',// 新建及群名称
+            clusterName:'' ,//已有集群
+            hostId:'',
+            clusterId:''
         };
     },
     methods: {
         getHostList(){
-            rancher.hostList(this.$store.getters.lang).then(data=>{
+            rancher.hostList(this.language).then(data=>{
                 console.log("hostList：",data)
                 this.tableData=data.data.data.records
             })
@@ -195,15 +203,70 @@ export default {
                 this.rancherLists=data.data.data
             })
         },
-        addHostToCluster(){
+        clusterList(){
+            var param={}
+          rancher.clusterSearch(this.language,param).then(data=>{
+              console.log("clusterList:",data)
+              this.clusterLists=data.data.data.records
+          })
+        },
+        addHostToNewCluster(){
             alert(this.rancherId)
             var param={
-                "name": "",
+                "name": this.newClusterName,
                 "rancherId": this.rancherId
             }
+            alert(param.name+"=="+param.rancherId)
             rancher.clusterAdd(this.language,param).then(data=>{
+                if(data.data.success){
+                    this.updatehost()
+                }else{
+
+                }
 
             })
+        },
+        updatehost(){
+            var updateInfo={
+                "clusterId": this.clusterId,
+                "rancherId": this.rancherId,
+                "state": "registring"
+            }
+            rancher.hostModify(this.language,this.hostId,updateInfo).then(data=>{
+                if(data.data.success){
+                    dialogVisible = false
+                }else{
+
+                }
+            })
+        },
+        joinCluster(){
+            //主机添加到已有集群
+            rancher.joinCluster(this.language,this.hostId,this.clusterId).then(data=>{
+                console.log(data)
+            })
+        },
+        search(){
+            var param={
+                inCluster: this.inCluster,
+                ownerId:this.userId
+            }
+            rancher.hostSearch(this.language,param).then(data=>{
+                console.log("result:",data)
+                this.tableData=data.data.data.records
+            })
+        },
+        okButtonClick(){
+            alert(this.groupJoin)
+            if(this.groupJoin==this.$t('seller.host.newGroup')){
+                this.addHostToNewCluster()
+            }else{
+                this.joinCluster()
+            }
+        },
+        joinButtonClick(selectedhostId){
+            this.hostId=selectedhostId
+            this.dialogVisible = true
         }
 
     },
@@ -219,7 +282,9 @@ export default {
     mounted() {
         this.getHostList()
         this.rancherList()
+        this.clusterList()
         this.language=auth.getCurLang()
+        this.userId=auth.getCurUserId()
     }
 };
 </script>
