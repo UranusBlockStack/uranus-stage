@@ -48,7 +48,7 @@
           <el-col :span="12" v-for="(pool, index) in poolList" :key="index">
             <el-row style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius:4px; margin:10px;">
               <el-col :span="8" style="margin-bottom: 15px;">
-                <Ball :chartData="62"/>
+                <Ball :chartData='pool.urpowerUsd'/>
               </el-col>
               <el-col :span="12">
                   <h3>Pool: {{pool.name}}</h3>
@@ -379,6 +379,7 @@ export default {
                   object['name'] = data[i].projectName
                   object['appCount'] = data[i].appCount
                   object['time'] = moment(data[i].endTime).format('YYYY-MM-DD hh:mm:ss')
+                    object['urpowerUsd'] = data[i].computeRatio
                   this.poolList.push(object)
                 }
               })

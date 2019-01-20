@@ -330,7 +330,6 @@ export default {
       return this.imageServerUrl + rid + '/icon'
     },
     deleteApp(appId) {
-      console.log('maxl', appId)
       project.deleteAppById(appId)
               .then(respData => {
                 this.$message(respData.data)
