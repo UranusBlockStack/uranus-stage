@@ -119,6 +119,10 @@ export function apptListByProjectId (lang, projectId) {
     return httpLang(lang).get(`/rancher/projects/${projectId}/apps`)
 }
 
+export function projectListById (lang, projectId) {
+    return httpLang(lang).get(`/rancher/projects/${projectId}`)
+}
+
 /** Rancher - App Instance Controller Service ***/
 export function appInstanceSearch (lang, queryData) {
   return httpLang(lang).post('/rancher/app_instances/search', queryData)

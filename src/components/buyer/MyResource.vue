@@ -115,7 +115,7 @@ export default {
         'memUsd': 0,
         'networkUsd': 0,
         'urapowerUsd': 0
-      }, test: 10
+      }
     }
   },
   methods: {
@@ -393,7 +393,6 @@ export default {
                 this.statisObejct['memUsd'] = data.memRatio * 100
                 this.statisObejct['networkUsd'] = data.networkRatio * 100
 
-                console.log('maxl', this.statisObejct)
               })
     }
   },
@@ -412,7 +411,6 @@ export default {
       deep: true,
       immediate: true
     }
-
   }
 }
 </script>

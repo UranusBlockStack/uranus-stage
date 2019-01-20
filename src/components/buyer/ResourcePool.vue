@@ -72,7 +72,14 @@ export default {
   data() {
     return {
       appList: [],
-      imageServerUrl: this.$store.state.imageServerUrl
+      imageServerUrl: this.$store.state.imageServerUrl,
+      statisObejct: {
+        'cpuUsd': 0,
+        'diskUsd': 0,
+        'memUsd': 0,
+        'networkUsd': 0,
+        'urapowerUsd': 0
+      }
     }
   },
   methods: {
@@ -105,12 +112,12 @@ export default {
             color: ['#1890FF', '#f2f2f2'],
             data: [
               {
-                value: 68,
+                value: this.statisObejct.cpuUsd,
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|CPU}', '{b|68%}'].join('\n'),
+                    formatter: ['{a|CPU}', this.statisObejct.cpuUsd].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',
@@ -129,7 +136,7 @@ export default {
                   }
                 }
               },
-              { value: 32 }
+              { value: 100 - this.statisObejct.cpuUsd }
             ]
           }
         ]
@@ -189,12 +196,12 @@ export default {
             color: ['#FACC14', '#f2f2f2'],
             data: [
               {
-                value: 62,
+                value: this.statisObejct.memUsd,
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|内存}', '{b|62%}'].join('\n'),
+                    formatter: ['{a|内存}', this.statisObejct.memUsd].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',
@@ -213,7 +220,7 @@ export default {
                   }
                 }
               },
-              { value: 38 }
+              { value: 100 - this.statisObejct.memUsd }
             ]
           }
         ]
@@ -231,12 +238,12 @@ export default {
             color: ['#658FF7', '#f2f2f2'],
             data: [
               {
-                value: 88,
+                value: this.statisObejct.diskUsd,
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|硬盘}', '{b|88%}'].join('\n'),
+                    formatter: ['{a|硬盘}', this.statisObejct.diskUsd].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',
@@ -255,7 +262,7 @@ export default {
                   }
                 }
               },
-              { value: 12 }
+              { value: 100 - this.statisObejct.diskUsd }
             ]
           }
         ]
@@ -273,12 +280,12 @@ export default {
             color: ['#FB8D5B', '#f2f2f2'],
             data: [
               {
-                value: 62,
+                value: this.statisObejct.networkUsd,
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ['{a|网络}', '{b|62%}'].join('\n'),
+                    formatter: ['{a|网络}', this.statisObejct.networkUsd].join('\n'),
                     rich: {
                       a: {
                         color: '#5d5d5d',
@@ -297,7 +304,7 @@ export default {
                   }
                 }
               },
-              { value: 38 }
+              { value: 100 - this.statisObejct.networkUsd }
             ]
           }
         ]
@@ -326,15 +333,22 @@ export default {
       console.log('maxl', appId)
       project.deleteAppById(appId)
               .then(respData => {
-                  this.$message(respData.data)
+                this.$message(respData.data)
+              })
+    },
+    getProjectById() {
+      project.projectListById(this.$store.getters.lang, this.$route.params.poolid)
+              .then(respData => {
+                let data = respData.data.data
+                this.statisObejct.diskUsd = (data.diskUsed + data.diskLock) / data.disk
+                this.statisObejct.cpuUsd = (data.cpuKernelLock + data.cpuKernelUsed) / data.cpuKernel
+                this.statisObejct.memUsd = (data.memUsed + data.memLock) / data.mem
+                this.statisObejct.networkUsd = (data.networkUsed + data.networkLock) / data.network
               })
     }
   },
   beforeRouteUpdate(to, from, next) {
-    project.apptListByProjectId(this.$store.getters.lang, to.params.poolid)
-          .then(respData => {
-            this.appList = respData.data.data.records
-          })
+    this.getAppList()
     next()
   },
   mounted() {
@@ -342,6 +356,16 @@ export default {
   },
   created() {
     this.getAppList()
+    this.getProjectById()
+  },
+  watch: {
+    statisObejct: {
+      handler() {
+        this.initEchart()
+      },
+      deep: true,
+      immediate: true
+    }
   }
 }
 </script>
