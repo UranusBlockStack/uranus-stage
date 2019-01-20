@@ -1,4 +1,4 @@
-<template>
+  <template>
   <section class="colony">
     <el-row class="colonyHead">
       <el-col class="title" :span="12">

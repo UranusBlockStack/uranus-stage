@@ -87,9 +87,9 @@
         <el-col :span="12" v-for="(colony, index) in colonyList" :key="index">
           <el-row style="border: 1px solid #e9e9e9; margin:10px;">
             <el-col :span="6">
-              <router-link :to="{path: '/colony'}">
-                <Water :chartData="colony.value"/>
-                <h1>{{colony.colony}}名称</h1>
+              <router-link :to="{path: '/colony/colony.id'}">
+                <Water :chartData="colony.usedCompute/colony.totalCompute"/>
+                <h1>{{colony.name}}</h1>
               </router-link>
             </el-col>
             <el-col class="padding-top" :span="15">
@@ -98,14 +98,15 @@
                   <i class="iconfont icon-earnings"></i>
                   {{$t('seller.groups.earnings')}}
                 </p>
-                <p>88888888.888888 URAC</p>
+                <p>{{colony.profit }} URAC</p>
               </h2>
               <h2>
                 <p>
                   <i class="iconfont icon-countdown"></i>
                   {{$t('seller.groups.restTime')}}
                 </p>
-                <RestTime endTime="2021-1-15 16:31:15"/>
+                <!--<RestTime endTime="2021-1-15 16:31:15"/>-->
+                <RestTime :endTime="colony.endTime"/>
               </h2>
             </el-col>
             <el-col :span="2" :offset="1">
@@ -126,8 +127,11 @@
 </template>
 
 <script>
+    import moment from 'moment'
 import Water from "@/components/modules/Water"
 import RestTime from "@/components/modules/RestTime"
+import * as rancher from '../../services/RancherService'
+import * as auth from "../../services/AuthService";
 
 export default {
   name: "MyColony",
@@ -137,16 +141,8 @@ export default {
   },
   data() {
     return {
-      colonyList: [
-        { id: "1", value: "0.50", colony: this.$t("menu.myColony") + " A" },
-        { id: "2", value: "0.40", colony: this.$t("menu.myColony") + " B" },
-        { id: "3", value: "0.60", colony: this.$t("menu.myColony") + " C" },
-        { id: "4", value: "0.50", colony: this.$t("menu.myColony") + " D" },
-        { id: "1", value: "0.50", colony: this.$t("menu.myColony") + " E" },
-        { id: "2", value: "0.50", colony: this.$t("menu.myColony") + " F" },
-        { id: "3", value: "0.50", colony: this.$t("menu.myColony") + " G" },
-        { id: "4", value: "0.50", colony: this.$t("menu.myColony") + " H" }
-      ],
+        language:'en-us',
+      colonyList: [],
       dialogVisible: false,
       //   setting information
       form: {
@@ -159,7 +155,22 @@ export default {
       }
     };
   },
-  methods: {},
+  methods: {
+      clusterSearch(){
+          var param={}
+          rancher.clusterSearch(this.language,param).then(data=>{
+              var records=data.data.data.records
+              this.colonyList=records
+              records.forEach((item,index)=>{
+                  this.colonyList[index].endTime=moment(item.endTime).format('YYYY-MM-DD hh:mm:ss')
+              })
+          })
+      }
+  },
+    mounted(){
+      this.clusterSearch()
+        this.language=auth.getCurLang()
+    }
 };
 </script>
 
