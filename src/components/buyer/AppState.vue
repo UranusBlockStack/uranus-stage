@@ -82,7 +82,8 @@ export default {
                let object = {}
                object['status'] = item.state
                object['name'] = item.name
-               JSON.parse(item.containers).forEach((item1, index) => {
+                 console.log('maxl', JSON.parse(item.containers));
+                 JSON.parse(item.containers).forEach((item1, index) => {
                  if (item1.hasOwnProperty('environment')) {
                    object['image'] = item1.image
                  }

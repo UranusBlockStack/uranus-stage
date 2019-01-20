@@ -115,7 +115,7 @@ export default {
         'memUsd': 0,
         'networkUsd': 0,
         'urapowerUsd': 0
-      }
+      }, test: 10
     }
   },
   methods: {
@@ -135,7 +135,6 @@ export default {
       var myChart5 = this.$echarts.init(
         document.getElementById('restResource5')
       )
-
       myChart1.setOption({
         series: [
           {
@@ -388,11 +387,12 @@ export default {
       project.statisticsProjects()
               .then(respData => {
                 const data = respData.data.data
+                this.statisObejct['urapowerUsd'] = data.computeRatio
                 this.statisObejct['cpuUsd'] = data.cpuKernelRatio * 100
                 this.statisObejct['diskUsd'] = data.diskRatio * 100
                 this.statisObejct['memUsd'] = data.memRatio * 100
                 this.statisObejct['networkUsd'] = data.networkRatio * 100
-                this.statisObejct['urapowerUsd'] = data.computeRatio
+
                 console.log('maxl', this.statisObejct)
               })
     }
@@ -405,9 +405,14 @@ export default {
     this.getUraPowerPoolList()
   },
   watch: {
-    statisObejct() {
-      this.initEchart()
+    statisObejct: {
+      handler() {
+        this.initEchart()
+      },
+      deep: true,
+      immediate: true
     }
+
   }
 }
 </script>
