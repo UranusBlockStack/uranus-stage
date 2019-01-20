@@ -16,7 +16,6 @@
           :data="workLoadList"
           border
           style="width: 100%"
-          @row-click="$router.push({path: '/statedetail'})"
         ><template slot="empty">
           <p class="empty-text">No Dtata</p>
         </template>
