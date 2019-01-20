@@ -132,6 +132,10 @@ export function appInstanceWorkLoads (lang, appId) {
     return httpLang(lang).get(`/rancher/app_instances/${appId}/workloads`)
 }
 
+export function appInstanceDeploy (lang, params) {
+    return httpLang(lang).post('/rancher/app_instances', params)
+}
+
 /**App User Controller Service ***/
 export function deleteAppById (lang, appId) {
     return httpLang(lang).delete(`/rancher/app_users/${appId}`)

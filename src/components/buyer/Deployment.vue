@@ -200,6 +200,7 @@
           </el-select>
         </el-col>
       </el-row>
+
       <el-row class="margin-top" v-show="more">
         <el-col :span="2" :offset="1">
           <el-radio v-model="radio" label="3">{{$t('buyer.deploy.noDeploy')}}</el-radio>
@@ -263,23 +264,57 @@
           <h1>{{$t('buyer.deploy.configurationOption')}}</h1>
         </el-col>
       </el-row>
-      <el-row class="margin-top">
-        <el-col
-          class="configuration-box"
-          :span="8"
-          :offset="2"
-          v-for="(configuration,index) in configurationList"
-          :key="index"
-        >
-          <p class="configuration-name">CHECK_CPU_USAGE：</p>
-          <el-input v-model="input"></el-input>
-          <span>Enable CPU usage check</span>
-        </el-col>
-      </el-row>
+
+        <ul>
+            <li v-for="(groupData, index) in paramTree" :key="index">
+
+                <ul>
+                    <li v-for="(paramsL2,index) in groupData" :key="index">
+                        <el-row class="margin-top">
+                            <el-col
+                                    class="configuration-box"
+                                    :span="8"
+                                    :offset="2"
+                                    v-for="(param,index) in paramsL2"
+                                    :key="index"
+                            >
+
+                            <!--<div v-if="param.type==='boolean'">-->
+                                <!--<el-radio  v-model="param.default" label="true">是</el-radio>-->
+                                <!--<el-radio  v-model="param.default" label="false">否</el-radio>-->
+                            <!--</div>-->
+
+                            <div v-if="param.type==='string' || param.type==='int' || param.type==='enum'" >
+                                <p class="configuration-name">{{param.label}}：</p>
+                                <el-input v-model="param.default" > </el-input>
+                                <span>{{param.description}}</span>
+                            </div>
+                            </el-col>
+                        </el-row>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+
+
+      <!--<el-row class="margin-top">-->
+        <!--<el-col-->
+          <!--class="configuration-box"-->
+          <!--:span="8"-->
+          <!--:offset="2"-->
+          <!--v-for="(configuration,index) in configurationList"-->
+          <!--:key="index"-->
+        <!--&gt;-->
+          <!--<p class="configuration-name">CHECK_CPU_USAGE：</p>-->
+          <!--<el-input v-model="input"></el-input>-->
+          <!--<span>Enable CPU usage check</span>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+
       <el-row class="border-line"></el-row>
       <el-row>
         <el-col :span="4" :offset="10">
-          <el-button type="success" @click="outerVisible = true">{{$t('buyer.deploy.deploy')}}</el-button>
+          <el-button type="success" @click="appDeploy()">{{$t('buyer.deploy.deploy')}}</el-button>
         </el-col>
       </el-row>
     </el-row>
@@ -389,7 +424,10 @@ export default {
       outerVisible: false,
       innerVisible: false,
       curUserInfo: auth.getUserBaseInfo(),
-      rancherServer: []
+      rancherServer: [],
+      environment: [],
+      paramTree: [],
+      appDeployParam: {}
     }
   },
     created () {
@@ -405,6 +443,44 @@ export default {
       }
     },
   methods: {
+        parseConfigData(configData) {
+          /// grouped data
+          let paramTreeTmp = {}
+          configData.map(param => {
+            if (!paramTreeTmp.hasOwnProperty(param.group)) { paramTreeTmp[param.group] = [] }
+            paramTreeTmp[param.group].push(param)
+          })
+
+          /// convert struct phase 2
+          const groups = Object.keys(paramTreeTmp)
+          groups.map(group => {
+            let newgroup = []
+            const curgroup = paramTreeTmp[group]
+
+            curgroup.map(param => {
+              const rebranchnode = param.showIf? param.showIf.endsWith('.enabled=true'):null
+                // move node to the branch its belong
+              if (!rebranchnode) {
+                newgroup.push(param)
+              } else {
+                newgroup.find(paramup => {
+                  if (param.showIf === paramup.variable + '=true') {
+                    if (!paramup.subquestions) { paramup.subquestions = [] }
+                    paramup.subquestions.push(param)
+                  }
+                })
+              }
+
+                // if(param.hasOwnProperty('subquestions')){
+                //
+                // }
+            })
+            const groupData = {}
+            groupData[group] = newgroup
+            this.paramTree.push(groupData)
+          })
+        },
+
     changeMore() {
       this.more = !this.more
     },
@@ -467,7 +543,6 @@ export default {
               this.stackData.name = appInfo.name.replace(/\s+/g, '-')
               const versions = JSON.parse(this.appDetail.versionLinks)
               this.appDetail.versionlinks = []
-              console.log(this.appDetail)
               this.imgsrc = this.imageServerUrl + this.appDetail.rid + '/icon'
               this.price = this.appDetail.free ? this.$t('buyer.deploy.free'): this.price
               for (var key in versions) {
@@ -476,7 +551,7 @@ export default {
                 this.appDetail.versionlinks.push({label: key, value: versionId})
               }
               this.versionSel = this.appDetail.versionlinks
-              this.versionValue = this.appDetail.versionlinks[0].label
+              this.versionValue = this.appDetail.defaultVersion
             } else {
                   // this.$alert(respData.message, this.$t('common.messages.alert'), {
                   //     confirmButtonText: this.$t('common.messages.confirm')
@@ -485,14 +560,14 @@ export default {
           })
         },
         getAppVersionDetail (appId, version) {
-          app.appVersion(auth.getCurLang(), appId, version).then(respon => {
-            if (respon.success) {
-              console.log('app respon', respon.data)
-              this.appVersionDetail = respon.data
-              let files = JSON.parse(respon.data.files)
-              this.appVersionDetail.files = files
-              this.appVersionDetail.readMe = files['README.md']
-              this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
+          app.appVersion(auth.getCurLang(), appId, version).then(respData => {
+            if (respData.data.success) {
+              this.appVersionDetail = respData.data.data
+              // let files = JSON.parse(this.appVersionDetail.files)
+              // this.appVersionDetail.files = files
+              // this.appVersionDetail.readMe = files['README.md']
+                // this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
+              this.parseConfigData(this.appVersionDetail.questions)
               this.appVersionDetail.questions.map(question => {
                 var key = question.variable
                 var value = question.defaultValue
@@ -504,6 +579,23 @@ export default {
                   // })
             }
           })
+        },
+        appDeploy() {
+          this.appDeployParam['appId'] = this.appId
+          this.appDeployParam['appVersion'] = this.versionValue
+          this.appDeployParam['config'] = JSON.stringify(this.paramTree)
+          this.appDeployParam['description'] = this.appDetail.description
+          this.appDeployParam['name'] = this.appDetail.name
+          this.appDeployParam['projectId'] = 93
+          app.appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
+                .then(respData => {
+                  const deployData = respData.data
+                  if (deployData.success) {
+                    this.outerVisible = true
+                  } else {
+                    this.$message('部署应用失败')
+                  }
+                })
         }
   }
 }
