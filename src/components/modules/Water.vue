@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import 'echarts-liquidfill'
+
 export default {
   name: 'EchartsWater',
   props: {

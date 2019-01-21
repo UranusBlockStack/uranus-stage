@@ -92,7 +92,7 @@
               <el-col :span="18">
                 <el-form-item :label="$t('buyer.deploy.newPool')">
                   <el-input
-                    v-model="deployForm.projectName"
+                    v-model="deployForm.name"
                     style="width:350px;"
                     :placeholder="$t('buyer.deploy.renamePool')"
                   ></el-input>
@@ -116,7 +116,7 @@
                     <el-option
                       v-for="item in cpuSel"
                       :key="item.value"
-                      :label="item.label + item.unit"
+                      :label="item.label"
                       :value="item.value"
                     ></el-option>
                   </el-select>
@@ -296,6 +296,21 @@
             </li>
         </ul>
 
+
+      <!--<el-row class="margin-top">-->
+        <!--<el-col-->
+          <!--class="configuration-box"-->
+          <!--:span="8"-->
+          <!--:offset="2"-->
+          <!--v-for="(configuration,index) in configurationList"-->
+          <!--:key="index"-->
+        <!--&gt;-->
+          <!--<p class="configuration-name">CHECK_CPU_USAGE：</p>-->
+          <!--<el-input v-model="input"></el-input>-->
+          <!--<span>Enable CPU usage check</span>-->
+        <!--</el-col>-->
+      <!--</el-row>-->
+
       <el-row class="border-line"></el-row>
       <el-row>
         <el-col :span="4" :offset="10">
@@ -311,8 +326,7 @@
     import * as app from '../../services/RancherService'
     import * as auth from '../../services/AuthService'
     import * as rancher from '../../services/RancherService'
-    import { ServerConfigData, WrapDropDownDataUnit, WrapDropDownData } from '../../store/rancher_info'
-    import * as project from '../../services/RancherService'
+    import { ServerConfigData, AddUnit, WrapDropDownData } from '../../store/rancher_info'
 
 export default {
   name: 'Deployment',
@@ -333,13 +347,21 @@ export default {
       price: '',
       regionSel: [],
       cpuSel: [],
-      cpuUnit: '',
       diskSel: [],
       memorySel: [],
       networkSel: [],
       // existed
-      spaceSel: [],
-      spaceValue: '',
+      spaceSel: [
+        {
+          value: '选项1',
+          label: '0.1.7'
+        },
+        {
+          value: '选项2',
+          label: '0.0.2'
+        }
+      ],
+      spaceValue: '0.1.2',
       // version
       versionSel: [],
       versionValue: '',
@@ -418,7 +440,6 @@ export default {
         this.getAppVersionDetail(this.appId, this.versionId)
         this.getRegionList()
         this.setConfigSelector()
-        this.getUraPowerPoolList()
       }
     },
   methods: {
@@ -465,20 +486,19 @@ export default {
     },
 
         setConfigSelector() {
-          const lang = auth.getCurLang()
-          const CpuData = ServerConfigData.CPU
-          this.cpuSel = WrapDropDownDataUnit(CpuData, lang)
+          const CpuData = ServerConfigData.CPU.paramVals[auth.getCurLang()]
+          this.cpuSel = WrapDropDownData(CpuData)
           this.deployForm.cpuKernel = this.cpuSel[0].value
 
-          const HdData = ServerConfigData.HD
+          const HdData = ServerConfigData.HD.paramVals
           this.diskSel = WrapDropDownData(HdData)
           this.deployForm.disk = this.diskSel[0].value
 
-          const MemData = ServerConfigData.Mem
+          const MemData = ServerConfigData.Mem.paramVals
           this.memorySel = WrapDropDownData(MemData)
           this.deployForm.mem = this.memorySel[0].value
 
-          const NetworData = ServerConfigData.Network
+          const NetworData = ServerConfigData.Network.paramVals
           this.networkSel = WrapDropDownData(NetworData)
           this.deployForm.network = this.networkSel[0].value
         },
@@ -507,13 +527,12 @@ export default {
               this.rancherServer.map(rancher => {
                 const region = {
                   value: auth.getCurLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
-                  label: auth.getCurLang() === 'zh-cn'? rancher.region :rancher.regionEnUs
+                  label: auth.getCurLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
                 }
                 regionData.push(region)
               })
 
               this.regionSel = regionData
-              this.deployForm.rancherId = this.regionSel[0].value
             })
         },
         getAppDetail (appid) {
@@ -561,42 +580,13 @@ export default {
             }
           })
         },
-        getUraPowerPoolList() {
-          const projectQuertData = {
-            'page': 0,
-            'pageSize': 0,
-            'projectName': '',
-            'sort': '',
-            'sortDesc': true
-          }
-          project.projectList(this.$store.getters.lang, projectQuertData)
-              .then(respData => {
-                const data = respData.data.data.records
-                for (let i = 0; i < data.length; i++) {
-                  let object = {}
-                  object['value'] = data[i].id
-                  object['label'] = data[i].projectName
-                  this.spaceSel.push(object)
-                }
-                this.spaceValue = this.spaceSel[0].value
-              })
-        },
-        appPreDeploy() {
-          if (this.radio === 1) { // delopy with new UraPower
-
-          } else if (this.radio === 2) { // deploy with exsit UraPower
-            this.appDeploy()
-          } else { // do not deploy
-
-          }
-        },
         appDeploy() {
           this.appDeployParam['appId'] = this.appId
           this.appDeployParam['appVersion'] = this.versionValue
           this.appDeployParam['config'] = JSON.stringify(this.paramTree)
           this.appDeployParam['description'] = this.appDetail.description
           this.appDeployParam['name'] = this.appDetail.name
-          this.appDeployParam['projectId'] = this.spaceValue
+          this.appDeployParam['projectId'] = 93
           app.appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
                 .then(respData => {
                   const deployData = respData.data

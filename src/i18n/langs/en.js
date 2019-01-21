@@ -247,8 +247,10 @@ module.exports = {
       rename: 'Rename',
       redeploy: 'Redeploy',
       shell: 'Execute shell',
+      pause: 'Pause Orchestration',
+      resume: 'Resume Orchestration',
       view: 'View',
-      delete: 'Delete'
+      delete: 'Delete',
     },
     stateDetail: {
       rename: 'Rename',

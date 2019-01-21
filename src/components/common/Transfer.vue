@@ -97,8 +97,8 @@ export default {
         fee: "",
         code: ""
       },
-      outerVisible: true,
-      innerVisible: true,
+      outerVisible: false,
+      innerVisible: false,
       curUserInfo: auth.getUserBaseInfo(),
       balance: 0
     };

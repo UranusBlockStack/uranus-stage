@@ -53,7 +53,7 @@
             <el-col :span="3">
               <el-dropdown trigger="click">
                 <span class="el-dropdown-link">
-                  <i class="el-icon-arrow-down el-icon--right"></i>
+                  <i class="iconfont icon-menu"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <router-link :to="{path: '/appstate/' + item.id}">
@@ -277,7 +277,7 @@ export default {
     }
     .el-dropdown {
       margin: 20px;
-      color: #8eb357;
+      color: #ffffff;
     }
   }
 }

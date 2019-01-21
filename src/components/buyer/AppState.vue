@@ -12,7 +12,7 @@
     </el-row>
     <el-row class="recordBox">
       <el-col class="blue-box" :span="24">
-        <el-table :data="workLoadList" style="width: 100%" @row-click="$router.push({path: '/statedetail'})">
+        <el-table :data="workLoadList" style="width: 100%">
           <template slot="empty">
             <p class="empty-text">No Dtata</p>
           </template>
@@ -49,6 +49,21 @@
                 <i class="iconfont icon-table-scale"></i>
                 {{$t('buyer.appState.pod')}}
               </p>
+            </template>
+          </el-table-column>
+          <el-table-column width="120">
+            <template slot-scope="scope">
+                <el-dropdown trigger="click">
+                <span class="el-dropdown-link">
+                  <i class="iconfont icon-menu"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>{{$t('buyer.appState.shell')}}</el-dropdown-item>
+                  <el-dropdown-item>{{$t('buyer.appState.pause')}}</el-dropdown-item>
+                  <el-dropdown-item>{{$t('buyer.appState.resume')}}</el-dropdown-item>
+                  <el-dropdown-item>{{$t('buyer.appState.delete')}}</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
             </template>
           </el-table-column>
         </el-table>
