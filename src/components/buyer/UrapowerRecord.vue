@@ -42,7 +42,7 @@
             :placeholder="$t('buyer.appRepository.deployPage.endTime')"
           ></el-date-picker>
         </el-col>-->
-        <el-col :span="6" :offset="1">
+        <el-col :span="6">
           <el-input
             :placeholder="$t('buyer.appRepository.deployPage.searchIn')"
             prefix-icon="el-icon-search" v-model="appName"
@@ -60,8 +60,8 @@
           </el-table>
         </el-dialog>
       </el-col>
-      <el-col :span="24">
-        <el-table :data="tableData" border style="width: 100%">
+      <el-col class="blue-box" :span="24">
+        <el-table :data="tableData" style="width: 100%">
             <template slot="empty">
                 <p class="empty-text">No Data</p >
             </template>
@@ -260,21 +260,25 @@ export default {
 
 <style lang="scss" scoped>
 .urapowerRecord {
-  background: #f2f2f2;
+  height: 100%;
   min-width: 1130px;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   .recordHead {
-    background: #ffffff;
-    height: 65px;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
+    height: 50px;
+    margin: 10px 10px 0;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
+        font-size: 16px;
+        color: #ffffff;
+        line-height: 50px;
         margin: 0;
         padding: 0;
         padding-left: 30px;
-        font-size: 16px;
-        color: #252525;
-        line-height: 50px;
-        text-align: left;
         i {
           font-size: 26px;
           margin-right: 10px;
@@ -283,33 +287,44 @@ export default {
     }
   }
   .recordBox {
+    min-height: 630px;
     min-width: 1130px;
     margin: 10px;
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     overflow: hidden;
     padding: 30px;
+    .el-input /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
     .table-head {
-        color: #363636;
+        color: #ffffff;
         font-weight: 500;
         font-size: 16px;
         margin: 0;
         padding: 0;
         i {
-          font-size: 26px;
+          font-size: 23px;
         }
       }
     .el-col {
       display: flex;
       .el-button {
-        background: #8eb357;
-        border: none;
+        background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 #2463ff;
+      border-radius: 3px;
+      border: none;
         margin: 0 20px;
       }
       .el-select {
         margin-left: 20px;
       }
       span {
-        color: rgba(0, 0, 0, 0.25);
+        color: #ffffff;
         line-height: 40px;
       }
       .time {
@@ -330,11 +345,44 @@ export default {
         line-height: 50px;
       }
     }
+     .blue-box {
+      .el-table {
+        color: #ffffff;
+        background-color: rgba(101, 143, 247, 0);
+      }
+      .el-table /deep/ tr:hover td {
+        background-color: rgba(101, 143, 247, 0.2) !important;
+      }
+      .el-table /deep/ th,
+      .el-table /deep/ tr {
+        background-color: rgba(101, 143, 247, 0);
+        border: none;
+      }
+      .el-table /deep/ td {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    }
     .transaction-foot {
       margin-top: 30px;
       .el-pagination {
         height: 50px;
       }
+      .el-pagination /deep/ .btn-prev{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-next{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li{
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li.active{
+        color: #409eff;
+    }
     }
   }
 }

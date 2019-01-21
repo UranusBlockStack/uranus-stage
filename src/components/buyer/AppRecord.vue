@@ -10,7 +10,7 @@
     </el-row>
     <el-row class="recordBox">
       <el-row>
-        <el-col class="123" :span="7">
+        <el-col :span="7">
           <el-input
             :placeholder="$t('buyer.appRepository.deployPage.searchIn')"
             prefix-icon="el-icon-search"
@@ -53,8 +53,8 @@
           </el-table>
         </el-dialog>
       </el-col>
-      <el-col :span="24">
-        <el-table :data="tableData" border style="width: 100%" @row-click="deployDetail">
+      <el-col class="blue-box" :span="24">
+        <el-table :data="tableData" style="width: 100%" @row-click="deployDetail">
           <template slot="empty">
             <p class="empty-text">{{$t('seller.host.text')}}</p>
           </template>
@@ -110,107 +110,107 @@
       </el-col>
       <el-col :span="8" :offset="16" class="transaction-foot">
         <el-pagination
-                layout="prev, pager, next"
-                :current-page.sync="currentPage"
-                :page-size="pageSize"
-                :total="totalRecords"
-                @current-change="handleCurrentChange" >
-        </el-pagination>
+          layout="prev, pager, next"
+          :current-page.sync="currentPage"
+          :page-size="pageSize"
+          :total="totalRecords"
+          @current-change="handleCurrentChange"
+        ></el-pagination>
       </el-col>
     </el-row>
   </section>
 </template>
 
 <script>
-import * as app from '../../services/RancherService'
-import * as auth from '../../services/AuthService'
-import moment from 'moment'
+import * as app from "../../services/RancherService";
+import * as auth from "../../services/AuthService";
+import moment from "moment";
 
 export default {
-  name: 'AppRecord',
+  name: "AppRecord",
   data() {
     return {
-      dateValue1: '',
-      dateValue2: '',
-      appName: '',
-      value1: '',
+      dateValue1: "",
+      dateValue2: "",
+      appName: "",
+      value1: "",
       options1: [
         {
-          value: '选项1',
-          label: '选项1'
+          value: "选项1",
+          label: "选项1"
         },
         {
-          value: '选项2',
-          label: '选项2'
+          value: "选项2",
+          label: "选项2"
         }
       ],
-      value2: '',
+      value2: "",
       options2: [
         {
-          value: '选项1',
-          label: '选项1'
+          value: "选项1",
+          label: "选项1"
         },
         {
-          value: '选项2',
-          label: '选项2'
+          value: "选项2",
+          label: "选项2"
         }
       ],
       dialogVisible: false,
       tableData: [],
       tableData1: [
         {
-          menu: this.$t('buyer.appRepository.deployPage.number'),
-          value: ''
+          menu: this.$t("buyer.appRepository.deployPage.number"),
+          value: ""
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appStatus'),
-          value: ''
+          menu: this.$t("buyer.appRepository.deployPage.appStatus"),
+          value: ""
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.orderTime'),
-          value: ''
+          menu: this.$t("buyer.appRepository.deployPage.orderTime"),
+          value: ""
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appName'),
-          value: ''
+          menu: this.$t("buyer.appRepository.deployPage.appName"),
+          value: ""
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appStore'),
-          value: ''
+          menu: this.$t("buyer.appRepository.deployPage.appStore"),
+          value: ""
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appTime'),
-          value: ''
+          menu: this.$t("buyer.appRepository.deployPage.appTime"),
+          value: ""
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appGroup'),
-          value: '资源池1'
+          menu: this.$t("buyer.appRepository.deployPage.appGroup"),
+          value: "资源池1"
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appPrice'),
-          value: '8888888888.66URAC'
+          menu: this.$t("buyer.appRepository.deployPage.appPrice"),
+          value: "8888888888.66URAC"
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.fee'),
-          value: '88.88URAC'
+          menu: this.$t("buyer.appRepository.deployPage.fee"),
+          value: "88.88URAC"
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.ip'),
-          value: '111.111.222.22'
+          menu: this.$t("buyer.appRepository.deployPage.ip"),
+          value: "111.111.222.22"
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.port'),
-          value: '8080'
+          menu: this.$t("buyer.appRepository.deployPage.port"),
+          value: "8080"
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appHash'),
-          value: '0X16546167451sd54f6a5s1dfa68ds4'
+          menu: this.$t("buyer.appRepository.deployPage.appHash"),
+          value: "0X16546167451sd54f6a5s1dfa68ds4"
         }
       ],
       currentPage: 1,
       pageSize: this.$store.state.defaultPageSize,
       totalRecords: 0
-    }
+    };
   },
   methods: {
     getAppDeployRecords() {
@@ -219,62 +219,71 @@ export default {
         page: this.currentPage,
         pageSize: this.pageSize,
         projectId: 0,
-        sort: 'string',
+        sort: "string",
         sortDesc: true
-      }
+      };
       app.appInstanceSearch(auth.getCurLang(), queryData).then(appList => {
-        this.tableData = appList.data.data.records
-        this.totalRecords = appList.data.data.total
+        this.tableData = appList.data.data.records;
+        this.totalRecords = appList.data.data.total;
 
         this.tableData.map(row => {
-          row.createTime = moment(row.createTime).format('YYYY-MM-DD hh:mm')
-        })
-      })
+          row.createTime = moment(row.createTime).format("YYYY-MM-DD hh:mm");
+        });
+      });
     },
     fillDetailData(data) {
-      this.tableData1[0].value = data.orderNo
-      this.tableData1[1].value = data.orderStatus
-      this.tableData1[2].value = moment(data.createTime).format('YYYY-MM-DD hh:mm')
-      this.tableData1[3].value = data.orderStatus
-      this.tableData1[4].value = data.catalog
-      this.tableData1[5].value = moment(data.updateTime).format('YYYY-MM-DD hh:mm')
-      this.tableData1[6].value = data.projectName
-      this.tableData1[7].value = data.orderAmount
-      this.tableData1[8].value = data.free
-      this.tableData1[9].value = data.ipAddress
-      this.tableData1[10].value = data.port
-      this.tableData1[11].value = data.orderHash
+      this.tableData1[0].value = data.orderNo;
+      this.tableData1[1].value = data.orderStatus;
+      this.tableData1[2].value = moment(data.createTime).format(
+        "YYYY-MM-DD hh:mm"
+      );
+      this.tableData1[3].value = data.orderStatus;
+      this.tableData1[4].value = data.catalog;
+      this.tableData1[5].value = moment(data.updateTime).format(
+        "YYYY-MM-DD hh:mm"
+      );
+      this.tableData1[6].value = data.projectName;
+      this.tableData1[7].value = data.orderAmount;
+      this.tableData1[8].value = data.free;
+      this.tableData1[9].value = data.ipAddress;
+      this.tableData1[10].value = data.port;
+      this.tableData1[11].value = data.orderHash;
     },
     deployDetail(rowdata) {
-      this.fillDetailData(rowdata)
-      this.dialogVisible = true
+      this.fillDetailData(rowdata);
+      this.dialogVisible = true;
     },
     searchApp() {
-      this.getAppDeployRecords()
+      this.getAppDeployRecords();
     },
     handleCurrentChange(val) {
-      this.currentPage = val
-      this.getAppDeployRecords()
+      this.currentPage = val;
+      this.getAppDeployRecords();
     }
   },
   created() {
-    this.getAppDeployRecords()
+    this.getAppDeployRecords();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .appRecord {
-  background: #f2f2f2;
+  height: 100%;
   min-width: 1130px;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   .recordHead {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     height: 50px;
+    margin: 10px 10px 0;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #252525;
+        color: #ffffff;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -287,16 +296,26 @@ export default {
     }
   }
   .recordBox {
-    height: 630px;
+    min-height: 630px;
     min-width: 1130px;
     margin: 10px;
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     overflow: hidden;
     padding: 30px;
+    .el-input /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
     .el-col {
       display: flex;
       .el-button {
-        background: #8eb357;
+        background: rgba(101, 143, 247, 0);
+        box-shadow: inset 0 0 22px 0 #2463ff;
+        border-radius: 3px;
         border: none;
         margin: 0 20px;
       }
@@ -308,7 +327,6 @@ export default {
         line-height: 40px;
       }
       .time {
-        font-family: PingFangSC-Regular;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.65);
         text-align: right;
@@ -318,28 +336,61 @@ export default {
       }
     }
     .table-head {
-        color: #363636;
-        font-weight: 500;
-        font-size: 16px;
-        margin: 0;
-        padding: 0;
-        i {
-          font-size: 23px;
-        }
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      i {
+        font-size: 23px;
       }
+    }
     .record-head {
       height: 50px;
       p {
-        font-family: PingFangSC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: rgba(0, 0, 0, 0.85);
         line-height: 50px;
+      }
+    }
+    .blue-box {
+      .el-table {
+        color: #ffffff;
+        background-color: rgba(101, 143, 247, 0);
+      }
+      .el-table /deep/ tr:hover td {
+        background-color: rgba(101, 143, 247, 0.2) !important;
+      }
+      .el-table /deep/ th,
+      .el-table /deep/ tr {
+        background-color: rgba(101, 143, 247, 0);
+        border: none;
+      }
+      .el-table /deep/ td {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
       }
     }
     .transaction-foot {
       margin-top: 30px;
       .el-pagination {
         height: 50px;
+      }
+      .el-pagination /deep/ .btn-prev {
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+      }
+      .el-pagination /deep/ .btn-next {
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+      }
+      .el-pagination /deep/ .el-pager li {
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+      }
+      .el-pagination /deep/ .el-pager li.active {
+        color: #409eff;
       }
     }
   }

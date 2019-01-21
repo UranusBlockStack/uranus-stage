@@ -33,11 +33,6 @@
             <Memory v-if="update2" :chartData='statisObejct.memUsd'/>
             <Disk v-if="update2" :chartData='statisObejct.diskUsd'/>
             <Network v-if="update2" :chartData='statisObejct.networkUsd'/>
-              <div id="restResource1"></div>
-              <!-- <div id="restResource2"></div> -->
-              <div id="restResource3"></div>
-              <div id="restResource4"></div>
-              <div id="restResource5"></div>
             </div>
           </el-col>
         </el-row>
@@ -252,14 +247,6 @@ export default {
       height: 200px;
       display: flex;
       padding-left: 50px;
-      #restResource1,
-      #restResource2,
-      #restResource3,
-      #restResource4,
-      #restResource5 {
-        height: 200px;
-        width: 20%;
-      }
     }
     .appResource {
       h3 {

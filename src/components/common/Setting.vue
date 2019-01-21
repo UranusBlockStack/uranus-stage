@@ -216,7 +216,7 @@
               <p style="width:100%" @click="dialogVisible = true">{{$t('setting.codeEmail')}}</p>
             </el-option>
           </el-select>
-          <el-dialog title="提示" :visible.sync="dialogVisible" width="580px">
+          <el-dialog :title="$t('setting.code')" :visible.sync="dialogVisible" width="580px">
             <span>{{$t('setting.codeText')}}</span>
             <span slot="footer" class="dialog-footer">
               <el-button @click="dialogVisible = false">{{$t('setting.button1')}}</el-button>
