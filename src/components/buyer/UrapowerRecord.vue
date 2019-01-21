@@ -230,7 +230,6 @@ export default {
         sortDesc: true,
         prodType: 'UraPower'
       }
-      console.log(queryData)
       order.orderSearch(auth.getCurLang(), queryData).then(appList => {
         this.tableData = appList.data.data.records
         this.totalRecords = appList.data.data.total

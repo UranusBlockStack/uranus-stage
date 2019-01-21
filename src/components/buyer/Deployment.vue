@@ -3,17 +3,17 @@
     <!-- Confirmation Information Bullet Box -->
     <el-dialog :title="$t('buyer.deploy.confirmTitle')" :visible.sync="outerVisible" width="800px">
       <el-table :data="gridData">
-        <el-table-column property="order" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
-        <el-table-column property="address" :label="$t('buyer.deploy.address')"></el-table-column>
-        <el-table-column property="number" :label="$t('buyer.deploy.value')"></el-table-column>
-        <el-table-column property="type" :label="$t('buyer.deploy.content')"></el-table-column>
+        <el-table-column property="orderNo" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
+        <el-table-column property="buyerId" :label="$t('buyer.deploy.address')"></el-table-column>
+        <el-table-column property="orderAmount" :label="$t('buyer.deploy.value')"></el-table-column>
+        <el-table-column property="prodType" :label="$t('buyer.deploy.content')"></el-table-column>
         <el-table-column :label="$t('buyer.deploy.fee')">
           <template slot-scope="scope">
             <el-input-number
               size="mini"
-              v-model="scope.row.charge"
-              :precision="2"
-              :step="0.1"
+              v-model="fee"
+              :precision="6"
+              :step="0.000001"
               :max="10"
             ></el-input-number>
           </template>
@@ -314,7 +314,7 @@
       <el-row class="border-line"></el-row>
       <el-row>
         <el-col :span="4" :offset="10">
-          <el-button type="success" @click="appDeploy()">{{$t('buyer.deploy.deploy')}}</el-button>
+          <el-button type="success" @click="appPreDeploy">{{$t('buyer.deploy.deploy')}}</el-button>
         </el-col>
       </el-row>
     </el-row>
@@ -326,7 +326,10 @@
     import * as app from '../../services/RancherService'
     import * as auth from '../../services/AuthService'
     import * as rancher from '../../services/RancherService'
-    import { ServerConfigData, AddUnit, WrapDropDownData } from '../../store/rancher_info'
+    import { ServerConfigData, WrapDropDownDataUnit, WrapDropDownData } from '../../store/rancher_info'
+    import * as project from '../../services/RancherService'
+    import * as wallet from '../../services/WalletService'
+    import * as order from '../../services/OrderService'
 
 export default {
   name: 'Deployment',
@@ -391,43 +394,14 @@ export default {
         description: '',
         startOnCreate: true
       },
-      gridData: [
-        {
-          order: '214521236987',
-          address: '0x461s2df6…',
-          number: '1000021.23',
-          type: this.$t('buyer.deploy.buyApp'),
-          charge: '0.11'
-        },
-        {
-          order: '214521236987',
-          address: '0x461s2df6…',
-          number: '1000021.23',
-          type: this.$t('buyer.deploy.buyApp'),
-          charge: '0.11'
-        },
-        {
-          order: '214521236987',
-          address: '0x461s2df6…',
-          number: '1000021.23',
-          type: this.$t('buyer.deploy.buyApp'),
-          charge: '0.11'
-        },
-        {
-          order: '214521236987',
-          address: '0x461s2df6…',
-          number: '1000021.23',
-          type: this.$t('buyer.deploy.buyApp'),
-          charge: '0.11'
-        }
-      ],
+      gridData: [],
       outerVisible: false,
       innerVisible: false,
-      curUserInfo: auth.getUserBaseInfo(),
       rancherServer: [],
       environment: [],
       paramTree: [],
-      appDeployParam: {}
+      appDeployParam: {},
+      fee: 0
     }
   },
     created () {
@@ -440,6 +414,8 @@ export default {
         this.getAppVersionDetail(this.appId, this.versionId)
         this.getRegionList()
         this.setConfigSelector()
+        this.getUraPowerPoolList()
+        this.getReferenceFee()
       }
     },
   methods: {
@@ -526,8 +502,8 @@ export default {
               let regionData = []
               this.rancherServer.map(rancher => {
                 const region = {
-                  value: auth.getCurLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
-                  label: auth.getCurLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
+                  value: rancher.id,
+                  label: auth.getCurLang() === 'zh-cn'? rancher.region :rancher.regionEnUs
                 }
                 regionData.push(region)
               })
@@ -566,11 +542,11 @@ export default {
               // let files = JSON.parse(this.appVersionDetail.files)
               // this.appVersionDetail.files = files
               // this.appVersionDetail.readMe = files['README.md']
-                // this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
+              // this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
               this.parseConfigData(this.appVersionDetail.questions)
               this.appVersionDetail.questions.map(question => {
-                var key = question.variable
-                var value = question.defaultValue
+                const key = question.variable
+                const value = question.defaultValue
                 this.environment[key] = value
               })
             } else {
@@ -579,6 +555,82 @@ export default {
                   // })
             }
           })
+        },
+        getUraPowerPoolList() {
+          const projectQuertData = {
+            'page': 0,
+            'pageSize': 0,
+            'projectName': '',
+            'sort': '',
+            'sortDesc': true
+          }
+          project.projectList(this.$store.getters.lang, projectQuertData)
+              .then(respData => {
+                const data = respData.data.data.records
+                for (let i = 0; i < data.length; i++) {
+                  let object = {}
+                  object['value'] = data[i].id
+                  object['label'] = data[i].projectName
+                  this.spaceSel.push(object)
+                }
+                this.spaceValue = this.spaceSel[0].value
+              })
+        },
+        getReferenceFee() {
+          wallet.walletReferenceFee(auth.getCurLang())
+              .then(reffee => {
+                this.fee = reffee.data.data
+              })
+        },
+        getConfirmCode() {
+          wallet.walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
+              .then(sendResult => {
+                  // const status = sendResult.data
+              })
+        },
+        purchaseUraPowerPlus() {
+          this.deployForm.beginTime = this.deployForm.dateRange[0]
+          this.deployForm.endTime = this.deployForm.dateRange[1]
+
+          // order.orderResource(auth.getCurLang(), this.deployForm)
+              // .then(purcheStatus => {
+              //   const purchStausData = purcheStatus.data
+              //   console.log(purchStausData)
+              //   if (purchStausData.success) {
+
+          const purchStausData = {
+            buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
+            buyerId: 60,
+            buyerName: '',
+            createTime: 1548072518330,
+            id: 59,
+            orderAmount: 0.24255,
+            orderHash: null,
+            orderNo: '2019012100003',
+            orderStatus: 1,
+            paySuccessTime: null,
+            poundage: 0.000378,
+            prodType: 'UraPower',
+            sellerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
+            sellerId: 60,
+            sellerName: '',
+            updateTime: 1548072518330,
+            projectId: 133
+          }
+          this.gridData = [purchStausData]
+          this.spaceValue = purchStausData.projectId
+          this.appDeploy()
+          //   }
+          // })
+        },
+        appPreDeploy() {
+          if (this.radio === '1') { // delopy with new UraPower
+            this.purchaseUraPowerPlus()
+          } else if (this.radio === '2') { // deploy with exsit UraPower
+            this.appDeploy()
+          } else { // do not deploy
+
+          }
         },
         appDeploy() {
           this.appDeployParam['appId'] = this.appId

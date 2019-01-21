@@ -1,8 +1,8 @@
 import { httpLang } from './HttpService'
 
 /** 订单 - Order Service ***/
-export function orderAdd (lang, orderInfo) {
-  return httpLang(lang).post('/order/orders', orderInfo)
+export function orderApp (lang, appId) {
+  return httpLang(lang).post(`/order/orders/${appId}`)
 }
 
 export function orderStatusInnerModify (lang) {
