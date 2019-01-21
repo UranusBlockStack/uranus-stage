@@ -14,46 +14,41 @@
         <div class="consumption">
           <p>{{$t('seller.home.resource')}}</p>
           <div class="chooseCon">
-            <span
-              @click="consumptionYear(0)"
-              :class="{active: this.indexCon == '0'}"
-            >{{$t('seller.home.month')}}</span>
-            <span
-              @click="consumptionMounth(1)"
-              :class="{active: indexCon == '1'}"
-            >{{$t('seller.home.week')}}</span>
-            <span
-              @click="consumptionWeek(2)"
-              :class="{active: indexCon == '2'}"
-            >{{$t('seller.home.day')}}</span>
-            <span
-              @click="consumptionDay(3)"
-              :class="{active: indexCon == '3'}"
-            >{{$t('seller.home.hour')}}</span>
+            <span @click="statisticsGlobalUraPower('myConsumption','month')" :class="{active: this.indexCon == '0'}">
+              {{$t('seller.home.month')}}
+            </span>
+            <span @click="statisticsGlobalUraPower('myConsumption','week')" :class="{active: indexCon == '1'}">
+              {{$t('seller.home.week')}}
+            </span>
+            <span @click="statisticsGlobalUraPower('myConsumption','day')" :class="{active: indexCon == '2'}">
+              {{$t('seller.home.day')}}
+            </span>
+           <!-- <span @click="statisticsGlobalUraPower('day')" :class="{active: indexCon == '3'}">
+              {{$t('seller.home.hour')}}444
+            </span>-->
           </div>
           <div id="myConsumption"></div>
         </div>
+
         <div class="profit">
           <p>{{$t('seller.home.myEarnings')}}</p>
           <div class="choosePro">
-            <span
-              @click="profitYear(0)"
-              :class="{active: this.indexPro == '0'}"
-            >{{$t('seller.home.month')}}</span>
-            <span
-              @click="profitMounth(1)"
-              :class="{active: this.indexPro == '1'}"
-            >{{$t('seller.home.week')}}</span>
-            <span
-              @click="profitWeek(2)"
-              :class="{active: this.indexPro == '2'}"
-            >{{$t('seller.home.day')}}</span>
-            <span
-              @click="profitDay(3)"
-              :class="{active: this.indexPro == '3'}"
-            >{{$t('seller.home.hour')}}</span>
+            <span @click="statisticsGlobalUraPower('myProfit','month')" :class="{active: this.indexPro == '0'}">
+              {{$t('seller.home.month')}}
+            </span>
+            <span @click="statisticsGlobalUraPower('myProfit','week')" :class="{active: this.indexPro == '1'}">
+              {{$t('seller.home.week')}}
+            </span>
+            <span @click="statisticsGlobalUraPower('myProfit','day')" :class="{active: this.indexPro == '2'}">
+              {{$t('seller.home.day')}}
+            </span>
+            <!--<span @click="profitDay(3)" :class="{active: this.indexPro == '3'}">
+              {{$t('seller.home.hour')}}333
+            </span>-->
           </div>
           <div id="myProfit"></div>
+
+
         </div>
       </div>
       <div class="power">
@@ -128,6 +123,7 @@
             </el-table>
           </el-col>
         </el-row>
+
         <el-row :gutter="20" style="height: 50px">
           <el-col :span="6" :offset="16">
             <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
@@ -142,6 +138,8 @@
 import * as wallet from "../../services/WalletService";
 import moment from "moment";
 import Oil from "@/components/modules/Oil";
+import * as rancher from "../../services/RancherService.js"
+import * as auth from "../../services/AuthService"
 
 export default {
   name: "Seller",
@@ -150,269 +148,130 @@ export default {
   },
   data() {
     return {
+        language:'en-us',
+
       indexCon: "3",
       indexPro: "3",
-      dataConsumption: {
-        day: {
-          x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
-          y: [50, 40, 30, 40, 50, 60, 50]
-        },
-        week: {
-          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-          y: [100, 200, 300, 400, 500, 600, 700]
-        },
-        mounth: {
-          x: ["1", "3", "5", "7", "9", "11", "12"],
-          y: [1000, 520, 200, 334, 390, 330, 220]
-        },
-        year: {
-          x: ["13", "15", "16", "17", "18", "19"],
-          y: [10000, 520, 200, 334, 390, 330]
-        }
-      },
-      consumptionVal: {
-        x: "",
-        y: ""
-      },
-      dataProfit: {
-        day: {
-          x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
-          y: [10, 20, 30, 40, 50, 60]
-        },
-        week: {
-          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-          y: [100, 200, 300, 400, 500, 600, 700]
-        },
-        mounth: {
-          x: ["1", "3", "5", "7", "9", "11", "12"],
-          y: [1000, 520, 200, 334, 390, 330, 220]
-        },
-        year: {
-          x: ["13", "15", "16", "17", "18", "19"],
-          y: [10000, 520, 200, 334, 390, 330]
-        }
-      },
-      profitVal: {
-        x: "",
-        y: ""
-      },
       tableData: []
     };
   },
 
   computed: {},
   methods: {
-    initTransactionRecords() {
-      wallet
-        .getTradeLogCurrentUser(this.$store.getters.lang, 0, 1, 10)
-        .then(transList => {
-          this.tableData = transList.data.data.records;
-          console.log(this.tableData);
-        });
+      statisticsGlobalUraPower(elementId,type){
+          //按类型统计 全网算力
+          rancher.statisticsGlobalUraPower(this.language,type).then(data=>{
+              console.log("按类型统计 全网算力数据：",data.data.data)
+              let result=data.data.data
+              let xValue=[]
+              let yValue=[]
+              result.forEach((item,index)=>{
+                  xValue.push(item.datetimeValue)
+                  yValue.push(item.usedCompute/item.totalCompute)
+              })
+              this.initEchart(elementId,xValue,yValue)
+          })
+      },
+
+      initTransactionRecords() {
+        wallet.getTradeLogCurrentUser(this.language, 0, 0, 10)
+            .then(transList => {
+                this.tableData = transList.data.data.records;
+                console.log(this.tableData);
+            });
     },
     formateDate(row, column, cellValue) {
       // return moment(cellValue).format("YYYY-MM-DD HH:mm:ss")
       return cellValue;
     },
-    consumptionDay(x) {
-      this.consumptionVal = this.dataConsumption.day;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexCon = x;
-    },
-    consumptionWeek(x) {
-      this.consumptionVal = this.dataConsumption.week;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexCon = x;
-    },
-    consumptionMounth(x) {
-      this.consumptionVal = this.dataConsumption.mounth;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexCon = x;
-    },
-    consumptionYear(x) {
-      this.consumptionVal = this.dataConsumption.year;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexCon = x;
-    },
-    profitDay(x) {
-      this.profitVal = this.dataProfit.day;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexPro = x;
-    },
-    profitWeek(x) {
-      this.profitVal = this.dataProfit.week;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexPro = x;
-    },
-    profitMounth(x) {
-      this.profitVal = this.dataProfit.mounth;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexPro = x;
-    },
-    profitYear(x) {
-      this.profitVal = this.dataProfit.year;
-      this.initEchart(this.consumptionVal, this.profitVal);
-      this.indexPro = x;
-    },
-    initEchart(val1, val2) {
-      let myChart1 = this.$echarts.init(
-        document.getElementById("myConsumption")
-      );
-      let myChart2 = this.$echarts.init(document.getElementById("myProfit"));
-      let myData1 = val1;
-      let myData2 = val2;
-      myChart1.setOption({
-        color: ["#3398DB"],
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "line" // 默认为直线，可选为：'line' | 'shadow'
+
+
+      initEchart(elementId,xValue,yValue) {
+          let option={
+              color: ["#3398DB"],
+              tooltip: {
+                  trigger: "axis",
+                  axisPointer: {
+                      // 坐标轴指示器，坐标轴触发有效
+                      type: "line" // 默认为直线，可选为：'line' | 'shadow'
+                  }
+              },
+              grid: {
+                  left: "3%",
+                  right: "4%",
+                  bottom: "3%",
+                  containLabel: true
+              },
+              xAxis: [
+                  {
+                      name: "T",
+                      type: "category",
+                      // x轴数值
+                      data: xValue,
+                      axisTick: {
+                          alignWithLabel: true
+                      },
+                      axisLine: {
+                          show: true,
+                          symbol: ["none", "arrow"],
+                          symbolSize: [10, 20],
+                          symbolOffset: [0, 5],
+                          lineStyle: {
+                              color: "#ffffff"
+                          }
+                      }
+                  }
+              ],
+              yAxis: [
+                  {
+                      name: "UracPower(U)",
+                      type: "value",
+                      /*axisLabel: {
+                          formatter: "{value}"
+                      },*/
+                      axisLine: {
+                          show: true,
+                          symbol: ["none", "arrow"],
+                          symbolSize: [10, 20],
+                          symbolOffset: [0, 15],
+                          lineStyle: {
+                              color: "#ffffff"
+                          }
+                      }
+                  }
+              ],
+              series: [
+                  {
+                      name: "uranus",
+                      type: "bar",
+                      barWidth: "30%",
+                      color: "#1890ff",
+                      // y轴柱形数值
+                      data: yValue
+                  },
+                  {
+                      name: "line",
+                      type: "line",
+                      color: "#1890ff",
+                      // y轴连线数值
+                      data: yValue
+                  }
+              ]
           }
-        },
-        grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true
-        },
-        xAxis: [
-          {
-            name: "T",
-            type: "category",
-            // x轴数值
-            data: myData1.x,
-            axisTick: {
-              alignWithLabel: true
-            },
-            axisLine: {
-              show: true,
-              symbol: ["none", "arrow"],
-              symbolSize: [10, 20],
-              symbolOffset: [0, 5],
-              lineStyle: {
-                color: "#ffffff"
-              }
-            }
-          }
-        ],
-        yAxis: [
-          {
-            name: "UracPower(U)",
-            type: "value",
-            axisLabel: {
-              formatter: "{value}"
-            },
-            axisLine: {
-              show: true,
-              symbol: ["none", "arrow"],
-              symbolSize: [10, 20],
-              symbolOffset: [0, 15],
-              lineStyle: {
-                color: "#ffffff"
-              }
-            }
-          }
-        ],
-        series: [
-          {
-            name: "uranus",
-            type: "bar",
-            barWidth: "30%",
-            color: "#1890ff",
-            // y轴柱形数值
-            data: myData1.y
-          },
-          {
-            name: "line",
-            type: "line",
-            color: "#1890ff",
-            // y轴连线数值
-            data: myData1.y
-          }
-        ]
-      });
-      myChart2.setOption({
-        color: ["#3398DB"],
-        tooltip: {
-          trigger: "axis",
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: "line" // 默认为直线，可选为：'line' | 'shadow'
-          }
-        },
-        grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
-          containLabel: true
-        },
-        xAxis: [
-          {
-            name: "T",
-            type: "category",
-            // x轴数值
-            data: myData2.x,
-            axisTick: {
-              alignWithLabel: true
-            },
-            axisLine: {
-              show: true,
-              symbol: ["none", "arrow"],
-              symbolSize: [10, 20],
-              symbolOffset: [0, 5],
-              lineStyle: {
-                color: "#ffffff"
-              }
-            }
-          }
-        ],
-        yAxis: [
-          {
-            name: "Earnings(Urac)",
-            type: "value",
-            axisLabel: {
-              formatter: "{value}"
-            },
-            axisLine: {
-              show: true,
-              symbol: ["none", "arrow"],
-              symbolSize: [10, 20],
-              symbolOffset: [0, 15],
-              lineStyle: {
-                color: "#ffffff"
-              }
-            }
-          }
-        ],
-        series: [
-          {
-            name: "uranus",
-            type: "bar",
-            barWidth: "30%",
-            color: "#1890ff",
-            // y轴柱形数值
-            data: myData2.y
-          },
-          {
-            name: "line",
-            type: "line",
-            color: "#1890ff",
-            // y轴连线数值
-            data: myData2.y
-          }
-        ]
-      });
-      window.onresize = function() {
-        myChart1.resize();
-        myChart2.resize();
-      };
-    }
+        let myChart1 = this.$echarts.init(
+          document.getElementById(elementId)
+        );
+        myChart1.setOption(option);
+        window.onresize = function() {
+          myChart1.resize();
+        };
+      }
   },
   mounted() {
-    this.consumptionDay(3);
-    this.profitDay(3);
-    this.initTransactionRecords();
+      this.language=auth.getCurLang()
+      this.initTransactionRecords()
+      this.statisticsGlobalUraPower('myProfit','week')
+      this.statisticsGlobalUraPower("myConsumption","month")
   }
 };
 </script>
