@@ -87,19 +87,33 @@
       </el-row>
       <el-row class="rePool">
         <el-col :span="4">
-          <Water :chartData="0.5"/>
+          <Water  v-if="update1" :chartData="division(clusterInfo.usedCompute,clusterInfo.totalCompute)"/>
         </el-col>
         <el-col class="padding-top" :span="7" :offset="1">
-          <h4>{{$t('seller.group.earnings')}} 888.86 URAC</h4>
-          <p>{{$t('seller.group.value')}} 100URAC/天</p>
-          <p>{{$t('seller.group.region')}} {{$t('seller.group.asia')}}</p>
-          <p>{{$t('seller.group.stateSale')}} {{$t('seller.group.inSale')}}</p>
+          <h4>{{$t('seller.group.earnings')}} {{clusterInfo.profit}} URAC</h4>
+          <p>{{$t('seller.group.value')}} {{clusterInfo.rentPrice}}URAC/天</p>
+          <p>{{$t('seller.group.region')}} {{clusterInfo.region}}</p>
+          <template v-if="clusterInfo.state== 'online'">
+            <p>{{$t('seller.group.stateSale')}} {{$t('seller.group.inSale')}}</p>
+          </template>
+          <template v-else>
+            <p>{{$t('seller.group.stateSale')}} 未上架</p>
+          </template>
         </el-col>
         <el-col class="padding-top" :span="8">
-          <h4>{{$t('seller.group.restTime')}} {{$t('seller.group.timeup')}}</h4>
-          <p>{{$t('seller.group.operatingStatus')}} {{$t('seller.group.running')}}</p>
-          <p>{{$t('seller.group.buyingTime')}} 2018/12/12 12:12:12</p>
-          <p>{{$t('seller.group.endingTime')}} 2019/12/12 12:12:12</p>
+          <h4>
+              {{$t('seller.group.restTime')}}
+              <RestTime :endTime="dateFormat(clusterInfo.endTime)"/>
+              111
+          </h4>
+          <template v-if="clusterInfo.state== 'online' || clusterInfo.state== 'active'">
+            <p>{{$t('seller.group.operatingStatus')}} {{$t('seller.group.running')}}</p>
+          </template>
+          <template v-else>
+            <p>{{$t('seller.group.operatingStatus')}} 未运行</p>
+          </template>
+          <p>{{$t('seller.group.buyingTime')}} {{dateFormat(clusterInfo.beginTime)}}</p>
+          <p>{{$t('seller.group.endingTime')}} {{dateFormat(clusterInfo.endTime)}}</p>
         </el-col>
         <el-col :span="4">
           <p class="setting" @click="dialogVisible = true">
@@ -219,6 +233,8 @@
 </template>
 
 <script>
+    import moment from 'moment'
+    import RestTime from "@/components/modules/RestTime"
     import * as rancher from '../../services/RancherService'
     import * as auth from "../../services/AuthService";
     import Water from "@/components/modules/Water"
@@ -230,7 +246,11 @@ export default {
   },
   data() {
     return {
+        update1: false,
+        clusterId:0,
+        language:"",
         tableData:[],
+        clusterInfo:{},
       dialogVisible: false,
       form: {
         name: "",
@@ -245,11 +265,10 @@ export default {
     };
   },
   methods: {
-
       getHosts(){
           //获取集群下的所有主机
-          rancher.clusterHosts(auth.getCurLang(),2).then(data=>{
-              console.log(data)
+          rancher.clusterHosts(this.language,this.clusterId).then(data=>{
+              console.log("hosts====",data)
               this.tableData=data.data.data.records
           })
       },
@@ -262,6 +281,14 @@ export default {
               this.outerVisible = true
           })
 
+      },
+      getClusterDetail(){
+          rancher.clusterInfo(this.language,this.clusterId).then(data=>{
+              console.log("detail",data)
+              this.clusterInfo=data.data.data
+              this.initEchart()
+              this.update1=true
+          })
       },
     filterState(value, row) {
       return row.state === value;
@@ -292,12 +319,12 @@ export default {
             color: ["#1890FF", "#f2f2f2"],
             data: [
               {
-                value: 68,
+                value: this.getPercentNumber(this.clusterInfo.cpuKernelUsed,this.clusterInfo.cpuKernel),
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|CPU}", "{b|68%}"].join("\n"),
+                    formatter: ["{a|CPU}", "{b|"+this.getPercentNumber(this.clusterInfo.cpuKernelUsed,this.clusterInfo.cpuKernel)+"%}"].join("\n"),
                     rich: {
                       a: {
                         color: "#5d5d5d",
@@ -314,7 +341,7 @@ export default {
                   }
                 }
               },
-              { value: 32 }
+              { value: 100-this.getPercentNumber(this.clusterInfo.cpuKernelUsed,this.clusterInfo.cpuKernel) }
             ]
           }
         ]
@@ -332,12 +359,12 @@ export default {
             color: ["#FACC14", "#f2f2f2"],
             data: [
               {
-                value: 62,
+                value: this.getPercentNumber(this.clusterInfo.memUsed,this.clusterInfo.mem),
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|内存}", "{b|62%}"].join("\n"),
+                    formatter: ["{a|内存}", "{b|"+this.getPercentNumber(this.clusterInfo.memUsed,this.clusterInfo.mem)+"%}"].join("\n"),
                     rich: {
                       a: {
                         color: "#5d5d5d",
@@ -354,7 +381,7 @@ export default {
                   }
                 }
               },
-              { value: 38 }
+              { value: 100-this.getPercentNumber(this.clusterInfo.memUsed,this.clusterInfo.mem) }
             ]
           }
         ]
@@ -372,12 +399,12 @@ export default {
             color: ["#658FF7", "#f2f2f2"],
             data: [
               {
-                value: 88,
+                value: this.getPercentNumber(this.clusterInfo.diskUsed,this.clusterInfo.disk),
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|硬盘}", "{b|88%}"].join("\n"),
+                    formatter: ["{a|硬盘}", "{b|"+this.getPercentNumber(this.clusterInfo.diskUsed,this.clusterInfo.disk)+"%}"].join("\n"),
                     rich: {
                       a: {
                         color: "#5d5d5d",
@@ -394,7 +421,7 @@ export default {
                   }
                 }
               },
-              { value: 12 }
+              { value: 100-this.getPercentNumber(this.clusterInfo.diskUsed,this.clusterInfo.disk) }
             ]
           }
         ]
@@ -412,12 +439,12 @@ export default {
             color: ["#FB8D5B", "#f2f2f2"],
             data: [
               {
-                value: 62,
+                value: this.getPercentNumber(this.clusterInfo.networkUsed,this.clusterInfo.network),
                 selected: false,
                 label: {
                   normal: {
                     show: true,
-                    formatter: ["{a|网络}", "{b|62%}"].join("\n"),
+                    formatter: ["{a|网络}", "{b|"+this.getPercentNumber(this.clusterInfo.networkUsed,this.clusterInfo.network)+"%}"].join("\n"),
                     rich: {
                       a: {
                         color: "#5d5d5d",
@@ -434,7 +461,7 @@ export default {
                   }
                 }
               },
-              { value: 38 }
+              { value: 100-this.getPercentNumber(this.clusterInfo.networkUsed,this.clusterInfo.network) }
             ]
           }
         ]
@@ -454,12 +481,33 @@ export default {
                 var n=Number(a/b*100).toFixed(2)
                 return Number(n)
             }
+        },
+        dateFormat(){
+            return function(time){
+                return moment(time).format('YYYY-MM-DD hh:mm:ss')
+            }
+        },
+        division(){
+            return function(a,b){
+                var n=a/b;
+                console.log("water is"+Number(n))
+                if(isNaN(Number(n))){
+                    console.log("nnnnnn"+Number(n))
+                    n=0
+                }
+                return Number(n)
+            }
         }
     },
   mounted() {
-    this.initEchart();
+      this.clusterId=Number(this.$route.params.resid)
+      console.log("id======"+this.clusterId)
+      this.getClusterDetail()
       this.getHosts()
-  }
+      this.language=auth.getCurLang()
+
+  },
+
 };
 </script>
 

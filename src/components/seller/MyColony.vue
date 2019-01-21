@@ -42,16 +42,7 @@
               ></el-date-picker>
             </el-col>
           </el-form-item>
-          <el-form-item :label="$t('seller.groups.setRegion')">
-            <el-select v-model="form.region" :placeholder="$t('seller.groups.setRegion')">
-              <el-option :label="$t('seller.groups.asia')" value="asia"></el-option>
-              <el-option :label="$t('seller.groups.europe')" value="europe"></el-option>
-              <el-option :label="$t('seller.groups.africa')" value="africa"></el-option>
-              <el-option :label="$t('seller.groups.south')" value="southAmerica"></el-option>
-              <el-option :label="$t('seller.groups.north')" value="northAmerica"></el-option>
-              <el-option :label="$t('seller.groups.oceania')" value="oceania"></el-option>
-            </el-select>
-          </el-form-item>
+
           <el-form-item :label="$t('seller.groups.setState')">
             <el-select v-model="form.state" :placeholder="$t('seller.groups.setState')">
               <el-option :label="$t('seller.groups.inSale')" value="inSale"></el-option>
@@ -87,8 +78,8 @@
         <el-col :span="12" v-for="(colony, index) in colonyList" :key="index">
           <el-row style="border: 1px solid #e9e9e9; margin:10px;">
             <el-col :span="6">
-              <router-link :to="{path: '/colony/colony.id'}">
-                <Water :chartData="colony.usedCompute/colony.totalCompute"/>
+              <router-link :to="{path: '/colony/'+colony.id}">
+                <Water :chartData="division(colony.usedCompute,colony.totalCompute)"/>
                 <h1>{{colony.name}}</h1>
               </router-link>
             </el-col>
@@ -162,11 +153,31 @@ export default {
               var records=data.data.data.records
               this.colonyList=records
               records.forEach((item,index)=>{
-                  this.colonyList[index].endTime=moment(item.endTime).format('YYYY-MM-DD hh:mm:ss')
+                  let momentInfo=moment(item.endTime)
+                  if(momentInfo.isValid()==false){
+                      this.colonyList[index].endTime=moment(0).format('YYYY-MM-DD hh:mm:ss')
+                  }else{
+                      this.colonyList[index].endTime=moment(item.endTime).format('YYYY-MM-DD hh:mm:ss')
+                  }
+
+                  //console.log(moment("index===:"+item.endTime))
               })
           })
       }
   },
+    computed:{
+        division(){
+            return function(a,b){
+               var n=a/b;
+                console.log(Number(n))
+               if(isNaN(Number(n))){
+                   console.log("nnnnnn"+Number(n))
+                   n=0
+               }
+               return Number(n)
+            }
+        }
+    },
     mounted(){
       this.clusterSearch()
         this.language=auth.getCurLang()
