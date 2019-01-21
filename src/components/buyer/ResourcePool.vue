@@ -74,11 +74,11 @@ export default {
       appList: [],
       imageServerUrl: this.$store.state.imageServerUrl,
       statisObejct: {
-        'cpuUsd': 0,
-        'diskUsd': 0,
-        'memUsd': 0,
-        'networkUsd': 0,
-        'urapowerUsd': 0
+        'cpuUsd': 10,
+        'diskUsd': 20,
+        'memUsd': 30,
+        'networkUsd': 40,
+        'urapowerUsd': 50
       }
     }
   },
@@ -123,7 +123,6 @@ export default {
                         color: '#5d5d5d',
                         fontSize: '14',
                         lineHeight: '22',
-                        fontFamily: 'PingFangSC-Regular'
                       },
                       b: {
                         color: 'rgba(0,0,0,.85)',
@@ -344,6 +343,7 @@ export default {
                 this.statisObejct.memUsd = (data.memUsed + data.memLock) / data.mem
                 this.statisObejct.networkUsd = (data.networkUsed + data.networkLock) / data.network
               })
+              this.initEchart()
     }
   },
   beforeRouteUpdate(to, from, next) {
@@ -359,9 +359,9 @@ export default {
   },
   watch: {
     statisObejct: {
-      handler() {
-        this.initEchart()
-      },
+    //   handler() {
+    //     this.initEchart()
+    //   },
       deep: true,
       immediate: true
     }
