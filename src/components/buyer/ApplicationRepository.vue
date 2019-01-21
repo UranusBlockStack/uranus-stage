@@ -46,8 +46,8 @@
         </el-col>
       </el-row>
       <el-row class="shopBox" :gutter="20">
-        <el-col :span="6" v-for="(app, index) in appList" :key="index" style="margin-bottom:40px">
-          <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
+        <el-col :span="24" style="margin-bottom:40px">
+          <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover" v-for="(app, index) in appList" :key="index">
             <div class="resources">
               <div>
                 <el-dropdown trigger="click">
@@ -204,7 +204,7 @@ export default {
         margin: 0;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #8eb357;
+        color: #1890ff;
       }
     }
   }
@@ -261,10 +261,13 @@ export default {
       .el-card {
           background: rgba(101, 143, 247, 0);
           border: 1px solid rgba(255, 255, 255, 0.2);
+          width: 270px;
+          display: inline-block;
+          margin: 0 15px;
         }
       .resources {
         text-align: center;
-        padding: 20px;
+        padding: 10px;
         div {
           cursor: default;
           .el-dropdown {
@@ -280,6 +283,7 @@ export default {
               height: 110px;
               width: 130px;
               margin: 10px auto;
+              position: relative;
               img {
                 min-width: 100px;
                 min-height: 80px;
@@ -287,19 +291,23 @@ export default {
                 max-height: 110px;
                 width: auto;
                 height: auto;
-                margin: 0 auto;
                 display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
               }
             }
           .name {
             font-weight: 600;
-            padding: 5px 0 10px;
-            border-bottom: 2px solid #eee;
-            font-family: Source-Sans-Pro-Bold;
-            font-size: 16px;
-            color: #ffffff;
-            text-align: center;
-            line-height: 24px;
+              padding: 5px 0 5px;
+              font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
+              font-size: 16px;
+              color: #ffffff;
+              text-align: center;
+              line-height: 24px;
+              margin-bottom: 0px;
           }
           .detail {
             width: 220px;
@@ -310,28 +318,37 @@ export default {
             color: #ffffff;
             text-align: center;
             line-height: 22px;
-            margin: 10px auto;
+            margin: -5px auto;
           }
           .free {
-            font-weight: 600;
-            padding: 10px 0;
-            font-size: 14px;
-            color: #81a028;
-            letter-spacing: 0;
-            line-height: 22px;
-            text-align: left;
+            font-weight: 500;
+              padding: 10px 0;
+              font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
+              font-size: 14px;
+              color: #1890ff;
+              letter-spacing: 0;
+              line-height: 22px;
+              text-align: left;
           }
           .shops {
-            font-size: 14px;
-            padding: 10px 0;
-            color: #ffffff;
-            letter-spacing: 0;
-            text-align: center;
-            line-height: 22px;
+            font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
+              font-size: 14px;
+              padding: 10px 0;
+              color: #ffffff;
+              letter-spacing: 0;
+              text-align: center;
+              line-height: 22px;
           }
           .el-button {
-            border: none;
-            margin-top: -10px;
+            background: rgba(101, 143, 247, 0);
+              box-shadow: inset 0 0 22px 0 #2463ff;
+              border-radius: 5px;
+              width: 120px;
+              border: none;
+              margin-top: -5px;
+              padding: 8px 20px;
           }
         }
       }

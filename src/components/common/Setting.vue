@@ -633,7 +633,7 @@ export default {
       text-align: left;
     }
     p > .el-button {
-      color: #8eb357;
+      color: #1890ff;
       margin-top: 45px;
     }
   }

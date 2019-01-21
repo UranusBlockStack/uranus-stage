@@ -48,12 +48,12 @@
         </el-col>
       </el-row>
       <el-row class="shopBox" :gutter="20">
-        <el-col :span="6" v-for="(app, index) in appList" :key="index" style="margin-bottom:40px">
-          <el-card :body-style="{ padding: '0px', height:'380px'}" shadow="hover">
+        <el-col :span="24" style="margin-bottom:40px">
+          <el-card :body-style="{ padding: '0px', height:'380px',}" shadow="hover" v-for="(app, index) in appList" :key="index">
             <div class="resources">
               <div>
                 <p class="shops">{{app.catalog}}</p>
-                <div class="imgBox">
+                <div class="img-box">
                   <img :src="app.imageurl" alt="img">
                 </div>
                 <p class="name">{{app.name}}</p>
@@ -66,10 +66,7 @@
                     <p class="downloads">{{$t('buyer.appMarket.download')}} {{app.downloadTimes}}</p>
                   </el-col>
                   <a @click.prevent="deployApp(app.id, app.rid, app.defaultVersion, app.catalog)">
-                    <el-button
-                      style="margin-bottom:10px;"
-                      type="success"
-                    >{{$t('buyer.appMarket.deploy')}}</el-button>
+                    <el-button type="success">{{$t('buyer.appMarket.deploy')}}</el-button>
                   </a>
                 </el-row>
               </div>
@@ -255,6 +252,7 @@ export default {
     p {
       height: 40px;
       font-family: Source-Sans-Pro-Bold;
+      font-weight: 500;
       font-size: 16px;
       color: #ffffff;
       line-height: 24px;
@@ -267,11 +265,14 @@ export default {
       min-height: 400px;
       .el-card {
         background: rgba(101, 143, 247, 0);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          width: 270px;
+          display: inline-block;
+          margin: 0 15px;
       }
       .resources {
         text-align: center;
-        padding: 20px;
+        padding: 10px;
         div {
           cursor: default;
           .shops {
@@ -280,64 +281,77 @@ export default {
             margin-bottom: -10px;
             text-align: right;
           }
-          .imgBox {
-            width: 130px;
-            height: 110px;
-            margin: 0 auto;
-            img {
-              min-width: 100px;
-              min-height: 80px;
-              max-width: 130px;
-              max-height: 110px;
-              width: auto;
-              height: auto;
-              margin: 0 auto;
-              display: block;
+          .img-box {
+              height: 110px;
+              width: 130px;
+              margin: 10px auto;
+              position: relative;
+              img {
+                min-width: 100px;
+                min-height: 80px;
+                max-width: 130px;
+                max-height: 110px;
+                width: auto;
+                height: auto;
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+              }
             }
-          }
           .name {
             font-weight: 600;
-            padding: 5px 0 10px;
-            border-bottom: 1px solid #eee;
-            font-family: Source-Sans-Pro-Bold;
-            font-size: 16px;
-            color: #ffffff;
-            text-align: center;
-            line-height: 24px;
+              padding: 5px 0 5px;
+              font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
+              font-size: 16px;
+              color: #ffffff;
+              text-align: center;
+              line-height: 24px;
+              margin-bottom: 0px;
           }
           .detail {
             width: 220px;
             height: 66px;
             overflow: hidden;
             box-sizing: content-box;
+            font-weight: 300;
             font-size: 14px;
             color: #ffffff;
             text-align: center;
             line-height: 22px;
-            margin: 10px auto;
+            margin: -5px auto;
           }
           .free {
-            font-weight: 600;
-            padding: 10px 0;
-            font-size: 14px;
-            color: #8eb357;
-            letter-spacing: 0;
-            line-height: 22px;
-            text-align: left;
+            font-weight: 500;
+              padding: 10px 0;
+              font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
+              font-size: 14px;
+              color: #1890ff;
+              letter-spacing: 0;
+              line-height: 22px;
+              text-align: left;
           }
           .downloads {
-            font-size: 14px;
-            padding: 10px 0;
-            color: #ffffff;
-            letter-spacing: 0;
-            text-align: center;
-            line-height: 22px;
-            height: 22px;
+            font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
+              font-size: 14px;
+              padding: 10px 0;
+              color: #ffffff;
+              letter-spacing: 0;
+              text-align: center;
+              line-height: 22px;
           }
           .el-button {
-            border: none;
-            margin-top: 10px;
-            margin-right: 75px;
+            background: rgba(101, 143, 247, 0);
+              box-shadow: inset 0 0 22px 0 #2463ff;
+              border-radius: 5px;
+              width: 120px;
+              border: none;
+              margin-top: -5px;
+              padding: 8px 20px;
           }
         }
       }
