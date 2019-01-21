@@ -146,3 +146,8 @@ export function deleteAppById (lang, appId) {
 export function statisticsProjects (lang) {
     return httpLang(lang).get('/rancher/statistics/projects')
 }
+
+
+export function statisticsGlobalUraPower (lang, type) {
+    return httpLang(lang).get(`/rancher/statistics/computes/${type}`)
+}

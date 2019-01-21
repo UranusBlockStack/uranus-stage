@@ -72,21 +72,21 @@
           <el-col :span="16">
             <div class="choosePower">
               <span
-                @click="powerYear(0)"
+                @click="powerMounth(0)"
                 :class="{active: this.indexPower == '0'}"
               >{{$t('buyer.home.month')}}</span>
               <span
-                @click="powerMounth(1)"
+                @click="powerWeek(1)"
                 :class="{active: indexPower == '1'}"
               >{{$t('buyer.home.week')}}</span>
               <span
-                @click="powerWeek(2)"
+                @click="powerDay(2)"
                 :class="{active: indexPower == '2'}"
               >{{$t('buyer.home.day')}}</span>
-              <span
-                @click="powerDay(3)"
-                :class="{active: indexPower == '3'}"
-              >{{$t('buyer.home.hour')}}</span>
+              <!--<span-->
+                <!--@click="powerDay(3)"-->
+                <!--:class="{active: indexPower == '3'}"-->
+              <!--&gt;{{$t('buyer.home.hour')}}</span>-->
             </div>
           </el-col>
         </el-row>
@@ -98,34 +98,34 @@
 </template>
 
 <script>
-import * as app from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
+import * as app from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
 
 export default {
-  name: "Buyer",
+  name: 'Buyer',
   data() {
     return {
       page: 1,
       pageSize: 4,
-      indexPower: "",
+      indexPower: '',
       dataPower: {
         day: {
-          x: ["00:00", "04:00", "08:00", "12:00", "16:00", "18:00"],
-          y: [10, 20, 30, 40, 50, 60],
-          line: [5, 10, 10, 15, 15, 15]
+          x: [],
+          y: [],
+          line: []
         },
         week: {
-          x: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-          y: [100, 200, 300, 400, 500, 600, 700],
-          line: [50, 100, 300, 200, 300, 600, 400]
+          x: [],
+          y: [],
+          line: []
         },
         mounth: {
-          x: ["1", "5", "10", "15", "20", "25", "30"],
-          y: [1000, 520, 200, 334, 390, 330, 220],
-          line: [50, 100, 300, 200, 300, 600, 400]
+          x: [],
+          y: [],
+          line: []
         },
         year: {
-          x: ["1", "4", "7", "10", "12"],
+          x: ['1', '4', '7', '10', '12'],
           y: [10000, 520, 200, 334, 390],
           line: [5000, 100, 100, 200, 300]
         }
@@ -133,7 +133,7 @@ export default {
       powerVal: {},
       appList: [],
       imageServerUrl: this.$store.state.imageServerUrl
-    };
+    }
   },
   methods: {
     getAppList() {
@@ -142,79 +142,82 @@ export default {
         pageSize: this.pageSize,
         // 'sort': this.sort,
         sortDesc: this.sortDesc
-      };
+      }
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
-        this.appList = respData.data.data.records;
+        this.appList = respData.data.data.records
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon";
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
           appitem.computedPrice = appitem.free
-            ? this.$t("buyer.deploy.free")
-            : appitem.price;
-          return appitem;
-        });
-      });
+            ? this.$t('buyer.deploy.free')
+            : appitem.price
+          return appitem
+        })
+      })
     },
     deployApp(appId, appRid, versionId, catalog) {
       this.$router.push({
-        path: "/deployment",
+        path: '/deployment',
         query: {
           appId: appId,
           appRid: appRid,
           versionId: versionId,
           catalog: catalog
         }
-      });
+      })
     },
     powerDay(x) {
-      this.powerVal = this.dataPower.day;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.statisGlobalUraPower('day')
+      this.powerVal = this.dataPower.day
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     powerWeek(x) {
-      this.powerVal = this.dataPower.week;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.statisGlobalUraPower('week')
+      this.powerVal = this.dataPower.week
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     powerMounth(x) {
-      this.powerVal = this.dataPower.mounth;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.statisGlobalUraPower('month')
+      this.powerVal = this.dataPower.mounth
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     powerYear(x) {
-      this.powerVal = this.dataPower.year;
-      this.initEchart(this.powerVal);
-      this.indexPower = x;
+      this.powerVal = this.dataPower.year
+      this.initEchart(this.powerVal)
+      this.indexPower = x
     },
     initEchart(val) {
-      var myChart = this.$echarts.init(document.getElementById("myPower"));
-      var myData = val;
+      var myChart = this.$echarts.init(document.getElementById('myPower'))
+      var myData = val
       myChart.setOption({
-        color: ["#1890ff"],
+        color: ['#1890ff'],
         //  backgroundColor:'rgba(128, 128, 128, 0.1)', //rgba设置透明度0.1
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
-            type: "line"
+            type: 'line'
           }
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            name: this.$t("buyer.home.xName"),
-            type: "category",
+            name: this.$t('buyer.home.xName'),
+            type: 'category',
             data: myData.x,
             axisLine: {
               show: true,
-              symbol: ["none", "arrow"],
+              symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               lineStyle: {
-                color: "#ffffff"
+                color: '#ffffff'
               }
             },
             axisTick: {
@@ -222,60 +225,87 @@ export default {
             },
             axisLabel: {
               textStyle: {
-                color: "#ffffff"
+                color: '#ffffff'
               }
             }
           }
         ],
         yAxis: [
           {
-            name: this.$t("buyer.home.yName") + " (U)",
-            type: "value",
+            name: this.$t('buyer.home.yName') + ' (U)',
+            type: 'value',
             axisLine: {
               show: true,
-              symbol: ["none", "arrow"],
+              symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               symbolOffset: [0, 15],
               lineStyle: {
-                color: "#ffffff"
+                color: '#ffffff'
               }
             },
             axisLabel: {
-              formatter: "{value}",
+              formatter: '{value}',
               textStyle: {
-                color: "#ffffff"
+                color: '#ffffff'
               }
             }
           }
         ],
         series: [
           {
-            name: this.$t("buyer.home.allPower"),
-            type: "bar",
-            color: "#2463ff",
-            barWidth: "20%",
+            name: this.$t('buyer.home.allPower'),
+            type: 'bar',
+            color: '#2463ff',
+            barWidth: '20%',
             data: myData.y
           },
           {
-            name: this.$t("buyer.home.restPower"),
-            type: "line",
-            color: "#51a906",
+            name: this.$t('buyer.home.restPower'),
+            type: 'line',
+            color: '#51a906',
             data: myData.line
           }
         ]
-      });
+      })
       window.onresize = function() {
-        myChart.resize();
-      };
+        myChart.resize()
+      }
+    },
+    statisGlobalUraPower(type) {
+      app.statisticsGlobalUraPower(auth.getCurLang(), type).then(respData => {
+        const data = respData.data.data
+        if (type == 'day') {
+          data.forEach((item) => {
+            this.dataPower.day.x.push(item.datetimeValue)
+            this.dataPower.day.y.push(item.totalCompute)
+            this.dataPower.day.line.push(item.usedCompute)
+          })
+          console.log('==day===', this.dataPower.day)
+        } else if (type == 'week') {
+          data.forEach((item) => {
+            this.dataPower.week.x.push(item.datetimeValue)
+            this.dataPower.week.y.push(item.totalCompute)
+            this.dataPower.week.line.push(item.usedCompute)
+          })
+          console.log('==week===', this.dataPower.day)
+        } else if (type == 'month') {
+          data.forEach((item) => {
+            this.dataPower.mounth.x.push(item.datetimeValue)
+            this.dataPower.mounth.y.push(item.totalCompute)
+            this.dataPower.mounth.line.push(item.usedCompute)
+          })
+          console.log('==mounth===', this.dataPower.day)
+        }
+      })
     }
   },
   mounted() {
-    this.powerDay(3);
+    this.powerDay(2)
   },
   created() {
-    this.getAppList();
+    this.getAppList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
