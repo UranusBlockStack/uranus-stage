@@ -9,17 +9,17 @@
       width="800px"
     >
       <el-table :data="gridData">
-        <el-table-column property="order" :label="$t('buyer.resourceMarket.orderNumber')"></el-table-column>
-        <el-table-column property="address" :label="$t('buyer.resourceMarket.address')"></el-table-column>
-        <el-table-column property="number" :label="$t('buyer.resourceMarket.value')"></el-table-column>
-        <el-table-column property="type" :label="$t('buyer.resourceMarket.content')"></el-table-column>
+        <el-table-column property="orderNo" :label="$t('buyer.resourceMarket.orderNumber')"></el-table-column>
+        <el-table-column property="buyerAccount" :label="$t('buyer.resourceMarket.address')"></el-table-column>
+        <el-table-column property="orderAmount" :label="$t('buyer.resourceMarket.value')"></el-table-column>
+        <el-table-column property="prodType" :label="$t('buyer.resourceMarket.content')"></el-table-column>
         <el-table-column :label="$t('buyer.resourceMarket.fee')">
           <template slot-scope="scope">
             <el-input-number
               size="mini"
-              v-model="scope.row.charge"
-              :precision="2"
-              :step="0.1"
+              v-model="fee"
+              :precision="6"
+              :step="0.000001"
               :max="10"
             ></el-input-number>
           </template>
@@ -27,8 +27,8 @@
       </el-table>
       <div class="code">
         <span slot="label">{{$t('buyer.resourceMarket.code')}}</span>
-        <el-input :placeholder="$t('buyer.resourceMarket.codeIn')"></el-input>
-        <el-button>{{$t('buyer.resourceMarket.codeBtn')}}</el-button>
+        <el-input :placeholder="$t('buyer.resourceMarket.codeIn')" v-model="concode"></el-input>
+        <el-button @click="getConfirmCode"> {{$t('buyer.resourceMarket.codeBtn')}} </el-button>
       </div>
       <p>{{$t('buyer.resourceMarket.confirmText1')}}</p>
       <p>{{$t('buyer.resourceMarket.confirmText2')}}</p>
@@ -51,7 +51,7 @@
         <el-button @click="outerVisible = false">{{$t('buyer.resourceMarket.button1')}}</el-button>
         <el-button
           type="primary"
-          @click="outerVisible = false, innerVisible = true"
+          @click="startTransfer"
         >{{$t('buyer.resourceMarket.button2')}}</el-button>
       </div>
     </el-dialog>
@@ -75,7 +75,7 @@
               <el-col :span="18">
                 <el-form-item :label="$t('buyer.deploy.newPool')">
                   <el-input
-                    v-model="deployForm.name"
+                    v-model="deployForm.projectName"
                     style="width:350px;"
                     :placeholder="$t('buyer.deploy.renamePool')"
                   ></el-input>
@@ -99,7 +99,7 @@
                     <el-option
                       v-for="item in cpuSel"
                       :key="item.value"
-                      :label="item.label"
+                      :label="item.label + item.unit"
                       :value="item.value"
                     ></el-option>
                   </el-select>
@@ -184,7 +184,8 @@ import TimeOver from '@/components/modules/TimeOver'
 import * as auth from '../../services/AuthService'
 import * as rancher from '../../services/RancherService'
 import * as order from '../../services/OrderService'
-import { ServerConfigData, WrapDropDownData } from '../../store/rancher_info'
+import * as wallet from '../../services/WalletService'
+import { ServerConfigData, WrapDropDownData, WrapDropDownDataUnit } from '../../store/rancher_info'
 
 export default {
   name: 'ResourceMarket',
@@ -214,43 +215,51 @@ export default {
       input: '',
       outerVisible: false,
       innerVisible: false,
+      fee: 0,
+      concode: '',
       gridData: [
-        {
-          order: '214521236987',
-          address: '0x461s2df6…',
-          number: '1000021.23',
-          type: this.$t('buyer.resourceMarket.purchaseApp'),
-          charge: '0.11'
-        },
-        {
-          order: '214521236987',
-          address: '0x461s2df6…',
-          number: '1000021.23',
-          type: this.$t('buyer.resourceMarket.purchasePower'),
-          charge: '0.11'
-        }
+        // {
+        //   buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
+        //   buyerId: 60,
+        //   buyerName: '',
+        //   createTime: 1548053643803,
+        //   id: 58,
+        //   orderAmount: 0.0441,
+        //   orderHash: null,
+        //   orderNo: '2019012100002',
+        //   orderStatus: 1,
+        //   paySuccessTime: null,
+        //   poundage: 0.000378,
+        //   prodType: 'UraPower',
+        //   sellerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
+        //   sellerId: 60,
+        //   sellerName: '',
+        //   updateTime: 1548053643803
+        // }
       ]
     }
   },
   created () {
     this.getRegionList()
     this.setConfigSelector()
+    this.getReferenceFee()
   },
   methods: {
     setConfigSelector() {
-      const CpuData = ServerConfigData.CPU.paramVals[auth.getCurLang()]
-      this.cpuSel = WrapDropDownData(CpuData)
+      const lang = auth.getCurLang()
+      const CpuData = ServerConfigData.CPU
+      this.cpuSel = WrapDropDownDataUnit(CpuData, lang)
       this.deployForm.cpuKernel = this.cpuSel[0].value
 
-      const HdData = ServerConfigData.HD.paramVals
+      const HdData = ServerConfigData.HD
       this.diskSel = WrapDropDownData(HdData)
       this.deployForm.disk = this.diskSel[0].value
 
-      const MemData = ServerConfigData.Mem.paramVals
+      const MemData = ServerConfigData.Mem
       this.memorySel = WrapDropDownData(MemData)
       this.deployForm.mem = this.memorySel[0].value
 
-      const NetworData = ServerConfigData.Network.paramVals
+      const NetworData = ServerConfigData.Network
       this.networkSel = WrapDropDownData(NetworData)
       this.deployForm.network = this.networkSel[0].value
     },
@@ -273,34 +282,65 @@ export default {
 
     getRegionList() {
       rancher.rancherList(auth.getCurLang())
-                .then(respData => {
-                  this.rancherServer = respData.data.data
-                  let regionData = []
-                  this.rancherServer.map(rancher => {
-                    const region = {
-                      value: auth.getCurLang() === 'zh-cn'? rancher.region: rancher.regionEnUs,
-                      label: auth.getCurLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
-                    }
-                    regionData.push(region)
-                  })
+            .then(respData => {
+              this.rancherServer = respData.data.data
+              let regionData = []
+              this.rancherServer.map(rancher => {
+                const region = {
+                  value: rancher.id,
+                  label: auth.getCurLang() === 'zh-cn'?rancher.region :rancher.regionEnUs
+                }
+                regionData.push(region)
+              })
 
-                  this.regionSel = regionData
-                })
+              this.regionSel = regionData
+              this.deployForm.rancherId = this.regionSel[0].value
+            })
     },
 
     purchaseUraPower() {
-        // console.log(this.deployForm.dateRange[0])
       this.deployForm.beginTime = this.deployForm.dateRange[0]
       this.deployForm.endTime = this.deployForm.dateRange[1]
 
-      console.log(this.deployForm)
       order.orderResource(auth.getCurLang(), this.deployForm)
             .then(purcheStatus => {
               const purchStausData = purcheStatus.data
               console.log(purchStausData)
-              if (purchStausData.success) { this.gridData = purchStausData.data }
+              if (purchStausData.success) {
+                  this.gridData = [purchStausData.data]
+              }
               this.outerVisible = true
             })
+    },
+    getReferenceFee() {
+      wallet.walletReferenceFee(auth.getCurLang())
+            .then(reffee => {
+              this.fee = reffee.data.data
+            })
+    },
+    getConfirmCode() {
+      wallet.walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
+              .then(sendResult => {
+                // const status = sendResult.data
+              })
+    },
+    startTransfer() {
+      const transData = {
+        code: this.concode,
+        fee: this.fee,
+        to: this.gridData[0].sellerAccount,
+        value: this.gridData[0].buyerAccount
+      }
+      console.log(transData)
+      wallet.walletTransfer(auth.getCurLang(), transData)
+              .then(respData => {
+                const transferStatus = respData.data
+                console.log(transferStatus)
+                if (transferStatus) {
+                  this.outerVisible = false
+                  this.innerVisible = true
+                }
+              })
     }
 
   }

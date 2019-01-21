@@ -1,21 +1,18 @@
 // import ES6Lib from '../lib/es6_obj'
 
 export const ServerConfigData = {
-  // CPU: {
-  //   unit: {'zh-cn': '核', 'en-us': 'core(s)'},
-  //   paramVals: {1: '1', 2: '2', 3: '3', 4: '4', 6: '6', 8: '8', 16: '16', 32: '32'}
-  // },
   CPU: {
-    paramVals: {
-      'zh-cn': {1: '1核', 2: '2核', 3: '3核', 4: '4核', 6: '6核', 8: '8核', 16: '16核', 32: '32核'},
-      'en-us': {1: '1 core(s)', 2: '2 core(s)', 3: '3 core(s)', 4: '4 core(s)', 6: '6 core(s)', 8: '8 core(s)', 16: '16 core(s)', 32: '32 core(s)'}
+    paramVals: { 1: '1', 2: '2', 3: '3', 4: '4', 6: '6', 8: '8', 16: '16', 32: '32' },
+    units: {
+      'zh-cn': '核',
+      'en-us': ' core(s)'
     }
   },
   Mem: {
-    paramVals: {'128': '128MB', '256': '256MB', '512': '512MB', '1': '1GB', '2': '2GB', '4': '4GB', '8': '8GB', '16': '16GB'}
+    paramVals: {'128': '128MB', '256': '256MB', '512': '512MB', '1024': '1GB', '2048': '2GB', '4096': '4GB', '8192': '8GB', '16384': '16GB'}
   },
   HD: {
-    paramVals: {'32': '32GB', '64': '64GB', '128': '128GB', '256': '256GB', '512': '512GB', '1': '1TB', '2': '2TB', '4': '4TB'}
+    paramVals: {'32': '32GB', '64': '64GB', '128': '128GB', '256': '256GB', '512': '512GB', '1024': '1TB', '2048': '2TB', '4096': '4TB'}
   },
   Network: {
     paramVals: {'0.5': '0.5Mbps', '1': '1Mbps', '2': '2Mbps', '3': '3Mbps', '4': '4Mbps', '6': '6Mbps', '8': '8Mbps', '10': '10Mbps'}
@@ -38,13 +35,28 @@ export const ServerConfigData = {
 //     return pvaluepairs
 // }
 
-export const WrapDropDownData = (param) => {
+export const WrapDropDownDataUnit = (param, lang) => {
   let dropdownData = []
-  const paramkeys = Object.keys(param)
+  const paramkeys = Object.keys(param.paramVals)
   paramkeys.map(key => {
     const itemData = {
-        value: key,
-        label: param[key]
+      value: key,
+      label: param.paramVals[key],
+      unit: param.units[lang]
+    }
+    dropdownData.push(itemData)
+  })
+
+  return dropdownData
+}
+
+export const WrapDropDownData = (param) => {
+  let dropdownData = []
+  const paramkeys = Object.keys(param.paramVals)
+  paramkeys.map(key => {
+    const itemData = {
+      value: key,
+      label: param.paramVals[key]
     }
     dropdownData.push(itemData)
   })

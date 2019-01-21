@@ -89,7 +89,6 @@ export default {
       },
       outerVisible: false,
       innerVisible: false,
-      curUserInfo: auth.getUserBaseInfo(),
       balance: 0
 
     }
@@ -102,24 +101,24 @@ export default {
           'to': this.formLabelAlign.address,
           'value': this.formLabelAlign.value
         }
-        wallet.walletTransfer(this.$store.getters.lang, transData)
+        wallet.walletTransfer(auth.getCurLang(), transData)
                 .then(respData => {
                   this.outerVisible = true
                 })
       },
       getConfirmCode() {
-        wallet.walletConfirmCode(this.$store.getters.lang, this.curUserInfo.userName)
+        wallet.walletConfirmCode(auth.getCurLang(), auth.getUsername())
                 .then(sendResult => {
                 })
       },
       getFee() {
-        wallet.walletReferenceFee(this.$store.getters.lang)
+        wallet.walletReferenceFee(auth.getCurLang())
                 .then(respData => {
                   this.formLabelAlign.fee = respData.data.data
                 })
       },
       getBalance() {
-        account.userBalcnce(this.$store.getters.lang)
+        account.userBalcnce(auth.getCurLang())
                 .then(respData => {
                   this.balcnce = respData.data.data.balcnce
                 })
