@@ -1,36 +1,7 @@
 import store from '../store'
 import { httpLang } from './HttpService'
 import jwt from 'jsonwebtoken'
-
-export function isLoggedIn () {
-  const token = localStorage.getItem('token')
-  return token != null
-}
-
-export function login (lang, userLoginfo) {
-  return httpLang(lang).post('/auth/users/signin', userLoginfo)
-    .then(res => {
-      const userdata = res.data.data
-      if (res) {
-        const curLoginUserInfo = {
-          userName: userLoginfo.loginName,
-          userId: userdata.id,
-          loginType: userLoginfo.loginType,
-          userAddress: userdata.accountAddress,
-          loginRole: getCurRole(),
-          loginLanguage: 'en-us'
-        }
-        setToken(userdata.token, curLoginUserInfo)
-        localStorage.setItem('currentUserStatus', JSON.stringify(curLoginUserInfo))
-        return curLoginUserInfo
-      }
-    })
-}
-
-export function logout () {
-  localStorage.clear()
-  store.dispatch('authenticate')
-}
+import moment from 'moment'
 
 /// / Conversation State Manage  Functions
 function setToken (token, user) {
@@ -71,7 +42,7 @@ const defaultUserStatus =
   }
 
 export function getDefaultUserStatus () {
-  return  defaultUserStatus
+  return defaultUserStatus
 }
 
 function updatePropValue(propName, value) {
@@ -92,13 +63,13 @@ export function getCurRole() {
 }
 
 export function getCurUserName() {
-    const curUserState = localStorage.getItem('currentUserStatus')
-    return JSON.parse(curUserState).userName
+  const curUserState = localStorage.getItem('currentUserStatus')
+  return JSON.parse(curUserState).userName
 }
 
 export function getCurUserId() {
-    const curUserState = localStorage.getItem('currentUserStatus')
-    return JSON.parse(curUserState).userId
+  const curUserState = localStorage.getItem('currentUserStatus')
+  return JSON.parse(curUserState).userId
 }
 
 export function getUsername () {
@@ -117,7 +88,47 @@ export function getUserId () {
   return token.user.id
 }
 
+export function tokenNeedUpdate() {
+    const tokenRefreshTimeMark = localStorage.getItem('tokenLastUpdateTime')
+    if(!tokenRefreshTimeMark) {
+        localStorage.setItem('tokenLastUpdateTime', moment())
+    }
+    console.log(tokenRefreshTimeMark)
+    console.log(moment().add(5, 'mins').calendar())
+}
+
+
 /// / Auth API Wraps
+
+export function isLoggedIn () {
+  const token = localStorage.getItem('token')
+  return token != null
+}
+
+export function login (lang, userLoginfo) {
+  return httpLang(lang).post('/auth/users/signin', userLoginfo)
+        .then(res => {
+          const userdata = res.data.data
+          if (res) {
+            const curLoginUserInfo = {
+              userName: userLoginfo.loginName,
+              userId: userdata.id,
+              loginType: userLoginfo.loginType,
+              userAddress: userdata.accountAddress,
+              loginRole: getCurRole(),
+              loginLanguage: 'en-us'
+            }
+            setToken(userdata.token, curLoginUserInfo)
+            localStorage.setItem('currentUserStatus', JSON.stringify(curLoginUserInfo))
+            return curLoginUserInfo
+          }
+        })
+}
+
+export function logout () {
+  localStorage.clear()
+  store.dispatch('authenticate')
+}
 
 export function registerUser (lang, user) {
   return httpLang(lang).post('/auth/users/signup', user)
@@ -147,9 +158,9 @@ export function captcha (lang, userinfo) {
   return httpLang(lang).post('/auth/captcha', userinfo)
 }
 
-//检查手机或邮箱验证码是否正确
+// 检查手机或邮箱验证码是否正确
 export function checkCaptcha (lang, receiver, captcha) {
-    return httpLang(lang).get(`/auth/captcha/${receiver}/${captcha}`)
+  return httpLang(lang).get(`/auth/captcha/${receiver}/${captcha}`)
 }
 
 export function country (lang) {
