@@ -116,7 +116,7 @@
                     <el-option
                       v-for="item in cpuSel"
                       :key="item.value"
-                      :label="item.label"
+                      :label="item.label + item.unit"
                       :value="item.value"
                     ></el-option>
                   </el-select>
@@ -314,7 +314,7 @@
       <el-row class="border-line"></el-row>
       <el-row>
         <el-col :span="4" :offset="10">
-          <el-button type="success" @click="appPreDeploy">{{$t('buyer.deploy.deploy')}}</el-button>
+          <el-button type="success" @click="purchaseResourceApp">{{$t('buyer.deploy.deploy')}}</el-button>
         </el-col>
       </el-row>
     </el-row>
@@ -326,7 +326,7 @@
     import * as app from '../../services/RancherService'
     import * as auth from '../../services/AuthService'
     import * as rancher from '../../services/RancherService'
-    import { ServerConfigData, WrapDropDownDataUnit, WrapDropDownData } from '../../store/rancher_info'
+    import { ServerConfigData, WrapDropDownData } from '../../store/rancher_info'
     import * as project from '../../services/RancherService'
     import * as wallet from '../../services/WalletService'
     import * as order from '../../services/OrderService'
@@ -462,20 +462,20 @@ export default {
     },
 
         setConfigSelector() {
-          const CpuData = ServerConfigData.CPU.paramVals[auth.getCurLang()]
-          this.cpuSel = WrapDropDownData(CpuData)
+          const CpuData = ServerConfigData.CPU
+          this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang())
           this.deployForm.cpuKernel = this.cpuSel[0].value
 
-          const HdData = ServerConfigData.HD.paramVals
-          this.diskSel = WrapDropDownData(HdData)
+          const HdData = ServerConfigData.HD
+          this.diskSel = WrapDropDownData(HdData, null)
           this.deployForm.disk = this.diskSel[0].value
 
-          const MemData = ServerConfigData.Mem.paramVals
-          this.memorySel = WrapDropDownData(MemData)
+          const MemData = ServerConfigData.Mem
+          this.memorySel = WrapDropDownData(MemData, null)
           this.deployForm.mem = this.memorySel[0].value
 
-          const NetworData = ServerConfigData.Network.paramVals
-          this.networkSel = WrapDropDownData(NetworData)
+          const NetworData = ServerConfigData.Network
+          this.networkSel = WrapDropDownData(NetworData, null)
           this.deployForm.network = this.networkSel[0].value
         },
 
@@ -619,11 +619,13 @@ export default {
           }
           this.gridData = [purchStausData]
           this.spaceValue = purchStausData.projectId
-          this.appDeploy()
-          //   }
-          // })
+
+
+
+          this.outerVisible = true
+
         },
-        appPreDeploy() {
+        purchaseResourceApp() {
           if (this.radio === '1') { // delopy with new UraPower
             this.purchaseUraPowerPlus()
           } else if (this.radio === '2') { // deploy with exsit UraPower

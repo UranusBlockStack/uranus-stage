@@ -246,21 +246,20 @@ export default {
   },
   methods: {
     setConfigSelector() {
-      const lang = auth.getCurLang()
       const CpuData = ServerConfigData.CPU
-      this.cpuSel = WrapDropDownDataUnit(CpuData, lang)
+      this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang())
       this.deployForm.cpuKernel = this.cpuSel[0].value
 
       const HdData = ServerConfigData.HD
-      this.diskSel = WrapDropDownData(HdData)
+      this.diskSel = WrapDropDownData(HdData, null)
       this.deployForm.disk = this.diskSel[0].value
 
       const MemData = ServerConfigData.Mem
-      this.memorySel = WrapDropDownData(MemData)
+      this.memorySel = WrapDropDownData(MemData, null)
       this.deployForm.mem = this.memorySel[0].value
 
       const NetworData = ServerConfigData.Network
-      this.networkSel = WrapDropDownData(NetworData)
+      this.networkSel = WrapDropDownData(NetworData, null)
       this.deployForm.network = this.networkSel[0].value
     },
 
