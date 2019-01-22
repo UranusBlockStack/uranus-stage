@@ -24,3 +24,8 @@ export function orderDelete (lang, orderNo) {
 export function orderResource(lang, orderData) {
   return httpLang(lang).post('/order/orders/resource', orderData)
 }
+
+//交易收益统计
+export function  earnings(lang, type) {
+    return httpLang(lang).get(`/order/statistics/earnings/${type}`)
+}

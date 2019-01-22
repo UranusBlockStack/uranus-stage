@@ -37,15 +37,15 @@
           <p>{{$t('seller.home.myEarnings')}}</p>
           <div class="choosePro">
             <span
-              @click="statisticsGlobalUraPower('myProfit','month')"
+              @click="getEarning('myProfit','month')"
               :class="{active: this.indexPro == '0'}"
             >{{$t('seller.home.month')}}</span>
             <span
-              @click="statisticsGlobalUraPower('myProfit','week')"
+              @click="getEarning('myProfit','week')"
               :class="{active: this.indexPro == '1'}"
             >{{$t('seller.home.week')}}</span>
             <span
-              @click="statisticsGlobalUraPower('myProfit','day')"
+              @click="getEarning('myProfit','day')"
               :class="{active: this.indexPro == '2'}"
             >{{$t('seller.home.day')}}</span>
             <!--<span @click="profitDay(3)" :class="{active: this.indexPro == '3'}">
@@ -57,18 +57,19 @@
       </div>
       <div class="power">
         <p>{{$t('seller.home.power')}}</p>
-        <div class="powerBox">
+        <div  v-if="initOil" class="powerBox">
           <div id="Cpu">
-            <Oil :chartData="{value: 20, type: 'CPU'}"/>
+            <Oil :chartData="{value: getPercentNumber(allResources.cpuKernelUsed,allResources.cpuKernel), type: 'CPU'}"/>
           </div>
           <div id="Memory">
-            <Oil :chartData="{value: 20, type: 'Memory'}"/>
+            <Oil :chartData="{value: getPercentNumber(allResources.memUsed,allResources.mem), type: 'Memory'}"/>
           </div>
           <div id="Storage">
-            <Oil :chartData="{value: 20, type: 'Storage'}"/>
+            <Oil :chartData="{value: getPercentNumber(allResources.disk,allResources.diskUsed), type: 'Storage'}"/>
           </div>
           <div id="Network">
-            <Oil :chartData="{value: 20, type: 'Network'}"/>
+            <Oil :chartData="{value: getPercentNumber(allResources.network,allResources.networkUsed), type: 'Network'}"/>
+            <!--<Oil :chartData="{value: 20, type: 'Network'}"/>-->
           </div>
         </div>
       </div>
@@ -139,11 +140,12 @@
 </template>
 
 <script>
-import * as wallet from "../../services/WalletService";
 import moment from "moment";
 import Oil from "@/components/modules/Oil";
+import * as wallet from "../../services/WalletService";
 import * as rancher from "../../services/RancherService.js";
 import * as auth from "../../services/AuthService";
+import * as order from "../../services/OrderService";
 
 export default {
   name: "Seller",
@@ -155,11 +157,15 @@ export default {
       language: "en-us",
       indexCon: 2,
       indexPro: 2,
-      tableData: []
+      tableData: [],
+        echarsArray:[],
+        allResources:"",
+      initOil:false
     };
   },
   methods: {
-    statisticsGlobalUraPower(elementId, type,) {
+
+    statisticsGlobalUraPower(elementId, type) {
       //按类型统计 全网算力
       rancher.statisticsGlobalUraPower(this.language, type).then(data => {
         console.log("按类型统计 全网算力数据：", data.data.data);
@@ -170,7 +176,8 @@ export default {
           xValue.push(item.datetimeValue);
           yValue.push(item.usedCompute / item.totalCompute);
         });
-        this.initEchart(elementId, xValue, yValue);
+        var chart
+        this.initEchart(chart,elementId, xValue, yValue);
       });
       if(elementId == 'myConsumption') {
           if (type == 'day') {
@@ -190,6 +197,28 @@ export default {
           }
           }
     },
+      getEarning(elementId,type){
+        order.earnings(this.language,type).then(data=>{
+            console.log("收益"+data.data.data)
+            let result = data.data.data;
+            let xValue = [];
+            let yValue = [];
+            result.forEach((item, index) => {
+                xValue.push(item.datetimeValue);
+                yValue.push(item.earnings);
+            });
+            var chart
+            this.initEchart(chart,elementId, xValue, yValue);
+        })
+      },
+      hosts(){
+        rancher.hosts(this.language).then(data=>{
+            //卖家所有资源
+            console.log("卖家所有资源allResources",data.data.data)
+            this.allResources=data.data.data
+            this.initOil=true
+        })
+      },
 
     initTransactionRecords() {
       wallet.getTradeLogCurrentUser(this.language, 0, 0, 10).then(transList => {
@@ -201,7 +230,7 @@ export default {
       // return moment(cellValue).format("YYYY-MM-DD HH:mm:ss")
       return cellValue;
     },
-    initEchart(elementId, xValue, yValue) {
+    initEchart(myChart1,elementId, xValue, yValue) {
       let option = {
         color: ["#3398DB"],
         tooltip: {
@@ -273,18 +302,43 @@ export default {
           }
         ]
       };
-      let myChart1 = this.$echarts.init(document.getElementById(elementId));
-      myChart1.setOption(option);
-      window.onresize = function() {
+      //var myChart1 = this.$echarts.init(document.getElementById(elementId));
+        myChart1 = this.$echarts.init(document.getElementById(elementId));
+      myChart1.setOption(option)
+        this.echarsArray.push(myChart1)
+     /* window.onresize = function() {
         myChart1.resize();
-      };
+      };*/
+        window.addEventListener("resize",function(){
+            myChart1.resize();
+        })
+
+/*
+        window.addEventListener("resize",function(){
+            console.log(this.echarsArray.length)
+            for(let i = 0; i < this.echarsArray.length; i++){
+                this.echarsArray[i].resize()
+            }
+        })*/
     }
   },
+    computed: {
+        getPercentNumber() {
+            //计算百分比 a/b
+            return function (a, b) {
+                console.log("a:"+a+"  b:"+b)
+                var n = Number(a / b * 100).toFixed(2)
+                console.log(Number(n))
+                return Number(n)
+            }
+        }
+    },
   mounted() {
     this.language = auth.getCurLang();
     this.initTransactionRecords();
-    this.statisticsGlobalUraPower("myProfit", "week");
     this.statisticsGlobalUraPower("myConsumption", "month");
+      this.getEarning("myProfit", "day");
+      this.hosts()
   }
 };
 </script>

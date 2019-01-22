@@ -151,3 +151,7 @@ export function statisticsProjects (lang) {
 export function statisticsGlobalUraPower (lang, type) {
     return httpLang(lang).get(`/rancher/statistics/computes/${type}`)
 }
+
+export function hosts (lang) {
+    return httpLang(lang).get('/rancher/statistics/hosts')
+}
