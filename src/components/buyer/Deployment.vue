@@ -25,7 +25,7 @@
         <el-button @click="getConfirmCode">{{$t('buyer.deploy.codeBtn')}}</el-button>
       </div>
       <p>{{$t('buyer.deploy.confirmText1')}}</p>
-      <p>{{$t('buyer.deploy.confirmText2')}}</p>
+      <TimeOver style="margin-left:300px;"/>
       <el-dialog
         width="800px"
         :title="$t('buyer.deploy.confirmText3')"
@@ -351,9 +351,13 @@ import { ServerConfigData, WrapDropDownData } from "../../store/rancher_info";
 import * as project from "../../services/RancherService";
 import * as wallet from "../../services/WalletService";
 import * as order from "../../services/OrderService";
+import TimeOver from '@/components/modules/TimeOver'
 
 export default {
   name: "Deployment",
+  components: {
+      TimeOver,
+  },
   data() {
     return {
       orderModel: "1",
