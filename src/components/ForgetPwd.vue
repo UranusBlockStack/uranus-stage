@@ -237,7 +237,7 @@ export default {
     a {
       color: #1890ff;
       i {
-        font-size: 35px;
+        font-size: 28px;
       }
     }
   }
