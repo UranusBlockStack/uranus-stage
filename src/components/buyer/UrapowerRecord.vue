@@ -3,15 +3,15 @@
     <el-row class="recordHead">
       <el-col class="title" :span="24">
         <h1>
-          <i class="iconfont icon-zhongmingming"></i>
-          {{$t('buyer.appRepository.deployRecord')}}
+          <i class="iconfont"></i>
+          {{$t('buyer.myResource.deployRecord')}}
         </h1>
       </el-col>
     </el-row>
     <el-row class="recordBox">
       <el-row>
         <!--<el-col :span="6">
-          <el-select v-model="value1" :placeholder="$t('buyer.appRepository.deployPage.pool')">
+          <el-select v-model="value1" :placeholder="$t('buyer.myResource.deployPage.pool')">
             <el-option
               v-for="item in options1"
               :key="item.value"
@@ -19,7 +19,7 @@
               :value="item.value"
             ></el-option>
           </el-select>
-          <el-select v-model="value2" :placeholder="$t('buyer.appRepository.deployPage.appStore')">
+          <el-select v-model="value2" :placeholder="$t('buyer.myResource.deployPage.appStore')">
             <el-option
               v-for="item in options2"
               :key="item.value"
@@ -29,22 +29,22 @@
           </el-select>
         </el-col>-->
         <!--<el-col :span="11">
-          <span class="time">{{$t('buyer.appRepository.deployPage.time')}}</span>
+          <span class="time">{{$t('buyer.myResource.deployPage.time')}}</span>
           <el-date-picker
             v-model="dateValue1"
             type="date"
-            :placeholder="$t('buyer.appRepository.deployPage.startTime')"
+            :placeholder="$t('buyer.myResource.deployPage.startTime')"
           ></el-date-picker>
           <span class="el-icon-arrow-right"></span>
           <el-date-picker
             v-model="dateValue2"
             type="date"
-            :placeholder="$t('buyer.appRepository.deployPage.endTime')"
+            :placeholder="$t('buyer.myResource.deployPage.endTime')"
           ></el-date-picker>
         </el-col>-->
         <el-col :span="6">
           <el-input
-            :placeholder="$t('buyer.appRepository.deployPage.searchIn')"
+            :placeholder="$t('buyer.myResource.deployPage.searchIn')"
             prefix-icon="el-icon-search" v-model="appName"
           ></el-input>
           <el-button type="success" @click="searchUra">
@@ -65,51 +65,51 @@
             <template slot="empty">
                 <p class="empty-text">No Data</p >
             </template>
-          <el-table-column prop="orderNo" :label="$t('buyer.appRepository.deployPage.number')">
+          <el-table-column prop="orderNo" :label="$t('buyer.myResource.deployPage.number')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
                     <i class="iconfont icon-id"></i>
-                    {{$t('buyer.appRepository.deployPage.number')}}
+                    {{$t('buyer.myResource.deployPage.number')}}
                   </p>
                 </template>
           </el-table-column>
-          <el-table-column prop="prodName" :label="$t('buyer.appRepository.deployPage.appName')">
+          <el-table-column prop="prodName" :label="$t('buyer.myResource.deployPage.appName')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
-                    <i class="iconfont icon-Point-in-time"></i>
-                    {{$t('buyer.appRepository.deployPage.appName')}}
+                    <i class="iconfont icon-table-name"></i>
+                    {{$t('buyer.myResource.deployPage.appName')}}
                   </p>
                 </template>
           </el-table-column>
-          <el-table-column prop="beginTime" :label="$t('buyer.appRepository.deployPage.appTime')">
+          <el-table-column prop="beginTime" :label="$t('buyer.myResource.deployPage.appTime')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
-                    <i class="iconfont icon-hangshishichang"></i>
-                    {{$t('buyer.appRepository.deployPage.appTime')}}
+                    <i class="iconfont icon-start-time"></i>
+                    {{$t('buyer.myResource.deployPage.appTime')}}
                   </p>
                 </template>
           </el-table-column>
-          <el-table-column prop="orderStatusName" :label="$t('buyer.appRepository.deployPage.appGroup')">
+          <el-table-column prop="orderStatusName" :label="$t('buyer.myResource.deployPage.appGroup')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
-                    <i class="iconfont icon-host1"></i>
-                    {{$t('buyer.appRepository.deployPage.appGroup')}}
+                    <i class="iconfont icon-table-state"></i>
+                    {{$t('buyer.myResource.deployPage.appState')}}
                   </p>
                 </template>
           </el-table-column>
-          <el-table-column prop="rentDays" :label="$t('buyer.appRepository.deployPage.appStore')">
+          <el-table-column prop="rentDays" :label="$t('buyer.myResource.deployPage.appStore')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
-                    <i class="iconfont icon-my-resource"></i>
-                    {{$t('buyer.appRepository.deployPage.appStore')}}
+                    <i class="iconfont icon-table-date"></i>
+                    {{$t('buyer.myResource.deployPage.appEnd')}}
                   </p>
                 </template>
           </el-table-column>
-          <el-table-column prop="prodPrice" :label="$t('buyer.appRepository.deployPage.appValur')">
+          <el-table-column prop="prodPrice" :label="$t('buyer.myResource.deployPage.appValur')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
-                    <i class="iconfont icon-turnover"></i>
-                    {{$t('buyer.appRepository.deployPage.appValur')}}
+                    <i class="iconfont icon-table-value"></i>
+                    {{$t('buyer.myResource.deployPage.appValur')}}
                   </p>
                 </template>
           </el-table-column>
@@ -166,51 +166,51 @@ export default {
       tableData: [],
       tableData1: [
         {
-          menu: this.$t('buyer.appRepository.deployPage.number'),
+          menu: this.$t('buyer.myResource.deployPage.number'),
           value: ''
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appStatus'),
+          menu: this.$t('buyer.myResource.deployPage.appStatus'),
           value: ''
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.orderTime'),
+          menu: this.$t('buyer.myResource.deployPage.orderTime'),
           value: ''
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appName'),
+          menu: this.$t('buyer.myResource.deployPage.appName'),
           value: ''
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appStore'),
+          menu: this.$t('buyer.myResource.deployPage.appStore'),
           value: ''
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appTime'),
+          menu: this.$t('buyer.myResource.deployPage.appTime'),
           value: ''
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appGroup'),
+          menu: this.$t('buyer.myResource.deployPage.appGroup'),
           value: '资源池1'
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appPrice'),
+          menu: this.$t('buyer.myResource.deployPage.appPrice'),
           value: '8888888888.66URAC'
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.fee'),
+          menu: this.$t('buyer.myResource.deployPage.fee'),
           value: '88.88URAC'
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.ip'),
+          menu: this.$t('buyer.myResource.deployPage.ip'),
           value: '111.111.222.22'
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.port'),
+          menu: this.$t('buyer.myResource.deployPage.port'),
           value: '8080'
         },
         {
-          menu: this.$t('buyer.appRepository.deployPage.appHash'),
+          menu: this.$t('buyer.myResource.deployPage.appHash'),
           value: ''
         }
       ],
