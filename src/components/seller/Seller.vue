@@ -158,7 +158,6 @@ export default {
       indexCon: 2,
       indexPro: 2,
       tableData: [],
-        echarsArray:[],
         allResources:"",
       initOil:false
     };
@@ -176,8 +175,7 @@ export default {
           xValue.push(item.datetimeValue);
           yValue.push(item.usedCompute / item.totalCompute);
         });
-        var chart
-        this.initEchart(chart,elementId, xValue, yValue);
+        this.initEchart(elementId, xValue, yValue);
       });
       if(elementId == 'myConsumption') {
           if (type == 'day') {
@@ -207,8 +205,7 @@ export default {
                 xValue.push(item.datetimeValue);
                 yValue.push(item.earnings);
             });
-            var chart
-            this.initEchart(chart,elementId, xValue, yValue);
+            this.initEchart(elementId, xValue, yValue);
         })
       },
       hosts(){
@@ -230,7 +227,7 @@ export default {
       // return moment(cellValue).format("YYYY-MM-DD HH:mm:ss")
       return cellValue;
     },
-    initEchart(myChart1,elementId, xValue, yValue) {
+    initEchart(elementId, xValue, yValue) {
       let option = {
         color: ["#3398DB"],
         tooltip: {
@@ -302,33 +299,21 @@ export default {
           }
         ]
       };
-      //var myChart1 = this.$echarts.init(document.getElementById(elementId));
-        myChart1 = this.$echarts.init(document.getElementById(elementId));
-      myChart1.setOption(option)
-        this.echarsArray.push(myChart1)
+     let myChart = this.$echarts.init(document.getElementById(elementId));
+        myChart.setOption(option)
      /* window.onresize = function() {
         myChart1.resize();
       };*/
         window.addEventListener("resize",function(){
-            myChart1.resize();
+            myChart.resize();
         })
-
-/*
-        window.addEventListener("resize",function(){
-            console.log(this.echarsArray.length)
-            for(let i = 0; i < this.echarsArray.length; i++){
-                this.echarsArray[i].resize()
-            }
-        })*/
     }
   },
     computed: {
         getPercentNumber() {
             //计算百分比 a/b
             return function (a, b) {
-                console.log("a:"+a+"  b:"+b)
                 var n = Number(a / b * 100).toFixed(2)
-                console.log(Number(n))
                 return Number(n)
             }
         }
