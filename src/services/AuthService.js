@@ -89,14 +89,27 @@ export function getUserId () {
 }
 
 export function tokenNeedUpdate() {
-    const tokenRefreshTimeMark = localStorage.getItem('tokenLastUpdateTime')
-    if(!tokenRefreshTimeMark) {
-        localStorage.setItem('tokenLastUpdateTime', moment())
-    }
-    console.log(tokenRefreshTimeMark)
-    console.log(moment().add(5, 'mins').calendar())
+  let tokenRefreshTimeMark = localStorage.getItem('tokenLastUpdateTime')
+  if (!tokenRefreshTimeMark) {
+    localStorage.setItem('tokenLastUpdateTime', moment().utc().format())
+    tokenRefreshTimeMark = localStorage.getItem('tokenLastUpdateTime')
+  }
+
+  const refreshDuration = store.state.refreshDuration
+  const updateEdge = moment(tokenRefreshTimeMark).add(refreshDuration, 'minutes')
+  const nowTime = moment()
+  return nowTime > updateEdge
 }
 
+export function refreshToken(lang) {
+  const token = localStorage.getItem('token')
+  const newLastUpdateTime = moment().utc().format()
+  localStorage.setItem('tokenLastUpdateTime', newLastUpdateTime)
+  return httpLang(lang).post(`/auth/users/refresh/${token}`)
+      .then(refreshedToken => {
+        localStorage.setItem('token', refreshedToken.data.data.token)
+      })
+}
 
 /// / Auth API Wraps
 

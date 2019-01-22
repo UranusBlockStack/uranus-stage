@@ -57,6 +57,13 @@ router.beforeEach(function (to, from, next) {
         next({path: '/'})
       } else {
         next()
+        const tokenNeedRefresh = auth.tokenNeedUpdate()
+        if (tokenNeedRefresh) {
+          auth.refreshToken(auth.getCurLang())
+              .then(newtoken => {
+                console.log('token refreshed')
+              })
+        }
       }
     }
   }
