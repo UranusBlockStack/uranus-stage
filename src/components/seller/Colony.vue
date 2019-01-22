@@ -8,7 +8,7 @@
         </h1>
       </el-col>
       <el-col :span="6" :offset="6">
-        <el-switch style="margin-top: 15px;" v-model="switchVal" :active-text="$t('seller.group.inSale')" :inactive-text="$t('seller.group.notSale')"></el-switch>
+        <el-switch style="margin-top: 15px;" v-model="switchVal" :active-text="$t('seller.group.notSale')" :inactive-text="$t('seller.group.inSale')"  @change="onLineClick()"></el-switch>
       </el-col>
     </el-row>
     <!-- Confirmation Information Bullet Box -->
@@ -101,20 +101,21 @@
             :chartData="division(clusterInfo.usedCompute,clusterInfo.totalCompute)"
           />
         </el-col>
-        <el-col class="padding-top" :span="7" :offset="1">
+        <el-col class="padding-top" :span="5" :offset="1">
+
           <h4>{{$t('seller.group.earnings')}} {{clusterInfo.profit}} URAC</h4>
           <p>{{$t('seller.group.value')}} {{clusterInfo.rentPrice}}URAC/天</p>
           <p>{{$t('seller.group.region')}} {{clusterInfo.region}}</p>
         </el-col>
-        <el-col class="padding-top" :span="8">
+        <el-col class="padding-top" :span="12">
           <h4>
             {{$t('seller.group.restTime')}}
-            <RestTime :endTime="dateFormat(clusterInfo.endTime)"/>111
+            <RestTime style="display: inline-block" :endTime="dateFormat(clusterInfo.endTime)"/>
           </h4>
           <p>{{$t('seller.group.buyingTime')}} {{dateFormat(clusterInfo.beginTime)}}</p>
           <p>{{$t('seller.group.endingTime')}} {{dateFormat(clusterInfo.endTime)}}</p>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="2">
           <p v-show="switchVal" class="setting" @click="dialogVisible = true">
             <i class="iconfont icon-setting"></i>
           </p>
@@ -290,7 +291,8 @@ export default {
     Cpu,
     Disk,
     Memory,
-    Network
+    Network,
+      RestTime
   },
   data() {
     return {
@@ -341,29 +343,39 @@ export default {
     },
     filterState(value, row) {
       return row.state === value;
-    }
+    },
+      onLineClick(){
+        alert(this.switchVal)
+      }
   },
   computed: {
     getPercentNumber() {
       //计算百分比 a/b
       return function(a, b) {
         var n = Number((a / b) * 100).toFixed(2);
+          if (isNaN(Number(n)) || !isFinite(Number(n)) ) {
+              n = 0;
+          }
         return Number(n);
       };
     },
     dateFormat() {
       return function(time) {
-        return moment(time).format("YYYY-MM-DD hh:mm:ss");
+          let momentInfo = moment(time)
+          if (momentInfo.isValid() == false) {
+              return moment(0).format("YYYY-MM-DD hh:mm:ss");
+          }else{
+              return moment(time).format("YYYY-MM-DD hh:mm:ss");
+          }
+
       };
     },
     division() {
       return function(a, b) {
         var n = a / b;
-        console.log("water is" + Number(n));
-        if (isNaN(Number(n))) {
-          console.log("nnnnnn" + Number(n));
-          n = 0;
-        }
+          if (isNaN(Number(n)) || !isFinite(Number(n)) ) {
+              n = 0;
+          }
         return Number(n);
       };
     }

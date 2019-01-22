@@ -144,8 +144,9 @@
         <el-table-column width="200">
           <template slot="header" slot-scope="scope">
             <el-select v-model="inCluster" placeholder="是否加入集群" @change="search()">
-              <el-option label="是" value="true"></el-option>
-              <el-option label="否" value="false"></el-option>
+              <el-option label="全部" value=0></el-option>
+              <el-option label="是" value=1></el-option>
+              <el-option label="否" value=2></el-option>
             </el-select>
           </template>
           <template slot-scope="scope">
@@ -246,7 +247,7 @@ export default {
         },
         search(){
             var param={
-                inCluster: this.inCluster,
+                scope: this.inCluster,
                 ownerId:this.userId
             }
             rancher.hostSearch(this.language,param).then(data=>{
@@ -255,12 +256,23 @@ export default {
             })
         },
         okButtonClick(){
-            alert(this.groupJoin)
-            if(this.groupJoin==this.$t('seller.host.newGroup')){
-                this.addHostToNewCluster()
-            }else{
-                this.joinCluster()
+
+            var param={
+                newCluster: false,
+                clusterName: this.newClusterName,
+                rancherId: this.rancherId
             }
+            if(this.groupJoin==this.$t('seller.host.newGroup')){
+                param.newCluster=true
+            }else{
+                param.newCluster=false
+            }
+            rancher.hostAdd(this.language,param).then(data=>{
+                console.log("hostAdd result",data)
+                /*if(data){
+
+                }*/
+            })
         },
         joinButtonClick(selectedhostId){
             this.hostId=selectedhostId
@@ -273,6 +285,9 @@ export default {
             //计算百分比 a/b
             return function(a,b){
                 var n=Number(a/b*100).toFixed(2)
+                if (isNaN(Number(n)) || !isFinite(Number(n)) ) {
+                    n = 0;
+                }
                 return Number(n)
             }
         }

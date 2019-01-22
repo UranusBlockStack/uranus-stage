@@ -137,7 +137,7 @@
 
           <el-row>
               <el-col :span="8" :offset="16">
-                  <el-pagination layout="prev, pager, next" :current-page.sync="pageInfo.currentPage" :page-size="pageInfo.pageSize" :total="pageInfo.totalRecords"
+                  <el-pagination layout="prev, pager, next" :current-page.sync="pageInfo.page" :page-size="pageInfo.pageSize" :total="pageInfo.totalRecords"
                                  @current-change="handleCurrentChange">
                   </el-pagination>
               </el-col>
@@ -169,7 +169,7 @@ export default {
         allResources:"",
       initOil:false,
         pageInfo:{
-            currentPage: 0,
+            page: 0,
             pageSize: 3,
             totalRecords: 0
         }
@@ -178,7 +178,7 @@ export default {
   methods: {
 
       handleCurrentChange(val) {
-          this.pageInfo.currentPage = val
+          this.pageInfo.page = val
           this.searchTransactionRecords()
       },
 
@@ -189,11 +189,13 @@ export default {
         let result = data.data.data;
         let xValue = [];
         let yValue = [];
+        let lineValue=[]
         result.forEach((item, index) => {
           xValue.push(item.datetimeValue);
-          yValue.push(item.usedCompute / item.totalCompute);
+          yValue.push(item.totalCompute);
+            lineValue.push(item.usedCompute)
         });
-        this.initEchart(elementId, xValue, yValue);
+        this.initEchart(elementId, xValue, yValue,lineValue);
       });
       if(elementId == 'myConsumption') {
           if (type == 'day') {
@@ -219,11 +221,12 @@ export default {
             let result = data.data.data;
             let xValue = [];
             let yValue = [];
+            let lineValue=[]
             result.forEach((item, index) => {
                 xValue.push(item.datetimeValue);
                 yValue.push(item.earnings);
             });
-            this.initEchart(elementId, xValue, yValue);
+            this.initEchart(elementId, xValue, yValue,lineValue);
         })
       },
       hosts(){
@@ -236,11 +239,10 @@ export default {
       },
 
       searchTransactionRecords() {
-          console.log("searchParam:",this.pageInfo)
-      wallet.getTradeLogCurrentUser(this.language, 0, this.pageInfo.currentPage, this.pageInfo.pageSize).then(transList => {
+      wallet.getTradeLogCurrentUser(this.language, 0, this.pageInfo.page, this.pageInfo.pageSize).then(transList => {
         this.tableData = transList.data.data.records;
         console.log("searchTransactionRecords:",transList.data)
-          this.pageInfo.currentPage=transList.data.data.current
+          this.pageInfo.page=transList.data.data.current
           //this.pageInfo.pageSize=transList.data.data.size
           this.pageInfo.totalRecords=transList.data.data.total
       });
@@ -248,7 +250,7 @@ export default {
     formateDate(time) {
       return moment(time).format("YYYY-MM-DD HH:mm:ss");
     },
-    initEchart(elementId, xValue, yValue) {
+    initEchart(elementId, xValue, yValue,lineValue) {
       let option = {
         color: ["#3398DB"],
         tooltip: {
@@ -316,7 +318,7 @@ export default {
             type: "line",
             color: "#1890ff",
             // y轴连线数值
-            data: yValue
+            data: lineValue
           }
         ]
       };
@@ -335,6 +337,9 @@ export default {
             //计算百分比 a/b
             return function (a, b) {
                 var n = Number(a / b * 100).toFixed(2)
+                if (isNaN(Number(n)) || !isFinite(Number(n)) ) {
+                    n = 0;
+                }
                 return Number(n)
             }
         }

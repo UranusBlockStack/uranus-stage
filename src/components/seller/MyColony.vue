@@ -74,10 +74,10 @@
           <p>{{$t('seller.groups.list')}}</p>
         </el-col>
         <el-col :span="4" :offset="12">
-          <el-input :placeholder="$t('seller.groups.searchIn')" prefix-icon="el-icon-search"></el-input>
+          <el-input v-model="searchParam.name" :placeholder="$t('seller.groups.searchIn')" prefix-icon="el-icon-search"></el-input>
         </el-col>
         <el-col :span="2">
-          <el-button style="margin-left:10px;" type="success">
+          <el-button style="margin-left:10px;" type="success" @click="clusterSearch()">
             <i class="iconfont icon-search"></i>
           </el-button>
         </el-col>
@@ -121,9 +121,17 @@
           </el-row>
         </el-col>
       </el-row>
-      <el-row>
+
+      <!--<el-row>
         <el-col :span="8" :offset="16">
           <el-pagination layout="prev, pager, next" :total="1000" style="padding-top: 15px;"></el-pagination>
+        </el-col>
+      </el-row>-->
+      <el-row>
+        <el-col :span="8" :offset="16">
+          <el-pagination layout="prev, pager, next" :current-page.sync="searchParam.page" :page-size="searchParam.pageSize" :total="searchParam.totalRecords"
+                         @current-change="handleCurrentChange">
+          </el-pagination>
         </el-col>
       </el-row>
     </div>
@@ -157,27 +165,35 @@ export default {
         region: "",
         state: ""
       },
+        searchParam:{
+            name: "",
+            page: 0,
+            pageSize: 6,
+            totalRecords: 0,
+            sort: "",
+            sortDesc: true,
+            state: ""
+        }
     };
   },
   methods: {
+      handleCurrentChange(val) {
+          this.searchParam.currentPage = val
+          this.clusterSearch()
+      },
     clusterSearch() {
-      var param = {};
-      rancher.clusterSearch(this.language, param).then(data => {
-        var records = data.data.data.records;
-        this.colonyList = records;
+      rancher.clusterSearch(this.language, this.searchParam).then(data => {
+          this.searchParam.page=data.data.data.current
+          this.searchParam.totalRecords=data.data.data.total
+        var records = data.data.data.records
+        this.colonyList = records
         records.forEach((item, index) => {
-          let momentInfo = moment(item.endTime);
+          let momentInfo = moment(item.endTime)
           if (momentInfo.isValid() == false) {
-            this.colonyList[index].endTime = moment(0).format(
-              "YYYY-MM-DD hh:mm:ss"
-            );
+            this.colonyList[index].endTime = moment(0).format("YYYY-MM-DD hh:mm:ss")
           } else {
-            this.colonyList[index].endTime = moment(item.endTime).format(
-              "YYYY-MM-DD hh:mm:ss"
-            );
+            this.colonyList[index].endTime = moment(item.endTime).format("YYYY-MM-DD hh:mm:ss")
           }
-
-          //console.log(moment("index===:"+item.endTime))
         });
       });
     }
@@ -186,11 +202,9 @@ export default {
     division() {
       return function(a, b) {
         var n = a / b;
-        console.log(Number(n));
-        if (isNaN(Number(n))) {
-          console.log("nnnnnn" + Number(n));
-          n = 0;
-        }
+          if (isNaN(Number(n)) || !isFinite(Number(n)) ) {
+              n = 0;
+          }
         return Number(n);
       };
     }
