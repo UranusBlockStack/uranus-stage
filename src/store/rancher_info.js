@@ -35,28 +35,14 @@ export const ServerConfigData = {
 //     return pvaluepairs
 // }
 
-export const WrapDropDownDataUnit = (param, lang) => {
+export const WrapDropDownData = (param, lang) => {
   let dropdownData = []
   const paramkeys = Object.keys(param.paramVals)
   paramkeys.map(key => {
     const itemData = {
       value: key,
       label: param.paramVals[key],
-      unit: param.units[lang]
-    }
-    dropdownData.push(itemData)
-  })
-
-  return dropdownData
-}
-
-export const WrapDropDownData = (param) => {
-  let dropdownData = []
-  const paramkeys = Object.keys(param.paramVals)
-  paramkeys.map(key => {
-    const itemData = {
-      value: key,
-      label: param.paramVals[key]
+      unit: param.units ? param.units[lang] : null
     }
     dropdownData.push(itemData)
   })

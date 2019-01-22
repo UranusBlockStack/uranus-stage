@@ -49,8 +49,7 @@
             <div :class="scope.row.state == 'Offline' ? 'off' : 'on'"></div>
           </template>
         </el-table-column>
-
-        <el-table-column min-width="120">
+        <el-table-column width="220">
             <!--主机名称 name-->
           <template slot="header" slot-scope="scope">
             <p class="table-head" style="text-align:left;">
@@ -76,7 +75,7 @@
               {{ scope.row.cpuKernelUsed }}{{$t('seller.host.usable')}}
                 <!--已用核数-->
             </p>
-            <el-progress :percentage="getPercentNumber(scope.row.cpuKernelUsed,scope.row.cpuKernel)" :stroke-width="18" :text-inside="true" style="margin-left:35px;"></el-progress>
+            <el-progress :percentage="getPercentNumber(scope.row.cpuKernelUsed, scope.row.cpuKernel)" :stroke-width="18" :text-inside="true" style="margin-left:35px;"></el-progress>
             <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
                 {{ scope.row.cpuKernel }}{{$t('seller.host.have')}}
                 <!--总核数-->
@@ -145,7 +144,6 @@
         <el-table-column width="200">
           <template slot="header" slot-scope="scope">
             <el-select v-model="inCluster" placeholder="是否加入集群" @change="search()">
-              <el-option label="=请选择=" value=""></el-option>
               <el-option label="是" value="true"></el-option>
               <el-option label="否" value="false"></el-option>
             </el-select>
@@ -153,7 +151,7 @@
           <template slot-scope="scope">
             <p style="margin-left: 30px; text-align: center;">
               <span v-show="scope.row.colony != $t('seller.host.group') + ' B'">{{scope.row.clusterName}}</span>
-              <el-button style="margin-left: 10px;" @click="joinButtonClick(scope.row.id)" v-show="scope.row.clusterId ==''||scope.row.clusterId ==null">
+              <el-button @click="joinButtonClick(scope.row.id)" v-show="scope.row.clusterId ==''||scope.row.clusterId ==null">
                 join
               </el-button>
             </p>
@@ -291,16 +289,20 @@ export default {
 
 <style lang="scss" scoped>
 .myHost {
-  background: #f2f2f2;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   min-width: 1130px;
   .myHostHead {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
+    margin: 10px 10px 0;
     height: 50px;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #252525;
+        color: #ffffff;
         line-height: 50px;
       margin: 0;
       padding: 0;
@@ -313,13 +315,43 @@ export default {
     }
   }
   .myHostBox {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
     border-radius: 2px;
     margin: 10px;
     padding: 15px;
     min-height: 550px;
     p {
       margin-bottom: 0;
+    }
+    .el-table {
+        color: #ffffff;
+        background-color: rgba(101, 143, 247, 0);
+      }
+      .el-table /deep/ tr:hover td {
+        background-color: rgba(101, 143, 247, 0.2) !important;
+      }
+      .el-table /deep/ th,
+      .el-table /deep/ tr {
+        background-color: rgba(101, 143, 247, 0);
+        border: none;
+      }
+      .el-table /deep/ td {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .el-select /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-button {
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 #2463ff;
+      border-radius: 3px;
+      border: none;
+          color: #ffffff;
     }
     .overflow {
           overflow: hidden;
@@ -362,15 +394,14 @@ export default {
     }
     .table-head {
       text-align: center;
-      color: #363636;
+      color: #ffffff;
         font-weight: 500;
         font-size: 16px;
         margin: 0;
         padding: 0;
         i {
-          font-size: 26px;
+          font-size: 23px;
         }
-
     }
     .el-select /deep/ .el-input__suffix {
       right: 10px;

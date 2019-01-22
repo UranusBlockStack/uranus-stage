@@ -73,15 +73,16 @@
 </template>
 
 <script>
-import Cpu from "@/components/modules/CPU";
-import Disk from "@/components/modules/Disk";
-import Memory from "@/components/modules/Memory";
-import Network from "@/components/modules/Network";
-import * as project from "../../services/RancherService";
-import moment from "moment";
+import Cpu from '@/components/modules/CPU'
+import Disk from '@/components/modules/Disk'
+import Memory from '@/components/modules/Memory'
+import Network from '@/components/modules/Network'
+import * as project from '../../services/RancherService'
+import moment from 'moment'
+import { Message } from 'element-ui'
 
 export default {
-  name: "ResourcePool",
+  name: 'ResourcePool',
   components: {
     Cpu,
     Disk,
@@ -100,7 +101,7 @@ export default {
         urapowerUsd: 50
       },
       update2: false
-    };
+    }
   },
   methods: {
     getAppList() {
@@ -110,45 +111,66 @@ export default {
           this.$route.params.poolid
         )
         .then(respData => {
-          this.appList = respData.data.data.records;
-        });
+          this.appList = respData.data.data.records
+        })
     },
     formateDate(time) {
-      return moment(time).format("YYYY-MM-DD HH:mm:ss");
+      return moment(time).format('YYYY-MM-DD HH:mm:ss')
     },
     getImage(rid) {
-      return this.imageServerUrl + rid + "/icon";
+      return this.imageServerUrl + rid + '/icon'
     },
     deleteApp(appId) {
-      project.deleteAppById(appId).then(respData => {
-        this.$message(respData.data);
-      });
+      project.deleteAppById(this.$store.getters.lang, appId)
+          .then(respData => {
+            let data = respData.data
+            if (data.success) {
+              this.$message({
+                showClose: true,
+                message: 'Success.',
+                type: 'success'
+              })
+                this.getAppList()
+            } else {
+              this.$message({
+                showClose: true,
+                message: data.errMsg,
+                type: 'error'
+              })
+            }
+          }).catch(err => {
+            this.$message({
+              showClose: true,
+              message: err,
+              type: 'error'
+            })
+          })
     },
     getProjectById() {
       project
         .projectListById(this.$store.getters.lang, this.$route.params.poolid)
         .then(respData => {
-          let data = respData.data.data;
+          let data = respData.data.data
           this.statisObejct.diskUsd =
-            (data.diskUsed + data.diskLock) / data.disk;
+            (data.diskUsed + data.diskLock) / data.disk
           this.statisObejct.cpuUsd =
-            (data.cpuKernelLock + data.cpuKernelUsed) / data.cpuKernel;
-          this.statisObejct.memUsd = (data.memUsed + data.memLock) / data.mem;
+            (data.cpuKernelLock + data.cpuKernelUsed) / data.cpuKernel
+          this.statisObejct.memUsd = (data.memUsed + data.memLock) / data.mem
           this.statisObejct.networkUsd =
-            (data.networkUsed + data.networkLock) / data.network;
-          this.update2 = true;
-        });
+            (data.networkUsed + data.networkLock) / data.network
+          this.update2 = true
+        })
     }
   },
   beforeRouteUpdate(to, from, next) {
-    this.getAppList();
-    next();
+    this.getAppList()
+    next()
   },
   created() {
-    this.getAppList();
-    this.getProjectById();
+    this.getAppList()
+    this.getProjectById()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

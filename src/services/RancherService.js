@@ -136,11 +136,9 @@ export function appInstanceDeploy (lang, params) {
     return httpLang(lang).post('/rancher/app_instances', params)
 }
 
-/**App User Controller Service ***/
 export function deleteAppById (lang, appId) {
-    return httpLang(lang).delete(`/rancher/app_users/${appId}`)
+    return httpLang(lang).delete(`/rancher/app_instances/${appId}`)
 }
-
 
 /** Statistics Controller Service ***/
 export function statisticsProjects (lang) {
