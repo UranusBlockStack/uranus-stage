@@ -41,13 +41,16 @@
       <el-row>
         <el-col class="rePool" :span="12" v-for="(item, index) in appList" :key="index">
           <el-row>
-            <el-col :span="2" :offset="1">
-              <img :src="getImage(item.appRid)" alt="img">
+            <el-col :span="4" :offset="1">
+                <div class="img-box">
+                    <img :src="getImage(item.appRid)" alt="img">
+                </div>
             </el-col>
-            <el-col :span="17" :offset="1">
+            <el-col :span="15" :offset="1">
               <h3>{{$t('buyer.resourcePool.appName')}} {{item.name}}</h3>
-              <h3>{{$t('buyer.resourcePool.appIp')}} {{item.ipAddress}}</h3>
-              <h3>{{$t('buyer.resourcePool.appPort')}} {{item.port}}</h3>
+              <!-- <h3>{{$t('buyer.resourcePool.appIp')}} {{item.ipAddress}}</h3>
+              <h3>{{$t('buyer.resourcePool.appPort')}} {{item.port}}</h3> -->
+              <h3>{{$t('buyer.resourcePool.appState')}} {{formateDate(item.createTime)}}</h3>
               <h3>{{$t('buyer.resourcePool.appTime')}} {{formateDate(item.createTime)}}</h3>
             </el-col>
             <el-col :span="3">
@@ -278,11 +281,25 @@ export default {
         margin-top: 30px;
         cursor: pointer;
       }
-      img {
-        height: 130px;
-        width: 130px;
-        margin-top: 30px;
-      }
+      .img-box {
+              height: 160px;
+              width: 130px;
+              margin: 10px auto;
+              position: relative;
+              img {
+                min-width: 100px;
+                min-height: 100px;
+                max-width: 130px;
+                max-height: 130px;
+                width: auto;
+                height: auto;
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+              }
+            }
     }
     h2 {
       font-family: Source-Sans-Pro-Bold;
