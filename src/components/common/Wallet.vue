@@ -110,82 +110,96 @@
         </el-table>
       </el-col>
       <el-col :span="6" :offset="15" class="transaction-foot">
-        <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
+        <el-pagination
+                layout="prev, pager, next"
+                :current-page.sync="currentPage"
+                :page-size="pageSize"
+                :total="totalRecords"
+                @current-change="handleCurrentChange">
+        </el-pagination>
       </el-col>
     </el-row>
   </section>
 </template>
 
 <script>
-import * as auth from "../../services/AuthService";
-import * as account from "../../services/AccountService";
-import * as wallet from "../../services/WalletService";
-import moment from "moment";
+import * as auth from '../../services/AuthService'
+import * as account from '../../services/AccountService'
+import * as wallet from '../../services/WalletService'
+import moment from 'moment'
 
 export default {
-  name: "Wallet",
+  name: 'Wallet',
   data() {
     return {
-      address: "",
+      address: '',
       dialogVisible: false,
       tableData: [],
       tableData1: [],
       curLang: this.$store.getters.lang,
-      curUserInfo: auth.getUserBaseInfo()
-    };
+      curUserInfo: auth.getUserBaseInfo(),
+      currentPage: 1,
+      pageSize: this.$store.state.defaultPageSize,
+      totalRecords: 0
+    }
   },
   methods: {
     formateDate(row, column, cellValue) {
-      return moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
+      return moment(cellValue).format('YYYY-MM-DD HH:mm:ss')
     },
     copy() {
-      console.log(123);
-      const input = document.createElement("input");
-      document.body.appendChild(input);
-      input.setAttribute("value", this.address);
-      input.select();
-      if (document.execCommand("copy")) {
-        document.execCommand("copy");
+      console.log(123)
+      const input = document.createElement('input')
+      document.body.appendChild(input)
+      input.setAttribute('value', this.address)
+      input.select()
+      if (document.execCommand('copy')) {
+        document.execCommand('copy')
       }
-      document.body.removeChild(input);
+      document.body.removeChild(input)
     },
     goTransfer() {
-      this.$router.push({ path: "transfer" });
+      this.$router.push({ path: 'transfer' })
     },
     getUserInfo() {
       const userInfo = account
         .userInfo(this.curLang, this.curUserInfo.userId)
         .then(userInfo => {
-          this.address = userInfo.data.data.accountAddress;
-        });
+          this.address = userInfo.data.data.accountAddress
+        })
     },
     getTradeFrom() {
       wallet
-        .getTradeListFromUser(this.curLang, this.curUserInfo.userId, 1, 10)
+        .getTradeListFromUser(this.curLang, this.curUserInfo.userId, this.currentPage, this.pageSize)
         .then(tradeList => {
-          this.tableData = tradeList.data.data.records;
-        });
+          this.tableData = tradeList.data.data.records
+          this.totalRecords = tradeList.data.data.records
+        })
     },
     viewDetail(row) {
-      console.log(row);
-      let transDetail = [];
-      const fields = Object.keys(row);
+      console.log(row)
+      let transDetail = []
+      const fields = Object.keys(row)
       fields.map(field => {
         const fieldData = {
           title: field,
           value: row[field]
-        };
-        transDetail.push(fieldData);
-      });
-      this.tableData1 = transDetail;
-      this.dialogVisible = true;
+        }
+        transDetail.push(fieldData)
+      })
+      this.tableData1 = transDetail
+      this.dialogVisible = true
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.getTradeFrom()
     }
   },
   mounted() {
-    this.getUserInfo();
-    this.getTradeFrom();
+    this.getUserInfo()
+    this.getTradeFrom()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
