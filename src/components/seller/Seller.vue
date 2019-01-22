@@ -90,7 +90,7 @@
                   </p>
                 </template>
               </el-table-column>
-              <el-table-column prop="createTime" :formatter="formateDate">
+              <el-table-column prop="formateDate(createTime)" :formatter="formateDate">
                 <template slot="header" slot-scope="scope">
                   <p class="table-head">
                     <i class="iconfont icon-table-date"></i>
@@ -129,11 +129,19 @@
           </el-col>
         </el-row>
 
-        <el-row :gutter="20" style="height: 50px">
+       <!-- <el-row :gutter="20" style="height: 50px">
           <el-col :span="6" :offset="16">
             <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
           </el-col>
-        </el-row>
+        </el-row>-->
+
+          <el-row>
+              <el-col :span="8" :offset="16">
+                  <el-pagination layout="prev, pager, next" :current-page.sync="pageInfo.currentPage" :page-size="pageInfo.pageSize" :total="pageInfo.totalRecords"
+                                 @current-change="handleCurrentChange">
+                  </el-pagination>
+              </el-col>
+          </el-row>
       </div>
     </div>
   </section>
@@ -159,10 +167,20 @@ export default {
       indexPro: 2,
       tableData: [],
         allResources:"",
-      initOil:false
+      initOil:false,
+        pageInfo:{
+            currentPage: 0,
+            pageSize: 3,
+            totalRecords: 0
+        }
     };
   },
   methods: {
+
+      handleCurrentChange(val) {
+          this.pageInfo.currentPage = val
+          this.searchTransactionRecords()
+      },
 
     statisticsGlobalUraPower(elementId, type) {
       //按类型统计 全网算力
@@ -217,15 +235,18 @@ export default {
         })
       },
 
-    initTransactionRecords() {
-      wallet.getTradeLogCurrentUser(this.language, 0, 0, 10).then(transList => {
+      searchTransactionRecords() {
+          console.log("searchParam:",this.pageInfo)
+      wallet.getTradeLogCurrentUser(this.language, 0, this.pageInfo.currentPage, this.pageInfo.pageSize).then(transList => {
         this.tableData = transList.data.data.records;
-        console.log(this.tableData);
+        console.log("searchTransactionRecords:",transList.data)
+          this.pageInfo.currentPage=transList.data.data.current
+          //this.pageInfo.pageSize=transList.data.data.size
+          this.pageInfo.totalRecords=transList.data.data.total
       });
     },
-    formateDate(row, column, cellValue) {
-      // return moment(cellValue).format("YYYY-MM-DD HH:mm:ss")
-      return cellValue;
+    formateDate(time) {
+      return moment(time).format("YYYY-MM-DD HH:mm:ss");
     },
     initEchart(elementId, xValue, yValue) {
       let option = {
@@ -320,7 +341,7 @@ export default {
     },
   mounted() {
     this.language = auth.getCurLang();
-    this.initTransactionRecords();
+    this.searchTransactionRecords();
     this.statisticsGlobalUraPower("myConsumption", "month");
       this.getEarning("myProfit", "day");
       this.hosts()
