@@ -42,7 +42,7 @@
         <el-col class="rePool" :span="12" v-for="(item, index) in appList" :key="index">
           <el-row>
             <el-col :span="2" :offset="1">
-              <img :src="getImage(item.rid)" alt="img">
+              <img :src="getImage(item.appRid)" alt="img">
             </el-col>
             <el-col :span="17" :offset="1">
               <h3>{{$t('buyer.resourcePool.appName')}} {{item.name}}</h3>
@@ -56,7 +56,7 @@
                   <i class="iconfont icon-menu"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <router-link :to="{path: '/appstate/' + item.id}">
+                  <router-link :to="{path: '/appstate/' + poolId + '/' + item.id}">
                     <el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item>
                   </router-link>
                   <el-dropdown-item
@@ -100,7 +100,8 @@ export default {
         networkUsd: 40,
         urapowerUsd: 50
       },
-      update2: false
+      update2: false,
+      poolId: this.$route.params.poolid
     }
   },
   methods: {
@@ -108,10 +109,12 @@ export default {
       project
         .apptListByProjectId(
           this.$store.getters.lang,
-          this.$route.params.poolid
+          this.poolId
         )
         .then(respData => {
-          this.appList = respData.data.data.records
+          if (respData.data.data) {
+            this.appList = respData.data.data.records
+          }
         })
     },
     formateDate(time) {
@@ -130,7 +133,7 @@ export default {
                 message: 'Success.',
                 type: 'success'
               })
-                this.getAppList()
+              this.getAppList()
             } else {
               this.$message({
                 showClose: true,
@@ -163,6 +166,7 @@ export default {
     }
   },
   beforeRouteUpdate(to, from, next) {
+    this.poolId = to.params.poolid
     this.getAppList()
     next()
   },
