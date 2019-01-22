@@ -19,7 +19,7 @@
       </div>
       <!-- User Sign out -->
       <div class="userInformation">
-        <span><i class="iconfont icon-user"></i> Alexander Pierce</span>
+        <span><i class="iconfont icon-user"></i> {{curUserName}}</span>
         <el-tooltip class="item" effect="dark" content="Sign out" placement="bottom-start">
     <el-button @click="logout">
           <i class="iconfont icon-sign-out"></i>
@@ -35,17 +35,22 @@
 </template>
 
 <script>
-import * as auth from "../services/AuthService";
+import * as auth from '../services/AuthService'
 
 export default {
-  name: "Head",
+  name: 'Head',
+  data() {
+    return {
+      curUserName: auth.getCurUserName()
+    }
+  },
   methods: {
     logout() {
-      auth.logout();
-      this.$router.push({ name: "Map" });
+      auth.logout()
+      this.$router.push({ name: 'Map' })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
