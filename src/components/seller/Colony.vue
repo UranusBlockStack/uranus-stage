@@ -7,6 +7,9 @@
           {{$t('menu.myColony')}}
         </h1>
       </el-col>
+      <el-col :span="6" :offset="6">
+        <el-switch style="margin-top: 15px;" v-model="switchVal" :active-text="$t('seller.group.inSale')" :inactive-text="$t('seller.group.notSale')"></el-switch>
+      </el-col>
     </el-row>
     <!-- Confirmation Information Bullet Box -->
     <el-dialog
@@ -54,12 +57,12 @@
               <el-option :label="$t('seller.group.oceania')" value="oceania"></el-option>
             </el-select>
           </el-form-item>
-          <el-form-item :label="$t('seller.group.setState')">
+          <!-- <el-form-item :label="$t('seller.group.setState')">
             <el-select v-model="form.state" :placeholder="$t('seller.group.setState')">
               <el-option :label="$t('seller.group.inSale')" value="inSale"></el-option>
               <el-option :label="$t('seller.group.notSale')" value="notSale"></el-option>
             </el-select>
-          </el-form-item>
+          </el-form-item> -->
           <el-form-item>
             <el-button type="primary" @click="dialogVisible = false">{{$t('seller.group.confirm')}}</el-button>
             <el-button @click="dialogVisible = false">{{$t('seller.group.cancel')}}</el-button>
@@ -102,29 +105,17 @@
           <h4>{{$t('seller.group.earnings')}} {{clusterInfo.profit}} URAC</h4>
           <p>{{$t('seller.group.value')}} {{clusterInfo.rentPrice}}URAC/天</p>
           <p>{{$t('seller.group.region')}} {{clusterInfo.region}}</p>
-          <template v-if="clusterInfo.state== 'online'">
-            <p>{{$t('seller.group.stateSale')}} {{$t('seller.group.inSale')}}</p>
-          </template>
-          <template v-else>
-            <p>{{$t('seller.group.stateSale')}} 未上架</p>
-          </template>
         </el-col>
         <el-col class="padding-top" :span="8">
           <h4>
             {{$t('seller.group.restTime')}}
             <RestTime :endTime="dateFormat(clusterInfo.endTime)"/>111
           </h4>
-          <template v-if="clusterInfo.state== 'online' || clusterInfo.state== 'active'">
-            <p>{{$t('seller.group.operatingStatus')}} {{$t('seller.group.running')}}</p>
-          </template>
-          <template v-else>
-            <p>{{$t('seller.group.operatingStatus')}} 未运行</p>
-          </template>
           <p>{{$t('seller.group.buyingTime')}} {{dateFormat(clusterInfo.beginTime)}}</p>
           <p>{{$t('seller.group.endingTime')}} {{dateFormat(clusterInfo.endTime)}}</p>
         </el-col>
         <el-col :span="4">
-          <p class="setting" @click="dialogVisible = true">
+          <p v-show="switchVal" class="setting" @click="dialogVisible = true">
             <i class="iconfont icon-setting"></i>
           </p>
         </el-col>
@@ -272,9 +263,7 @@
           <!--删除-->
           <el-table-column width="200">
             <template slot-scope="scope">
-              <el-button
-                @click="deleteHost(scope.row.id)"
-              >{{$t('seller.group.deleteHost')}}</el-button>
+              <el-button @click="deleteHost(scope.row.id)">{{$t('seller.group.deleteHost')}}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -320,6 +309,7 @@ export default {
         address: "",
         state: ""
       },
+      switchVal: true,
       outerVisible: false,
       innerVisible: false
     };
@@ -469,7 +459,7 @@ export default {
       }
       .setting {
         text-align: right;
-        padding-right: 24px;
+        padding-right: 50px;
         font-family: Source-Sans-Pro-Bold;
         color: #1890ff;
         line-height: 24px;

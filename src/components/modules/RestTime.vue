@@ -80,6 +80,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+p {
+    color: #ffffff;
+}
 .false {
   b {
     display: inline-block;

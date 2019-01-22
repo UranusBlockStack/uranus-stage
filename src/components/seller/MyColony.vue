@@ -98,16 +98,10 @@
               <h2>
                 <p>
                   <i class="iconfont icon-earnings"></i>
-                  {{$t('seller.groups.earnings')}} {{colony.profit }} URAC
+                  {{$t('seller.groups.earnings')}}
                 </p>
                 <p>
-                  <el-switch
-                    v-model="switchVal"
-                    active-text="In sale"
-                    inactive-text="Not for sale"
-                    active-color="#1890ff"
-                    inactive-color="#ff4949"
-                  ></el-switch>
+                    {{colony.profit }} URAC
                 </p>
               </h2>
               <h2>
@@ -119,11 +113,11 @@
                 <RestTime :endTime="colony.endTime"/>
               </h2>
             </el-col>
-            <el-col :span="2" :offset="1">
+            <!-- <el-col :span="2" :offset="1">
               <h2 class="setting" @click="dialogVisible = true">
                 <i class="iconfont icon-setting" style="font-size: 25px;"></i>
               </h2>
-            </el-col>
+            </el-col> -->
           </el-row>
         </el-col>
       </el-row>
@@ -290,7 +284,7 @@ export default {
         text-align: center;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #363636;
+        color: #ffffff;
         margin-top: 0;
         line-height: 22px;
       }
