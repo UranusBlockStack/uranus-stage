@@ -306,7 +306,7 @@ export default {
               const purchStausData = purcheStatus.data
               console.log(purchStausData)
               if (purchStausData.success) {
-                  this.gridData = [purchStausData.data]
+                this.gridData = [purchStausData.data]
               }
               this.outerVisible = true
             })
@@ -320,7 +320,13 @@ export default {
     getConfirmCode() {
       wallet.walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
               .then(sendResult => {
-                // const status = sendResult.data
+                const status = sendResult.data
+                this.$message({
+                  showClose: true,
+                  message: status.data,
+                  type: 'success',
+                  duration: 3000
+                })
               })
     },
     startTransfer() {

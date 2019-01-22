@@ -5,8 +5,8 @@ export function walletConfirmCode (lang, mobile_email) {
     return httpLang(lang).get(`/wallet/wallet/confirmcode/${mobile_email}`)
 }
 
-export function walletPay (lang) {
-    return httpLang(lang).post('/wallet/wallet/pay')
+export function walletPay (lang, payInfo) {
+    return httpLang(lang).post('/wallet/wallet/pay', payInfo)
 }
 
 export function walletReferenceFee (lang) {

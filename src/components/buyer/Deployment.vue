@@ -1,10 +1,10 @@
 <template>
   <section class="deployment">
     <!-- Confirmation Information Bullet Box -->
-    <el-dialog :title="$t('buyer.deploy.confirmTitle')" :visible.sync="outerVisible" width="800px">
+    <el-dialog :title="$t('buyer.deploy.confirmTitle')" :visible.sync="outerVisible" width="800px" :close-on-click-modal="false" :close-on-press-escape="false">
       <el-table :data="gridData">
         <el-table-column property="orderNo" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
-        <el-table-column property="buyerId" :label="$t('buyer.deploy.address')"></el-table-column>
+        <el-table-column property="sellerId" :label="$t('buyer.deploy.address')"></el-table-column>
         <el-table-column property="orderAmount" :label="$t('buyer.deploy.value')"></el-table-column>
         <el-table-column property="prodType" :label="$t('buyer.deploy.content')"></el-table-column>
         <el-table-column :label="$t('buyer.deploy.fee')">
@@ -21,8 +21,8 @@
       </el-table>
       <div class="code">
         <span slot="label">{{$t('buyer.deploy.code')}}</span>
-        <el-input :placeholder="$t('buyer.deploy.codeIn')"></el-input>
-        <el-button>{{$t('buyer.deploy.codeBtn')}}</el-button>
+        <el-input :placeholder="$t('buyer.deploy.codeIn')"  v-model="concode"></el-input>
+        <el-button @click="getConfirmCode">{{$t('buyer.deploy.codeBtn')}}</el-button>
       </div>
       <p>{{$t('buyer.deploy.confirmText1')}}</p>
       <p>{{$t('buyer.deploy.confirmText2')}}</p>
@@ -31,18 +31,17 @@
         :title="$t('buyer.deploy.confirmText3')"
         :visible.sync="innerVisible"
         append-to-body
+        :close-on-click-modal="false" :close-on-press-escape="false"
       >
         <p>{{$t('buyer.deploy.confirmText4')}}</p>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="innerVisible = false">{{$t('buyer.deploy.button2')}}</el-button>
+          <el-button type="primary" @click="successToListPage">{{$t('buyer.deploy.button2')}}</el-button>
         </div>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false">{{$t('buyer.deploy.button1')}}</el-button>
         <el-button
-          type="primary"
-          @click="outerVisible = false, innerVisible = true"
-        >{{$t('buyer.deploy.button2')}}</el-button>
+          type="primary" @click="startTransfer" >{{$t('buyer.deploy.button2')}}</el-button>
       </div>
     </el-dialog>
 
@@ -84,7 +83,7 @@
       <!-- deploy application -->
       <el-row class="margin-top">
         <el-col :span="23" :offset="1">
-          <el-radio v-model="radio" label="1">{{$t('buyer.deploy.application')}}</el-radio>
+          <el-radio v-model="orderModel" label="1">{{$t('buyer.deploy.application')}}</el-radio>
         </el-col>
         <el-col :span="22" :offset="2">
           <el-form label-width="80px">
@@ -187,10 +186,10 @@
       <!-- more choice -->
       <el-row class="margin-top" v-show="more">
         <el-col :span="2" :offset="1">
-          <el-radio v-model="radio" label="2">{{$t('buyer.deploy.choosePool')}}</el-radio>
+          <el-radio v-model="orderModel" label="2">{{$t('buyer.deploy.choosePool')}}</el-radio>
         </el-col>
         <el-col :span="20">
-          <el-select v-model="spaceValue">
+          <el-select v-model="projectId">
             <el-option
               v-for="item in spaceSel"
               :key="item.value"
@@ -203,7 +202,7 @@
 
       <el-row class="margin-top" v-show="more">
         <el-col :span="2" :offset="1">
-          <el-radio v-model="radio" label="3">{{$t('buyer.deploy.noDeploy')}}</el-radio>
+          <el-radio v-model="orderModel" label="3">{{$t('buyer.deploy.noDeploy')}}</el-radio>
         </el-col>
       </el-row>
       <el-row class="more">
@@ -280,8 +279,8 @@
                             >
 
                             <!--<div v-if="param.type==='boolean'">-->
-                                <!--<el-radio  v-model="param.default" label="true">是</el-radio>-->
-                                <!--<el-radio  v-model="param.default" label="false">否</el-radio>-->
+                                <!--<el-orderModel  v-model="param.default" label="true">是</el-orderModel>-->
+                                <!--<el-orderModel  v-model="param.default" label="false">否</el-orderModel>-->
                             <!--</div>-->
 
                             <div v-if="param.type==='string' || param.type==='int' || param.type==='enum'" >
@@ -297,24 +296,10 @@
         </ul>
 
 
-      <!--<el-row class="margin-top">-->
-        <!--<el-col-->
-          <!--class="configuration-box"-->
-          <!--:span="8"-->
-          <!--:offset="2"-->
-          <!--v-for="(configuration,index) in configurationList"-->
-          <!--:key="index"-->
-        <!--&gt;-->
-          <!--<p class="configuration-name">CHECK_CPU_USAGE：</p>-->
-          <!--<el-input v-model="input"></el-input>-->
-          <!--<span>Enable CPU usage check</span>-->
-        <!--</el-col>-->
-      <!--</el-row>-->
-
       <el-row class="border-line"></el-row>
       <el-row>
         <el-col :span="4" :offset="10">
-          <el-button type="success" @click="purchaseResourceApp">{{$t('buyer.deploy.deploy')}}</el-button>
+          <el-button type="success"  @click="purchaseEntry">{{$t('buyer.deploy.deploy')}}</el-button>
         </el-col>
       </el-row>
     </el-row>
@@ -325,6 +310,7 @@
 <script>
     import * as app from '../../services/RancherService'
     import * as auth from '../../services/AuthService'
+    import * as account from '../../services/AccountService'
     import * as rancher from '../../services/RancherService'
     import { ServerConfigData, WrapDropDownData } from '../../store/rancher_info'
     import * as project from '../../services/RancherService'
@@ -335,7 +321,7 @@ export default {
   name: 'Deployment',
   data() {
     return {
-      radio: '1',
+      orderModel: '1',
       deployForm: {
         projectName: '',
         rancherId: 2,
@@ -364,7 +350,7 @@ export default {
           label: '0.0.2'
         }
       ],
-      spaceValue: '0.1.2',
+      projectId: '0.1.2',
       // version
       versionSel: [],
       versionValue: '',
@@ -401,7 +387,8 @@ export default {
       environment: [],
       paramTree: [],
       appDeployParam: {},
-      fee: 0
+      fee: 0,
+      concode: ''
     }
   },
     created () {
@@ -444,9 +431,10 @@ export default {
                     if (!paramup.subquestions) { paramup.subquestions = [] }
                     paramup.subquestions.push(param)
                   }
+                  // TODO : node on false branch to attach paramup
                 })
               }
-
+                // TODO :  level 3 trans_struct
                 // if(param.hasOwnProperty('subquestions')){
                 //
                 // }
@@ -556,6 +544,14 @@ export default {
             }
           })
         },
+      successToListPage() {
+          this.innerVisible = false
+          if(this.orderModel === '1' || this.orderModel === '2' )
+              this.$router.push({name: 'MyResource'})
+          else
+              this.$router.push({name: 'ApplicationRepository'})
+      },
+
         getUraPowerPoolList() {
           const projectQuertData = {
             'page': 0,
@@ -573,7 +569,7 @@ export default {
                   object['label'] = data[i].projectName
                   this.spaceSel.push(object)
                 }
-                this.spaceValue = this.spaceSel[0].value
+                this.projectId = this.spaceSel[0].value
               })
         },
         getReferenceFee() {
@@ -585,8 +581,23 @@ export default {
         getConfirmCode() {
           wallet.walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
               .then(sendResult => {
-                  // const status = sendResult.data
+                const status = sendResult.data
+                this.$message({
+                  showClose: true,
+                  message: status.data,
+                  type: 'success',
+                  duration: 3000
+                })
               })
+        },
+        purchaseEntry() {
+          if (this.orderModel === '1') {
+            this.purchaseUraPowerPlus()
+          } else if (this.orderModel === '2') {
+            this.purchaseAppliction()
+          } else { // do not deploy
+
+          }
         },
         purchaseUraPowerPlus() {
           this.deployForm.beginTime = this.deployForm.dateRange[0]
@@ -594,11 +605,11 @@ export default {
 
           // order.orderResource(auth.getCurLang(), this.deployForm)
               // .then(purcheStatus => {
-              //   const purchStausData = purcheStatus.data
-              //   console.log(purchStausData)
+              //   const purchUraStausData = purcheStatus.data
+              //   console.log(purchUraStausData)
               //   if (purchStausData.success) {
 
-          const purchStausData = {
+          const purchUraStausData = {
             buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
             buyerId: 60,
             buyerName: '',
@@ -617,34 +628,120 @@ export default {
             updateTime: 1548072518330,
             projectId: 133
           }
-          this.gridData = [purchStausData]
-          this.spaceValue = purchStausData.projectId
+          this.gridData = [purchUraStausData]
+          this.projectId = purchUraStausData.projectId
 
-
-
+          this.purchaseAppliction()
           this.outerVisible = true
-
         },
-        purchaseResourceApp() {
-          if (this.radio === '1') { // delopy with new UraPower
-            this.purchaseUraPowerPlus()
-          } else if (this.radio === '2') { // deploy with exsit UraPower
-            this.appDeploy()
-          } else { // do not deploy
 
+        purchaseAppliction() {
+        //   console.log('buy app')
+        //   order.orderApp(auth.getCurLang(), this.appId)
+        //        .then(purchaseStatus => {
+        //          const purchaseAppStatusData = purchaseStatus.data
+
+          const purchaseAppStatusData = {
+            beginTime: null,
+            buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
+            buyerId: 60,
+            buyerName: '',
+            createTime: 1548131638960,
+            endTime: null,
+            id: 65,
+            orderAmount: 0.6,
+            orderHash: null,
+            orderNo: '2019012200003',
+            orderStatus: 3,
+            orderStatusName: 'paid',
+            paySuccessTime: 1548131638960,
+            poundage: 0,
+            prodId: 274,
+            prodName: 'mariadb',
+            prodPrice: 0,
+            prodType: 'Application',
+            sellerAccount: null,
+            sellerId: 62,
+            sellerName: null,
+            updateTime: 1548131638960
           }
+
+          this.gridData.push(purchaseAppStatusData)
+
+          if (purchaseAppStatusData.errCode === 'REPEAT_BUY_APP') {
+            this.$message({
+              showClose: true,
+              message: purchaseAppStatusData.errMsg,
+              type: 'error'
+            })
+          }
+
+          if (this.orderModel === '2') { this.outerVisible = true }
+        // }).catch(error => {
+        //   // console.log(error)
+        // })
         },
+
+        startTransfer() {
+          let orders = []
+          this.gridData.map(order => {
+            const tmporder = {
+              'buyerId': auth.getCurUserId(),
+              'orderAmount': order.orderAmount,
+              'orderNo': order.orderNo,
+              'poundage': this.fee,
+              'sellerId': order.sellerId
+            }
+            orders.push(tmporder)
+          })
+          account.userInfo(auth.getCurLang(), auth.getCurUserId())
+                .then(userInfo => {
+                  const userData = userInfo.data.data
+                  const transData = {
+                    orders: orders,
+                    phone: userData.mobile,
+                    smsCode: this.concode
+                  }
+                  wallet.walletPay(auth.getCurLang(), transData)
+                      .then(transStatus => {
+                        console.log(transStatus)
+
+                      })
+                    this.outerVisible = false
+                    this.innerVisible = true
+                })
+
+          // wallet.walletTransfer(auth.getCurLang(), transData)
+          //     .then(respData => {
+          //       const transferStatus = respData.data
+          //       console.log(transferStatus)
+          //       if (transferStatus) {
+          //         this.outerVisible = false
+          //         this.innerVisible = true
+          //       }
+          //     })
+        },
+
         appDeploy() {
           this.appDeployParam['appId'] = this.appId
           this.appDeployParam['appVersion'] = this.versionValue
           this.appDeployParam['config'] = JSON.stringify(this.paramTree)
           this.appDeployParam['description'] = this.appDetail.description
           this.appDeployParam['name'] = this.appDetail.name
-          this.appDeployParam['projectId'] = 93
+          if (this.orderModel === '1' || this.orderModel === '2') {
+            this.appDeployParam['projectId'] = this.projectId
+          }
+
           app.appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
                 .then(respData => {
                   const deployData = respData.data
                   if (deployData.success) {
+                    this.$message({
+                      showClose: true,
+                      message: this.appDetail.name + 'deployed',
+                      type: 'success',
+                      duration: 3000
+                    })
                     this.outerVisible = true
                   } else {
                     this.$message('部署应用失败')
