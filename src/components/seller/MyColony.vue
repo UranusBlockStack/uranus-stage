@@ -157,7 +157,6 @@ export default {
         region: "",
         state: ""
       },
-      switchVal: true
     };
   },
   methods: {
