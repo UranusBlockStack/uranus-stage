@@ -9,13 +9,20 @@
       </el-col>
       <el-col :span="4" :offset="8">
         <router-link :to="{path: '/resourcerecord'}">
-          <p>{{$t('seller.groups.view')}}<i class="iconfont icon-more"></i></p>
+          <p>
+            {{$t('seller.groups.view')}}
+            <i class="iconfont icon-more"></i>
+          </p>
         </router-link>
       </el-col>
     </el-row>
 
     <!-- Setting Information Bullet Box -->
-    <el-dialog :title="$t('seller.groups.settingTitle')" :visible.sync="dialogVisible" width="650px">
+    <el-dialog
+      :title="$t('seller.groups.settingTitle')"
+      :visible.sync="dialogVisible"
+      width="650px"
+    >
       <span>
         <el-form ref="form" :model="form" label-width="100px">
           <el-form-item :label="$t('seller.groups.settingName')">
@@ -27,8 +34,12 @@
           </el-form-item>
           <el-form-item :label="$t('seller.groups.settingTime')">
             <el-col :span="8">
-              <el-date-picker type="date" :placeholder="$t('seller.groups.startingTime')" v-model="form.date1" style="width: 100%;">
-              </el-date-picker>
+              <el-date-picker
+                type="date"
+                :placeholder="$t('seller.groups.startingTime')"
+                v-model="form.date1"
+                style="width: 100%;"
+              ></el-date-picker>
             </el-col>
             <el-col class="line" :span="1">
               <i class="el-icon-arrow-right"></i>
@@ -76,7 +87,7 @@
       <!-- Cluster List -->
       <el-row class="shopBox">
         <el-col :span="12" v-for="(colony, index) in colonyList" :key="index">
-          <el-row style="border: 1px solid #e9e9e9; margin:10px;">
+          <el-row style="border: 1px solid rgba(255, 255, 255, 0.2); margin:10px;">
             <el-col :span="6">
               <router-link :to="{path: '/colony/'+colony.id}">
                 <Water :chartData="division(colony.usedCompute,colony.totalCompute)"/>
@@ -87,9 +98,17 @@
               <h2>
                 <p>
                   <i class="iconfont icon-earnings"></i>
-                  {{$t('seller.groups.earnings')}}
+                  {{$t('seller.groups.earnings')}} {{colony.profit }} URAC
                 </p>
-                <p>{{colony.profit }} URAC</p>
+                <p>
+                  <el-switch
+                    v-model="switchVal"
+                    active-text="In sale"
+                    inactive-text="Not for sale"
+                    active-color="#1890ff"
+                    inactive-color="#ff4949"
+                  ></el-switch>
+                </p>
               </h2>
               <h2>
                 <p>
@@ -118,10 +137,10 @@
 </template>
 
 <script>
-    import moment from 'moment'
-import Water from "@/components/modules/Water"
-import RestTime from "@/components/modules/RestTime"
-import * as rancher from '../../services/RancherService'
+import moment from "moment";
+import Water from "@/components/modules/Water";
+import RestTime from "@/components/modules/RestTime";
+import * as rancher from "../../services/RancherService";
 import * as auth from "../../services/AuthService";
 
 export default {
@@ -132,7 +151,7 @@ export default {
   },
   data() {
     return {
-        language:'en-us',
+      language: "en-us",
       colonyList: [],
       dialogVisible: false,
       //   setting information
@@ -142,68 +161,71 @@ export default {
         date1: "",
         date2: "",
         region: "",
-        state: "",
-      }
+        state: ""
+      },
+      switchVal: true
     };
   },
   methods: {
-      clusterSearch(){
-          var param={}
-          rancher.clusterSearch(this.language,param).then(data=>{
-              var records=data.data.data.records
-              this.colonyList=records
-              records.forEach((item,index)=>{
-                  let momentInfo=moment(item.endTime)
-                  if(momentInfo.isValid()==false){
-                      this.colonyList[index].endTime=moment(0).format('YYYY-MM-DD hh:mm:ss')
-                  }else{
-                      this.colonyList[index].endTime=moment(item.endTime).format('YYYY-MM-DD hh:mm:ss')
-                  }
+    clusterSearch() {
+      var param = {};
+      rancher.clusterSearch(this.language, param).then(data => {
+        var records = data.data.data.records;
+        this.colonyList = records;
+        records.forEach((item, index) => {
+          let momentInfo = moment(item.endTime);
+          if (momentInfo.isValid() == false) {
+            this.colonyList[index].endTime = moment(0).format(
+              "YYYY-MM-DD hh:mm:ss"
+            );
+          } else {
+            this.colonyList[index].endTime = moment(item.endTime).format(
+              "YYYY-MM-DD hh:mm:ss"
+            );
+          }
 
-                  //console.log(moment("index===:"+item.endTime))
-              })
-          })
-      }
-  },
-    computed:{
-        division(){
-            return function(a,b){
-               var n=a/b;
-                console.log(Number(n))
-               if(isNaN(Number(n))){
-                   console.log("nnnnnn"+Number(n))
-                   n=0
-               }
-               return Number(n)
-            }
-        }
-    },
-    mounted(){
-      this.clusterSearch()
-        this.language=auth.getCurLang()
+          //console.log(moment("index===:"+item.endTime))
+        });
+      });
     }
+  },
+  computed: {
+    division() {
+      return function(a, b) {
+        var n = a / b;
+        console.log(Number(n));
+        if (isNaN(Number(n))) {
+          console.log("nnnnnn" + Number(n));
+          n = 0;
+        }
+        return Number(n);
+      };
+    }
+  },
+  mounted() {
+    this.clusterSearch();
+    this.language = auth.getCurLang();
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .myColony {
-  background: #f2f2f2;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   width: 100%;
   min-width: 1130px;
-  .rent {
-      color: #8eb357;
-      text-align: right;
-      font-size: 12px;
-      margin-bottom: -5px;
-  }
   .myColonyHead {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     height: 50px;
+    margin: 10px 10px 0;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #252525;
+        color: #ffffff;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -222,7 +244,9 @@ export default {
     }
   }
   .shop {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     min-width: 1130px;
     margin: 10px;
     padding: 15px;
@@ -233,13 +257,14 @@ export default {
     p {
       height: 40px;
       font-family: Source-Sans-Pro-Bold;
+      font-weight: 500;
       font-size: 16px;
-      color: #252525;
+      color: #ffffff;
       line-height: 40px;
       text-align: left;
     }
     .lineBox {
-      border-bottom: 1px solid #e9e9e9;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
     .shopBox {
       padding-top: 20px;
@@ -272,8 +297,35 @@ export default {
       .setting {
         text-align: right;
         padding-right: 24px;
-        color: #8eb357;
+        color: #1890ff;
       }
+    }
+    .el-button {
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 #2463ff;
+      border-radius: 3px;
+      border: none;
+    }
+    .el-input /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-prev {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-next {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li.active {
+      color: #409eff;
     }
   }
 }

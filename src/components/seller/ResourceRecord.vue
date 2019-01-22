@@ -10,7 +10,7 @@
     </el-row>
     <el-row class="recordBox">
       <el-row>
-        <el-col :span="6">
+        <!-- <el-col :span="6">
           <el-select v-model="value1" :placeholder="$t('seller.groups.deployPage.pool')">
             <el-option
               v-for="item in options1"
@@ -41,8 +41,8 @@
             type="date"
             :placeholder="$t('seller.groups.deployPage.endTime')"
           ></el-date-picker>
-        </el-col>
-        <el-col :span="7" :offset="1">
+        </el-col> -->
+        <el-col :span="7">
           <el-input
             :placeholder="$t('seller.groups.deployPage.searchIn')"
             prefix-icon="el-icon-search"
@@ -53,6 +53,7 @@
         </el-col>
       </el-row>
       <el-col class="record-head">
+          <p>{{$t('seller.groups.deployRecord')}}</p>
         <el-dialog
           :title="$t('seller.groups.deployPage.title')"
           :visible.sync="dialogVisible"
@@ -64,8 +65,8 @@
           </el-table>
         </el-dialog>
       </el-col>
-      <el-col :span="24">
-        <el-table :data="tableData" border style="width: 100%" @row-click="dialogVisible = true">
+      <el-col class="blue-box" :span="24">
+        <el-table :data="tableData" style="width: 100%" @row-click="dialogVisible = true">
           <el-table-column prop="1">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
@@ -250,16 +251,21 @@ export default {
 
 <style lang="scss" scoped>
 .resourceRecord {
-  background: #f2f2f2;
+  height: 100%;
   min-width: 1130px;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   .recordHead {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     height: 50px;
+    margin: 10px 10px 0;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #252525;
+        color: #ffffff;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -275,13 +281,23 @@ export default {
     height: 630px;
     min-width: 1130px;
     margin: 10px;
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
     overflow: hidden;
     padding: 30px;
+    .el-input /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
     .el-col {
       display: flex;
       .el-button {
-        background: #8eb357;
+        background: rgba(101, 143, 247, 0);
+        box-shadow: inset 0 0 22px 0 #2463ff;
+        border-radius: 3px;
         border: none;
         margin: 0 20px;
       }
@@ -307,12 +323,12 @@ export default {
       p {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: rgba(0, 0, 0, 0.85);
+        color: #ffffff;
         line-height: 50px;
       }
     }
     .table-head {
-      color: #363636;
+      color: #ffffff;
       font-weight: 500;
       font-size: 16px;
       margin: 0;
@@ -327,10 +343,43 @@ export default {
       white-space: nowrap;
       width: 100%;
     }
+    .blue-box {
+      .el-table {
+        color: #ffffff;
+        background-color: rgba(101, 143, 247, 0);
+      }
+      .el-table /deep/ tr:hover td {
+        background-color: rgba(101, 143, 247, 0.2) !important;
+      }
+      .el-table /deep/ th,
+      .el-table /deep/ tr {
+        background-color: rgba(101, 143, 247, 0);
+        border: none;
+      }
+      .el-table /deep/ td {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+      }
+    }
     .transaction-foot {
       margin-top: 30px;
       .el-pagination {
         height: 50px;
+      }
+      .el-pagination /deep/ .btn-prev {
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+      }
+      .el-pagination /deep/ .btn-next {
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+      }
+      .el-pagination /deep/ .el-pager li {
+        background: rgba(36, 99, 255, 0.2);
+        color: #ffffff;
+      }
+      .el-pagination /deep/ .el-pager li.active {
+        color: #409eff;
       }
     }
   }
