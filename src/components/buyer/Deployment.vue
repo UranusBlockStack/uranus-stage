@@ -1,28 +1,28 @@
 <template>
   <section class="deployment">
     <!-- Confirmation Information Bullet Box -->
-    <el-dialog :title="$t('buyer.deploy.confirmTitle')" :visible.sync="outerVisible" width="800px">
+    <el-dialog
+      :title="$t('buyer.deploy.confirmTitle')"
+      :visible.sync="outerVisible"
+      width="800px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
       <el-table :data="gridData">
         <el-table-column property="orderNo" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
-        <el-table-column property="buyerId" :label="$t('buyer.deploy.address')"></el-table-column>
+        <el-table-column property="sellerId" :label="$t('buyer.deploy.address')"></el-table-column>
         <el-table-column property="orderAmount" :label="$t('buyer.deploy.value')"></el-table-column>
         <el-table-column property="prodType" :label="$t('buyer.deploy.content')"></el-table-column>
         <el-table-column :label="$t('buyer.deploy.fee')">
           <template slot-scope="scope">
-            <el-input-number
-              size="mini"
-              v-model="fee"
-              :precision="6"
-              :step="0.000001"
-              :max="10"
-            ></el-input-number>
+            <el-input-number size="mini" v-model="fee" :precision="6" :step="0.000001" :max="10"></el-input-number>
           </template>
         </el-table-column>
       </el-table>
       <div class="code">
         <span slot="label">{{$t('buyer.deploy.code')}}</span>
-        <el-input :placeholder="$t('buyer.deploy.codeIn')"></el-input>
-        <el-button>{{$t('buyer.deploy.codeBtn')}}</el-button>
+        <el-input :placeholder="$t('buyer.deploy.codeIn')" v-model="concode"></el-input>
+        <el-button @click="getConfirmCode">{{$t('buyer.deploy.codeBtn')}}</el-button>
       </div>
       <p>{{$t('buyer.deploy.confirmText1')}}</p>
       <p>{{$t('buyer.deploy.confirmText2')}}</p>
@@ -31,18 +31,17 @@
         :title="$t('buyer.deploy.confirmText3')"
         :visible.sync="innerVisible"
         append-to-body
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
       >
         <p>{{$t('buyer.deploy.confirmText4')}}</p>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="innerVisible = false">{{$t('buyer.deploy.button2')}}</el-button>
+          <el-button type="primary" @click="successToListPage">{{$t('buyer.deploy.button2')}}</el-button>
         </div>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false">{{$t('buyer.deploy.button1')}}</el-button>
-        <el-button
-          type="primary"
-          @click="outerVisible = false, innerVisible = true"
-        >{{$t('buyer.deploy.button2')}}</el-button>
+        <el-button type="primary" @click="startTransfer">{{$t('buyer.deploy.button2')}}</el-button>
       </div>
     </el-dialog>
 
@@ -67,16 +66,16 @@
         </el-col>
 
         <!--<el-col class="inf-col" :span="6" :offset="1">-->
-          <!--<p>{{$t('buyer.deploy.configuration')}}</p>-->
-          <!--<p>-->
-            <!--<span class="left-span">{{$t('buyer.deploy.cpu')}}xxx</span>-->
-            <!--<span>{{$t('buyer.deploy.memoryCon')}}xxx</span>-->
-            <!--<span>{{$t('buyer.deploy.networkCon')}}xxx</span>-->
-          <!--</p>-->
-          <!--<p>-->
-            <!--<span class="left-span">{{$t('buyer.deploy.gpuCon')}}xxx</span>-->
-            <!--<span>{{$t('buyer.deploy.diskCon')}}xxx</span>-->
-          <!--</p>-->
+        <!--<p>{{$t('buyer.deploy.configuration')}}</p>-->
+        <!--<p>-->
+        <!--<span class="left-span">{{$t('buyer.deploy.cpu')}}xxx</span>-->
+        <!--<span>{{$t('buyer.deploy.memoryCon')}}xxx</span>-->
+        <!--<span>{{$t('buyer.deploy.networkCon')}}xxx</span>-->
+        <!--</p>-->
+        <!--<p>-->
+        <!--<span class="left-span">{{$t('buyer.deploy.gpuCon')}}xxx</span>-->
+        <!--<span>{{$t('buyer.deploy.diskCon')}}xxx</span>-->
+        <!--</p>-->
         <!--</el-col>-->
       </el-row>
       <el-row class="border-line"></el-row>
@@ -84,13 +83,17 @@
       <!-- deploy application -->
       <el-row class="margin-top">
         <el-col :span="23" :offset="1">
-          <el-radio v-model="radio" label="1">{{$t('buyer.deploy.application')}}</el-radio>
+          <el-radio v-model="orderModel" label="1">{{$t('buyer.deploy.application')}}</el-radio>
         </el-col>
         <el-col :span="22" :offset="2">
-          <el-form label-width="80px">
+          <el-form label-width="160px">
             <el-row class="margin-top">
               <el-col :span="18">
-                <el-form-item :label="$t('buyer.deploy.newPool')">
+                <el-form-item>
+                    <span slot="label">
+                    <i class="iconfont icon-name"></i>
+                    {{$t('buyer.deploy.newPool')}}
+                  </span>
                   <el-input
                     v-model="deployForm.name"
                     style="width:350px;"
@@ -99,7 +102,11 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.region')" @change="setRegionSelectValue">
+                <el-form-item @change="setRegionSelectValue">
+                    <span slot="label">
+                    <i class="iconfont icon-region"></i>
+                    {{$t('buyer.deploy.region')}}
+                  </span>
                   <el-select v-model="deployForm.rancherId">
                     <el-option
                       v-for="item in regionSel"
@@ -111,7 +118,11 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.cpu')" @change="setParamCPU">
+                <el-form-item @change="setParamCPU">
+                    <span slot="label">
+                    <i class="iconfont icon-cpu"></i>
+                    {{$t('buyer.deploy.cpu')}}
+                  </span>
                   <el-select v-model="deployForm.cpuKernel">
                     <el-option
                       v-for="item in cpuSel"
@@ -124,6 +135,10 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item :label="$t('buyer.deploy.disk')" @change="setParamHD">
+                    <span slot="label">
+                    <i class="iconfont icon-disk"></i>
+                    {{$t('buyer.deploy.disk')}}
+                  </span>
                   <el-select v-model="deployForm.disk">
                     <el-option
                       v-for="item in diskSel"
@@ -136,6 +151,10 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item :label="$t('buyer.deploy.memory')" @change="setParamRAM">
+                    <span slot="label">
+                    <i class="iconfont icon-memory"></i>
+                    {{$t('buyer.deploy.memory')}}
+                  </span>
                   <el-select v-model="deployForm.mem">
                     <el-option
                       v-for="item in memorySel"
@@ -156,6 +175,10 @@
               </el-col>-->
               <el-col :span="8">
                 <el-form-item :label="$t('buyer.deploy.network')" @change="setParamNet">
+                    <span slot="label">
+                    <i class="iconfont icon-network"></i>
+                    {{$t('buyer.deploy.network')}}
+                  </span>
                   <el-select v-model="deployForm.network">
                     <el-option
                       v-for="item in networkSel"
@@ -167,17 +190,21 @@
                 </el-form-item>
               </el-col>
               <el-col :span="12">
-                <el-form-item :label="$t('buyer.deploy.timeScreening')">
-                    <el-col :span="18">
-                        <el-date-picker
-                                type="daterange"
-                                :start-placeholder="$t('buyer.deploy.startingTime')"
-                                :end-placeholder="$t('buyer.deploy.endTime')"
-                                range-separator="-"
-                                v-model="deployForm.dateRange"
-                                style="width: 100%;"
-                        ></el-date-picker>
-                    </el-col>
+                <el-form-item>
+                    <span slot="label">
+                    <i class="iconfont icon-time"></i>
+                    {{$t('buyer.deploy.timeScreening')}}
+                  </span>
+                  <el-col :span="18">
+                    <el-date-picker
+                      type="daterange"
+                      :start-placeholder="$t('buyer.deploy.startingTime')"
+                      :end-placeholder="$t('buyer.deploy.endTime')"
+                      range-separator="-"
+                      v-model="deployForm.dateRange"
+                      style="width: 100%;"
+                    ></el-date-picker>
+                  </el-col>
                 </el-form-item>
               </el-col>
             </el-row>
@@ -187,10 +214,10 @@
       <!-- more choice -->
       <el-row class="margin-top" v-show="more">
         <el-col :span="2" :offset="1">
-          <el-radio v-model="radio" label="2">{{$t('buyer.deploy.choosePool')}}</el-radio>
+          <el-radio v-model="orderModel" label="2">{{$t('buyer.deploy.choosePool')}}</el-radio>
         </el-col>
         <el-col :span="20">
-          <el-select v-model="spaceValue">
+          <el-select v-model="projectId">
             <el-option
               v-for="item in spaceSel"
               :key="item.value"
@@ -203,7 +230,7 @@
 
       <el-row class="margin-top" v-show="more">
         <el-col :span="2" :offset="1">
-          <el-radio v-model="radio" label="3">{{$t('buyer.deploy.noDeploy')}}</el-radio>
+          <el-radio v-model="orderModel" label="3">{{$t('buyer.deploy.noDeploy')}}</el-radio>
         </el-col>
       </el-row>
       <el-row class="more">
@@ -231,14 +258,22 @@
         </el-col>
       </el-row>
       <el-row class="margin-top">
-        <el-form label-width="80px">
+        <el-form label-width="160px">
           <el-col :span="8" :offset="2">
-            <el-form-item :label="$t('buyer.deploy.nameApp')">
+            <el-form-item>
+                <span slot="label">
+                    <i class="iconfont icon-name"></i>
+                    {{$t('buyer.deploy.nameApp')}}
+                  </span>
               <el-input v-model="appDetail.name" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="10" :offset="4">
-            <el-form-item :label="$t('buyer.deploy.chooseVersion')">
+            <el-form-item>
+                <span slot="label">
+                    <i class="iconfont icon-name"></i>
+                    {{$t('buyer.deploy.chooseVersion')}}
+                  </span>
               <el-select v-model="versionValue">
                 <el-option
                   v-for="item in versionSel"
@@ -250,7 +285,11 @@
             </el-form-item>
           </el-col>
           <el-col :span="8" :offset="2">
-            <el-form-item :label="$t('buyer.deploy.description')">
+            <el-form-item>
+                <span slot="label">
+                    <i class="iconfont icon-name"></i>
+                    {{$t('buyer.deploy.description')}}
+                  </span>
               <el-input v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
             </el-form-item>
           </el-col>
@@ -265,89 +304,71 @@
         </el-col>
       </el-row>
 
-        <ul>
-            <li v-for="(groupData, index) in paramTree" :key="index">
-
-                <ul>
-                    <li v-for="(paramsL2,index) in groupData" :key="index">
-                        <el-row class="margin-top">
-                            <el-col
-                                    class="configuration-box"
-                                    :span="8"
-                                    :offset="2"
-                                    v-for="(param,index) in paramsL2"
-                                    :key="index"
-                            >
-
-                            <!--<div v-if="param.type==='boolean'">-->
-                                <!--<el-radio  v-model="param.default" label="true">是</el-radio>-->
-                                <!--<el-radio  v-model="param.default" label="false">否</el-radio>-->
-                            <!--</div>-->
-
-                            <div v-if="param.type==='string' || param.type==='int' || param.type==='enum'" >
-                                <p class="configuration-name">{{param.label}}：</p>
-                                <el-input v-model="param.default" > </el-input>
-                                <span>{{param.description}}</span>
-                            </div>
-                            </el-col>
-                        </el-row>
-                    </li>
-                </ul>
+      <ul>
+        <li v-for="(groupData, index) in paramTree" :key="index">
+          <ul>
+            <li v-for="(paramsL2,index) in groupData" :key="index">
+              <el-row class="margin-top">
+                <el-col
+                  class="configuration-box"
+                  :span="8"
+                  :offset="2"
+                  v-for="(param,index) in paramsL2"
+                  :key="index"
+                >
+                  <!--<div v-if="param.type==='boolean'">-->
+                  <!--<el-orderModel  v-model="param.default" label="true">是</el-orderModel>-->
+                  <!--<el-orderModel  v-model="param.default" label="false">否</el-orderModel>-->
+                  <!--</div>-->
+                  <div v-if="param.type==='string' || param.type==='int' || param.type==='enum'">
+                    <p class="configuration-name">{{param.label}}：</p>
+                    <el-input v-model="param.default"></el-input>
+                    <span>{{param.description}}</span>
+                  </div>
+                </el-col>
+              </el-row>
             </li>
-        </ul>
-
-
-      <!--<el-row class="margin-top">-->
-        <!--<el-col-->
-          <!--class="configuration-box"-->
-          <!--:span="8"-->
-          <!--:offset="2"-->
-          <!--v-for="(configuration,index) in configurationList"-->
-          <!--:key="index"-->
-        <!--&gt;-->
-          <!--<p class="configuration-name">CHECK_CPU_USAGE：</p>-->
-          <!--<el-input v-model="input"></el-input>-->
-          <!--<span>Enable CPU usage check</span>-->
-        <!--</el-col>-->
-      <!--</el-row>-->
+          </ul>
+        </li>
+      </ul>
 
       <el-row class="border-line"></el-row>
       <el-row>
         <el-col :span="4" :offset="10">
-          <el-button type="success" @click="purchaseResourceApp">{{$t('buyer.deploy.deploy')}}</el-button>
+          <el-button type="success" @click="purchaseEntry">{{$t('buyer.deploy.deploy')}}</el-button>
         </el-col>
       </el-row>
     </el-row>
-
   </section>
 </template>
 
 <script>
-    import * as app from '../../services/RancherService'
-    import * as auth from '../../services/AuthService'
-    import * as rancher from '../../services/RancherService'
-    import { ServerConfigData, WrapDropDownData } from '../../store/rancher_info'
-    import * as project from '../../services/RancherService'
-    import * as wallet from '../../services/WalletService'
-    import * as order from '../../services/OrderService'
+import * as app from "../../services/RancherService";
+import * as auth from "../../services/AuthService";
+import * as account from "../../services/AccountService";
+import * as rancher from "../../services/RancherService";
+import { ServerConfigData, WrapDropDownData } from "../../store/rancher_info";
+import * as project from "../../services/RancherService";
+import * as wallet from "../../services/WalletService";
+import * as order from "../../services/OrderService";
 
 export default {
-  name: 'Deployment',
+  name: "Deployment",
   data() {
     return {
-      radio: '1',
+      orderModel: "1",
       deployForm: {
-        projectName: '',
+        projectName: "",
         rancherId: 2,
-        cpuKernel: '4',
-        disk: '512G',
-        mem: '16',
-        network: '512G',
-        dateRange: ''
+        cpuKernel: "4",
+        disk: "512G",
+        mem: "16",
+        network: "512G",
+        dateRange: ""
       },
       imageServerUrl: this.$store.state.imageServerUrl,
-      imgsrc: '',
-      price: '',
+      imgsrc: "",
+      price: "",
       regionSel: [],
       cpuSel: [],
       diskSel: [],
@@ -356,42 +377,42 @@ export default {
       // existed
       spaceSel: [
         {
-          value: '选项1',
-          label: '0.1.7'
+          value: "选项1",
+          label: "0.1.7"
         },
         {
-          value: '选项2',
-          label: '0.0.2'
+          value: "选项2",
+          label: "0.0.2"
         }
       ],
-      spaceValue: '0.1.2',
+      projectId: "0.1.2",
       // version
       versionSel: [],
-      versionValue: '',
+      versionValue: "",
       // new application name
-      input: '',
+      input: "",
       // more button status
       more: false,
       configurationList: [
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Imagepuller', shop: '商店2' },
-        { id: '3', name: 'Imagepuller', shop: '商店3' },
-        { id: '4', name: 'Imagepuller', shop: '商店4' },
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Imagepuller', shop: '商店2' },
-        { id: '3', name: 'Imagepuller', shop: '商店3' },
-        { id: '4', name: 'Imagepuller', shop: '商店4' }
+        { id: "1", name: "Imagepuller", shop: "商店1" },
+        { id: "2", name: "Imagepuller", shop: "商店2" },
+        { id: "3", name: "Imagepuller", shop: "商店3" },
+        { id: "4", name: "Imagepuller", shop: "商店4" },
+        { id: "1", name: "Imagepuller", shop: "商店1" },
+        { id: "2", name: "Imagepuller", shop: "商店2" },
+        { id: "3", name: "Imagepuller", shop: "商店3" },
+        { id: "4", name: "Imagepuller", shop: "商店4" }
       ],
       appId: 0,
-      appRid: '',
-      versionId: '',
-      catalog: '',
+      appRid: "",
+      versionId: "",
+      catalog: "",
       appDetail: {},
       appVersionDetail: {},
       stackData: {
         hostType: 1,
-        name: '',
-        description: '',
+        name: "",
+        description: "",
         startOnCreate: true
       },
       gridData: [],
@@ -401,263 +422,389 @@ export default {
       environment: [],
       paramTree: [],
       appDeployParam: {},
-      fee: 0
+      fee: 0,
+      concode: ""
+    };
+  },
+  created() {
+    if (typeof this.$route.query.appId !== "undefined") {
+      this.appId = this.$route.query.appId;
+      this.appRid = this.$route.query.appRid;
+      this.versionId = this.$route.query.versionId;
+      this.catalog = this.$route.query.catalog;
+      this.getAppDetail(this.appId);
+      this.getAppVersionDetail(this.appId, this.versionId);
+      this.getRegionList();
+      this.setConfigSelector();
+      this.getUraPowerPoolList();
+      this.getReferenceFee();
     }
   },
-    created () {
-      if (typeof this.$route.query.appId !== 'undefined') {
-        this.appId = this.$route.query.appId
-        this.appRid = this.$route.query.appRid
-        this.versionId = this.$route.query.versionId
-        this.catalog = this.$route.query.catalog
-        this.getAppDetail(this.appId)
-        this.getAppVersionDetail(this.appId, this.versionId)
-        this.getRegionList()
-        this.setConfigSelector()
-        this.getUraPowerPoolList()
-        this.getReferenceFee()
-      }
-    },
   methods: {
-        parseConfigData(configData) {
-          /// grouped data
-          let paramTreeTmp = {}
-          configData.map(param => {
-            if (!paramTreeTmp.hasOwnProperty(param.group)) { paramTreeTmp[param.group] = [] }
-            paramTreeTmp[param.group].push(param)
-          })
+    parseConfigData(configData) {
+      /// grouped data
+      let paramTreeTmp = {};
+      configData.map(param => {
+        if (!paramTreeTmp.hasOwnProperty(param.group)) {
+          paramTreeTmp[param.group] = [];
+        }
+        paramTreeTmp[param.group].push(param);
+      });
 
-          /// convert struct phase 2
-          const groups = Object.keys(paramTreeTmp)
-          groups.map(group => {
-            let newgroup = []
-            const curgroup = paramTreeTmp[group]
+      /// convert struct phase 2
+      const groups = Object.keys(paramTreeTmp);
+      groups.map(group => {
+        let newgroup = [];
+        const curgroup = paramTreeTmp[group];
 
-            curgroup.map(param => {
-              const rebranchnode = param.showIf? param.showIf.endsWith('.enabled=true'):null
-                // move node to the branch its belong
-              if (!rebranchnode) {
-                newgroup.push(param)
-              } else {
-                newgroup.find(paramup => {
-                  if (param.showIf === paramup.variable + '=true') {
-                    if (!paramup.subquestions) { paramup.subquestions = [] }
-                    paramup.subquestions.push(param)
-                  }
-                })
+        curgroup.map(param => {
+          const rebranchnode = param.showIf
+            ? param.showIf.endsWith(".enabled=true")
+            : null;
+          // move node to the branch its belong
+          if (!rebranchnode) {
+            newgroup.push(param);
+          } else {
+            newgroup.find(paramup => {
+              if (param.showIf === paramup.variable + "=true") {
+                if (!paramup.subquestions) {
+                  paramup.subquestions = [];
+                }
+                paramup.subquestions.push(param);
               }
-
-                // if(param.hasOwnProperty('subquestions')){
-                //
-                // }
-            })
-            const groupData = {}
-            groupData[group] = newgroup
-            this.paramTree.push(groupData)
-          })
-        },
+              // TODO : node on false branch to attach paramup
+            });
+          }
+          // TODO :  level 3 trans_struct
+          // if(param.hasOwnProperty('subquestions')){
+          //
+          // }
+        });
+        const groupData = {};
+        groupData[group] = newgroup;
+        this.paramTree.push(groupData);
+      });
+    },
 
     changeMore() {
-      this.more = !this.more
+      this.more = !this.more;
     },
 
-        setConfigSelector() {
-          const CpuData = ServerConfigData.CPU
-          this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang())
-          this.deployForm.cpuKernel = this.cpuSel[0].value
+    setConfigSelector() {
+      const CpuData = ServerConfigData.CPU;
+      this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang());
+      this.deployForm.cpuKernel = this.cpuSel[0].value;
 
-          const HdData = ServerConfigData.HD
-          this.diskSel = WrapDropDownData(HdData, null)
-          this.deployForm.disk = this.diskSel[0].value
+      const HdData = ServerConfigData.HD;
+      this.diskSel = WrapDropDownData(HdData, null);
+      this.deployForm.disk = this.diskSel[0].value;
 
-          const MemData = ServerConfigData.Mem
-          this.memorySel = WrapDropDownData(MemData, null)
-          this.deployForm.mem = this.memorySel[0].value
+      const MemData = ServerConfigData.Mem;
+      this.memorySel = WrapDropDownData(MemData, null);
+      this.deployForm.mem = this.memorySel[0].value;
 
-          const NetworData = ServerConfigData.Network
-          this.networkSel = WrapDropDownData(NetworData, null)
-          this.deployForm.network = this.networkSel[0].value
-        },
+      const NetworData = ServerConfigData.Network;
+      this.networkSel = WrapDropDownData(NetworData, null);
+      this.deployForm.network = this.networkSel[0].value;
+    },
 
-        setRegionSelectValue(region) {
-          this.deployForm.rancherId = region
-        },
-        setParamCPU(value) {
-          this.deployForm.cpuKernel = value
-        },
-        setParamHD(value) {
-          this.deployForm.disk = value
-        },
-        setParamRAM(value) {
-          this.deployForm.mem = value
-        },
-        setParamNet(value) {
-          this.deployForm.network = value
-        },
+    setRegionSelectValue(region) {
+      this.deployForm.rancherId = region;
+    },
+    setParamCPU(value) {
+      this.deployForm.cpuKernel = value;
+    },
+    setParamHD(value) {
+      this.deployForm.disk = value;
+    },
+    setParamRAM(value) {
+      this.deployForm.mem = value;
+    },
+    setParamNet(value) {
+      this.deployForm.network = value;
+    },
 
-        getRegionList() {
-          rancher.rancherList(auth.getCurLang())
-            .then(respData => {
-              this.rancherServer = respData.data.data
-              let regionData = []
-              this.rancherServer.map(rancher => {
-                const region = {
-                  value: rancher.id,
-                  label: auth.getCurLang() === 'zh-cn'? rancher.region :rancher.regionEnUs
-                }
-                regionData.push(region)
-              })
+    getRegionList() {
+      rancher.rancherList(auth.getCurLang()).then(respData => {
+        this.rancherServer = respData.data.data;
+        let regionData = [];
+        this.rancherServer.map(rancher => {
+          const region = {
+            value: rancher.id,
+            label:
+              auth.getCurLang() === "zh-cn"
+                ? rancher.region
+                : rancher.regionEnUs
+          };
+          regionData.push(region);
+        });
 
-              this.regionSel = regionData
-            })
-        },
-        getAppDetail (appid) {
-          app.appDetail(auth.getCurLang(), appid).then(respData => {
-            if (respData.data.success) {
-              const appInfo = respData.data.data
-              this.appDetail = appInfo
-              this.stackData.name = appInfo.name.replace(/\s+/g, '-')
-              const versions = JSON.parse(this.appDetail.versionLinks)
-              this.appDetail.versionlinks = []
-              this.imgsrc = this.imageServerUrl + this.appDetail.rid + '/icon'
-              this.price = this.appDetail.free ? this.$t('buyer.deploy.free'): this.price
-              for (var key in versions) {
-                var versionLink = versions[key]
-                var versionId = versionLink.substr(versionLink.lastIndexOf('/') + 1)
-                this.appDetail.versionlinks.push({label: key, value: versionId})
-              }
-              this.versionSel = this.appDetail.versionlinks
-              this.versionValue = this.appDetail.defaultVersion
-            } else {
-                  // this.$alert(respData.message, this.$t('common.messages.alert'), {
-                  //     confirmButtonText: this.$t('common.messages.confirm')
-                  // })
-            }
-          })
-        },
-        getAppVersionDetail (appId, version) {
-          app.appVersion(auth.getCurLang(), appId, version).then(respData => {
-            if (respData.data.success) {
-              this.appVersionDetail = respData.data.data
-              // let files = JSON.parse(this.appVersionDetail.files)
-              // this.appVersionDetail.files = files
-              // this.appVersionDetail.readMe = files['README.md']
-              // this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
-              this.parseConfigData(this.appVersionDetail.questions)
-              this.appVersionDetail.questions.map(question => {
-                const key = question.variable
-                const value = question.defaultValue
-                this.environment[key] = value
-              })
-            } else {
-                  // this.$alert(respon.message, this.$t('common.messages.alert'), {
-                  //     confirmButtonText: this.$t('common.messages.confirm')
-                  // })
-            }
-          })
-        },
-        getUraPowerPoolList() {
-          const projectQuertData = {
-            'page': 0,
-            'pageSize': 0,
-            'projectName': '',
-            'sort': '',
-            'sortDesc': true
+        this.regionSel = regionData;
+      });
+    },
+    getAppDetail(appid) {
+      app.appDetail(auth.getCurLang(), appid).then(respData => {
+        if (respData.data.success) {
+          const appInfo = respData.data.data;
+          this.appDetail = appInfo;
+          this.stackData.name = appInfo.name.replace(/\s+/g, "-");
+          const versions = JSON.parse(this.appDetail.versionLinks);
+          this.appDetail.versionlinks = [];
+          this.imgsrc = this.imageServerUrl + this.appDetail.rid + "/icon";
+          this.price = this.appDetail.free
+            ? this.$t("buyer.deploy.free")
+            : this.price;
+          for (var key in versions) {
+            var versionLink = versions[key];
+            var versionId = versionLink.substr(
+              versionLink.lastIndexOf("/") + 1
+            );
+            this.appDetail.versionlinks.push({ label: key, value: versionId });
           }
-          project.projectList(this.$store.getters.lang, projectQuertData)
-              .then(respData => {
-                const data = respData.data.data.records
-                for (let i = 0; i < data.length; i++) {
-                  let object = {}
-                  object['value'] = data[i].id
-                  object['label'] = data[i].projectName
-                  this.spaceSel.push(object)
-                }
-                this.spaceValue = this.spaceSel[0].value
-              })
-        },
-        getReferenceFee() {
-          wallet.walletReferenceFee(auth.getCurLang())
-              .then(reffee => {
-                this.fee = reffee.data.data
-              })
-        },
-        getConfirmCode() {
-          wallet.walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
-              .then(sendResult => {
-                  // const status = sendResult.data
-              })
-        },
-        purchaseUraPowerPlus() {
-          this.deployForm.beginTime = this.deployForm.dateRange[0]
-          this.deployForm.endTime = this.deployForm.dateRange[1]
-
-          // order.orderResource(auth.getCurLang(), this.deployForm)
-              // .then(purcheStatus => {
-              //   const purchStausData = purcheStatus.data
-              //   console.log(purchStausData)
-              //   if (purchStausData.success) {
-
-          const purchStausData = {
-            buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-            buyerId: 60,
-            buyerName: '',
-            createTime: 1548072518330,
-            id: 59,
-            orderAmount: 0.24255,
-            orderHash: null,
-            orderNo: '2019012100003',
-            orderStatus: 1,
-            paySuccessTime: null,
-            poundage: 0.000378,
-            prodType: 'UraPower',
-            sellerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-            sellerId: 60,
-            sellerName: '',
-            updateTime: 1548072518330,
-            projectId: 133
-          }
-          this.gridData = [purchStausData]
-          this.spaceValue = purchStausData.projectId
-
-
-
-          this.outerVisible = true
-
-        },
-        purchaseResourceApp() {
-          if (this.radio === '1') { // delopy with new UraPower
-            this.purchaseUraPowerPlus()
-          } else if (this.radio === '2') { // deploy with exsit UraPower
-            this.appDeploy()
-          } else { // do not deploy
-
-          }
-        },
-        appDeploy() {
-          this.appDeployParam['appId'] = this.appId
-          this.appDeployParam['appVersion'] = this.versionValue
-          this.appDeployParam['config'] = JSON.stringify(this.paramTree)
-          this.appDeployParam['description'] = this.appDetail.description
-          this.appDeployParam['name'] = this.appDetail.name
-          this.appDeployParam['projectId'] = 93
-          app.appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
-                .then(respData => {
-                  const deployData = respData.data
-                  if (deployData.success) {
-                    this.outerVisible = true
-                  } else {
-                    this.$message('部署应用失败')
-                  }
-                })
+          this.versionSel = this.appDetail.versionlinks;
+          this.versionValue = this.appDetail.defaultVersion;
+        } else {
+          // this.$alert(respData.message, this.$t('common.messages.alert'), {
+          //     confirmButtonText: this.$t('common.messages.confirm')
+          // })
         }
+      });
+    },
+    getAppVersionDetail(appId, version) {
+      app.appVersion(auth.getCurLang(), appId, version).then(respData => {
+        if (respData.data.success) {
+          this.appVersionDetail = respData.data.data;
+          // let files = JSON.parse(this.appVersionDetail.files)
+          // this.appVersionDetail.files = files
+          // this.appVersionDetail.readMe = files['README.md']
+          // this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
+          this.parseConfigData(this.appVersionDetail.questions);
+          this.appVersionDetail.questions.map(question => {
+            const key = question.variable;
+            const value = question.defaultValue;
+            this.environment[key] = value;
+          });
+        } else {
+          // this.$alert(respon.message, this.$t('common.messages.alert'), {
+          //     confirmButtonText: this.$t('common.messages.confirm')
+          // })
+        }
+      });
+    },
+    successToListPage() {
+      this.innerVisible = false;
+      if (this.orderModel === "1" || this.orderModel === "2")
+        this.$router.push({ name: "MyResource" });
+      else this.$router.push({ name: "ApplicationRepository" });
+    },
+
+    getUraPowerPoolList() {
+      const projectQuertData = {
+        page: 0,
+        pageSize: 0,
+        projectName: "",
+        sort: "",
+        sortDesc: true
+      };
+      project
+        .projectList(this.$store.getters.lang, projectQuertData)
+        .then(respData => {
+          const data = respData.data.data.records;
+          for (let i = 0; i < data.length; i++) {
+            let object = {};
+            object["value"] = data[i].id;
+            object["label"] = data[i].projectName;
+            this.spaceSel.push(object);
+          }
+          this.projectId = this.spaceSel[0].value;
+        });
+    },
+    getReferenceFee() {
+      wallet.walletReferenceFee(auth.getCurLang()).then(reffee => {
+        this.fee = reffee.data.data;
+      });
+    },
+    getConfirmCode() {
+      wallet
+        .walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
+        .then(sendResult => {
+          const status = sendResult.data;
+          this.$message({
+            showClose: true,
+            message: status.data,
+            type: "success",
+            duration: 3000
+          });
+        });
+    },
+    purchaseEntry() {
+      if (this.orderModel === "1") {
+        this.purchaseUraPowerPlus();
+      } else if (this.orderModel === "2") {
+        this.purchaseAppliction();
+      } else {
+        // do not deploy
+      }
+    },
+    purchaseUraPowerPlus() {
+      this.deployForm.beginTime = this.deployForm.dateRange[0];
+      this.deployForm.endTime = this.deployForm.dateRange[1];
+
+      // order.orderResource(auth.getCurLang(), this.deployForm)
+      // .then(purcheStatus => {
+      //   const purchUraStausData = purcheStatus.data
+      //   console.log(purchUraStausData)
+      //   if (purchStausData.success) {
+
+      const purchUraStausData = {
+        buyerAccount: "0x323ec4e944F0C78FA8254B213b7C1d495632622e",
+        buyerId: 60,
+        buyerName: "",
+        createTime: 1548072518330,
+        id: 59,
+        orderAmount: 0.24255,
+        orderHash: null,
+        orderNo: "2019012100003",
+        orderStatus: 1,
+        paySuccessTime: null,
+        poundage: 0.000378,
+        prodType: "UraPower",
+        sellerAccount: "0x323ec4e944F0C78FA8254B213b7C1d495632622e",
+        sellerId: 60,
+        sellerName: "",
+        updateTime: 1548072518330,
+        projectId: 133
+      };
+      this.gridData = [purchUraStausData];
+      this.projectId = purchUraStausData.projectId;
+
+      this.purchaseAppliction();
+      this.outerVisible = true;
+    },
+
+    purchaseAppliction() {
+      //   console.log('buy app')
+      //   order.orderApp(auth.getCurLang(), this.appId)
+      //        .then(purchaseStatus => {
+      //          const purchaseAppStatusData = purchaseStatus.data
+
+      const purchaseAppStatusData = {
+        beginTime: null,
+        buyerAccount: "0x323ec4e944F0C78FA8254B213b7C1d495632622e",
+        buyerId: 60,
+        buyerName: "",
+        createTime: 1548131638960,
+        endTime: null,
+        id: 65,
+        orderAmount: 0.6,
+        orderHash: null,
+        orderNo: "2019012200003",
+        orderStatus: 3,
+        orderStatusName: "paid",
+        paySuccessTime: 1548131638960,
+        poundage: 0,
+        prodId: 274,
+        prodName: "mariadb",
+        prodPrice: 0,
+        prodType: "Application",
+        sellerAccount: null,
+        sellerId: 62,
+        sellerName: null,
+        updateTime: 1548131638960
+      };
+
+      this.gridData.push(purchaseAppStatusData);
+
+      if (purchaseAppStatusData.errCode === "REPEAT_BUY_APP") {
+        this.$message({
+          showClose: true,
+          message: purchaseAppStatusData.errMsg,
+          type: "error"
+        });
+      }
+
+      if (this.orderModel === "2") {
+        this.outerVisible = true;
+      }
+      // }).catch(error => {
+      //   // console.log(error)
+      // })
+    },
+
+    startTransfer() {
+      let orders = [];
+      this.gridData.map(order => {
+        const tmporder = {
+          buyerId: auth.getCurUserId(),
+          orderAmount: order.orderAmount,
+          orderNo: order.orderNo,
+          poundage: this.fee,
+          sellerId: order.sellerId
+        };
+        orders.push(tmporder);
+      });
+      account
+        .userInfo(auth.getCurLang(), auth.getCurUserId())
+        .then(userInfo => {
+          const userData = userInfo.data.data;
+          const transData = {
+            orders: orders,
+            phone: userData.mobile,
+            smsCode: this.concode
+          };
+          wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
+            console.log(transStatus);
+          });
+          this.outerVisible = false;
+          this.innerVisible = true;
+        });
+
+      // wallet.walletTransfer(auth.getCurLang(), transData)
+      //     .then(respData => {
+      //       const transferStatus = respData.data
+      //       console.log(transferStatus)
+      //       if (transferStatus) {
+      //         this.outerVisible = false
+      //         this.innerVisible = true
+      //       }
+      //     })
+    },
+
+    appDeploy() {
+      this.appDeployParam["appId"] = this.appId;
+      this.appDeployParam["appVersion"] = this.versionValue;
+      this.appDeployParam["config"] = JSON.stringify(this.paramTree);
+      this.appDeployParam["description"] = this.appDetail.description;
+      this.appDeployParam["name"] = this.appDetail.name;
+      if (this.orderModel === "1" || this.orderModel === "2") {
+        this.appDeployParam["projectId"] = this.projectId;
+      }
+
+      app
+        .appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
+        .then(respData => {
+          const deployData = respData.data;
+          if (deployData.success) {
+            this.$message({
+              showClose: true,
+              message: this.appDetail.name + "deployed",
+              type: "success",
+              duration: 3000
+            });
+            this.outerVisible = true;
+          } else {
+            this.$message("部署应用失败");
+          }
+        });
+    }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .deployment {
-  background: #f2f2f2;
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
   min-width: 1130px;
   .el-dialog {
     .code {
@@ -666,7 +813,7 @@ export default {
       margin: 25px;
       span {
         width: 85px;
-        font-family: PingFang-SC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #363636;
         line-height: 40px;
@@ -679,32 +826,64 @@ export default {
     p {
       margin: 15px auto;
       text-align: center;
-      font-family: PingFang-SC-Medium;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
       color: #f54c46;
       line-height: 20px;
     }
   }
   .resourceBox {
-    background: #ffffff;
+    background: rgba(101, 143, 247, 0);
     border-radius: 2px;
-    margin: 20px;
+    margin: 10px;
     .border-line {
       border-bottom: 1px solid #e9e9e9;
       margin-top: 33px;
       margin-bottom: 30px;
     }
     .bg {
-      background: #fafafa;
+      background: rgba(101, 143, 247, 0);
+    }
+    .el-button {
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 #2463ff;
+      border-radius: 3px;
+      border: none;
+    }
+    .el-select /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-input /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-input__inner /deep/ .el-range-input {
+      background: rgba(36, 99, 255, 0.2);
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .el-radio {
+        color: #ffffff;
     }
     .title {
       border-radius: 4px 4px 0 0;
       height: 54px;
       margin-bottom: 25px;
       h1 {
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: rgba(0, 0, 0, 0.65);
+        color: #ffffff;
         text-align: left;
         line-height: 24px;
         padding-left: 30px;
@@ -720,14 +899,14 @@ export default {
       h2 {
         font-family: ArialMT;
         font-size: 18px;
-        color: #363636;
+        color: #ffffff;
         line-height: 22px;
         text-align: left;
       }
       p {
-        font-family: PingFang-SC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: rgba(0, 0, 0, 0.85);
+        color: #ffffff;
         letter-spacing: 0;
         line-height: 22px;
         text-align: left;
@@ -743,9 +922,9 @@ export default {
       .inf-col {
         margin-top: 60px;
         span {
-          font-family: PingFang-SC-Medium;
+          font-family: Source-Sans-Pro-Bold;
           font-size: 16px;
-          color: rgba(0, 0, 0, 0.65);
+          color: #ffffff;
           text-align: left;
           line-height: 24px;
           padding-left: 20px;
@@ -760,19 +939,26 @@ export default {
       .line {
         text-align: center;
       }
+      span {
+        font-size: 16px;
+        color: #ffffff;
+        line-height: 24px;
+        i {
+          font-size: 26px;
+          margin-right: 10px;
+        }
+      }
       .configuration-box {
         margin-bottom: 30px;
         p {
-          font-family: PingFangSC-Regular;
           font-size: 16px;
-          color: rgba(0, 0, 0, 0.65);
+          color: #ffffff;
           text-align: left;
           line-height: 24px;
         }
         span {
-          font-family: PingFangSC-Regular;
           font-size: 16px;
-          color: rgba(0, 0, 0, 0.25);
+          color: #ffffff;
           text-align: left;
           line-height: 24px;
         }
@@ -785,16 +971,17 @@ export default {
       .more-button {
         cursor: pointer;
         text-align: center;
-        font-family: PingFang-SC-Medium;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #979797;
+        color: #ffffff;
         line-height: 22px;
       }
     }
     .el-button {
       margin-bottom: 30px;
-      background: #8eb357;
-      border-radius: 5px;
+       background: rgba(101, 143, 247, 0);
+              box-shadow: inset 0 0 22px 0 #2463ff;
+              border-radius: 5px;
       border: none;
       width: 200px;
       height: 34px;

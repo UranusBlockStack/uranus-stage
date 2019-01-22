@@ -119,6 +119,10 @@ export function apptListByProjectId (lang, projectId) {
     return httpLang(lang).get(`/rancher/projects/${projectId}/apps`)
 }
 
+export function projectWorkloadActon (lang, projectId, workloadId, action) {
+    return httpLang(lang).post(`/rancher/projects/${projectId}/workloads/${workloadId}?action=` + action)
+}
+
 export function projectListById (lang, projectId) {
     return httpLang(lang).get(`/rancher/projects/${projectId}`)
 }

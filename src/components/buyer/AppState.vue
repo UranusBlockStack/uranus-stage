@@ -59,8 +59,8 @@
                 </span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>{{$t('buyer.appState.shell')}}</el-dropdown-item>
-                  <el-dropdown-item>{{$t('buyer.appState.pause')}}</el-dropdown-item>
-                  <el-dropdown-item>{{$t('buyer.appState.resume')}}</el-dropdown-item>
+                  <el-dropdown-item  @click.native="workloadAction(scope.row.wid, 'pause')" >{{$t('buyer.appState.pause')}}</el-dropdown-item>
+                  <el-dropdown-item @click.native="workloadAction(scope.row.wid, 'resume')">{{$t('buyer.appState.resume')}}</el-dropdown-item>
                   <el-dropdown-item>{{$t('buyer.appState.delete')}}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -76,41 +76,71 @@
 </template>
 
 <script>
-import * as apps from "../../services/RancherService";
+import * as apps from '../../services/RancherService'
 
 export default {
-  name: "AppRecord",
+  name: 'AppRecord',
   data() {
     return {
-      workLoadList: []
-    };
+      workLoadList: [],
+      appId: this.$route.params.appId,
+      poolId: this.$route.params.projectId
+    }
   },
   methods: {
     getWorkLoads() {
+      this.workLoadList = []
       apps
-        .appInstanceWorkLoads(this.$store.getters.lang, this.$route.params.id)
+        .appInstanceWorkLoads(this.$store.getters.lang, this.$route.params.appId)
         .then(respData => {
-          let dataList = respData.data.data.records;
+          let dataList = respData.data.data.records
+
           dataList.forEach((item, index) => {
-            let object = {};
-            object["status"] = item.state;
-            object["name"] = item.name;
-            console.log("maxl", JSON.parse(item.containers));
+            let object = {}
+            object['wid'] = item.id
+            object['status'] = item.state
+            object['name'] = item.name
             JSON.parse(item.containers).forEach((item1, index) => {
-              if (item1.hasOwnProperty("environment")) {
-                object["image"] = item1.image;
+              if (item1.hasOwnProperty('environment')) {
+                object['image'] = item1.image
               }
-            });
-            object["scale"] = item.scale;
-            this.workLoadList.push(object);
-          });
-        });
+            })
+            object['scale'] = item.scale
+            this.workLoadList.push(object)
+          })
+        })
+    },
+    workloadAction(wid, type) {
+      apps.projectWorkloadActon(this.$store.getters.lang, this.poolId, wid, type)
+            .then(respData => {
+              let data = respData.data
+              if (data.success) {
+                this.$message({
+                  showClose: true,
+                  message: 'Success.',
+                  type: 'success'
+                })
+                this.getWorkLoads()
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: data.errMsg,
+                  type: 'error'
+                })
+              }
+            }).catch(err => {
+              this.$message({
+                showClose: true,
+                message: err,
+                type: 'error'
+              })
+            })
     }
   },
   created() {
-    this.getWorkLoads();
+    this.getWorkLoads()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -9,9 +9,6 @@ module.exports = {
     appRepository: 'My Application',
     resourceMarket: 'UraPower',
     myResource: 'UraPower Pool',
-    resourcePool1: 'UraPower Pool A',
-    resourcePool2: 'UraPower Pool B',
-    resourcePool3: 'UraPower Pool C',
     // seller
     myHost: 'Host',
     myColony: 'Cluster',
@@ -45,11 +42,10 @@ module.exports = {
       allPower: 'All',
       restPower: 'Residual',
       time: 'Time',
-      hour: 'Hour',
       day: 'Day',
       week: 'Week',
       month: 'Month',
-      yName: 'UracPower',
+      yName: 'UraPower',
       xName: 'Time',
     },
     appMarket: {
@@ -58,11 +54,9 @@ module.exports = {
       free: 'Free',
       paid: 'Paid',
       storeAll: 'All Store',
-      download: 'Download',
+      download: 'Download: ',
       deploy: 'Deploy',
       buy: 'Buy',
-      go: 'Go',
-      page: 'Page'
     },
     appRepository: {
       deployRecord: 'Records',
@@ -81,8 +75,8 @@ module.exports = {
         appStatus: 'Status',
         completedStatus: 'Complete',
         orderTime: 'Creation time',
-        appPrice: 'Value',
-        fee: 'Fee',
+        appPrice: 'Value(URAC)',
+        fee: 'Fee(URAC)',
         ip: 'IP',
         port: 'Port',
         appHash: 'TX Hash'
@@ -103,6 +97,7 @@ module.exports = {
     resourceMarket: {
       purchase: 'Purchase',
       region: 'Region',
+      cpu: 'CPU',
       memory: 'Memory',
       disk: 'Disk',
       network: 'Network',
@@ -118,7 +113,7 @@ module.exports = {
       address: 'Address',
       value: 'Value(URAC)',
       content: 'Type',
-      fee: 'Fee',
+      fee: 'Fee(URAC)',
       purchaseApp: 'Application',
       purchasePower: 'UraPower',
       code: 'Code',
@@ -129,7 +124,6 @@ module.exports = {
       button1: 'Cancel',
       button2: 'OK',
       confirmText3: 'Successfully Paid',
-      confirmText4: ''
     },
     deploy: {
       application: 'Deploy Application',
@@ -210,7 +204,29 @@ module.exports = {
       countdownTime: 'Count down:',
       timeUp: '',
       renewal: 'Renewal fee',
-      detail: 'View'
+      detail: 'View',
+      deployRecord: 'Records',
+      deployPage: {
+        searchIn: 'Search',
+        time: 'Time',
+        startTime: 'Start',
+        endTime: 'End',
+        pool: 'Pool',
+        number: 'ID',
+        appName: 'Name',
+        appTime: 'Deploy Time',
+        appState: 'State',
+        appEnd: 'Remaining Time',
+        appValur: 'Value(URAC)',
+        appStatus: 'Status',
+        completedStatus: 'Complete',
+        orderTime: 'Creation time',
+        appPrice: 'Value',
+        fee: 'Fee',
+        ip: 'IP',
+        port: 'Port',
+        appHash: 'TX Hash'
+      },
     },
     resourcePool: {
       list: 'UraPower purchase list',
