@@ -130,6 +130,7 @@ export default {
                 message: 'Success.',
                 type: 'success'
               })
+                this.getAppList()
             } else {
               this.$message({
                 showClose: true,
