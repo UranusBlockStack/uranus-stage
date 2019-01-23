@@ -93,7 +93,10 @@ export default {
       apps
         .appInstanceWorkLoads(this.$store.getters.lang, this.$route.params.appId)
         .then(respData => {
-          let dataList = respData.data.data.records
+          let dataList = []
+          if (respData.data.data) {
+            dataList = respData.data.data.records
+          }
 
           dataList.forEach((item, index) => {
             let object = {}
