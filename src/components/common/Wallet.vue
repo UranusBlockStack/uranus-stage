@@ -173,7 +173,7 @@ export default {
         .getTradeListFromUser(this.curLang, this.curUserInfo.userId, this.currentPage, this.pageSize)
         .then(tradeList => {
           this.tableData = tradeList.data.data.records
-          this.totalRecords = tradeList.data.data.records
+          this.totalRecords = tradeList.data.data.records.length
         })
     },
     viewDetail(row) {

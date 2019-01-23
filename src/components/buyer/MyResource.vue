@@ -50,8 +50,8 @@
                 <Ball v-if="update1" :chartData='pool.urpowerUsd'/>
               </el-col>
               <el-col :span="12">
-                  <h3>Pool: {{pool.name}}</h3>
-                <h3>{{$t('buyer.myResource.state')}} {{pool.appCount}}</h3>
+                  <h3>Pool: {{pool.name}} </h3>
+                <h3>{{$t('buyer.myResource.state')}} {{pool.orderStatus}} {{pool.orderStatusName}}</h3>
                 <h3>{{$t('buyer.myResource.number')}} {{pool.appCount}}</h3>
                 <div class="timeText">
                   <p>{{$t('buyer.myResource.countdownTime')}}</p>
@@ -125,7 +125,7 @@ export default {
         'urapowerUsd': 0
       },
       update1: false,
-      update2: false,
+      update2: false
     }
   },
   methods: {
@@ -140,7 +140,9 @@ export default {
                   object['name'] = data[i].projectName
                   object['appCount'] = data[i].appCount
                   object['time'] = moment(data[i].endTime).format('YYYY-MM-DD hh:mm:ss')
-                    object['urpowerUsd'] = data[i].computeRatio
+                  object['urpowerUsd'] = data[i].computeRatio
+                  object.orderStatus = data[i].orderStatus
+                  object.orderStatusName = data[i].orderStatusName
                   this.poolList.push(object)
                   this.update1 = true
                 }
@@ -162,7 +164,7 @@ export default {
   created() {
     this.allStatisticsProjects()
     this.getUraPowerPoolList()
-  },
+  }
 }
 </script>
 

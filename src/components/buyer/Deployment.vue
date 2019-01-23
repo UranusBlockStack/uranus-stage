@@ -343,36 +343,36 @@
 </template>
 
 <script>
-import * as app from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
-import * as account from "../../services/AccountService";
-import * as rancher from "../../services/RancherService";
-import { ServerConfigData, WrapDropDownData } from "../../store/rancher_info";
-import * as project from "../../services/RancherService";
-import * as wallet from "../../services/WalletService";
-import * as order from "../../services/OrderService";
+import * as app from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
+import * as account from '../../services/AccountService'
+import * as rancher from '../../services/RancherService'
+import { ServerConfigData, WrapDropDownData } from '../../store/rancher_info'
+import * as project from '../../services/RancherService'
+import * as wallet from '../../services/WalletService'
+import * as order from '../../services/OrderService'
 import TimeOver from '@/components/modules/TimeOver'
 
 export default {
-  name: "Deployment",
+  name: 'Deployment',
   components: {
-      TimeOver,
+    TimeOver
   },
   data() {
     return {
-      orderModel: "1",
+      orderModel: '1',
       deployForm: {
-        projectName: "",
+        projectName: '',
         rancherId: 2,
-        cpuKernel: "4",
-        disk: "512G",
-        mem: "16",
-        network: "512G",
-        dateRange: ""
+        cpuKernel: '4',
+        disk: '512G',
+        mem: '16',
+        network: '512G',
+        dateRange: ''
       },
       imageServerUrl: this.$store.state.imageServerUrl,
-      imgsrc: "",
-      price: "",
+      imgsrc: '',
+      price: '',
       regionSel: [],
       cpuSel: [],
       diskSel: [],
@@ -381,42 +381,42 @@ export default {
       // existed
       spaceSel: [
         {
-          value: "选项1",
-          label: "0.1.7"
+          value: '选项1',
+          label: '0.1.7'
         },
         {
-          value: "选项2",
-          label: "0.0.2"
+          value: '选项2',
+          label: '0.0.2'
         }
       ],
-      projectId: "0.1.2",
+      projectId: '0.1.2',
       // version
       versionSel: [],
-      versionValue: "",
+      versionValue: '',
       // new application name
-      input: "",
+      input: '',
       // more button status
       more: false,
       configurationList: [
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" },
-        { id: "1", name: "Imagepuller", shop: "商店1" },
-        { id: "2", name: "Imagepuller", shop: "商店2" },
-        { id: "3", name: "Imagepuller", shop: "商店3" },
-        { id: "4", name: "Imagepuller", shop: "商店4" }
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' },
+        { id: '1', name: 'Imagepuller', shop: '商店1' },
+        { id: '2', name: 'Imagepuller', shop: '商店2' },
+        { id: '3', name: 'Imagepuller', shop: '商店3' },
+        { id: '4', name: 'Imagepuller', shop: '商店4' }
       ],
       appId: 0,
-      appRid: "",
-      versionId: "",
-      catalog: "",
+      appRid: '',
+      versionId: '',
+      catalog: '',
       appDetail: {},
       appVersionDetail: {},
       stackData: {
         hostType: 1,
-        name: "",
-        description: "",
+        name: '',
+        description: '',
         startOnCreate: true
       },
       gridData: [],
@@ -427,232 +427,230 @@ export default {
       paramTree: [],
       appDeployParam: {},
       fee: 0,
-      concode: ""
-    };
+      concode: ''
+    }
   },
   created() {
-    if (typeof this.$route.query.appId !== "undefined") {
-      this.appId = this.$route.query.appId;
-      this.appRid = this.$route.query.appRid;
-      this.versionId = this.$route.query.versionId;
-      this.catalog = this.$route.query.catalog;
-      this.getAppDetail(this.appId);
-      this.getAppVersionDetail(this.appId, this.versionId);
-      this.getRegionList();
-      this.setConfigSelector();
-      this.getUraPowerPoolList();
-      this.getReferenceFee();
+    if (typeof this.$route.query.appId !== 'undefined') {
+      this.appId = this.$route.query.appId
+      this.appRid = this.$route.query.appRid
+      this.versionId = this.$route.query.versionId
+      this.catalog = this.$route.query.catalog
+      this.getAppDetail(this.appId)
+      this.getAppVersionDetail(this.appId, this.versionId)
+      this.getRegionList()
+      this.setConfigSelector()
+      this.getUraPowerPoolList()
+      this.getReferenceFee()
     }
   },
   methods: {
     parseConfigData(configData) {
       /// grouped data
-      let paramTreeTmp = {};
+      let paramTreeTmp = {}
       configData.map(param => {
         if (!paramTreeTmp.hasOwnProperty(param.group)) {
-          paramTreeTmp[param.group] = [];
+          paramTreeTmp[param.group] = []
         }
-        paramTreeTmp[param.group].push(param);
-      });
+        paramTreeTmp[param.group].push(param)
+      })
 
       /// convert struct phase 2
-      const groups = Object.keys(paramTreeTmp);
+      const groups = Object.keys(paramTreeTmp)
       groups.map(group => {
-        let newgroup = [];
-        const curgroup = paramTreeTmp[group];
+        let newgroup = []
+        const curgroup = paramTreeTmp[group]
 
         curgroup.map(param => {
           const rebranchnode = param.showIf
-            ? param.showIf.endsWith(".enabled=true")
-            : null;
+            ? param.showIf.endsWith('.enabled=true')
+            : null
           // move node to the branch its belong
           if (!rebranchnode) {
-            newgroup.push(param);
+            newgroup.push(param)
           } else {
             newgroup.find(paramup => {
-              if (param.showIf === paramup.variable + "=true") {
+              if (param.showIf === paramup.variable + '=true') {
                 if (!paramup.subquestions) {
-                  paramup.subquestions = [];
+                  paramup.subquestions = []
                 }
-                paramup.subquestions.push(param);
+                paramup.subquestions.push(param)
               }
               // TODO : node on false branch to attach paramup
-            });
+            })
           }
           // TODO :  level 3 trans_struct
           // if(param.hasOwnProperty('subquestions')){
           //
           // }
-        });
-        const groupData = {};
-        groupData[group] = newgroup;
-        this.paramTree.push(groupData);
-      });
+        })
+        const groupData = {}
+        groupData[group] = newgroup
+        this.paramTree.push(groupData)
+      })
     },
 
     changeMore() {
-      this.more = !this.more;
+      this.more = !this.more
     },
 
     setConfigSelector() {
-      const CpuData = ServerConfigData.CPU;
-      this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang());
-      this.deployForm.cpuKernel = this.cpuSel[0].value;
+      const CpuData = ServerConfigData.CPU
+      this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang())
+      this.deployForm.cpuKernel = this.cpuSel[0].value
 
-      const HdData = ServerConfigData.HD;
-      this.diskSel = WrapDropDownData(HdData, null);
-      this.deployForm.disk = this.diskSel[0].value;
+      const HdData = ServerConfigData.HD
+      this.diskSel = WrapDropDownData(HdData, null)
+      this.deployForm.disk = this.diskSel[0].value
 
-      const MemData = ServerConfigData.Mem;
-      this.memorySel = WrapDropDownData(MemData, null);
-      this.deployForm.mem = this.memorySel[0].value;
+      const MemData = ServerConfigData.Mem
+      this.memorySel = WrapDropDownData(MemData, null)
+      this.deployForm.mem = this.memorySel[0].value
 
-      const NetworData = ServerConfigData.Network;
-      this.networkSel = WrapDropDownData(NetworData, null);
-      this.deployForm.network = this.networkSel[0].value;
+      const NetworData = ServerConfigData.Network
+      this.networkSel = WrapDropDownData(NetworData, null)
+      this.deployForm.network = this.networkSel[0].value
     },
 
     setRegionSelectValue(region) {
-      this.deployForm.rancherId = region;
+      this.deployForm.rancherId = region
     },
     setParamCPU(value) {
-      this.deployForm.cpuKernel = value;
+      this.deployForm.cpuKernel = value
     },
     setParamHD(value) {
-      this.deployForm.disk = value;
+      this.deployForm.disk = value
     },
     setParamRAM(value) {
-      this.deployForm.mem = value;
+      this.deployForm.mem = value
     },
     setParamNet(value) {
-      this.deployForm.network = value;
+      this.deployForm.network = value
     },
 
     getRegionList() {
       rancher.rancherList(auth.getCurLang()).then(respData => {
-        this.rancherServer = respData.data.data;
-        let regionData = [];
+        this.rancherServer = respData.data.data
+        let regionData = []
         this.rancherServer.map(rancher => {
           const region = {
             value: rancher.id,
             label:
-              auth.getCurLang() === "zh-cn"
+              auth.getCurLang() === 'zh-cn'
                 ? rancher.region
                 : rancher.regionEnUs
-          };
-          regionData.push(region);
-        });
+          }
+          regionData.push(region)
+        })
 
-        this.regionSel = regionData;
-      });
+        this.regionSel = regionData
+      })
     },
     getAppDetail(appid) {
       app.appDetail(auth.getCurLang(), appid).then(respData => {
         if (respData.data.success) {
-          const appInfo = respData.data.data;
-          this.appDetail = appInfo;
-          this.stackData.name = appInfo.name.replace(/\s+/g, "-");
-          const versions = JSON.parse(this.appDetail.versionLinks);
-          this.appDetail.versionlinks = [];
-          this.imgsrc = this.imageServerUrl + this.appDetail.rid + "/icon";
+          const appInfo = respData.data.data
+          this.appDetail = appInfo
+          this.stackData.name = appInfo.name.replace(/\s+/g, '-')
+          const versions = JSON.parse(this.appDetail.versionLinks)
+          this.appDetail.versionlinks = []
+          this.imgsrc = this.imageServerUrl + this.appDetail.rid + '/icon'
           this.price = this.appDetail.free
-            ? this.$t("buyer.deploy.free")
-            : this.price;
+            ? this.$t('buyer.deploy.free')
+            : this.price
           for (var key in versions) {
-            var versionLink = versions[key];
+            var versionLink = versions[key]
             var versionId = versionLink.substr(
-              versionLink.lastIndexOf("/") + 1
-            );
-            this.appDetail.versionlinks.push({ label: key, value: versionId });
+              versionLink.lastIndexOf('/') + 1
+            )
+            this.appDetail.versionlinks.push({ label: key, value: versionId })
           }
-          this.versionSel = this.appDetail.versionlinks;
-          this.versionValue = this.appDetail.defaultVersion;
+          this.versionSel = this.appDetail.versionlinks
+          this.versionValue = this.appDetail.defaultVersion
         } else {
           // this.$alert(respData.message, this.$t('common.messages.alert'), {
           //     confirmButtonText: this.$t('common.messages.confirm')
           // })
         }
-      });
+      })
     },
     getAppVersionDetail(appId, version) {
       app.appVersion(auth.getCurLang(), appId, version).then(respData => {
         if (respData.data.success) {
-          this.appVersionDetail = respData.data.data;
+          this.appVersionDetail = respData.data.data
           // let files = JSON.parse(this.appVersionDetail.files)
           // this.appVersionDetail.files = files
           // this.appVersionDetail.readMe = files['README.md']
           // this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
-          this.parseConfigData(this.appVersionDetail.questions);
+          this.parseConfigData(this.appVersionDetail.questions)
           this.appVersionDetail.questions.map(question => {
-            const key = question.variable;
-            const value = question.defaultValue;
-            this.environment[key] = value;
-          });
+            const key = question.variable
+            const value = question.defaultValue
+            this.environment[key] = value
+          })
         } else {
           // this.$alert(respon.message, this.$t('common.messages.alert'), {
           //     confirmButtonText: this.$t('common.messages.confirm')
           // })
         }
-      });
+      })
     },
     successToListPage() {
-      this.innerVisible = false;
-      if (this.orderModel === "1" || this.orderModel === "2")
-        this.$router.push({ name: "MyResource" });
-      else this.$router.push({ name: "ApplicationRepository" });
+      this.innerVisible = false
+      if (this.orderModel === '1' || this.orderModel === '2') { this.$router.push({ name: 'MyResource' }) } else this.$router.push({ name: 'ApplicationRepository' })
     },
 
     getUraPowerPoolList() {
       const projectQuertData = {
         page: 0,
         pageSize: 0,
-        projectName: "",
-        sort: "",
+        projectName: '',
+        sort: '',
         sortDesc: true
-      };
+      }
       project
         .projectList(this.$store.getters.lang, projectQuertData)
         .then(respData => {
-          const data = respData.data.data.records;
+          const data = respData.data.data.records
           for (let i = 0; i < data.length; i++) {
-            let object = {};
-            object["value"] = data[i].id;
-            object["label"] = data[i].projectName;
-            this.spaceSel.push(object);
+            let object = {}
+            object['value'] = data[i].id
+            object['label'] = data[i].projectName
+            this.spaceSel.push(object)
           }
-          this.projectId = this.spaceSel[0].value;
-        });
+          this.projectId = this.spaceSel[0].value
+        })
     },
     getReferenceFee() {
       wallet.walletReferenceFee(auth.getCurLang()).then(reffee => {
-        this.fee = reffee.data.data;
-      });
+        this.fee = reffee.data.data
+      })
     },
     getConfirmCode() {
       wallet
         .walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
         .then(sendResult => {
-          const status = sendResult.data;
+          const status = sendResult.data
           this.$message({
             showClose: true,
             message: status.data,
-            type: "success",
+            type: 'success',
             duration: 3000
-          });
-        });
+          })
+        })
     },
     purchaseEntry() {
-      if (this.orderModel === "1") {
-        this.purchaseUraPowerPlus();
-      } else if (this.orderModel === "2") {
-        this.purchaseAppliction();
+      if (this.orderModel === '1') {
+        this.purchaseUraPowerPlus()
+      } else if (this.orderModel === '2') {
+        this.purchaseAppliction()
       } else {
         // do not deploy
       }
     },
     purchaseUraPowerPlus() {
-      this.deployForm.beginTime = this.deployForm.dateRange[0];
-      this.deployForm.endTime = this.deployForm.dateRange[1];
+      this.deployForm.beginTime = this.deployForm.dateRange[0]
+      this.deployForm.endTime = this.deployForm.dateRange[1]
 
       // order.orderResource(auth.getCurLang(), this.deployForm)
       // .then(purcheStatus => {
@@ -661,29 +659,29 @@ export default {
       //   if (purchStausData.success) {
 
       const purchUraStausData = {
-        buyerAccount: "0x323ec4e944F0C78FA8254B213b7C1d495632622e",
+        buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
         buyerId: 60,
-        buyerName: "",
+        buyerName: '',
         createTime: 1548072518330,
         id: 59,
         orderAmount: 0.24255,
         orderHash: null,
-        orderNo: "2019012100003",
+        orderNo: '2019012100003',
         orderStatus: 1,
         paySuccessTime: null,
         poundage: 0.000378,
-        prodType: "UraPower",
-        sellerAccount: "0x323ec4e944F0C78FA8254B213b7C1d495632622e",
+        prodType: 'UraPower',
+        sellerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
         sellerId: 60,
-        sellerName: "",
+        sellerName: '',
         updateTime: 1548072518330,
         projectId: 133
-      };
-      this.gridData = [purchUraStausData];
-      this.projectId = purchUraStausData.projectId;
+      }
+      this.gridData = [purchUraStausData]
+      this.projectId = purchUraStausData.projectId
 
-      this.purchaseAppliction();
-      this.outerVisible = true;
+      this.purchaseAppliction()
+      this.outerVisible = true
     },
 
     purchaseAppliction() {
@@ -694,41 +692,41 @@ export default {
 
       const purchaseAppStatusData = {
         beginTime: null,
-        buyerAccount: "0x323ec4e944F0C78FA8254B213b7C1d495632622e",
+        buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
         buyerId: 60,
-        buyerName: "",
+        buyerName: '',
         createTime: 1548131638960,
         endTime: null,
         id: 65,
         orderAmount: 0.6,
         orderHash: null,
-        orderNo: "2019012200003",
+        orderNo: '2019012200003',
         orderStatus: 3,
-        orderStatusName: "paid",
+        orderStatusName: 'paid',
         paySuccessTime: 1548131638960,
         poundage: 0,
         prodId: 274,
-        prodName: "mariadb",
+        prodName: 'mariadb',
         prodPrice: 0,
-        prodType: "Application",
+        prodType: 'Application',
         sellerAccount: null,
         sellerId: 62,
         sellerName: null,
         updateTime: 1548131638960
-      };
+      }
 
-      this.gridData.push(purchaseAppStatusData);
+      this.gridData.push(purchaseAppStatusData)
 
-      if (purchaseAppStatusData.errCode === "REPEAT_BUY_APP") {
+      if (purchaseAppStatusData.errCode === 'REPEAT_BUY_APP') {
         this.$message({
           showClose: true,
           message: purchaseAppStatusData.errMsg,
-          type: "error"
-        });
+          type: 'error'
+        })
       }
 
-      if (this.orderModel === "2") {
-        this.outerVisible = true;
+      if (this.orderModel === '2') {
+        this.outerVisible = true
       }
       // }).catch(error => {
       //   // console.log(error)
@@ -736,7 +734,7 @@ export default {
     },
 
     startTransfer() {
-      let orders = [];
+      let orders = []
       this.gridData.map(order => {
         const tmporder = {
           buyerId: auth.getCurUserId(),
@@ -744,24 +742,24 @@ export default {
           orderNo: order.orderNo,
           poundage: this.fee,
           sellerId: order.sellerId
-        };
-        orders.push(tmporder);
-      });
+        }
+        orders.push(tmporder)
+      })
       account
         .userInfo(auth.getCurLang(), auth.getCurUserId())
         .then(userInfo => {
-          const userData = userInfo.data.data;
+          const userData = userInfo.data.data
           const transData = {
             orders: orders,
             phone: userData.mobile,
             smsCode: this.concode
-          };
+          }
           wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
-            console.log(transStatus);
-          });
-          this.outerVisible = false;
-          this.innerVisible = true;
-        });
+            console.log(transStatus)
+          })
+          this.outerVisible = false
+          this.innerVisible = true
+        })
 
       // wallet.walletTransfer(auth.getCurLang(), transData)
       //     .then(respData => {
@@ -775,34 +773,34 @@ export default {
     },
 
     appDeploy() {
-      this.appDeployParam["appId"] = this.appId;
-      this.appDeployParam["appVersion"] = this.versionValue;
-      this.appDeployParam["config"] = JSON.stringify(this.paramTree);
-      this.appDeployParam["description"] = this.appDetail.description;
-      this.appDeployParam["name"] = this.appDetail.name;
-      if (this.orderModel === "1" || this.orderModel === "2") {
-        this.appDeployParam["projectId"] = this.projectId;
+      this.appDeployParam['appId'] = this.appId
+      this.appDeployParam['appVersion'] = this.versionValue
+      this.appDeployParam['config'] = JSON.stringify(this.paramTree)
+      this.appDeployParam['description'] = this.appDetail.description
+      this.appDeployParam['name'] = this.appDetail.name
+      if (this.orderModel === '1' || this.orderModel === '2') {
+        this.appDeployParam['projectId'] = this.projectId
       }
 
       app
         .appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
         .then(respData => {
-          const deployData = respData.data;
+          const deployData = respData.data
           if (deployData.success) {
             this.$message({
               showClose: true,
-              message: this.appDetail.name + "deployed",
-              type: "success",
+              message: this.appDetail.name + 'deployed',
+              type: 'success',
               duration: 3000
-            });
-            this.outerVisible = true;
+            })
+            this.outerVisible = true
           } else {
-            this.$message("部署应用失败");
+            this.$message('部署应用失败')
           }
-        });
+        })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

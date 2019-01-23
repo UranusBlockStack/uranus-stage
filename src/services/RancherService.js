@@ -106,9 +106,16 @@ export function appVersion (lang, appId, version) {
   return httpLang(lang).get(`/rancher/apps/${appId}/versions/${version}`)
 }
 
+
+/** Rancher - 我的App  AppUserController Service ***/
+
 export function appByUser (lang, queryData) {
     return httpLang(lang).post('/rancher/app_users/search', queryData)
 }
+export function appPurchase (lang, appId) {
+    return httpLang(lang).post('/rancher/app_users/search', appId)
+}
+
 
 /** Rancher - Project Controller Service ***/
 export function projectList (lang, queryData) {
