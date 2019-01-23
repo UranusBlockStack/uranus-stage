@@ -44,30 +44,31 @@
           </el-col>
         </el-row>
         <el-row class="appResource">
-          <el-col :span="12" v-for="(pool, index) in poolList" :key="index">
+          <el-col :span="12" v-for="(pool, index) in poolList"  :key="index">
             <el-row style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius:4px; margin:10px;">
-              <el-col :span="8" style="margin-bottom: 15px;">
-                <Ball v-if="update1" :chartData='pool.urpowerUsd'/>
+              <el-col :span="5" style="margin-bottom: 15px;">
+                  <router-link :to="{path: '/resourcepool/' + pool.id + '/' + pool.name}">
+                  <Ball style="margin:0 auto;" v-if="update1" :chartData='pool.urpowerUsd'/>
+                  </router-link>
               </el-col>
-              <el-col :span="12">
+              <el-col :span="17" :offset="2">
                   <h3>Pool: {{pool.name}} </h3>
                 <h3>{{$t('buyer.myResource.state')}} {{pool.orderStatus}} {{pool.orderStatusName}}</h3>
                 <h3>{{$t('buyer.myResource.number')}} {{pool.appCount}}</h3>
                 <div class="timeText">
-                  <p>{{$t('buyer.myResource.countdownTime')}}</p>
-                  <RestTime :endTime= "pool.time" />
+                  <p>{{$t('buyer.myResource.countdownTime')}} <RestTime style="display:inline-block;" :endTime= "pool.time" /></p>
                 </div>
               </el-col>
-              <el-col :span="3" :offset="1">
+              <!-- <el-col :span="3" :offset="1">
                 <el-dropdown trigger="click" style="margin-top: 10px; margin-left: 20px;">
                   <span class="el-dropdown-link">
                     <i class="iconfont icon-menu" style="color:#ffffff;"></i>
                   </span>
                   <el-dropdown-menu slot="dropdown">
-                    <!-- <el-dropdown-item>
+                    <el-dropdown-item>
                       {{$t('buyer.myResource.renewal')}}
                       <i class="el-icon-arrow-right"></i>
-                    </el-dropdown-item> -->
+                    </el-dropdown-item>
                     <el-dropdown-item>
                       <p @click="$router.push({path: '/resourcepool/' + pool.id + '/' + pool.name})">
                         {{$t('buyer.myResource.detail')}}
@@ -76,7 +77,7 @@
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-              </el-col>
+              </el-col> -->
             </el-row>
           </el-col>
         </el-row>

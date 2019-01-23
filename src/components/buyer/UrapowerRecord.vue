@@ -42,7 +42,7 @@
             :placeholder="$t('buyer.myResource.deployPage.endTime')"
           ></el-date-picker>
         </el-col>-->
-        <el-col :span="6">
+        <el-col :span="6" :offset="18">
           <el-input
             :placeholder="$t('buyer.myResource.deployPage.searchIn')"
             prefix-icon="el-icon-search" v-model="appName"

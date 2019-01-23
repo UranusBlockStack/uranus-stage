@@ -156,10 +156,22 @@ export default {
       }
     },
     choosePhone() {
-      this.phoneShow = true;
+      this.phoneShow = true
+      this.phone = ""
+      this.mail = ""
+      this.password = ""
+      this.surepwd = ""
+      this.code = ""
+      this.prompt = ""
     },
     chooseMail() {
       this.phoneShow = false;
+      this.phone = ""
+      this.mail = ""
+      this.password = ""
+      this.surepwd = ""
+      this.code = ""
+      this.prompt = ""
     },
     countDown() {
       this.getCode();
@@ -286,6 +298,10 @@ export default {
           transition: all 0.5s;
         }
       }
+    }
+    input::-webkit-input-placeholder {
+      color: #c8c8c8;
+      font-family: Source-Sans-Pro-Regular;
     }
     .phoneRes {
       width: 380px;

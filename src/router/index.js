@@ -1,4 +1,4 @@
-import Starter from '@/components/starter'
+import Starter from '@/components/Starter'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import ForgetPwd from '@/components/ForgetPwd'

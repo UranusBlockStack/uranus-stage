@@ -105,10 +105,18 @@ export default {
       return loginname;
     },
     choosePhone() {
-      this.phoneShow = true;
+      this.phoneShow = true
+      this.phone = ''
+      this.mail = ''
+      this.password =''
+      this.prompt = ''
     },
     chooseMail() {
-      this.phoneShow = false;
+      this.phoneShow = false
+      this.phone = ''
+      this.mail = ''
+      this.password = ''
+      this.prompt = ''
     },
     userLogin() {
       if (this.phoneShow == true) {

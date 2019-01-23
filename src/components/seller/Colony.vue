@@ -102,17 +102,16 @@
           />
         </el-col>
         <el-col class="padding-top" :span="5" :offset="1">
-
           <h4>{{$t('seller.group.earnings')}} {{clusterInfo.profit}} URAC</h4>
-          <p>{{$t('seller.group.value')}} {{clusterInfo.rentPrice}}URAC/天</p>
+          <p>{{$t('seller.group.value')}} {{clusterInfo.rentPrice}} URAC/Day</p>
           <p>{{$t('seller.group.region')}} {{clusterInfo.region}}</p>
         </el-col>
         <el-col class="padding-top" :span="12">
-          <h4>
+          <!-- <h4>
             {{$t('seller.group.restTime')}}
             <RestTime style="display: inline-block" :endTime="dateFormat(clusterInfo.endTime)"/>
-          </h4>
-          <p>{{$t('seller.group.buyingTime')}} {{dateFormat(clusterInfo.beginTime)}}</p>
+          </h4> -->
+          <p style="margin-top: 45px;">{{$t('seller.group.buyingTime')}} {{dateFormat(clusterInfo.beginTime)}}</p>
           <p>{{$t('seller.group.endingTime')}} {{dateFormat(clusterInfo.endTime)}}</p>
         </el-col>
         <el-col :span="2">
@@ -152,7 +151,7 @@
           </template>
           <el-table-column width="70">
             <template slot-scope="scope">
-              <div :class="scope.row.state == 'Offline' ? 'off' : 'on'"></div>
+              <div :class="scope.row.state == 'active' ? 'on' : 'off'"></div>
             </template>
           </el-table-column>
 
@@ -178,7 +177,7 @@
             <template slot-scope="scope">
               <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
                 <!--已用核数-->
-                {{ scope.row.cpuKernelUsed }}{{$t('seller.host.usable')}}
+                {{ scope.row.cpuKernelUsed }} {{$t('seller.host.usable.cpu')}}
               </p>
               <el-progress
                 :percentage="getPercentNumber(scope.row.cpuKernelUsed,scope.row.cpuKernel)"
@@ -187,7 +186,7 @@
                 style="margin-left:35px;"
               ></el-progress>
               <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
-                {{ scope.row.cpuKernel }}{{$t('seller.host.have')}}
+                {{ scope.row.cpuKernel }} {{$t('seller.host.have.cpu')}}
                 <!--总核数-->
               </p>
             </template>
@@ -203,16 +202,16 @@
             <template slot-scope="scope">
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.memUsed}}{{$t('seller.host.usable')}}</p>
+              >{{ scope.row.memUsed}} {{$t('seller.host.usable.memory')}}</p>
               <el-progress
                 :percentage="getPercentNumber(scope.row.memUsed,scope.row.mem)"
                 :stroke-width="18"
-                :show-text="false"
+                :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.mem}}{{$t('seller.host.have')}}</p>
+              >{{ scope.row.mem}} {{$t('seller.host.have.memory')}}</p>
             </template>
           </el-table-column>
           <!--硬盘-->
@@ -226,16 +225,16 @@
             <template slot-scope="scope">
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.diskUsed }}{{$t('seller.host.usable')}}</p>
+              >{{ scope.row.diskUsed }} {{$t('seller.host.usable.disk')}}</p>
               <el-progress
                 :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
                 :stroke-width="18"
-                :show-text="false"
+                :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.disk }}{{$t('seller.host.have')}}</p>
+              >{{ scope.row.disk }} {{$t('seller.host.have.disk')}}</p>
             </template>
           </el-table-column>
           <!--宽带(M)-->
@@ -249,22 +248,22 @@
             <template slot-scope="scope">
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.networkUsed }}{{$t('seller.host.usable')}}</p>
+              >{{ scope.row.networkUsed }} {{$t('seller.host.usable.network')}}</p>
               <el-progress
                 :percentage="getPercentNumber(scope.row.networkUsed,scope.row.network)"
                 :stroke-width="18"
-                :show-text="false"
+                :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.networkUsed }}{{$t('seller.host.have')}}</p>
+              >{{ scope.row.networkUsed }} {{$t('seller.host.have.network')}}</p>
             </template>
           </el-table-column>
           <!--删除-->
           <el-table-column width="200">
             <template slot-scope="scope">
-              <el-button @click="deleteHost(scope.row.id)">{{$t('seller.group.deleteHost')}}</el-button>
+              <el-button v-show="switchVal" @click="deleteHost(scope.row.id)">{{$t('seller.group.deleteHost')}}</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -386,6 +385,7 @@ export default {
     this.getClusterDetail();
     this.getHosts();
     this.language = auth.getCurLang();
+    console.log (this.language)
   }
 };
 </script>

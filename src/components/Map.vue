@@ -277,8 +277,10 @@ export default {
     height: 60px;
     line-height: 60px;
     text-align: center;
+    margin-right: 30px;
     float: right;
     color: #81a028;
+    cursor: pointer;
   }
 }
 .right {
