@@ -195,9 +195,9 @@ export default {
     },
     lastedBlock() {
       this.BlockData = []
-      block.getLastedBlock(this.$store.getters.lang, {'height': -1})
+      block.getLastedBlock(this.langCode, {'height': -1})
               .then(blockData => {
-                if (blockData.data.success) {
+                  if (blockData.data.success) {
                   const data = blockData.data.data
                   this.BlockData.push(data)
                   this.TranscationData = data.transactions
@@ -214,9 +214,9 @@ export default {
       return this.TranscationData
     },
     refushBlockData() {
-      this.timer = setInterval(() => {
-        this.lastedBlock()
-      }, 5000)
+      // this.timer = setInterval(() => {
+      //   this.lastedBlock()
+      // }, 5000)
     }
   },
   mounted() {

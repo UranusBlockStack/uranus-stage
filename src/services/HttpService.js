@@ -13,11 +13,23 @@ export function http () {
 }
 
 export function httpLang (language) {
-  return axios.create({
+  const axinstance = axios.create({
     baseURL: store.state.apiUrl,
     headers: {
       Authorization: auth.getToken(),
       Language: language
     }
   })
+
+  axinstance.interceptors.response.use((response) => {
+    const axdata = response.data
+    if (axdata.errCode === 'TOKEN_NOT_INVALID') {
+      localStorage.setItem('token', '')
+      location.href = '/'
+    } else {
+      return response
+    }
+  })
+
+  return axinstance
 }
