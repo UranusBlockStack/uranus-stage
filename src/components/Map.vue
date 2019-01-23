@@ -143,12 +143,11 @@ export default {
       ]
 
       myChartMap2.setOption({
-        // 新建一个地理坐标系 geo ，
         geo: {
           map: 'world', // 地图类型为世界地图
-          roam: true,
-          zoom: 1,
-          scaleLimit: { min: 1, max: 2 },
+        //   roam: true, //缩放  拖动
+        //   zoom: 1,
+        //   scaleLimit: { min: 1, max: 2 },
           itemStyle: {
             // 定义样式
             normal: {

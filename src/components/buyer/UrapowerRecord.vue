@@ -100,7 +100,7 @@
           <el-table-column prop="rentDays" :label="$t('buyer.myResource.deployPage.appStore')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
-                    <i class="iconfont icon-table-date"></i>
+                    <i class="iconfont icon-finish-time"></i>
                     {{$t('buyer.myResource.deployPage.appEnd')}}
                   </p>
                 </template>

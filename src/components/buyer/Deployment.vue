@@ -34,7 +34,7 @@
         :close-on-click-modal="false"
         :close-on-press-escape="false"
       >
-        <p>{{$t('buyer.deploy.confirmText4')}}</p>
+        <p>{{$t('buyer.deploy.confirmText3')}}</p>
         <div slot="footer" class="dialog-footer">
           <el-button type="primary" @click="successToListPage">{{$t('buyer.deploy.button2')}}</el-button>
         </div>

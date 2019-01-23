@@ -34,7 +34,7 @@
             >
               <div class="resources">
                 <div>
-                  <p class="shops">{{$t('buyer.home.stores')}} {{app.catalog}}</p>
+                  <p class="shops">{{app.catalog}}</p>
                   <div class="img-box">
                     <img :src="app.imageurl" alt="img">
                   </div>

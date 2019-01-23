@@ -127,6 +127,7 @@ import * as auth from '../../services/AuthService'
 import * as account from '../../services/AccountService'
 import * as wallet from '../../services/WalletService'
 import moment from 'moment'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Wallet',
@@ -148,7 +149,6 @@ export default {
       return moment(cellValue).format('YYYY-MM-DD HH:mm:ss')
     },
     copy() {
-      console.log(123)
       const input = document.createElement('input')
       document.body.appendChild(input)
       input.setAttribute('value', this.address)
@@ -157,6 +157,7 @@ export default {
         document.execCommand('copy')
       }
       document.body.removeChild(input)
+      this.$message('Success')
     },
     goTransfer() {
       this.$router.push({ path: 'transfer' })
