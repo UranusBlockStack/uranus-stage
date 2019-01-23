@@ -726,9 +726,9 @@ export default {
       if (this.orderModel === '1') {
         this.purchaseUraPowerPlus()
       } else if (this.orderModel === '2') {
-        if (!this.isMyApplication) { this.purchaseAppliction() }
+        this.purchaseAppliction()
       } else {
-        // do not deploy
+        this.purchaseAppliction()
       }
     },
     purchaseUraPowerPlus() {
@@ -765,6 +765,13 @@ export default {
 
             if (!this.isMyApplication) {
               this.purchaseAppliction()
+            } else {
+              this.deployApp()
+              this.$message({
+                showClose: true,
+                message: 'deploy  success.',
+                type: 'success'
+              })
             }
             this.outerVisible = true
           }
@@ -772,53 +779,61 @@ export default {
     },
 
     purchaseAppliction() {
-      order
-        .orderApp(auth.getCurLang(), this.appId)
-        .then(purchaseStatus => {
-          const purchaseAppStatusData = purchaseStatus.data
+      if (!this.isMyApplication) {
+        order
+           .orderApp(auth.getCurLang(), this.appId)
+            .then(purchaseStatus => {
+              const purchaseAppStatusData = purchaseStatus.data
 
-          // const purchaseAppStatusData = {
-          //   beginTime: null,
-          //   buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-          //   buyerId: 60,
-          //   buyerName: '',
-          //   createTime: 1548131638960,
-          //   endTime: null,
-          //   id: 65,
-          //   orderAmount: 0.6,
-          //   orderHash: null,
-          //   orderNo: '2019012200003',
-          //   orderStatus: 3,
-          //   orderStatusName: 'paid',
-          //   paySuccessTime: 1548131638960,
-          //   poundage: 0,
-          //   prodId: 274,
-          //   prodName: 'mariadb',
-          //   prodPrice: 0,
-          //   prodType: 'Application',
-          //   sellerAccount: null,
-          //   sellerId: 62,
-          //   sellerName: null,
-          //   updateTime: 1548131638960
-          // }
+                // const purchaseAppStatusData = {
+                //   beginTime: null,
+                //   buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
+                //   buyerId: 60,
+                //   buyerName: '',
+                //   createTime: 1548131638960,
+                //   endTime: null,
+                //   id: 65,
+                //   orderAmount: 0.6,
+                //   orderHash: null,
+                //   orderNo: '2019012200003',
+                //   orderStatus: 3,
+                //   orderStatusName: 'paid',
+                //   paySuccessTime: 1548131638960,
+                //   poundage: 0,
+                //   prodId: 274,
+                //   prodName: 'mariadb',
+                //   prodPrice: 0,
+                //   prodType: 'Application',
+                //   sellerAccount: null,
+                //   sellerId: 62,
+                //   sellerName: null,
+                //   updateTime: 1548131638960
+                // }
 
-          this.gridData.push(purchaseAppStatusData)
+              this.gridData.push(purchaseAppStatusData)
 
-          if (purchaseAppStatusData.errCode === 'REPEAT_BUY_APP') {
-            this.$message({
-              showClose: true,
-              message: purchaseAppStatusData.errMsg,
-              type: 'error'
+              if (purchaseAppStatusData.errCode === 'REPEAT_BUY_APP') {
+                this.$message({
+                  showClose: true,
+                  message: purchaseAppStatusData.errMsg,
+                  type: 'error'
+                })
+              }
+
+              if (this.orderModel === '2') {
+                this.outerVisible = true
+              }
             })
-          }
-
-          if (this.orderModel === '2') {
-            this.outerVisible = true
-          }
-        })
-        .catch(error => {
-          console.log(error)
-        })
+            .catch(error => {
+              this.$message({
+                showClose: true,
+                message: error,
+                type: 'error'
+              })
+            })
+      } else {
+        this.appDeploy()
+      }
     },
 
     startTransfer() {

@@ -154,16 +154,36 @@ export default {
         })
       })
     },
+    getOrderOfApp(appId) {
+      return app.appPurchaseInfo(auth.getCurLang(), appId)
+              .then(purchaseInfo => {
+                const purchaseInfoData = purchaseInfo.data
+                const purchased = purchaseInfoData.success
+              })
+    },
     deployApp(appId, appRid, versionId, catalog) {
-      this.$router.push({
-        path: '/deployment',
-        query: {
-          appId: appId,
-          appRid: appRid,
-          versionId: versionId,
-          catalog: catalog
-        }
-      })
+      app.appPurchaseInfo(auth.getCurLang(), appId)
+            .then(purchaseInfo => {
+              const purchaseInfoData = purchaseInfo.data
+              const isMyApplication = purchaseInfoData.success
+              if (isMyApplication) {
+                this.$message({
+                  showClose: true,
+                  message: 'you purchased app, please go to "My Application" to deploy it',
+                  type: 'warning'
+                })
+              } else {
+                this.$router.push({
+                  path: '/deployment',
+                  query: {
+                    appId: appId,
+                    appRid: appRid,
+                    versionId: versionId,
+                    catalog: catalog
+                  }
+                })
+              }
+            })
     },
     searchApps() {
       this.getAppList()
