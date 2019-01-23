@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as auth from './services/AuthService'
+import * as auth from '../services/AuthService'
 import {mapActions } from 'vuex'
 
 Vue.use(Vuex)
@@ -29,23 +29,23 @@ export default new Vuex.Store({
     refreshDuration: 5
   },
   getters: {
-    lang: state => {
+    lang: function (state) {
       return state.lang[state.curLang]
     }
   },
   mutations: {
-    authenticate (state, user) {
+    authenticate: function (state, user) {
       state.isLoggedIn = auth.isLoggedIn()
     },
-    setLang(state, lang) {
+    setLang: function(state, lang) {
       state.curLang = lang
     }
   },
   actions: {
-    authenticate (context, user) {
+    authenticate: function (context, user) {
       context.commit('authenticate', user)
     },
-    setLang(context, lang) {
+    setLang: function(context, lang) {
       context.commit('setLang', lang)
     }
   }

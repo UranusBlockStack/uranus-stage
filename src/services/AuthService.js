@@ -1,4 +1,4 @@
-import store from '../store'
+import store from '../store/store'
 import { httpLang } from './HttpService'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'

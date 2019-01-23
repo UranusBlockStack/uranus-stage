@@ -110,7 +110,7 @@ export default {
   methods: {
     getAppList() {
       project
-        .apptListByProjectId(
+        .appListByProjectId(
           this.$store.getters.lang,
           this.poolId
         )

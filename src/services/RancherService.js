@@ -112,8 +112,8 @@ export function appVersion (lang, appId, version) {
 export function appByUser (lang, queryData) {
     return httpLang(lang).post('/rancher/app_users/search', queryData)
 }
-export function appPurchase (lang, appId) {
-    return httpLang(lang).post('/rancher/app_users/search', appId)
+export function appPurchaseInfo (lang, appId) {
+    return httpLang(lang).get(`/rancher/app_users/${appId}`)
 }
 
 
@@ -122,7 +122,7 @@ export function projectList (lang, queryData) {
     return httpLang(lang).post('/rancher/projects/search', queryData)
 }
 
-export function apptListByProjectId (lang, projectId) {
+export function appListByProjectId (lang, projectId) {
     return httpLang(lang).get(`/rancher/projects/${projectId}/apps`)
 }
 

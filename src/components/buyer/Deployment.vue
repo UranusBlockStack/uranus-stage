@@ -9,23 +9,46 @@
       :close-on-press-escape="false"
     >
       <el-table :data="gridData">
-        <el-table-column property="orderNo" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
-        <el-table-column property="sellerId" :label="$t('buyer.deploy.address')"></el-table-column>
-        <el-table-column property="orderAmount" :label="$t('buyer.deploy.value')"></el-table-column>
-        <el-table-column property="prodType" :label="$t('buyer.deploy.content')"></el-table-column>
+        <el-table-column
+          property="orderNo"
+          :label="$t('buyer.deploy.orderNumber')"
+        ></el-table-column>
+        <el-table-column
+          property="sellerId"
+          :label="$t('buyer.deploy.address')"
+        ></el-table-column>
+        <el-table-column
+          property="orderAmount"
+          :label="$t('buyer.deploy.value')"
+        ></el-table-column>
+        <el-table-column
+          property="prodType"
+          :label="$t('buyer.deploy.content')"
+        ></el-table-column>
         <el-table-column :label="$t('buyer.deploy.fee')">
           <template slot-scope="scope">
-            <el-input-number size="mini" v-model="fee" :precision="6" :step="0.000001" :max="10"></el-input-number>
+            <el-input-number
+              size="mini"
+              v-model="fee"
+              :precision="6"
+              :step="0.000001"
+              :max="10"
+            ></el-input-number>
           </template>
         </el-table-column>
       </el-table>
       <div class="code">
-        <span slot="label">{{$t('buyer.deploy.code')}}</span>
-        <el-input :placeholder="$t('buyer.deploy.codeIn')" v-model="concode"></el-input>
-        <el-button @click="getConfirmCode">{{$t('buyer.deploy.codeBtn')}}</el-button>
+        <span slot="label">{{ $t("buyer.deploy.code") }}</span>
+        <el-input
+          :placeholder="$t('buyer.deploy.codeIn')"
+          v-model="concode"
+        ></el-input>
+        <el-button @click="getConfirmCode">{{
+          $t("buyer.deploy.codeBtn")
+        }}</el-button>
       </div>
-      <p>{{$t('buyer.deploy.confirmText1')}}</p>
-      <TimeOver style="margin-left:300px;"/>
+      <p>{{ $t("buyer.deploy.confirmText1") }}</p>
+      <TimeOver style="margin-left:300px;" />
       <el-dialog
         width="800px"
         :title="$t('buyer.deploy.confirmText3')"
@@ -36,33 +59,41 @@
       >
         <p>{{$t('buyer.deploy.confirmText3')}}</p>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="successToListPage">{{$t('buyer.deploy.button2')}}</el-button>
+          <el-button type="primary" @click="successToListPage">{{
+            $t("buyer.deploy.button2")
+          }}</el-button>
         </div>
       </el-dialog>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="outerVisible = false">{{$t('buyer.deploy.button1')}}</el-button>
-        <el-button type="primary" @click="startTransfer">{{$t('buyer.deploy.button2')}}</el-button>
+        <el-button @click="outerVisible = false">{{
+          $t("buyer.deploy.button1")
+        }}</el-button>
+        <el-button type="primary" @click="startTransfer">{{
+          $t("buyer.deploy.button2")
+        }}</el-button>
       </div>
     </el-dialog>
 
     <el-row class="resourceBox">
       <el-row>
         <el-col class="title bg" :span="24">
-          <h1>{{$t('buyer.deploy.application')}}</h1>
+          <h1>{{ $t("buyer.deploy.application") }}</h1>
         </el-col>
       </el-row>
       <el-row class="detial">
-        <el-col :span="2" :offset="1">
-          <img :src="imgsrc">
-        </el-col>
+        <el-col :span="2" :offset="1"> <img :src="imgsrc" /> </el-col>
         <el-col :span="8" :offset="1">
-          <h2>{{$t('buyer.deploy.name')}} {{appDetail.name}}</h2>
-          <p>{{$t('buyer.deploy.appDetail')}} {{appDetail.description}}</p>
+          <h2>{{ $t("buyer.deploy.name") }} {{ appDetail.name }}</h2>
+          <p>{{ $t("buyer.deploy.appDetail") }} {{ appDetail.description }}</p>
         </el-col>
         <el-col class="border-col" :span="4" :offset="1">
-          <p>{{$t('buyer.deploy.price')}} {{price}}</p>
-          <p>{{$t('buyer.deploy.from')}} {{$t('buyer.deploy.store')}} {{appDetail.catalog}}</p>
-          <p>{{$t('buyer.deploy.download')}} {{appDetail.downloadTimes}}</p>
+          <p>{{ $t("buyer.deploy.price") }} {{ price }}</p>
+          <p>
+            {{ $t("buyer.deploy.from") }} {{ $t("buyer.deploy.store") }}
+            {{ appDetail.catalog }}
+          </p>
+          <p>{{ $t("buyer.deploy.download") }} {{ appDetail.downloadTimes }}</p>
+            <p> OrderNum:   {{orderNumber}}</p>
         </el-col>
 
         <!--<el-col class="inf-col" :span="6" :offset="1">-->
@@ -83,16 +114,18 @@
       <!-- deploy application -->
       <el-row class="margin-top">
         <el-col :span="23" :offset="1">
-          <el-radio v-model="orderModel" label="1">{{$t('buyer.deploy.application')}}</el-radio>
+          <el-radio v-model="orderModel" label="1">{{
+            $t("buyer.deploy.application")
+          }}</el-radio>
         </el-col>
         <el-col :span="22" :offset="2">
           <el-form label-width="160px">
             <el-row class="margin-top">
               <el-col :span="18">
                 <el-form-item>
-                    <span slot="label">
+                  <span slot="label">
                     <i class="iconfont icon-name"></i>
-                    {{$t('buyer.deploy.newPool')}}
+                    {{ $t("buyer.deploy.newPool") }}
                   </span>
                   <el-input
                     v-model="deployForm.name"
@@ -103,9 +136,9 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item @change="setRegionSelectValue">
-                    <span slot="label">
+                  <span slot="label">
                     <i class="iconfont icon-region"></i>
-                    {{$t('buyer.deploy.region')}}
+                    {{ $t("buyer.deploy.region") }}
                   </span>
                   <el-select v-model="deployForm.rancherId">
                     <el-option
@@ -119,9 +152,9 @@
               </el-col>
               <el-col :span="8">
                 <el-form-item @change="setParamCPU">
-                    <span slot="label">
+                  <span slot="label">
                     <i class="iconfont icon-cpu"></i>
-                    {{$t('buyer.deploy.cpu')}}
+                    {{ $t("buyer.deploy.cpu") }}
                   </span>
                   <el-select v-model="deployForm.cpuKernel">
                     <el-option
@@ -134,10 +167,13 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.disk')" @change="setParamHD">
-                    <span slot="label">
+                <el-form-item
+                  :label="$t('buyer.deploy.disk')"
+                  @change="setParamHD"
+                >
+                  <span slot="label">
                     <i class="iconfont icon-disk"></i>
-                    {{$t('buyer.deploy.disk')}}
+                    {{ $t("buyer.deploy.disk") }}
                   </span>
                   <el-select v-model="deployForm.disk">
                     <el-option
@@ -150,10 +186,13 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.memory')" @change="setParamRAM">
-                    <span slot="label">
+                <el-form-item
+                  :label="$t('buyer.deploy.memory')"
+                  @change="setParamRAM"
+                >
+                  <span slot="label">
                     <i class="iconfont icon-memory"></i>
-                    {{$t('buyer.deploy.memory')}}
+                    {{ $t("buyer.deploy.memory") }}
                   </span>
                   <el-select v-model="deployForm.mem">
                     <el-option
@@ -174,10 +213,13 @@
                 </el-form-item>
               </el-col>-->
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.network')" @change="setParamNet">
-                    <span slot="label">
+                <el-form-item
+                  :label="$t('buyer.deploy.network')"
+                  @change="setParamNet"
+                >
+                  <span slot="label">
                     <i class="iconfont icon-network"></i>
-                    {{$t('buyer.deploy.network')}}
+                    {{ $t("buyer.deploy.network") }}
                   </span>
                   <el-select v-model="deployForm.network">
                     <el-option
@@ -191,9 +233,9 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item>
-                    <span slot="label">
+                  <span slot="label">
                     <i class="iconfont icon-time"></i>
-                    {{$t('buyer.deploy.timeScreening')}}
+                    {{ $t("buyer.deploy.timeScreening") }}
                   </span>
                   <el-col :span="18">
                     <el-date-picker
@@ -214,7 +256,9 @@
       <!-- more choice -->
       <el-row class="margin-top" v-show="more">
         <el-col :span="2" :offset="1">
-          <el-radio v-model="orderModel" label="2">{{$t('buyer.deploy.choosePool')}}</el-radio>
+          <el-radio v-model="orderModel" label="2">{{
+            $t("buyer.deploy.choosePool")
+          }}</el-radio>
         </el-col>
         <el-col :span="20">
           <el-select v-model="projectId">
@@ -229,21 +273,21 @@
       </el-row>
 
       <el-row class="margin-top" v-show="more">
-        <el-col :span="2" :offset="1">
-          <el-radio v-model="orderModel" label="3">{{$t('buyer.deploy.noDeploy')}}</el-radio>
+        <el-col :span="2" :offset="1" v-show="!isMyApplication">
+          <el-radio v-model="orderModel" label="3">{{
+            $t("buyer.deploy.noDeploy")
+          }}</el-radio>
         </el-col>
       </el-row>
       <el-row class="more">
         <el-col :span="4" :offset="10" class="more-button" v-show="!more">
           <p @click="changeMore">
-            {{$t('buyer.deploy.more')}}
-            <i class="el-icon-arrow-down"></i>
+            {{ $t("buyer.deploy.more") }} <i class="el-icon-arrow-down"></i>
           </p>
         </el-col>
         <el-col :span="4" :offset="10" class="more-button" v-show="more">
           <p @click="changeMore">
-            {{$t('buyer.deploy.pick')}}
-            <i class="el-icon-arrow-up"></i>
+            {{ $t("buyer.deploy.pick") }} <i class="el-icon-arrow-up"></i>
           </p>
         </el-col>
       </el-row>
@@ -251,29 +295,32 @@
       <!-- application setting -->
       <el-row>
         <el-col class="title" :span="12">
-          <h1>{{$t('buyer.deploy.newApp')}}</h1>
+          <h1>{{ $t("buyer.deploy.newApp") }}</h1>
         </el-col>
         <el-col class="title" :span="12">
-          <h1>{{$t('buyer.deploy.version')}}</h1>
+          <h1>{{ $t("buyer.deploy.version") }}</h1>
         </el-col>
       </el-row>
       <el-row class="margin-top">
         <el-form label-width="160px">
           <el-col :span="8" :offset="2">
             <el-form-item>
-                <span slot="label">
-                    <i class="iconfont icon-name"></i>
-                    {{$t('buyer.deploy.nameApp')}}
-                  </span>
-              <el-input v-model="appDetail.name" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
+              <span slot="label">
+                <i class="iconfont icon-name"></i>
+                {{ $t("buyer.deploy.nameApp") }}
+              </span>
+              <el-input
+                v-model="appDetail.name"
+                :placeholder="$t('buyer.deploy.authorApp')"
+              ></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="10" :offset="4">
             <el-form-item>
-                <span slot="label">
-                    <i class="iconfont icon-name"></i>
-                    {{$t('buyer.deploy.chooseVersion')}}
-                  </span>
+              <span slot="label">
+                <i class="iconfont icon-name"></i>
+                {{ $t("buyer.deploy.chooseVersion") }}
+              </span>
               <el-select v-model="versionValue">
                 <el-option
                   v-for="item in versionSel"
@@ -286,11 +333,14 @@
           </el-col>
           <el-col :span="8" :offset="2">
             <el-form-item>
-                <span slot="label">
-                    <i class="iconfont icon-name"></i>
-                    {{$t('buyer.deploy.description')}}
-                  </span>
-              <el-input v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
+              <span slot="label">
+                <i class="iconfont icon-name"></i>
+                {{ $t("buyer.deploy.description") }}
+              </span>
+              <el-input
+                v-model="input"
+                :placeholder="$t('buyer.deploy.authorApp')"
+              ></el-input>
             </el-form-item>
           </el-col>
         </el-form>
@@ -300,30 +350,36 @@
       <!-- configuration options -->
       <el-row class="configuration">
         <el-col class="title" :span="24">
-          <h1>{{$t('buyer.deploy.configurationOption')}}</h1>
+          <h1>{{ $t("buyer.deploy.configurationOption") }}</h1>
         </el-col>
       </el-row>
 
       <ul>
         <li v-for="(groupData, index) in paramTree" :key="index">
           <ul>
-            <li v-for="(paramsL2,index) in groupData" :key="index">
+            <li v-for="(paramsL2, index) in groupData" :key="index">
               <el-row class="margin-top">
                 <el-col
                   class="configuration-box"
                   :span="8"
                   :offset="2"
-                  v-for="(param,index) in paramsL2"
+                  v-for="(param, index) in paramsL2"
                   :key="index"
                 >
                   <!--<div v-if="param.type==='boolean'">-->
                   <!--<el-orderModel  v-model="param.default" label="true">是</el-orderModel>-->
                   <!--<el-orderModel  v-model="param.default" label="false">否</el-orderModel>-->
                   <!--</div>-->
-                  <div v-if="param.type==='string' || param.type==='int' || param.type==='enum'">
-                    <p class="configuration-name">{{param.label}}：</p>
+                  <div
+                    v-if="
+                      param.type === 'string' ||
+                        param.type === 'int' ||
+                        param.type === 'enum'
+                    "
+                  >
+                    <p class="configuration-name">{{ param.label }}：</p>
                     <el-input v-model="param.default"></el-input>
-                    <span>{{param.description}}</span>
+                    <span>{{ param.description }}</span>
                   </div>
                 </el-col>
               </el-row>
@@ -335,7 +391,9 @@
       <el-row class="border-line"></el-row>
       <el-row>
         <el-col :span="4" :offset="10">
-          <el-button type="success" @click="purchaseEntry">{{$t('buyer.deploy.deploy')}}</el-button>
+          <el-button type="success" @click="purchaseEntry">{{
+            $t("buyer.deploy.deploy")
+          }}</el-button>
         </el-col>
       </el-row>
     </el-row>
@@ -427,7 +485,9 @@ export default {
       paramTree: [],
       appDeployParam: {},
       fee: 0,
-      concode: ''
+      concode: '',
+      isMyApplication: false,
+      orderNumber: ''
     }
   },
   created() {
@@ -442,9 +502,27 @@ export default {
       this.setConfigSelector()
       this.getUraPowerPoolList()
       this.getReferenceFee()
+      this.getOrderOfApp()
     }
   },
+  // beforeRouteEnter(to, from, next) {
+  //   if (from.name === 'ApplicationRepository') {
+  //     this.isMyApplication = true
+  //   }
+  //   next()
+  // },
+
   methods: {
+    getOrderOfApp() {
+      app.appPurchaseInfo(auth.getCurLang(), this.appId)
+          .then(purchaseInfo => {
+            const purchaseInfoData = purchaseInfo.data
+            if (purchaseInfoData.success) {
+              this.isMyApplication = true
+              this.orderNumber = purchaseInfoData.data.orderNo
+            }
+          })
+    },
     parseConfigData(configData) {
       /// grouped data
       let paramTreeTmp = {}
@@ -494,6 +572,7 @@ export default {
       this.more = !this.more
     },
 
+    /// phase 1 resource and appinfo --------
     setConfigSelector() {
       const CpuData = ServerConfigData.CPU
       this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang())
@@ -595,10 +674,6 @@ export default {
         }
       })
     },
-    successToListPage() {
-      this.innerVisible = false
-      if (this.orderModel === '1' || this.orderModel === '2') { this.$router.push({ name: 'MyResource' }) } else this.$router.push({ name: 'ApplicationRepository' })
-    },
 
     getUraPowerPoolList() {
       const projectQuertData = {
@@ -620,6 +695,14 @@ export default {
           }
           this.projectId = this.spaceSel[0].value
         })
+    },
+
+    /// phase 2 buy resource and appinfo --------
+    successToListPage() {
+      this.innerVisible = false
+      if (this.orderModel === '1' || this.orderModel === '2') {
+        this.$router.push({ name: 'MyResource' })
+      } else this.$router.push({ name: 'ApplicationRepository' })
     },
     getReferenceFee() {
       wallet.walletReferenceFee(auth.getCurLang()).then(reffee => {
@@ -643,7 +726,7 @@ export default {
       if (this.orderModel === '1') {
         this.purchaseUraPowerPlus()
       } else if (this.orderModel === '2') {
-        this.purchaseAppliction()
+        if (!this.isMyApplication) { this.purchaseAppliction() }
       } else {
         // do not deploy
       }
@@ -652,85 +735,90 @@ export default {
       this.deployForm.beginTime = this.deployForm.dateRange[0]
       this.deployForm.endTime = this.deployForm.dateRange[1]
 
-      // order.orderResource(auth.getCurLang(), this.deployForm)
-      // .then(purcheStatus => {
-      //   const purchUraStausData = purcheStatus.data
-      //   console.log(purchUraStausData)
-      //   if (purchStausData.success) {
+      order
+        .orderResource(auth.getCurLang(), this.deployForm)
+        .then(purcheStatus => {
+          const purchUraStausData = purcheStatus.data
+          console.log(purchUraStausData)
+          if (purchUraStausData.success) {
+            // const purchUraStausData = {
+            //   buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
+            //   buyerId: 60,
+            //   buyerName: '',
+            //   createTime: 1548072518330,
+            //   id: 59,
+            //   orderAmount: 0.24255,
+            //   orderHash: null,
+            //   orderNo: '2019012100003',
+            //   orderStatus: 1,
+            //   paySuccessTime: null,
+            //   poundage: 0.000378,
+            //   prodType: 'UraPower',
+            //   sellerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
+            //   sellerId: 60,
+            //   sellerName: '',
+            //   updateTime: 1548072518330,
+            //   projectId: 133
+            // }
+            this.gridData = [purchUraStausData]
+            this.projectId = purchUraStausData.projectId
 
-      const purchUraStausData = {
-        buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-        buyerId: 60,
-        buyerName: '',
-        createTime: 1548072518330,
-        id: 59,
-        orderAmount: 0.24255,
-        orderHash: null,
-        orderNo: '2019012100003',
-        orderStatus: 1,
-        paySuccessTime: null,
-        poundage: 0.000378,
-        prodType: 'UraPower',
-        sellerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-        sellerId: 60,
-        sellerName: '',
-        updateTime: 1548072518330,
-        projectId: 133
-      }
-      this.gridData = [purchUraStausData]
-      this.projectId = purchUraStausData.projectId
-
-      this.purchaseAppliction()
-      this.outerVisible = true
+            if (!this.isMyApplication) {
+              this.purchaseAppliction()
+            }
+            this.outerVisible = true
+          }
+        })
     },
 
     purchaseAppliction() {
-      //   console.log('buy app')
-      //   order.orderApp(auth.getCurLang(), this.appId)
-      //        .then(purchaseStatus => {
-      //          const purchaseAppStatusData = purchaseStatus.data
+      order
+        .orderApp(auth.getCurLang(), this.appId)
+        .then(purchaseStatus => {
+          const purchaseAppStatusData = purchaseStatus.data
 
-      const purchaseAppStatusData = {
-        beginTime: null,
-        buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-        buyerId: 60,
-        buyerName: '',
-        createTime: 1548131638960,
-        endTime: null,
-        id: 65,
-        orderAmount: 0.6,
-        orderHash: null,
-        orderNo: '2019012200003',
-        orderStatus: 3,
-        orderStatusName: 'paid',
-        paySuccessTime: 1548131638960,
-        poundage: 0,
-        prodId: 274,
-        prodName: 'mariadb',
-        prodPrice: 0,
-        prodType: 'Application',
-        sellerAccount: null,
-        sellerId: 62,
-        sellerName: null,
-        updateTime: 1548131638960
-      }
+          // const purchaseAppStatusData = {
+          //   beginTime: null,
+          //   buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
+          //   buyerId: 60,
+          //   buyerName: '',
+          //   createTime: 1548131638960,
+          //   endTime: null,
+          //   id: 65,
+          //   orderAmount: 0.6,
+          //   orderHash: null,
+          //   orderNo: '2019012200003',
+          //   orderStatus: 3,
+          //   orderStatusName: 'paid',
+          //   paySuccessTime: 1548131638960,
+          //   poundage: 0,
+          //   prodId: 274,
+          //   prodName: 'mariadb',
+          //   prodPrice: 0,
+          //   prodType: 'Application',
+          //   sellerAccount: null,
+          //   sellerId: 62,
+          //   sellerName: null,
+          //   updateTime: 1548131638960
+          // }
 
-      this.gridData.push(purchaseAppStatusData)
+          this.gridData.push(purchaseAppStatusData)
 
-      if (purchaseAppStatusData.errCode === 'REPEAT_BUY_APP') {
-        this.$message({
-          showClose: true,
-          message: purchaseAppStatusData.errMsg,
-          type: 'error'
+          if (purchaseAppStatusData.errCode === 'REPEAT_BUY_APP') {
+            this.$message({
+              showClose: true,
+              message: purchaseAppStatusData.errMsg,
+              type: 'error'
+            })
+          }
+
+          if (this.orderModel === '2') {
+            this.outerVisible = true
+          }
         })
-      }
-
-      if (this.orderModel === '2') {
-        this.outerVisible = true
-      }
-      // }).catch(error => {
-      //   // console.log(error)
-      // })
+        .catch(error => {
+          console.log(error)
+        })
     },
 
     startTransfer() {
@@ -756,9 +844,17 @@ export default {
           }
           wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
             console.log(transStatus)
+            this.appDeploy()
+            this.outerVisible = false
+            this.$message({
+              showClose: true,
+              message:
+                this.appDetail.name +
+                ' 订单支付成功后，App自动部署，请耐心等待',
+              type: 'success',
+              duration: 3000
+            })
           })
-          this.outerVisible = false
-          this.innerVisible = true
         })
 
       // wallet.walletTransfer(auth.getCurLang(), transData)
@@ -772,6 +868,7 @@ export default {
       //     })
     },
 
+      /// phase 3 deploy application --------
     appDeploy() {
       this.appDeployParam['appId'] = this.appId
       this.appDeployParam['appVersion'] = this.versionValue
@@ -782,22 +879,7 @@ export default {
         this.appDeployParam['projectId'] = this.projectId
       }
 
-      app
-        .appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
-        .then(respData => {
-          const deployData = respData.data
-          if (deployData.success) {
-            this.$message({
-              showClose: true,
-              message: this.appDetail.name + 'deployed',
-              type: 'success',
-              duration: 3000
-            })
-            this.outerVisible = true
-          } else {
-            this.$message('部署应用失败')
-          }
-        })
+      app.appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
     }
   }
 }
@@ -876,7 +958,7 @@ export default {
       color: #ffffff;
     }
     .el-radio {
-        color: #ffffff;
+      color: #ffffff;
     }
     .title {
       border-radius: 4px 4px 0 0;
@@ -981,9 +1063,9 @@ export default {
     }
     .el-button {
       margin-bottom: 30px;
-       background: rgba(101, 143, 247, 0);
-              box-shadow: inset 0 0 22px 0 #2463ff;
-              border-radius: 5px;
+      background: rgba(101, 143, 247, 0);
+      box-shadow: inset 0 0 22px 0 #2463ff;
+      border-radius: 5px;
       border: none;
       width: 200px;
       height: 34px;
