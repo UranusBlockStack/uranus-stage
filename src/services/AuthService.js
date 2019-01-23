@@ -105,8 +105,8 @@ export function refreshToken(lang) {
   const token = localStorage.getItem('token')
   const newLastUpdateTime = moment().utc().format()
   localStorage.setItem('tokenLastUpdateTime', newLastUpdateTime)
-  return httpLang(lang).post(`/auth/users/refresh/${token}`)
-      .then(refreshedToken => {
+  return httpLang(lang).post('/auth/users/refresh/' + token)
+      .then(function (refreshedToken) {
         localStorage.setItem('token', refreshedToken.data.data.token)
       })
 }
@@ -120,7 +120,7 @@ export function isLoggedIn () {
 
 export function login (lang, userLoginfo) {
   return httpLang(lang).post('/auth/users/signin', userLoginfo)
-        .then(res => {
+        .then(function(res) {
           const userdata = res.data.data
           if (res) {
             const curLoginUserInfo = {
@@ -156,7 +156,7 @@ function decodeToken () {
 }
 
 export function checkUser (lang, checkType, checkValue) {
-  return httpLang(lang).get(`/auth/users/${checkType}/${checkValue}`)
+  return httpLang(lang).get('/auth/users/' + checkType + checkValue)
 }
 
 export function resetPassword (lang, passPair) {
@@ -173,7 +173,7 @@ export function captcha (lang, userinfo) {
 
 // 检查手机或邮箱验证码是否正确
 export function checkCaptcha (lang, receiver, captcha) {
-  return httpLang(lang).get(`/auth/captcha/${receiver}/${captcha}`)
+  return httpLang(lang).get('/auth/captcha/' + receiver + captcha)
 }
 
 export function country (lang) {

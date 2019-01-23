@@ -47,9 +47,9 @@
           <el-col :span="12" v-for="(pool, index) in poolList"  :key="index">
             <el-row style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius:4px; margin:10px;">
               <el-col :span="5" style="margin-bottom: 15px;">
-                  <router-link :to="{path: '/resourcepool/' + pool.id + '/' + pool.name}">
+                  <a @click="checkPatch(index, pool.orderStatus)">
                   <Ball style="margin:0 auto;" v-if="update1" :chartData='pool.urpowerUsd'/>
-                  </router-link>
+                  </a>
               </el-col>
               <el-col :span="17" :offset="2">
                   <h3>Pool: {{pool.name}} </h3>
@@ -144,10 +144,23 @@ export default {
                   object['urpowerUsd'] = data[i].computeRatio
                   object.orderStatus = data[i].orderStatus
                   object.orderStatusName = data[i].orderStatusName
+                  object.link = '/resourcepool/' + data[i].id + '/' + data[i].projectName
                   this.poolList.push(object)
                   this.update1 = true
                 }
               })
+    },
+    checkPatch(index, ostatus) {
+      console.log(index, ostatus)
+      if (ostatus !== 3) {
+        this.$message({
+          showClose: true,
+          message: '该Project 正在支付或创建中',
+          type: 'warning'
+        })
+      } else {
+        console.log(this.poolList)
+      }
     },
     allStatisticsProjects() {
       project.statisticsProjects()

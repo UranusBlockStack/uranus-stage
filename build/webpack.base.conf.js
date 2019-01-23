@@ -50,7 +50,8 @@ module.exports = {
         include: [
           resolve('src'),
           resolve('test'),
-          resolve(__dirname, 'src/store.js')
+          resolve(__dirname, 'src/store/store.js'),
+          resolve(__dirname, 'src/service/HttpService.js')
         ]
       },
       {

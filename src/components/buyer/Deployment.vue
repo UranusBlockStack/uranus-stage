@@ -128,7 +128,7 @@
                     {{ $t("buyer.deploy.newPool") }}
                   </span>
                   <el-input
-                    v-model="deployForm.name"
+                    v-model="deployForm.projectName"
                     style="width:350px;"
                     :placeholder="$t('buyer.deploy.renamePool')"
                   ></el-input>
@@ -437,17 +437,8 @@ export default {
       memorySel: [],
       networkSel: [],
       // existed
-      spaceSel: [
-        {
-          value: '选项1',
-          label: '0.1.7'
-        },
-        {
-          value: '选项2',
-          label: '0.0.2'
-        }
-      ],
-      projectId: '0.1.2',
+      spaceSel: [],
+      projectId: '',
       // version
       versionSel: [],
       versionValue: '',
@@ -697,7 +688,9 @@ export default {
         })
     },
 
-    /// phase 2 buy resource and appinfo --------
+
+
+    /// phase 2 buy resource and application --------
     successToListPage() {
       this.innerVisible = false
       if (this.orderModel === '1' || this.orderModel === '2') {

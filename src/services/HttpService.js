@@ -21,7 +21,7 @@ export function httpLang (language) {
     }
   })
 
-  axinstance.interceptors.response.use((response) => {
+  axinstance.interceptors.response.use(function(response) {
     const axdata = response.data
     if (axdata.errCode === 'TOKEN_NOT_INVALID') {
       localStorage.setItem('token', '')
