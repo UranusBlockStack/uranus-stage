@@ -59,7 +59,7 @@
       >
         <p>{{$t('buyer.deploy.confirmText3')}}</p>
         <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="successToListPage">{{
+          <el-button type="primary" @click="deployConfirm">{{
             $t("buyer.deploy.button2")
           }}</el-button>
         </div>
@@ -688,15 +688,7 @@ export default {
         })
     },
 
-
-
     /// phase 2 buy resource and application --------
-    successToListPage() {
-      this.innerVisible = false
-      if (this.orderModel === '1' || this.orderModel === '2') {
-        this.$router.push({ name: 'MyResource' })
-      } else this.$router.push({ name: 'ApplicationRepository' })
-    },
     getReferenceFee() {
       wallet.walletReferenceFee(auth.getCurLang()).then(reffee => {
         this.fee = reffee.data.data
@@ -727,94 +719,51 @@ export default {
     purchaseUraPowerPlus() {
       this.deployForm.beginTime = this.deployForm.dateRange[0]
       this.deployForm.endTime = this.deployForm.dateRange[1]
-
+      console.log('order ura')
       order
         .orderResource(auth.getCurLang(), this.deployForm)
         .then(purcheStatus => {
           const purchUraStausData = purcheStatus.data
           console.log(purchUraStausData)
           if (purchUraStausData.success) {
-            // const purchUraStausData = {
-            //   buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-            //   buyerId: 60,
-            //   buyerName: '',
-            //   createTime: 1548072518330,
-            //   id: 59,
-            //   orderAmount: 0.24255,
-            //   orderHash: null,
-            //   orderNo: '2019012100003',
-            //   orderStatus: 1,
-            //   paySuccessTime: null,
-            //   poundage: 0.000378,
-            //   prodType: 'UraPower',
-            //   sellerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-            //   sellerId: 60,
-            //   sellerName: '',
-            //   updateTime: 1548072518330,
-            //   projectId: 133
-            // }
-            this.gridData = [purchUraStausData]
+            this.gridData = [purchUraStausData.data]
             this.projectId = purchUraStausData.projectId
 
             if (!this.isMyApplication) {
               this.purchaseAppliction()
             } else {
-              this.deployApp()
-              this.$message({
-                showClose: true,
-                message: 'deploy  success.',
-                type: 'success'
-              })
+              if (this.orderModel === '1') {
+                this.outerVisible = true
+              }
             }
-            this.outerVisible = true
+          } else {
+            this.$message({
+              showClose: true,
+              message: purchUraStausData.errMsg,
+              type: 'error'
+            })
           }
         })
     },
 
     purchaseAppliction() {
-      if (!this.isMyApplication) {
+      console.log('-------', this.isMyApplication)
+      if (!this.isMyApplication) {              // app order
         order
            .orderApp(auth.getCurLang(), this.appId)
             .then(purchaseStatus => {
               const purchaseAppStatusData = purchaseStatus.data
-
-                // const purchaseAppStatusData = {
-                //   beginTime: null,
-                //   buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-                //   buyerId: 60,
-                //   buyerName: '',
-                //   createTime: 1548131638960,
-                //   endTime: null,
-                //   id: 65,
-                //   orderAmount: 0.6,
-                //   orderHash: null,
-                //   orderNo: '2019012200003',
-                //   orderStatus: 3,
-                //   orderStatusName: 'paid',
-                //   paySuccessTime: 1548131638960,
-                //   poundage: 0,
-                //   prodId: 274,
-                //   prodName: 'mariadb',
-                //   prodPrice: 0,
-                //   prodType: 'Application',
-                //   sellerAccount: null,
-                //   sellerId: 62,
-                //   sellerName: null,
-                //   updateTime: 1548131638960
-                // }
-
-              this.gridData.push(purchaseAppStatusData)
-
-              if (purchaseAppStatusData.errCode === 'REPEAT_BUY_APP') {
+              if (purchaseAppStatusData.success) {
+                this.gridData.push(purchaseAppStatusData.data)
+                if (this.orderModel === '2') {
+                  this.outerVisible = true
+                }
+              } else {
                 this.$message({
                   showClose: true,
                   message: purchaseAppStatusData.errMsg,
                   type: 'error'
                 })
-              }
-
-              if (this.orderModel === '2') {
-                this.outerVisible = true
               }
             })
             .catch(error => {
@@ -825,7 +774,7 @@ export default {
               })
             })
       } else {
-        this.appDeploy()
+        this.deployConfirm()
       }
     },
 
@@ -876,7 +825,33 @@ export default {
       //     })
     },
 
-      /// phase 3 deploy application --------
+    /// phase 3 deploy application --------
+    
+    deployConfirm() {
+      this.innerVisible = false
+      this.$confirm('是否部署?', '部署', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.appDeploy()
+        this.$message({
+          type: 'success',
+          message: 'App 将自动部署 请耐心等待!'
+        })
+        this.successToListPage()
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消部署'
+        })
+      })
+    },
+    successToListPage() {
+      if (this.orderModel === '1' || this.orderModel === '2') {
+        this.$router.push({ name: 'MyResource' })
+      } else this.$router.push({ name: 'ApplicationRepository' })
+    },
     appDeploy() {
       this.appDeployParam['appId'] = this.appId
       this.appDeployParam['appVersion'] = this.versionValue

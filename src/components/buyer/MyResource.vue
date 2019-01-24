@@ -161,7 +161,7 @@ export default {
           type: 'warning'
         })
       } else {
-        console.log(this.poolList)
+        location.href = this.poolList[index].link
       }
     },
     allStatisticsProjects() {
