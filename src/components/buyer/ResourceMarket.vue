@@ -385,9 +385,19 @@ export default {
       }
       wallet.walletTransfer(auth.getCurLang(), transData).then(respData => {
         const transferStatus = respData.data
-        if (transferStatus) {
+        if (transferStatus.success) {
           this.outerVisible = false
-          this.innerVisible = true
+            this.$message({
+                showClose: true,
+                message: 'success',
+                type: 'success'
+            })
+        }else{
+            this.$message({
+                showClose: true,
+                message: transferStatus.errMsg,
+                type: 'error'
+            })
         }
       })
     }
