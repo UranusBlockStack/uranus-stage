@@ -59,7 +59,7 @@
                   <i class="iconfont icon-menu"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <router-link :to="{path: '/appstate/' + poolId + '/' + item.id}">
+                  <router-link :to="{path: '/appstate/' + poolId + '/' + item.id + '/' + item.name}">
                     <el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item>
                   </router-link>
                   <el-dropdown-item

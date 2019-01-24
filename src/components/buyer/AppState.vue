@@ -3,7 +3,7 @@
     <el-row class="recordHead">
       <el-col class="title" :span="20">
         <h1 @click="$router.back(-1)">
-          <i class="iconfont"></i> Imagepuler
+          <i class="iconfont"></i> {{appName}}
         </h1>
       </el-col>
       <!-- <el-col :span="4">
@@ -76,6 +76,8 @@
 </template>
 
 <script>
+
+import * as auth from '../../services/AuthService'
 import * as apps from '../../services/RancherService'
 
 export default {
@@ -84,6 +86,7 @@ export default {
     return {
       workLoadList: [],
       appId: this.$route.params.appId,
+      appName: this.$route.params.appname,
       poolId: this.$route.params.projectId
     }
   },
@@ -91,7 +94,7 @@ export default {
     getWorkLoads() {
       this.workLoadList = []
       apps
-        .appInstanceWorkLoads(this.$store.getters.lang, this.$route.params.appId)
+        .appInstanceWorkLoads(auth.getCurLang(), this.$route.params.appId)
         .then(respData => {
           let dataList = []
           if (respData.data.data) {

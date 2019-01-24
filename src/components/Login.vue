@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     getUser() {
-      const userStatus = auth.getUserBaseInfo()
+      let userStatus = auth.getUserBaseInfo()
       if (!userStatus) {
         userStatus = auth.getDefaultUserStatus()
         auth.setCurRole(userStatus.loginRole)

@@ -97,7 +97,7 @@ const routes = [
         component: UrapowerRecord,
         name: 'UrapowerRecord'
       }, {
-        path: '/appstate/:projectId?/:appId?',
+        path: '/appstate/:projectId?/:appId?/:appname?',
         component: AppState,
         name: 'AppState'
       }, {
