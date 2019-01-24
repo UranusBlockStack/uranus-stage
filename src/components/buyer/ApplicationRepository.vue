@@ -50,7 +50,7 @@
           <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover" v-for="(app, index) in appList" :key="index">
             <div class="resources">
               <div>
-                <el-dropdown trigger="click">
+                <el-dropdown trigger="click" style="display: none;">
                   <span class="el-dropdown-link">
                     <span class="iconfont icon-menu"></span>
                   </span>
