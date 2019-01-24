@@ -355,8 +355,14 @@ export default {
               const purchStausData = purcheStatus.data
               if (purchStausData.success) {
                 this.gridData = [purchStausData.data]
+                this.outerVisible = true
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: purchStausData.errMsg,
+                  type: 'error'
+                })
               }
-              this.outerVisible = true
             })
     },
     getReferenceFee() {
@@ -381,23 +387,23 @@ export default {
         code: this.concode,
         fee: this.fee,
         to: this.gridData[0].sellerAccount,
-        value: this.gridData[0].buyerAccount
+        value: this.gridData[0].orderAmount
       }
       wallet.walletTransfer(auth.getCurLang(), transData).then(respData => {
         const transferStatus = respData.data
         if (transferStatus.success) {
           this.outerVisible = false
-            this.$message({
-                showClose: true,
-                message: 'success',
-                type: 'success'
-            })
-        }else{
-            this.$message({
-                showClose: true,
-                message: transferStatus.errMsg,
-                type: 'error'
-            })
+          this.$message({
+            showClose: true,
+            message: 'success',
+            type: 'success'
+          })
+        } else {
+          this.$message({
+            showClose: true,
+            message: transferStatus.errMsg,
+            type: 'error'
+          })
         }
       })
     }

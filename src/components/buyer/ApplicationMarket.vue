@@ -169,7 +169,7 @@ export default {
               if (isMyApplication) {
                 this.$message({
                   showClose: true,
-                  message: 'you purchased app, please go to "My Application" to deploy it',
+                  message: 'you\'ve purchased app, please go to "My Application" to deploy it',
                   type: 'warning'
                 })
               } else {
