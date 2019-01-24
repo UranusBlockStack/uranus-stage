@@ -79,7 +79,7 @@
             <div :class="scope.row.state == 'active' ? 'on' : 'off'"></div>
           </template>
         </el-table-column>
-        <el-table-column width="220">
+        <el-table-column width="200">
           <!--主机名称 name-->
           <template slot="header" slot-scope="scope">
             <p class="table-head" style="text-align:left;">
@@ -89,6 +89,18 @@
           </template>
           <template slot-scope="scope">
             <p class="overflow">{{ scope.row.name}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column width="180">
+          <!--主机IP ip-->
+          <template slot="header" slot-scope="scope">
+            <p class="table-head" style="text-align:left;">
+              <i class="iconfont icon-table-ip"></i>
+              {{$t('seller.host.ip')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p class="overflow">{{ scope.row.hostIp}}</p>
           </template>
         </el-table-column>
 
@@ -199,7 +211,7 @@
           <template slot-scope="scope">
             <p style="margin-left: 30px; text-align: center;">
               <span
-                v-show="scope.row.colony != $t('seller.host.group') + ' B'"
+                v-show="scope.row.clusterId !=''||scope.row.clusterId !=null"
               >{{scope.row.clusterName}}</span>
               <el-button
                 @click="joinButtonClick(scope.row.id)"
@@ -239,6 +251,10 @@ export default {
     };
   },
   methods: {
+    //   window reload for update data
+    winReload(cond) {
+      window.location.reload();
+    },
     getHostList() {
       rancher.hostList(this.language).then(data => {
         console.log("hostList：", data);
@@ -290,7 +306,7 @@ export default {
       rancher
         .joinCluster(this.language, this.hostId, this.clusterId)
         .then(data => {
-          console.log(data);
+          console.log("joinAdd result", data);
         });
     },
     search() {
@@ -311,15 +327,17 @@ export default {
       };
       if (this.groupJoin == this.$t("seller.host.newGroup")) {
         param.newCluster = true;
+        rancher.hostAdd(this.language, param).then(data => {
+          console.log("hostAdd result", data);
+          this.dialogVisible = false;
+          this.winReload();
+        });
       } else {
         param.newCluster = false;
+        this.joinCluster();
+        this.dialogVisible = false;
+        this.winReload();
       }
-      rancher.hostAdd(this.language, param).then(data => {
-        console.log("hostAdd result", data);
-        /*if(data){
-
-                }*/
-      });
     },
     joinButtonClick(selectedhostId) {
       this.hostId = selectedhostId;
@@ -413,6 +431,9 @@ export default {
       border-radius: 3px;
       border: none;
       color: #ffffff;
+    }
+    .el-button :hover {
+      color: #1890ff;
     }
     .overflow {
       overflow: hidden;

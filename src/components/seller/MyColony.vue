@@ -186,6 +186,7 @@ export default {
           this.searchParam.page=data.data.data.current
           this.searchParam.totalRecords=data.data.data.total
         var records = data.data.data.records
+        console.log('cluster ===', records)
         this.colonyList = records
         records.forEach((item, index) => {
           let momentInfo = moment(item.endTime)
@@ -212,7 +213,7 @@ export default {
   mounted() {
     this.clusterSearch();
     this.language = auth.getCurLang();
-  }
+  },
 };
 </script>
 

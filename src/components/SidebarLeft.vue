@@ -73,7 +73,7 @@
         </router-link>
         <ul class="treeview-menu">
           <li v-for="(item,index) in uraPowerList" :key="index">
-            <router-link :to="{path: '/resourcepool/' + item.id + '/' + item.projectName}">
+            <router-link :to="{path: '/resourcepool/' + item.id + '/' + item.name}">
               <i class="iconfont icon-resource"></i>
               {{item.projectName}}
             </router-link>
@@ -95,22 +95,10 @@
           </span>
         </router-link>
         <ul class="treeview-menu">
-          <li>
-            <router-link :to="{path: '/colony'}">
-              <i class="iconfont icon-cluster"></i>
-              {{$t('menu.myColony1')}}
-            </router-link>
-          </li>
-          <li>
-            <router-link :to="{path: '/colony'}">
-              <i class="iconfont icon-cluster"></i>
-              {{$t('menu.myColony2')}}
-            </router-link>
-          </li>
-          <li>
-            <router-link :to="{path: '/colony'}">
-              <i class="iconfont icon-cluster"></i>
-              {{$t('menu.myColony3')}}
+            <li v-for="(item,index) in clusterList" :key="index">
+            <router-link :to="{path: '/colony/' + item.id}">
+              <i class="iconfont icon-resource"></i>
+              {{item.name}}
             </router-link>
           </li>
         </ul>
@@ -149,6 +137,7 @@
 import * as auth from '../services/AuthService'
 import * as project from '../services/RancherService'
 
+
 export default {
   name: 'SidebarLeft',
   data() {
@@ -161,22 +150,32 @@ export default {
         'projectName': '',
         'sort': '',
         'sortDesc': true
-      }
+      },
+      clusterList: [],
     }
   },
   created() {
     this.getUser()
-    this.getUraPowerPoolLIst()
+    this.getUraPowerPoolList()
+    this.getClusterList()
   },
+
   methods: {
     getUser() {
       this.user = auth.getUserBaseInfo().loginRole
     },
-    getUraPowerPoolLIst() {
+    getUraPowerPoolList() {
       project.projectList(this.$store.getters.lang, this.projectQuertData)
                 .then(respData => {
                   const data = respData.data.data.records
                   this.uraPowerList = data
+                })
+    },
+    getClusterList() {
+        project.clusterSearch(this.$store.getters.lang, this.projectQuertData)
+                .then(respData => {
+                  const data = respData.data.data.records
+                  this.clusterList = data
                 })
     }
   }

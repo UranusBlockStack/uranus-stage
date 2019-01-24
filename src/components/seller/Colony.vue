@@ -1,5 +1,5 @@
   <template>
-  <section class="colony">
+  <section class="colony" v-if="isRouterAlive">
     <el-row class="colonyHead">
       <el-col class="title" :span="12">
         <h1>
@@ -8,7 +8,13 @@
         </h1>
       </el-col>
       <el-col :span="6" :offset="6">
-        <el-switch style="margin-top: 15px;" v-model="switchVal" :active-text="$t('seller.group.notSale')" :inactive-text="$t('seller.group.inSale')"  @change="onLineClick()"></el-switch>
+        <el-switch
+          style="margin-top: 15px;"
+          v-model="switchVal"
+          :active-text="$t('seller.group.notSale')"
+          :inactive-text="$t('seller.group.inSale')"
+          @change="onLineClick()"
+        ></el-switch>
       </el-col>
     </el-row>
     <!-- Confirmation Information Bullet Box -->
@@ -19,19 +25,19 @@
       width="650px"
     >
       <span>
-        <el-form ref="form" :model="form" label-width="80px">
+        <el-form :model="tableCluster" label-position="left" label-width="100px">
           <el-form-item :label="$t('seller.group.settingName')">
-            <el-input v-model="form.name"></el-input>
+            <el-input v-model="tableCluster.name"></el-input>
           </el-form-item>
           <el-form-item :label="$t('seller.group.setRent')">
-            <el-input v-model="form.price"></el-input>
+            <el-input v-model="tableCluster.rentPrice"></el-input>
           </el-form-item>
           <el-form-item :label="$t('seller.group.settingTime')">
             <el-col :span="8">
               <el-date-picker
                 type="date"
                 :placeholder="$t('seller.group.startingTime')"
-                v-model="form.date1"
+                v-model="tableCluster.beginTime"
                 style="width: 100%;"
               ></el-date-picker>
             </el-col>
@@ -42,25 +48,22 @@
               <el-date-picker
                 type="date"
                 :placeholder="$t('seller.group.endTime')"
-                v-model="form.date2"
+                v-model="tableCluster.endTime"
                 style="width: 100%;"
               ></el-date-picker>
             </el-col>
           </el-form-item>
-          <el-form-item :label="$t('seller.group.setRegion')">
-            <el-select v-model="form.address" :placeholder="$t('seller.group.setRegion')">
+          <!-- <el-form-item :label="$t('seller.group.setRegion')">
+            <el-select
+              v-model="tableCluster.regionEnUs"
+              :placeholder="$t('seller.group.setRegion')"
+            >
               <el-option :label="$t('seller.group.asia')" value="asia"></el-option>
               <el-option :label="$t('seller.group.europe')" value="europe"></el-option>
               <el-option :label="$t('seller.group.africa')" value="africa"></el-option>
               <el-option :label="$t('seller.group.south')" value="southAmerica"></el-option>
               <el-option :label="$t('seller.group.north')" value="northAmerica"></el-option>
               <el-option :label="$t('seller.group.oceania')" value="oceania"></el-option>
-            </el-select>
-          </el-form-item>
-          <!-- <el-form-item :label="$t('seller.group.setState')">
-            <el-select v-model="form.state" :placeholder="$t('seller.group.setState')">
-              <el-option :label="$t('seller.group.inSale')" value="inSale"></el-option>
-              <el-option :label="$t('seller.group.notSale')" value="notSale"></el-option>
             </el-select>
           </el-form-item> -->
           <el-form-item>
@@ -71,29 +74,11 @@
       </span>
     </el-dialog>
 
-    <!-- delete text box -->
-    <el-dialog :close-on-click-modal="false" :visible.sync="outerVisible" width="480px">
-      <p>{{$t('seller.group.deleteSure')}}</p>
-      <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
-        <p>{{$t('seller.group.deleteText1')}}</p>
-        <div slot="footer" class="dialog-footer">
-          <el-button type="primary" @click="innerVisible = false">{{$t('seller.group.confirm')}}</el-button>
-        </div>
-      </el-dialog>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="outerVisible = false">{{$t('seller.group.cancel')}}</el-button>
-        <el-button
-          type="primary"
-          @click="outerVisible = false, innerVisible = true"
-        >{{$t('seller.group.confirm')}}</el-button>
-      </div>
-    </el-dialog>
-
     <!-- colony -->
     <el-row class="colonyBox">
       <el-row class="rePool">
         <el-col class="title" :span="24">
-          <h1>{{$t('menu.myColony1')}}</h1>
+          <h1>{{clusterInfo.name}}</h1>
         </el-col>
         <el-col :span="4">
           <Water
@@ -102,17 +87,30 @@
           />
         </el-col>
         <el-col class="padding-top" :span="5" :offset="1">
-          <h4>{{$t('seller.group.earnings')}} {{clusterInfo.profit}} URAC</h4>
-          <p>{{$t('seller.group.value')}} {{clusterInfo.rentPrice}} URAC/Day</p>
-          <p>{{$t('seller.group.region')}} {{clusterInfo.region}}</p>
+          <h4>{{$t('seller.group.earnings')}} {{clusterInfo.profit}}</h4>
+          <p
+            v-if="clusterInfo.rentPrice != null"
+          >{{$t('seller.group.value')}} {{clusterInfo.rentPrice}}</p>
+          <p v-if="clusterInfo.rentPrice == null">{{$t('seller.group.value')}} -- --</p>
+          <p>{{$t('seller.group.region')}} {{clusterInfo.regionEnUs}}</p>
         </el-col>
         <el-col class="padding-top" :span="12">
           <!-- <h4>
             {{$t('seller.group.restTime')}}
             <RestTime style="display: inline-block" :endTime="dateFormat(clusterInfo.endTime)"/>
-          </h4> -->
-          <p style="margin-top: 45px;">{{$t('seller.group.buyingTime')}} {{dateFormat(clusterInfo.beginTime)}}</p>
-          <p>{{$t('seller.group.endingTime')}} {{dateFormat(clusterInfo.endTime)}}</p>
+          </h4>-->
+          <p
+            v-if="clusterInfo.beginTime != null"
+            style="margin-top: 45px;"
+          >{{$t('seller.group.buyingTime')}} {{dateFormat(clusterInfo.beginTime)}}</p>
+          <p
+            v-if="clusterInfo.beginTime == null"
+            style="margin-top: 45px;"
+          >{{$t('seller.group.buyingTime')}} -- --</p>
+          <p
+            v-if="clusterInfo.endTime != null"
+          >{{$t('seller.group.endingTime')}} {{dateFormat(clusterInfo.endTime)}}</p>
+          <p v-if="clusterInfo.endTime == null">{{$t('seller.group.endingTime')}} -- --</p>
         </el-col>
         <el-col :span="2">
           <p v-show="switchVal" class="setting" @click="dialogVisible = true">
@@ -263,7 +261,28 @@
           <!--删除-->
           <el-table-column width="200">
             <template slot-scope="scope">
-              <el-button v-show="switchVal" @click="deleteHost(scope.row.id)">{{$t('seller.group.deleteHost')}}</el-button>
+              <el-button
+                style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
+                v-show="switchVal"
+                @click="outerVisible = true"
+              >{{$t('seller.group.deleteHost')}}</el-button>
+              <!-- delete host text box -->
+              <el-dialog :close-on-click-modal="false" :visible.sync="outerVisible" width="480px">
+                <p>{{$t('seller.group.deleteSure')}}{{scope.row.id}}</p>
+                <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
+                  <p>{{$t('seller.group.deleteText1')}}</p>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="winReload">{{$t('seller.group.confirm')}}</el-button>
+                  </div>
+                </el-dialog>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="outerVisible = false">{{$t('seller.group.cancel')}}</el-button>
+                  <el-button
+                    type="primary"
+                    @click="deleteHost(scope.row.id)"
+                  >{{$t('seller.group.confirm')}}</el-button>
+                </div>
+              </el-dialog>
             </template>
           </el-table-column>
         </el-table>
@@ -291,7 +310,7 @@ export default {
     Disk,
     Memory,
     Network,
-      RestTime
+    RestTime
   },
   data() {
     return {
@@ -301,18 +320,12 @@ export default {
       language: "",
       tableData: [],
       clusterInfo: {},
+      tableCluster: {},
       dialogVisible: false,
-      form: {
-        name: "",
-        price: "",
-        date1: "",
-        date2: "",
-        address: "",
-        state: ""
-      },
       switchVal: true,
       outerVisible: false,
-      innerVisible: false
+      innerVisible: false,
+      isRouterAlive: true,
     };
   },
   methods: {
@@ -323,19 +336,23 @@ export default {
         this.tableData = data.data.data.records;
       });
     },
-
     deleteHost(id) {
       //删除主机
-      rancher.hostDelete(auth.getCurLang()).then(data => {
-        console.log(data);
+      rancher.hostDelete(auth.getCurLang(), id).then(data => {
+        console.log("delete ===", data);
         //删除逻辑
-        this.outerVisible = true;
+        this.outerVisible = false;
+        this.innerVisible = true;
       });
+    },
+    winReload(cond) {
+      window.location.reload();
     },
     getClusterDetail() {
       rancher.clusterInfo(this.language, this.clusterId).then(data => {
         console.log("detail", data);
         this.clusterInfo = data.data.data;
+        this.tableCluster = JSON.parse(JSON.stringify(data.data.data));
         this.update1 = true;
         this.update2 = true;
       });
@@ -343,38 +360,41 @@ export default {
     filterState(value, row) {
       return row.state === value;
     },
-      onLineClick(){
-        alert(this.switchVal)
-      }
+    onLineClick() {
+      alert(this.switchVal);
+    },
+    reload () {
+     this.isRouterAlive = false
+     this.$nextTick(() => (this.isRouterAlive = true))
+   },
   },
   computed: {
     getPercentNumber() {
       //计算百分比 a/b
       return function(a, b) {
         var n = Number((a / b) * 100).toFixed(2);
-          if (isNaN(Number(n)) || !isFinite(Number(n)) ) {
-              n = 0;
-          }
+        if (isNaN(Number(n)) || !isFinite(Number(n))) {
+          n = 0;
+        }
         return Number(n);
       };
     },
     dateFormat() {
       return function(time) {
-          let momentInfo = moment(time)
-          if (momentInfo.isValid() == false) {
-              return moment(0).format("YYYY-MM-DD hh:mm:ss");
-          }else{
-              return moment(time).format("YYYY-MM-DD hh:mm:ss");
-          }
-
+        let momentInfo = moment(time);
+        if (momentInfo.isValid() == false) {
+          return moment(0).format("YYYY-MM-DD hh:mm:ss");
+        } else {
+          return moment(time).format("YYYY-MM-DD hh:mm:ss");
+        }
       };
     },
     division() {
       return function(a, b) {
         var n = a / b;
-          if (isNaN(Number(n)) || !isFinite(Number(n)) ) {
-              n = 0;
-          }
+        if (isNaN(Number(n)) || !isFinite(Number(n))) {
+          n = 0;
+        }
         return Number(n);
       };
     }
@@ -385,8 +405,16 @@ export default {
     this.getClusterDetail();
     this.getHosts();
     this.language = auth.getCurLang();
-    console.log (this.language)
-  }
+    console.log(this.language);
+  },
+  beforeRouteUpdate(to, from, next) {
+    this.clusterId = to.params.resid;
+    this.getClusterDetail();
+    this.getHosts();
+    this.reload()
+    next();
+  },
+
 };
 </script>
 
@@ -585,14 +613,6 @@ export default {
         i {
           font-size: 23px;
         }
-      }
-      .el-button {
-        background: rgba(101, 143, 247, 0);
-        box-shadow: inset 0 0 22px 0 #2463ff;
-        border-radius: 3px;
-        border: none;
-        color: #ffffff;
-        margin-left: 35px;
       }
       .el-select /deep/ .el-input__suffix {
         right: 10px;

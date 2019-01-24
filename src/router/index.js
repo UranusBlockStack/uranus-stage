@@ -135,7 +135,7 @@ const routes = [
         component: MyColony,
         name: 'MyColony'
       }, {
-        path: '/colony/:resid',
+        path: '/colony/:resid?',
         component: Colony,
         name: 'Colony'
       }, {

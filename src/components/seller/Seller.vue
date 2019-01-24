@@ -57,18 +57,26 @@
       </div>
       <div class="power">
         <p>{{$t('seller.home.power')}}</p>
-        <div  v-if="initOil" class="powerBox">
+        <div v-if="initOil" class="powerBox">
           <div id="Cpu">
-            <Oil :chartData="{value: getPercentNumber(allResources.cpuKernelUsed,allResources.cpuKernel), type: 'CPU'}"/>
+            <Oil
+              :chartData="{value: getPercentNumber(allResources.cpuKernelUsed,allResources.cpuKernel), type: 'CPU'}"
+            />
           </div>
           <div id="Memory">
-            <Oil :chartData="{value: getPercentNumber(allResources.memUsed,allResources.mem), type: 'Memory'}"/>
+            <Oil
+              :chartData="{value: getPercentNumber(allResources.memUsed,allResources.mem), type: 'Memory'}"
+            />
           </div>
           <div id="Storage">
-            <Oil :chartData="{value: getPercentNumber(allResources.disk,allResources.diskUsed), type: 'Storage'}"/>
+            <Oil
+              :chartData="{value: getPercentNumber(allResources.disk,allResources.diskUsed), type: 'Storage'}"
+            />
           </div>
           <div id="Network">
-            <Oil :chartData="{value: getPercentNumber(allResources.network,allResources.networkUsed), type: 'Network'}"/>
+            <Oil
+              :chartData="{value: getPercentNumber(allResources.network,allResources.networkUsed), type: 'Network'}"
+            />
             <!--<Oil :chartData="{value: 20, type: 'Network'}"/>-->
           </div>
         </div>
@@ -129,19 +137,22 @@
           </el-col>
         </el-row>
 
-       <!-- <el-row :gutter="20" style="height: 50px">
+        <!-- <el-row :gutter="20" style="height: 50px">
           <el-col :span="6" :offset="16">
             <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
           </el-col>
         </el-row>-->
-
-          <el-row>
-              <el-col :span="8" :offset="16">
-                  <el-pagination layout="prev, pager, next" :current-page.sync="pageInfo.page" :page-size="pageInfo.pageSize" :total="pageInfo.totalRecords"
-                                 @current-change="handleCurrentChange">
-                  </el-pagination>
-              </el-col>
-          </el-row>
+        <el-row>
+          <el-col :span="8" :offset="16">
+            <el-pagination
+              layout="prev, pager, next"
+              :current-page.sync="pageInfo.page"
+              :page-size="pageInfo.pageSize"
+              :total="pageInfo.totalRecords"
+              @current-change="handleCurrentChange"
+            ></el-pagination>
+          </el-col>
+        </el-row>
       </div>
     </div>
   </section>
@@ -166,21 +177,20 @@ export default {
       indexCon: 2,
       indexPro: 2,
       tableData: [],
-        allResources:"",
-      initOil:false,
-        pageInfo:{
-            page: 0,
-            pageSize: 3,
-            totalRecords: 0
-        }
+      allResources: "",
+      initOil: false,
+      pageInfo: {
+        page: 0,
+        pageSize: 5,
+        totalRecords: 0
+      }
     };
   },
   methods: {
-
-      handleCurrentChange(val) {
-          this.pageInfo.page = val
-          this.searchTransactionRecords()
-      },
+    handleCurrentChange(val) {
+      this.pageInfo.page = val;
+      this.searchTransactionRecords();
+    },
 
     statisticsGlobalUraPower(elementId, type) {
       //按类型统计 全网算力
@@ -189,68 +199,71 @@ export default {
         let result = data.data.data;
         let xValue = [];
         let yValue = [];
-        let lineValue=[]
+        let lineValue = [];
         result.forEach((item, index) => {
           xValue.push(item.datetimeValue);
           yValue.push(item.totalCompute);
-            lineValue.push(item.usedCompute)
+          lineValue.push(item.usedCompute);
         });
-        this.initEchart(elementId, xValue, yValue,lineValue);
+        this.initEchart(elementId, xValue, yValue, lineValue);
       });
-      if(elementId == 'myConsumption') {
-          if (type == 'day') {
-              this.indexCon = 2
-          } else if (type == 'week') {
-              this.indexCon = 1
-          }else if (type == 'month') {
-              this.indexCon = 0
-          }
-      }else if (elementId == 'myProfit') {
-              if (type == 'day') {
-              this.indexPro = 2
-          } else if (type == 'week') {
-              this.indexPro = 1
-          }else if (type == 'month') {
-              this.indexPro = 0
-          }
-          }
+      if (type == "day") {
+        this.indexCon = 2;
+      } else if (type == "week") {
+        this.indexCon = 1;
+      } else if (type == "month") {
+        this.indexCon = 0;
+      }
     },
-      getEarning(elementId,type){
-        order.earnings(this.language,type).then(data=>{
-            console.log("收益"+data.data.data)
-            let result = data.data.data;
-            let xValue = [];
-            let yValue = [];
-            let lineValue=[]
-            result.forEach((item, index) => {
-                xValue.push(item.datetimeValue);
-                yValue.push(item.earnings);
-            });
-            this.initEchart(elementId, xValue, yValue,lineValue);
-        })
-      },
-      hosts(){
-        rancher.hosts(this.language).then(data=>{
-            //卖家所有资源
-            console.log("卖家所有资源allResources",data.data.data)
-            this.allResources=data.data.data
-            this.initOil=true
-        })
-      },
-
-      searchTransactionRecords() {
-      wallet.getTradeLogCurrentUser(this.language, 0, this.pageInfo.page, this.pageInfo.pageSize).then(transList => {
-        this.tableData = transList.data.data.records;
-        console.log("searchTransactionRecords:",transList.data)
-          this.pageInfo.page=transList.data.data.current
-          //this.pageInfo.pageSize=transList.data.data.size
-          this.pageInfo.totalRecords=transList.data.data.total
+    getEarning(elementId, type) {
+      order.earnings(this.language, type).then(data => {
+        console.log("收益" , data.data.data);
+        let result = data.data.data;
+        let xValue = [];
+        let yValue = [];
+        result.forEach((item, index) => {
+          xValue.push(item.datetimeValue);
+          yValue.push(item.earnings);
+        });
+        this.initEchart(elementId, xValue, yValue);
       });
+      if (type == "day") {
+        this.indexPro = 2;
+      } else if (type == "week") {
+        this.indexPro = 1;
+      } else if (type == "month") {
+        this.indexPro = 0;
+      }
+    },
+    hosts() {
+      rancher.hosts(this.language).then(data => {
+        //卖家所有资源
+        console.log("卖家所有资源allResources", data.data.data);
+        this.allResources = data.data.data;
+        this.initOil = true;
+      });
+    },
+
+    searchTransactionRecords() {
+      wallet
+        .getTradeLogCurrentUser(
+          this.language,
+          0,
+          this.pageInfo.page,
+          this.pageInfo.pageSize
+        )
+        .then(transList => {
+          this.tableData = transList.data.data.records;
+          console.log("searchTransactionRecords:", transList.data);
+          this.pageInfo.page = transList.data.data.current;
+          //this.pageInfo.pageSize=transList.data.data.size
+          this.pageInfo.totalRecords = transList.data.data.total;
+        });
     },
     formateDate(time) {
       return moment(time).format("YYYY-MM-DD HH:mm:ss");
     },
-    initEchart(elementId, xValue, yValue,lineValue) {
+    initEchart(elementId, xValue, yValue, lineValue) {
       let option = {
         color: ["#3398DB"],
         tooltip: {
@@ -306,50 +319,47 @@ export default {
         ],
         series: [
           {
-            name: "uranus",
+            name: " ",
             type: "bar",
             barWidth: "30%",
-            color: "#1890ff",
+            color: "#2463ff",
             // y轴柱形数值
             data: yValue
           },
           {
-            name: "line",
+            name: " ",
             type: "line",
-            color: "#1890ff",
+            color: "#51a906",
             // y轴连线数值
             data: lineValue
           }
         ]
       };
-     let myChart = this.$echarts.init(document.getElementById(elementId));
-        myChart.setOption(option)
-     /* window.onresize = function() {
-        myChart1.resize();
-      };*/
-        window.addEventListener("resize",function(){
-            myChart.resize();
-        })
+      let myChart = this.$echarts.init(document.getElementById(elementId));
+      myChart.setOption(option);
+      window.addEventListener("resize", function() {
+        myChart.resize();
+      });
     }
   },
-    computed: {
-        getPercentNumber() {
-            //计算百分比 a/b
-            return function (a, b) {
-                var n = Number(a / b * 100).toFixed(2)
-                if (isNaN(Number(n)) || !isFinite(Number(n)) ) {
-                    n = 0;
-                }
-                return Number(n)
-            }
+  computed: {
+    getPercentNumber() {
+      //计算百分比 a/b
+      return function(a, b) {
+        var n = Number((a / b) * 100).toFixed(2);
+        if (isNaN(Number(n)) || !isFinite(Number(n))) {
+          n = 0;
         }
-    },
+        return Number(n);
+      };
+    }
+  },
   mounted() {
     this.language = auth.getCurLang();
     this.searchTransactionRecords();
     this.statisticsGlobalUraPower("myConsumption", "month");
-      this.getEarning("myProfit", "day");
-      this.hosts()
+    this.getEarning("myProfit", "day");
+    this.hosts();
   }
 };
 </script>
