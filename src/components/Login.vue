@@ -56,53 +56,53 @@
 </template>
 
 <script>
-import * as auth from "../services/AuthService";
+import * as auth from '../services/AuthService'
 
 export default {
-  name: "Login",
+  name: 'Login',
   data() {
     return {
       phoneShow: true,
       // 用户身份
-      user: "",
+      user: '',
       // 提示信息
-      prompt: "",
+      prompt: '',
       // 用户登录信息
-      phone: "",
-      mail: "",
-      password: "",
+      phone: '',
+      mail: '',
+      password: '',
       // 地区代码
       regions: [],
-      currentRegion: "86"
-    };
+      currentRegion: '86'
+    }
   },
   methods: {
     getUser() {
-      const userStatus = auth.getUserBaseInfo();
+      const userStatus = auth.getUserBaseInfo()
       if (!userStatus) {
-        userStatus = auth.getDefaultUserStatus();
-        auth.setCurRole(userStatus.loginRole);
-        this.user = userStatus.loginRole;
+        userStatus = auth.getDefaultUserStatus()
+        auth.setCurRole(userStatus.loginRole)
+        this.user = userStatus.loginRole
       }
 
-      this.user = auth.getCurRole();
+      this.user = auth.getCurRole()
     },
     getRegionList2() {
-      auth.country(this.$store.getters.lang).then(resdata => {
-        this.regions = resdata.data.data;
-      });
+      auth.country(auth.getCurLang()).then(resdata => {
+        this.regions = resdata.data.data
+      })
     },
     selectRegion(region) {
-      this.currentRegion = region;
+      this.currentRegion = region
     },
     getLoginName: function(logintype) {
-      let loginname = "";
-      if (logintype === "mobile") {
-        loginname = this.currentRegion + this.phone;
+      let loginname = ''
+      if (logintype === 'mobile') {
+        loginname = this.currentRegion + this.phone
       } else {
-        loginname = this.mail;
+        loginname = this.mail
       }
-      return loginname;
+      return loginname
     },
     choosePhone() {
       this.phoneShow = true
@@ -120,74 +120,74 @@ export default {
     },
     userLogin() {
       if (this.phoneShow == true) {
-        if (this.phone === "") {
-          this.prompt = this.$t('userCommon.phoneError');
-        } else if (this.password === "") {
-          this.prompt = this.$t('userCommon.passwordEmpty');
+        if (this.phone === '') {
+          this.prompt = this.$t('userCommon.phoneError')
+        } else if (this.password === '') {
+          this.prompt = this.$t('userCommon.passwordEmpty')
         } else if (this.password.length < 6 || this.password.length > 12) {
-          this.prompt = this.$t('userCommon.password');
+          this.prompt = this.$t('userCommon.password')
         } else {
-          this.prompt = "";
-          const logintype = this.phoneShow ? "mobile" : "email";
+          this.prompt = ''
+          const logintype = this.phoneShow ? 'mobile' : 'email'
           const userLoginfo = {
             loginName: this.getLoginName(logintype),
             password: this.password,
             loginType: logintype
-          };
+          }
 
-          const self = this;
+          const self = this
 
           auth
             .login(auth.getCurLang(), userLoginfo)
             .then(function(curLoginUserInfo) {
-              self.$router.push({ path: curLoginUserInfo.loginRole });
-            });
+              self.$router.push({ path: curLoginUserInfo.loginRole })
+            })
           // .catch(error => {
           //   if (error) {
           //     alert('登录不成功')
           //   }
           // })
-          const globalUserinfo = auth.getUserBaseInfo();
+          const globalUserinfo = auth.getUserBaseInfo()
         }
       }
       if (this.phoneShow == false) {
-        if (this.mail === "") {
-          this.prompt = this.$t('userCommon.EmailError');
-        } else if (this.password === "") {
-          this.prompt = this.$t('userCommon.passwordEmpty');
+        if (this.mail === '') {
+          this.prompt = this.$t('userCommon.EmailError')
+        } else if (this.password === '') {
+          this.prompt = this.$t('userCommon.passwordEmpty')
         } else if (this.password.length < 6 || this.password.length > 12) {
-          this.prompt = this.$t('userCommon.password');
+          this.prompt = this.$t('userCommon.password')
         } else {
-          this.prompt = "";
-          const logintype = this.phoneShow ? "mobile" : "email";
+          this.prompt = ''
+          const logintype = this.phoneShow ? 'mobile' : 'email'
           const userLoginfo = {
             loginName: this.getLoginName(logintype),
             password: this.password,
             loginType: logintype
-          };
+          }
 
-          const self = this;
+          const self = this
 
           auth
             .login(auth.getCurLang(), userLoginfo)
             .then(function(curLoginUserInfo) {
-              self.$router.push({ path: curLoginUserInfo.loginRole });
-            });
+              self.$router.push({ path: curLoginUserInfo.loginRole })
+            })
           // .catch(error => {
           //   if (error) {
           //     alert('登录不成功')
           //   }
           // })
-          const globalUserinfo = auth.getUserBaseInfo();
+          const globalUserinfo = auth.getUserBaseInfo()
         }
       }
     }
   },
   mounted() {
-    this.getRegionList2();
-    this.getUser();
+    this.getRegionList2()
+    this.getUser()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
