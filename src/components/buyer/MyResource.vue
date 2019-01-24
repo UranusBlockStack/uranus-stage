@@ -134,20 +134,22 @@ export default {
       project.projectList(this.$store.getters.lang, this.projectQuertData)
               .then(respData => {
                 this.appList = {}
-                const data = respData.data.data.records
-                for (let i = 0; i < data.length; i++) {
-                  let object = {}
-                  object['id'] = data[i].id
-                  object['name'] = data[i].projectName
-                  object['appCount'] = data[i].appCount
-                  object['time'] = moment(data[i].endTime).format('YYYY-MM-DD hh:mm:ss')
-                  object['urpowerUsd'] = data[i].computeRatio
-                  object.orderStatus = data[i].orderStatus
-                  object.orderStatusName = data[i].orderStatusName
-                  object.link = '/resourcepool/' + data[i].id + '/' + data[i].projectName
-                  this.poolList.push(object)
-                  this.update1 = true
+                if (respData.data.data) {
+                  const data = respData.data.data.records
+                  for (let i = 0; i < data.length; i++) {
+                    let object = {}
+                    object['id'] = data[i].id
+                    object['name'] = data[i].projectName
+                    object['appCount'] = data[i].appCount
+                    object['time'] = moment(data[i].endTime).format('YYYY-MM-DD hh:mm:ss')
+                    object['urpowerUsd'] = data[i].computeRatio
+                    object.orderStatus = data[i].orderStatus
+                    object.orderStatusName = data[i].orderStatusName
+                    object.link = '/resourcepool/' + data[i].id + '/' + data[i].projectName
+                    this.poolList.push(object)
+                  }
                 }
+                this.update1 = true
               })
     },
     checkPatch(index, ostatus) {
@@ -165,12 +167,14 @@ export default {
     allStatisticsProjects() {
       project.statisticsProjects()
               .then(respData => {
-                const data = respData.data.data
-                this.statisObejct['urapowerUsd'] = data.computeRatio
-                this.statisObejct['cpuUsd'] = data.cpuKernelRatio * 100
-                this.statisObejct['diskUsd'] = data.diskRatio * 100
-                this.statisObejct['memUsd'] = data.memRatio * 100
-                this.statisObejct['networkUsd'] = data.networkRatio * 100
+                if (respData.data.data) {
+                  const data = respData.data.data
+                  this.statisObejct['urapowerUsd'] = data.computeRatio
+                  this.statisObejct['cpuUsd'] = data.cpuKernelRatio * 100
+                  this.statisObejct['diskUsd'] = data.diskRatio * 100
+                  this.statisObejct['memUsd'] = data.memRatio * 100
+                  this.statisObejct['networkUsd'] = data.networkRatio * 100
+                }
                 this.update2 = true
               })
     }

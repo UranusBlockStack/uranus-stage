@@ -156,14 +156,16 @@ export default {
       project
         .projectListById(this.$store.getters.lang, this.$route.params.poolid)
         .then(respData => {
-          let data = respData.data.data
-          this.statisObejct.diskUsd =
-            (data.diskUsed + data.diskLock) / data.disk
-          this.statisObejct.cpuUsd =
-            (data.cpuKernelLock + data.cpuKernelUsed) / data.cpuKernel
-          this.statisObejct.memUsd = (data.memUsed + data.memLock) / data.mem
-          this.statisObejct.networkUsd =
-            (data.networkUsed + data.networkLock) / data.network
+          if (respData.data.data) {
+            let data = respData.data.data
+            this.statisObejct.diskUsd =
+                    (data.diskUsed + data.diskLock) / data.disk
+            this.statisObejct.cpuUsd =
+                    (data.cpuKernelLock + data.cpuKernelUsed) / data.cpuKernel
+            this.statisObejct.memUsd = (data.memUsed + data.memLock) / data.mem
+            this.statisObejct.networkUsd =
+                    (data.networkUsed + data.networkLock) / data.network
+          }
           this.update2 = true
         })
     }
