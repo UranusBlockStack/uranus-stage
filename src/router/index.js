@@ -19,6 +19,7 @@ import ResourcePool from '@/components/buyer/ResourcePool'
 import UrapowerRecord from '@/components/buyer/UrapowerRecord'
 import AppState from '@/components/buyer/AppState'
 import StateDetail from '@/components/buyer/StateDetail'
+import Xterm from '@/components/buyer/Console'
 
 // developer
 import Developer from '@/components/developer/Developer'
@@ -54,6 +55,10 @@ const routes = [
     path: '/forgetPwd',
     name: 'ForgetPwd',
     component: ForgetPwd
+  }, {
+    path: '/xterm',
+    name: 'Xterm',
+    component: Xterm
   }, {
     path: '',
     name: 'Starter',

@@ -17,6 +17,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'font-awesome/css/font-awesome.css'
 import 'admin-lte/dist/css/AdminLTE.min.css'
 import 'admin-lte/dist/css/skins/_all-skins.min.css'
+import 'xterm/dist/xterm.css'
 
 import store from './store/store'
 import * as auth from './services/AuthService'

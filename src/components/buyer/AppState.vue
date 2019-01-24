@@ -58,10 +58,9 @@
                   <i class="iconfont icon-menu"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>{{$t('buyer.appState.shell')}}</el-dropdown-item>
-                  <el-dropdown-item  @click.native="workloadAction(scope.row.wid, 'pause')" >{{$t('buyer.appState.pause')}}</el-dropdown-item>
+                    <el-dropdown-item @click.native="workloadAction(scope.row.wid, 'execute')">{{$t('buyer.appState.shell')}}</el-dropdown-item>
+                  <el-dropdown-item  @click.native="workloadAction(scope.row.wid, 'pause')">{{$t('buyer.appState.pause')}}</el-dropdown-item>
                   <el-dropdown-item @click.native="workloadAction(scope.row.wid, 'resume')">{{$t('buyer.appState.resume')}}</el-dropdown-item>
-                  <el-dropdown-item>{{$t('buyer.appState.delete')}}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -79,6 +78,8 @@
 
 import * as auth from '../../services/AuthService'
 import * as apps from '../../services/RancherService'
+import { Terminal } from 'xterm'
+import * as fit from 'xterm/lib/addons/fit/fit'
 
 export default {
   name: 'AppRecord',
@@ -87,7 +88,9 @@ export default {
       workLoadList: [],
       appId: this.$route.params.appId,
       appName: this.$route.params.appname,
-      poolId: this.$route.params.projectId
+      poolId: this.$route.params.projectId,
+      Base64: require('js-base64').Base64,
+      DefaultCommand: ['/bin/sh', '-c', 'TERM=xterm-256color; export TERM; [ -x /bin/bash ] && ([ -x /usr/bin/script ] && /usr/bin/script -q -c "/bin/bash" /dev/null || exec /bin/bash) || exec /bin/sh']
     }
   },
   methods: {
@@ -116,31 +119,82 @@ export default {
           })
         })
     },
+    ConncetContainer(url) {
+      let a = this.innerBuildUrl(url)
+      console.log('======', a)
+      const socket = new WebSocket(a, 'base64.channel.k8s.io')
+      socket.onopen = () => {
+        Terminal.applyAddon(fit)
+        var term = new Terminal({
+          cursorBlink: true,
+          useStyle: true,
+          fontSize: 14
+        })
+
+        term.on('data', (data) => {
+          socket.send(`0${this.Base64.encode(data)}`)
+        })
+
+        term.open(document.getElementById('xterm'))
+
+        term.fit()
+        term.focus()
+
+        socket.onmessage = (message) => {
+          const data = message.data.slice(1)
+
+          switch (message.data[0]) {
+            case '1':
+            case '2':
+            case '3':
+              term.write(this.Base64.decode(data).toString())
+              break
+          }
+        }
+      }
+    },
+    innerBuildUrl(baseUrl) {
+      this.DefaultCommand.forEach((c) => {
+        baseUrl += `&command=${encodeURIComponent(c)}`
+      })
+      return baseUrl
+    },
     workloadAction(wid, type) {
-      apps.projectWorkloadActon(this.$store.getters.lang, this.poolId, wid, type)
-            .then(respData => {
-              let data = respData.data
-              if (data.success) {
-                this.$message({
-                  showClose: true,
-                  message: 'Success.',
-                  type: 'success'
-                })
-                this.getWorkLoads()
-              } else {
-                this.$message({
-                  showClose: true,
-                  message: data.errMsg,
-                  type: 'error'
-                })
-              }
-            }).catch(err => {
-              this.$message({
-                showClose: true,
-                message: err,
-                type: 'error'
-              })
-            })
+      let url = 'wss://47.105.151.140/k8s/clusters/c-b6tdq/api/v1/namespaces/wordpress-vzdjq/pods/wordpress-vzdjq-mariadb-0/exec?container=mariadb&stdout=1&stdin=1&stderr=1&tty=1'
+      this.ConncetContainer(url)
+      // apps.projectWorkloadActon(auth.getCurLang(), this.poolId, wid, type)
+      //       .then(respData => {
+      //         let data = respData.data
+      //         if (data.success) {
+      //           if (type === 'execute') {
+      //             console.log('--------', data)
+      //               // let url = 'wss://47.105.151.140/k8s/clusters/c-b6tdq/api/v1/namespaces/wordpress-vzdjq/pods/wordpress-vzdjq-mariadb-0/exec?container=mariadb&stdout=1&stdin=1&stderr=1&tty=1'
+      //               // ConncetContainer(url)
+      //           } else {
+      //             this.$message({
+      //               showClose: true,
+      //               message: 'Success.',
+      //               type: 'success'
+      //             })
+      //             this.getWorkLoads()
+      //           }
+      //         } else {
+      //           this.$message({
+      //             showClose: true,
+      //             message: data.errMsg,
+      //             type: 'error'
+      //           })
+      //         }
+      //       }).catch(err => {
+      //         this.$message({
+      //           showClose: true,
+      //           message: err,
+      //           type: 'error'
+      //         })
+      //       })
+    },
+    execPod(wid, type) {
+      this.workloadAction(wid, type)
     }
   },
   created() {
