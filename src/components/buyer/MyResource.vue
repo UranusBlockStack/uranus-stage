@@ -53,7 +53,7 @@
               </el-col>
               <el-col :span="17" :offset="2">
                   <h3>Pool: {{pool.name}} </h3>
-                <h3>{{$t('buyer.myResource.state')}} {{pool.orderStatusName}}</h3>
+                <h3>{{$t('buyer.myResource.state')}} {{pool.orderDispName}}</h3>
                 <h3>{{$t('buyer.myResource.number')}} {{pool.appCount}}</h3>
                 <div class="timeText">
                   <p>{{$t('buyer.myResource.countdownTime')}} <RestTime style="display:inline-block;" :endTime= "pool.time" /></p>
@@ -89,6 +89,7 @@
 <script>
 import moment from 'moment'
 import * as project from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
 import Water from '@/components/modules/Water'
 import Cpu from '@/components/modules/CPU'
 import Disk from '@/components/modules/Disk'
@@ -96,6 +97,7 @@ import Memory from '@/components/modules/Memory'
 import Network from '@/components/modules/Network'
 import Ball from '@/components/modules/Ball'
 import RestTime from '@/components/modules/RestTime'
+import { getOrderStatusName, getCNNamefromCode } from '../../store/orderStatus'
 
 export default {
   name: 'MyResource',
@@ -145,6 +147,7 @@ export default {
                     object['urpowerUsd'] = data[i].computeRatio
                     object.orderStatus = data[i].orderStatus
                     object.orderStatusName = data[i].orderStatusName
+                    object.orderDispName = getOrderStatusName(data[i].orderStatus, auth.getCurLang())
                     object.link = '/resourcepool/' + data[i].id + '/' + data[i].projectName
                     this.poolList.push(object)
                   }

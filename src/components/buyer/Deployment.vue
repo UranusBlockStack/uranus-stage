@@ -751,8 +751,14 @@ export default {
             .then(purchaseStatus => {
               const purchaseAppStatusData = purchaseStatus.data
               if (purchaseAppStatusData.success) {
-                this.gridData.push(purchaseAppStatusData.data)
-                this.outerVisible = true
+                if (this.appDetail.free !== 1) {
+                  this.gridData.push(purchaseAppStatusData.data)
+                }
+                if (this.gridData.length) {
+                  this.outerVisible = true
+                } else {
+                  this.deployConfirm()
+                }
               } else {
                 this.$message({
                   showClose: true,
