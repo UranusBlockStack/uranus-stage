@@ -719,12 +719,10 @@ export default {
     purchaseUraPowerPlus() {
       this.deployForm.beginTime = this.deployForm.dateRange[0]
       this.deployForm.endTime = this.deployForm.dateRange[1]
-      console.log('order ura')
       order
         .orderResource(auth.getCurLang(), this.deployForm)
         .then(purcheStatus => {
           const purchUraStausData = purcheStatus.data
-          console.log(purchUraStausData)
           if (purchUraStausData.success) {
             this.gridData = [purchUraStausData.data]
             this.projectId = purchUraStausData.projectId
@@ -747,7 +745,6 @@ export default {
     },
 
     purchaseAppliction() {
-      console.log('-------', this.isMyApplication)
       if (!this.isMyApplication) {              // app order
         order
            .orderApp(auth.getCurLang(), this.appId)
@@ -755,9 +752,7 @@ export default {
               const purchaseAppStatusData = purchaseStatus.data
               if (purchaseAppStatusData.success) {
                 this.gridData.push(purchaseAppStatusData.data)
-                if (this.orderModel === '2') {
-                  this.outerVisible = true
-                }
+                this.outerVisible = true
               } else {
                 this.$message({
                   showClose: true,
@@ -800,24 +795,32 @@ export default {
             smsCode: this.concode
           }
           wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
-            console.log(transStatus)
-            this.appDeploy()
-            this.outerVisible = false
-            this.$message({
-              showClose: true,
-              message:
-                this.appDetail.name +
-                ' 订单支付成功后，App自动部署，请耐心等待',
-              type: 'success',
-              duration: 3000
-            })
+            const transStatusData = transStatus.data
+            if (transStatusData.success) {
+              this.appDeploy()
+              this.outerVisible = false
+              this.$message({
+                showClose: true,
+                message:
+                      this.appDetail.name +
+                      ' 订单支付成功后，App自动部署，请耐心等待',
+                type: 'success',
+                duration: 3000
+              })
+            } else {
+              this.$message({
+                showClose: true,
+                message: transStatusData.errMsg,
+                type: 'error',
+                duration: 3000
+              })
+            }
           })
         })
 
       // wallet.walletTransfer(auth.getCurLang(), transData)
       //     .then(respData => {
       //       const transferStatus = respData.data
-      //       console.log(transferStatus)
       //       if (transferStatus) {
       //         this.outerVisible = false
       //         this.innerVisible = true
@@ -859,7 +862,7 @@ export default {
       this.appDeployParam['description'] = this.appDetail.description
       this.appDeployParam['name'] = this.appDetail.name
       if (this.orderModel === '1' || this.orderModel === '2') {
-        this.appDeployParam['projectId'] = this.projectId
+        this.appDeployParam.projectId = this.projectId
       }
 
       app.appInstanceDeploy(auth.getCurLang(), this.appDeployParam)

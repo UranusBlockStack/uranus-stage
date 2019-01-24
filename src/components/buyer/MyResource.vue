@@ -53,7 +53,7 @@
               </el-col>
               <el-col :span="17" :offset="2">
                   <h3>Pool: {{pool.name}} </h3>
-                <h3>{{$t('buyer.myResource.state')}} {{pool.orderStatus}} {{pool.orderStatusName}}</h3>
+                <h3>{{$t('buyer.myResource.state')}} {{pool.orderStatusName}}</h3>
                 <h3>{{$t('buyer.myResource.number')}} {{pool.appCount}}</h3>
                 <div class="timeText">
                   <p>{{$t('buyer.myResource.countdownTime')}} <RestTime style="display:inline-block;" :endTime= "pool.time" /></p>

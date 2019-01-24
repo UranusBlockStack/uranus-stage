@@ -223,47 +223,47 @@
 </template>
 
 <script>
-import TimeOver from "@/components/modules/TimeOver";
-import * as auth from "../../services/AuthService";
-import * as rancher from "../../services/RancherService";
-import * as order from "../../services/OrderService";
-import * as wallet from "../../services/WalletService";
+import TimeOver from '@/components/modules/TimeOver'
+import * as auth from '../../services/AuthService'
+import * as rancher from '../../services/RancherService'
+import * as order from '../../services/OrderService'
+import * as wallet from '../../services/WalletService'
 import {
   ServerConfigData,
   WrapDropDownData,
   WrapDropDownDataUnit
-} from "../../store/rancher_info";
+} from '../../store/rancher_info'
 
 export default {
-  name: "ResourceMarket",
+  name: 'ResourceMarket',
   components: {
     TimeOver
   },
   data() {
     return {
       deployForm: {
-        projectName: "",
+        projectName: '',
         rancherId: 2,
-        cpuKernel: "4",
-        disk: "512G",
-        mem: "16",
-        network: "512G",
-        dateRange: "",
-        deployStatus: ""
+        cpuKernel: '4',
+        disk: '512G',
+        mem: '16',
+        network: '512G',
+        dateRange: '',
+        deployStatus: ''
       },
       regionSel: [],
       cpuSel: [],
       diskSel: [],
       memorySel: [],
       networkSel: [],
-      value: "",
-      time1: "",
-      time2: "",
-      input: "",
+      value: '',
+      time1: '',
+      time2: '',
+      input: '',
       outerVisible: false,
       innerVisible: false,
       fee: 0,
-      concode: "",
+      concode: '',
       gridData: [
         // {
         //   buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
@@ -284,76 +284,75 @@ export default {
         //   updateTime: 1548053643803
         // }
       ]
-    };
+    }
   },
   created() {
-    this.getRegionList();
-    this.setConfigSelector();
-    this.getReferenceFee();
+    this.getRegionList()
+    this.setConfigSelector()
+    this.getReferenceFee()
   },
   methods: {
     setConfigSelector() {
-      const CpuData = ServerConfigData.CPU;
-      this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang());
-      this.deployForm.cpuKernel = this.cpuSel[0].value;
+      const CpuData = ServerConfigData.CPU
+      this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang())
+      this.deployForm.cpuKernel = this.cpuSel[0].value
 
-      const HdData = ServerConfigData.HD;
-      this.diskSel = WrapDropDownData(HdData, null);
-      this.deployForm.disk = this.diskSel[0].value;
+      const HdData = ServerConfigData.HD
+      this.diskSel = WrapDropDownData(HdData, null)
+      this.deployForm.disk = this.diskSel[0].value
 
-      const MemData = ServerConfigData.Mem;
-      this.memorySel = WrapDropDownData(MemData, null);
-      this.deployForm.mem = this.memorySel[0].value;
+      const MemData = ServerConfigData.Mem
+      this.memorySel = WrapDropDownData(MemData, null)
+      this.deployForm.mem = this.memorySel[0].value
 
-      const NetworData = ServerConfigData.Network;
-      this.networkSel = WrapDropDownData(NetworData, null);
-      this.deployForm.network = this.networkSel[0].value;
+      const NetworData = ServerConfigData.Network
+      this.networkSel = WrapDropDownData(NetworData, null)
+      this.deployForm.network = this.networkSel[0].value
     },
 
     setRegionSelectValue(region) {
-      this.deployForm.rancherId = region;
+      this.deployForm.rancherId = region
     },
     setParamCPU(value) {
-      this.deployForm.cpuKernel = value;
+      this.deployForm.cpuKernel = value
     },
     setParamHD(value) {
-      this.deployForm.disk = value;
+      this.deployForm.disk = value
     },
     setParamRAM(value) {
-      this.deployForm.mem = value;
+      this.deployForm.mem = value
     },
     setParamNet(value) {
-      this.deployForm.network = value;
+      this.deployForm.network = value
     },
 
     getRegionList() {
       rancher.rancherList(auth.getCurLang()).then(respData => {
-        this.rancherServer = respData.data.data;
-        let regionData = [];
+        this.rancherServer = respData.data.data
+        let regionData = []
         this.rancherServer.map(rancher => {
           const region = {
             value: rancher.id,
             label:
-              auth.getCurLang() === "zh-cn"
+              auth.getCurLang() === 'zh-cn'
                 ? rancher.region
                 : rancher.regionEnUs
-          };
-          regionData.push(region);
-        });
+          }
+          regionData.push(region)
+        })
 
-        this.regionSel = regionData;
-        this.deployForm.rancherId = this.regionSel[0].value;
-      });
+        this.regionSel = regionData
+        this.deployForm.rancherId = this.regionSel[0].value
+      })
     },
 
     purchaseUraPower() {
-      this.deployForm.beginTime = this.deployForm.dateRange[0];
-      this.deployForm.endTime = this.deployForm.dateRange[1];
+      this.deployForm.beginTime = this.deployForm.dateRange[0]
+      this.deployForm.endTime = this.deployForm.dateRange[1]
 
       order.orderResource(auth.getCurLang(), this.deployForm)
             .then(purcheStatus => {
               const purchStausData = purcheStatus.data
-              console.log(purchStausData)
               if (purchStausData.success) {
                 this.gridData = [purchStausData.data]
               }
@@ -362,8 +361,8 @@ export default {
     },
     getReferenceFee() {
       wallet.walletReferenceFee(auth.getCurLang()).then(reffee => {
-        this.fee = reffee.data.data;
-      });
+        this.fee = reffee.data.data
+      })
     },
     getConfirmCode() {
       wallet.walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
@@ -383,19 +382,17 @@ export default {
         fee: this.fee,
         to: this.gridData[0].sellerAccount,
         value: this.gridData[0].buyerAccount
-      };
-      console.log(transData);
+      }
       wallet.walletTransfer(auth.getCurLang(), transData).then(respData => {
-        const transferStatus = respData.data;
-        console.log(transferStatus);
+        const transferStatus = respData.data
         if (transferStatus) {
-          this.outerVisible = false;
-          this.innerVisible = true;
+          this.outerVisible = false
+          this.innerVisible = true
         }
-      });
+      })
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
