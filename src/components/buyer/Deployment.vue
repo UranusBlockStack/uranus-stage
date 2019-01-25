@@ -373,7 +373,8 @@
                     v-if="
                       param.type === 'string' ||
                         param.type === 'int' ||
-                        param.type === 'enum'
+                        param.type === 'enum' ||
+                        param.type === 'password'
                     "
                   >
                     <p class="configuration-name">{{ param.label }}：</p>
@@ -859,10 +860,10 @@ export default {
       paramsData.map(groupData => {
         const confData = Object.values(groupData)[0]
         confData.map(confItem => {
-          relConfData[confItem.variable] = confItem.default
+          relConfData[confItem.variable] = confItem.default ? confItem.default : ''
         })
       })
-      relConfData.defaultImage = this.appVersionDetail.name
+      relConfData.defaultImage = 'https://47.105.151.140/v3/templateVersions/' + this.appVersionDetail.name
       console.log('relconfig', relConfData)
 
       // relConfData = {

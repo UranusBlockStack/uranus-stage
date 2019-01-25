@@ -50,7 +50,7 @@
               <h3>{{$t('buyer.resourcePool.appName')}} {{item.name}}</h3>
               <!-- <h3>{{$t('buyer.resourcePool.appIp')}} {{item.ipAddress}}</h3>
               <h3>{{$t('buyer.resourcePool.appPort')}} {{item.port}}</h3> -->
-              <h3>{{$t('buyer.resourcePool.appState')}} {{formateDate(item.createTime)}}</h3>
+              <h3>{{$t('buyer.resourcePool.appState')}} {{item.appOrderStatusName}}</h3>
               <h3>{{$t('buyer.resourcePool.appTime')}} {{formateDate(item.createTime)}}</h3>
             </el-col>
             <el-col :span="3">
@@ -117,6 +117,9 @@ export default {
         .then(respData => {
           if (respData.data.data) {
             this.appList = respData.data.data.records
+            this.appList.map(app => {
+                console.log(app)
+            })
           }
         })
     },
