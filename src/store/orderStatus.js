@@ -1,4 +1,4 @@
-
+/// 状态集合定义
 const orderStatus = [
     {id: 1, 'zh-cn': '未支付', 'en-us': 'unpaid'},
     {id: 2, 'zh-cn': '支付中', 'en-us': 'paying'},
@@ -8,8 +8,16 @@ const orderStatus = [
     {id: 6, 'zh-cn': '支付失败', 'en-us': 'failure'}
 ]
 
-export const getOrderStatusName = (id, lang) => {
-  const order = orderStatus.find(order => {
+const tradeStatus = [
+    { id: 0, 'en-us': 'UnConfirmed', 'zh-cn': '交易未确认'},
+    { id: 1, 'en-us': 'Confirmed', 'zh-cn': '交易已确认'},
+    { id: 10, 'en-us': 'Failed', 'zh-cn': '交易失败'}
+]
+
+/// / 公用函数 ---------------
+///
+export const getStatusName = (statusDefine, id, lang) => {
+  const order = statusDefine.find(order => {
     if (order.id === id) {
       return true
     }
@@ -28,3 +36,15 @@ export const getCNNamefromCode = (code) => {
     }
   })
 }
+
+
+/// 状态获取的函数
+//
+export const getOrderStatusName = (id, lang) => {
+    return getStatusName(orderStatus, id, lang)
+}
+export const getTradeStatusName = (id, lang) => {
+
+}
+
+

@@ -225,6 +225,7 @@
 <script>
 import TimeOver from '@/components/modules/TimeOver'
 import * as auth from '../../services/AuthService'
+import * as account from '../../services/AccountService'
 import * as rancher from '../../services/RancherService'
 import * as order from '../../services/OrderService'
 import * as wallet from '../../services/WalletService'
@@ -382,31 +383,50 @@ export default {
                 })
               })
     },
+
     startTransfer() {
-      const transData = {
-        code: this.concode,
-        fee: this.fee,
-        to: this.gridData[0].sellerAccount,
-        value: this.gridData[0].orderAmount
-      }
-      wallet.walletTransfer(auth.getCurLang(), transData).then(respData => {
-        const transferStatus = respData.data
-        if (transferStatus.success) {
-          this.outerVisible = false
-          this.$message({
-            showClose: true,
-            message: 'success',
-            type: 'success'
-          })
-        } else {
-          this.$message({
-            showClose: true,
-            message: transferStatus.errMsg,
-            type: 'error'
-          })
+      let orders = []
+      this.gridData.map(order => {
+        const tmporder = {
+          buyerId: auth.getCurUserId(),
+          orderAmount: order.orderAmount,
+          orderNo: order.orderNo,
+          fee: this.fee,
+          sellerId: order.sellerId
         }
+        orders.push(tmporder)
+      })
+      account.userInfo(auth.getCurLang(), auth.getCurUserId())
+              .then(userInfo => {
+                const userData = userInfo.data.data
+                const transData = {
+                  orders: orders,
+                  phone: userData.mobile,
+                  smsCode: this.concode
+                }
+                wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
+                  const transStatusData = transStatus.data
+                  if (transStatusData.success) {
+                    this.outerVisible = false
+                    this.$message({
+                      showClose: true,
+                      message:
+                                  ' 订单支付成功，请耐心等待',
+                      type: 'success',
+                      duration: 3000
+                    })
+                  } else {
+                    this.$message({
+                      showClose: true,
+                      message: transStatusData.errMsg,
+                      type: 'error',
+                      duration: 3000
+                    })
+                  }
+                })
       })
     }
+
   }
 }
 </script>

@@ -409,7 +409,6 @@ import * as project from '../../services/RancherService'
 import * as wallet from '../../services/WalletService'
 import * as order from '../../services/OrderService'
 import TimeOver from '@/components/modules/TimeOver'
-import appconfig from '../../rancherappconfig'
 
 export default {
   name: 'Deployment',
@@ -553,6 +552,7 @@ export default {
       this.more = !this.more
     },
 
+
     /// phase 1 resource and appinfo --------
     setConfigSelector() {
       const CpuData = ServerConfigData.CPU
@@ -643,11 +643,11 @@ export default {
           // this.appVersionDetail.readMe = files['README.md']
           // this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
           this.parseConfigData(this.appVersionDetail.questions)
-          this.appVersionDetail.questions.map(question => {
-            const key = question.variable
-            const value = question.defaultValue
-            this.environment[key] = value
-          })
+          // this.appVersionDetail.questions.map(question => {
+          //   const key = question.variable
+          //   const value = question.defaultValue
+          //   this.environment[key] = value
+          // })
         } else {
           // this.$alert(respon.message, this.$t('common.messages.alert'), {
           //     confirmButtonText: this.$t('common.messages.confirm')
@@ -677,6 +677,7 @@ export default {
           this.projectId = this.spaceSel[0].value
         })
     },
+
 
     /// phase 2 buy resource and application --------
     getReferenceFee() {
@@ -776,7 +777,7 @@ export default {
           buyerId: auth.getCurUserId(),
           orderAmount: order.orderAmount,
           orderNo: order.orderNo,
-          poundage: this.fee,
+          fee: this.fee,
           sellerId: order.sellerId
         }
         orders.push(tmporder)
@@ -824,6 +825,7 @@ export default {
       //     })
     },
 
+
     /// phase 3 deploy application --------
     
     deployConfirm() {
@@ -838,7 +840,6 @@ export default {
           type: 'success',
           message: 'App 将自动部署 请耐心等待!'
         })
-        this.successToListPage()
       }).catch(() => {
         this.$message({
           type: 'info',
@@ -861,7 +862,18 @@ export default {
           relConfData[confItem.variable] = confItem.default
         })
       })
-      console.log(relConfData)
+      relConfData.defaultImage = this.appVersionDetail.name
+      console.log('relconfig', relConfData)
+
+      // relConfData = {
+      //   defaultImage: 'https://47.105.151.140/v3/templateVersions/library-mysql-0.3.8',
+      //   mysqlDatabase: 'admin',
+      //   mysqlPassword: '',
+      //   mysqlUser: 'admin',
+      //   'persistence.enabled': '',
+      //   'service.port': '3306',
+      //   'service.type': 'ClusterIP'
+      // }
       return relConfData
     },
 
@@ -869,7 +881,7 @@ export default {
       this.appDeployParam['appId'] = this.appId
       this.appDeployParam['appVersion'] = this.versionValue
 
-      this.appDeployParam['config'] = this.genRealConfigData()
+      this.appDeployParam['config'] = JSON.stringify(this.genRealConfigData())
 
       this.appDeployParam['description'] = this.appDetail.description
       this.appDeployParam['name'] = this.appDetail.name
@@ -878,6 +890,10 @@ export default {
       }
 
       app.appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
+          .then(deployStatus => {
+            console.log(deployStatus.data)
+            this.successToListPage()
+          })
     }
   }
 }
