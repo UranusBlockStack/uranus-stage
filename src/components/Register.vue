@@ -224,21 +224,21 @@ export default {
               .then(regResp => {
                 let data = regResp.data
                 if (data.success) {
-                  this.$message({
+                  self.$message({
                     showClose: true,
                     message: 'Success.',
                     type: 'success'
                   })
                   self.$router.push({ name: 'Map' })
                 } else {
-                  this.$message({
+                  self.$message({
                     showClose: true,
                     message: data.errMsg,
                     type: 'error'
                   })
                 }
               }).catch(err => {
-                this.$message({
+                self.$message({
                   showClose: true,
                   message: err,
                   type: 'error'

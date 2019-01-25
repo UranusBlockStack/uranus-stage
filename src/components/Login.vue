@@ -141,7 +141,6 @@ export default {
           auth.login(auth.getCurLang(), userLoginfo)
             .then(function(respDat) {
               let data = respDat.data
-              console.log('====', data)
               if (data.success) {
                 self.$message({
                   showClose: true,
