@@ -265,6 +265,9 @@ module.exports = {
       resume: 'Resume Orchestration',
       view: 'View',
       delete: 'Delete',
+      shellTitle: 'Execute shell',
+      button: 'OK',
+
     },
     stateDetail: {
       rename: 'Rename',

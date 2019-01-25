@@ -1,9 +1,16 @@
 <template>
   <section class="appRecord">
+    <el-dialog :title="$t('buyer.appState.shellTitle')" :visible.sync="dialogTableVisible" width='90%' :show-close='false' center>
+        <div id="xterm" style="width:100%;"></div>
+        <span slot="footer" class="dialog-footer">
+    <el-button type="primary" @click="dialogTableVisible = false">{{$t($t('buyer.appState.button'))}}</el-button>
+  </span>
+    </el-dialog>
     <el-row class="recordHead">
       <el-col class="title" :span="20">
         <h1 @click="$router.back(-1)">
-          <i class="iconfont"></i> {{appName}}
+          <i class="iconfont"></i>
+          {{appName}}
         </h1>
       </el-col>
       <!-- <el-col :span="4">
@@ -53,14 +60,20 @@
           </el-table-column>
           <el-table-column width="120">
             <template slot-scope="scope">
-                <el-dropdown trigger="click">
+              <el-dropdown trigger="click">
                 <span class="el-dropdown-link">
                   <i class="iconfont icon-menu"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item @click.native="workloadAction(scope.row.wid, 'execute')">{{$t('buyer.appState.shell')}}</el-dropdown-item>
-                  <el-dropdown-item  @click.native="workloadAction(scope.row.wid, 'pause')">{{$t('buyer.appState.pause')}}</el-dropdown-item>
-                  <el-dropdown-item @click.native="workloadAction(scope.row.wid, 'resume')">{{$t('buyer.appState.resume')}}</el-dropdown-item>
+                  <el-dropdown-item
+                    @click.native="workloadAction(scope.row.wid, 'execute')"
+                  >{{$t('buyer.appState.shell')}}</el-dropdown-item>
+                  <el-dropdown-item
+                    @click.native="workloadAction(scope.row.wid, 'pause')"
+                  >{{$t('buyer.appState.pause')}}</el-dropdown-item>
+                  <el-dropdown-item
+                    @click.native="workloadAction(scope.row.wid, 'resume')"
+                  >{{$t('buyer.appState.resume')}}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
@@ -75,93 +88,99 @@
 </template>
 
 <script>
-
-import * as auth from '../../services/AuthService'
-import * as apps from '../../services/RancherService'
-import { Terminal } from 'xterm'
-import * as fit from 'xterm/lib/addons/fit/fit'
+import * as auth from "../../services/AuthService";
+import * as apps from "../../services/RancherService";
+import { Terminal } from "xterm";
+import * as fit from "xterm/lib/addons/fit/fit";
 
 export default {
-  name: 'AppRecord',
+  name: "AppRecord",
   data() {
     return {
       workLoadList: [],
       appId: this.$route.params.appId,
       appName: this.$route.params.appname,
       poolId: this.$route.params.projectId,
-      Base64: require('js-base64').Base64,
-      DefaultCommand: ['/bin/sh', '-c', 'TERM=xterm-256color; export TERM; [ -x /bin/bash ] && ([ -x /usr/bin/script ] && /usr/bin/script -q -c "/bin/bash" /dev/null || exec /bin/bash) || exec /bin/sh']
-    }
+      Base64: require("js-base64").Base64,
+      DefaultCommand: [
+        "/bin/sh",
+        "-c",
+        'TERM=xterm-256color; export TERM; [ -x /bin/bash ] && ([ -x /usr/bin/script ] && /usr/bin/script -q -c "/bin/bash" /dev/null || exec /bin/bash) || exec /bin/sh'
+      ],
+      dialogTableVisible: true,
+    };
   },
   methods: {
     getWorkLoads() {
-      this.workLoadList = []
+      this.workLoadList = [];
       apps
         .appInstanceWorkLoads(auth.getCurLang(), this.$route.params.appId)
         .then(respData => {
-          let dataList = []
+          let dataList = [];
           if (respData.data.data) {
-            dataList = respData.data.data.records
+            dataList = respData.data.data.records;
           }
 
           dataList.forEach((item, index) => {
-            let object = {}
-            object['wid'] = item.id
-            object['status'] = item.state
-            object['name'] = item.name
+            let object = {};
+            object["wid"] = item.id;
+            object["status"] = item.state;
+            object["name"] = item.name;
             JSON.parse(item.containers).forEach((item1, index) => {
-              if (item1.hasOwnProperty('environment')) {
-                object['image'] = item1.image
+              if (item1.hasOwnProperty("environment")) {
+                object["image"] = item1.image;
               }
-            })
-            object['scale'] = item.scale
-            this.workLoadList.push(object)
-          })
-        })
+            });
+            object["scale"] = item.scale;
+            this.workLoadList.push(object);
+          });
+        });
     },
     ConncetContainer(url) {
-      let a = this.innerBuildUrl(url)
-      console.log('======', a)
-      const socket = new WebSocket(a, 'base64.channel.k8s.io')
+      let a = this.innerBuildUrl(url);
+      console.log("======", a);
+      const socket = new WebSocket(a, "base64.channel.k8s.io");
+      console.log("123", socket);
       socket.onopen = () => {
-        Terminal.applyAddon(fit)
+        Terminal.applyAddon(fit);
         var term = new Terminal({
           cursorBlink: true,
           useStyle: true,
           fontSize: 14
-        })
+        });
 
-        term.on('data', (data) => {
-          socket.send(`0${this.Base64.encode(data)}`)
-        })
+        term.on("data", data => {
+          socket.send(`0${this.Base64.encode(data)}`);
+        });
 
-        term.open(document.getElementById('xterm'))
+        term.open(document.getElementById("xterm"));
 
-        term.fit()
-        term.focus()
+        term.fit();
+        term.focus();
 
-        socket.onmessage = (message) => {
-          const data = message.data.slice(1)
+        socket.onmessage = message => {
+          const data = message.data.slice(1);
 
           switch (message.data[0]) {
-            case '1':
-            case '2':
-            case '3':
-              term.write(this.Base64.decode(data).toString())
-              break
+            case "1":
+            case "2":
+            case "3":
+              term.write(this.Base64.decode(data).toString());
+              break;
           }
-        }
-      }
+        };
+      };
     },
     innerBuildUrl(baseUrl) {
-      this.DefaultCommand.forEach((c) => {
-        baseUrl += `&command=${encodeURIComponent(c)}`
-      })
-      return baseUrl
+      this.DefaultCommand.forEach(c => {
+        baseUrl += `&command=${encodeURIComponent(c)}`;
+      });
+      return baseUrl;
     },
     workloadAction(wid, type) {
-      let url = 'wss://47.105.151.140/k8s/clusters/c-b6tdq/api/v1/namespaces/wordpress-vzdjq/pods/wordpress-vzdjq-mariadb-0/exec?container=mariadb&stdout=1&stdin=1&stderr=1&tty=1'
-      this.ConncetContainer(url)
+      let url =
+        "wss://47.105.151.140/k8s/clusters/c-b6tdq/api/v1/namespaces/wordpress-vzdjq/pods/wordpress-vzdjq-mariadb-0/exec?container=mariadb&stdout=1&stdin=1&stderr=1&tty=1";
+      this.ConncetContainer(url);
       // apps.projectWorkloadActon(auth.getCurLang(), this.poolId, wid, type)
       //       .then(respData => {
       //         let data = respData.data
@@ -194,13 +213,13 @@ export default {
       //       })
     },
     execPod(wid, type) {
-      this.workloadAction(wid, type)
+      this.workloadAction(wid, type);
     }
   },
   created() {
-    this.getWorkLoads()
+    this.getWorkLoads();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
