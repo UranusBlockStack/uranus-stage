@@ -24,7 +24,7 @@
       <span>{{$t('transfer.checkText')}}</span>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false, innerVisible = true">{{$t('transfer.button1')}}</el-button>
-        <el-button type="primary" @click="outerVisible = false">{{$t('transfer.button2')}}</el-button>
+        <el-button type="primary" @click="transfer()">{{$t('transfer.button2')}}</el-button>
       </div>
     </el-dialog>
 
@@ -83,61 +83,122 @@
 </template>
 
 <script>
-import * as auth from "../../services/AuthService";
-import * as wallet from "../../services/WalletService";
-import * as account from "../../services/AccountService";
+import * as auth from '../../services/AuthService'
+import * as wallet from '../../services/WalletService'
+import * as account from '../../services/AccountService'
+import { Message } from 'element-ui'
 
 export default {
-  name: "Transfer",
+  name: 'Transfer',
   data() {
     return {
       formLabelAlign: {
-        address: "",
-        value: "",
-        fee: "",
-        code: ""
+        address: '',
+        value: '',
+        fee: '',
+        code: ''
       },
       outerVisible: false,
       innerVisible: false,
       curUserInfo: auth.getUserBaseInfo(),
-      balance: 0
-    };
+      balance: 0,
+      transData: {}
+    }
   },
   methods: {
     startTransfer() {
-      const transData = {
+      this.transData = {
         code: this.formLabelAlign.code,
         fee: this.formLabelAlign.fee,
         to: this.formLabelAlign.address,
         value: this.formLabelAlign.value
-      };
-      wallet
-        .walletTransfer(this.$store.getters.lang, transData)
-        .then(respData => {
-          this.outerVisible = true;
-        });
+      }
+      if (this.transData.code && this.transData.to && this.transData.value) {
+        this.outerVisible = true
+      } else {
+        this.$message({
+          showClose: true,
+          message: 'Please enter the correct parameters.',
+          type: 'warn'
+        })
+      }
+    },
+    transfer() {
+      wallet.walletTransfer(auth.getCurLang(), this.transData)
+          .then(respData => {
+            let data = respData.data
+            if (data.success) {
+              this.$message({
+                showClose: true,
+                message: 'Success.',
+                type: 'success'
+              })
+              this.outerVisible = false
+              this.$router.push({ name: 'Wallet' })
+            } else {
+              this.$message({
+                showClose: true,
+                message: data.errMsg,
+                type: 'error'
+              })
+            }
+          }).catch(err => {
+            self.$message({
+              showClose: true,
+              message: err,
+              type: 'error'
+            })
+          })
     },
     getConfirmCode() {
-      wallet
-        .walletConfirmCode(this.$store.getters.lang, this.curUserInfo.userName)
-        .then(sendResult => {});
+      wallet.walletConfirmCode(auth.getCurLang(), this.curUserInfo.userName)
+        .then(respData => {
+          let data = respData.data
+          if (data.success) {
+            this.$message({
+              showClose: true,
+              message: 'Success.',
+              type: 'success'
+            })
+          } else {
+            this.$message({
+              showClose: true,
+              message: data.errMsg,
+              type: 'error'
+            })
+          }
+        }).catch(err => {
+          self.$message({
+            showClose: true,
+            message: err,
+            type: 'error'
+          })
+        })
     },
     getFee() {
-      wallet.walletReferenceFee(this.$store.getters.lang).then(respData => {
-        this.formLabelAlign.fee = respData.data.data;
-      });
+      wallet.walletReferenceFee(auth.getCurLang())
+          .then(respData => {
+            let data = respData.data
+            if (data.success) {
+              this.formLabelAlign.fee = respData.data.data
+            }
+          })
     },
     getBalance() {
-      account.userBalcnce(this.$store.getters.lang).then(respData => {
-        this.balcnce = respData.data.data.balcnce;
-      });
+      account.userBalcnce(auth.getCurLang())
+          .then(respData => {
+            let data = respData.data
+            if (data.success) {
+              this.balance = respData.data.data.balance
+            }
+          })
     }
   },
   created() {
-    this.getFee();
-    this.getBalance();
+    this.getFee()
+    this.getBalance()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
