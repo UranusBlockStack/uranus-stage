@@ -65,27 +65,11 @@
             <template slot="empty">
                 <p class="empty-text">No Data</p >
             </template>
-          <el-table-column prop="orderNo" :label="$t('buyer.myResource.deployPage.number')">
-              <template slot="header" slot-scope="scope">
-                  <p class="table-head">
-                    <i class="iconfont icon-id"></i>
-                    {{$t('buyer.myResource.deployPage.number')}}
-                  </p>
-                </template>
-          </el-table-column>
           <el-table-column prop="prodName" :label="$t('buyer.myResource.deployPage.appName')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
                     <i class="iconfont icon-table-name"></i>
                     {{$t('buyer.myResource.deployPage.appName')}}
-                  </p>
-                </template>
-          </el-table-column>
-          <el-table-column prop="beginTime" :label="$t('buyer.myResource.deployPage.appTime')">
-              <template slot="header" slot-scope="scope">
-                  <p class="table-head">
-                    <i class="iconfont icon-start-time"></i>
-                    {{$t('buyer.myResource.deployPage.appTime')}}
                   </p>
                 </template>
           </el-table-column>
@@ -97,7 +81,15 @@
                   </p>
                 </template>
           </el-table-column>
-          <el-table-column prop="rentDays" :label="$t('buyer.myResource.deployPage.appStore')">
+            <el-table-column prop="beginTime" :label="$t('buyer.myResource.deployPage.appTime')">
+                <template slot="header" slot-scope="scope">
+                    <p class="table-head">
+                        <i class="iconfont icon-start-time"></i>
+                        {{$t('buyer.myResource.deployPage.appTime')}}
+                    </p>
+                </template>
+            </el-table-column>
+          <el-table-column prop="endTime" :label="$t('buyer.myResource.deployPage.appStore')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
                     <i class="iconfont icon-finish-time"></i>
@@ -236,6 +228,7 @@ export default {
 
         this.tableData.map(row => {
           row.beginTime = moment(row.beginTime).format('YYYY-MM-DD hh:mm')
+          row.endTime = moment(row.endTime).format('YYYY-MM-DD hh:mm')
         })
       })
     },
