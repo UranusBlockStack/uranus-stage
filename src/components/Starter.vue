@@ -55,7 +55,7 @@ export default {
 
 <style lang="scss" scoped>
 .wrapper {
-  background: url(/static/img/uranus/bg-blue.png) no-repeat !important;
+  background: url(/static/img/uranus/bg-blue.png) no-repeat;
   background-size: cover;
 }
 .main-header {

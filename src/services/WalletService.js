@@ -29,4 +29,6 @@ export function walletGetTradeByHash (lang, hash) {
     return httpLang(lang).get(`/wallet/wallet/trades/${hash}`)
 }
 
-
+export function walletTransfer (lang, transInfo) {
+    return httpLang(lang).post('/wallet/wallet/transfer', transInfo)
+}
