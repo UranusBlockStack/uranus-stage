@@ -259,7 +259,9 @@ module.exports = {
             redeploy: '重新部署',
             shell: '执行命令',
             view: '查看',
-            delete: '删除'
+            delete: '删除',
+            shellTitle: '控制台',
+            button: '关闭',
         },
         stateDetail: {
             rename: '修改应用名',

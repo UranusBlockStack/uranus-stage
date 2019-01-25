@@ -83,7 +83,7 @@
           <!--主机名称 name-->
           <template slot="header" slot-scope="scope">
             <p class="table-head" style="text-align:left;">
-              <i class="iconfont icon-resource-market"></i>
+              <i class="iconfont icon-table-host"></i>
               {{$t('seller.host.number')}}
             </p>
           </template>
@@ -424,6 +424,7 @@ export default {
       border: 1px solid rgba(24, 144, 255, 0.3);
       border-radius: 4px;
       color: #ffffff;
+      font-weight: 400;
     }
     .el-button {
       background: rgba(101, 143, 247, 0);
@@ -461,16 +462,16 @@ export default {
     .on {
       background: #9bcc3d;
       border: 2px solid #dcdcdc;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       border-radius: 100%;
       float: right;
     }
     .off {
       background: #f2f2f2;
       border: 2px solid #dcdcdc;
-      width: 20px;
-      height: 20px;
+      width: 16px;
+      height: 16px;
       border-radius: 100%;
       float: right;
     }

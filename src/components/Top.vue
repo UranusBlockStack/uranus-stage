@@ -101,7 +101,7 @@ export default {
         line-height: 50px;
       }
       :hover {
-          color: #f54c46;
+          color: #1890ff;
       }
     }
   }

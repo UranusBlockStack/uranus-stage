@@ -159,12 +159,12 @@
 </template>
 
 <script>
-import moment from "moment"
-import Oil from "@/components/modules/Oil"
-import * as wallet from "../../services/WalletService"
-import * as rancher from "../../services/RancherService.js"
-import * as auth from "../../services/AuthService"
-import * as order from "../../services/OrderService"
+import moment from "moment";
+import Oil from "@/components/modules/Oil";
+import * as wallet from "../../services/WalletService";
+import * as rancher from "../../services/RancherService.js";
+import * as auth from "../../services/AuthService";
+import * as order from "../../services/OrderService";
 
 export default {
   name: "Seller",
@@ -184,40 +184,40 @@ export default {
         pageSize: 5,
         totalRecords: 0
       }
-    }
+    };
   },
   methods: {
     handleCurrentChange(val) {
-      this.pageInfo.page = val
-      this.searchTransactionRecords()
+      this.pageInfo.page = val;
+      this.searchTransactionRecords();
     },
 
     statisticsGlobalUraPower(elementId, type) {
       //按类型统计 全网算力
       rancher.statisticsGlobalUraPower(this.language, type).then(data => {
-        console.log("按类型统计 全网算力数据：", data.data.data)
-        let result = data.data.data
-        let xValue = []
-        let yValue = []
-        let lineValue = []
+        console.log("按类型统计 全网算力数据：", data.data.data);
+        let result = data.data.data;
+        let xValue = [];
+        let yValue = [];
+        let lineValue = [];
         result.forEach((item, index) => {
-          xValue.push(item.datetimeValue)
-          yValue.push(item.totalCompute)
-          lineValue.push(item.usedCompute)
-        })
-        this.initEchart(elementId, xValue, yValue, lineValue)
-      })
+          xValue.push(item.datetimeValue);
+          yValue.push(item.totalCompute);
+          lineValue.push(item.usedCompute);
+        });
+        this.initEchart(elementId, xValue, yValue, lineValue);
+      });
       if (type == "day") {
-        this.indexCon = 2
+        this.indexCon = 2;
       } else if (type == "week") {
-        this.indexCon = 1
+        this.indexCon = 1;
       } else if (type == "month") {
-        this.indexCon = 0
+        this.indexCon = 0;
       }
     },
     getEarning(elementId, type) {
       order.earnings(this.language, type).then(data => {
-        console.log("收益" , data.data.data);
+        console.log("收益", data.data.data);
         let result = data.data.data;
         let xValue = [];
         let yValue = [];
@@ -306,6 +306,12 @@ export default {
             /*axisLabel: {
                           formatter: "{value}"
                       },*/
+            splitLine: {
+              show: true,
+              lineStyle: {
+                  color: '#363636',
+              }
+            },
             axisLine: {
               show: true,
               symbol: ["none", "arrow"],
@@ -401,7 +407,7 @@ export default {
       display: flex;
       justify-content: space-between;
       .active {
-        color: #81a028;
+        color: #1890ff;
         font-weight: bolder;
       }
       .consumption {

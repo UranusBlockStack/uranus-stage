@@ -10,7 +10,7 @@
     </el-row>
     <el-row class="wallet-body">
       <el-col :span="18">
-        <p>{{$t('wallet.balance')}} {{balcnce}} URAC</p>
+        <p>{{$t('wallet.balance')}} {{balance}} URAC</p>
         <p>
           {{$t('wallet.address')}}
           {{address}}
@@ -134,7 +134,7 @@ export default {
   data() {
     return {
       address: '',
-      balance: 0,
+      balance: '0',
       dialogVisible: false,
       tableData: [],
       tableData1: [],
@@ -195,7 +195,7 @@ export default {
       return account.userBalcnce(this.curLang)
           .then(resPdata => {
             let data = resPdata.data.data
-            this.balcnce = data.balance
+            this.balance = data.balance
           })
     },
     handleCurrentChange(val) {
