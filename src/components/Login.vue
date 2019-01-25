@@ -138,26 +138,26 @@ export default {
 
           const self = this
 
-          auth
-            .login(auth.getCurLang(), userLoginfo)
-            .then(function(curLoginUserInfo) {
-              let data = curLoginUserInfo.data
+          auth.login(auth.getCurLang(), userLoginfo)
+            .then(function(respDat) {
+              let data = respDat.data
+              console.log('====', data)
               if (data.success) {
-                this.$message({
+                self.$message({
                   showClose: true,
                   message: 'Success.',
                   type: 'success'
                 })
-                self.$router.push({ path: curLoginUserInfo.loginRole })
+                self.$router.push({ path: respDat.curLoginUserInfo.loginRole })
               } else {
-                this.$message({
+                self.$message({
                   showClose: true,
                   message: data.errMsg,
                   type: 'error'
                 })
               }
             }).catch(err => {
-              this.$message({
+              self.$message({
                 showClose: true,
                 message: err,
                 type: 'error'
@@ -190,24 +190,24 @@ export default {
           const self = this
 
           auth.login(auth.getCurLang(), userLoginfo)
-            .then(function(curLoginUserInfo) {
-              let data = curLoginUserInfo.data
+            .then(function(respData) {
+              let data = respData.data
               if (data.success) {
-                this.$message({
+                self.$message({
                   showClose: true,
                   message: 'Success.',
                   type: 'success'
                 })
-                self.$router.push({ path: curLoginUserInfo.loginRole })
+                self.$router.push({ path: respData.curLoginUserInfo.loginRole })
               } else {
-                this.$message({
+                self.$message({
                   showClose: true,
                   message: data.errMsg,
                   type: 'error'
                 })
               }
             }).catch(err => {
-              this.$message({
+              self.$message({
                 showClose: true,
                 message: err,
                 type: 'error'

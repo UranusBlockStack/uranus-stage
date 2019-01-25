@@ -133,8 +133,9 @@ export function login (lang, userLoginfo) {
             }
             setToken(userdata.token, curLoginUserInfo)
             localStorage.setItem('currentUserStatus', JSON.stringify(curLoginUserInfo))
-            return curLoginUserInfo
+            res['curLoginUserInfo'] = curLoginUserInfo
           }
+          return res
         })
 }
 
