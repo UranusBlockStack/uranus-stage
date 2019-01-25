@@ -1,9 +1,9 @@
 <template>
   <section class="appRecord">
-    <el-dialog :title="$t('buyer.appState.shellTitle')" :visible.sync="dialogTableVisible" width='90%' :show-close='false' center>
+    <el-dialog :title="$t('buyer.appState.shellTitle')" :close-on-click-modal='false' :visible.sync="dialogTableVisible" width='90%' :show-close='false' center>
         <div id="xterm" style="width:100%;"></div>
         <span slot="footer" class="dialog-footer">
-    <el-button type="primary" @click="dialogTableVisible = false">{{$t($t('buyer.appState.button'))}}</el-button>
+    <el-button type="primary" @click="closeConnect()">{{$t($t('buyer.appState.button'))}}</el-button>
   </span>
     </el-dialog>
     <el-row class="recordHead">
@@ -88,138 +88,140 @@
 </template>
 
 <script>
-import * as auth from "../../services/AuthService";
-import * as apps from "../../services/RancherService";
-import { Terminal } from "xterm";
-import * as fit from "xterm/lib/addons/fit/fit";
+import * as auth from '../../services/AuthService'
+import * as apps from '../../services/RancherService'
+import { Terminal } from 'xterm'
+import * as fit from 'xterm/lib/addons/fit/fit'
 
 export default {
-  name: "AppRecord",
+  name: 'AppRecord',
   data() {
     return {
       workLoadList: [],
       appId: this.$route.params.appId,
       appName: this.$route.params.appname,
       poolId: this.$route.params.projectId,
-      Base64: require("js-base64").Base64,
+      Base64: require('js-base64').Base64,
       DefaultCommand: [
-        "/bin/sh",
-        "-c",
+        '/bin/sh',
+        '-c',
         'TERM=xterm-256color; export TERM; [ -x /bin/bash ] && ([ -x /usr/bin/script ] && /usr/bin/script -q -c "/bin/bash" /dev/null || exec /bin/bash) || exec /bin/sh'
       ],
-      dialogTableVisible: true,
-    };
+      dialogTableVisible: false,
+      websocket: null
+    }
   },
   methods: {
     getWorkLoads() {
-      this.workLoadList = [];
+      this.workLoadList = []
       apps
         .appInstanceWorkLoads(auth.getCurLang(), this.$route.params.appId)
         .then(respData => {
-          let dataList = [];
+          let dataList = []
           if (respData.data.data) {
-            dataList = respData.data.data.records;
+            dataList = respData.data.data.records
           }
 
           dataList.forEach((item, index) => {
-            let object = {};
-            object["wid"] = item.id;
-            object["status"] = item.state;
-            object["name"] = item.name;
+            let object = {}
+            object['wid'] = item.id
+            object['status'] = item.state
+            object['name'] = item.name
             JSON.parse(item.containers).forEach((item1, index) => {
-              if (item1.hasOwnProperty("environment")) {
-                object["image"] = item1.image;
+              if (item1.hasOwnProperty('environment')) {
+                object['image'] = item1.image
               }
-            });
-            object["scale"] = item.scale;
-            this.workLoadList.push(object);
-          });
-        });
+            })
+            object['scale'] = item.scale
+            this.workLoadList.push(object)
+          })
+        })
     },
     ConncetContainer(url) {
-      let a = this.innerBuildUrl(url);
-      console.log("======", a);
-      const socket = new WebSocket(a, "base64.channel.k8s.io");
-      console.log("123", socket);
-      socket.onopen = () => {
-        Terminal.applyAddon(fit);
+      this.websocket = new WebSocket(url, 'base64.channel.k8s.io')
+      this.websocket.onopen = () => {
+        Terminal.applyAddon(fit)
         var term = new Terminal({
           cursorBlink: true,
           useStyle: true,
           fontSize: 14
-        });
+        })
 
-        term.on("data", data => {
-          socket.send(`0${this.Base64.encode(data)}`);
-        });
+        term.on('data', data => {
+          this.websocket.send(`0${this.Base64.encode(data)}`)
+        })
 
-        term.open(document.getElementById("xterm"));
+        term.open(document.getElementById('xterm'))
 
-        term.fit();
-        term.focus();
+        term.fit()
+        term.focus()
 
-        socket.onmessage = message => {
-          const data = message.data.slice(1);
+        this.websocket.onmessage = message => {
+          const data = message.data.slice(1)
 
           switch (message.data[0]) {
-            case "1":
-            case "2":
-            case "3":
-              term.write(this.Base64.decode(data).toString());
-              break;
+            case '1':
+            case '2':
+            case '3':
+              term.write(this.Base64.decode(data).toString())
+              break
           }
-        };
-      };
+        }
+      }
+    },
+    closeConnect() {
+      this.websocket.close()
+      this.dialogTableVisible = false
+      document.getElementById('xterm').innerHTML = ''
     },
     innerBuildUrl(baseUrl) {
       this.DefaultCommand.forEach(c => {
-        baseUrl += `&command=${encodeURIComponent(c)}`;
-      });
-      return baseUrl;
+        baseUrl += `&command=${encodeURIComponent(c)}`
+      })
+      return baseUrl
     },
     workloadAction(wid, type) {
-      let url =
-        "wss://47.105.151.140/k8s/clusters/c-b6tdq/api/v1/namespaces/wordpress-vzdjq/pods/wordpress-vzdjq-mariadb-0/exec?container=mariadb&stdout=1&stdin=1&stderr=1&tty=1";
-      this.ConncetContainer(url);
-      // apps.projectWorkloadActon(auth.getCurLang(), this.poolId, wid, type)
-      //       .then(respData => {
-      //         let data = respData.data
-      //         if (data.success) {
-      //           if (type === 'execute') {
-      //             console.log('--------', data)
-      //               // let url = 'wss://47.105.151.140/k8s/clusters/c-b6tdq/api/v1/namespaces/wordpress-vzdjq/pods/wordpress-vzdjq-mariadb-0/exec?container=mariadb&stdout=1&stdin=1&stderr=1&tty=1'
-      //               // ConncetContainer(url)
-      //           } else {
-      //             this.$message({
-      //               showClose: true,
-      //               message: 'Success.',
-      //               type: 'success'
-      //             })
-      //             this.getWorkLoads()
-      //           }
-      //         } else {
-      //           this.$message({
-      //             showClose: true,
-      //             message: data.errMsg,
-      //             type: 'error'
-      //           })
-      //         }
-      //       }).catch(err => {
-      //         this.$message({
-      //           showClose: true,
-      //           message: err,
-      //           type: 'error'
-      //         })
-      //       })
+      apps.projectWorkloadActon(auth.getCurLang(), this.poolId, wid, type)
+            .then(respData => {
+              let data = respData.data
+              if (data.success) {
+                if (type === 'execute') {
+                  let baseUrl = data.errMsg
+                  // let baseUrl = 'wss://47.105.151.140/k8s/clusters/c-b6tdq/api/v1/namespaces/mysql-test2/pods/mysql-test2-mysql-fdf8d5d88-zlzzn/exec?container=mysql-test2-mysql&stdout=1&stdin=1&stderr=1&tty=1'
+                  let url = this.innerBuildUrl(baseUrl)
+                  this.dialogTableVisible = true 
+                  this.ConncetContainer(url)
+                } else {
+                  this.$message({
+                    showClose: true,
+                    message: 'Success.',
+                    type: 'success'
+                  })
+                  this.getWorkLoads()
+                }
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: data.errMsg,
+                  type: 'error'
+                })
+              }
+            }).catch(err => {
+              this.$message({
+                showClose: true,
+                message: err,
+                type: 'error'
+              })
+            })
     },
     execPod(wid, type) {
-      this.workloadAction(wid, type);
+      this.workloadAction(wid, type)
     }
   },
   created() {
-    this.getWorkLoads();
+    this.getWorkLoads()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
