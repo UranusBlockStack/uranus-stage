@@ -65,6 +65,14 @@
             <template slot="empty">
                 <p class="empty-text">No Data</p >
             </template>
+            <el-table-column prop="orderNo" :label="$t('buyer.myResource.deployPage.number')">
+              <template slot="header" slot-scope="scope">
+                  <p class="table-head">
+                    <i class="iconfont icon-id"></i>
+                    {{$t('buyer.myResource.deployPage.number')}}
+                  </p>
+                </template>
+          </el-table-column>
           <el-table-column prop="prodName" :label="$t('buyer.myResource.deployPage.appName')">
               <template slot="header" slot-scope="scope">
                   <p class="table-head">
