@@ -93,7 +93,6 @@
             {{ appDetail.catalog }}
           </p>
           <p>{{ $t("buyer.deploy.download") }} {{ appDetail.downloadTimes }}</p>
-            <p> OrderNum:   {{orderNumber}}</p>
         </el-col>
 
         <!--<el-col class="inf-col" :span="6" :offset="1">-->
@@ -410,6 +409,7 @@ import * as project from '../../services/RancherService'
 import * as wallet from '../../services/WalletService'
 import * as order from '../../services/OrderService'
 import TimeOver from '@/components/modules/TimeOver'
+import appconfig from '../../rancherappconfig'
 
 export default {
   name: 'Deployment',
@@ -418,7 +418,7 @@ export default {
   },
   data() {
     return {
-      orderModel: '1',
+      orderModel: '2',
       deployForm: {
         projectName: '',
         rancherId: 2,
@@ -446,16 +446,6 @@ export default {
       input: '',
       // more button status
       more: false,
-      configurationList: [
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Imagepuller', shop: '商店2' },
-        { id: '3', name: 'Imagepuller', shop: '商店3' },
-        { id: '4', name: 'Imagepuller', shop: '商店4' },
-        { id: '1', name: 'Imagepuller', shop: '商店1' },
-        { id: '2', name: 'Imagepuller', shop: '商店2' },
-        { id: '3', name: 'Imagepuller', shop: '商店3' },
-        { id: '4', name: 'Imagepuller', shop: '商店4' }
-      ],
       appId: 0,
       appRid: '',
       versionId: '',
@@ -861,10 +851,26 @@ export default {
         this.$router.push({ name: 'MyResource' })
       } else this.$router.push({ name: 'ApplicationRepository' })
     },
+
+    genRealConfigData () {
+      const paramsData = this.paramTree
+      let relConfData = {}
+      paramsData.map(groupData => {
+        const confData = Object.values(groupData)[0]
+        confData.map(confItem => {
+          relConfData[confItem.variable] = confItem.default
+        })
+      })
+      console.log(relConfData)
+      return relConfData
+    },
+
     appDeploy() {
       this.appDeployParam['appId'] = this.appId
       this.appDeployParam['appVersion'] = this.versionValue
-      this.appDeployParam['config'] = JSON.stringify(this.paramTree)
+
+      this.appDeployParam['config'] = this.genRealConfigData()
+
       this.appDeployParam['description'] = this.appDetail.description
       this.appDeployParam['name'] = this.appDetail.name
       if (this.orderModel === '1' || this.orderModel === '2') {
