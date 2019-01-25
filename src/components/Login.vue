@@ -57,6 +57,7 @@
 
 <script>
 import * as auth from '../services/AuthService'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Login',
@@ -140,7 +141,27 @@ export default {
           auth
             .login(auth.getCurLang(), userLoginfo)
             .then(function(curLoginUserInfo) {
-              self.$router.push({ path: curLoginUserInfo.loginRole })
+              let data = curLoginUserInfo.data
+              if (data.success) {
+                this.$message({
+                  showClose: true,
+                  message: 'Success.',
+                  type: 'success'
+                })
+                self.$router.push({ path: curLoginUserInfo.loginRole })
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: data.errMsg,
+                  type: 'error'
+                })
+              }
+            }).catch(err => {
+              this.$message({
+                showClose: true,
+                message: err,
+                type: 'error'
+              })
             })
           // .catch(error => {
           //   if (error) {
@@ -168,10 +189,29 @@ export default {
 
           const self = this
 
-          auth
-            .login(auth.getCurLang(), userLoginfo)
+          auth.login(auth.getCurLang(), userLoginfo)
             .then(function(curLoginUserInfo) {
-              self.$router.push({ path: curLoginUserInfo.loginRole })
+              let data = curLoginUserInfo.data
+              if (data.success) {
+                this.$message({
+                  showClose: true,
+                  message: 'Success.',
+                  type: 'success'
+                })
+                self.$router.push({ path: curLoginUserInfo.loginRole })
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: data.errMsg,
+                  type: 'error'
+                })
+              }
+            }).catch(err => {
+              this.$message({
+                showClose: true,
+                message: err,
+                type: 'error'
+              })
             })
           // .catch(error => {
           //   if (error) {

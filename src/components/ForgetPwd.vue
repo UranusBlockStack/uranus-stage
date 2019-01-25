@@ -76,6 +76,7 @@
 
 <script>
 import * as auth from '../services/AuthService'
+import { Message } from 'element-ui'
 
 export default {
   name: 'ForgetPwd',
