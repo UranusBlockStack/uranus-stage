@@ -70,7 +70,7 @@
                 {{$t('transfer.code')}}
               </span>
               <el-input v-model="formLabelAlign.code" :placeholder="$t('transfer.codeIn')"></el-input>
-              <el-button @click="getConfirmCode">{{$t('transfer.codeBtn')}}</el-button>
+              <el-button :class="{'is-disabled': !this.canClick}" @click="countDown">{{content}}</el-button>
             </el-form-item>
           </el-form>
         </div>
@@ -102,7 +102,10 @@ export default {
       innerVisible: false,
       curUserInfo: auth.getUserBaseInfo(),
       balance: 0,
-      transData: {}
+      transData: {},
+      totalTime: 10,
+      canClick: true,
+      content: this.$t('userCommon.codeBtn'),
     }
   },
   methods: {
@@ -154,6 +157,7 @@ export default {
       wallet.walletConfirmCode(auth.getCurLang(), this.curUserInfo.userName)
         .then(respData => {
           let data = respData.data
+          console.log(data)
           if (data.success) {
             this.$message({
               showClose: true,
@@ -174,6 +178,28 @@ export default {
             type: 'error'
           })
         })
+    },
+    countDown() {
+      
+      if (!this.canClick) return
+      else {
+        this.canClick = false
+      this.content =
+        this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+      let clock = window.setInterval(() => {
+        this.totalTime--
+        this.content =
+          this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+        if (this.totalTime < 0) {
+          window.clearInterval(clock)
+          this.content = this.$t('userCommon.codeTime')
+          this.totalTime = 10
+          this.canClick = true
+        }
+      }, 1000)
+      this.getConfirmCode()
+      }
+      
     },
     getFee() {
       wallet.walletReferenceFee(auth.getCurLang())

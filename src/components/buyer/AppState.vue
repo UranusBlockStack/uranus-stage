@@ -74,6 +74,12 @@
                   <el-dropdown-item
                     @click.native="workloadAction(scope.row.wid, 'resume')"
                   >{{$t('buyer.appState.resume')}}</el-dropdown-item>
+                <el-dropdown-item
+                    @click.native="workloadAction(scope.row.wid, 'pause')"
+                  >{{$t('buyer.appState.pause')}}</el-dropdown-item>
+                  <el-dropdown-item
+                    @click.native="workloadAction(scope.row.wid, 'resume')"
+                  >{{$t('buyer.appState.resume')}}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </template>
