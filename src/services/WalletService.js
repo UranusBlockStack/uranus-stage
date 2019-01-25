@@ -22,7 +22,7 @@ export function getTradeListFromUser (lang, userId, page, size) {
 }
 
 export function getTradeListToUser (lang, userId, page, size) {
-    return httpLang(lang).get(`/wallet/wallet/trades/from/${userId}?page=${page}&size=${size}`)
+    return httpLang(lang).get(`/wallet/wallet/trades/to/${userId}?page=${page}&size=${size}`)
 }
 
 export function walletGetTradeByHash (lang, hash) {

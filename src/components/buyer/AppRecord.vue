@@ -207,7 +207,7 @@ export default {
           value: "0X16546167451sd54f6a5s1dfa68ds4"
         }
       ],
-      currentPage: 1,
+      currentPageFrom: 1,
       pageSize: this.$store.state.defaultPageSize,
       totalRecords: 0
     };
@@ -216,7 +216,7 @@ export default {
     getAppDeployRecords() {
       const queryData = {
         name: this.appName,
-        page: this.currentPage,
+        page: this.currentPageFrom,
         pageSize: this.pageSize,
         projectId: 0,
         sort: "string",

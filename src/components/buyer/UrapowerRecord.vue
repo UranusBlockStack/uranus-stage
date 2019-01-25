@@ -214,7 +214,7 @@ export default {
           value: ''
         }
       ],
-      currentPage: 1,
+      currentPageFrom: 1,
       pageSize: this.$store.state.defaultPageSize,
       totalRecords: 0
     }
@@ -223,7 +223,7 @@ export default {
     getUraPowerPoolList() {
       const queryData = {
         name: this.appName,
-        page: this.currentPage,
+        page: this.currentPageFrom,
         pageSize: this.pageSize,
         projectId: 0,
         sort: 'string',

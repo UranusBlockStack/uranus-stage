@@ -44,7 +44,7 @@ export const getOrderStatusName = (id, lang) => {
     return getStatusName(orderStatus, id, lang)
 }
 export const getTradeStatusName = (id, lang) => {
-
+    return getStatusName(tradeStatus, id, lang)
 }
 
 

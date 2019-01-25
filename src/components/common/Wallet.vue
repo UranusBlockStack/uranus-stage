@@ -2,30 +2,35 @@
   <section class="Wallet">
     <el-row class="wallet-head">
       <el-col :span="24">
-        <h1>
-          <i class="iconfont icon-wallet"></i>
-          {{$t('wallet.title')}}
-        </h1>
+        <h1><i class="iconfont icon-wallet"></i> {{ $t("wallet.title") }}</h1>
       </el-col>
     </el-row>
     <el-row class="wallet-body">
       <el-col :span="18">
-        <p>{{$t('wallet.balance')}} {{balance}} URAC</p>
+        <p>{{ $t("wallet.balance") }} {{ balance }} URAC</p>
         <p>
-          {{$t('wallet.address')}}
-          {{address}}
-          <el-tooltip class="item" effect="dark" content="Copy address" placement="right">
-            <u class="copy" @click="copy()">{{$t('wallet.copy')}}</u>
+          {{ $t("wallet.address") }} {{ address }}
+          <el-tooltip
+            class="item"
+            effect="dark"
+            content="Copy address"
+            placement="right"
+          >
+            <u class="copy" @click="copy()">{{ $t("wallet.copy") }}</u>
           </el-tooltip>
         </p>
       </el-col>
       <el-col :span="6">
-        <el-button type="success" @click="goTransfer">{{$t('wallet.button')}}</el-button>
+        <el-button type="success" @click="goTransfer">{{
+          $t("wallet.button")
+        }}</el-button>
       </el-col>
     </el-row>
+
+
     <el-row class="transaction">
       <el-col class="transaction-head">
-        <p>{{$t('wallet.transactionDetails')}}</p>
+        <p>{{ $t("wallet.transactionDetails") }}</p>
         <el-dialog
           :title="$t('wallet.transactionDetails')"
           :visible.sync="dialogVisible"
@@ -37,88 +42,195 @@
           </el-table>
         </el-dialog>
       </el-col>
+
       <el-col class="blue-box" :span="24">
-        <el-table :data="tableData" style="width: 100%" @row-click="viewDetail">
+        <el-table
+          :data="transactionListFrom"
+          style="width: 100%"
+          @row-click="viewDetail"
+        >
           <template slot="empty">
             <p class="empty-text">No Transaction</p>
           </template>
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-hash"></i>
-                {{$t('wallet.hash')}}
+                <i class="iconfont icon-table-hash"></i> {{ $t("wallet.hash") }}
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.hash}}</p>
+              <p class="overflow">{{ scope.row.hash }}</p>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :formatter="formateDate" min-width="160">
+          <el-table-column
+            prop="createTime"
+            :formatter="formateDate"
+            min-width="160"
+          >
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-time"></i>
-                {{$t('wallet.time')}}
+                <i class="iconfont icon-table-time"></i> {{ $t("wallet.time") }}
               </p>
             </template>
           </el-table-column>
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-from"></i>
-                {{$t('wallet.from')}}
+                <i class="iconfont icon-table-from"></i> {{ $t("wallet.from") }}
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.from}}</p>
+              <p class="overflow">{{ scope.row.from }}</p>
             </template>
           </el-table-column>
           <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-to"></i>
-                {{$t('wallet.to')}}
+                <i class="iconfont icon-table-to"></i> {{ $t("wallet.to") }}
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.to}}</p>
+              <p class="overflow">{{ scope.row.to }}</p>
             </template>
           </el-table-column>
-          <el-table-column prop="value" :label="$t('wallet.value')" min-width="150">
+          <el-table-column
+            prop="value"
+            :label="$t('wallet.value')"
+            min-width="150"
+          >
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-value"></i>
-                {{$t('wallet.value')}}
+                {{ $t("wallet.value") }}
               </p>
             </template>
           </el-table-column>
           <el-table-column prop="fee" :label="$t('wallet.fee')">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-fee"></i>
-                {{$t('wallet.fee')}}
+                <i class="iconfont icon-table-fee"></i> {{ $t("wallet.fee") }}
               </p>
             </template>
           </el-table-column>
-          <el-table-column prop="status" :label="$t('wallet.status')" min-width="110">
+          <el-table-column
+            prop="status"
+            :label="$t('wallet.status')"
+            min-width="110"
+          >
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-state"></i>
-                {{$t('wallet.status')}}
+                {{ $t("wallet.status") }}
+              </p>
+            </template>
+          </el-table-column>
+        </el-table>
+        <el-col :span="6" :offset="15" class="transaction-foot">
+          <el-pagination
+            layout="prev, pager, next"
+            :current-page.sync="currentPageFrom"
+            :page-size="pageSize"
+            :total="totalRecordsFrom"
+            @current-change="handleCurrentChangeFrom"
+          >
+          </el-pagination>
+        </el-col>
+
+        <el-table
+          :data="transactionListTo"
+          style="width: 100%"
+          @row-click="viewDetail"
+        >
+          <template slot="empty">
+            <p class="empty-text">No Transaction</p>
+          </template>
+          <el-table-column min-width="150">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-table-hash"></i> {{ $t("wallet.hash") }}
+              </p>
+            </template>
+            <template slot-scope="scope">
+              <p class="overflow">{{ scope.row.hash }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="createTime"
+            :formatter="formateDate"
+            min-width="160"
+          >
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-table-time"></i> {{ $t("wallet.time") }}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column min-width="150">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-table-from"></i> {{ $t("wallet.from") }}
+              </p>
+            </template>
+            <template slot-scope="scope">
+              <p class="overflow">{{ scope.row.from }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-table-to"></i> {{ $t("wallet.to") }}
+              </p>
+            </template>
+            <template slot-scope="scope">
+              <p class="overflow">{{ scope.row.to }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="value"
+            :label="$t('wallet.value')"
+            min-width="150"
+          >
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-table-value"></i>
+                {{ $t("wallet.value") }}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="fee" :label="$t('wallet.fee')">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-table-fee"></i> {{ $t("wallet.fee") }}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="TransStatus"
+            :label="$t('wallet.status')"
+            min-width="110"
+          >
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-table-state"></i>
+                {{ $t("wallet.status") }}
               </p>
             </template>
           </el-table-column>
         </el-table>
       </el-col>
+
       <el-col :span="6" :offset="15" class="transaction-foot">
         <el-pagination
-                layout="prev, pager, next"
-                :current-page.sync="currentPage"
-                :page-size="pageSize"
-                :total="totalRecords"
-                @current-change="handleCurrentChange">
+          layout="prev, pager, next"
+          :current-page.sync="currentPageTo"
+          :page-size="pageSize"
+          :total="totalRecordsTo"
+          @current-change="handleCurrentChangeTo"
+        >
         </el-pagination>
       </el-col>
     </el-row>
+
   </section>
 </template>
 
@@ -128,6 +240,7 @@ import * as account from '../../services/AccountService'
 import * as wallet from '../../services/WalletService'
 import moment from 'moment'
 import { Message } from 'element-ui'
+import { getTradeStatusName } from '../../store/orderStatus'
 
 export default {
   name: 'Wallet',
@@ -136,13 +249,16 @@ export default {
       address: '',
       balance: '0',
       dialogVisible: false,
-      tableData: [],
+      transactionListFrom: [],
+      transactionListTo: [],
       tableData1: [],
       curLang: this.$store.getters.lang,
       curUserInfo: auth.getUserBaseInfo(),
-      currentPage: 1,
+      currentPageFrom: 1,
+      currentPageTo: 1,
       pageSize: this.$store.state.defaultPageSize,
-      totalRecords: 0
+      totalRecordsFrom: 0,
+      totalRecordsTo: 0
     }
   },
   methods: {
@@ -170,12 +286,40 @@ export default {
           this.address = userInfo.data.data.accountAddress
         })
     },
-    getTradeFrom() {
+    getTradeList() {
       wallet
-        .getTradeListFromUser(this.curLang, this.curUserInfo.userId, this.currentPage, this.pageSize)
+        .getTradeListFromUser(
+          this.curLang,
+          this.curUserInfo.userId,
+          this.currentPageFrom,
+          this.pageSize
+        )
         .then(tradeList => {
-          this.tableData = tradeList.data.data.records
-          this.totalRecords = tradeList.data.data.records.length
+          this.transactionListFrom = tradeList.data.data.records
+          this.transactionListFrom.map(transaction => {
+            transaction.TransStatus = getTradeStatusName(
+              transaction.status,
+              auth.getCurLang()
+            )
+          })
+          this.totalRecordsFrom = tradeList.data.data.records.length
+        })
+      wallet
+        .getTradeListToUser(
+          this.curLang,
+          this.curUserInfo.userId,
+          this.currentPageTo,
+          this.pageSize
+        )
+        .then(tradeList => {
+          this.transactionListTo = tradeList.data.data.records
+          this.transactionListTo.map(transaction => {
+            transaction.TransStatus = getTradeStatusName(
+              transaction.status,
+              auth.getCurLang()
+            )
+          })
+          this.totalRecordsTo = tradeList.data.data.records.length
         })
     },
     viewDetail(row) {
@@ -192,21 +336,24 @@ export default {
       this.dialogVisible = true
     },
     getBalance() {
-      return account.userBalcnce(this.curLang)
-          .then(resPdata => {
-            let data = resPdata.data.data
-            this.balance = data.balance
-          })
+      return account.userBalcnce(this.curLang).then(resPdata => {
+        let data = resPdata.data.data
+        this.balance = data.balance
+      })
     },
-    handleCurrentChange(val) {
-      this.currentPage = val
-      this.getTradeFrom()
+    handleCurrentChangeFrom(val) {
+      this.currentPageFrom = val
+      this.getTradeList()
+    },
+    handleCurrentChangeTo(val) {
+      this.currentPageTo = val
+      this.getTradeList()
     }
   },
   mounted() {
     this.getUserInfo()
     this.getBalance()
-    this.getTradeFrom()
+    this.getTradeList()
   }
 }
 </script>
@@ -324,21 +471,21 @@ export default {
       .el-pagination {
         height: 50px;
       }
-      .el-pagination /deep/ .btn-prev{
+      .el-pagination /deep/ .btn-prev {
         background: rgba(36, 99, 255, 0.2);
         color: #ffffff;
-    }
-    .el-pagination /deep/ .btn-next{
+      }
+      .el-pagination /deep/ .btn-next {
         background: rgba(36, 99, 255, 0.2);
         color: #ffffff;
-    }
-    .el-pagination /deep/ .el-pager li{
+      }
+      .el-pagination /deep/ .el-pager li {
         background: rgba(36, 99, 255, 0.2);
         color: #ffffff;
-    }
-    .el-pagination /deep/ .el-pager li.active{
+      }
+      .el-pagination /deep/ .el-pager li.active {
         color: #409eff;
-    }
+      }
     }
   }
 }
