@@ -460,18 +460,17 @@ export default {
       border-radius: 0;
     }
     .on {
-      background: #9bcc3d;
+      background: #51a906;
       border: 2px solid #dcdcdc;
-      width: 16px;
-      height: 16px;
+      width: 12px;
+      height: 12px;
       border-radius: 100%;
       float: right;
     }
     .off {
-      background: #f2f2f2;
       border: 2px solid #dcdcdc;
-      width: 16px;
-      height: 16px;
+      width: 12px;
+      height: 12px;
       border-radius: 100%;
       float: right;
     }

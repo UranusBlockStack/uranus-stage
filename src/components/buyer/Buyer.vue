@@ -231,6 +231,12 @@ export default {
                 color: '#ffffff'
               }
             },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                  color: '#363636',
+              }
+            },
             axisLabel: {
               formatter: '{value}',
               textStyle: {
