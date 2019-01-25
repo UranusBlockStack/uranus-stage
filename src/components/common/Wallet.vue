@@ -10,7 +10,7 @@
     </el-row>
     <el-row class="wallet-body">
       <el-col :span="18">
-        <p>{{$t('wallet.balance')}}100 URAC</p>
+        <p>{{$t('wallet.balance')}} {{balcnce}} URAC</p>
         <p>
           {{$t('wallet.address')}}
           {{address}}
@@ -134,6 +134,7 @@ export default {
   data() {
     return {
       address: '',
+      balance: 0,
       dialogVisible: false,
       tableData: [],
       tableData1: [],
@@ -178,7 +179,6 @@ export default {
         })
     },
     viewDetail(row) {
-      console.log(row)
       let transDetail = []
       const fields = Object.keys(row)
       fields.map(field => {
@@ -191,6 +191,13 @@ export default {
       this.tableData1 = transDetail
       this.dialogVisible = true
     },
+    getBalance() {
+      return account.userBalcnce(this.curLang)
+          .then(resPdata => {
+            let data = resPdata.data.data
+            this.balcnce = data.balance
+          })
+    },
     handleCurrentChange(val) {
       this.currentPage = val
       this.getTradeFrom()
@@ -198,6 +205,7 @@ export default {
   },
   mounted() {
     this.getUserInfo()
+    this.getBalance()
     this.getTradeFrom()
   }
 }
