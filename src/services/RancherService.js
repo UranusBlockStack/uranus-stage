@@ -34,6 +34,10 @@ export function clusterRegistCluster (lang, rid) {
   return httpLang(lang).get(`/rancher/clusters/${rid}`)
 }
 
+export function clusterState (lang, id, action) {
+    return httpLang(lang).post(`/rancher/clusters/${id}/?action=${action}`)
+}
+
 /** Rancher - Host Service ***/
 export function joinCluster (lang, hostId, clusterId) {
     return httpLang(lang).post(`/rancher/hosts/${hostId}/cluster/${clusterId}`)

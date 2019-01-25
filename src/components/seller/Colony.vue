@@ -294,6 +294,7 @@
 <script>
 import moment from "moment";
 import RestTime from "@/components/modules/RestTime";
+import { Message } from 'element-ui'
 import * as rancher from "../../services/RancherService";
 import * as auth from "../../services/AuthService";
 import Water from "@/components/modules/Water";
@@ -353,6 +354,16 @@ export default {
         console.log("detail", data);
         this.clusterInfo = data.data.data;
         this.tableCluster = JSON.parse(JSON.stringify(data.data.data));
+        // if (this.tableCluster.beginTime == null || this.tableCluster.beginTime == '') {
+        //     this.tableCluster.dateRange = ''
+        // } else {
+        //     this.tableCluster.dateRange = [this.tableCluster.beginTime,this.tableCluster.endTime]
+        // }
+        if (this.tableCluster.state == 'offline') {
+          this.switchVal = true
+      } else {
+          this.switchVal = false
+      }
         this.update1 = true;
         this.update2 = true;
       });
@@ -360,8 +371,27 @@ export default {
     filterState(value, row) {
       return row.state === value;
     },
+    // Switching cluster sale state
     onLineClick() {
-      alert(this.switchVal);
+      var action = ''
+      if (this.switchVal) {
+          action = 'offline'
+      } else {
+          action = 'online'
+      }
+      rancher.clusterState(this.language, this.clusterId, action).then(data=> {
+          console.log(data.data)
+          if (data.data.success) {
+              this.$message({
+          message: 'Success',
+          type: 'success'
+        })
+              this.switchVal = this.switchVal
+          } else {
+              this.$message(data.data.errMsg)
+              this.switchVal = !this.switchVal
+          }
+      })
     },
     reload () {
      this.isRouterAlive = false
