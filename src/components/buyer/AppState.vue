@@ -176,7 +176,10 @@ export default {
       }
     },
     closeConnect() {
-      this.websocket.close()
+      if (this.websocket) {
+        this.websocket.close()
+        this.websocket = null
+      }
       this.dialogTableVisible = false
       document.getElementById('xterm').innerHTML = ''
     },
@@ -192,10 +195,10 @@ export default {
               let data = respData.data
               if (data.success) {
                 if (type === 'execute') {
-                  let baseUrl = data.errMsg
-                  // let baseUrl = 'wss://47.105.151.140/k8s/clusters/c-b6tdq/api/v1/namespaces/mysql-test2/pods/mysql-test2-mysql-fdf8d5d88-zlzzn/exec?container=mysql-test2-mysql&stdout=1&stdin=1&stderr=1&tty=1'
+                  let baseUrl = data.data
+
                   let url = this.innerBuildUrl(baseUrl)
-                  this.dialogTableVisible = true 
+                  this.dialogTableVisible = true
                   this.ConncetContainer(url)
                 } else {
                   this.$message({
