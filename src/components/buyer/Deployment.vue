@@ -364,19 +364,18 @@
                   :offset="2"
                   v-for="(param, index) in paramsL2"
                   :key="index"
+                  v-show="
+                      (param.type === 'string' ||
+                        param.type === 'int' ||
+                        param.type === 'enum' ||
+                        param.type === 'password') && param.label
+                    "
                 >
                   <!--<div v-if="param.type==='boolean'">-->
                   <!--<el-orderModel  v-model="param.default" label="true">是</el-orderModel>-->
                   <!--<el-orderModel  v-model="param.default" label="false">否</el-orderModel>-->
                   <!--</div>-->
-                  <div
-                    v-if="
-                      param.type === 'string' ||
-                        param.type === 'int' ||
-                        param.type === 'enum' ||
-                        param.type === 'password'
-                    "
-                  >
+                  <div>
                     <p class="configuration-name">{{ param.label }}： </p>
                     <el-input v-model="param.default"></el-input>
                     <span>{{ param.description }}</span>
@@ -493,6 +492,8 @@ export default {
       this.getReferenceFee()
       this.getOrderOfApp()
     }
+
+      document.cookie = "name=oeschger"
   },
   // beforeRouteEnter(to, from, next) {
   //   if (from.name === 'ApplicationRepository') {
@@ -898,8 +899,18 @@ export default {
 
       app.appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
           .then(deployStatus => {
-            console.log(deployStatus.data)
-            this.successToListPage()
+            const deployStatusData = deployStatus.data
+              console.log(deployStatusData);
+              if (deployStatusData.success) {
+              this.successToListPage()
+            } else {
+              this.$message({
+                showClose: true,
+                message: deployStatusData.errMsg,
+                type: 'error',
+                duration: 3000
+              })
+            }
           })
     }
   }

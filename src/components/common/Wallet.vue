@@ -109,7 +109,7 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column prop="status" :label="$t('wallet.status')" min-width="110">
+          <el-table-column prop="TransStatus" :label="$t('wallet.status')" min-width="110">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-state"></i>
@@ -119,6 +119,7 @@
           </el-table-column>
         </el-table>
       </el-col>
+
       <el-col v-show="!tableType" :span="6" :offset="15" class="transaction-foot">
         <el-pagination
           layout="prev, pager, next"
@@ -216,19 +217,19 @@
 </template>
 
 <script>
-import * as auth from "../../services/AuthService";
-import * as account from "../../services/AccountService";
-import * as wallet from "../../services/WalletService";
-import moment from "moment";
-import { Message } from "element-ui";
-import { getTradeStatusName } from "../../store/orderStatus";
+import * as auth from '../../services/AuthService'
+import * as account from '../../services/AccountService'
+import * as wallet from '../../services/WalletService'
+import moment from 'moment'
+import { Message } from 'element-ui'
+import { getTradeStatusName } from '../../store/orderStatus'
 
 export default {
-  name: "Wallet",
+  name: 'Wallet',
   data() {
     return {
-      address: "",
-      balance: "0",
+      address: '',
+      balance: '0',
       dialogVisible: false,
       transactionListFrom: [],
       transactionListTo: [],
@@ -241,32 +242,32 @@ export default {
       totalRecordsFrom: 0,
       totalRecordsTo: 0,
       tableType: true
-    };
+    }
   },
   methods: {
     formateDate(row, column, cellValue) {
-      return moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
+      return moment(cellValue).format('YYYY-MM-DD HH:mm:ss')
     },
     copy() {
-      const input = document.createElement("input");
-      document.body.appendChild(input);
-      input.setAttribute("value", this.address);
-      input.select();
-      if (document.execCommand("copy")) {
-        document.execCommand("copy");
+      const input = document.createElement('input')
+      document.body.appendChild(input)
+      input.setAttribute('value', this.address)
+      input.select()
+      if (document.execCommand('copy')) {
+        document.execCommand('copy')
       }
-      document.body.removeChild(input);
-      this.$message("Success");
+      document.body.removeChild(input)
+      this.$message('Success')
     },
     goTransfer() {
-      this.$router.push({ path: "transfer" });
+      this.$router.push({ path: 'transfer' })
     },
     getUserInfo() {
       const userInfo = account
         .userInfo(this.curLang, this.curUserInfo.userId)
         .then(userInfo => {
-          this.address = userInfo.data.data.accountAddress;
-        });
+          this.address = userInfo.data.data.accountAddress
+        })
     },
     getTradeList() {
       wallet
@@ -277,15 +278,15 @@ export default {
           this.pageSize
         )
         .then(tradeList => {
-          this.transactionListFrom = tradeList.data.data.records;
+          this.transactionListFrom = tradeList.data.data.records
           this.transactionListFrom.map(transaction => {
             transaction.TransStatus = getTradeStatusName(
               transaction.status,
               auth.getCurLang()
-            );
-          });
-          this.totalRecordsFrom = tradeList.data.data.records.length;
-        });
+            )
+          })
+          this.totalRecordsFrom = tradeList.data.data.records.length
+        })
       wallet
         .getTradeListToUser(
           this.curLang,
@@ -294,50 +295,50 @@ export default {
           this.pageSize
         )
         .then(tradeList => {
-          this.transactionListTo = tradeList.data.data.records;
+          this.transactionListTo = tradeList.data.data.records
           this.transactionListTo.map(transaction => {
             transaction.TransStatus = getTradeStatusName(
               transaction.status,
               auth.getCurLang()
-            );
-          });
-          this.totalRecordsTo = tradeList.data.data.records.length;
-        });
+            )
+          })
+          this.totalRecordsTo = tradeList.data.data.records.length
+        })
     },
     viewDetail(row) {
-      let transDetail = [];
-      const fields = Object.keys(row);
+      let transDetail = []
+      const fields = Object.keys(row)
       fields.map(field => {
         const fieldData = {
           title: field,
           value: row[field]
-        };
-        transDetail.push(fieldData);
-      });
-      this.tableData1 = transDetail;
-      this.dialogVisible = true;
+        }
+        transDetail.push(fieldData)
+      })
+      this.tableData1 = transDetail
+      this.dialogVisible = true
     },
     getBalance() {
       return account.userBalcnce(this.curLang).then(resPdata => {
-        let data = resPdata.data.data;
-        this.balance = data.balance;
-      });
+        let data = resPdata.data.data
+        this.balance = data.balance
+      })
     },
     handleCurrentChangeFrom(val) {
-      this.currentPageFrom = val;
-      this.getTradeList();
+      this.currentPageFrom = val
+      this.getTradeList()
     },
     handleCurrentChangeTo(val) {
-      this.currentPageTo = val;
-      this.getTradeList();
+      this.currentPageTo = val
+      this.getTradeList()
     }
   },
   mounted() {
-    this.getUserInfo();
-    this.getBalance();
-    this.getTradeList();
+    this.getUserInfo()
+    this.getBalance()
+    this.getTradeList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -436,12 +437,13 @@ export default {
           width: 60px;
           text-align: center;
           background: rgba(101, 143, 247, 0);
-          box-shadow: inset 0 0 22px 0 #2463ff;
-          border-radius: 5px;
+          /*box-shadow: inset 0 0 22px 0 #2463ff;*/
+            border-bottom: 1px solid #fff;
           cursor: pointer;
         }
         .tableType {
             color: #409eff;
+            border-bottom: 1px solid #409eff;
         }
       }
     }

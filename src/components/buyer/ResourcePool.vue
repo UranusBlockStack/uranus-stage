@@ -50,7 +50,8 @@
               <h3>{{$t('buyer.resourcePool.appName')}} {{item.name}}</h3>
               <!-- <h3>{{$t('buyer.resourcePool.appIp')}} {{item.ipAddress}}</h3>
               <h3>{{$t('buyer.resourcePool.appPort')}} {{item.port}}</h3> -->
-              <h3>{{$t('buyer.resourcePool.appState')}} {{item.appOrderStatusName}}</h3>
+              <h3>{{$t('buyer.resourcePool.appState')}} {{item.appOrderStatusName}}
+              <span v-if="item.errMsg"> {{item.errMsg}} </span></h3>
               <h3>{{$t('buyer.resourcePool.appTime')}} {{formateDate(item.createTime)}}</h3>
             </el-col>
             <el-col :span="3">
