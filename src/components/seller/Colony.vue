@@ -359,10 +359,10 @@ export default {
         // } else {
         //     this.tableCluster.dateRange = [this.tableCluster.beginTime,this.tableCluster.endTime]
         // }
-        if (this.tableCluster.state == 'offline') {
-          this.switchVal = true
-      } else {
+        if (this.tableCluster.state == 'active') {
           this.switchVal = false
+      } else {
+          this.switchVal = true
       }
         this.update1 = true;
         this.update2 = true;
@@ -619,18 +619,17 @@ export default {
         border-radius: 0;
       }
       .on {
-        background: #9bcc3d;
+        background: #51a906;
         border: 2px solid #dcdcdc;
-        width: 20px;
-        height: 20px;
+        width: 12px;
+        height: 12px;
         border-radius: 100%;
         float: right;
       }
       .off {
-        background: #f2f2f2;
         border: 2px solid #dcdcdc;
-        width: 20px;
-        height: 20px;
+        width: 12px;
+        height: 12px;
         border-radius: 100%;
         float: right;
       }

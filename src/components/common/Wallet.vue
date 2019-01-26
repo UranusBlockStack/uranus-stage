@@ -31,8 +31,8 @@
       <el-col class="transaction-head">
         <p>
           {{ $t("wallet.transactionDetails") }}
-          <span :class="{tableType:!tableType}" @click="tableType = false">From</span>
-          <span :class="{tableType:tableType}" @click="tableType = true">To</span>
+          <span :class="{tableType:!tableType}" @click="tableType = false">Send</span>
+          <span :class="{tableType:tableType}" @click="tableType = true">Recive</span>
         </p>
         <!-- transactions details box -->
         <el-dialog
@@ -71,7 +71,7 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column min-width="150">
+          <!-- <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-from"></i>
@@ -81,7 +81,7 @@
             <template slot-scope="scope">
               <p class="overflow">{{ scope.row.from }}</p>
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
@@ -165,7 +165,7 @@
               <p class="overflow">{{ scope.row.from }}</p>
             </template>
           </el-table-column>
-          <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
+          <!-- <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-to"></i>
@@ -175,7 +175,7 @@
             <template slot-scope="scope">
               <p class="overflow">{{ scope.row.to }}</p>
             </template>
-          </el-table-column>
+          </el-table-column> -->
           <el-table-column prop="value" :label="$t('wallet.value')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">

@@ -41,7 +41,7 @@
           </template>
         </el-table-column>
         <el-table-column>
-            <template slot="header" slot-scope="scope">
+          <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-table-fee"></i>
               {{$t('buyer.resourceMarket.fee')}}
@@ -223,51 +223,51 @@
 </template>
 
 <script>
-import TimeOver from '@/components/modules/TimeOver'
-import * as auth from '../../services/AuthService'
-import * as account from '../../services/AccountService'
-import * as rancher from '../../services/RancherService'
-import * as order from '../../services/OrderService'
-import * as wallet from '../../services/WalletService'
+import TimeOver from "@/components/modules/TimeOver";
+import * as auth from "../../services/AuthService";
+import * as account from "../../services/AccountService";
+import * as rancher from "../../services/RancherService";
+import * as order from "../../services/OrderService";
+import * as wallet from "../../services/WalletService";
 import {
   ServerConfigData,
   WrapDropDownData,
   WrapDropDownDataUnit
-} from '../../store/rancher_info'
+} from "../../store/rancher_info";
 
 export default {
-  name: 'ResourceMarket',
+  name: "ResourceMarket",
   components: {
     TimeOver
   },
   data() {
     return {
-        content: this.$t('buyer.resourceMarket.codeBtn'),
-        totalTime: 10,
+      content: this.$t("buyer.resourceMarket.codeBtn"),
+      totalTime: 10,
       canClick: true,
       deployForm: {
-        projectName: '',
+        projectName: "",
         rancherId: 2,
-        cpuKernel: '4',
-        disk: '512G',
-        mem: '16',
-        network: '512G',
-        dateRange: '',
-        deployStatus: ''
+        cpuKernel: "4",
+        disk: "512G",
+        mem: "16",
+        network: "512G",
+        dateRange: "",
+        deployStatus: ""
       },
       regionSel: [],
       cpuSel: [],
       diskSel: [],
       memorySel: [],
       networkSel: [],
-      value: '',
-      time1: '',
-      time2: '',
-      input: '',
+      value: "",
+      time1: "",
+      time2: "",
+      input: "",
       outerVisible: false,
       innerVisible: false,
       fee: 0,
-      concode: '',
+      concode: "",
       gridData: [
         // {
         //   buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
@@ -288,129 +288,129 @@ export default {
         //   updateTime: 1548053643803
         // }
       ]
-    }
+    };
   },
   created() {
-    this.getRegionList()
-    this.setConfigSelector()
-    this.getReferenceFee()
+    this.getRegionList();
+    this.setConfigSelector();
+    this.getReferenceFee();
   },
   methods: {
-      countDown() {
-      
-      if (!this.canClick) return
+    countDown() {
+      if (!this.canClick) return;
       else {
-        this.canClick = false
-      this.content =
-        this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
-      let clock = window.setInterval(() => {
-        this.totalTime--
+        this.canClick = false;
         this.content =
-          this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
-        if (this.totalTime < 0) {
-          window.clearInterval(clock)
-          this.content = this.$t('userCommon.codeTime')
-          this.totalTime = 10
-          this.canClick = true
-        }
-      }, 1000)
-      this.getConfirmCode()
+          this.$t("userCommon.codeTime") + "(" + this.totalTime + "s)";
+        let clock = window.setInterval(() => {
+          this.totalTime--;
+          this.content =
+            this.$t("userCommon.codeTime") + "(" + this.totalTime + "s)";
+          if (this.totalTime < 0) {
+            window.clearInterval(clock);
+            this.content = this.$t("userCommon.codeTime");
+            this.totalTime = 10;
+            this.canClick = true;
+          }
+        }, 1000);
+        this.getConfirmCode();
       }
-      
     },
     setConfigSelector() {
-      const CpuData = ServerConfigData.CPU
-      this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang())
-      this.deployForm.cpuKernel = this.cpuSel[0].value
+      const CpuData = ServerConfigData.CPU;
+      this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang());
+      this.deployForm.cpuKernel = this.cpuSel[0].value;
 
-      const HdData = ServerConfigData.HD
-      this.diskSel = WrapDropDownData(HdData, null)
-      this.deployForm.disk = this.diskSel[0].value
+      const HdData = ServerConfigData.HD;
+      this.diskSel = WrapDropDownData(HdData, null);
+      this.deployForm.disk = this.diskSel[0].value;
 
-      const MemData = ServerConfigData.Mem
-      this.memorySel = WrapDropDownData(MemData, null)
-      this.deployForm.mem = this.memorySel[0].value
+      const MemData = ServerConfigData.Mem;
+      this.memorySel = WrapDropDownData(MemData, null);
+      this.deployForm.mem = this.memorySel[0].value;
 
-      const NetworData = ServerConfigData.Network
-      this.networkSel = WrapDropDownData(NetworData, null)
-      this.deployForm.network = this.networkSel[0].value
+      const NetworData = ServerConfigData.Network;
+      this.networkSel = WrapDropDownData(NetworData, null);
+      this.deployForm.network = this.networkSel[0].value;
     },
 
     setRegionSelectValue(region) {
-      this.deployForm.rancherId = region
+      this.deployForm.rancherId = region;
     },
     setParamCPU(value) {
-      this.deployForm.cpuKernel = value
+      this.deployForm.cpuKernel = value;
     },
     setParamHD(value) {
-      this.deployForm.disk = value
+      this.deployForm.disk = value;
     },
     setParamRAM(value) {
-      this.deployForm.mem = value
+      this.deployForm.mem = value;
     },
     setParamNet(value) {
-      this.deployForm.network = value
+      this.deployForm.network = value;
     },
 
     getRegionList() {
       rancher.rancherList(auth.getCurLang()).then(respData => {
-        this.rancherServer = respData.data.data
-        let regionData = []
+        this.rancherServer = respData.data.data;
+        let regionData = [];
         this.rancherServer.map(rancher => {
           const region = {
             value: rancher.id,
             label:
-              auth.getCurLang() === 'zh-cn'
+              auth.getCurLang() === "zh-cn"
                 ? rancher.region
                 : rancher.regionEnUs
-          }
-          regionData.push(region)
-        })
+          };
+          regionData.push(region);
+        });
 
-        this.regionSel = regionData
-        this.deployForm.rancherId = this.regionSel[0].value
-      })
+        this.regionSel = regionData;
+        this.deployForm.rancherId = this.regionSel[0].value;
+      });
     },
 
     purchaseUraPower() {
-      this.deployForm.beginTime = this.deployForm.dateRange[0]
-      this.deployForm.endTime = this.deployForm.dateRange[1]
+      this.deployForm.beginTime = this.deployForm.dateRange[0];
+      this.deployForm.endTime = this.deployForm.dateRange[1];
 
-      order.orderResource(auth.getCurLang(), this.deployForm)
-            .then(purcheStatus => {
-              const purchStausData = purcheStatus.data
-              if (purchStausData.success) {
-                this.gridData = [purchStausData.data]
-                this.outerVisible = true
-              } else {
-                this.$message({
-                  showClose: true,
-                  message: purchStausData.errMsg,
-                  type: 'error'
-                })
-              }
-            })
+      order
+        .orderResource(auth.getCurLang(), this.deployForm)
+        .then(purcheStatus => {
+          const purchStausData = purcheStatus.data;
+          if (purchStausData.success) {
+            this.gridData = [purchStausData.data];
+            this.outerVisible = true;
+          } else {
+            this.$message({
+              showClose: true,
+              message: purchStausData.errMsg,
+              type: "error"
+            });
+          }
+        });
     },
     getReferenceFee() {
       wallet.walletReferenceFee(auth.getCurLang()).then(reffee => {
-        this.fee = reffee.data.data
-      })
+        this.fee = reffee.data.data;
+      });
     },
     getConfirmCode() {
-      wallet.walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
-              .then(sendResult => {
-                const status = sendResult.data
-                this.$message({
-                  showClose: true,
-                  message: status.data,
-                  type: 'success',
-                  duration: 3000
-                })
-              })
+      wallet
+        .walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
+        .then(sendResult => {
+          const status = sendResult.data;
+          this.$message({
+            showClose: true,
+            message: status.data,
+            type: "success",
+            duration: 3000
+          });
+        });
     },
 
     startTransfer() {
-      let orders = []
+      let orders = [];
       this.gridData.map(order => {
         const tmporder = {
           buyerId: auth.getCurUserId(),
@@ -418,42 +418,41 @@ export default {
           orderNo: order.orderNo,
           fee: this.fee,
           sellerId: order.sellerId
-        }
-        orders.push(tmporder)
-      })
-      account.userInfo(auth.getCurLang(), auth.getCurUserId())
-              .then(userInfo => {
-                const userData = userInfo.data.data
-                const transData = {
-                  orders: orders,
-                  phone: userData.mobile,
-                  smsCode: this.concode
-                }
-                wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
-                  const transStatusData = transStatus.data
-                  if (transStatusData.success) {
-                    this.outerVisible = false
-                    this.$message({
-                      showClose: true,
-                      message:
-                                  ' 订单支付成功，请耐心等待',
-                      type: 'success',
-                      duration: 3000
-                    })
-                  } else {
-                    this.$message({
-                      showClose: true,
-                      message: transStatusData.errMsg,
-                      type: 'error',
-                      duration: 3000
-                    })
-                  }
-                })
-      })
+        };
+        orders.push(tmporder);
+      });
+      account
+        .userInfo(auth.getCurLang(), auth.getCurUserId())
+        .then(userInfo => {
+          const userData = userInfo.data.data;
+          const transData = {
+            orders: orders,
+            phone: userData.mobile,
+            smsCode: this.concode
+          };
+          wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
+            const transStatusData = transStatus.data;
+            if (transStatusData.success) {
+              this.outerVisible = false;
+              this.$message({
+                showClose: true,
+                message: " 订单支付成功，请耐心等待",
+                type: "success",
+                duration: 3000
+              });
+            } else {
+              this.$message({
+                showClose: true,
+                message: transStatusData.errMsg,
+                type: "error",
+                duration: 3000
+              });
+            }
+          });
+        });
     }
-
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
