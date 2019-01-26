@@ -221,6 +221,17 @@
           </template>
         </el-table-column>
       </el-table>
+      <el-row>
+        <el-col :span="8" :offset="16" style="margin-top: 15px;">
+          <el-pagination
+            layout="prev, pager, next"
+            :current-page.sync="pageParam.page"
+            :page-size="pageParam.pageSize"
+            :total="pageParam.totalRecords"
+            @current-change="search()"
+          ></el-pagination>
+        </el-col>
+      </el-row>
     </el-row>
   </section>
 </template>
@@ -247,7 +258,16 @@ export default {
       newClusterName: "", // 新建及群名称
       clusterName: "", //已有集群
       hostId: "",
-      clusterId: ""
+      clusterId: "",
+      pageParam: {
+        name: "",
+        page: 2,
+        pageSize: 5,
+        totalRecords: 0,
+        sort: "",
+        sortDesc: true,
+        state: ""
+      }
     };
   },
   methods: {
@@ -256,10 +276,14 @@ export default {
       window.location.reload();
     },
     getHostList() {
-      rancher.hostList(this.language).then(data => {
-        console.log("hostList：", data);
-        this.tableData = data.data.data.records;
-      });
+      rancher
+        .hostList(this.language, this.pageParam.page, this.pageParam.pageSize)
+        .then(data => {
+          console.log("hostList：", data);
+          this.pageParam.page = data.data.data.current;
+          this.pageParam.totalRecords = data.data.data.total;
+          this.tableData = data.data.data.records;
+        });
     },
     rancherList() {
       rancher.rancherList().then(data => {
@@ -312,10 +336,14 @@ export default {
     search() {
       var param = {
         scope: this.inCluster,
-        ownerId: this.userId
+        ownerId: this.userId,
+        page: this.pageParam.page,
+        pageSize: this.pageParam.pageSize
       };
       rancher.hostSearch(this.language, param).then(data => {
         console.log("result:", data);
+        this.pageParam.page = data.data.data.current;
+        this.pageParam.totalRecords = data.data.data.total;
         this.tableData = data.data.data.records;
       });
     },
@@ -400,6 +428,21 @@ export default {
     margin: 10px;
     padding: 15px;
     min-height: 550px;
+    .el-pagination /deep/ .btn-prev {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-next {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li.active {
+      color: #409eff;
+    }
     p {
       margin-bottom: 0;
     }

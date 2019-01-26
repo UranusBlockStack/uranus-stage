@@ -62,7 +62,7 @@
                 <i class="iconfont icon-table-fee"></i>
                 {{$t('transfer.fee')}}
               </span>
-              <el-input v-model="formLabelAlign.fee" :placeholder="$t('transfer.feeIn')"></el-input>
+              <el-input type="number" step="0.01" v-model="formLabelAlign.fee" :placeholder="$t('transfer.feeIn')"></el-input>
             </el-form-item>
             <el-form-item prop="code" class="code">
               <span slot="label">

@@ -65,19 +65,13 @@
                   <i class="iconfont icon-menu"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <el-dropdown-item
+                  <el-dropdown-item v-show="workLoadList.status!='active'"
                     @click.native="workloadAction(scope.row.wid, 'execute')"
                   >{{$t('buyer.appState.shell')}}</el-dropdown-item>
-                  <el-dropdown-item
+                  <el-dropdown-item v-show="workLoadList.status!='active'"
                     @click.native="workloadAction(scope.row.wid, 'pause')"
                   >{{$t('buyer.appState.pause')}}</el-dropdown-item>
-                  <el-dropdown-item
-                    @click.native="workloadAction(scope.row.wid, 'resume')"
-                  >{{$t('buyer.appState.resume')}}</el-dropdown-item>
-                <el-dropdown-item
-                    @click.native="workloadAction(scope.row.wid, 'pause')"
-                  >{{$t('buyer.appState.pause')}}</el-dropdown-item>
-                  <el-dropdown-item
+                  <el-dropdown-item v-show="workLoadList.status=='active'"
                     @click.native="workloadAction(scope.row.wid, 'resume')"
                   >{{$t('buyer.appState.resume')}}</el-dropdown-item>
                 </el-dropdown-menu>

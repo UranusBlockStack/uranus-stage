@@ -342,7 +342,6 @@ export default {
       margin-top: 24px;
       font-size: 16px;
       color: #ffffff;
-      line-height: 24px;
     }
     .prompt {
       color: red;

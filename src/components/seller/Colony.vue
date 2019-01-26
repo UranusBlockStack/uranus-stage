@@ -268,7 +268,7 @@
               >{{$t('seller.group.deleteHost')}}</el-button>
               <!-- delete host text box -->
               <el-dialog :close-on-click-modal="false" :visible.sync="outerVisible" width="480px">
-                <p>{{$t('seller.group.deleteSure')}}{{scope.row.id}}</p>
+                <p>{{$t('seller.group.deleteSure')}}</p>
                 <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
                   <p>{{$t('seller.group.deleteText1')}}</p>
                   <div slot="footer" class="dialog-footer">

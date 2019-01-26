@@ -31,8 +31,8 @@
       <el-col class="transaction-head">
         <p>
           {{ $t("wallet.transactionDetails") }}
-          <span :class="{tableType:!tableType}" @click="tableType = false">FROM</span>
-          <span :class="{tableType:tableType}" @click="tableType = true">TO</span>
+          <span :class="{tableType:!tableType}" @click="tableType = false">From</span>
+          <span :class="{tableType:tableType}" @click="tableType = true">To</span>
         </p>
         <!-- transactions details box -->
         <el-dialog
