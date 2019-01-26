@@ -55,7 +55,7 @@
       <div class="code">
         <span slot="label">{{$t('buyer.resourceMarket.code')}}</span>
         <el-input :placeholder="$t('buyer.resourceMarket.codeIn')" v-model="concode"></el-input>
-        <el-button @click="getConfirmCode">{{$t('buyer.resourceMarket.codeBtn')}}</el-button>
+        <el-button :class="{'is-disabled': !this.canClick}" @click="countDown">{{content}}</el-button>
       </div>
       <p>{{$t('buyer.resourceMarket.confirmText1')}}</p>
       <p>{{$t('buyer.resourceMarket.confirmText2')}}</p>
@@ -242,6 +242,9 @@ export default {
   },
   data() {
     return {
+        content: this.$t('buyer.resourceMarket.codeBtn'),
+        totalTime: 10,
+      canClick: true,
       deployForm: {
         projectName: '',
         rancherId: 2,
@@ -293,6 +296,28 @@ export default {
     this.getReferenceFee()
   },
   methods: {
+      countDown() {
+      
+      if (!this.canClick) return
+      else {
+        this.canClick = false
+      this.content =
+        this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+      let clock = window.setInterval(() => {
+        this.totalTime--
+        this.content =
+          this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+        if (this.totalTime < 0) {
+          window.clearInterval(clock)
+          this.content = this.$t('userCommon.codeTime')
+          this.totalTime = 10
+          this.canClick = true
+        }
+      }, 1000)
+      this.getConfirmCode()
+      }
+      
+    },
     setConfigSelector() {
       const CpuData = ServerConfigData.CPU
       this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang())
