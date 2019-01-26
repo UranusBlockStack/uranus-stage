@@ -436,13 +436,8 @@ export default {
               this.outerVisible = false
               this.$message({
                 showClose: true,
-<<<<<<< HEAD
-                message: ' 订单支付成功，请耐心等待',
-                type: 'success',
-=======
                 message: this.$t('buyer.resourceMarket.orderSuccess'),
                 type: "success",
->>>>>>> d0041c5b... update style for better
                 duration: 3000
               })
               this.$router.push({ name: 'ApplicationRepository' })
