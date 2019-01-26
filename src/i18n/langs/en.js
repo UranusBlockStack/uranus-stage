@@ -182,6 +182,11 @@ module.exports = {
       button1: 'Cancel',
       button2: 'OK',
       confirmText3: 'Successfully Paid',
+      orderSuccess: 'App will be deployed after the order is successfully paid, please wait for a moment',
+      deployTitle: 'Deploy',
+      deployText: 'Are you sure to deploy the application?',
+      deployAuto: 'App will be deployed automatically Please wait patiently!',
+      deployCancel: 'Successful undeployment',
     },
     myResource: {
       resourceAll: 'All UraPower',

@@ -179,7 +179,11 @@ module.exports = {
             button1: '取 消',
             button2: '确 定',
             confirmText3: '付款成功',
-            confirmText4: '可前往我的应用仓库查看我已经部署的应用'
+            orderSuccess: '订单支付成功，app自动部署，请耐心等待',
+            deployTitle: '部署',
+            deployText: '是否确认部署',
+            deployAuto: '应用将自动部署，请耐心等待',
+            deployCancel: '已取消部署',
         },
         myResource: {
             resourceAll: '资源总览',

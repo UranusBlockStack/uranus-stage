@@ -241,8 +241,8 @@ export default {
       pageSize: this.$store.state.defaultPageSize,
       totalRecordsFrom: 0,
       totalRecordsTo: 0,
-      tableType: true
-    }
+      tableType: false
+    };
   },
   methods: {
     formateDate(row, column, cellValue) {

@@ -815,7 +815,7 @@ export default {
                 showClose: true,
                 message:
                       this.appDetail.name +
-                      ' 订单支付成功后，App自动部署，请耐心等待',
+                      this.$t('buyer.deploy.orderSuccess'),
                 type: 'success',
                 duration: 3000
               })
@@ -844,20 +844,20 @@ export default {
     
     deployConfirm() {
       this.innerVisible = false
-      this.$confirm('是否部署?', '部署', {
-        confirmButtonText: '确定',
-        cancelButtonText: '取消',
+      this.$confirm(this.$t('buyer.deploy.deployText'), this.$t('buyer.deploy.deployTitle'), {
+        confirmButtonText: this.$t('buyer.deploy.button2'),
+        cancelButtonText: this.$t('buyer.deploy.button1'),
         type: 'warning'
       }).then(() => {
         this.appDeploy()
         this.$message({
           type: 'success',
-          message: 'App 将自动部署 请耐心等待!'
+          message: this.$t('buyer.deploy.deployAuto')
         })
       }).catch(() => {
         this.$message({
           type: 'info',
-          message: '已取消部署'
+          message: this.$t('buyer.deploy.deployCancel')
         })
       })
     },
