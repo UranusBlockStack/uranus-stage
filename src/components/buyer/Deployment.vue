@@ -870,6 +870,13 @@ export default {
             message: this.$t('buyer.deploy.deployCancel')
           })
         })
+      } else {
+        this.$message({
+          type: 'success',
+          message: 'Success.',
+          duration: 3000
+        })
+        this.successToListPage()
       }
     },
     successToListPage() {
