@@ -731,7 +731,7 @@ export default {
           const purchUraStausData = purcheStatus.data
           if (purchUraStausData.success) {
             this.gridData = [purchUraStausData.data]
-            this.projectId = purchUraStausData.data.projectId
+            this.projectId = purchUraStausData.data.prodId
 
             if (!this.isMyApplication) {
               this.purchaseAppliction()
