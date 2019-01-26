@@ -2,7 +2,10 @@
   <section class="Wallet">
     <el-row class="wallet-head">
       <el-col :span="24">
-        <h1><i class="iconfont icon-wallet"></i> {{ $t("wallet.title") }}</h1>
+        <h1>
+          <i class="iconfont icon-wallet"></i>
+          {{ $t("wallet.title") }}
+        </h1>
       </el-col>
     </el-row>
     <el-row class="wallet-body">
@@ -10,27 +13,28 @@
         <p>{{ $t("wallet.balance") }} {{ balance }} URAC</p>
         <p>
           {{ $t("wallet.address") }} {{ address }}
-          <el-tooltip
-            class="item"
-            effect="dark"
-            content="Copy address"
-            placement="right"
-          >
+          <el-tooltip class="item" effect="dark" content="Copy address" placement="right">
             <u class="copy" @click="copy()">{{ $t("wallet.copy") }}</u>
           </el-tooltip>
         </p>
       </el-col>
       <el-col :span="6">
-        <el-button type="success" @click="goTransfer">{{
+        <el-button type="success" @click="goTransfer">
+          {{
           $t("wallet.button")
-        }}</el-button>
+          }}
+        </el-button>
       </el-col>
     </el-row>
 
-
     <el-row class="transaction">
       <el-col class="transaction-head">
-        <p>{{ $t("wallet.transactionDetails") }}</p>
+        <p>
+          {{ $t("wallet.transactionDetails") }}
+          <span :class="{tableType:!tableType}" @click="tableType = false">FROM</span>
+          <span :class="{tableType:tableType}" @click="tableType = true">TO</span>
+        </p>
+        <!-- transactions details box -->
         <el-dialog
           :title="$t('wallet.transactionDetails')"
           :visible.sync="dialogVisible"
@@ -42,41 +46,36 @@
           </el-table>
         </el-dialog>
       </el-col>
-
-      <el-col class="blue-box" :span="24">
-        <el-table
-          :data="transactionListFrom"
-          style="width: 100%"
-          @row-click="viewDetail"
-        >
+      <!-- transaction from table -->
+      <el-col v-show="!tableType" class="blue-box" :span="24">
+        <el-table :data="transactionListFrom" style="width: 100%" @row-click="viewDetail">
           <template slot="empty">
             <p class="empty-text">No Transaction</p>
           </template>
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-hash"></i> {{ $t("wallet.hash") }}
+                <i class="iconfont icon-table-hash"></i>
+                {{ $t("wallet.hash") }}
               </p>
             </template>
             <template slot-scope="scope">
               <p class="overflow">{{ scope.row.hash }}</p>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="createTime"
-            :formatter="formateDate"
-            min-width="160"
-          >
+          <el-table-column prop="createTime" :formatter="formateDate" min-width="160">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-time"></i> {{ $t("wallet.time") }}
+                <i class="iconfont icon-table-time"></i>
+                {{ $t("wallet.time") }}
               </p>
             </template>
           </el-table-column>
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-from"></i> {{ $t("wallet.from") }}
+                <i class="iconfont icon-table-from"></i>
+                {{ $t("wallet.from") }}
               </p>
             </template>
             <template slot-scope="scope">
@@ -86,18 +85,15 @@
           <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-to"></i> {{ $t("wallet.to") }}
+                <i class="iconfont icon-table-to"></i>
+                {{ $t("wallet.to") }}
               </p>
             </template>
             <template slot-scope="scope">
               <p class="overflow">{{ scope.row.to }}</p>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="value"
-            :label="$t('wallet.value')"
-            min-width="150"
-          >
+          <el-table-column prop="value" :label="$t('wallet.value')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-value"></i>
@@ -108,15 +104,12 @@
           <el-table-column prop="fee" :label="$t('wallet.fee')">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-fee"></i> {{ $t("wallet.fee") }}
+                <i class="iconfont icon-table-fee"></i>
+                {{ $t("wallet.fee") }}
               </p>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="status"
-            :label="$t('wallet.status')"
-            min-width="110"
-          >
+          <el-table-column prop="status" :label="$t('wallet.status')" min-width="110">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-state"></i>
@@ -125,50 +118,46 @@
             </template>
           </el-table-column>
         </el-table>
-        <el-col :span="6" :offset="15" class="transaction-foot">
-          <el-pagination
-            layout="prev, pager, next"
-            :current-page.sync="currentPageFrom"
-            :page-size="pageSize"
-            :total="totalRecordsFrom"
-            @current-change="handleCurrentChangeFrom"
-          >
-          </el-pagination>
-        </el-col>
-
-        <el-table
-          :data="transactionListTo"
-          style="width: 100%"
-          @row-click="viewDetail"
-        >
+      </el-col>
+      <el-col v-show="!tableType" :span="6" :offset="15" class="transaction-foot">
+        <el-pagination
+          layout="prev, pager, next"
+          :current-page.sync="currentPageFrom"
+          :page-size="pageSize"
+          :total="totalRecordsFrom"
+          @current-change="handleCurrentChangeFrom"
+        ></el-pagination>
+      </el-col>
+      <!-- transcation to table-->
+      <el-col v-show="tableType" class="blue-box" :span="24">
+        <el-table :data="transactionListTo" style="width: 100%" @row-click="viewDetail">
           <template slot="empty">
             <p class="empty-text">No Transaction</p>
           </template>
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-hash"></i> {{ $t("wallet.hash") }}
+                <i class="iconfont icon-table-hash"></i>
+                {{ $t("wallet.hash") }}
               </p>
             </template>
             <template slot-scope="scope">
               <p class="overflow">{{ scope.row.hash }}</p>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="createTime"
-            :formatter="formateDate"
-            min-width="160"
-          >
+          <el-table-column prop="createTime" :formatter="formateDate" min-width="160">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-time"></i> {{ $t("wallet.time") }}
+                <i class="iconfont icon-table-time"></i>
+                {{ $t("wallet.time") }}
               </p>
             </template>
           </el-table-column>
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-from"></i> {{ $t("wallet.from") }}
+                <i class="iconfont icon-table-from"></i>
+                {{ $t("wallet.from") }}
               </p>
             </template>
             <template slot-scope="scope">
@@ -178,18 +167,15 @@
           <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-to"></i> {{ $t("wallet.to") }}
+                <i class="iconfont icon-table-to"></i>
+                {{ $t("wallet.to") }}
               </p>
             </template>
             <template slot-scope="scope">
               <p class="overflow">{{ scope.row.to }}</p>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="value"
-            :label="$t('wallet.value')"
-            min-width="150"
-          >
+          <el-table-column prop="value" :label="$t('wallet.value')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-value"></i>
@@ -200,15 +186,12 @@
           <el-table-column prop="fee" :label="$t('wallet.fee')">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-fee"></i> {{ $t("wallet.fee") }}
+                <i class="iconfont icon-table-fee"></i>
+                {{ $t("wallet.fee") }}
               </p>
             </template>
           </el-table-column>
-          <el-table-column
-            prop="TransStatus"
-            :label="$t('wallet.status')"
-            min-width="110"
-          >
+          <el-table-column prop="TransStatus" :label="$t('wallet.status')" min-width="110">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-state"></i>
@@ -219,35 +202,33 @@
         </el-table>
       </el-col>
 
-      <el-col :span="6" :offset="15" class="transaction-foot">
+      <el-col v-show="tableType" :span="6" :offset="15" class="transaction-foot">
         <el-pagination
           layout="prev, pager, next"
           :current-page.sync="currentPageTo"
           :page-size="pageSize"
           :total="totalRecordsTo"
           @current-change="handleCurrentChangeTo"
-        >
-        </el-pagination>
+        ></el-pagination>
       </el-col>
     </el-row>
-
   </section>
 </template>
 
 <script>
-import * as auth from '../../services/AuthService'
-import * as account from '../../services/AccountService'
-import * as wallet from '../../services/WalletService'
-import moment from 'moment'
-import { Message } from 'element-ui'
-import { getTradeStatusName } from '../../store/orderStatus'
+import * as auth from "../../services/AuthService";
+import * as account from "../../services/AccountService";
+import * as wallet from "../../services/WalletService";
+import moment from "moment";
+import { Message } from "element-ui";
+import { getTradeStatusName } from "../../store/orderStatus";
 
 export default {
-  name: 'Wallet',
+  name: "Wallet",
   data() {
     return {
-      address: '',
-      balance: '0',
+      address: "",
+      balance: "0",
       dialogVisible: false,
       transactionListFrom: [],
       transactionListTo: [],
@@ -258,33 +239,34 @@ export default {
       currentPageTo: 1,
       pageSize: this.$store.state.defaultPageSize,
       totalRecordsFrom: 0,
-      totalRecordsTo: 0
-    }
+      totalRecordsTo: 0,
+      tableType: true
+    };
   },
   methods: {
     formateDate(row, column, cellValue) {
-      return moment(cellValue).format('YYYY-MM-DD HH:mm:ss')
+      return moment(cellValue).format("YYYY-MM-DD HH:mm:ss");
     },
     copy() {
-      const input = document.createElement('input')
-      document.body.appendChild(input)
-      input.setAttribute('value', this.address)
-      input.select()
-      if (document.execCommand('copy')) {
-        document.execCommand('copy')
+      const input = document.createElement("input");
+      document.body.appendChild(input);
+      input.setAttribute("value", this.address);
+      input.select();
+      if (document.execCommand("copy")) {
+        document.execCommand("copy");
       }
-      document.body.removeChild(input)
-      this.$message('Success')
+      document.body.removeChild(input);
+      this.$message("Success");
     },
     goTransfer() {
-      this.$router.push({ path: 'transfer' })
+      this.$router.push({ path: "transfer" });
     },
     getUserInfo() {
       const userInfo = account
         .userInfo(this.curLang, this.curUserInfo.userId)
         .then(userInfo => {
-          this.address = userInfo.data.data.accountAddress
-        })
+          this.address = userInfo.data.data.accountAddress;
+        });
     },
     getTradeList() {
       wallet
@@ -295,15 +277,15 @@ export default {
           this.pageSize
         )
         .then(tradeList => {
-          this.transactionListFrom = tradeList.data.data.records
+          this.transactionListFrom = tradeList.data.data.records;
           this.transactionListFrom.map(transaction => {
             transaction.TransStatus = getTradeStatusName(
               transaction.status,
               auth.getCurLang()
-            )
-          })
-          this.totalRecordsFrom = tradeList.data.data.records.length
-        })
+            );
+          });
+          this.totalRecordsFrom = tradeList.data.data.records.length;
+        });
       wallet
         .getTradeListToUser(
           this.curLang,
@@ -312,50 +294,50 @@ export default {
           this.pageSize
         )
         .then(tradeList => {
-          this.transactionListTo = tradeList.data.data.records
+          this.transactionListTo = tradeList.data.data.records;
           this.transactionListTo.map(transaction => {
             transaction.TransStatus = getTradeStatusName(
               transaction.status,
               auth.getCurLang()
-            )
-          })
-          this.totalRecordsTo = tradeList.data.data.records.length
-        })
+            );
+          });
+          this.totalRecordsTo = tradeList.data.data.records.length;
+        });
     },
     viewDetail(row) {
-      let transDetail = []
-      const fields = Object.keys(row)
+      let transDetail = [];
+      const fields = Object.keys(row);
       fields.map(field => {
         const fieldData = {
           title: field,
           value: row[field]
-        }
-        transDetail.push(fieldData)
-      })
-      this.tableData1 = transDetail
-      this.dialogVisible = true
+        };
+        transDetail.push(fieldData);
+      });
+      this.tableData1 = transDetail;
+      this.dialogVisible = true;
     },
     getBalance() {
       return account.userBalcnce(this.curLang).then(resPdata => {
-        let data = resPdata.data.data
-        this.balance = data.balance
-      })
+        let data = resPdata.data.data;
+        this.balance = data.balance;
+      });
     },
     handleCurrentChangeFrom(val) {
-      this.currentPageFrom = val
-      this.getTradeList()
+      this.currentPageFrom = val;
+      this.getTradeList();
     },
     handleCurrentChangeTo(val) {
-      this.currentPageTo = val
-      this.getTradeList()
+      this.currentPageTo = val;
+      this.getTradeList();
     }
   },
   mounted() {
-    this.getUserInfo()
-    this.getBalance()
-    this.getTradeList()
+    this.getUserInfo();
+    this.getBalance();
+    this.getTradeList();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -446,6 +428,21 @@ export default {
         font-size: 16px;
         color: #ffffff;
         line-height: 50px;
+        span {
+          display: inline-block;
+          margin-left: 30px;
+          height: 30px;
+          line-height: 30px;
+          width: 60px;
+          text-align: center;
+          background: rgba(101, 143, 247, 0);
+          box-shadow: inset 0 0 22px 0 #2463ff;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        .tableType {
+            color: #409eff;
+        }
       }
     }
     .blue-box {
