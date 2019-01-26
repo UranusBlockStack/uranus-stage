@@ -554,7 +554,9 @@ export default {
       this.more = !this.more
     },
 
+
     /// phase 1 resource and appinfo --------
+
     setConfigSelector() {
       const CpuData = ServerConfigData.CPU
       this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang())
@@ -688,7 +690,9 @@ export default {
         })
     },
 
+
     /// phase 2 buy resource and application --------
+
     getReferenceFee() {
       wallet.walletReferenceFee(auth.getCurLang()).then(reffee => {
         this.fee = reffee.data.data
@@ -725,7 +729,7 @@ export default {
           const purchUraStausData = purcheStatus.data
           if (purchUraStausData.success) {
             this.gridData = [purchUraStausData.data]
-            this.projectId = purchUraStausData.projectId
+            this.projectId = purchUraStausData.data.projectId
 
             if (!this.isMyApplication) {
               this.purchaseAppliction()
@@ -833,6 +837,7 @@ export default {
       //       }
       //     })
     },
+
 
     /// phase 3 deploy application --------
     
