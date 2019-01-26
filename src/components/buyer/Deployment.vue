@@ -377,10 +377,18 @@
                         param.type === 'password'
                     "
                   >
-                    <p class="configuration-name">{{ param.label }}：</p>
+                    <p class="configuration-name">{{ param.label }}： </p>
                     <el-input v-model="param.default"></el-input>
                     <span>{{ param.description }}</span>
                   </div>
+                  <!--<div-->
+                      <!--v-if="-->
+                      <!--param.type === 'boolean' " >-->
+                        <!--<p class="configuration-name">{{ param.label }}：[{{param.subquestions ?param.subquestions.length :0 }}]</p>-->
+                        <!--<el-input v-model="param.default"></el-input>-->
+                        <!--<span>{{ param.description }}</span>-->
+                  <!--</div>-->
+
                 </el-col>
               </el-row>
             </li>
@@ -494,16 +502,7 @@ export default {
   // },
 
   methods: {
-    getOrderOfApp() {
-      app.appPurchaseInfo(auth.getCurLang(), this.appId)
-          .then(purchaseInfo => {
-            const purchaseInfoData = purchaseInfo.data
-            if (purchaseInfoData.success) {
-              this.isMyApplication = true
-              this.orderNumber = purchaseInfoData.data.orderNo
-            }
-          })
-    },
+    /// common functions
     parseConfigData(configData) {
       /// grouped data
       let paramTreeTmp = {}
@@ -519,6 +518,7 @@ export default {
       groups.map(group => {
         let newgroup = []
         const curgroup = paramTreeTmp[group]
+        console.log(group, curgroup)
 
         curgroup.map(param => {
           const rebranchnode = param.showIf
@@ -553,7 +553,6 @@ export default {
       this.more = !this.more
     },
 
-
     /// phase 1 resource and appinfo --------
     setConfigSelector() {
       const CpuData = ServerConfigData.CPU
@@ -572,7 +571,16 @@ export default {
       this.networkSel = WrapDropDownData(NetworData, null)
       this.deployForm.network = this.networkSel[0].value
     },
-
+    getOrderOfApp() {
+      app.appPurchaseInfo(auth.getCurLang(), this.appId)
+              .then(purchaseInfo => {
+                const purchaseInfoData = purchaseInfo.data
+                if (purchaseInfoData.success) {
+                  this.isMyApplication = true
+                  this.orderNumber = purchaseInfoData.data.orderNo
+                }
+              })
+    },
     setRegionSelectValue(region) {
       this.deployForm.rancherId = region
     },
@@ -678,7 +686,6 @@ export default {
           this.projectId = this.spaceSel[0].value
         })
     },
-
 
     /// phase 2 buy resource and application --------
     getReferenceFee() {
@@ -825,7 +832,6 @@ export default {
       //       }
       //     })
     },
-
 
     /// phase 3 deploy application --------
     

@@ -112,7 +112,7 @@ export default {
       imageServerUrl: this.$store.state.imageServerUrl,
       appList: [],
       searchName: '',
-      currentPageFrom: 1,
+      currentPage: 1,
       pageSize: this.$store.state.defaultCardPageSize,
       totalRecords: 0,
       sort: 'download_times',
@@ -123,7 +123,7 @@ export default {
     getAppList() {
       const queryData = {
         name: this.searchName,
-        page: this.currentPageFrom,
+        page: this.currentPage,
         pageSize: this.pageSize,
         sort: this.sort,
         sortDesc: this.sortDesc

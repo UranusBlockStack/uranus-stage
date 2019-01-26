@@ -122,7 +122,7 @@ export default {
       appTypeSelected: 0,
       catalogRid: 'library',
       searchName: '',
-      currentPageFrom: 1,
+      currentPage: 1,
       pageSize: this.$store.state.defaultCardPageSize,
       totalRecords: 0,
       sort: 'download_times',
@@ -135,7 +135,7 @@ export default {
       const searchData = {
         free: this.appTypeSelected,
         name: this.searchName,
-        page: this.currentPageFrom,
+        page: this.currentPage,
         pageSize: this.pageSize,
         // 'sort': this.sort,
         sortDesc: this.sortDesc

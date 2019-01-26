@@ -9,13 +9,13 @@ const orderStatus = [
 ]
 
 const tradeStatus = [
-    { id: 0, 'en-us': 'UnConfirmed', 'zh-cn': '交易未确认'},
-    { id: 1, 'en-us': 'Confirmed', 'zh-cn': '交易已确认'},
-    { id: 10, 'en-us': 'Failed', 'zh-cn': '交易失败'}
+    {id: 0, 'en-us': 'UnConfirmed', 'zh-cn': '交易未确认'},
+    {id: 1, 'en-us': 'Confirmed', 'zh-cn': '交易已确认'},
+    {id: 10, 'en-us': 'Failed', 'zh-cn': '交易失败'}
 ]
 
 /// / 公用函数 ---------------
-///
+/// 
 export const getStatusName = (statusDefine, id, lang) => {
   const order = statusDefine.find(order => {
     if (order.id === id) {
@@ -37,14 +37,11 @@ export const getCNNamefromCode = (code) => {
   })
 }
 
-
 /// 状态获取的函数
 //
 export const getOrderStatusName = (id, lang) => {
-    return getStatusName(orderStatus, id, lang)
+  return getStatusName(orderStatus, id, lang)
 }
 export const getTradeStatusName = (id, lang) => {
-    return getStatusName(tradeStatus, id, lang)
+  return getStatusName(tradeStatus, id, lang)
 }
-
-
