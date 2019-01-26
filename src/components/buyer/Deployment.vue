@@ -253,7 +253,7 @@
         </el-col>
       </el-row>
       <!-- more choice -->
-      <el-row class="margin-top" v-show="more">
+      <el-row class="margin-top" v-show="more && existedResourceSelect">
         <el-col :span="2" :offset="1">
           <el-radio v-model="orderModel" label="2">{{
             $t("buyer.deploy.choosePool")
@@ -425,7 +425,7 @@ export default {
   },
   data() {
     return {
-      orderModel: '2',
+      orderModel: '1',
       deployForm: {
         projectName: '',
         rancherId: 2,
@@ -475,7 +475,8 @@ export default {
       fee: 0,
       concode: '',
       isMyApplication: false,
-      orderNumber: ''
+      orderNumber: '',
+      existedResourceSelect: true
     }
   },
   created() {
@@ -493,7 +494,7 @@ export default {
       this.getOrderOfApp()
     }
 
-      document.cookie = "name=oeschger"
+    document.cookie = 'name=oeschger'
   },
   // beforeRouteEnter(to, from, next) {
   //   if (from.name === 'ApplicationRepository') {
@@ -553,7 +554,6 @@ export default {
     changeMore() {
       this.more = !this.more
     },
-
 
     /// phase 1 resource and appinfo --------
 
@@ -686,10 +686,12 @@ export default {
             object['label'] = data[i].projectName
             this.spaceSel.push(object)
           }
-          this.projectId = this.spaceSel[0].value
+
+          if (!this.spaceSel.length) { this.existedResourceSelect = false } else {
+              this.projectId = this.spaceSel[0].value
+          }
         })
     },
-
 
     /// phase 2 buy resource and application --------
 
@@ -838,7 +840,6 @@ export default {
       //     })
     },
 
-
     /// phase 3 deploy application --------
     
     deployConfirm() {
@@ -905,8 +906,8 @@ export default {
       app.appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
           .then(deployStatus => {
             const deployStatusData = deployStatus.data
-              console.log(deployStatusData);
-              if (deployStatusData.success) {
+            console.log(deployStatusData)
+            if (deployStatusData.success) {
               this.successToListPage()
             } else {
               this.$message({
