@@ -121,20 +121,24 @@ export function isLoggedIn () {
 export function login (lang, userLoginfo) {
   return httpLang(lang).post('/auth/users/signin', userLoginfo)
         .then(function(res) {
-          const userdata = res.data.data
-          if (res) {
-            const curLoginUserInfo = {
-              userName: userLoginfo.loginName,
-              userId: userdata.id,
-              loginType: userLoginfo.loginType,
-              userAddress: userdata.accountAddress,
-              loginRole: getCurRole(),
-              loginLanguage: 'en-us'
+          if (res.data.success) {
+            const userdata = res.data.data
+
+            if (res) {
+              const curLoginUserInfo = {
+                userName: userLoginfo.loginName,
+                userId: userdata.id,
+                loginType: userLoginfo.loginType,
+                userAddress: userdata.accountAddress,
+                loginRole: getCurRole(),
+                loginLanguage: 'en-us'
+              }
+              setToken(userdata.token, curLoginUserInfo)
+              localStorage.setItem('currentUserStatus', JSON.stringify(curLoginUserInfo))
+              res['curLoginUserInfo'] = curLoginUserInfo
             }
-            setToken(userdata.token, curLoginUserInfo)
-            localStorage.setItem('currentUserStatus', JSON.stringify(curLoginUserInfo))
-            res['curLoginUserInfo'] = curLoginUserInfo
           }
+
           return res
         })
 }
