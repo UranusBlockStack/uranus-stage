@@ -102,16 +102,16 @@
 </template>
 
 <script>
-import * as app from '../../services/RancherService'
-import * as auth from '../../services/AuthService'
+import * as app from "../../services/RancherService";
+import * as auth from "../../services/AuthService";
 
 export default {
-  name: 'Buyer',
+  name: "Buyer",
   data() {
     return {
       page: 1,
       pageSize: 4,
-      indexPower: '',
+      indexPower: "",
       dataPower: {
         day: {
           x: [],
@@ -132,7 +132,7 @@ export default {
       powerVal: {},
       appList: [],
       imageServerUrl: this.$store.state.imageServerUrl
-    }
+    };
   },
   methods: {
     getAppList() {
@@ -141,71 +141,71 @@ export default {
         pageSize: this.pageSize,
         // 'sort': this.sort,
         sortDesc: this.sortDesc
-      }
+      };
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
-        this.appList = respData.data.data.records
+        this.appList = respData.data.data.records;
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon";
           appitem.computedPrice = appitem.free
-            ? this.$t('buyer.deploy.free')
-            : appitem.price
-          return appitem
-        })
-      })
+            ? this.$t("buyer.deploy.free")
+            : appitem.price;
+          return appitem;
+        });
+      });
     },
     deployApp(appId, appRid, versionId, catalog) {
       this.$router.push({
-        path: '/deployment',
+        path: "/deployment",
         query: {
           appId: appId,
           appRid: appRid,
           versionId: versionId,
           catalog: catalog
         }
-      })
+      });
     },
     powerDay(x) {
-      this.statisGlobalUraPower('day')
-      this.indexPower = x
+      this.statisGlobalUraPower("day");
+      this.indexPower = x;
     },
     powerWeek(x) {
-      this.statisGlobalUraPower('week')
-      this.indexPower = x
+      this.statisGlobalUraPower("week");
+      this.indexPower = x;
     },
     powerMounth(x) {
-      this.statisGlobalUraPower('month')
-      this.indexPower = x
+      this.statisGlobalUraPower("month");
+      this.indexPower = x;
     },
     initEchart(val) {
-      var myChart = this.$echarts.init(document.getElementById('myPower'))
-      var myData = val
+      var myChart = this.$echarts.init(document.getElementById("myPower"));
+      var myData = val;
       myChart.setOption({
-        color: ['#1890ff'],
+        color: ["#1890ff"],
         //  backgroundColor:'rgba(128, 128, 128, 0.1)', //rgba设置透明度0.1
         tooltip: {
-          trigger: 'axis',
+          trigger: "axis",
           axisPointer: {
-            type: 'line'
+            type: "line"
           }
         },
         grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
+          left: "3%",
+          right: "4%",
+          bottom: "3%",
           containLabel: true
         },
         xAxis: [
           {
-            name: this.$t('buyer.home.xName'),
-            type: 'category',
+            name: this.$t("buyer.home.xName"),
+            type: "category",
             data: myData.x,
             axisLine: {
               show: true,
-              symbol: ['none', 'arrow'],
+              symbol: ["none", "arrow"],
               symbolSize: [10, 20],
               lineStyle: {
-                color: '#ffffff'
+                color: "#ffffff"
               }
             },
             axisTick: {
@@ -213,57 +213,57 @@ export default {
             },
             axisLabel: {
               textStyle: {
-                color: '#ffffff'
+                color: "#ffffff"
               }
             }
           }
         ],
         yAxis: [
           {
-            name: this.$t('buyer.home.yName') + ' (U)',
-            type: 'value',
+            name: this.$t("buyer.home.yName") + " (U)",
+            type: "value",
             axisLine: {
               show: true,
-              symbol: ['none', 'arrow'],
+              symbol: ["none", "arrow"],
               symbolSize: [10, 20],
               symbolOffset: [0, 15],
               lineStyle: {
-                color: '#ffffff'
+                color: "#ffffff"
               }
             },
             splitLine: {
               show: true,
               lineStyle: {
-                  color: '#363636',
+                color: "#363636"
               }
             },
             axisLabel: {
-              formatter: '{value}',
+              formatter: "{value}",
               textStyle: {
-                color: '#ffffff'
+                color: "#ffffff"
               }
             }
           }
         ],
         series: [
           {
-            name: this.$t('buyer.home.allPower'),
-            type: 'bar',
-            color: '#2463ff',
-            barWidth: '20%',
+            name: this.$t("buyer.home.allPower"),
+            type: "bar",
+            color: "#2463ff",
+            barWidth: "20%",
             data: myData.y
           },
           {
-            name: this.$t('buyer.home.restPower'),
-            type: 'line',
-            color: '#51a906',
+            name: this.$t("buyer.home.restPower"),
+            type: "line",
+            color: "#51a906",
             data: myData.line
           }
         ]
-      })
+      });
       window.onresize = function() {
-        myChart.resize()
-      }
+        myChart.resize();
+      };
     },
     statisGlobalUraPower(type) {
       this.dataPower = {
@@ -282,44 +282,44 @@ export default {
           y: [],
           line: []
         }
-      }
+      };
       app.statisticsGlobalUraPower(auth.getCurLang(), type).then(respData => {
-        const data = respData.data.data
-        if (type == 'day') {
+        const data = respData.data.data;
+        if (type == "day") {
           data.forEach(item => {
-            this.dataPower.day.x.push(item.datetimeValue)
-            this.dataPower.day.y.push(item.totalCompute)
-            this.dataPower.day.line.push(item.usedCompute)
-          })
-          this.powerVal = this.dataPower.day
-          this.initEchart(this.powerVal)
-        } else if (type == 'week') {
+            this.dataPower.day.x.push(item.datetimeValue);
+            this.dataPower.day.y.push(item.totalCompute);
+            this.dataPower.day.line.push(item.usedCompute);
+          });
+          this.powerVal = this.dataPower.day;
+          this.initEchart(this.powerVal);
+        } else if (type == "week") {
           data.forEach(item => {
-            this.dataPower.week.x.push(item.datetimeValue)
-            this.dataPower.week.y.push(item.totalCompute)
-            this.dataPower.week.line.push(item.usedCompute)
-          })
-          this.powerVal = this.dataPower.week
-          this.initEchart(this.powerVal)
-        } else if (type == 'month') {
+            this.dataPower.week.x.push(item.datetimeValue);
+            this.dataPower.week.y.push(item.totalCompute);
+            this.dataPower.week.line.push(item.usedCompute);
+          });
+          this.powerVal = this.dataPower.week;
+          this.initEchart(this.powerVal);
+        } else if (type == "month") {
           data.forEach(item => {
-            this.dataPower.mounth.x.push(item.datetimeValue)
-            this.dataPower.mounth.y.push(item.totalCompute)
-            this.dataPower.mounth.line.push(item.usedCompute)
-          })
-          this.powerVal = this.dataPower.mounth
-          this.initEchart(this.powerVal)
+            this.dataPower.mounth.x.push(item.datetimeValue);
+            this.dataPower.mounth.y.push(item.totalCompute);
+            this.dataPower.mounth.line.push(item.usedCompute);
+          });
+          this.powerVal = this.dataPower.mounth;
+          this.initEchart(this.powerVal);
         }
-      })
+      });
     }
   },
   mounted() {
-    this.powerDay(2)
+    this.powerDay(2);
   },
   created() {
-    this.getAppList()
+    this.getAppList();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -401,6 +401,7 @@ export default {
               margin: 10px auto;
               position: relative;
               img {
+                background: #f2f2f2;
                 min-width: 100px;
                 min-height: 80px;
                 max-width: 130px;

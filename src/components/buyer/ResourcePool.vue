@@ -1,5 +1,5 @@
 <template>
-  <section class="resourcePool">
+  <section class="resourcePool"  v-if="isRouterAlive">
     <el-row class="poolHead">
       <el-col class="title" :span="12">
         <h1>
@@ -15,7 +15,7 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="20">
+        <el-col :span="24">
           <h2>{{$t('buyer.resourcePool.restOne')}}</h2>
           <div class="restRes">
             <Cpu v-if="update2" :chartData="statisObejct.cpuUsd"/>
@@ -102,10 +102,11 @@ export default {
         diskUsd: 20,
         memUsd: 30,
         networkUsd: 40,
-        urapowerUsd: 50
+        urapowerUsd: 50,
       },
       update2: false,
-      poolId: this.$route.params.poolid
+      poolId: this.$route.params.poolid,
+      isRouterAlive: true
     }
   },
   methods: {
@@ -172,11 +173,16 @@ export default {
           }
           this.update2 = true
         })
+    },
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(() => (this.isRouterAlive = true));
     }
   },
   beforeRouteUpdate(to, from, next) {
     this.poolId = to.params.poolid
     this.getAppList()
+    this.reload()
     next()
   },
   created() {

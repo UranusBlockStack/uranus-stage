@@ -436,8 +436,13 @@ export default {
               this.outerVisible = false
               this.$message({
                 showClose: true,
+<<<<<<< HEAD
                 message: ' 订单支付成功，请耐心等待',
                 type: 'success',
+=======
+                message: this.$t('buyer.resourceMarket.orderSuccess'),
+                type: "success",
+>>>>>>> d0041c5b... update style for better
                 duration: 3000
               })
               this.$router.push({ name: 'ApplicationRepository' })
@@ -574,6 +579,7 @@ export default {
         font-size: 16px;
         color: #ffffff;
         line-height: 24px;
+        font-weight: 400;
         i {
           font-size: 26px;
           margin-right: 10px;

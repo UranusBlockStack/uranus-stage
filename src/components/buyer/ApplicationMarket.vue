@@ -49,7 +49,12 @@
       </el-row>
       <el-row class="shopBox" :gutter="20">
         <el-col :span="24" style="margin-bottom:40px">
-          <el-card :body-style="{ padding: '0px', height:'380px',}" shadow="hover" v-for="(app, index) in appList" :key="index">
+          <el-card
+            :body-style="{ padding: '0px', height:'380px',}"
+            shadow="hover"
+            v-for="(app, index) in appList"
+            :key="index"
+          >
             <div class="resources">
               <div>
                 <p class="shops">{{app.catalog}}</p>
@@ -77,12 +82,12 @@
       <el-row>
         <el-col :span="8" :offset="16">
           <el-pagination
-                  layout="prev, pager, next"
-                  :current-page.sync="currentPage"
-                  :page-size="pageSize"
-                  :total="totalRecords"
-                  @current-change="handleCurrentChange" >
-          </el-pagination>
+            layout="prev, pager, next"
+            :current-page.sync="currentPage"
+            :page-size="pageSize"
+            :total="totalRecords"
+            @current-change="handleCurrentChange"
+          ></el-pagination>
         </el-col>
       </el-row>
     </div>
@@ -90,44 +95,44 @@
 </template>
 
 <script>
-import * as app from '../../services/RancherService'
-import * as auth from '../../services/AuthService'
+import * as app from "../../services/RancherService";
+import * as auth from "../../services/AuthService";
 
 export default {
-  name: 'ApplicationMarket',
+  name: "ApplicationMarket",
   data() {
     return {
       options1: [
         {
           value: 1,
-          label: 'Free'
+          label: "Free"
         },
         {
           value: 2,
-          label: 'Paid'
+          label: "Paid"
         },
-        { value: 0, label: 'All' }
+        { value: 0, label: "All" }
       ],
       options2: [
         {
-          value: 'library',
-          label: 'library'
+          value: "library",
+          label: "library"
         }
       ],
-      value1: '',
-      value2: '',
+      value1: "",
+      value2: "",
       appList: [],
       imageServerUrl: this.$store.state.imageServerUrl,
-      appType: 'All',
+      appType: "All",
       appTypeSelected: 0,
-      catalogRid: 'library',
-      searchName: '',
+      catalogRid: "library",
+      searchName: "",
       currentPage: 1,
       pageSize: this.$store.state.defaultCardPageSize,
       totalRecords: 0,
-      sort: 'download_times',
-      sortDesc: 'true'
-    }
+      sort: "download_times",
+      sortDesc: "true"
+    };
   },
   methods: {
     // to do 分页的实现
@@ -139,67 +144,68 @@ export default {
         pageSize: this.pageSize,
         // 'sort': this.sort,
         sortDesc: this.sortDesc
-      }
+      };
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
-        this.appList = respData.data.data.records
-        this.totalRecords = respData.data.data.total
+        this.appList = respData.data.data.records;
+        this.totalRecords = respData.data.data.total;
 
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon";
           appitem.computedPrice = appitem.free
-            ? this.$t('buyer.deploy.free')
-            : appitem.price
-          return appitem
-        })
-      })
+            ? this.$t("buyer.deploy.free")
+            : appitem.price;
+          return appitem;
+        });
+      });
     },
     getOrderOfApp(appId) {
-      return app.appPurchaseInfo(auth.getCurLang(), appId)
-              .then(purchaseInfo => {
-                const purchaseInfoData = purchaseInfo.data
-                const purchased = purchaseInfoData.success
-              })
+      return app
+        .appPurchaseInfo(auth.getCurLang(), appId)
+        .then(purchaseInfo => {
+          const purchaseInfoData = purchaseInfo.data;
+          const purchased = purchaseInfoData.success;
+        });
     },
     deployApp(appId, appRid, versionId, catalog) {
-      app.appPurchaseInfo(auth.getCurLang(), appId)
-            .then(purchaseInfo => {
-              const purchaseInfoData = purchaseInfo.data
-              const isMyApplication = purchaseInfoData.success
-              if (isMyApplication) {
-                this.$message({
-                  showClose: true,
-                  message: 'you\'ve purchased app, please go to "My Application" to deploy it',
-                  type: 'warning'
-                })
-              } else {
-                this.$router.push({
-                  path: '/deployment',
-                  query: {
-                    appId: appId,
-                    appRid: appRid,
-                    versionId: versionId,
-                    catalog: catalog
-                  }
-                })
-              }
-            })
+      app.appPurchaseInfo(auth.getCurLang(), appId).then(purchaseInfo => {
+        const purchaseInfoData = purchaseInfo.data;
+        const isMyApplication = purchaseInfoData.success;
+        if (isMyApplication) {
+          this.$message({
+            showClose: true,
+            message:
+              'you\'ve purchased app, please go to "My Application" to deploy it',
+            type: "warning"
+          });
+        } else {
+          this.$router.push({
+            path: "/deployment",
+            query: {
+              appId: appId,
+              appRid: appRid,
+              versionId: versionId,
+              catalog: catalog
+            }
+          });
+        }
+      });
     },
     searchApps() {
-      this.getAppList()
+      this.getAppList();
     },
     setAppType(select) {
-      this.appTypeSelected = select
+      this.appTypeSelected = select;
     },
     handleCurrentChange(val) {
-      this.currentPage = val
-      this.getAppList()
+      this.currentPage = val;
+      this.getAppList();
     }
   },
   created() {
-    this.getAppList()
+    this.getAppList();
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -254,20 +260,20 @@ export default {
       border-radius: 4px;
       color: #ffffff;
     }
-    .el-pagination /deep/ .btn-prev{
-        background: rgba(36, 99, 255, 0.2);
-        color: #ffffff;
+    .el-pagination /deep/ .btn-prev {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
     }
-    .el-pagination /deep/ .btn-next{
-        background: rgba(36, 99, 255, 0.2);
-        color: #ffffff;
+    .el-pagination /deep/ .btn-next {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
     }
-    .el-pagination /deep/ .el-pager li{
-        background: rgba(36, 99, 255, 0.2);
-        color: #ffffff;
+    .el-pagination /deep/ .el-pager li {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
     }
-    .el-pagination /deep/ .el-pager li.active{
-        color: #409eff;
+    .el-pagination /deep/ .el-pager li.active {
+      color: #409eff;
     }
     p {
       height: 40px;
@@ -285,10 +291,10 @@ export default {
       min-height: 400px;
       .el-card {
         background: rgba(101, 143, 247, 0);
-          border: 1px solid rgba(255, 255, 255, 0.2);
-          width: 270px;
-          display: inline-block;
-          margin: 0 15px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        width: 270px;
+        display: inline-block;
+        margin: 0 15px;
       }
       .resources {
         text-align: center;
@@ -302,34 +308,35 @@ export default {
             text-align: right;
           }
           .img-box {
-              height: 110px;
-              width: 130px;
-              margin: 10px auto;
-              position: relative;
-              img {
-                min-width: 100px;
-                min-height: 80px;
-                max-width: 130px;
-                max-height: 110px;
-                width: auto;
-                height: auto;
-                display: block;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-              }
+            height: 110px;
+            width: 130px;
+            margin: 10px auto;
+            position: relative;
+            img {
+              background: #f2f2f2;
+              min-width: 100px;
+              min-height: 80px;
+              max-width: 130px;
+              max-height: 110px;
+              width: auto;
+              height: auto;
+              display: block;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
             }
+          }
           .name {
             font-weight: 600;
-              padding: 5px 0 5px;
-              font-family: Source-Sans-Pro-Bold;
-              font-weight: 500;
-              font-size: 16px;
-              color: #ffffff;
-              text-align: center;
-              line-height: 24px;
-              margin-bottom: 0px;
+            padding: 5px 0 5px;
+            font-family: Source-Sans-Pro-Bold;
+            font-weight: 500;
+            font-size: 16px;
+            color: #ffffff;
+            text-align: center;
+            line-height: 24px;
+            margin-bottom: 0px;
           }
           .detail {
             width: 220px;
@@ -345,33 +352,33 @@ export default {
           }
           .free {
             font-weight: 500;
-              padding: 10px 0;
-              font-family: Source-Sans-Pro-Bold;
-              font-weight: 500;
-              font-size: 14px;
-              color: #1890ff;
-              letter-spacing: 0;
-              line-height: 22px;
-              text-align: left;
+            padding: 10px 0;
+            font-family: Source-Sans-Pro-Bold;
+            font-weight: 500;
+            font-size: 14px;
+            color: #1890ff;
+            letter-spacing: 0;
+            line-height: 22px;
+            text-align: left;
           }
           .downloads {
             font-family: Source-Sans-Pro-Bold;
-              font-weight: 500;
-              font-size: 14px;
-              padding: 10px 0;
-              color: #ffffff;
-              letter-spacing: 0;
-              text-align: center;
-              line-height: 22px;
+            font-weight: 500;
+            font-size: 14px;
+            padding: 10px 0;
+            color: #ffffff;
+            letter-spacing: 0;
+            text-align: center;
+            line-height: 22px;
           }
           .el-button {
             background: rgba(101, 143, 247, 0);
-              box-shadow: inset 0 0 22px 0 #2463ff;
-              border-radius: 5px;
-              width: 120px;
-              border: none;
-              margin-top: -5px;
-              padding: 8px 20px;
+            box-shadow: inset 0 0 22px 0 #2463ff;
+            border-radius: 5px;
+            width: 120px;
+            border: none;
+            margin-top: -5px;
+            padding: 8px 20px;
           }
         }
       }

@@ -79,10 +79,22 @@
             <div :class="scope.row.state == 'active' ? 'on' : 'off'"></div>
           </template>
         </el-table-column>
-        <el-table-column width="200">
-          <!--主机名称 name-->
+        <el-table-column width="100">
+          <!--主机状态 state-->
           <template slot="header" slot-scope="scope">
             <p class="table-head" style="text-align:left;">
+              <i class="iconfont icon-table-state"></i>
+              {{$t('seller.host.state')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p class="overflow">{{ scope.row.state}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="180">
+          <!--主机名称 name-->
+          <template slot="header" slot-scope="scope">
+            <p class="table-head" >
               <i class="iconfont icon-table-host"></i>
               {{$t('seller.host.number')}}
             </p>
@@ -91,7 +103,7 @@
             <p class="overflow">{{ scope.row.name}}</p>
           </template>
         </el-table-column>
-        <el-table-column width="180">
+        <el-table-column min-width="100">
           <!--主机IP ip-->
           <template slot="header" slot-scope="scope">
             <p class="table-head" style="text-align:left;">

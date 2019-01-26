@@ -65,13 +65,15 @@
       </el-row>
       <el-row class="detial">
         <el-col :span="2" :offset="1">
+            <div class="img-box">
           <img :src="imgsrc">
+            </div>
         </el-col>
-        <el-col :span="8" :offset="1">
+        <el-col :span="8" :offset="2">
           <h2>{{ $t("buyer.deploy.name") }} {{ appDetail.name }}</h2>
           <p>{{ $t("buyer.deploy.appDetail") }} {{ appDetail.description }}</p>
         </el-col>
-        <el-col class="border-col" :span="4" :offset="1">
+        <el-col class="border-col" :span="6" :offset="1">
           <p>{{ $t("buyer.deploy.price") }} {{ price }}</p>
           <p>
             {{ $t("buyer.deploy.from") }} {{ $t("buyer.deploy.store") }}
@@ -1036,11 +1038,25 @@ export default {
     }
     .detial {
       height: 155px;
-      img {
-        height: 100px;
-        width: 100px;
-        margin-top: 30px;
-      }
+      .img-box {
+            height: 110px;
+            width: 130px;
+            margin: 10px auto;
+            position: relative;
+            img {
+              background: #f2f2f2;
+              min-width: 100px;
+              min-height: 80px;
+              max-width: 130px;
+              max-height: 110px;
+              width: auto;
+              height: auto;
+              display: block;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }}
       h2 {
         font-family: ArialMT;
         font-size: 18px;

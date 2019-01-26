@@ -46,9 +46,6 @@ export default {
           }
         ]
       })
-      window.onresize = function() {
-        myChart.resize()
-      }
     }
   },
   computed: {},

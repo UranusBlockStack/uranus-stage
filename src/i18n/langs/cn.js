@@ -122,6 +122,7 @@ module.exports = {
             button1: '取 消',
             button2: '确 定',
             confirmText3: '付款成功',
+            orderSuccess: '订单支付成功，请耐心等待'
         },
         deploy: {
             application: '应用部署',

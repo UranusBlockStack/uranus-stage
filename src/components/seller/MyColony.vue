@@ -88,20 +88,17 @@
       <el-row class="shopBox">
         <el-col :span="12" v-for="(colony, index) in colonyList" :key="index">
           <el-row style="border: 1px solid rgba(255, 255, 255, 0.2); margin:10px;">
-            <el-col :span="6">
+            <el-col :span="8">
               <router-link :to="{path: '/colony/'+colony.id}">
                 <Water :chartData="division(colony.usedCompute,colony.totalCompute)"/>
-                <h1>{{colony.name}}</h1>
               </router-link>
             </el-col>
-            <el-col class="padding-top" :span="15">
+            <el-col class="padding-top" :span="16">
+                <h1>{{$t('seller.groups.name')}}: {{colony.name}}</h1>
               <h2>
                 <p>
                   <i class="iconfont icon-earnings"></i>
-                  {{$t('seller.groups.earnings')}}
-                </p>
-                <p>
-                    {{colony.profit }} URAC
+                  {{$t('seller.groups.earnings')}} {{colony.profit }} URAC
                 </p>
               </h2>
               <h2>
@@ -295,11 +292,12 @@ export default {
       }
       h1 {
         width: 100%;
-        text-align: center;
+        text-align: left;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #ffffff;
         margin-top: 0;
+        margin-left: 22px;
         line-height: 22px;
       }
       .setting {

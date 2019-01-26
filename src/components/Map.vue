@@ -290,6 +290,7 @@ export default {
   position: fixed;
   right: 20px;
   top: 80px;
+  z-index: 999;
   .head-block {
     background: #ffffff;
     border: 1px solid #dcdcdc;

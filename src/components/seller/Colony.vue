@@ -65,7 +65,7 @@
               <el-option :label="$t('seller.group.north')" value="northAmerica"></el-option>
               <el-option :label="$t('seller.group.oceania')" value="oceania"></el-option>
             </el-select>
-          </el-form-item> -->
+          </el-form-item>-->
           <el-form-item>
             <el-button type="primary" @click="dialogVisible = false">{{$t('seller.group.confirm')}}</el-button>
             <el-button @click="dialogVisible = false">{{$t('seller.group.cancel')}}</el-button>
@@ -99,14 +99,11 @@
             {{$t('seller.group.restTime')}}
             <RestTime style="display: inline-block" :endTime="dateFormat(clusterInfo.endTime)"/>
           </h4>-->
+          <p style="margin-top: 15px;">{{$t('seller.group.state')}}: {{clusterInfo.state}}</p>
           <p
             v-if="clusterInfo.beginTime != null"
-            style="margin-top: 45px;"
           >{{$t('seller.group.buyingTime')}} {{dateFormat(clusterInfo.beginTime)}}</p>
-          <p
-            v-if="clusterInfo.beginTime == null"
-            style="margin-top: 45px;"
-          >{{$t('seller.group.buyingTime')}} -- --</p>
+          <p v-if="clusterInfo.beginTime == null">{{$t('seller.group.buyingTime')}} -- --</p>
           <p
             v-if="clusterInfo.endTime != null"
           >{{$t('seller.group.endingTime')}} {{dateFormat(clusterInfo.endTime)}}</p>
@@ -152,12 +149,23 @@
               <div :class="scope.row.state == 'active' ? 'on' : 'off'"></div>
             </template>
           </el-table-column>
-
+          <!--主机状态-->
+          <el-table-column width="100">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head" style="text-align: left;">
+                <i class="iconfont icon-table-state"></i>
+                {{$t('seller.host.state')}}
+              </p>
+            </template>
+            <template slot-scope="scope">
+              <p class="overflow">{{ scope.row.state}}</p>
+            </template>
+          </el-table-column>
           <!--主机名称-->
           <el-table-column width="220">
             <template slot="header" slot-scope="scope">
-              <p class="table-head" style="text-align: left;">
-                <i class="iconfont icon-resource-market"></i>
+              <p class="table-head">
+                <i class="iconfont icon-table-host"></i>
                 {{$t('seller.host.number')}}
               </p>
             </template>
@@ -294,7 +302,7 @@
 <script>
 import moment from "moment";
 import RestTime from "@/components/modules/RestTime";
-import { Message } from 'element-ui'
+import { Message } from "element-ui";
 import * as rancher from "../../services/RancherService";
 import * as auth from "../../services/AuthService";
 import Water from "@/components/modules/Water";
@@ -326,7 +334,7 @@ export default {
       switchVal: true,
       outerVisible: false,
       innerVisible: false,
-      isRouterAlive: true,
+      isRouterAlive: true
     };
   },
   methods: {
@@ -359,11 +367,11 @@ export default {
         // } else {
         //     this.tableCluster.dateRange = [this.tableCluster.beginTime,this.tableCluster.endTime]
         // }
-        if (this.tableCluster.state == 'active') {
-          this.switchVal = false
-      } else {
-          this.switchVal = true
-      }
+        if (this.tableCluster.state == "online") {
+          this.switchVal = false;
+        } else {
+          this.switchVal = true;
+        }
         this.update1 = true;
         this.update2 = true;
       });
@@ -373,30 +381,30 @@ export default {
     },
     // Switching cluster sale state
     onLineClick() {
-      var action = ''
+      var action = "";
       if (this.switchVal) {
-          action = 'offline'
+        action = "offline";
       } else {
-          action = 'online'
+        action = "online";
       }
-      rancher.clusterState(this.language, this.clusterId, action).then(data=> {
-          console.log(data.data)
-          if (data.data.success) {
-              this.$message({
-          message: 'Success',
-          type: 'success'
-        })
-              this.switchVal = this.switchVal
-          } else {
-              this.$message(data.data.errMsg)
-              this.switchVal = !this.switchVal
-          }
-      })
+      rancher.clusterState(this.language, this.clusterId, action).then(data => {
+        console.log(data.data);
+        if (data.data.success) {
+          this.$message({
+            message: "Success",
+            type: "success"
+          });
+          this.switchVal = this.switchVal;
+        } else {
+          this.$message(data.data.errMsg);
+          this.switchVal = !this.switchVal;
+        }
+      });
     },
-    reload () {
-     this.isRouterAlive = false
-     this.$nextTick(() => (this.isRouterAlive = true))
-   },
+    reload() {
+      this.isRouterAlive = false;
+      this.$nextTick(() => (this.isRouterAlive = true));
+    }
   },
   computed: {
     getPercentNumber() {
@@ -441,10 +449,9 @@ export default {
     this.clusterId = to.params.resid;
     this.getClusterDetail();
     this.getHosts();
-    this.reload()
+    this.reload();
     next();
-  },
-
+  }
 };
 </script>
 
