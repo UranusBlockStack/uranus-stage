@@ -41,11 +41,15 @@ export default {
           } else if (_this.minutes === 0 && _this.seconds === 0) {
             _this.seconds = 0
             _this.flag = true
+            _this.timeOver()
             window.clearInterval(time)
           } else {
             _this.seconds -= 1
           }
         }, 1000)
+      },
+      timeOver: function() {
+          this.$emit("listentimeOver","false")
       }
     },
     watch: {

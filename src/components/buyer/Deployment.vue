@@ -25,7 +25,7 @@
         <el-button :class="{'is-disabled': !this.canClick}" @click="countDown">{{content}}</el-button>
       </div>
       <p>{{ $t("buyer.deploy.confirmText1") }}</p>
-      <TimeOver style="margin-left:300px;"/>
+      <TimeOver style="margin-left:300px;" v-on:listentimeOver="closeDialog"/>
       <el-dialog
         width="800px"
         :title="$t('buyer.deploy.confirmText3')"
@@ -488,6 +488,9 @@ export default {
   // },
 
   methods: {
+      closeDialog: function(data) {
+          this.outerVisible=false
+      },
     countDown() {
       if (!this.canClick) return
       else {

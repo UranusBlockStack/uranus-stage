@@ -72,7 +72,7 @@
           >{{$t('buyer.resourceMarket.button2')}}</el-button>
         </div>
       </el-dialog>
-      <TimeOver style="margin-left: 250px;"/>
+      <TimeOver style="margin-left: 250px;" v-on:listentimeOver="closeDialog"/>
       <div slot="footer" class="dialog-footer">
         <el-button @click="outerVisible = false">{{$t('buyer.resourceMarket.button1')}}</el-button>
         <el-button type="primary" @click="startTransfer">{{$t('buyer.resourceMarket.button2')}}</el-button>
@@ -296,6 +296,9 @@ export default {
     this.getReferenceFee()
   },
   methods: {
+      closeDialog: function(data) {
+          this.outerVisible=false
+      },
     countDown() {
       if (!this.canClick) return
       else {
