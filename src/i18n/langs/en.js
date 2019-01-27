@@ -492,7 +492,8 @@ module.exports = {
       deleteText1: 'Exit successfully',    //'The host is already occupied and cannot be logged out of the group.',
       deleteText2: 'The host has been leased and cannot exit the Cluster.',
       deleteText3: "The host which is can't exit is on sale in the cluster.",
-      deleteSure: 'After exiting, the relationship of the predicted Cluster will be released, and the corresponding data cannot be restored. Is the exit determined?'
+      deleteSure: 'After exiting, the relationship of the predicted Cluster will be released, and the corresponding data cannot be restored. Is the exit determined?',
+        clusterFail: 'Cluster information is not perfect',
     }
   },
   wallet: {

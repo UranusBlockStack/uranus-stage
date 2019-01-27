@@ -150,7 +150,7 @@
       <el-row class="myHostBox">
         <el-table :data="tableData" style="width: 100%">
           <template slot="empty">
-            <p class="empty-text">{{$t('seller.host.text')}}</p>
+            <p class="empty-text">{{$t('seller.group.text')}}</p>
           </template>
           <el-table-column width="70">
             <template slot-scope="scope">
@@ -162,7 +162,7 @@
             <template slot="header" slot-scope="scope">
               <p class="table-head" style="text-align: left;">
                 <i class="iconfont icon-table-state"></i>
-                {{$t('seller.host.state')}}
+                {{$t('seller.group.state')}}
               </p>
             </template>
             <template slot-scope="scope">
@@ -174,7 +174,7 @@
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-host"></i>
-                {{$t('seller.host.number')}}
+                {{$t('seller.group.number')}}
               </p>
             </template>
             <template slot-scope="scope">
@@ -191,7 +191,7 @@
             <template slot-scope="scope">
               <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
                 <!--已用核数-->
-                {{ scope.row.cpuKernelUsed }} {{$t('seller.host.usable.cpu')}}
+                {{ scope.row.cpuKernelUsed }} {{$t('seller.group.usable.cpu')}}
               </p>
               <el-progress
                 :percentage="getPercentNumber(scope.row.cpuKernelUsed,scope.row.cpuKernel)"
@@ -200,7 +200,7 @@
                 style="margin-left:35px;"
               ></el-progress>
               <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
-                {{ scope.row.cpuKernel }} {{$t('seller.host.have.cpu')}}
+                {{ scope.row.cpuKernel }} {{$t('seller.group.have.cpu')}}
                 <!--总核数-->
               </p>
             </template>
@@ -210,13 +210,13 @@
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-memory"></i>
-                {{$t('seller.host.memory')}}
+                {{$t('seller.group.memory')}}
               </p>
             </template>
             <template slot-scope="scope">
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.memUsed}} {{$t('seller.host.usable.memory')}}</p>
+              >{{ scope.row.memUsed}} {{$t('seller.group.usable.memory')}}</p>
               <el-progress
                 :percentage="getPercentNumber(scope.row.memUsed,scope.row.mem)"
                 :stroke-width="18"
@@ -225,7 +225,7 @@
               ></el-progress>
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.mem}} {{$t('seller.host.have.memory')}}</p>
+              >{{ scope.row.mem}} {{$t('seller.group.have.memory')}}</p>
             </template>
           </el-table-column>
           <!--硬盘-->
@@ -233,13 +233,13 @@
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-disk"></i>
-                {{$t('seller.host.disk')}}
+                {{$t('seller.group.disk')}}
               </p>
             </template>
             <template slot-scope="scope">
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.diskUsed }} {{$t('seller.host.usable.disk')}}</p>
+              >{{ scope.row.diskUsed }} {{$t('seller.group.usable.disk')}}</p>
               <el-progress
                 :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
                 :stroke-width="18"
@@ -248,7 +248,7 @@
               ></el-progress>
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.disk }} {{$t('seller.host.have.disk')}}</p>
+              >{{ scope.row.disk }} {{$t('seller.group.have.disk')}}</p>
             </template>
           </el-table-column>
           <!--宽带(M)-->
@@ -256,13 +256,13 @@
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-network"></i>
-                {{$t('seller.host.network')}}
+                {{$t('seller.group.network')}}
               </p>
             </template>
             <template slot-scope="scope">
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.networkUsed }} {{$t('seller.host.usable.network')}}</p>
+              >{{ scope.row.networkUsed }} {{$t('seller.group.usable.network')}}</p>
               <el-progress
                 :percentage="getPercentNumber(scope.row.networkUsed,scope.row.network)"
                 :stroke-width="18"
@@ -271,7 +271,7 @@
               ></el-progress>
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.networkUsed }} {{$t('seller.host.have.network')}}</p>
+              >{{ scope.row.networkUsed }} {{$t('seller.group.have.network')}}</p>
             </template>
           </el-table-column>
           <!--删除-->
@@ -354,17 +354,19 @@ export default {
       });
     },
     modifyCluster() {
-        // 设置集群
-        let newClusterInfo = this.tableCluster
-        newClusterInfo.beginTime = this.tableCluster.dateRange[0]
-        newClusterInfo.endTime = this.tableCluster.dateRange[1]
-        rancher.clusterModify(this.language, this.clusterId, newClusterInfo).then(data => {
-            if(data.data.success) {
-                this.winReload()
-            } else {
-                console.log(data.data.errMsg)
-            }
-        })
+      // 设置集群
+      let newClusterInfo = this.tableCluster;
+      newClusterInfo.beginTime = this.tableCluster.dateRange[0];
+      newClusterInfo.endTime = this.tableCluster.dateRange[1];
+      rancher
+        .clusterModify(this.language, this.clusterId, newClusterInfo)
+        .then(data => {
+          if (data.data.success) {
+            this.winReload();
+          } else {
+            console.log(data.data.errMsg);
+          }
+        });
     },
     deleteHost(id) {
       //删除主机
@@ -402,25 +404,32 @@ export default {
     },
     // Switching cluster sale state
     onLineClick() {
-      var action = "";
-      if (this.switchVal) {
-        action = "offline";
-      } else {
-        action = "online";
-      }
-      rancher.clusterState(this.language, this.clusterId, action).then(data => {
-        console.log(data.data);
-        if (data.data.success) {
-          this.$message({
-            message: "Success",
-            type: "success"
-          });
-          this.switchVal = this.switchVal;
-        } else {
-          this.$message(data.data.errMsg);
+      if (this.tableCluster.rentPrice == null || this.tableCluster.regionEnUs == null || this.tableCluster.beginTime == null || this.tableCluster.endTime == null) {
+          this.$message(this.$t('seller.group.clusterFail'));
           this.switchVal = !this.switchVal;
+      } else {
+        var action = "";
+        if (this.switchVal) {
+          action = "offline";
+        } else {
+          action = "online";
         }
-      });
+        rancher
+          .clusterState(this.language, this.clusterId, action)
+          .then(data => {
+            console.log(data.data);
+            if (data.data.success) {
+              this.$message({
+                message: "Success",
+                type: "success"
+              });
+              this.switchVal = this.switchVal;
+            } else {
+              this.$message(data.data.errMsg);
+              this.switchVal = !this.switchVal;
+            }
+          });
+      }
     },
     reload() {
       this.isRouterAlive = false;
