@@ -106,7 +106,7 @@
         <el-table-column min-width="100">
           <!--主机IP ip-->
           <template slot="header" slot-scope="scope">
-            <p class="table-head" style="text-align:left;">
+            <p class="table-head">
               <i class="iconfont icon-table-ip"></i>
               {{$t('seller.host.ip')}}
             </p>
@@ -363,7 +363,7 @@ export default {
       var param = {
         newCluster: false,
         clusterName: this.newClusterName,
-        rancherId: this.rancherId
+        rancherId: this.rancherId,
       };
       if (this.groupJoin == this.$t("seller.host.newGroup")) {
         param.newCluster = true;
@@ -494,6 +494,7 @@ export default {
     .overflow {
       overflow: hidden;
       text-overflow: ellipsis;
+      text-align: center;
       white-space: nowrap;
       width: 100%;
     }
