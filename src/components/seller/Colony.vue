@@ -35,6 +35,14 @@
           <el-form-item :label="$t('seller.group.settingTime')">
             <el-col :span="8">
               <el-date-picker
+                v-model="tableCluster.dateRange"
+                type="daterange"
+                :start-placeholder="$t('seller.group.startingTime')"
+                :end-placeholder="$t('seller.group.endTime')"
+              ></el-date-picker>
+            </el-col>
+            <!-- <el-col :span="8">
+              <el-date-picker
                 type="date"
                 :placeholder="$t('seller.group.startingTime')"
                 v-model="tableCluster.beginTime"
@@ -51,7 +59,7 @@
                 v-model="tableCluster.endTime"
                 style="width: 100%;"
               ></el-date-picker>
-            </el-col>
+            </el-col>-->
           </el-form-item>
           <!-- <el-form-item :label="$t('seller.group.setRegion')">
             <el-select
@@ -67,7 +75,7 @@
             </el-select>
           </el-form-item>-->
           <el-form-item>
-            <el-button type="primary" @click="dialogVisible = false">{{$t('seller.group.confirm')}}</el-button>
+            <el-button type="primary" @click="modifyCluster">{{$t('seller.group.confirm')}}</el-button>
             <el-button @click="dialogVisible = false">{{$t('seller.group.cancel')}}</el-button>
           </el-form-item>
         </el-form>
@@ -344,6 +352,19 @@ export default {
         console.log("hosts====", data);
         this.tableData = data.data.data.records;
       });
+    },
+    modifyCluster() {
+        // 设置集群
+        let newClusterInfo = this.tableCluster
+        newClusterInfo.beginTime = this.tableCluster.dateRange[0]
+        newClusterInfo.endTime = this.tableCluster.dateRange[1]
+        rancher.clusterModify(this.language, this.clusterId, newClusterInfo).then(data => {
+            if(data.data.success) {
+                this.winReload()
+            } else {
+                console.log(data.data.errMsg)
+            }
+        })
     },
     deleteHost(id) {
       //删除主机
