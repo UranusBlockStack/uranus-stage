@@ -71,10 +71,7 @@
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="bindMailCaptcha" style="width:69%"></el-input>
-                <el-button
-                  style="width:28%"
-                  @click="sendCode('email',newEmail)"
-                >{{$t('setting.codeBtn')}}</el-button>
+                <el-button style="width:28%" @click="sendCode('email',newEmail)">{{$t('setting.codeBtn')}}</el-button>
               </el-form-item>
               <div class="prompt">{{mailprompt}}</div>
             </el-form>
@@ -100,12 +97,7 @@
         <p>
           <el-button type="text" @click="setPhone()">{{buttonClick}}</el-button>
           <!-- change phone -->
-          <el-dialog
-            :title="this.buttonClick"
-            :visible.sync="phoneOuterVisible"
-            width="580px"
-            :close-on-click-modal="false"
-          >
+          <el-dialog :title="this.buttonClick" :visible.sync="phoneOuterVisible" width="580px" :close-on-click-modal="false">
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
                 <el-input v-model="sourceNum" disabled="disabled"></el-input>
@@ -387,9 +379,7 @@ export default {
           this.mailprompt = "";
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              console.log("验证码发送失败");
-            } else {
-              console.log("验证码发送成功");
+              alert("验证码发送失败");
             }
           });
         }
@@ -469,15 +459,18 @@ export default {
           account
             .userBind(this.$store.getters.lang, bindType, param)
             .then(data => {
-              console.log("解绑中。。。。");
+              console.log("解绑中。。。。"+data.data.succes);
               console.log(data);
               if (data.data.success) {
                 //成功
                 this.mailprompt = "";
                 if (bindType == "email") {
+                    this.mail=this.newEmail
                   this.mailOuterVisible = false;
                   this.mailInnerVisible = false;
+
                 } else if (bindType == "mobile") {
+                    this.sourceNum=this.newPhoneNum
                   this.phoneOuterVisible = false;
                   this.phoneInnerVisible = false;
                 }
@@ -499,7 +492,7 @@ export default {
           account
             .userBind(this.$store.getters.lang, bindType, param)
             .then(data => {
-              console.log("解绑中。。。。");
+              console.log("解绑中。。。。p:",param,"==="+data.data.success);
               console.log(data);
               if (data.data.success) {
                 //成功
