@@ -161,7 +161,7 @@ function decodeToken () {
 }
 
 export function checkUser (lang, checkType, checkValue) {
-  return httpLang(lang).get('/auth/users/' + checkType + checkValue)
+  return httpLang(lang).get(`/auth/users/${checkType}/${checkValue}`)
 }
 
 export function resetPassword (lang, passPair) {
@@ -178,7 +178,7 @@ export function captcha (lang, userinfo) {
 
 // 检查手机或邮箱验证码是否正确
 export function checkCaptcha (lang, receiver, captcha) {
-  return httpLang(lang).get('/auth/captcha/' + receiver + captcha)
+  return httpLang(lang).get(`/auth/captcha/${receiver}/${captcha}`)
 }
 
 export function country (lang) {
