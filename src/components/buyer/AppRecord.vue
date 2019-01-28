@@ -11,12 +11,12 @@
     <el-row class="recordBox">
       <el-row>
         <el-col :span="7">
-          <el-input
+          <el-input @keyup.enter.native="searchApps"
             :placeholder="$t('buyer.appRepository.deployPage.searchIn')"
             prefix-icon="el-icon-search"
             v-model="appName"
           ></el-input>
-          <el-button type="success" @click="searchApp">
+          <el-button type="success" @click="searchApps">
             <i class="iconfont icon-search"></i>
           </el-button>
         </el-col>
@@ -253,7 +253,7 @@ export default {
       this.fillDetailData(rowdata);
       this.dialogVisible = true;
     },
-    searchApp() {
+    searchApps() {
       this.getAppDeployRecords();
     },
     handleCurrentChange(val) {
