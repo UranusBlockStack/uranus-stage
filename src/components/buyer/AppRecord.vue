@@ -54,7 +54,7 @@
         </el-dialog>
       </el-col>
       <el-col class="blue-box" :span="24">
-        <el-table :data="tableData" style="width: 100%" @row-click="deployDetail">
+        <el-table :data="tableData" style="width: 100%" >
           <template slot="empty">
             <p class="empty-text">{{$t('seller.host.text')}}</p>
           </template>

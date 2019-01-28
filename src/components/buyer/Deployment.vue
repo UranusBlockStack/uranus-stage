@@ -300,7 +300,7 @@
           <el-col :span="10" :offset="4">
             <el-form-item>
               <span slot="label">
-                <i class="iconfont icon-name"></i>
+                <i class="iconfont icon-version"></i>
                 {{ $t("buyer.deploy.chooseVersion") }}
               </span>
               <el-select v-model="versionValue">
@@ -316,7 +316,7 @@
           <el-col :span="8" :offset="2">
             <el-form-item>
               <span slot="label">
-                <i class="iconfont icon-name"></i>
+                <i class="iconfont icon-description"></i>
                 {{ $t("buyer.deploy.description") }}
               </span>
               <el-input v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
@@ -527,7 +527,6 @@ export default {
       groups.map(group => {
         let newgroup = []
         const curgroup = paramTreeTmp[group]
-        console.log(group, curgroup)
 
         curgroup.map(param => {
           const rebranchnode = param.showIf
@@ -866,13 +865,15 @@ export default {
           this.appDeploy()
           this.$message({
             type: 'success',
-            message: this.$t('buyer.deploy.deployAuto')
+            message: this.$t('buyer.deploy.deployAuto'),
+            duration: 3000
           })
         })
         .catch(() => {
           this.$message({
             type: 'info',
-            message: this.$t('buyer.deploy.deployCancel')
+            message: this.$t('buyer.deploy.deployCancel'),
+            duration: 3000
           })
         })
       } else {
@@ -902,19 +903,9 @@ export default {
         })
       })
       relConfData.defaultImage =
-        'https://47.105.151.140/v3/templateVersions/' +
+       'https://47.105.151.140/v3/templateVersions/' +
         this.appVersionDetail.name
-      console.log('relconfig', relConfData)
 
-      // relConfData = {
-      //   defaultImage: 'https://47.105.151.140/v3/templateVersions/library-mysql-0.3.8',
-      //   mysqlDatabase: 'admin',
-      //   mysqlPassword: '',
-      //   mysqlUser: 'admin',
-      //   'persistence.enabled': '',
-      //   'service.port': '3306',
-      //   'service.type': 'ClusterIP'
-      // }
       return relConfData
     },
 
@@ -934,7 +925,6 @@ export default {
         .appInstanceDeploy(auth.getCurLang(), this.appDeployParam)
         .then(deployStatus => {
           const deployStatusData = deployStatus.data
-          console.log(deployStatusData)
           if (deployStatusData.success) {
             this.successToListPage()
           } else {

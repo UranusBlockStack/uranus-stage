@@ -81,6 +81,7 @@ import Cpu from '@/components/modules/CPU'
 import Disk from '@/components/modules/Disk'
 import Memory from '@/components/modules/Memory'
 import Network from '@/components/modules/Network'
+import * as auth from '../../services/AuthService'
 import * as project from '../../services/RancherService'
 import moment from 'moment'
 import { Message } from 'element-ui'
@@ -113,7 +114,7 @@ export default {
     getAppList() {
       project
         .appListByProjectId(
-          this.$store.getters.lang,
+          auth.getCurLang(),
           this.poolId
         )
         .then(respData => {
@@ -132,7 +133,7 @@ export default {
       return this.imageServerUrl + rid + '/icon'
     },
     deleteApp(appId) {
-      project.deleteAppById(this.$store.getters.lang, appId)
+      project.deleteAppById(auth.getCurLang(), appId)
           .then(respData => {
             let data = respData.data
             if (data.success) {
