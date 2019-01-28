@@ -249,101 +249,101 @@
 </template>
 
 <script>
-import * as rancher from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
-import { Message } from "element-ui";
+import * as rancher from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
+import { Message } from 'element-ui'
 
 export default {
-  name: "MyHost",
+  name: 'MyHost',
   data() {
     return {
       dialogVisible: false,
-      groupJoin: this.$t("seller.host.newGroup"),
-      state: "",
-      group: "",
-      userId: "",
-      inCluster: "",
+      groupJoin: this.$t('seller.host.newGroup'),
+      state: '',
+      group: '',
+      userId: '',
+      inCluster: '',
       tableData: [],
       rancherLists: [],
       clusterLists: [],
-      language: "en-us",
-      rancherId: "",
-      newClusterName: "", // 新建及群名称
-      clusterName: "", //已有集群
-      hostId: "",
-      clusterId: "",
+      language: 'en-us',
+      rancherId: '',
+      newClusterName: '', // 新建及群名称
+      clusterName: '', // 已有集群
+      hostId: '',
+      clusterId: '',
       pageParam: {
-        name: "",
+        name: '',
         page: 2,
         pageSize: 5,
         totalRecords: 0,
-        sort: "",
+        sort: '',
         sortDesc: true,
-        state: ""
+        state: ''
       }
-    };
+    }
   },
   methods: {
     //   window reload for update data
     winReload(cond) {
-      window.location.reload();
+      window.location.reload()
     },
     getHostList() {
       rancher
         .hostList(this.language, this.pageParam.page, this.pageParam.pageSize)
         .then(data => {
-          this.pageParam.page = data.data.data.current;
-          this.pageParam.totalRecords = data.data.data.total;
-          this.tableData = data.data.data.records;
-        });
+          this.pageParam.page = data.data.data.current
+          this.pageParam.totalRecords = data.data.data.total
+          this.tableData = data.data.data.records
+        })
     },
     rancherList() {
       rancher.rancherList().then(data => {
-        this.rancherLists = data.data.data;
-      });
+        this.rancherLists = data.data.data
+      })
     },
     clusterList() {
-      var param = {};
+      var param = {}
       rancher.clusterSearch(this.language, param).then(data => {
-        this.clusterLists = data.data.data.records;
-      });
+        this.clusterLists = data.data.data.records
+      })
     },
     addHostToNewCluster() {
-      alert(this.rancherId);
+      alert(this.rancherId)
       var param = {
         name: this.newClusterName,
         rancherId: this.rancherId
-      };
-      alert(param.name + "==" + param.rancherId);
+      }
+      alert(param.name + '==' + param.rancherId)
       rancher.clusterAdd(this.language, param).then(data => {
         if (data.data.success) {
-          this.updatehost();
+          this.updatehost()
         } else {
           this.$message({
             showClose: true,
             message: data.data.errMsg,
-            type: "error"
-          });
+            type: 'error'
+          })
         }
-      });
+      })
     },
     updatehost() {
       var updateInfo = {
         clusterId: this.clusterId,
         rancherId: this.rancherId,
-        state: "registring"
-      };
+        state: 'registring'
+      }
       rancher.hostModify(this.language, this.hostId, updateInfo).then(data => {
         if (data.data.success) {
-          dialogVisible = false;
+          dialogVisible = false
         } else {
           this.$message({
             showClose: true,
             message: data.data.errMsg,
-            type: "error"
-          });
+            type: 'error'
+          })
         }
-      });
+      })
     },
     search() {
       var param = {
@@ -351,12 +351,12 @@ export default {
         ownerId: this.userId,
         page: this.pageParam.page,
         pageSize: this.pageParam.pageSize
-      };
+      }
       rancher.hostSearch(this.language, param).then(data => {
-        this.pageParam.page = data.data.data.current;
-        this.pageParam.totalRecords = data.data.data.total;
-        this.tableData = data.data.data.records;
-      });
+        this.pageParam.page = data.data.data.current
+        this.pageParam.totalRecords = data.data.data.total
+        this.tableData = data.data.data.records
+      })
     },
     okButtonClick() {
       var param = {
@@ -364,73 +364,73 @@ export default {
         clusterName: this.newClusterName,
         rancherId: this.rancherId,
         clusterId: 0
-      };
-      if (this.groupJoin == this.$t("seller.host.newGroup")) {
+      }
+      if (this.groupJoin == this.$t('seller.host.newGroup')) {
         // 主机加入新建集群
-        if (this.rancherId == "" || this.rancherId == null) {
+        if (this.rancherId == '' || this.rancherId == null) {
           this.$message({
             showClose: true,
-            message: this.$t("seller.host.clusterFail"),
-            type: "error"
-          });
+            message: this.$t('seller.host.clusterFail'),
+            type: 'error'
+          })
         } else {
-          param.newCluster = true;
+          param.newCluster = true
           rancher.joinCluster(this.language, this.hostId, param).then(data => {
             if (data.data.success) {
-              this.dialogVisible = false;
-              this.winReload();
+              this.dialogVisible = false
+              this.winReload()
             } else {
               this.$message({
                 showClose: true,
                 message: data.data.errMsg,
-                type: "error"
-              });
+                type: 'error'
+              })
             }
-          });
+          })
         }
       } else {
         // 主机加入已有集群
-        param.newCluster = false;
-        param.clusterId = this.clusterId;
+        param.newCluster = false
+        param.clusterId = this.clusterId
         rancher.joinCluster(this.language, this.hostId, param).then(data => {
           if (data.data.success) {
-            this.dialogVisible = false;
-            this.winReload();
+            this.dialogVisible = false
+            this.winReload()
           } else {
             this.$message({
               showClose: true,
               message: data.data.errMsg,
-              type: "error"
-            });
+              type: 'error'
+            })
           }
-        });
+        })
       }
     },
     joinButtonClick(selectedhostId) {
-      this.hostId = selectedhostId;
-      this.dialogVisible = true;
+      this.hostId = selectedhostId
+      this.dialogVisible = true
     }
   },
   computed: {
     getPercentNumber() {
-      //计算百分比 a/b
+      // 计算百分比 a/b
       return function(a, b) {
-        var n = Number((a / b) * 100).toFixed(2);
+        var n = Number((a / b) * 100).toFixed(2)
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
-          n = 0;
+          n = 0
         }
-        return Number(n);
-      };
+        return Number(n)
+      }
     }
   },
   mounted() {
-    this.getHostList();
-    this.rancherList();
-    this.clusterList();
-    this.language = auth.getCurLang();
-    this.userId = auth.getCurUserId();
+    this.getHostList()
+    this.rancherList()
+    this.clusterList()
+    this.language = auth.getCurLang()
+    this.userId = auth.getCurUserId()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

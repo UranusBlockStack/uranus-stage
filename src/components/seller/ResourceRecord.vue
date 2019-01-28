@@ -137,116 +137,116 @@
 
 <script>
 export default {
-  name: "ResourceRecord",
+  name: 'ResourceRecord',
   data() {
     return {
-      dateValue1: "",
-      dateValue2: "",
-      value1: "",
+      dateValue1: '',
+      dateValue2: '',
+      value1: '',
       options1: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
+          value: '选项2',
+          label: '选项2'
         }
       ],
-      value2: "",
+      value2: '',
       options2: [
         {
-          value: "选项1",
-          label: "选项1"
+          value: '选项1',
+          label: '选项1'
         },
         {
-          value: "选项2",
-          label: "选项2"
+          value: '选项2',
+          label: '选项2'
         }
       ],
       dialogVisible: false,
       tableData: [
         {
-          1: "1234561",
-          2: "MySQL",
-          3: "2018-12-16",
-          4: "Limitid",
-          5: "Limitid",
-          6: "Limitid",
-          hash: "0X16546167451sd54f6a5s1dfa68ds4"
+          1: '1234561',
+          2: 'MySQL',
+          3: '2018-12-16',
+          4: 'Limitid',
+          5: 'Limitid',
+          6: 'Limitid',
+          hash: '0X16546167451sd54f6a5s1dfa68ds4'
         },
         {
-          1: "1234561",
-          2: "MySQL",
-          3: "2018-12-16",
-          4: "Limitid",
-          5: "Limitid",
-          6: "Limitid",
-          hash: "0X16546167451sd54f6a5s1dfa68ds4"
+          1: '1234561',
+          2: 'MySQL',
+          3: '2018-12-16',
+          4: 'Limitid',
+          5: 'Limitid',
+          6: 'Limitid',
+          hash: '0X16546167451sd54f6a5s1dfa68ds4'
         },
         {
-          1: "1234561",
-          2: "MySQL",
-          3: "2018-12-16",
-          4: "Limitid",
-          5: "Limitid",
-          6: "Limitid",
-          hash: "0X16546167451sd54f6a5s1dfa68ds4"
-        },
+          1: '1234561',
+          2: 'MySQL',
+          3: '2018-12-16',
+          4: 'Limitid',
+          5: 'Limitid',
+          6: 'Limitid',
+          hash: '0X16546167451sd54f6a5s1dfa68ds4'
+        }
       ],
       tableData1: [
         {
-          menu: this.$t("seller.groups.deployPage.number"),
-          value: "132156421846148451"
+          menu: this.$t('seller.groups.deployPage.number'),
+          value: '132156421846148451'
         },
         {
-          menu: this.$t("seller.groups.deployPage.clusterStatus"),
-          value: "已完成"
+          menu: this.$t('seller.groups.deployPage.clusterStatus'),
+          value: '已完成'
         },
         {
-          menu: this.$t("seller.groups.deployPage.orderTime"),
-          value: "2018-12-12 12:12"
+          menu: this.$t('seller.groups.deployPage.orderTime'),
+          value: '2018-12-12 12:12'
         },
         {
-          menu: this.$t("seller.groups.deployPage.clusterName"),
-          value: "木马人123"
+          menu: this.$t('seller.groups.deployPage.clusterName'),
+          value: '木马人123'
         },
         {
-          menu: this.$t("seller.groups.deployPage.clusterTime"),
-          value: "2018-12-12 12:12"
+          menu: this.$t('seller.groups.deployPage.clusterTime'),
+          value: '2018-12-12 12:12'
         },
         {
-          menu: this.$t("seller.groups.deployPage.startingTime"),
-          value: "2018-12-12 12:12"
+          menu: this.$t('seller.groups.deployPage.startingTime'),
+          value: '2018-12-12 12:12'
         },
         {
-          menu: this.$t("seller.groups.deployPage.endingTime"),
-          value: "2018-12-12 12:12"
+          menu: this.$t('seller.groups.deployPage.endingTime'),
+          value: '2018-12-12 12:12'
         },
         {
-          menu: this.$t("seller.groups.deployPage.clusterPrice"),
-          value: "8888888888.66URAC"
+          menu: this.$t('seller.groups.deployPage.clusterPrice'),
+          value: '8888888888.66URAC'
         },
         {
-          menu: this.$t("seller.groups.deployPage.fee"),
-          value: "88.88URAC"
+          menu: this.$t('seller.groups.deployPage.fee'),
+          value: '88.88URAC'
         },
         {
-          menu: this.$t("seller.groups.deployPage.ip"),
-          value: "111.111.222.22"
+          menu: this.$t('seller.groups.deployPage.ip'),
+          value: '111.111.222.22'
         },
         {
-          menu: this.$t("seller.groups.deployPage.port"),
-          value: "8080"
+          menu: this.$t('seller.groups.deployPage.port'),
+          value: '8080'
         },
         {
-          menu: this.$t("seller.groups.deployPage.clusterHash"),
-          value: "0X16546167451sd54f6a5s1dfa68ds4"
+          menu: this.$t('seller.groups.deployPage.clusterHash'),
+          value: '0X16546167451sd54f6a5s1dfa68ds4'
         }
       ]
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

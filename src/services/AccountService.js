@@ -20,5 +20,5 @@ export function userInfo (lang, id) {
 }
 
 export function userBalcnce (lang) {
-    return httpLang(lang).get('/accounts/users/balance')
+  return httpLang(lang).get('/accounts/users/balance')
 }

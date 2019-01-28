@@ -230,218 +230,218 @@
 </template>
 
 <script>
-import * as account from "../../services/AccountService";
-import * as auth from "../../services/AuthService";
+import * as account from '../../services/AccountService'
+import * as auth from '../../services/AuthService'
 
 export default {
-  name: "Setting",
+  name: 'Setting',
   data() {
     return {
-      id: "",
-      mail: "", //用户邮箱
-      newEmail: "", //绑定新邮箱
-      mailCaptcha: "", //初次输入框邮箱验证码
-      bindMailCaptcha: "", //绑定输入框邮箱验证码
-      buttonClick: this.$t("setting.clickLink"),
-      phonenum: "", //用户信息手机号
-      sourceNum: "", //用户原手机号
-      newPhoneNum: "",
-      captcha: "", //初次验证原手机验证码
-      bindCaptcha: "", //绑定新手机验证码
+      id: '',
+      mail: '', // 用户邮箱
+      newEmail: '', // 绑定新邮箱
+      mailCaptcha: '', // 初次输入框邮箱验证码
+      bindMailCaptcha: '', // 绑定输入框邮箱验证码
+      buttonClick: this.$t('setting.clickLink'),
+      phonenum: '', // 用户信息手机号
+      sourceNum: '', // 用户原手机号
+      newPhoneNum: '',
+      captcha: '', // 初次验证原手机验证码
+      bindCaptcha: '', // 绑定新手机验证码
       mailOuterVisible: false,
       mailInnerVisible: false,
-      currentPassword: "", //输入框当前密码
-      newPassword: "", //输入框新密码
-      confirmPassword: "", //输入框确认密码
+      currentPassword: '', // 输入框当前密码
+      newPassword: '', // 输入框新密码
+      confirmPassword: '', // 输入框确认密码
       phoneOuterVisible: false,
       phoneInnerVisible: false,
-      code: this.$t("setting.codePhone"),
+      code: this.$t('setting.codePhone'),
       pwdOuterVisible: false,
       dialogVisible: false,
-      mailprompt: "", //提示信息
-      phoneprompt: "",
-      pwdprompt: ""
-    };
+      mailprompt: '', // 提示信息
+      phoneprompt: '',
+      pwdprompt: ''
+    }
   },
   methods: {
     // Input box validation
     checkPassword() {
-      if (this.newPassword === "" || this.newPassword == null) {
-        this.pwdprompt = this.$t("userCommon.passwordEmpty");
+      if (this.newPassword === '' || this.newPassword == null) {
+        this.pwdprompt = this.$t('userCommon.passwordEmpty')
       } else if (this.newPassword.length < 6 || this.newPassword.length > 12) {
-        this.pwdprompt = this.$t("userCommon.password");
+        this.pwdprompt = this.$t('userCommon.password')
       } else {
-        this.pwdprompt = "";
+        this.pwdprompt = ''
       }
     },
     surePassword() {
       if (this.surepwd !== this.password) {
-        this.pwdprompt = this.$t("userCommon.passwordInconsistent");
+        this.pwdprompt = this.$t('userCommon.passwordInconsistent')
       } else {
-        this.pwdprompt = "";
+        this.pwdprompt = ''
       }
     },
     userInfo() {
-      //获取用户信息
-      var user = auth.getUserBaseInfo();
+      // 获取用户信息
+      var user = auth.getUserBaseInfo()
       account.userInfo(this.$store.getters.lang, user.userId).then(data => {
-        this.id = data.data.data.id;
-        this.phonenum = data.data.data.mobile;
-        this.mail = data.data.data.email;
-        this.sourceNum = this.phonenum;
-        if (this.phonenum == null || this.phonenum == "") {
-          this.buttonClick = this.$t("setting.clickLink");
+        this.id = data.data.data.id
+        this.phonenum = data.data.data.mobile
+        this.mail = data.data.data.email
+        this.sourceNum = this.phonenum
+        if (this.phonenum == null || this.phonenum == '') {
+          this.buttonClick = this.$t('setting.clickLink')
         } else {
-          this.buttonClick = this.$t("setting.clickChange");
+          this.buttonClick = this.$t('setting.clickChange')
         }
-        if (this.mail == null || this.mail == "") {
-          this.buttonClick = this.$t("setting.clickLink");
+        if (this.mail == null || this.mail == '') {
+          this.buttonClick = this.$t('setting.clickLink')
         } else {
-          this.buttonClick = this.$t("setting.clickChange");
+          this.buttonClick = this.$t('setting.clickChange')
         }
-        console.log(data);
-      });
+        console.log(data)
+      })
     },
 
     resetPassword() {
-      //修改密码
+      // 修改密码
       var param = {
         id: this.id,
         newPassword: this.newPassword,
         oldPassword: this.currentPassword
-      };
-      if (this.currentPassword === "" || this.currentPassword == null) {
-        this.pwdprompt = this.$t("userCommon.passwordEmpty");
-      } else if (this.confirmPassword === "" || this.confirmPassword == null) {
-        this.pwdprompt = this.$t("userCommon.newpasswordEmpty");
+      }
+      if (this.currentPassword === '' || this.currentPassword == null) {
+        this.pwdprompt = this.$t('userCommon.passwordEmpty')
+      } else if (this.confirmPassword === '' || this.confirmPassword == null) {
+        this.pwdprompt = this.$t('userCommon.newpasswordEmpty')
       } else {
-        this.pwdprompt = "";
+        this.pwdprompt = ''
         auth.resetPassword(this.$store.getters.lang, param).then(data => {
-          console.log(data);
+          console.log(data)
           if (data.data.success) {
-            this.pwdOuterVisible = false;
+            this.pwdOuterVisible = false
           } else {
-            this.pwdprompt = "当前密码输入错误";
-            alert("修改失败");
+            this.pwdprompt = '当前密码输入错误'
+            alert('修改失败')
           }
-        });
+        })
       }
     },
     sendCode(senderType, receiver) {
-      //发送验证码至原手机/邮箱
+      // 发送验证码至原手机/邮箱
       const param = {
         captchaType: 0,
         receiver: receiver,
         senderType: senderType
-      };
+      }
       //   phone
       if (this.phoneOuterVisible == true) {
-        if (this.sourceNum === "") {
-          this.phoneprompt = this.$t("userCommon.phoneError");
+        if (this.sourceNum === '') {
+          this.phoneprompt = this.$t('userCommon.phoneError')
         } else {
-          this.phoneprompt = "";
+          this.phoneprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              console.log("验证码发送失败");
+              console.log('验证码发送失败')
             } else {
-              console.log("验证码发送成功");
+              console.log('验证码发送成功')
             }
-          });
+          })
         }
       }
       //   new phone
       if (this.phoneInnerVisible == true) {
-        if (this.newPhoneNum === "") {
-          this.phoneprompt = this.$t("userCommon.phoneError");
+        if (this.newPhoneNum === '') {
+          this.phoneprompt = this.$t('userCommon.phoneError')
         } else {
-          this.phoneprompt = "";
+          this.phoneprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              console.log("验证码发送失败");
+              console.log('验证码发送失败')
             } else {
-              console.log("验证码发送成功");
+              console.log('验证码发送成功')
             }
-          });
+          })
         }
       }
       //   mail
       if (this.mailOuterVisible == true) {
-        if (this.mail === "") {
-          this.mailprompt = this.$t("userCommon.EmailError");
+        if (this.mail === '') {
+          this.mailprompt = this.$t('userCommon.EmailError')
         } else {
-          this.mailprompt = "";
+          this.mailprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              console.log("验证码发送失败");
+              console.log('验证码发送失败')
             } else {
-              console.log("验证码发送成功");
+              console.log('验证码发送成功')
             }
-          });
+          })
         }
       }
       //   new mail
       if (this.mailInnerVisible == true) {
-        if (this.newEmail === "") {
-          this.mailprompt = this.$t("userCommon.EmailError");
+        if (this.newEmail === '') {
+          this.mailprompt = this.$t('userCommon.EmailError')
         } else {
-          this.mailprompt = "";
+          this.mailprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              console.log("验证码发送失败");
+              console.log('验证码发送失败')
             } else {
-              console.log("验证码发送成功");
+              console.log('验证码发送成功')
             }
-          });
+          })
         }
       }
     },
     checkCaptcha(type, receiver, captcha) {
       if (this.mailOuterVisible == true) {
-        if (this.mailCaptcha == "" || this.mailCaptcha == null) {
-          this.mailprompt = this.$t("userCommon.code");
+        if (this.mailCaptcha == '' || this.mailCaptcha == null) {
+          this.mailprompt = this.$t('userCommon.code')
         } else {
-          this.mailprompt = "";
-          //校验原手机/邮箱验证码是否正确
-          console.log("校验中。。。。" + receiver + "==" + captcha);
+          this.mailprompt = ''
+          // 校验原手机/邮箱验证码是否正确
+          console.log('校验中。。。。' + receiver + '==' + captcha)
           auth.checkCaptcha(auth.getCurLang(), receiver, captcha).then(data => {
-            console.log("校验结果：", data);
-            console.log("校验结果：" + data.data.success);
+            console.log('校验结果：', data)
+            console.log('校验结果：' + data.data.success)
             if (data.data.success) {
-              if (type == "email") {
-                this.mailOuterVisible = false;
-                this.mailInnerVisible = true;
-              } else if (type == "mobile") {
-                this.phoneOuterVisible = false;
-                this.phoneInnerVisible = true;
+              if (type == 'email') {
+                this.mailOuterVisible = false
+                this.mailInnerVisible = true
+              } else if (type == 'mobile') {
+                this.phoneOuterVisible = false
+                this.phoneInnerVisible = true
               }
             } else {
-              alert("验证码错误，请重新输入");
+              alert('验证码错误，请重新输入')
             }
-          });
+          })
         }
       }
       if (this.phoneOuterVisible == true) {
-        if (this.captcha == "" || this.captcha == null) {
-          this.phoneprompt = this.$t("userCommon.code");
+        if (this.captcha == '' || this.captcha == null) {
+          this.phoneprompt = this.$t('userCommon.code')
         } else {
-          this.mailprompt = "";
-          //校验原手机/邮箱验证码是否正确
-          console.log("校验中。。。。" + receiver + "==" + captcha);
+          this.mailprompt = ''
+          // 校验原手机/邮箱验证码是否正确
+          console.log('校验中。。。。' + receiver + '==' + captcha)
           auth.checkCaptcha(auth.getCurLang(), receiver, captcha).then(data => {
-            console.log("校验结果：", data);
-            console.log("校验结果：" + data.data.success);
+            console.log('校验结果：', data)
+            console.log('校验结果：' + data.data.success)
             if (data.data.success) {
-              if (type == "email") {
-                this.mailOuterVisible = false;
-                this.mailInnerVisible = true;
-              } else if (type == "mobile") {
-                this.phoneOuterVisible = false;
-                this.phoneInnerVisible = true;
+              if (type == 'email') {
+                this.mailOuterVisible = false
+                this.mailInnerVisible = true
+              } else if (type == 'mobile') {
+                this.phoneOuterVisible = false
+                this.phoneInnerVisible = true
               }
             } else {
-              alert("验证码错误，请重新输入");
+              alert('验证码错误，请重新输入')
             }
-          });
+          })
         }
       }
     },
@@ -457,91 +457,91 @@ export default {
         captcha: bindCap,
         id: this.id,
         loginName: bindNum
-      };
+      }
       //   mail
       if (this.mailInnerVisible == true) {
-        if (this.newEmail == "" || this.newEmail == null) {
-          this.mailprompt = this.$t("userCommon.newEmailError");
-        } else if (this.bindMailCaptcha == "" || this.bindMailCaptcha == null) {
-          this.mailprompt = this.$t("userCommon.code");
+        if (this.newEmail == '' || this.newEmail == null) {
+          this.mailprompt = this.$t('userCommon.newEmailError')
+        } else if (this.bindMailCaptcha == '' || this.bindMailCaptcha == null) {
+          this.mailprompt = this.$t('userCommon.code')
         } else {
-          this.mailprompt = "";
+          this.mailprompt = ''
           account
             .userBind(this.$store.getters.lang, bindType, param)
             .then(data => {
-              console.log("解绑中。。。。");
-              console.log(data);
+              console.log('解绑中。。。。')
+              console.log(data)
               if (data.data.success) {
-                //成功
-                this.mailprompt = "";
-                if (bindType == "email") {
-                  this.mailOuterVisible = false;
-                  this.mailInnerVisible = false;
-                } else if (bindType == "mobile") {
-                  this.phoneOuterVisible = false;
-                  this.phoneInnerVisible = false;
+                // 成功
+                this.mailprompt = ''
+                if (bindType == 'email') {
+                  this.mailOuterVisible = false
+                  this.mailInnerVisible = false
+                } else if (bindType == 'mobile') {
+                  this.phoneOuterVisible = false
+                  this.phoneInnerVisible = false
                 }
               } else {
-                //失败
-                alert("解绑失败");
+                // 失败
+                alert('解绑失败')
               }
-            });
+            })
         }
       }
       //   phone
       if (this.phoneInnerVisible == true) {
-        if (this.bindCaptcha == "" || this.bindCaptcha == null) {
-          this.phoneprompt = this.$t("userCommon.newphoneError");
-        } else if (this.bindCaptcha == "" || this.bindCaptcha == null) {
-          this.phoneprompt = "请输入验证码";
+        if (this.bindCaptcha == '' || this.bindCaptcha == null) {
+          this.phoneprompt = this.$t('userCommon.newphoneError')
+        } else if (this.bindCaptcha == '' || this.bindCaptcha == null) {
+          this.phoneprompt = '请输入验证码'
         } else {
-          this.phoneprompt = "";
+          this.phoneprompt = ''
           account
             .userBind(this.$store.getters.lang, bindType, param)
             .then(data => {
-              console.log("解绑中。。。。");
-              console.log(data);
+              console.log('解绑中。。。。')
+              console.log(data)
               if (data.data.success) {
-                //成功
-                this.phoneprompt = "";
-                if (bindType == "email") {
-                  this.mailOuterVisible = false;
-                  this.mailInnerVisible = false;
-                } else if (bindType == "mobile") {
-                  this.phoneOuterVisible = false;
-                  this.phoneInnerVisible = false;
+                // 成功
+                this.phoneprompt = ''
+                if (bindType == 'email') {
+                  this.mailOuterVisible = false
+                  this.mailInnerVisible = false
+                } else if (bindType == 'mobile') {
+                  this.phoneOuterVisible = false
+                  this.phoneInnerVisible = false
                 }
               } else {
-                //失败
-                alert("解绑失败");
+                // 失败
+                alert('解绑失败')
               }
-            });
+            })
         }
       }
     },
     setMail() {
-      //change mail 按钮控制逻辑
-      if (this.mail == null || this.mail == "") {
-        this.mailInnerVisible = true;
+      // change mail 按钮控制逻辑
+      if (this.mail == null || this.mail == '') {
+        this.mailInnerVisible = true
       } else {
-        this.mailOuterVisible = true;
-        this.buttonClick = this.$t("setting.clickChange");
+        this.mailOuterVisible = true
+        this.buttonClick = this.$t('setting.clickChange')
       }
     },
     setPhone() {
-      //change phone 按钮控制逻辑
-      if (this.phonenum == null || this.phonenum == "") {
-        this.phoneInnerVisible = true;
+      // change phone 按钮控制逻辑
+      if (this.phonenum == null || this.phonenum == '') {
+        this.phoneInnerVisible = true
       } else {
-        this.phoneOuterVisible = true;
-        this.buttonClick = this.$t("setting.clickChange");
+        this.phoneOuterVisible = true
+        this.buttonClick = this.$t('setting.clickChange')
       }
     }
   },
   mounted() {
-    this.userInfo();
+    this.userInfo()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

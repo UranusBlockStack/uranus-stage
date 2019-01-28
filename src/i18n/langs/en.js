@@ -45,7 +45,7 @@ module.exports = {
       week: 'Week',
       month: 'Month',
       yName: 'UraPower',
-      xName: 'Time',
+      xName: 'Time'
     },
     appMarket: {
       searchIn: 'Search',
@@ -55,7 +55,7 @@ module.exports = {
       storeAll: 'All Store',
       download: 'Download: ',
       deploy: 'Deploy',
-      buy: 'Buy',
+      buy: 'Buy'
     },
     appRepository: {
       deployRecord: 'Records',
@@ -187,7 +187,7 @@ module.exports = {
       deployTitle: 'Deploy',
       deployText: 'Are you sure to deploy the application?',
       deployAuto: 'App will be deployed automatically Please wait patiently!',
-      deployCancel: 'Successful undeployment',
+      deployCancel: 'Successful undeployment'
     },
     myResource: {
       resourceAll: 'All UraPower',
@@ -229,7 +229,7 @@ module.exports = {
         ip: 'IP',
         port: 'Port',
         appHash: 'TX Hash'
-      },
+      }
     },
     resourcePool: {
       list: 'UraPower purchase list',
@@ -272,7 +272,7 @@ module.exports = {
       view: 'View',
       delete: 'Delete',
       shellTitle: 'Shell',
-      button: 'Close',
+      button: 'Close'
 
     },
     stateDetail: {
@@ -318,16 +318,16 @@ module.exports = {
       disk: 'Disk',
       network: 'Network',
       usable: {
-          cpu: 'core(s)',
-          memory: 'MB',
-          disk: 'GB',
-          network: 'Mbps',
+        cpu: 'core(s)',
+        memory: 'MB',
+        disk: 'GB',
+        network: 'Mbps'
       },
       have: {
         cpu: 'core(s)',
         memory: 'MB',
         disk: 'GB',
-        network: 'Mbps',
+        network: 'Mbps'
       },
       ownGroup: 'Own Cluster',
       group: 'Cluster',
@@ -350,7 +350,7 @@ module.exports = {
       north: 'North America',
       oceania: 'Australia',
       cancel: 'Cancel',
-      confirm: 'OK',
+      confirm: 'OK'
     },
     groups: {
       view: 'Cluster Records',
@@ -490,23 +490,23 @@ module.exports = {
       operating: 'Operating',
       text: 'Please click on the installation package in the upper right corner to download the client.',
       deleteHost: 'Delete',
-      deleteText1: 'Exit successfully',    //'The host is already occupied and cannot be logged out of the group.',
+      deleteText1: 'Exit successfully',    // 'The host is already occupied and cannot be logged out of the group.',
       deleteText2: 'The host has been leased and cannot exit the Cluster.',
       deleteText3: "The host which is can't exit is on sale in the cluster.",
       deleteSure: 'After exiting, the relationship of the predicted Cluster will be released, and the corresponding data cannot be restored. Is the exit determined?',
-        clusterFail: 'Cluster information is not perfect',
-        usable: {
-            cpu: 'core(s)',
-            memory: 'MB',
-            disk: 'GB',
-            network: 'Mbps',
-        },
-        have: {
-          cpu: 'core(s)',
-          memory: 'MB',
-          disk: 'GB',
-          network: 'Mbps',
-        },
+      clusterFail: 'Cluster information is not perfect',
+      usable: {
+        cpu: 'core(s)',
+        memory: 'MB',
+        disk: 'GB',
+        network: 'Mbps'
+      },
+      have: {
+        cpu: 'core(s)',
+        memory: 'MB',
+        disk: 'GB',
+        network: 'Mbps'
+      }
     }
   },
   wallet: {
@@ -610,12 +610,12 @@ module.exports = {
     EmailError: 'Please enter Email',
     newEmailError: 'Please enter new Email',
     passwordError: 'The account or password entered is incorrect. Please re-enter',
-    download: 'Download package',
+    download: 'Download package'
   },
   module: {
     day: 'D',
     hour: 'H',
     minute: 'M',
-    second: 'S',
+    second: 'S'
   }
 }

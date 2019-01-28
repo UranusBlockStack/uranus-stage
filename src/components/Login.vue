@@ -148,9 +148,9 @@ export default {
                   message: 'Success.',
                   type: 'success'
                 })
-                //self.$router.push({ path: respData.curLoginUserInfo.loginRole })
-             location.href=respData.curLoginUserInfo.loginRole
-             } else {
+                // self.$router.push({ path: respData.curLoginUserInfo.loginRole })
+                location.href=respData.curLoginUserInfo.loginRole
+              } else {
                 self.$message({
                   showClose: true,
                   message: data.errMsg,

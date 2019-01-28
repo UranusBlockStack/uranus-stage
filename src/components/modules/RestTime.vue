@@ -27,21 +27,21 @@
 export default {
   data() {
     return {
-      time: "",
-      showDay: "",
-      showHour: "",
-      showMinute: "",
-      showSecond: "",
+      time: '',
+      showDay: '',
+      showHour: '',
+      showMinute: '',
+      showSecond: '',
       flag: false
-    };
+    }
   },
   mounted() {
     let time = setInterval(() => {
       if (this.flag == true) {
-        clearInterval(time);
+        clearInterval(time)
       }
-      this.timeDown();
-    }, 500);
+      this.timeDown()
+    }, 500)
   },
   props: {
     endTime: {
@@ -50,33 +50,33 @@ export default {
   },
   methods: {
     timeDown() {
-      const endTime = new Date(this.endTime);
-      const nowTime = new Date();
-      let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000);
-      let d = parseInt(leftTime / (24 * 60 * 60));
-      let h = this.formate(parseInt((leftTime / (60 * 60)) % 24));
-      let m = this.formate(parseInt((leftTime / 60) % 60));
-      let s = this.formate(parseInt(leftTime % 60));
+      const endTime = new Date(this.endTime)
+      const nowTime = new Date()
+      let leftTime = parseInt((endTime.getTime() - nowTime.getTime()) / 1000)
+      let d = parseInt(leftTime / (24 * 60 * 60))
+      let h = this.formate(parseInt((leftTime / (60 * 60)) % 24))
+      let m = this.formate(parseInt((leftTime / 60) % 60))
+      let s = this.formate(parseInt(leftTime % 60))
       if (leftTime <= 0) {
-        this.flag = true;
-        this.$emit("time-end");
+        this.flag = true
+        this.$emit('time-end')
       } else {
-        this.time = `${d} d ${h} h ${m} m ${s} s`;
-        this.showDay = `${d}`;
-        this.showHour = `${h}`;
-        this.showMinute = `${m}`;
-        this.showSecond = `${s}`;
+        this.time = `${d} d ${h} h ${m} m ${s} s`
+        this.showDay = `${d}`
+        this.showHour = `${h}`
+        this.showMinute = `${m}`
+        this.showSecond = `${s}`
       }
     },
     formate(time) {
       if (time >= 10) {
-        return time;
+        return time
       } else {
-        return `0${time}`;
+        return `0${time}`
       }
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

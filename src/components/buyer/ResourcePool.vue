@@ -102,7 +102,7 @@ export default {
         diskUsd: 20,
         memUsd: 30,
         networkUsd: 40,
-        urapowerUsd: 50,
+        urapowerUsd: 50
       },
       update2: false,
       poolId: this.$route.params.poolid,
@@ -120,7 +120,7 @@ export default {
           if (respData.data.data) {
             this.appList = respData.data.data.records
             this.appList.map(app => {
-                console.log(app)
+              console.log(app)
             })
           }
         })
@@ -175,8 +175,8 @@ export default {
         })
     },
     reload() {
-      this.isRouterAlive = false;
-      this.$nextTick(() => (this.isRouterAlive = true));
+      this.isRouterAlive = false
+      this.$nextTick(() => (this.isRouterAlive = true))
     }
   },
   beforeRouteUpdate(to, from, next) {

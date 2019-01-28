@@ -310,19 +310,19 @@
 </template>
 
 <script>
-import moment from "moment";
-import RestTime from "@/components/modules/RestTime";
-import { Message } from "element-ui";
-import * as rancher from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
-import Water from "@/components/modules/Water";
-import Cpu from "@/components/modules/CPU";
-import Disk from "@/components/modules/Disk";
-import Memory from "@/components/modules/Memory";
-import Network from "@/components/modules/Network";
+import moment from 'moment'
+import RestTime from '@/components/modules/RestTime'
+import { Message } from 'element-ui'
+import * as rancher from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
+import Water from '@/components/modules/Water'
+import Cpu from '@/components/modules/CPU'
+import Disk from '@/components/modules/Disk'
+import Memory from '@/components/modules/Memory'
+import Network from '@/components/modules/Network'
 
 export default {
-  name: "ResourcePool",
+  name: 'ResourcePool',
   components: {
     Water,
     Cpu,
@@ -336,7 +336,7 @@ export default {
       update1: false,
       update2: false,
       clusterId: 0,
-      language: "",
+      language: '',
       tableData: [],
       clusterInfo: {},
       tableCluster: {},
@@ -347,69 +347,69 @@ export default {
       isRouterAlive: true,
       startDatePickerOptions: {},
       endDataPickerOptions: {}
-    };
+    }
   },
   methods: {
     getHosts() {
-      //获取集群下的所有主机
+      // 获取集群下的所有主机
       rancher.clusterHosts(this.language, this.clusterId).then(data => {
-        this.tableData = data.data.data.records;
-      });
+        this.tableData = data.data.data.records
+      })
     },
     modifyCluster() {
       // 设置集群
-      let newClusterInfo = this.tableCluster;
+      let newClusterInfo = this.tableCluster
       //   newClusterInfo.beginTime = this.tableCluster.dateRange[0];
       //   newClusterInfo.endTime = this.tableCluster.dateRange[1];
       rancher
         .clusterModify(this.language, this.clusterId, newClusterInfo)
         .then(data => {
           if (data.data.success) {
-            this.winReload();
+            this.winReload()
           } else {
             this.$message({
               showClose: true,
               message: data.data.errMsg,
-              type: "error"
-            });
+              type: 'error'
+            })
           }
-        });
+        })
     },
     deleteHost(id) {
-      //删除主机
+      // 删除主机
       rancher.hostDelete(auth.getCurLang(), id).then(data => {
-        //删除逻辑
+        // 删除逻辑
         if (data.data.success) {
-          this.outerVisible = false;
-          this.innerVisible = true;
+          this.outerVisible = false
+          this.innerVisible = true
         } else {
           this.$message({
             showClose: true,
             message: data.data.errMsg,
-            type: "error"
-          });
+            type: 'error'
+          })
         }
-      });
+      })
     },
     winReload(cond) {
-      window.location.reload();
+      window.location.reload()
     },
     getClusterDetail() {
       rancher.clusterInfo(this.language, this.clusterId).then(data => {
-        this.clusterInfo = data.data.data;
-        this.tableCluster = JSON.parse(JSON.stringify(data.data.data));
-        this.setDatePick();
-        if (this.tableCluster.state == "online") {
-          this.switchVal = true;
+        this.clusterInfo = data.data.data
+        this.tableCluster = JSON.parse(JSON.stringify(data.data.data))
+        this.setDatePick()
+        if (this.tableCluster.state == 'online') {
+          this.switchVal = true
         } else {
-          this.switchVal = false;
+          this.switchVal = false
         }
-        this.update1 = true;
-        this.update2 = true;
-      });
+        this.update1 = true
+        this.update2 = true
+      })
     },
     filterState(value, row) {
-      return row.state === value;
+      return row.state === value
     },
     // Switching cluster sale state
     onLineClick() {
@@ -419,118 +419,118 @@ export default {
         this.tableCluster.beginTime == null ||
         this.tableCluster.endTime == null
       ) {
-        this.$message(this.$t("seller.group.clusterFail"));
-        this.switchVal = !this.switchVal;
+        this.$message(this.$t('seller.group.clusterFail'))
+        this.switchVal = !this.switchVal
       } else {
-        var action = "";
+        var action = ''
         if (this.switchVal) {
-          action = "online";
+          action = 'online'
         } else {
-          action = "offline";
+          action = 'offline'
         }
         rancher
           .clusterState(this.language, this.clusterId, action)
           .then(data => {
             if (data.data.success) {
               this.$message({
-                message: "Success",
-                type: "success"
-              });
-              this.switchVal = this.switchVal;
+                message: 'Success',
+                type: 'success'
+              })
+              this.switchVal = this.switchVal
             } else {
               this.$message({
                 showClose: true,
                 message: data.data.errMsg,
-                type: "error"
-              });
-              this.switchVal = !this.switchVal;
+                type: 'error'
+              })
+              this.switchVal = !this.switchVal
             }
-          });
+          })
       }
     },
     reload() {
-      this.isRouterAlive = false;
-      this.$nextTick(() => (this.isRouterAlive = true));
+      this.isRouterAlive = false
+      this.$nextTick(() => (this.isRouterAlive = true))
     },
     setDatePick() {
-      let that = this;
+      let that = this
       this.startDatePickerOptions = {
         disabledDate(time) {
           if (
-            typeof that.tableCluster.beginTime !== "undefined" &&
+            typeof that.tableCluster.beginTime !== 'undefined' &&
             that.tableCluster.beginTime !== null &&
             that.tableCluster.beginTime !== 0
           ) {
             return (
               time.getTime() > new Date(that.tableCluster.beginTime).getTime()
-            );
+            )
           } else {
-            return time.getTime() < Date.now() - 3600 * 1000 * 24 * 1;
+            return time.getTime() < Date.now() - 3600 * 1000 * 24 * 1
           }
         }
-      };
+      }
       this.endDataPickerOptions = {
         disabledDate(time) {
           if (
-            typeof that.tableCluster.endTime !== "undefined" &&
+            typeof that.tableCluster.endTime !== 'undefined' &&
             that.tableCluster.endTime !== null &&
             that.tableCluster.endTime !== 0
           ) {
             return (
               time.getTime() < new Date(that.tableCluster.endTime).getTime()
-            );
+            )
           }
         }
-      };
+      }
     }
   },
   computed: {
     getPercentNumber() {
-      //计算百分比 a/b
+      // 计算百分比 a/b
       return function(a, b) {
-        var n = Number((a / b) * 100).toFixed(2);
+        var n = Number((a / b) * 100).toFixed(2)
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
-          n = 0;
+          n = 0
         }
-        return Number(n);
-      };
+        return Number(n)
+      }
     },
     dateFormat() {
       return function(time) {
-        let momentInfo = moment(time);
+        let momentInfo = moment(time)
         if (momentInfo.isValid() == false) {
-          return moment(0).format("YYYY-MM-DD hh:mm:ss");
+          return moment(0).format('YYYY-MM-DD hh:mm:ss')
         } else {
-          return moment(time).format("YYYY-MM-DD hh:mm:ss");
+          return moment(time).format('YYYY-MM-DD hh:mm:ss')
         }
-      };
+      }
     },
     division() {
       return function(a, b) {
-        var n = a / b;
+        var n = a / b
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
-          n = 0;
+          n = 0
         }
-        return Number(n);
-      };
+        return Number(n)
+      }
     }
   },
   mounted() {
-    this.clusterId = Number(this.$route.params.resid);
-    console.log("id======" + this.clusterId);
-    this.getClusterDetail();
-    this.getHosts();
-    this.language = auth.getCurLang();
-    console.log(this.language);
+    this.clusterId = Number(this.$route.params.resid)
+    console.log('id======' + this.clusterId)
+    this.getClusterDetail()
+    this.getHosts()
+    this.language = auth.getCurLang()
+    console.log(this.language)
   },
   beforeRouteUpdate(to, from, next) {
-    this.clusterId = to.params.resid;
-    this.getClusterDetail();
-    this.getHosts();
-    this.reload();
-    next();
+    this.clusterId = to.params.resid
+    this.getClusterDetail()
+    this.getHosts()
+    this.reload()
+    next()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

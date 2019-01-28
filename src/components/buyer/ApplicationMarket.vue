@@ -96,44 +96,44 @@
 </template>
 
 <script>
-import * as app from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
+import * as app from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
 
 export default {
-  name: "ApplicationMarket",
+  name: 'ApplicationMarket',
   data() {
     return {
       options1: [
         {
           value: 1,
-          label: "Free"
+          label: 'Free'
         },
         {
           value: 2,
-          label: "Paid"
+          label: 'Paid'
         },
-        { value: 0, label: "All" }
+        { value: 0, label: 'All' }
       ],
       options2: [
         {
-          value: "library",
-          label: "library"
+          value: 'library',
+          label: 'library'
         }
       ],
-      value1: "",
-      value2: "",
+      value1: '',
+      value2: '',
       appList: [],
       imageServerUrl: this.$store.state.imageServerUrl,
-      appType: "All",
+      appType: 'All',
       appTypeSelected: 0,
-      catalogRid: "library",
-      searchName: "",
+      catalogRid: 'library',
+      searchName: '',
       currentPage: 1,
       pageSize: this.$store.state.defaultCardPageSize,
       totalRecords: 0,
-      sort: "download_times",
-      sortDesc: "true"
-    };
+      sort: 'download_times',
+      sortDesc: 'true'
+    }
   },
   methods: {
     // to do 分页的实现
@@ -148,65 +148,65 @@ export default {
       }
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
-        this.appList = respData.data.data.records;
-        this.totalRecords = respData.data.data.total;
+        this.appList = respData.data.data.records
+        this.totalRecords = respData.data.data.total
 
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon";
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
           appitem.computedPrice = appitem.free
-            ? this.$t("buyer.deploy.free")
-            : appitem.price;
-          return appitem;
-        });
-      });
+            ? this.$t('buyer.deploy.free')
+            : appitem.price
+          return appitem
+        })
+      })
     },
     getOrderOfApp(appId) {
       return app
         .appPurchaseInfo(auth.getCurLang(), appId)
         .then(purchaseInfo => {
-          const purchaseInfoData = purchaseInfo.data;
-          const purchased = purchaseInfoData.success;
-        });
+          const purchaseInfoData = purchaseInfo.data
+          const purchased = purchaseInfoData.success
+        })
     },
     deployApp(appId, appRid, versionId, catalog) {
       app.appPurchaseInfo(auth.getCurLang(), appId).then(purchaseInfo => {
-        const purchaseInfoData = purchaseInfo.data;
-        const isMyApplication = purchaseInfoData.success;
+        const purchaseInfoData = purchaseInfo.data
+        const isMyApplication = purchaseInfoData.success
         if (isMyApplication) {
           this.$message({
             showClose: true,
             message:
               'you\'ve purchased app, please go to "My Application" to deploy it',
-            type: "warning"
-          });
+            type: 'warning'
+          })
         } else {
           this.$router.push({
-            path: "/deployment",
+            path: '/deployment',
             query: {
               appId: appId,
               appRid: appRid,
               versionId: versionId,
               catalog: catalog
             }
-          });
+          })
         }
-      });
+      })
     },
     searchApps() {
-      this.getAppList();
+      this.getAppList()
     },
     setAppType(select) {
-      this.appTypeSelected = select;
+      this.appTypeSelected = select
     },
     handleCurrentChange(val) {
-      this.currentPage = val;
-      this.getAppList();
+      this.currentPage = val
+      this.getAppList()
     }
   },
   created() {
-    this.getAppList();
+    this.getAppList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -242,7 +242,7 @@ export default {
       totalRecordsFrom: 0,
       totalRecordsTo: 0,
       tableType: false
-    };
+    }
   },
   methods: {
     formateDate(row, column, cellValue) {

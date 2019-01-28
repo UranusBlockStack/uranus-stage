@@ -488,9 +488,9 @@ export default {
   // },
 
   methods: {
-      closeDialog: function(data) {
-          this.outerVisible=false
-      },
+    closeDialog: function(data) {
+      this.outerVisible=false
+    },
     countDown() {
       if (!this.canClick) return
       else {
