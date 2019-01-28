@@ -54,7 +54,7 @@
               <el-button
                 type="primary"
                 @click="checkCaptcha('email',mail,mailCaptcha)"
-              >{{$t('setting.button3')}}next</el-button>
+              >{{$t('setting.button3')}}</el-button>
             </div>
           </el-dialog>
           <!-- new mail -->
