@@ -495,6 +495,18 @@ module.exports = {
       deleteText3: "The host which is can't exit is on sale in the cluster.",
       deleteSure: 'After exiting, the relationship of the predicted Cluster will be released, and the corresponding data cannot be restored. Is the exit determined?',
         clusterFail: 'Cluster information is not perfect',
+        usable: {
+            cpu: 'core(s)',
+            memory: 'MB',
+            disk: 'GB',
+            network: 'Mbps',
+        },
+        have: {
+          cpu: 'core(s)',
+          memory: 'MB',
+          disk: 'GB',
+          network: 'Mbps',
+        },
     }
   },
   wallet: {

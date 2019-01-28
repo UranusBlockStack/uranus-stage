@@ -40,7 +40,7 @@
                 :start-placeholder="$t('seller.group.startingTime')"
                 :end-placeholder="$t('seller.group.endTime')"
               ></el-date-picker>
-            </el-col> -->
+            </el-col>-->
             <el-col :span="8">
               <el-date-picker
                 type="date"
@@ -346,39 +346,49 @@ export default {
       innerVisible: false,
       isRouterAlive: true,
       startDatePickerOptions: {},
-      endDataPickerOptions: {},
+      endDataPickerOptions: {}
     };
   },
   methods: {
     getHosts() {
       //获取集群下的所有主机
       rancher.clusterHosts(this.language, this.clusterId).then(data => {
-        console.log("hosts====", data);
         this.tableData = data.data.data.records;
       });
     },
     modifyCluster() {
       // 设置集群
       let newClusterInfo = this.tableCluster;
-    //   newClusterInfo.beginTime = this.tableCluster.dateRange[0];
-    //   newClusterInfo.endTime = this.tableCluster.dateRange[1];
+      //   newClusterInfo.beginTime = this.tableCluster.dateRange[0];
+      //   newClusterInfo.endTime = this.tableCluster.dateRange[1];
       rancher
         .clusterModify(this.language, this.clusterId, newClusterInfo)
         .then(data => {
           if (data.data.success) {
             this.winReload();
           } else {
-            console.log(data.data.errMsg);
+            this.$message({
+              showClose: true,
+              message: data.data.errMsg,
+              type: "error"
+            });
           }
         });
     },
     deleteHost(id) {
       //删除主机
       rancher.hostDelete(auth.getCurLang(), id).then(data => {
-        console.log("delete ===", data);
         //删除逻辑
-        this.outerVisible = false;
-        this.innerVisible = true;
+        if (data.data.success) {
+          this.outerVisible = false;
+          this.innerVisible = true;
+        } else {
+          this.$message({
+            showClose: true,
+            message: data.data.errMsg,
+            type: "error"
+          });
+        }
       });
     },
     winReload(cond) {
@@ -386,15 +396,9 @@ export default {
     },
     getClusterDetail() {
       rancher.clusterInfo(this.language, this.clusterId).then(data => {
-        console.log("detail", data);
         this.clusterInfo = data.data.data;
         this.tableCluster = JSON.parse(JSON.stringify(data.data.data));
         this.setDatePick();
-        // if (this.tableCluster.beginTime == null || this.tableCluster.beginTime == '') {
-        //     this.tableCluster.dateRange = ''
-        // } else {
-        //     this.tableCluster.dateRange = [this.tableCluster.beginTime,this.tableCluster.endTime]
-        // }
         if (this.tableCluster.state == "online") {
           this.switchVal = true;
         } else {
@@ -409,9 +413,14 @@ export default {
     },
     // Switching cluster sale state
     onLineClick() {
-      if (this.tableCluster.rentPrice == null || this.tableCluster.regionEnUs == null || this.tableCluster.beginTime == null || this.tableCluster.endTime == null) {
-          this.$message(this.$t('seller.group.clusterFail'));
-          this.switchVal = !this.switchVal;
+      if (
+        this.tableCluster.rentPrice == null ||
+        this.tableCluster.regionEnUs == null ||
+        this.tableCluster.beginTime == null ||
+        this.tableCluster.endTime == null
+      ) {
+        this.$message(this.$t("seller.group.clusterFail"));
+        this.switchVal = !this.switchVal;
       } else {
         var action = "";
         if (this.switchVal) {
@@ -422,7 +431,6 @@ export default {
         rancher
           .clusterState(this.language, this.clusterId, action)
           .then(data => {
-            console.log(data.data);
             if (data.data.success) {
               this.$message({
                 message: "Success",
@@ -430,7 +438,11 @@ export default {
               });
               this.switchVal = this.switchVal;
             } else {
-              this.$message(data.data.errMsg);
+              this.$message({
+                showClose: true,
+                message: data.data.errMsg,
+                type: "error"
+              });
               this.switchVal = !this.switchVal;
             }
           });
@@ -442,7 +454,6 @@ export default {
     },
     setDatePick() {
       let that = this;
-      console.log("that.tableCluster.beginTime", that.tableCluster.beginTime);
       this.startDatePickerOptions = {
         disabledDate(time) {
           if (
@@ -465,11 +476,13 @@ export default {
             that.tableCluster.endTime !== null &&
             that.tableCluster.endTime !== 0
           ) {
-            return time.getTime() < new Date(that.tableCluster.endTime).getTime();
+            return (
+              time.getTime() < new Date(that.tableCluster.endTime).getTime()
+            );
           }
         }
       };
-    },
+    }
   },
   computed: {
     getPercentNumber() {

@@ -40,8 +40,8 @@ export function clusterState(lang, id, action) {
 }
 
 /** Rancher - Host Service ***/
-export function joinCluster(lang, hostId, clusterId) {
-    return httpLang(lang).post(`/rancher/hosts/${hostId}/cluster/${clusterId}`)
+export function joinCluster(lang, hostId, params) {
+    return httpLang(lang).post(`/rancher/hosts/${hostId}/cluster/`,params)
 }
 
 export function hostAdd(lang, hostInfo) {

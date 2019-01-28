@@ -35,7 +35,8 @@
           </el-select>
         </el-col>
         <el-col :span="6" :offset="7">
-          <el-input @keyup.enter.native="searchApps"
+          <el-input
+            @keyup.enter.native="searchApps"
             :placeholder="$t('buyer.appMarket.searchIn')"
             v-model="searchName"
             prefix-icon="el-icon-search"
@@ -144,7 +145,7 @@ export default {
         pageSize: this.pageSize,
         // 'sort': this.sort,
         sortDesc: this.sortDesc
-      };
+      }
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
         this.appList = respData.data.data.records;

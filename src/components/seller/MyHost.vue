@@ -249,9 +249,9 @@
 </template>
 
 <script>
-import * as rancher from "../../services/RancherService"
-import * as auth from "../../services/AuthService"
-import { Message } from 'element-ui'
+import * as rancher from "../../services/RancherService";
+import * as auth from "../../services/AuthService";
+import { Message } from "element-ui";
 
 export default {
   name: "MyHost",
@@ -292,7 +292,6 @@ export default {
       rancher
         .hostList(this.language, this.pageParam.page, this.pageParam.pageSize)
         .then(data => {
-          console.log("hostList：", data);
           this.pageParam.page = data.data.data.current;
           this.pageParam.totalRecords = data.data.data.total;
           this.tableData = data.data.data.records;
@@ -300,14 +299,12 @@ export default {
     },
     rancherList() {
       rancher.rancherList().then(data => {
-        console.log("rancherList：", data);
         this.rancherLists = data.data.data;
       });
     },
     clusterList() {
       var param = {};
       rancher.clusterSearch(this.language, param).then(data => {
-        console.log("clusterList:", data);
         this.clusterLists = data.data.data.records;
       });
     },
@@ -322,6 +319,11 @@ export default {
         if (data.data.success) {
           this.updatehost();
         } else {
+          this.$message({
+            showClose: true,
+            message: data.data.errMsg,
+            type: "error"
+          });
         }
       });
     },
@@ -335,16 +337,13 @@ export default {
         if (data.data.success) {
           dialogVisible = false;
         } else {
+          this.$message({
+            showClose: true,
+            message: data.data.errMsg,
+            type: "error"
+          });
         }
       });
-    },
-    joinCluster() {
-      //主机添加到已有集群
-      rancher
-        .joinCluster(this.language, this.hostId, this.clusterId)
-        .then(data => {
-          console.log("joinAdd result", data);
-        });
     },
     search() {
       var param = {
@@ -354,7 +353,6 @@ export default {
         pageSize: this.pageParam.pageSize
       };
       rancher.hostSearch(this.language, param).then(data => {
-        console.log("result:", data);
         this.pageParam.page = data.data.data.current;
         this.pageParam.totalRecords = data.data.data.total;
         this.tableData = data.data.data.records;
@@ -364,41 +362,48 @@ export default {
       var param = {
         newCluster: false,
         clusterName: this.newClusterName,
-        rancherId: this.rancherId
+        rancherId: this.rancherId,
+        clusterId: 0
       };
-      if (this.rancherId == "" || this.rancherId == null) {
+      if (this.groupJoin == this.$t("seller.host.newGroup")) {
+        // 主机加入新建集群
+        if (this.rancherId == "" || this.rancherId == null) {
           this.$message({
-                  showClose: true,
-                  message: this.$t('seller.host.clusterFail'),
-                  type: 'error'
-                })
-      } else {
-        if (this.groupJoin == this.$t("seller.host.newGroup")) {
-          param.newCluster = true;
-          rancher.hostAdd(this.language, param).then(data => {
-            console.log("hostAdd result", data);
-            this.dialogVisible = false;
-            this.winReload();
+            showClose: true,
+            message: this.$t("seller.host.clusterFail"),
+            type: "error"
           });
         } else {
-          param.newCluster = false;
-          this.joinCluster();
-          this.dialogVisible = false;
-          this.winReload();
+          param.newCluster = true;
+          rancher.joinCluster(this.language, this.hostId, param).then(data => {
+            if (data.data.success) {
+              this.dialogVisible = false;
+              this.winReload();
+            } else {
+              this.$message({
+                showClose: true,
+                message: data.data.errMsg,
+                type: "error"
+              });
+            }
+          });
         }
-      }
-      if (this.groupJoin == this.$t("seller.host.newGroup")) {
-        param.newCluster = true;
-        rancher.hostAdd(this.language, param).then(data => {
-          console.log("hostAdd result", data);
-          this.dialogVisible = false;
-          this.winReload();
-        });
       } else {
+        // 主机加入已有集群
         param.newCluster = false;
-        this.joinCluster();
-        this.dialogVisible = false;
-        this.winReload();
+        param.clusterId = this.clusterId;
+        rancher.joinCluster(this.language, this.hostId, param).then(data => {
+          if (data.data.success) {
+            this.dialogVisible = false;
+            this.winReload();
+          } else {
+            this.$message({
+              showClose: true,
+              message: data.data.errMsg,
+              type: "error"
+            });
+          }
+        });
       }
     },
     joinButtonClick(selectedhostId) {
