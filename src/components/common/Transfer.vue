@@ -105,7 +105,7 @@ export default {
       transData: {},
       totalTime: 60,
       canClick: true,
-      content: this.$t('userCommon.codeBtn'),
+      content: this.$t('userCommon.codeBtn')
     }
   },
   methods: {
@@ -180,26 +180,24 @@ export default {
         })
     },
     countDown() {
-      
       if (!this.canClick) return
       else {
         this.canClick = false
-      this.content =
-        this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
-      let clock = window.setInterval(() => {
-        this.totalTime--
         this.content =
+        this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+        let clock = window.setInterval(() => {
+          this.totalTime--
+          this.content =
           this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
-        if (this.totalTime < 0) {
-          window.clearInterval(clock)
-          this.content = this.$t('userCommon.codeTime')
-          this.totalTime = 10
-          this.canClick = true
-        }
-      }, 1000)
-      this.getConfirmCode()
+          if (this.totalTime < 0) {
+            window.clearInterval(clock)
+            this.content = this.$t('userCommon.codeTime')
+            this.totalTime = 10
+            this.canClick = true
+          }
+        }, 1000)
+        this.getConfirmCode()
       }
-      
     },
     getFee() {
       wallet.walletReferenceFee(auth.getCurLang())

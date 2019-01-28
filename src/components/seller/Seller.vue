@@ -159,21 +159,21 @@
 </template>
 
 <script>
-import moment from "moment";
-import Oil from "@/components/modules/Oil";
-import * as wallet from "../../services/WalletService";
-import * as rancher from "../../services/RancherService.js";
-import * as auth from "../../services/AuthService";
-import * as order from "../../services/OrderService";
+import moment from 'moment'
+import Oil from '@/components/modules/Oil'
+import * as wallet from '../../services/WalletService'
+import * as rancher from '../../services/RancherService.js'
+import * as auth from '../../services/AuthService'
+import * as order from '../../services/OrderService'
 
 export default {
-  name: "Seller",
+  name: 'Seller',
   components: {
     Oil
   },
   data() {
     return {
-      language: "en-us",
+      language: 'en-us',
       indexCon: 2,
       indexPro: 2,
       tableData: [],
@@ -185,7 +185,7 @@ export default {
         diskUsed: 0,
         disk: 1,
         networkUsed: 0,
-        network: 1,
+        network: 1
       },
       initOil: false,
       pageInfo: {
@@ -193,68 +193,68 @@ export default {
         pageSize: 5,
         totalRecords: 0
       }
-    };
+    }
   },
   methods: {
     handleCurrentChange(val) {
-      this.pageInfo.page = val;
-      this.searchTransactionRecords();
+      this.pageInfo.page = val
+      this.searchTransactionRecords()
     },
 
     statisticsGlobalUraPower(elementId, type) {
-      //按类型统计 全网算力
+      // 按类型统计 全网算力
       rancher.statisticsGlobalUraPower(this.language, type).then(data => {
-        console.log("按类型统计 全网算力数据：", data.data.data);
-        let result = data.data.data;
-        let xValue = [];
-        let yValue = [];
-        let lineValue = [];
+        console.log('按类型统计 全网算力数据：', data.data.data)
+        let result = data.data.data
+        let xValue = []
+        let yValue = []
+        let lineValue = []
         result.forEach((item, index) => {
-          xValue.push(item.datetimeValue);
-          yValue.push(item.totalCompute);
-          lineValue.push(item.usedCompute);
-        });
-        this.initEchart(elementId, xValue, yValue, lineValue);
-      });
-      if (type == "day") {
-        this.indexCon = 2;
-      } else if (type == "week") {
-        this.indexCon = 1;
-      } else if (type == "month") {
-        this.indexCon = 0;
+          xValue.push(item.datetimeValue)
+          yValue.push(item.totalCompute)
+          lineValue.push(item.usedCompute)
+        })
+        this.initEchart(elementId, xValue, yValue, lineValue)
+      })
+      if (type == 'day') {
+        this.indexCon = 2
+      } else if (type == 'week') {
+        this.indexCon = 1
+      } else if (type == 'month') {
+        this.indexCon = 0
       }
     },
     getEarning(elementId, type) {
       order.earnings(this.language, type).then(data => {
-        console.log("收益", data.data.data);
-        let result = data.data.data;
-        let xValue = [];
-        let yValue = [];
+        console.log('收益', data.data.data)
+        let result = data.data.data
+        let xValue = []
+        let yValue = []
         result.forEach((item, index) => {
-          xValue.push(item.datetimeValue);
-          yValue.push(item.earnings);
-        });
-        this.initEchart(elementId, xValue, yValue);
-      });
-      if (type == "day") {
-        this.indexPro = 2;
-      } else if (type == "week") {
-        this.indexPro = 1;
-      } else if (type == "month") {
-        this.indexPro = 0;
+          xValue.push(item.datetimeValue)
+          yValue.push(item.earnings)
+        })
+        this.initEchart(elementId, xValue, yValue)
+      })
+      if (type == 'day') {
+        this.indexPro = 2
+      } else if (type == 'week') {
+        this.indexPro = 1
+      } else if (type == 'month') {
+        this.indexPro = 0
       }
     },
     hosts() {
       rancher.hosts(this.language).then(data => {
-        //卖家所有资源
-        console.log("卖家所有资源allResources", data.data.data);
-        if ((data.data.data = "null")) {
-            this.allResources
-        } else{
-           this.allResources = data.data.data; 
+        // 卖家所有资源
+        console.log('卖家所有资源allResources', data.data.data)
+        if ((data.data.data = 'null')) {
+          this.allResources
+        } else {
+          this.allResources = data.data.data 
         }
-        this.initOil = true;
-      });
+        this.initOil = true
+      })
     },
 
     searchTransactionRecords() {
@@ -266,36 +266,36 @@ export default {
           this.pageInfo.pageSize
         )
         .then(transList => {
-          this.tableData = transList.data.data.records;
-          console.log("searchTransactionRecords:", transList.data);
-          this.pageInfo.page = transList.data.data.current;
-          //this.pageInfo.pageSize=transList.data.data.size
-          this.pageInfo.totalRecords = transList.data.data.total;
-        });
+          this.tableData = transList.data.data.records
+          console.log('searchTransactionRecords:', transList.data)
+          this.pageInfo.page = transList.data.data.current
+          // this.pageInfo.pageSize=transList.data.data.size
+          this.pageInfo.totalRecords = transList.data.data.total
+        })
     },
     formateDate(time) {
-      return moment(time).format("YYYY-MM-DD HH:mm:ss");
+      return moment(time).format('YYYY-MM-DD HH:mm:ss')
     },
     initEchart(elementId, xValue, yValue, lineValue) {
       let option = {
-        color: ["#3398DB"],
+        color: ['#3398DB'],
         tooltip: {
-          trigger: "axis",
+          trigger: 'axis',
           axisPointer: {
             // 坐标轴指示器，坐标轴触发有效
-            type: "line" // 默认为直线，可选为：'line' | 'shadow'
+            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
           }
         },
         grid: {
-          left: "3%",
-          right: "4%",
-          bottom: "3%",
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
           containLabel: true
         },
         xAxis: [
           {
-            name: "T",
-            type: "category",
+            name: 'T',
+            type: 'category',
             // x轴数值
             data: xValue,
             axisTick: {
@@ -303,84 +303,84 @@ export default {
             },
             axisLine: {
               show: true,
-              symbol: ["none", "arrow"],
+              symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               symbolOffset: [0, 5],
               lineStyle: {
-                color: "#ffffff"
+                color: '#ffffff'
               }
             }
           }
         ],
         yAxis: [
           {
-            name: "UracPower(U)",
-            type: "value",
-            /*axisLabel: {
+            name: 'UracPower(U)',
+            type: 'value',
+            /* axisLabel: {
                           formatter: "{value}"
-                      },*/
+                      }, */
             splitLine: {
               show: true,
               lineStyle: {
-                color: "#363636"
+                color: '#363636'
               }
             },
             axisLine: {
               show: true,
-              symbol: ["none", "arrow"],
+              symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               symbolOffset: [0, 15],
               lineStyle: {
-                color: "#ffffff"
+                color: '#ffffff'
               }
             }
           }
         ],
         series: [
           {
-            name: " ",
-            type: "bar",
-            barWidth: "30%",
-            color: "#2463ff",
+            name: ' ',
+            type: 'bar',
+            barWidth: '30%',
+            color: '#2463ff',
             // y轴柱形数值
             data: yValue
           },
           {
-            name: " ",
-            type: "line",
-            color: "#51a906",
+            name: ' ',
+            type: 'line',
+            color: '#51a906',
             // y轴连线数值
             data: lineValue
           }
         ]
-      };
-      let myChart = this.$echarts.init(document.getElementById(elementId));
-      myChart.setOption(option);
-      window.addEventListener("resize", function() {
-        myChart.resize();
-      });
+      }
+      let myChart = this.$echarts.init(document.getElementById(elementId))
+      myChart.setOption(option)
+      window.addEventListener('resize', function() {
+        myChart.resize()
+      })
     }
   },
   computed: {
     getPercentNumber() {
-      //计算百分比 a/b
+      // 计算百分比 a/b
       return function(a, b) {
-        var n = Number((a / b) * 100).toFixed(2);
+        var n = Number((a / b) * 100).toFixed(2)
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
-          n = 0;
+          n = 0
         }
-        return Number(n);
-      };
+        return Number(n)
+      }
     }
   },
   mounted() {
-    this.language = auth.getCurLang();
-    this.searchTransactionRecords();
-    this.statisticsGlobalUraPower("myConsumption", "month");
-    this.getEarning("myProfit", "day");
-    this.hosts();
+    this.language = auth.getCurLang()
+    this.searchTransactionRecords()
+    this.statisticsGlobalUraPower('myConsumption', 'month')
+    this.getEarning('myProfit', 'day')
+    this.hosts()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

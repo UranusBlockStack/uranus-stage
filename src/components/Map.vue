@@ -196,7 +196,7 @@ export default {
       this.BlockData = []
       block.getLastedBlock(this.langCode, {'height': -1})
               .then(blockData => {
-                  if (blockData.data.success) {
+                if (blockData.data.success) {
                   const data = blockData.data.data
                   this.BlockData.push(data)
                   this.TranscationData = data.transactions

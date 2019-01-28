@@ -296,9 +296,9 @@ export default {
     this.getReferenceFee()
   },
   methods: {
-      closeDialog: function(data) {
-          this.outerVisible=false
-      },
+    closeDialog: function(data) {
+      this.outerVisible=false
+    },
     countDown() {
       if (!this.canClick) return
       else {
@@ -440,7 +440,7 @@ export default {
               this.$message({
                 showClose: true,
                 message: this.$t('buyer.resourceMarket.orderSuccess'),
-                type: "success",
+                type: 'success',
                 duration: 3000
               })
               this.$router.push({ name: 'ApplicationRepository' })

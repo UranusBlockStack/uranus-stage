@@ -137,7 +137,6 @@
 import * as auth from '../services/AuthService'
 import * as project from '../services/RancherService'
 
-
 export default {
   name: 'SidebarLeft',
   data() {
@@ -151,7 +150,7 @@ export default {
         'sort': '',
         'sortDesc': true
       },
-      clusterList: [],
+      clusterList: []
     }
   },
   created() {
@@ -172,7 +171,7 @@ export default {
                 })
     },
     getClusterList() {
-        project.clusterSearch(this.$store.getters.lang, this.projectQuertData)
+      project.clusterSearch(this.$store.getters.lang, this.projectQuertData)
                 .then(respData => {
                   const data = respData.data.data.records
                   this.clusterList = data

@@ -19,12 +19,15 @@
       </div>
       <!-- User Sign out -->
       <div class="userInformation">
-        <span><i class="iconfont icon-user"></i> {{curUserName}}</span>
+        <span>
+          <i class="iconfont icon-user"></i>
+          {{curUserName}}
+        </span>
         <el-tooltip class="item" effect="dark" content="Sign out" placement="bottom-start">
-    <el-button @click="logout">
-          <i class="iconfont icon-sign-out"></i>
-        </el-button>
-    </el-tooltip>
+          <el-button @click="logout">
+            <i class="iconfont icon-sign-out"></i>
+          </el-button>
+        </el-tooltip>
       </div>
       <!-- Download button -->
       <div class="download">
@@ -101,7 +104,7 @@ export default {
         line-height: 50px;
       }
       :hover {
-          color: #1890ff;
+        color: #1890ff;
       }
     }
   }

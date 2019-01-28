@@ -74,64 +74,64 @@
 
 <script>
 export default {
-  name: "AppRecord",
+  name: 'AppRecord',
   data() {
     return {
       tableData: [
         {
-          1: "on",
-          2: "wordpress-mdkyy-mariadb",
+          1: 'on',
+          2: 'wordpress-mdkyy-mariadb',
           image: [
-            "docker.io/bitnami/mariadb.10.135-debian-9",
-            this.$t("buyer.appState.choosePod")
+            'docker.io/bitnami/mariadb.10.135-debian-9',
+            this.$t('buyer.appState.choosePod')
           ],
-          4: "host140",
-          5: "10.42.0.58"
+          4: 'host140',
+          5: '10.42.0.58'
         },
         {
-          1: "on",
-          2: "wordpress-mdkyy-mariadb",
+          1: 'on',
+          2: 'wordpress-mdkyy-mariadb',
           image: [
-            "docker.io/bitnami/mariadb.10.135-debian-9",
-            this.$t("buyer.appState.choosePod")
+            'docker.io/bitnami/mariadb.10.135-debian-9',
+            this.$t('buyer.appState.choosePod')
           ],
-          4: "host140",
-          5: "10.42.0.58"
+          4: 'host140',
+          5: '10.42.0.58'
         },
         {
-          1: "on",
-          2: "wordpress-mdkyy-mariadb",
+          1: 'on',
+          2: 'wordpress-mdkyy-mariadb',
           image: [
-            "docker.io/bitnami/mariadb.10.135-debian-9",
-            this.$t("buyer.appState.choosePod")
+            'docker.io/bitnami/mariadb.10.135-debian-9',
+            this.$t('buyer.appState.choosePod')
           ],
-          4: "host140",
-          5: "10.42.0.58"
+          4: 'host140',
+          5: '10.42.0.58'
         },
         {
-          1: "on",
-          2: "wordpress-mdkyy-mariadb",
+          1: 'on',
+          2: 'wordpress-mdkyy-mariadb',
           image: [
-            "docker.io/bitnami/mariadb.10.135-debian-9",
-            this.$t("buyer.appState.choosePod")
+            'docker.io/bitnami/mariadb.10.135-debian-9',
+            this.$t('buyer.appState.choosePod')
           ],
-          4: "host140",
-          5: "10.42.0.58"
+          4: 'host140',
+          5: '10.42.0.58'
         },
         {
-          1: "on",
-          2: "wordpress-mdkyy-mariadb",
+          1: 'on',
+          2: 'wordpress-mdkyy-mariadb',
           image: [
-            "docker.io/bitnami/mariadb.10.135-debian-9",
-            this.$t("buyer.appState.choosePod")
+            'docker.io/bitnami/mariadb.10.135-debian-9',
+            this.$t('buyer.appState.choosePod')
           ],
-          4: "host140",
-          5: "10.42.0.58"
+          4: 'host140',
+          5: '10.42.0.58'
         }
       ]
-    };
+    }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

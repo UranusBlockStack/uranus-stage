@@ -15,18 +15,18 @@ export default {
       myChart.setOption({
         series: [
           {
-            name: "pool",
-            type: "pie",
-            radius: ["85%", "70%"],
+            name: 'pool',
+            type: 'pie',
+            radius: ['85%', '70%'],
             hoverAnimation: false,
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ["#6AB52B", "#f2f2f2"],
+            color: ['#6AB52B', '#f2f2f2'],
             labelLine: {
-                normal: {
-                    show: false
-                }
+              normal: {
+                show: false
+              }
             },
             data: [
               {
@@ -41,7 +41,7 @@ export default {
                         color: '#f2f2f2',
                         fontSize: '14',
                         lineHeight: '22'
-                      },
+                      }
                     },
                     position: 'center',
                     textStyle: { align: 'center' }

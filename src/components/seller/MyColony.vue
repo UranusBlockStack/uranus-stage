@@ -136,82 +136,82 @@
 </template>
 
 <script>
-import moment from "moment";
-import Water from "@/components/modules/Water";
-import RestTime from "@/components/modules/RestTime";
-import * as rancher from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
+import moment from 'moment'
+import Water from '@/components/modules/Water'
+import RestTime from '@/components/modules/RestTime'
+import * as rancher from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
 
 export default {
-  name: "MyColony",
+  name: 'MyColony',
   components: {
     Water,
     RestTime
   },
   data() {
     return {
-      language: "en-us",
+      language: 'en-us',
       colonyList: [],
       dialogVisible: false,
       //   setting information
       form: {
-        name: "",
-        rent: "",
-        date1: "",
-        date2: "",
-        region: "",
-        state: ""
+        name: '',
+        rent: '',
+        date1: '',
+        date2: '',
+        region: '',
+        state: ''
       },
-        searchParam:{
-            name: "",
-            page: 0,
-            pageSize: 6,
-            totalRecords: 0,
-            sort: "",
-            sortDesc: true,
-            state: ""
-        }
-    };
+      searchParam: {
+        name: '',
+        page: 0,
+        pageSize: 6,
+        totalRecords: 0,
+        sort: '',
+        sortDesc: true,
+        state: ''
+      }
+    }
   },
   methods: {
-      handleCurrentChange(val) {
-          this.searchParam.currentPage = val
-          this.clusterSearch()
-      },
+    handleCurrentChange(val) {
+      this.searchParam.currentPage = val
+      this.clusterSearch()
+    },
     clusterSearch() {
       rancher.clusterSearch(this.language, this.searchParam).then(data => {
-          this.searchParam.page=data.data.data.current
-          this.searchParam.totalRecords=data.data.data.total
+        this.searchParam.page=data.data.data.current
+        this.searchParam.totalRecords=data.data.data.total
         var records = data.data.data.records
         console.log('cluster ===', records)
         this.colonyList = records
         records.forEach((item, index) => {
           let momentInfo = moment(item.endTime)
           if (momentInfo.isValid() == false) {
-            this.colonyList[index].endTime = moment(0).format("YYYY-MM-DD hh:mm:ss")
+            this.colonyList[index].endTime = moment(0).format('YYYY-MM-DD hh:mm:ss')
           } else {
-            this.colonyList[index].endTime = moment(item.endTime).format("YYYY-MM-DD hh:mm:ss")
+            this.colonyList[index].endTime = moment(item.endTime).format('YYYY-MM-DD hh:mm:ss')
           }
-        });
-      });
+        })
+      })
     }
   },
   computed: {
     division() {
       return function(a, b) {
-        var n = a / b;
-          if (isNaN(Number(n)) || !isFinite(Number(n)) ) {
-              n = 0;
-          }
-        return Number(n);
-      };
+        var n = a / b
+        if (isNaN(Number(n)) || !isFinite(Number(n))) {
+          n = 0
+        }
+        return Number(n)
+      }
     }
   },
   mounted() {
-    this.clusterSearch();
-    this.language = auth.getCurLang();
-  },
-};
+    this.clusterSearch()
+    this.language = auth.getCurLang()
+  }
+}
 </script>
 
 <style lang="scss" scoped>

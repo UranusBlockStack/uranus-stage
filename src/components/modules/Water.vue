@@ -25,12 +25,12 @@ export default {
                 direction: 'left',
                 itemStyle: {
                   normal: {
-                    color: '#1890FF',
+                    color: '#1890FF'
                   }
                 },
                 label: {
-                    formatter: ["Used",  this.chartData*100 + "%",].join("\n"),
-                    fontSize: "22",
+                  formatter: ['Used', this.chartData*100 + '%' ].join('\n'),
+                  fontSize: '22'
                 }
               }
             ],
@@ -39,7 +39,7 @@ export default {
             },
             backgroundStyle: {
               borderColor: '#1890FF',
-              borderWidth: 3,
+              borderWidth: 3
             }
           }
         ]
