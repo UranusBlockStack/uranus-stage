@@ -83,7 +83,7 @@ export default {
   data() {
     return {
       phoneShow: true,
-      totalTime: 10,
+      totalTime: 60,
       canClick: true,
       content: this.$t('userCommon.codeBtn'),
       phone: '',

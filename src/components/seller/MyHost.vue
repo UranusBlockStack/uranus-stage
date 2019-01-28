@@ -94,7 +94,7 @@
         <el-table-column min-width="180">
           <!--主机名称 name-->
           <template slot="header" slot-scope="scope">
-            <p class="table-head" >
+            <p class="table-head">
               <i class="iconfont icon-table-host"></i>
               {{$t('seller.host.number')}}
             </p>
@@ -249,8 +249,9 @@
 </template>
 
 <script>
-import * as rancher from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
+import * as rancher from "../../services/RancherService"
+import * as auth from "../../services/AuthService"
+import { Message } from 'element-ui'
 
 export default {
   name: "MyHost",
@@ -363,8 +364,29 @@ export default {
       var param = {
         newCluster: false,
         clusterName: this.newClusterName,
-        rancherId: this.rancherId,
+        rancherId: this.rancherId
       };
+      if (this.rancherId == "" || this.rancherId == null) {
+          this.$message({
+                  showClose: true,
+                  message: this.$t('seller.host.clusterFail'),
+                  type: 'error'
+                })
+      } else {
+        if (this.groupJoin == this.$t("seller.host.newGroup")) {
+          param.newCluster = true;
+          rancher.hostAdd(this.language, param).then(data => {
+            console.log("hostAdd result", data);
+            this.dialogVisible = false;
+            this.winReload();
+          });
+        } else {
+          param.newCluster = false;
+          this.joinCluster();
+          this.dialogVisible = false;
+          this.winReload();
+        }
+      }
       if (this.groupJoin == this.$t("seller.host.newGroup")) {
         param.newCluster = true;
         rancher.hostAdd(this.language, param).then(data => {

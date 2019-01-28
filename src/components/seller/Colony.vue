@@ -11,8 +11,8 @@
         <el-switch
           style="margin-top: 15px;"
           v-model="switchVal"
-          :active-text="$t('seller.group.notSale')"
-          :inactive-text="$t('seller.group.inSale')"
+          :active-text="$t('seller.group.inSale')"
+          :inactive-text="$t('seller.group.notSale')"
           @change="onLineClick()"
         ></el-switch>
       </el-col>
@@ -120,7 +120,7 @@
           <p v-if="clusterInfo.endTime == null">{{$t('seller.group.endingTime')}} -- --</p>
         </el-col>
         <el-col :span="2">
-          <p v-show="switchVal" class="setting" @click="dialogVisible = true">
+          <p v-show="!switchVal" class="setting" @click="dialogVisible = true">
             <i class="iconfont icon-setting"></i>
           </p>
         </el-col>
@@ -281,7 +281,7 @@
             <template slot-scope="scope">
               <el-button
                 style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
-                v-show="switchVal"
+                v-show="!switchVal"
                 @click="outerVisible = true"
               >{{$t('seller.group.deleteHost')}}</el-button>
               <!-- delete host text box -->
@@ -341,7 +341,7 @@ export default {
       clusterInfo: {},
       tableCluster: {},
       dialogVisible: false,
-      switchVal: true,
+      switchVal: false,
       outerVisible: false,
       innerVisible: false,
       isRouterAlive: true,
@@ -396,9 +396,9 @@ export default {
         //     this.tableCluster.dateRange = [this.tableCluster.beginTime,this.tableCluster.endTime]
         // }
         if (this.tableCluster.state == "online") {
-          this.switchVal = false;
-        } else {
           this.switchVal = true;
+        } else {
+          this.switchVal = false;
         }
         this.update1 = true;
         this.update2 = true;
@@ -415,9 +415,9 @@ export default {
       } else {
         var action = "";
         if (this.switchVal) {
-          action = "offline";
-        } else {
           action = "online";
+        } else {
+          action = "offline";
         }
         rancher
           .clusterState(this.language, this.clusterId, action)

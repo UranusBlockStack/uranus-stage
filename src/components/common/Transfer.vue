@@ -103,7 +103,7 @@ export default {
       curUserInfo: auth.getUserBaseInfo(),
       balance: 0,
       transData: {},
-      totalTime: 10,
+      totalTime: 60,
       canClick: true,
       content: this.$t('userCommon.codeBtn'),
     }

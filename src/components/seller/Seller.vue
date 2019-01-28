@@ -70,12 +70,12 @@
           </div>
           <div id="Storage">
             <Oil
-              :chartData="{value: getPercentNumber(allResources.disk,allResources.diskUsed), type: 'Storage'}"
+              :chartData="{value: getPercentNumber(allResources.diskUsed,allResources.disk), type: 'Storage'}"
             />
           </div>
           <div id="Network">
             <Oil
-              :chartData="{value: getPercentNumber(allResources.network,allResources.networkUsed), type: 'Network'}"
+              :chartData="{value: getPercentNumber(allResources.networkUsed,allResources.network), type: 'Network'}"
             />
             <!--<Oil :chartData="{value: 20, type: 'Network'}"/>-->
           </div>
@@ -177,7 +177,16 @@ export default {
       indexCon: 2,
       indexPro: 2,
       tableData: [],
-      allResources: "",
+      allResources: {
+        cpuKernelUsed: 0,
+        cpuKernel: 1,
+        memUsed: 0,
+        mem: 1,
+        diskUsed: 0,
+        disk: 1,
+        networkUsed: 0,
+        network: 1,
+      },
       initOil: false,
       pageInfo: {
         page: 0,
@@ -239,7 +248,11 @@ export default {
       rancher.hosts(this.language).then(data => {
         //卖家所有资源
         console.log("卖家所有资源allResources", data.data.data);
-        this.allResources = data.data.data;
+        if ((data.data.data = "null")) {
+            this.allResources
+        } else{
+           this.allResources = data.data.data; 
+        }
         this.initOil = true;
       });
     },
@@ -309,7 +322,7 @@ export default {
             splitLine: {
               show: true,
               lineStyle: {
-                  color: '#363636',
+                color: "#363636"
               }
             },
             axisLine: {

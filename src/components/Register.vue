@@ -62,6 +62,7 @@
       <input
         oninput="value=value.replace(/[^\d]/g,'')"
         class="inputCode"
+        v-model="code"
         ref="verifyCodeInput"
         :placeholder="$t('userCommon.code')"
       >
@@ -85,13 +86,14 @@ export default {
   data() {
     return {
       phoneShow: true,
-      totalTime: 10,
+      totalTime: 60,
       canClick: true,
       content: this.$t('userCommon.codeBtn'),
       phone: '',
       mail: '',
       password: '',
       surepwd: '',
+      code: '',
       prompt: '',
       regions: [],
       currentRegion: '86'
