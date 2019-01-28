@@ -35,7 +35,7 @@
           </el-select>
         </el-col>
         <el-col :span="6" :offset="7">
-          <el-input
+          <el-input @keyup.enter.native="searchApps"
             :placeholder="$t('buyer.appMarket.searchIn')"
             v-model="searchName"
             prefix-icon="el-icon-search"

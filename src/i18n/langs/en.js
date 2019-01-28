@@ -340,6 +340,7 @@ module.exports = {
       newGroup: 'New Cluster',
       nameGroup: 'Name Cluster',
       joinGroup: 'Jion Cluster',
+      clusterFail: 'Cluster information is not perfect',
       existingGroup: 'Existing Cluster',
       region: 'Region',
       asia: 'Asia',

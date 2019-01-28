@@ -320,6 +320,7 @@ module.exports = {
             chooseGroup: '选择集群',
             newGroup: '新建集群',
             nameGroup: '命名新的集群',
+            clusterFail: '集群信息不完善',
             joinGroup: '加入已有集群',
             asia: '亚洲',
             europe: '欧洲',

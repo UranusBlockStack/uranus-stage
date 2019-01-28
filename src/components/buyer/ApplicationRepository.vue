@@ -36,7 +36,7 @@
     <div class="shop">
       <el-row>
         <el-col :span="6" :offset="16">
-          <el-input
+          <el-input @keyup.enter.native="searchMyApp"
             :placeholder="$t('buyer.appRepository.searchIn')"
             prefix-icon="el-icon-search"
             v-model="searchName"
@@ -108,24 +108,24 @@
 </template>
 
 <script>
-import * as app from "../../services/RancherService";
-import * as auth from "../../services/AuthService";
+import * as app from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
 
 export default {
-  name: "Applicationmarket",
+  name: 'Applicationmarket',
   data() {
     return {
-      letter: "123",
+      letter: '123',
       dialogVisible: false,
       imageServerUrl: this.$store.state.imageServerUrl,
       appList: [],
-      searchName: "",
+      searchName: '',
       currentPage: 1,
       pageSize: this.$store.state.defaultCardPageSize,
       totalRecords: 0,
-      sort: "download_times",
-      sortDesc: "true"
-    };
+      sort: 'download_times',
+      sortDesc: 'true'
+    }
   },
   methods: {
     getAppList() {
@@ -135,43 +135,43 @@ export default {
         pageSize: this.pageSize,
         sort: this.sort,
         sortDesc: this.sortDesc
-      };
+      }
       app.appByUser(auth.getCurLang(), queryData).then(respData => {
-        this.appList = respData.data.data.records;
-        this.totalRecords = respData.data.data.total;
+        this.appList = respData.data.data.records
+        this.totalRecords = respData.data.data.total
 
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + "/icon";
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
           appitem.computedPrice = appitem.free
-            ? this.$t("buyer.deploy.free")
-            : appitem.price;
-          return appitem;
-        });
-      });
+            ? this.$t('buyer.deploy.free')
+            : appitem.price
+          return appitem
+        })
+      })
     },
     deployApp(appId, appRid, versionId, catalog) {
       this.$router.push({
-        path: "/deployment",
+        path: '/deployment',
         query: {
           appId: appId,
           appRid: appRid,
           versionId: versionId,
           catalog: catalog
         }
-      });
+      })
     },
     searchMyApp() {
-      this.getAppList();
+      this.getAppList()
     },
     handleCurrentChange(val) {
-      this.currentPage = val;
-      this.getAppList();
+      this.currentPage = val
+      this.getAppList()
     }
   },
   created() {
-    this.getAppList();
+    this.getAppList()
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>

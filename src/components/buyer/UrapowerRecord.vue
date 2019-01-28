@@ -43,9 +43,9 @@
           ></el-date-picker>
         </el-col>-->
         <el-col :span="6" :offset="18">
-          <el-input
+         <el-input @keyup.enter.native="searchUra"
             :placeholder="$t('buyer.myResource.deployPage.searchIn')"
-            prefix-icon="el-icon-search" v-model="appName"
+            prefix-icon="el-icon-search" v-model="prodName"
           ></el-input>
           <el-button type="success" @click="searchUra">
             <i class="iconfont icon-search"></i>
@@ -150,7 +150,7 @@ export default {
           label: '选项2'
         }
       ],
-      appName: '',
+      prodName: '',
       value2: '',
       options2: [
         {
@@ -222,7 +222,7 @@ export default {
   methods: {
     getUraPowerPoolList() {
       const queryData = {
-        name: this.appName,
+        prodName: this.prodName,
         page: this.currentPage,
         pageSize: this.pageSize,
         projectId: 0,

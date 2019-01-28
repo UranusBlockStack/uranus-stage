@@ -407,7 +407,7 @@ export default {
   data() {
     return {
       content: this.$t('buyer.deploy.codeBtn'),
-      totalTime: 10,
+      totalTime: 60,
       canClick: true,
       orderMode: '1',
       deployForm: {

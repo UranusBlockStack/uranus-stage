@@ -243,7 +243,7 @@ export default {
   data() {
     return {
       content: this.$t('buyer.resourceMarket.codeBtn'),
-      totalTime: 10,
+      totalTime: 60,
       canClick: true,
       deployForm: {
         projectName: '',
