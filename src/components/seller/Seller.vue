@@ -204,7 +204,6 @@ export default {
     statisticsGlobalUraPower(elementId, type) {
       // 按类型统计 全网算力
       rancher.statisticsGlobalUraPower(this.language, type).then(data => {
-        console.log('按类型统计 全网算力数据：', data.data.data)
         let result = data.data.data
         let xValue = []
         let yValue = []
@@ -226,7 +225,6 @@ export default {
     },
     getEarning(elementId, type) {
       order.earnings(this.language, type).then(data => {
-        console.log('收益', data.data.data)
         let result = data.data.data
         let xValue = []
         let yValue = []
@@ -247,7 +245,6 @@ export default {
     hosts() {
       rancher.hosts(this.language).then(data => {
         // 卖家所有资源
-        console.log('卖家所有资源allResources', data.data.data)
         if ((data.data.data = 'null')) {
           this.allResources
         } else {
@@ -267,7 +264,6 @@ export default {
         )
         .then(transList => {
           this.tableData = transList.data.data.records
-          console.log('searchTransactionRecords:', transList.data)
           this.pageInfo.page = transList.data.data.current
           // this.pageInfo.pageSize=transList.data.data.size
           this.pageInfo.totalRecords = transList.data.data.total

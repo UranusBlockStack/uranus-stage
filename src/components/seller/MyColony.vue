@@ -71,7 +71,7 @@
     <div class="shop">
       <el-row style="padding-bottom: 10px;">
         <el-col :span="6">
-          <p>{{$t('seller.groups.list')}}</p>
+          <p style="padding-left: 15px;">{{$t('seller.groups.list')}}</p>
         </el-col>
         <el-col :span="4" :offset="12">
           <el-input v-model="searchParam.name" :placeholder="$t('seller.groups.searchIn')" prefix-icon="el-icon-search"></el-input>
@@ -183,7 +183,6 @@ export default {
         this.searchParam.page=data.data.data.current
         this.searchParam.totalRecords=data.data.data.total
         var records = data.data.data.records
-        console.log('cluster ===', records)
         this.colonyList = records
         records.forEach((item, index) => {
           let momentInfo = moment(item.endTime)

@@ -1,5 +1,5 @@
 <template>
-  <section class="resourcePool"  v-if="isRouterAlive">
+  <section class="resourcePool" v-if="isRouterAlive">
     <el-row class="poolHead">
       <el-col class="title" :span="12">
         <h1>
@@ -42,16 +42,20 @@
         <el-col class="rePool" :span="12" v-for="(item, index) in appList" :key="index">
           <el-row>
             <el-col :span="4" :offset="1">
-                <div class="img-box">
-                    <img :src="getImage(item.appRid)" alt="img">
-                </div>
+              <div class="img-box">
+                <img :src="getImage(item.appRid)" alt="img">
+              </div>
             </el-col>
             <el-col :span="15" :offset="1">
               <h3>{{$t('buyer.resourcePool.appName')}} {{item.name}}</h3>
               <!-- <h3>{{$t('buyer.resourcePool.appIp')}} {{item.ipAddress}}</h3>
-              <h3>{{$t('buyer.resourcePool.appPort')}} {{item.port}}</h3> -->
-              <h3>{{$t('buyer.resourcePool.appState')}} {{item.appOrderStatusName}}
-              <span v-if="item.errMsg"> {{item.errMsg}} </span></h3>
+              <h3>{{$t('buyer.resourcePool.appPort')}} {{item.port}}</h3>-->
+              <h3>
+                {{$t('buyer.resourcePool.appState')}} {{item.appOrderStatusName}}
+                <span
+                  v-if="item.errMsg"
+                >{{item.errMsg}}</span>
+              </h3>
               <h3>{{$t('buyer.resourcePool.appTime')}} {{formateDate(item.createTime)}}</h3>
             </el-col>
             <el-col :span="3">
@@ -60,7 +64,9 @@
                   <i class="iconfont icon-menu"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <router-link :to="{path: '/appstate/' + poolId + '/' + item.id + '/' + item.name}">
+                  <router-link
+                    :to="{path: '/appstate/' + poolId + '/' + item.id + '/' + item.name}"
+                  >
                     <el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item>
                   </router-link>
                   <el-dropdown-item
@@ -133,6 +139,7 @@ export default {
       return this.imageServerUrl + rid + '/icon'
     },
     deleteApp(appId) {
+<<<<<<< HEAD
       project.deleteAppById(auth.getCurLang(), appId)
           .then(respData => {
             let data = respData.data
@@ -151,12 +158,32 @@ export default {
               })
             }
           }).catch(err => {
+=======
+      project.deleteAppById(this.$store.getters.lang, appId)
+        .then(respData => {
+          let data = respData.data
+          if (data.success) {
             this.$message({
               showClose: true,
-              message: err,
+              message: 'Success.',
+              type: 'success'
+            })
+            this.getAppList()
+          } else {
+>>>>>>> 7fb965bf... update page bug
+            this.$message({
+              showClose: true,
+              message: data.errMsg,
               type: 'error'
             })
+          }
+        }).catch(err => {
+          this.$message({
+            showClose: true,
+            message: err,
+            type: 'error'
           })
+        })
     },
     getProjectById() {
       project
@@ -165,12 +192,12 @@ export default {
           if (respData.data.data) {
             let data = respData.data.data
             this.statisObejct.diskUsd =
-                    (data.diskUsed + data.diskLock) / data.disk
+              (data.diskUsed + data.diskLock) / data.disk
             this.statisObejct.cpuUsd =
-                    (data.cpuKernelLock + data.cpuKernelUsed) / data.cpuKernel
+              (data.cpuKernelLock + data.cpuKernelUsed) / data.cpuKernel
             this.statisObejct.memUsd = (data.memUsed + data.memLock) / data.mem
             this.statisObejct.networkUsd =
-                    (data.networkUsed + data.networkLock) / data.network
+              (data.networkUsed + data.networkLock) / data.network
           }
           this.update2 = true
         })
@@ -251,11 +278,11 @@ export default {
         color: #ffffff;
       }
       .el-button {
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 #2463ff;
-      border-radius: 3px;
-      border: none;
-    }
+        background: rgba(101, 143, 247, 0);
+        box-shadow: inset 0 0 22px 0 #2463ff;
+        border-radius: 3px;
+        border: none;
+      }
     }
     .rePool {
       padding: 10px;
@@ -295,24 +322,25 @@ export default {
         cursor: pointer;
       }
       .img-box {
-              height: 160px;
-              width: 130px;
-              margin: 10px auto;
-              position: relative;
-              img {
-                min-width: 100px;
-                min-height: 100px;
-                max-width: 130px;
-                max-height: 130px;
-                width: auto;
-                height: auto;
-                display: block;
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-              }
-            }
+        height: 160px;
+        width: 130px;
+        margin: 10px auto;
+        position: relative;
+        img {
+          background: #f2f2f2;
+          min-width: 100px;
+          min-height: 100px;
+          max-width: 130px;
+          max-height: 130px;
+          width: auto;
+          height: auto;
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
     }
     h2 {
       font-family: Source-Sans-Pro-Bold;

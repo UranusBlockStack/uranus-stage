@@ -10,9 +10,9 @@
     </el-row>
     <el-row class="wallet-body">
       <el-col :span="18">
-        <p>{{ $t("wallet.balance") }} {{ balance }} URAC</p>
+        <p><i class="iconfont icon-balance"></i>{{ $t("wallet.balance") }} {{ balance }} URAC</p>
         <p>
-          {{ $t("wallet.address") }} {{ address }}
+          <i class="iconfont icon-address"></i>{{ $t("wallet.address") }} {{ address }}
           <el-tooltip class="item" effect="dark" content="Copy address" placement="right">
             <u class="copy" @click="copy()">{{ $t("wallet.copy") }}</u>
           </el-tooltip>
@@ -85,7 +85,7 @@
           <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-to"></i>
+                <i class="iconfont icon-table-from"></i>
                 {{ $t("wallet.to") }}
               </p>
             </template>
@@ -157,7 +157,7 @@
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-table-from"></i>
+                <i class="iconfont icon-table-to"></i>
                 {{ $t("wallet.from") }}
               </p>
             </template>
@@ -371,7 +371,7 @@ export default {
     }
   }
   .wallet-body {
-    height: 110px;
+    height: 130px;
     margin: 10px;
     background: rgba(101, 143, 247, 0);
     box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
@@ -383,6 +383,10 @@ export default {
       color: #ffffff;
       line-height: 30px;
       text-align: left;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
     }
     .copy {
       color: #409eff;

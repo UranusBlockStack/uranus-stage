@@ -268,8 +268,8 @@ export default {
       clusterLists: [],
       language: 'en-us',
       rancherId: '',
-      newClusterName: '', // 新建及群名称
-      clusterName: '', // 已有集群
+      newClusterName: '',
+      clusterName: '',
       hostId: '',
       clusterId: '',
       pageParam: {
@@ -367,7 +367,7 @@ export default {
       }
       if (this.groupJoin == this.$t('seller.host.newGroup')) {
         // 主机加入新建集群
-        if (this.rancherId == '' || this.rancherId == null) {
+        if (this.rancherId === '' || this.rancherId == null || this.newClusterName === '' || this.newClusterName == null) {
           this.$message({
             showClose: true,
             message: this.$t('seller.host.clusterFail'),
@@ -390,20 +390,28 @@ export default {
         }
       } else {
         // 主机加入已有集群
-        param.newCluster = false
-        param.clusterId = this.clusterId
-        rancher.joinCluster(this.language, this.hostId, param).then(data => {
-          if (data.data.success) {
-            this.dialogVisible = false
-            this.winReload()
-          } else {
-            this.$message({
-              showClose: true,
-              message: data.data.errMsg,
-              type: 'error'
-            })
-          }
-        })
+        if (this.clusterId === '' || this.clusterId == null) {
+          this.$message({
+            showClose: true,
+            message: this.$t('seller.host.clusterFail'),
+            type: 'error'
+          })
+        } else {
+          param.newCluster = false
+          param.clusterId = this.clusterId
+          rancher.joinCluster(this.language, this.hostId, param).then(data => {
+            if (data.data.success) {
+              this.dialogVisible = false
+              this.winReload()
+            } else {
+              this.$message({
+                showClose: true,
+                message: data.data.errMsg,
+                type: 'error'
+              })
+            }
+          })
+        }
       }
     },
     joinButtonClick(selectedhostId) {
@@ -414,7 +422,7 @@ export default {
   computed: {
     getPercentNumber() {
       // 计算百分比 a/b
-      return function(a, b) {
+      return function (a, b) {
         var n = Number((a / b) * 100).toFixed(2)
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
           n = 0

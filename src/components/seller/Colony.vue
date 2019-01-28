@@ -517,11 +517,9 @@ export default {
   },
   mounted() {
     this.clusterId = Number(this.$route.params.resid)
-    console.log('id======' + this.clusterId)
     this.getClusterDetail()
     this.getHosts()
     this.language = auth.getCurLang()
-    console.log(this.language)
   },
   beforeRouteUpdate(to, from, next) {
     this.clusterId = to.params.resid
