@@ -33,18 +33,19 @@
             <el-input v-model="tableCluster.rentPrice"></el-input>
           </el-form-item>
           <el-form-item :label="$t('seller.group.settingTime')">
-            <el-col :span="8">
+            <!-- <el-col :span="8">
               <el-date-picker
                 v-model="tableCluster.dateRange"
                 type="daterange"
                 :start-placeholder="$t('seller.group.startingTime')"
                 :end-placeholder="$t('seller.group.endTime')"
               ></el-date-picker>
-            </el-col>
-            <!-- <el-col :span="8">
+            </el-col> -->
+            <el-col :span="8">
               <el-date-picker
                 type="date"
                 :placeholder="$t('seller.group.startingTime')"
+                :picker-options="startDatePickerOptions"
                 v-model="tableCluster.beginTime"
                 style="width: 100%;"
               ></el-date-picker>
@@ -56,10 +57,11 @@
               <el-date-picker
                 type="date"
                 :placeholder="$t('seller.group.endTime')"
+                :picker-options="endDataPickerOptions"
                 v-model="tableCluster.endTime"
                 style="width: 100%;"
               ></el-date-picker>
-            </el-col>-->
+            </el-col>
           </el-form-item>
           <!-- <el-form-item :label="$t('seller.group.setRegion')">
             <el-select
@@ -342,7 +344,9 @@ export default {
       switchVal: true,
       outerVisible: false,
       innerVisible: false,
-      isRouterAlive: true
+      isRouterAlive: true,
+      startDatePickerOptions: {},
+      endDataPickerOptions: {},
     };
   },
   methods: {
@@ -356,8 +360,8 @@ export default {
     modifyCluster() {
       // 设置集群
       let newClusterInfo = this.tableCluster;
-      newClusterInfo.beginTime = this.tableCluster.dateRange[0];
-      newClusterInfo.endTime = this.tableCluster.dateRange[1];
+    //   newClusterInfo.beginTime = this.tableCluster.dateRange[0];
+    //   newClusterInfo.endTime = this.tableCluster.dateRange[1];
       rancher
         .clusterModify(this.language, this.clusterId, newClusterInfo)
         .then(data => {
@@ -385,6 +389,7 @@ export default {
         console.log("detail", data);
         this.clusterInfo = data.data.data;
         this.tableCluster = JSON.parse(JSON.stringify(data.data.data));
+        this.setDatePick();
         // if (this.tableCluster.beginTime == null || this.tableCluster.beginTime == '') {
         //     this.tableCluster.dateRange = ''
         // } else {
@@ -434,7 +439,37 @@ export default {
     reload() {
       this.isRouterAlive = false;
       this.$nextTick(() => (this.isRouterAlive = true));
-    }
+    },
+    setDatePick() {
+      let that = this;
+      console.log("that.tableCluster.beginTime", that.tableCluster.beginTime);
+      this.startDatePickerOptions = {
+        disabledDate(time) {
+          if (
+            typeof that.tableCluster.beginTime !== "undefined" &&
+            that.tableCluster.beginTime !== null &&
+            that.tableCluster.beginTime !== 0
+          ) {
+            return (
+              time.getTime() > new Date(that.tableCluster.beginTime).getTime()
+            );
+          } else {
+            return time.getTime() < Date.now() - 3600 * 1000 * 24 * 1;
+          }
+        }
+      };
+      this.endDataPickerOptions = {
+        disabledDate(time) {
+          if (
+            typeof that.tableCluster.endTime !== "undefined" &&
+            that.tableCluster.endTime !== null &&
+            that.tableCluster.endTime !== 0
+          ) {
+            return time.getTime() < new Date(that.tableCluster.endTime).getTime();
+          }
+        }
+      };
+    },
   },
   computed: {
     getPercentNumber() {

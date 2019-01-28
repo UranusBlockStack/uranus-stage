@@ -37,7 +37,7 @@
           </div>
           <input
             class="phoneIpt"
-            type="text"
+            oninput="value=value.replace(/[^\d]/g,'')"
             ref="loginMobile"
             :placeholder="$t('userCommon.mobile')"
             v-model="phone"
@@ -61,7 +61,7 @@
         @blur="surePassword"
       >
       <input
-        type="text"
+        oninput="value=value.replace(/[^\d]/g,'')"
         class="inputCode"
         v-model="code"
         ref="verifyCodeInput"

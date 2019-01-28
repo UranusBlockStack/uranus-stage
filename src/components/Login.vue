@@ -36,6 +36,7 @@
             </ul>
           </div>
           <input
+          oninput="value=value.replace(/[^\d]/g,'')"
             class="phoneIpt"
             type="text"
             ref="mobileNumber"
