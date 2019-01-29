@@ -30,10 +30,13 @@
           <h1>{{$t('buyer.resourcePool.appList')}}</h1>
         </el-col>
         <el-col :span="5" :offset="10">
-          <el-input :placeholder="$t('buyer.resourcePool.searchIn')" prefix-icon="el-icon-search"></el-input>
+          <el-input @keyup.enter.native="getAppList"
+                  :placeholder="$t('buyer.resourcePool.searchIn')"
+                  prefix-icon="el-icon-search" v-model="appName"
+          ></el-input>
         </el-col>
         <el-col :span="2" :offset="1">
-          <el-button type="success">
+          <el-button type="success" @click="getAppList">
             <i class="iconfont icon-search"></i>
           </el-button>
         </el-col>
@@ -131,20 +134,33 @@ export default {
       isRouterAlive: true,
       deleteId: null,
       dialogVisible: false,
+      appName: ''
     }
   },
   methods: {
     getAppList() {
       project
-        .appListByProjectId(
+        .appInstanceSearch(
           auth.getCurLang(),
-          this.poolId
+        {
+          projectId: this.poolId,
+          name: this.appName
+        }
         )
         .then(respData => {
-          if (respData.data.data) {
-            this.appList = respData.data.data.records
-            this.appList.map(app => {
-              console.log(app)
+          const appListData = respData.data
+          if (appListData.success) {
+            if (appListData.data) {
+              this.appList = appListData.data.records
+              this.appList.map(app => {
+                console.log(app)
+              })
+            }
+          } else {
+            this.$message({
+              showClose: true,
+              message: appListData.errMsg,
+              type: 'error'
             })
           }
         })
@@ -156,8 +172,8 @@ export default {
       return this.imageServerUrl + rid + '/icon'
     },
     deleteAppId(appId) {
-        this.deleteId = appId
-        this.dialogVisible = true
+      this.deleteId = appId
+      this.dialogVisible = true
     },
     deleteApp() {
       project.deleteAppById(this.$store.getters.lang, this.deleteId)
