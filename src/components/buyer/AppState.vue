@@ -21,7 +21,7 @@
       <el-col class="blue-box" :span="24">
         <el-table :data="workLoadList" style="width: 100%">
           <template slot="empty">
-            <p class="empty-text">No Dtata</p>
+            <p class="empty-text">No Data</p>
           </template>
           <el-table-column prop="status" :label="$t('buyer.appState.status')">
             <template slot="header" slot-scope="scope" min-width="250">

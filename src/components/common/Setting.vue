@@ -28,32 +28,50 @@
       </el-col>
       <el-col :span="8" :offset="4">
         <p>
-          <el-button type="text" @click="setMail()">{{buttonClick}}</el-button>
+          <el-button type="text" @click="setMail()">{{buttonmailClick}}</el-button>
           <!-- change mail -->
           <!--<el-dialog :title="this.buttonClick" :visible.sync="mailOuterVisible" :close-on-click-modal="false" width="580px">-->
-          <el-dialog :title="this.buttonClick" :visible.sync="mailOuterVisible" @close="restSendButton" width="580px">
+          <el-dialog
+            :title="this.buttonmailClick"
+            :visible.sync="mailOuterVisible"
+            @close="restSendButton"
+            width="580px"
+          >
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                 <el-input v-model="mail" disabled="disabled"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="mailCaptcha" style="width:69%"></el-input>
-                <el-button :class="{'is-disabled': !this.canClick}" style="width:28%" @click="sendCode('email',mail)">
-                  <!--{{$t('setting.codeBtn')}}-->{{content}}
+                <el-button
+                  :class="{'is-disabled': !this.canClick}"
+                  style="width:28%"
+                  @click="sendCode('email',mail)"
+                >
+                  <!--{{$t('setting.codeBtn')}}-->
+                  {{content}}
                 </el-button>
               </el-form-item>
               <div class="prompt">{{mailprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer" center>
-              <el-button @click="mailOuterVisible = false">{{$t('setting.button1')}}</el-button>
-              <el-button type="primary" @click="checkCaptcha('email',mail,mailCaptcha)">
-                {{$t('setting.button3')}}
-              </el-button>
+              <el-button
+                @click="mailOuterVisible = false, mailprompt = ''"
+              >{{$t('setting.button1')}}</el-button>
+              <el-button
+                type="primary"
+                @click="checkCaptcha('email',mail,mailCaptcha)"
+              >{{$t('setting.button3')}}</el-button>
             </div>
           </el-dialog>
           <!-- new mail -->
           <!--<el-dialog width="580px" :close-on-click-modal="false" :title="$t('setting.mail')" :visible.sync="mailInnerVisible">-->
-          <el-dialog width="580px" :title="$t('setting.mail')" :visible.sync="mailInnerVisible"　 @close="restSendButton">
+          <el-dialog
+            width="580px"
+            :title="$t('setting.mail')"
+            :visible.sync="mailInnerVisible"
+            @close="restSendButton"
+          >
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                 <span slot="label">{{$t('setting.mail')}}</span>
@@ -61,12 +79,21 @@
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="bindMailCaptcha" style="width:69%"></el-input>
-                <el-button :class="{'is-disabled': !this.canClick}" style="width:28%" @click="sendCode('email',newEmail)"><!--{{$t('setting.codeBtn')}}-->{{content}}</el-button>
+                <el-button
+                  :class="{'is-disabled': !this.canClick}"
+                  style="width:28%"
+                  @click="sendCode('email',newEmail)"
+                >
+                  <!--{{$t('setting.codeBtn')}}-->
+                  {{content}}
+                </el-button>
               </el-form-item>
               <div class="prompt">{{mailprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button @click="userBind('email',newEmail,bindMailCaptcha)">{{$t('setting.button2')}}</el-button>
+              <el-button
+                @click="userBind('email',newEmail,bindMailCaptcha)"
+              >{{$t('setting.button2')}}</el-button>
             </div>
           </el-dialog>
         </p>
@@ -83,46 +110,71 @@
       </el-col>
       <el-col :span="8" :offset="4">
         <p>
-          <el-button type="text" @click="setPhone()">{{buttonClick}}</el-button>
+          <el-button type="text" @click="setPhone()">{{buttonphoneClick}}</el-button>
           <!-- change phone -->
           <!--<el-dialog :title="this.buttonClick" :visible.sync="phoneOuterVisible" width="580px" :close-on-click-modal="false">-->
-          <el-dialog :title="this.buttonClick" :visible.sync="phoneOuterVisible" width="580px" @close="restSendButton">
+          <el-dialog
+            :title="this.buttonphoneClick"
+            :visible.sync="phoneOuterVisible"
+            width="580px"
+            @close="restSendButton"
+          >
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
                 <el-input v-model="sourceNum" disabled="disabled"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="captcha" style="width:69%"></el-input>
-                <el-button :class="{'is-disabled': !this.canClick}" style="width:28%" @click="sendCode('mobile',sourceNum)">
-                  <!--{{$t('setting.codeBtn')}}--> {{content}}
+                <el-button
+                  :class="{'is-disabled': !this.canClick}"
+                  style="width:28%"
+                  @click="sendCode('mobile',sourceNum)"
+                >
+                  <!--{{$t('setting.codeBtn')}}-->
+                  {{content}}
                 </el-button>
               </el-form-item>
               <div class="prompt">{{phoneprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer" center>
-              <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}</el-button>
-              <el-button type="primary" @click="checkCaptcha('mobile',sourceNum,captcha)">
-                {{$t('setting.button3')}}
-              </el-button>
+              <el-button
+                @click="phoneOuterVisible = false, phoneprompt= ''"
+              >{{$t('setting.button1')}}</el-button>
+              <el-button
+                type="primary"
+                @click="checkCaptcha('mobile',sourceNum,captcha)"
+              >{{$t('setting.button3')}}</el-button>
             </div>
           </el-dialog>
           <!-- new phone -->
           <!--<el-dialog width="580px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" :close-on-click-modal="false">-->
-          <el-dialog width="580px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" @close="restSendButton">
+          <el-dialog
+            width="580px"
+            :title="$t('setting.phone')"
+            :visible.sync="phoneInnerVisible"
+            @close="restSendButton"
+          >
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
                 <el-input v-model="newPhoneNum"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="bindCaptcha" style="width:69%"></el-input>
-                <el-button :class="{'is-disabled': !this.canClick}" style="width:28%" @click="sendCode('mobile',newPhoneNum)">
-                  <!--{{$t('setting.codeBtn')}}--> {{content}}
+                <el-button
+                  :class="{'is-disabled': !this.canClick}"
+                  style="width:28%"
+                  @click="sendCode('mobile',newPhoneNum)"
+                >
+                  <!--{{$t('setting.codeBtn')}}-->
+                  {{content}}
                 </el-button>
               </el-form-item>
               <div class="prompt">{{phoneprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button @click="userBind('mobile',newPhoneNum,bindCaptcha)">{{$t('setting.button2')}}</el-button>
+              <el-button
+                @click="userBind('mobile',newPhoneNum,bindCaptcha)"
+              >{{$t('setting.button2')}}</el-button>
             </div>
           </el-dialog>
         </p>
@@ -163,7 +215,7 @@
               <div class="prompt">{{pwdprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer" center>
-              <el-button @click="pwdOuterVisible = false">{{$t('setting.button1')}}</el-button>
+              <el-button @click="pwdOuterVisible = false, pwdprompt = ''">{{$t('setting.button1')}}</el-button>
               <el-button type="primary" @click="resetPassword()">{{$t('setting.button2')}}</el-button>
             </div>
           </el-dialog>
@@ -181,7 +233,6 @@
       <el-col :span="8" :offset="4">
         <p>
           <el-select v-model="code">
-
             <el-option :value="$t('setting.codePhone')">
               <p @click="dialogVisible = true">{{$t('setting.codePhone')}}</p>
             </el-option>
@@ -189,7 +240,6 @@
             <el-option :value="$t('setting.codeEmail')">
               <p style="width:100%" @click="dialogVisible = true">{{$t('setting.codeEmail')}}</p>
             </el-option>
-
           </el-select>
 
           <el-dialog :title="$t('setting.code')" :visible.sync="dialogVisible" width="580px">
@@ -216,11 +266,12 @@ export default {
     return {
       id: '',
       mail: '', // 用户邮箱
-        sourceEmail: '',
+      sourceEmail: '',
       newEmail: '', // 绑定新邮箱
       mailCaptcha: '', // 初次输入框邮箱验证码
       bindMailCaptcha: '', // 绑定输入框邮箱验证码
-      buttonClick: this.$t('setting.clickLink'),
+      buttonmailClick: this.$t('setting.clickLink'),
+      buttonphoneClick: this.$t('setting.clickLink'),
       phonenum: '', // 用户信息手机号
       sourceNum: '', // 用户原手机号
       newPhoneNum: '',
@@ -239,10 +290,10 @@ export default {
       mailprompt: '', // 提示信息
       phoneprompt: '',
       pwdprompt: '',
-        canClick: true,
-        totalTime: 60,
-        content: this.$t('setting.codeBtn'),
-        clock:null
+      canClick: true,
+      totalTime: 60,
+      content: this.$t('setting.codeBtn'),
+      clock: null
     }
   },
   methods: {
@@ -250,6 +301,8 @@ export default {
     checkPassword() {
       if (this.newPassword === '' || this.newPassword == null) {
         this.pwdprompt = this.$t('userCommon.passwordEmpty')
+      } else if (this.newPassword === this.currentPassword) {
+        this.pwdprompt = this.$t('userCommon.newpasswordError')
       } else if (this.newPassword.length < 6 || this.newPassword.length > 12) {
         this.pwdprompt = this.$t('userCommon.password')
       } else {
@@ -271,18 +324,17 @@ export default {
         this.phonenum = data.data.data.mobile
         this.mail = data.data.data.email
         this.sourceNum = this.phonenum
-          this.sourceEmail=this.mail
+        this.sourceEmail = this.mail
         if (this.phonenum == null || this.phonenum === '') {
-          this.buttonClick = this.$t('setting.clickLink')
+          this.buttonphoneClick = this.$t('setting.clickLink')
         } else {
-          this.buttonClick = this.$t('setting.clickChange')
+          this.buttonphoneClick = this.$t('setting.clickChange')
         }
         if (this.mail == null || this.mail === '') {
-          this.buttonClick = this.$t('setting.clickLink')
+          this.buttonmailClick = this.$t('setting.clickLink')
         } else {
-          this.buttonClick = this.$t('setting.clickChange')
+          this.buttonmailClick = this.$t('setting.clickChange')
         }
-        console.log(data)
       })
     },
 
@@ -300,18 +352,23 @@ export default {
       } else {
         this.pwdprompt = ''
         auth.resetPassword(this.$store.getters.lang, param).then(data => {
-          console.log(data)
           if (data.data.success) {
             this.pwdOuterVisible = false
+            this.$message({
+              showClose: true,
+              message: 'Success.',
+              type: 'success'
+            })
+            auth.logout()
+            this.$router.push({ name: 'Map' })
           } else {
-            this.pwdprompt = '当前密码输入错误'
-            alert('修改失败')
+            this.pwdprompt = this.$t('userCommon.passwordError')
           }
         })
       }
     },
     sendCode(senderType, receiver) {
-        this.countDown()
+      this.countDown()
       // 发送验证码至原手机/邮箱
       const param = {
         captchaType: 0,
@@ -326,9 +383,17 @@ export default {
           this.phoneprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              alert('验证码发送失败')
+              this.$message({
+                  showClose: true,
+                  message: 'Failed',
+                  type: 'error'
+                }) //  ???触发条件
             } else {
-              console.log('验证码发送成功')
+              this.$message({
+                showClose: true,
+                message: 'Success.',
+                type: 'success'
+              })
             }
           })
         }
@@ -341,9 +406,17 @@ export default {
           this.phoneprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              alert('验证码发送失败')
+              this.$message({
+                  showClose: true,
+                  message: 'Failed',
+                  type: 'error'
+                }) //  ???触发条件
             } else {
-              console.log('验证码发送成功')
+              this.$message({
+                showClose: true,
+                message: 'Success.',
+                type: 'success'
+              })
             }
           })
         }
@@ -356,9 +429,17 @@ export default {
           this.mailprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              alert('验证码发送失败')
+              this.$message({
+                  showClose: true,
+                  message: 'Failed',
+                  type: 'error'
+                }) //  ???触发条件
             } else {
-              console.log('验证码发送成功')
+              this.$message({
+                showClose: true,
+                message: 'Success.',
+                type: 'success'
+              })
             }
           })
         }
@@ -371,7 +452,17 @@ export default {
           this.mailprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              alert('验证码发送失败')
+              this.$message({
+                  showClose: true,
+                  message: 'Failed',
+                  type: 'error'
+                }) //  ???触发条件
+            } else {
+              this.$message({
+                showClose: true,
+                message: 'Success.',
+                type: 'success'
+              })
             }
           })
         }
@@ -384,10 +475,7 @@ export default {
         } else {
           this.mailprompt = ''
           // 校验原手机/邮箱验证码是否正确
-          console.log('校验中。。。。' + receiver + '==' + captcha)
           auth.checkCaptcha(auth.getCurLang(), receiver, captcha).then(data => {
-            console.log('校验结果：', data)
-            console.log('校验结果：' + data.data.success)
             if (data.data.success) {
               if (type === 'email') {
                 this.mailOuterVisible = false
@@ -397,7 +485,7 @@ export default {
                 this.phoneInnerVisible = true
               }
             } else {
-              alert('验证码错误，请重新输入')
+              this.mailprompt = this.$t('userCommon.codeError')
             }
           })
         }
@@ -408,10 +496,7 @@ export default {
         } else {
           this.mailprompt = ''
           // 校验原手机/邮箱验证码是否正确
-          console.log('校验中。。。。' + receiver + '==' + captcha)
           auth.checkCaptcha(auth.getCurLang(), receiver, captcha).then(data => {
-            console.log('校验结果：', data)
-            console.log('校验结果：' + data.data.success)
             if (data.data.success) {
               if (type == 'email') {
                 this.mailOuterVisible = false
@@ -421,45 +506,45 @@ export default {
                 this.phoneInnerVisible = true
               }
             } else {
-              alert('验证码错误，请重新输入')
+              this.mailprompt = this.$t('userCommon.codeError')
             }
           })
         }
       }
     },
 
-      countDown() {
-          if (!this.canClick) return
-          else {
-              this.canClick = false
-              this.content =
-                  this.$t('setting.codeBtn') + '(' + this.totalTime + 's)'
-                  this.clock = window.setInterval(() => {
-                  this.totalTime--
-                  this.content =
-                      this.$t('setting.codeBtn') + '(' + this.totalTime + 's)'
-                  if (this.totalTime < 0) {
-                      window.clearInterval(clock)
-                      this.content = this.$t('setting.codeBtn')
-                      this.totalTime = 10
-                      this.canClick = true
-                  }
-              }, 1000)
+    countDown() {
+      if (!this.canClick) return
+      else {
+        this.canClick = false
+        this.content =
+          this.$t('setting.codeBtn') + '(' + this.totalTime + 's)'
+        this.clock = window.setInterval(() => {
+          this.totalTime--
+          this.content =
+            this.$t('setting.codeBtn') + '(' + this.totalTime + 's)'
+          if (this.totalTime < 0) {
+            window.clearInterval(clock)
+            this.content = this.$t('setting.codeBtn')
+            this.totalTime = 60
+            this.canClick = true
           }
-      },
-      restSendButton(){
-        //复位发送验证码按钮 防止关闭后 倒计时未关闭
-          window.clearInterval(this.clock)
-          this.content = this.$t('setting.codeBtn')
-          this.canClick=true
-          this.totalTime=60
-          this.newEmail=''
-          this.newPhoneNum=''
-          this.mailCaptcha= ''
-          this.bindMailCaptcha= ''
-          this.captcha=''
-          this.bindCaptcha=''
-      },
+        }, 1000)
+      }
+    },
+    restSendButton() {
+      //复位发送验证码按钮 防止关闭后 倒计时未关闭
+      window.clearInterval(this.clock)
+      this.content = this.$t('setting.codeBtn')
+      this.canClick = true
+      this.totalTime = 60
+      this.newEmail = ''
+      this.newPhoneNum = ''
+      this.mailCaptcha = ''
+      this.bindMailCaptcha = ''
+      this.captcha = ''
+      this.bindCaptcha = ''
+    },
 
     userBind(bindType, bindNum, bindCap) {
       /**
@@ -484,24 +569,30 @@ export default {
           account
             .userBind(this.$store.getters.lang, bindType, param)
             .then(data => {
-              console.log('解绑中。。。。'+data.data.succes)
-              console.log(data)
               if (data.data.success) {
                 // 成功
                 this.mailprompt = ''
+                this.$message({
+                  showClose: true,
+                  message: 'Success.',
+                  type: 'success'
+                })
                 if (bindType == 'email') {
-                  this.mail=this.newEmail
+                  this.mail = this.newEmail
                   this.mailOuterVisible = false
                   this.mailInnerVisible = false
                 } else if (bindType == 'mobile') {
-                  this.sourceNum=this.newPhoneNum
+                  this.sourceNum = this.newPhoneNum
                   this.phoneOuterVisible = false
                   this.phoneInnerVisible = false
                 }
               } else {
                 // 失败
-                alert('解绑失败')
-
+                this.$message({
+                  showClose: true,
+                  message: data.data.errMsg,
+                  type: 'error'
+                })
               }
             })
         }
@@ -511,29 +602,36 @@ export default {
         if (this.bindCaptcha == '' || this.bindCaptcha == null) {
           this.phoneprompt = this.$t('userCommon.newphoneError')
         } else if (this.bindCaptcha == '' || this.bindCaptcha == null) {
-          this.phoneprompt = '请输入验证码'
+          this.phoneprompt = this.$t('userCommon.code')
         } else {
           this.phoneprompt = ''
           account
             .userBind(this.$store.getters.lang, bindType, param)
             .then(data => {
-              console.log('解绑中。。。。p:', param, '==='+data.data.success)
-              console.log(data)
               if (data.data.success) {
                 // 成功
                 this.phoneprompt = ''
+                this.$message({
+                  showClose: true,
+                  message: 'Success.',
+                  type: 'success'
+                })
                 if (bindType == 'email') {
-                    this.mail=this.newEmail
+                  this.mail = this.newEmail
                   this.mailOuterVisible = false
                   this.mailInnerVisible = false
                 } else if (bindType == 'mobile') {
-                    this.sourceNum=this.newPhoneNum
+                  this.sourceNum = this.newPhoneNum
                   this.phoneOuterVisible = false
                   this.phoneInnerVisible = false
                 }
               } else {
                 // 失败
-                alert('解绑失败')
+                this.$message({
+                  showClose: true,
+                  message: data.data.errMsg,
+                  type: 'error'
+                })
               }
             })
         }
@@ -545,7 +643,7 @@ export default {
         this.mailInnerVisible = true
       } else {
         this.mailOuterVisible = true
-        this.buttonClick = this.$t('setting.clickChange')
+        this.buttonmailClick = this.$t('setting.clickChange')
       }
     },
     setPhone() {
@@ -554,7 +652,7 @@ export default {
         this.phoneInnerVisible = true
       } else {
         this.phoneOuterVisible = true
-        this.buttonClick = this.$t('setting.clickChange')
+        this.buttonphoneClick = this.$t('setting.clickChange')
       }
     }
   },

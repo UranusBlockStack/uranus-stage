@@ -607,6 +607,7 @@ module.exports = {
     confirm: 'OK',
     passwordEmpty: 'Please enter password',
     newpasswordEmpty: 'Please enter new password',
+    newpasswordError: 'The new password is the same as the old password',
     passwordInconsistent: "The passwords don't match, please re-enter",
     codeEmpty: 'The verification code is invalid. Please re-acquire',
     codeError: 'The verification code entered is incorrect. Please re-enter',
