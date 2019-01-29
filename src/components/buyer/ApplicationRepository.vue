@@ -293,7 +293,7 @@ export default {
             margin: 10px auto;
             position: relative;
             img {
-              background: #f2f2f2;
+
               min-width: 100px;
               min-height: 80px;
               max-width: 130px;

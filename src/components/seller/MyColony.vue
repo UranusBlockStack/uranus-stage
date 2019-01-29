@@ -74,7 +74,9 @@
           <p style="padding-left: 15px;">{{$t('seller.groups.list')}}</p>
         </el-col>
         <el-col :span="4" :offset="12">
-          <el-input v-model="searchParam.name" :placeholder="$t('seller.groups.searchIn')" prefix-icon="el-icon-search"></el-input>
+          <el-input v-model="searchParam.name" @keyup.enter.native="clusterSearch"
+                    :placeholder="$t('seller.groups.searchIn')"
+                    prefix-icon="el-icon-search"></el-input>
         </el-col>
         <el-col :span="2">
           <el-button style="margin-left:10px;" type="success" @click="clusterSearch()">

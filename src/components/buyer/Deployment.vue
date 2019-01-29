@@ -477,8 +477,6 @@ export default {
       this.getReferenceFee()
       this.getOrderOfApp()
     }
-
-    document.cookie = 'name=oeschger'
   },
   // beforeRouteEnter(to, from, next) {
   //   if (from.name === 'ApplicationRepository') {
