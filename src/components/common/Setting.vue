@@ -30,40 +30,30 @@
         <p>
           <el-button type="text" @click="setMail()">{{buttonClick}}</el-button>
           <!-- change mail -->
-          <el-dialog
-            :title="this.buttonClick"
-            :visible.sync="mailOuterVisible"
-            :close-on-click-modal="false"
-            width="580px"
-          >
+          <!--<el-dialog :title="this.buttonClick" :visible.sync="mailOuterVisible" :close-on-click-modal="false" width="580px">-->
+          <el-dialog :title="this.buttonClick" :visible.sync="mailOuterVisible" @close="restSendButton" width="580px">
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                 <el-input v-model="mail" disabled="disabled"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="mailCaptcha" style="width:69%"></el-input>
-                <el-button
-                  style="width:28%"
-                  @click="sendCode('email',mail)"
-                >{{$t('setting.codeBtn')}}</el-button>
+                <el-button :class="{'is-disabled': !this.canClick}" style="width:28%" @click="sendCode('email',mail)">
+                  <!--{{$t('setting.codeBtn')}}-->{{content}}
+                </el-button>
               </el-form-item>
               <div class="prompt">{{mailprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer" center>
               <el-button @click="mailOuterVisible = false">{{$t('setting.button1')}}</el-button>
-              <el-button
-                type="primary"
-                @click="checkCaptcha('email',mail,mailCaptcha)"
-              >{{$t('setting.button3')}}</el-button>
+              <el-button type="primary" @click="checkCaptcha('email',mail,mailCaptcha)">
+                {{$t('setting.button3')}}
+              </el-button>
             </div>
           </el-dialog>
           <!-- new mail -->
-          <el-dialog
-            width="580px"
-            :close-on-click-modal="false"
-            :title="$t('setting.mail')"
-            :visible.sync="mailInnerVisible"
-          >
+          <!--<el-dialog width="580px" :close-on-click-modal="false" :title="$t('setting.mail')" :visible.sync="mailInnerVisible">-->
+          <el-dialog width="580px" :title="$t('setting.mail')" :visible.sync="mailInnerVisible"　 @close="restSendButton">
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
                 <span slot="label">{{$t('setting.mail')}}</span>
@@ -71,14 +61,12 @@
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="bindMailCaptcha" style="width:69%"></el-input>
-                <el-button style="width:28%" @click="sendCode('email',newEmail)">{{$t('setting.codeBtn')}}</el-button>
+                <el-button :class="{'is-disabled': !this.canClick}" style="width:28%" @click="sendCode('email',newEmail)"><!--{{$t('setting.codeBtn')}}-->{{content}}</el-button>
               </el-form-item>
               <div class="prompt">{{mailprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button
-                @click="userBind('email',newEmail,bindMailCaptcha)"
-              >{{$t('setting.button2')}}</el-button>
+              <el-button @click="userBind('email',newEmail,bindMailCaptcha)">{{$t('setting.button2')}}</el-button>
             </div>
           </el-dialog>
         </p>
@@ -97,52 +85,44 @@
         <p>
           <el-button type="text" @click="setPhone()">{{buttonClick}}</el-button>
           <!-- change phone -->
-          <el-dialog :title="this.buttonClick" :visible.sync="phoneOuterVisible" width="580px" :close-on-click-modal="false">
+          <!--<el-dialog :title="this.buttonClick" :visible.sync="phoneOuterVisible" width="580px" :close-on-click-modal="false">-->
+          <el-dialog :title="this.buttonClick" :visible.sync="phoneOuterVisible" width="580px" @close="restSendButton">
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
                 <el-input v-model="sourceNum" disabled="disabled"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="captcha" style="width:69%"></el-input>
-                <el-button
-                  style="width:28%"
-                  @click="sendCode('mobile',sourceNum)"
-                >{{$t('setting.codeBtn')}}</el-button>
+                <el-button :class="{'is-disabled': !this.canClick}" style="width:28%" @click="sendCode('mobile',sourceNum)">
+                  <!--{{$t('setting.codeBtn')}}--> {{content}}
+                </el-button>
               </el-form-item>
               <div class="prompt">{{phoneprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer" center>
               <el-button @click="phoneOuterVisible = false">{{$t('setting.button1')}}</el-button>
-              <el-button
-                type="primary"
-                @click="checkCaptcha('mobile',sourceNum,captcha)"
-              >{{$t('setting.button3')}}</el-button>
+              <el-button type="primary" @click="checkCaptcha('mobile',sourceNum,captcha)">
+                {{$t('setting.button3')}}
+              </el-button>
             </div>
           </el-dialog>
           <!-- new phone -->
-          <el-dialog
-            width="580px"
-            :title="$t('setting.phone')"
-            :visible.sync="phoneInnerVisible"
-            :close-on-click-modal="false"
-          >
+          <!--<el-dialog width="580px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" :close-on-click-modal="false">-->
+          <el-dialog width="580px" :title="$t('setting.phone')" :visible.sync="phoneInnerVisible" @close="restSendButton">
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
                 <el-input v-model="newPhoneNum"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model="bindCaptcha" style="width:69%"></el-input>
-                <el-button
-                  style="width:28%"
-                  @click="sendCode('mobile',newPhoneNum)"
-                >{{$t('setting.codeBtn')}}</el-button>
+                <el-button :class="{'is-disabled': !this.canClick}" style="width:28%" @click="sendCode('mobile',newPhoneNum)">
+                  <!--{{$t('setting.codeBtn')}}--> {{content}}
+                </el-button>
               </el-form-item>
               <div class="prompt">{{phoneprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button
-                @click="userBind('mobile',newPhoneNum,bindCaptcha)"
-              >{{$t('setting.button2')}}</el-button>
+              <el-button @click="userBind('mobile',newPhoneNum,bindCaptcha)">{{$t('setting.button2')}}</el-button>
             </div>
           </el-dialog>
         </p>
@@ -201,13 +181,17 @@
       <el-col :span="8" :offset="4">
         <p>
           <el-select v-model="code">
+
             <el-option :value="$t('setting.codePhone')">
               <p @click="dialogVisible = true">{{$t('setting.codePhone')}}</p>
             </el-option>
+
             <el-option :value="$t('setting.codeEmail')">
               <p style="width:100%" @click="dialogVisible = true">{{$t('setting.codeEmail')}}</p>
             </el-option>
+
           </el-select>
+
           <el-dialog :title="$t('setting.code')" :visible.sync="dialogVisible" width="580px">
             <span>{{$t('setting.codeText')}}</span>
             <span slot="footer" class="dialog-footer">
@@ -224,6 +208,7 @@
 <script>
 import * as account from '../../services/AccountService'
 import * as auth from '../../services/AuthService'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Setting',
@@ -231,6 +216,7 @@ export default {
     return {
       id: '',
       mail: '', // 用户邮箱
+        sourceEmail: '',
       newEmail: '', // 绑定新邮箱
       mailCaptcha: '', // 初次输入框邮箱验证码
       bindMailCaptcha: '', // 绑定输入框邮箱验证码
@@ -252,7 +238,11 @@ export default {
       dialogVisible: false,
       mailprompt: '', // 提示信息
       phoneprompt: '',
-      pwdprompt: ''
+      pwdprompt: '',
+        canClick: true,
+        totalTime: 60,
+        content: this.$t('setting.codeBtn'),
+        clock:null
     }
   },
   methods: {
@@ -281,6 +271,7 @@ export default {
         this.phonenum = data.data.data.mobile
         this.mail = data.data.data.email
         this.sourceNum = this.phonenum
+          this.sourceEmail=this.mail
         if (this.phonenum == null || this.phonenum === '') {
           this.buttonClick = this.$t('setting.clickLink')
         } else {
@@ -320,6 +311,7 @@ export default {
       }
     },
     sendCode(senderType, receiver) {
+        this.countDown()
       // 发送验证码至原手机/邮箱
       const param = {
         captchaType: 0,
@@ -334,7 +326,7 @@ export default {
           this.phoneprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              console.log('验证码发送失败')
+              alert('验证码发送失败')
             } else {
               console.log('验证码发送成功')
             }
@@ -349,7 +341,7 @@ export default {
           this.phoneprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              console.log('验证码发送失败')
+              alert('验证码发送失败')
             } else {
               console.log('验证码发送成功')
             }
@@ -364,7 +356,7 @@ export default {
           this.mailprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
-              console.log('验证码发送失败')
+              alert('验证码发送失败')
             } else {
               console.log('验证码发送成功')
             }
@@ -436,6 +428,39 @@ export default {
       }
     },
 
+      countDown() {
+          if (!this.canClick) return
+          else {
+              this.canClick = false
+              this.content =
+                  this.$t('setting.codeBtn') + '(' + this.totalTime + 's)'
+                  this.clock = window.setInterval(() => {
+                  this.totalTime--
+                  this.content =
+                      this.$t('setting.codeBtn') + '(' + this.totalTime + 's)'
+                  if (this.totalTime < 0) {
+                      window.clearInterval(clock)
+                      this.content = this.$t('setting.codeBtn')
+                      this.totalTime = 10
+                      this.canClick = true
+                  }
+              }, 1000)
+          }
+      },
+      restSendButton(){
+        //复位发送验证码按钮 防止关闭后 倒计时未关闭
+          window.clearInterval(this.clock)
+          this.content = this.$t('setting.codeBtn')
+          this.canClick=true
+          this.totalTime=60
+          this.newEmail=''
+          this.newPhoneNum=''
+          this.mailCaptcha= ''
+          this.bindMailCaptcha= ''
+          this.captcha=''
+          this.bindCaptcha=''
+      },
+
     userBind(bindType, bindNum, bindCap) {
       /**
        * 绑定手机号/邮箱
@@ -476,6 +501,7 @@ export default {
               } else {
                 // 失败
                 alert('解绑失败')
+
               }
             })
         }
@@ -497,9 +523,11 @@ export default {
                 // 成功
                 this.phoneprompt = ''
                 if (bindType == 'email') {
+                    this.mail=this.newEmail
                   this.mailOuterVisible = false
                   this.mailInnerVisible = false
                 } else if (bindType == 'mobile') {
+                    this.sourceNum=this.newPhoneNum
                   this.phoneOuterVisible = false
                   this.phoneInnerVisible = false
                 }
