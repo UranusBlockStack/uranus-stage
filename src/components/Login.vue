@@ -36,7 +36,7 @@
             </ul>
           </div>
           <input
-          oninput="value=value.replace(/[^\d]/g,'')"
+            oninput="value=value.replace(/[^\d]/g,'')"
             class="phoneIpt"
             type="text"
             ref="mobileNumber"
@@ -97,7 +97,7 @@ export default {
     selectRegion(region) {
       this.currentRegion = region
     },
-    getLoginName: function(logintype) {
+    getLoginName: function (logintype) {
       let loginname = ''
       if (logintype === 'mobile') {
         loginname = this.currentRegion + this.phone
@@ -110,7 +110,7 @@ export default {
       this.phoneShow = true
       this.phone = ''
       this.mail = ''
-      this.password =''
+      this.password = ''
       this.prompt = ''
     },
     chooseMail() {
@@ -140,7 +140,7 @@ export default {
           const self = this
 
           auth.login(auth.getCurLang(), userLoginfo)
-            .then(function(respData) {
+            .then(function (respData) {
               let data = respData.data
               if (data.success) {
                 self.$message({
@@ -149,7 +149,7 @@ export default {
                   type: 'success'
                 })
                 // self.$router.push({ path: respData.curLoginUserInfo.loginRole })
-                location.href=respData.curLoginUserInfo.loginRole
+                location.href = respData.curLoginUserInfo.loginRole
               } else {
                 self.$message({
                   showClose: true,
@@ -191,7 +191,7 @@ export default {
           const self = this
 
           auth.login(auth.getCurLang(), userLoginfo)
-            .then(function(respData) {
+            .then(function (respData) {
               let data = respData.data
               if (data.success) {
                 self.$message({
@@ -199,7 +199,8 @@ export default {
                   message: 'Success.',
                   type: 'success'
                 })
-                self.$router.push({ path: respData.curLoginUserInfo.loginRole })
+                // self.$router.push({ path: respData.curLoginUserInfo.loginRole })
+                location.href = respData.curLoginUserInfo.loginRole
               } else {
                 self.$message({
                   showClose: true,

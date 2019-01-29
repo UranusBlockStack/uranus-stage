@@ -257,7 +257,11 @@ export default {
         document.execCommand('copy')
       }
       document.body.removeChild(input)
-      this.$message('Success')
+      this.$message({
+            showClose: true,
+            message: 'Success.',
+            type: 'success'
+          })
     },
     goTransfer() {
       this.$router.push({ path: 'transfer' })

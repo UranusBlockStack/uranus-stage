@@ -1,5 +1,4 @@
-
-import { httpLang} from './HttpService'
+import {httpLang} from './HttpService'
 
 /** 账号 Account 管理  **/
 

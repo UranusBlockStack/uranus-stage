@@ -201,8 +201,12 @@
                 :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
-              <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              <p v-if="scope.row.cpuKernel != null" style="color:#8c8c8c; font-size:10px; margin-left:35px;">
                 {{ scope.row.cpuKernel }} {{$t('seller.group.have.cpu')}}
+                <!--总核数-->
+              </p>
+              <p v-if="scope.row.cpuKernel == null" style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+                0 {{$t('seller.group.have.cpu')}}
                 <!--总核数-->
               </p>
             </template>
@@ -225,9 +229,12 @@
                 :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
-              <p
+              <p v-if="scope.row.mem != null"
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
               >{{ scope.row.mem}} {{$t('seller.group.have.memory')}}</p>
+              <p v-if="scope.row.mem == null"
+                style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+              >0 {{$t('seller.group.have.memory')}}</p>
             </template>
           </el-table-column>
           <!--硬盘-->
@@ -248,9 +255,12 @@
                 :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
-              <p
+              <p v-if="scope.row.disk != null"
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
               >{{ scope.row.disk }} {{$t('seller.group.have.disk')}}</p>
+              <p v-if="scope.row.disk == null"
+                style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+              >0 {{$t('seller.group.have.disk')}}</p>
             </template>
           </el-table-column>
           <!--宽带(M)-->
@@ -271,9 +281,12 @@
                 :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
-              <p
+              <p v-if="scope.row.network != null"
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-              >{{ scope.row.networkUsed }} {{$t('seller.group.have.network')}}</p>
+              >{{ scope.row.network }} {{$t('seller.group.have.network')}}</p>
+              <p v-if="scope.row.network == null"
+                style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+              >0 {{$t('seller.group.have.network')}}</p>
             </template>
           </el-table-column>
           <!--删除-->

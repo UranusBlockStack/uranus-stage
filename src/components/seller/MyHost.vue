@@ -133,8 +133,18 @@
               :text-inside="true"
               style="margin-left:35px;"
             ></el-progress>
-            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+            <p
+              v-if="scope.row.cpuKernel != null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >
               {{ scope.row.cpuKernel }} {{$t('seller.host.have.cpu')}}
+              <!--总核数-->
+            </p>
+            <p
+              v-if="scope.row.cpuKernel == null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >
+              0 {{$t('seller.host.have.cpu')}}
               <!--总核数-->
             </p>
           </template>
@@ -159,8 +169,13 @@
               style="margin-left:35px;"
             ></el-progress>
             <p
+              v-if="scope.row.mem != null"
               style="color:#8c8c8c; font-size:10px; margin-left:35px;"
             >{{ scope.row.mem}} {{$t('seller.host.have.memory')}}</p>
+            <p
+              v-if="scope.row.mem == null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >0 {{$t('seller.host.have.memory')}}</p>
           </template>
         </el-table-column>
 
@@ -183,8 +198,13 @@
               style="margin-left:35px;"
             ></el-progress>
             <p
+              v-if="scope.row.disk != null"
               style="color:#8c8c8c; font-size:10px; margin-left:35px;"
             >{{ scope.row.disk }} {{$t('seller.host.have.disk')}}</p>
+            <p
+              v-if="scope.row.disk == null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >0 {{$t('seller.host.have.disk')}}</p>
           </template>
         </el-table-column>
 
@@ -207,8 +227,13 @@
               style="margin-left:35px;"
             ></el-progress>
             <p
+              v-if="scope.row.network != null"
               style="color:#8c8c8c; font-size:10px; margin-left:35px;"
             >{{ scope.row.network }} {{$t('seller.host.have.network')}}</p>
+            <p
+              v-if="scope.row.network == null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >0 {{$t('seller.host.have.network')}}</p>
           </template>
         </el-table-column>
 
