@@ -21,6 +21,29 @@ export function httpLang (language) {
     }
   })
 
+  // axinstance.catch(error => {
+  //   if (error.response) {
+  //     console.log('error.response')
+  //     console.log(error.response)
+  //   } else if (error.request) {
+  //     console.log('error.request')
+  //     console.log(error.request)
+  //     // if (error.request.readyState === 4 && error.request.status === 0) {
+  //     // }
+  //   } else {
+  //     console.log('Error', error.message)
+  //   }
+  //   console.log(error.config)
+  // })
+
+  axinstance.defaults.timeout = 30000
+
+  axinstance.interceptors.request.use(function (config) {
+    return config
+  }, function (error) {
+    return Promise.reject(error)
+  })
+
   axinstance.interceptors.response.use(function(response) {
     const axdata = response.data
     if (axdata.errCode === 'TOKEN_NOT_INVALID') {
@@ -29,6 +52,8 @@ export function httpLang (language) {
     } else {
       return response
     }
+  }, function (error) {
+    return Promise.reject(error)
   })
 
   return axinstance
