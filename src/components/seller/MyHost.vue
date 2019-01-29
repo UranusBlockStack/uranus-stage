@@ -250,11 +250,44 @@
               <span
                 v-show="scope.row.clusterId !=''||scope.row.clusterId !=null"
               >{{scope.row.clusterName}}</span>
-              <el-button
+              <el-button style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
                 @click="joinButtonClick(scope.row.id)"
                 v-show="scope.row.clusterId ==''||scope.row.clusterId ==null"
               >{{$t('seller.host.join')}}</el-button>
             </p>
+          </template>
+        </el-table-column>
+        <el-table-column width="160">
+              <template slot-scope="scope">
+              <!-- <el-button style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
+              v-show="scope.row.state != 'online'"
+                @click="outerVisible = true"
+              >{{$t('seller.group.deleteHost')}}</el-button> -->
+              <el-dropdown trigger="click" v-show="scope.row.state != 'online'" @command="outerVisible = true">
+                <span class="el-dropdown-link">
+                    <i class="iconfont icon-table-more"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                    <el-dropdown-item>{{$t('seller.group.deleteHost')}}</el-dropdown-item>
+                </el-dropdown-menu>
+            </el-dropdown>
+              <!-- delete host text box -->
+              <el-dialog :close-on-click-modal="false" :visible.sync="outerVisible" width="480px">
+                <p>{{$t('seller.group.deleteSure')}}</p>
+                <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
+                  <p>{{$t('seller.group.deleteText1')}}</p>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button type="primary" @click="hostReload()">{{$t('seller.group.confirm')}}</el-button>
+                  </div>
+                </el-dialog>
+                <div slot="footer" class="dialog-footer">
+                  <el-button @click="outerVisible = false">{{$t('seller.group.cancel')}}</el-button>
+                  <el-button
+                    type="primary"
+                    @click="deleteHost(scope.row.id)"
+                  >{{$t('seller.group.confirm')}}</el-button>
+                </div>
+              </el-dialog>
           </template>
         </el-table-column>
       </el-table>
@@ -283,6 +316,8 @@ export default {
   data() {
     return {
       dialogVisible: false,
+      outerVisible: false,
+      innerVisible: false,
       groupJoin: this.$t('seller.host.newGroup'),
       state: '',
       group: '',
@@ -310,8 +345,9 @@ export default {
   },
   methods: {
     //   window reload for update data
-    winReload(cond) {
-      window.location.reload()
+    hostReload() {
+      this.innerVisible= false
+      this.getHostList()
     },
     getHostList() {
       rancher
@@ -403,7 +439,7 @@ export default {
           rancher.joinCluster(this.language, this.hostId, param).then(data => {
             if (data.data.success) {
               this.dialogVisible = false
-              this.winReload()
+              this.getHostList()
             } else {
               this.$message({
                 showClose: true,
@@ -427,7 +463,7 @@ export default {
           rancher.joinCluster(this.language, this.hostId, param).then(data => {
             if (data.data.success) {
               this.dialogVisible = false
-              this.winReload()
+              this.getHostList()
             } else {
               this.$message({
                 showClose: true,
@@ -438,6 +474,22 @@ export default {
           })
         }
       }
+    },
+    deleteHost(id) {
+      // 删除主机
+      rancher.hostDelete(auth.getCurLang(), id).then(data => {
+        // 删除逻辑
+        if (data.data.success) {
+          this.outerVisible = false
+          this.innerVisible = true
+        } else {
+          this.$message({
+            showClose: true,
+            message: data.data.errMsg,
+            type: 'error'
+          })
+        }
+      })
     },
     joinButtonClick(selectedhostId) {
       this.hostId = selectedhostId
@@ -541,13 +593,13 @@ export default {
       color: #ffffff;
       font-weight: 400;
     }
-    .el-button {
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 #2463ff;
-      border-radius: 3px;
-      border: none;
-      color: #ffffff;
-    }
+    // .el-button {
+    //   background: rgba(101, 143, 247, 0);
+    //   box-shadow: inset 0 0 22px 0 #2463ff;
+    //   border-radius: 3px;
+    //   border: none;
+    //   color: #ffffff;
+    // }
     .el-button :hover {
       color: #1890ff;
     }

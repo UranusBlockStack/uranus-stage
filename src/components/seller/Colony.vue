@@ -303,7 +303,7 @@
                 <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
                   <p>{{$t('seller.group.deleteText1')}}</p>
                   <div slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="winReload">{{$t('seller.group.confirm')}}</el-button>
+                    <el-button type="primary" @click="hostReload">{{$t('seller.group.confirm')}}</el-button>
                   </div>
                 </el-dialog>
                 <div slot="footer" class="dialog-footer">
@@ -378,7 +378,7 @@ export default {
         .clusterModify(this.language, this.clusterId, newClusterInfo)
         .then(data => {
           if (data.data.success) {
-            this.winReload()
+            this.getHosts()
           } else {
             this.$message({
               showClose: true,
@@ -404,8 +404,9 @@ export default {
         }
       })
     },
-    winReload(cond) {
-      window.location.reload()
+    hostReload() {
+      this.innerVisible= false
+      this.getHosts()
     },
     getClusterDetail() {
       rancher.clusterInfo(this.language, this.clusterId).then(data => {
