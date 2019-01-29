@@ -205,6 +205,7 @@ module.exports = {
       renewal: '前往续费',
       detail: '查看详情',
       deployRecord: '部署应用记录',
+      project: '该Project 正在支付或创建中',
       deployPage: {
         searchIn: '输入关键字',
         time: '布置时间筛选',

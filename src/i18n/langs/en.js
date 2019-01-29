@@ -209,6 +209,7 @@ module.exports = {
       renewal: 'Renewal fee',
       detail: 'View',
       deployRecord: 'Records',
+      project: 'The Project is being paid or created',
       deployPage: {
         searchIn: 'Search',
         time: 'Time',
@@ -255,7 +256,11 @@ module.exports = {
       appIntroduction: 'Introduction:',
       appParameter: 'Parameter:',
       detail: 'Detail',
-      delete: 'Delete'
+      delete: 'Delete',
+      notice: 'Delete',
+      deleteSure: 'Are you sure to delete this app?',
+      cancel: 'Cancel',
+      confirm: 'OK'
     },
     appState: {
       status: 'Status',

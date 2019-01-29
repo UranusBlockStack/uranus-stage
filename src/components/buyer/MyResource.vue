@@ -160,7 +160,7 @@ export default {
       if (ostatus !== 3) {
         this.$message({
           showClose: true,
-          message: '该Project 正在支付或创建中',
+          message: this.$t('buyer.myResource.project'),
           type: 'warning'
         })
       } else {

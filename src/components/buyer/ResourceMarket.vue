@@ -312,7 +312,7 @@ export default {
           if (this.totalTime < 0) {
             window.clearInterval(clock)
             this.content = this.$t('userCommon.codeTime')
-            this.totalTime = 10
+            this.totalTime = 60
             this.canClick = true
           }
         }, 1000)

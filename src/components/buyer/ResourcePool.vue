@@ -39,6 +39,18 @@
         </el-col>
       </el-row>
       <el-row>
+          <!-- delete app notice box -->
+          <el-dialog
+            :title="$t('buyer.resourcePool.notice')"
+            :visible.sync="dialogVisible"
+            width="580px"
+          >
+            <span>{{$t('buyer.resourcePool.deleteSure')}}</span>
+            <span slot="footer" class="dialog-footer">
+              <el-button @click="dialogVisible = false">{{$t('buyer.resourcePool.cancel')}}</el-button>
+              <el-button type="primary" @click="deleteApp()">{{$t('buyer.resourcePool.confirm')}}</el-button>
+            </span>
+          </el-dialog>
         <el-col class="rePool" :span="12" v-for="(item, index) in appList" :key="index">
           <el-row>
             <el-col :span="4" :offset="1">
@@ -46,7 +58,7 @@
                 <img :src="getImage(item.appRid)" alt="img">
               </div>
             </el-col>
-            <el-col :span="15" :offset="1">
+            <el-col :span="14" :offset="3">
               <h3>{{$t('buyer.resourcePool.appName')}} {{item.name}}</h3>
               <!-- <h3>{{$t('buyer.resourcePool.appIp')}} {{item.ipAddress}}</h3>
               <h3>{{$t('buyer.resourcePool.appPort')}} {{item.port}}</h3>-->
@@ -58,7 +70,7 @@
               </h3>
               <h3>{{$t('buyer.resourcePool.appTime')}} {{formateDate(item.createTime)}}</h3>
             </el-col>
-            <el-col :span="3">
+            <el-col :span="2">
               <el-dropdown trigger="click">
                 <span class="el-dropdown-link">
                   <i class="iconfont icon-menu"></i>
@@ -70,8 +82,11 @@
                     <el-dropdown-item>{{$t('buyer.resourcePool.detail')}}</el-dropdown-item>
                   </router-link>
                   <el-dropdown-item
-                    @click.native="deleteApp(item.id)"
+                    @click.native="deleteAppId(item.id)"
                   >{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
+                  <!-- <el-dropdown-item
+                    @click.native="deleteApp(item.id)"
+                  >{{$t('buyer.resourcePool.delete')}}</el-dropdown-item> -->
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>
@@ -113,7 +128,9 @@ export default {
       },
       update2: false,
       poolId: this.$route.params.poolid,
-      isRouterAlive: true
+      isRouterAlive: true,
+      deleteId: null,
+      dialogVisible: false,
     }
   },
   methods: {
@@ -138,8 +155,12 @@ export default {
     getImage(rid) {
       return this.imageServerUrl + rid + '/icon'
     },
-    deleteApp(appId) {
-      project.deleteAppById(this.$store.getters.lang, appId)
+    deleteAppId(appId) {
+        this.deleteId = appId
+        this.dialogVisible = true
+    },
+    deleteApp() {
+      project.deleteAppById(this.$store.getters.lang, this.deleteId)
         .then(respData => {
           let data = respData.data
           if (data.success) {
@@ -148,6 +169,7 @@ export default {
               message: 'Success.',
               type: 'success'
             })
+            this.dialogVisible = false
             this.getAppList()
           } else {
             this.$message({
@@ -327,10 +349,6 @@ export default {
       height: 200px;
       display: flex;
       padding-left: 50px;
-    }
-    .el-button {
-      background: #8eb357;
-      border: none;
     }
     .el-dropdown {
       margin: 20px;
