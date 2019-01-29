@@ -139,26 +139,6 @@ export default {
       return this.imageServerUrl + rid + '/icon'
     },
     deleteApp(appId) {
-<<<<<<< HEAD
-      project.deleteAppById(auth.getCurLang(), appId)
-          .then(respData => {
-            let data = respData.data
-            if (data.success) {
-              this.$message({
-                showClose: true,
-                message: 'Success.',
-                type: 'success'
-              })
-              this.getAppList()
-            } else {
-              this.$message({
-                showClose: true,
-                message: data.errMsg,
-                type: 'error'
-              })
-            }
-          }).catch(err => {
-=======
       project.deleteAppById(this.$store.getters.lang, appId)
         .then(respData => {
           let data = respData.data
@@ -170,19 +150,12 @@ export default {
             })
             this.getAppList()
           } else {
->>>>>>> 7fb965bf... update page bug
             this.$message({
               showClose: true,
               message: data.errMsg,
               type: 'error'
             })
           }
-        }).catch(err => {
-          this.$message({
-            showClose: true,
-            message: err,
-            type: 'error'
-          })
         })
     },
     getProjectById() {
