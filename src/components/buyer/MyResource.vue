@@ -172,11 +172,11 @@ export default {
               .then(respData => {
                 if (respData.data.data) {
                   const data = respData.data.data
-                  this.statisObejct['urapowerUsd'] = data.computeRatio
-                  this.statisObejct['cpuUsd'] = data.cpuKernelRatio * 100
-                  this.statisObejct['diskUsd'] = data.diskRatio * 100
-                  this.statisObejct['memUsd'] = data.memRatio * 100
-                  this.statisObejct['networkUsd'] = data.networkRatio * 100
+                  this.statisObejct['urapowerUsd'] = data.computeRatio / 100
+                  this.statisObejct['cpuUsd'] = data.cpuKernelRatio
+                  this.statisObejct['diskUsd'] = data.diskRatio
+                  this.statisObejct['memUsd'] = data.memRatio
+                  this.statisObejct['networkUsd'] = data.networkRatio
                 }
                 this.update2 = true
               })
