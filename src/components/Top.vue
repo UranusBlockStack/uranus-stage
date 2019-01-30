@@ -31,7 +31,7 @@
       </div>
       <!-- Download button -->
       <div class="download">
-        <span>{{$t('userCommon.download')}}</span>
+        <span  v-if="this.userRole == 'Seller'">{{$t('userCommon.download')}}</span>
       </div>
     </nav>
   </section>
@@ -44,7 +44,8 @@ export default {
   name: 'Head',
   data() {
     return {
-      curUserName: auth.getCurUserName()
+      curUserName: auth.getCurUserName(),
+      userRole: auth.getCurRole()
     }
   },
   methods: {

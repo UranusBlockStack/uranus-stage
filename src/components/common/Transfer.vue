@@ -157,7 +157,6 @@ export default {
       wallet.walletConfirmCode(auth.getCurLang(), this.curUserInfo.userName)
         .then(respData => {
           let data = respData.data
-          console.log(data)
           if (data.success) {
             this.$message({
               showClose: true,

@@ -153,7 +153,6 @@ export default {
             if (appListData.data) {
               this.appList = appListData.data.records
               this.appList.map(app => {
-                console.log(app)
               })
             }
           } else {

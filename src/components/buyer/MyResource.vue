@@ -156,7 +156,6 @@ export default {
               })
     },
     checkPatch(index, ostatus) {
-      console.log(index, ostatus)
       if (ostatus !== 3) {
         this.$message({
           showClose: true,
