@@ -5,5 +5,4 @@ export function getOrderPayCounter() {
 
 export function setOrderPayCounter() {
   const orderpay = localStorage.setItem('counterOrderPay')
-  console.log('ordercount val', orderpay)
 }

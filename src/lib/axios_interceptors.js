@@ -15,7 +15,6 @@ axios.interceptors.request.use((config) => {
 // 拦截响应response，并做一些错误处理
 axios.interceptors.response.use((response) => {
   const data = response.data
-  console.log(response)
 
 // 根据返回的code值来做不同的处理（和后端约定）
   switch (data.code) {

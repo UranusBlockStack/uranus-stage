@@ -29,9 +29,7 @@ export const ServerConfigData = {
 //     const  paramkeys = Object.keys(pvaluepairs)
 //     paramkeys.map( key => {
 //         pvaluepairs[key] += unitStr
-//         console.log('2222', pvaluepairs[key])
 //   })
-//     console.log('nakx', pvaluepairs)
 //     return pvaluepairs
 // }
 

@@ -23,17 +23,13 @@ export function httpLang (language) {
 
   // axinstance.catch(error => {
   //   if (error.response) {
-  //     console.log('error.response')
-  //     console.log(error.response)
   //   } else if (error.request) {
-  //     console.log('error.request')
-  //     console.log(error.request)
   //     // if (error.request.readyState === 4 && error.request.status === 0) {
   //     // }
   //   } else {
-  //     console.log('Error', error.message)
+  //     con sole.log('Error', error.message)
   //   }
-  //   console.log(error.config)
+  //   con sole.log(error.config)
   // })
 
   axinstance.defaults.timeout = 30000
