@@ -63,7 +63,7 @@
               <p class="overflow">{{ scope.row.hash }}</p>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :formatter="formateDate" min-width="160">
+          <el-table-column prop="createTime" :formatter="formateDate" min-width="130">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-time"></i>
@@ -93,7 +93,7 @@
               <p class="overflow">{{ scope.row.to }}</p>
             </template>
           </el-table-column>
-          <el-table-column prop="value" :label="$t('wallet.value')" min-width="150">
+          <el-table-column prop="value" :label="$t('wallet.value')" min-width="130">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-value"></i>
@@ -101,7 +101,7 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column prop="fee" :label="$t('wallet.fee')">
+          <el-table-column prop="fee" :label="$t('wallet.fee')" min-width="130">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-fee"></i>
@@ -184,7 +184,7 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column prop="fee" :label="$t('wallet.fee')">
+          <el-table-column prop="fee" :label="$t('wallet.fee')"  min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-fee"></i>

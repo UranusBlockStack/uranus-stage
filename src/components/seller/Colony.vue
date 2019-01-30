@@ -201,11 +201,17 @@
                 :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
-              <p v-if="scope.row.cpuKernel != null" style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              <p
+                v-if="scope.row.cpuKernel != null"
+                style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+              >
                 {{ scope.row.cpuKernel }} {{$t('seller.group.have.cpu')}}
                 <!--总核数-->
               </p>
-              <p v-if="scope.row.cpuKernel == null" style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              <p
+                v-if="scope.row.cpuKernel == null"
+                style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+              >
                 0 {{$t('seller.group.have.cpu')}}
                 <!--总核数-->
               </p>
@@ -229,10 +235,12 @@
                 :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
-              <p v-if="scope.row.mem != null"
+              <p
+                v-if="scope.row.mem != null"
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
               >{{ scope.row.mem}} {{$t('seller.group.have.memory')}}</p>
-              <p v-if="scope.row.mem == null"
+              <p
+                v-if="scope.row.mem == null"
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
               >0 {{$t('seller.group.have.memory')}}</p>
             </template>
@@ -255,10 +263,12 @@
                 :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
-              <p v-if="scope.row.disk != null"
+              <p
+                v-if="scope.row.disk != null"
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
               >{{ scope.row.disk }} {{$t('seller.group.have.disk')}}</p>
-              <p v-if="scope.row.disk == null"
+              <p
+                v-if="scope.row.disk == null"
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
               >0 {{$t('seller.group.have.disk')}}</p>
             </template>
@@ -281,10 +291,12 @@
                 :text-inside="true"
                 style="margin-left:35px;"
               ></el-progress>
-              <p v-if="scope.row.network != null"
+              <p
+                v-if="scope.row.network != null"
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
               >{{ scope.row.network }} {{$t('seller.group.have.network')}}</p>
-              <p v-if="scope.row.network == null"
+              <p
+                v-if="scope.row.network == null"
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
               >0 {{$t('seller.group.have.network')}}</p>
             </template>
@@ -378,7 +390,12 @@ export default {
         .clusterModify(this.language, this.clusterId, newClusterInfo)
         .then(data => {
           if (data.data.success) {
-            this.getHosts()
+            this.$message({
+              message: 'Success',
+              type: 'success'
+            })
+            this.dialogVisible = false
+            this.getClusterDetail()
           } else {
             this.$message({
               showClose: true,
@@ -393,6 +410,10 @@ export default {
       rancher.hostDelete(auth.getCurLang(), id).then(data => {
         // 删除逻辑
         if (data.data.success) {
+          this.$message({
+            message: 'Success',
+            type: 'success'
+          })
           this.outerVisible = false
           this.innerVisible = true
         } else {
@@ -405,7 +426,7 @@ export default {
       })
     },
     hostReload() {
-      this.innerVisible= false
+      this.innerVisible = false
       this.getHosts()
     },
     getClusterDetail() {
@@ -433,7 +454,11 @@ export default {
         this.tableCluster.beginTime == null ||
         this.tableCluster.endTime == null
       ) {
-        this.$message(this.$t('seller.group.clusterFail'))
+        this.$message({
+          showClose: true,
+          message: this.$t('seller.group.clusterFail'),
+          type: 'error'
+        })
         this.switchVal = !this.switchVal
       } else {
         var action = ''
@@ -501,7 +526,7 @@ export default {
   computed: {
     getPercentNumber() {
       // 计算百分比 a/b
-      return function(a, b) {
+      return function (a, b) {
         var n = Number((a / b) * 100).toFixed(2)
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
           n = 0
@@ -510,7 +535,7 @@ export default {
       }
     },
     dateFormat() {
-      return function(time) {
+      return function (time) {
         let momentInfo = moment(time)
         if (momentInfo.isValid() == false) {
           return moment(0).format('YYYY-MM-DD hh:mm:ss')
@@ -520,7 +545,7 @@ export default {
       }
     },
     division() {
-      return function(a, b) {
+      return function (a, b) {
         var n = a / b
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
           n = 0

@@ -144,11 +144,15 @@ export default {
       let myChartMap2 = this.$echarts.init(document.getElementById('mapWorld'))
       // 地图上数据
       let myData = [
-        { name: '分点1', value: [121.15, 31.89, 9] },
-        { name: '分点2', value: [89.781327, 39.608266, 120] },
-        { name: '分点3', value: [120.38, 37.35, 142] },
-        { name: '分点4', value: [22.207216, 29.985295, 123] },
-        { name: '分点5', value: [110.245672, 30.7787677, 566] }
+        { name: '1', value: [121.15, 31.89, 9] },
+        { name: '2', value: [89.781327, 39.608266, 120] },
+        { name: '3', value: [120.38, 37.35, 142] },
+        { name: '4', value: [22.207216, 29.985295, 123] },
+        { name: '5', value: [127.766922,35.907757, 566] },
+        { name: '6', value: [105.318756, 61.52401, 90] },
+        { name: '7', value: [138.252924, 36.204824, 90] },
+        { name: '8', value: [105.318756, 61.52401, 90] },
+        { name: '9', value: [-95.712891,37.09024, 90] },
       ]
 
       myChartMap2.setOption({
@@ -171,12 +175,12 @@ export default {
           }
         },
         // hover显示目标数据
-        tooltip: {
-          trigger: 'item',
-          textStyle: {
-            align: 'left'
-          }
-        },
+        // tooltip: {
+        //   trigger: 'item',
+        //   textStyle: {
+        //     align: 'left'
+        //   }
+        // },
         // 图表背景色
         backgroundColor: '#ffffff',
         // 标志颜色
