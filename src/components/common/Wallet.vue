@@ -258,10 +258,10 @@ export default {
       }
       document.body.removeChild(input)
       this.$message({
-            showClose: true,
-            message: 'Success.',
-            type: 'success'
-          })
+        showClose: true,
+        message: 'Success.',
+        type: 'success'
+      })
     },
     goTransfer() {
       this.$router.push({ path: 'transfer' })
@@ -313,9 +313,13 @@ export default {
       let transDetail = []
       const fields = Object.keys(row)
       fields.map(field => {
+        let value = row[field]
+        if (field ==='createTime' || field === 'updateTime') {
+          value = moment(row[field]).format('YYYY-MM-DD HH:mm:ss')
+        }
         const fieldData = {
           title: field,
-          value: row[field]
+          value: value
         }
         transDetail.push(fieldData)
       })
