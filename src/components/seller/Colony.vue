@@ -29,6 +29,7 @@
           <el-form-item :label="$t('seller.group.settingName')">
             <el-input v-model="tableCluster.name"></el-input>
           </el-form-item>
+          <p class="rentDay">{{tableCluster.rentPrice}}*1U*1Day</p>
           <el-form-item :label="$t('seller.group.setRent')">
             <el-input v-model="tableCluster.rentPrice"></el-input>
           </el-form-item>
@@ -576,6 +577,15 @@ export default {
   border-radius: 2px;
   width: 100%;
   min-width: 1130px;
+  .rentDay {
+      color: #8eb357;
+      text-align: right;
+      font-size: 12px;
+      height: 12px;
+      line-height: 12px;
+      margin: 0;
+      padding: 0;
+  }
   .colonyHead {
     background: rgba(101, 143, 247, 0);
     box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
