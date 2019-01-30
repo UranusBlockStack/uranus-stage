@@ -25,7 +25,7 @@
       width="650px"
     >
       <span>
-        <el-form :model="tableCluster" label-position="left" label-width="100px">
+        <el-form :model="tableCluster" label-position="left" label-width="130px">
           <el-form-item :label="$t('seller.group.settingName')">
             <el-input v-model="tableCluster.name"></el-input>
           </el-form-item>
@@ -77,8 +77,8 @@
             </el-select>
           </el-form-item>-->
           <el-form-item>
-            <el-button type="primary" @click="modifyCluster">{{$t('seller.group.confirm')}}</el-button>
             <el-button @click="dialogVisible = false">{{$t('seller.group.cancel')}}</el-button>
+            <el-button type="primary" @click="modifyCluster">{{$t('seller.group.confirm')}}</el-button>
           </el-form-item>
         </el-form>
       </span>

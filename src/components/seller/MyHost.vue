@@ -265,7 +265,7 @@
               >{{$t('seller.group.deleteHost')}}</el-button> -->
               <el-dropdown trigger="click" v-show="scope.row.state != 'online'" @command="outerVisible = true">
                 <span class="el-dropdown-link">
-                    <i class="iconfont icon-table-more"></i>
+                    <i class="iconfont icon-table-more" style="color: #ffffff; font-size: 22px;"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item>{{$t('seller.group.deleteHost')}}</el-dropdown-item>
@@ -273,7 +273,7 @@
             </el-dropdown>
               <!-- delete host text box -->
               <el-dialog :close-on-click-modal="false" :visible.sync="outerVisible" width="480px">
-                <p>{{$t('seller.group.deleteSure')}}</p>
+                <p>{{$t('seller.host.deleteSure')}}</p>
                 <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
                   <p>{{$t('seller.group.deleteText1')}}</p>
                   <div slot="footer" class="dialog-footer">
@@ -327,7 +327,7 @@ export default {
       rancherLists: [],
       clusterLists: [],
       language: 'en-us',
-      rancherId: '',
+      rancherId: 2,
       newClusterName: '',
       clusterName: '',
       hostId: '',

@@ -77,7 +77,7 @@
           <el-col :span="16">
             <div class="choosePower">
               <span
-                @click="powerMounth(0)"
+                @click="powerMonth(0)"
                 :class="{active: this.indexPower == '0'}"
               >{{$t('buyer.home.month')}}</span>
               <span
@@ -123,7 +123,7 @@ export default {
           y: [],
           line: []
         },
-        mounth: {
+        month: {
           x: [],
           y: [],
           line: []
@@ -173,7 +173,7 @@ export default {
       this.statisGlobalUraPower('week')
       this.indexPower = x
     },
-    powerMounth(x) {
+    powerMonth(x) {
       this.statisGlobalUraPower('month')
       this.indexPower = x
     },
@@ -277,7 +277,7 @@ export default {
           y: [],
           line: []
         },
-        mounth: {
+        month: {
           x: [],
           y: [],
           line: []
@@ -303,11 +303,11 @@ export default {
           this.initEchart(this.powerVal)
         } else if (type == 'month') {
           data.forEach(item => {
-            this.dataPower.mounth.x.push(item.datetimeValue)
-            this.dataPower.mounth.y.push(item.totalCompute)
-            this.dataPower.mounth.line.push(item.usedCompute)
+            this.dataPower.month.x.push(item.datetimeValue)
+            this.dataPower.month.y.push(item.totalCompute)
+            this.dataPower.month.line.push(item.usedCompute)
           })
-          this.powerVal = this.dataPower.mounth
+          this.powerVal = this.dataPower.month
           this.initEchart(this.powerVal)
         }
       })

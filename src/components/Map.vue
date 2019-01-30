@@ -9,9 +9,9 @@
           <i class="el-icon-arrow-down el-icon--right"></i>
         </span>
         <el-dropdown-menu slot="dropdown">
-          <el-dropdown-item>
+          <!-- <el-dropdown-item>
             <p @click="chooseCn()">{{$t('map.cn')}}</p>
-          </el-dropdown-item>
+          </el-dropdown-item> -->
           <el-dropdown-item>
             <p @click="chooseEn()">{{$t('map.en')}}</p>
           </el-dropdown-item>
@@ -59,10 +59,10 @@
           <p>value: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].value}} URAC</p>
         </div>
         <div class="text" id="show">
-            <p>TX hash: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].hash}}</p>
-            <p>from: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].from}}</p>
-            <p>to: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].to}}</p>
-            <p>value: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].value}} URAC</p>
+          <p>TX hash: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].hash}}</p>
+          <p>from: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].from}}</p>
+          <p>to: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].to}}</p>
+          <p>value: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].value}} URAC</p>
         </div>
       </div>
     </div>
@@ -83,7 +83,8 @@
         </span>
         <p>{{$t('map.buyerText')}}</p>
       </a>
-      <a @click.prevent="LoginPage('Developer')" class="developer">
+      <!-- <a @click.prevent="LoginPage('Developer')" class="developer"> -->
+      <a @click.prevent="construction()" class="developer">
         <span>
           <img src="/static/img/uranus/developer.png">
           {{$t('map.developer')}}
@@ -100,6 +101,7 @@ import '../../static/js/world.js'
 import * as auth from '../services/AuthService'
 import * as block from '../services/BlockService'
 import moment from 'moment'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Map',
@@ -114,6 +116,13 @@ export default {
     }
   },
   methods: {
+    construction() {
+      this.$message({
+        showClose: true,
+        message: 'This role is under construction',
+        type: 'warning'
+      })
+    },
     chooseCn() {
       this.lang = '中文'
       this.langCode = 'zh-cn'
@@ -145,9 +154,9 @@ export default {
       myChartMap2.setOption({
         geo: {
           map: 'world', // 地图类型为世界地图
-        //   roam: true, //缩放  拖动
-        //   zoom: 1,
-        //   scaleLimit: { min: 1, max: 2 },
+          //   roam: true, //缩放  拖动
+          //   zoom: 1,
+          //   scaleLimit: { min: 1, max: 2 },
           itemStyle: {
             // 定义样式
             normal: {
@@ -184,7 +193,7 @@ export default {
           }
         ]
       })
-      window.onresize = function() {
+      window.onresize = function () {
         myChartMap2.resize()
       }
     },
@@ -194,20 +203,20 @@ export default {
     },
     lastedBlock() {
       this.BlockData = []
-      block.getLastedBlock(this.langCode, {'height': -1})
+      block.getLastedBlock(this.langCode, { 'height': -1 })
+        .then(blockData => {
+          if (blockData.data.success) {
+            const data = blockData.data.data
+            this.BlockData.push(data)
+            this.TranscationData = data.transactions
+            block.getLastedBlock(this.$store.getters.lang, { 'height': data.height - 1 })
               .then(blockData => {
                 if (blockData.data.success) {
-                  const data = blockData.data.data
-                  this.BlockData.push(data)
-                  this.TranscationData = data.transactions
-                  block.getLastedBlock(this.$store.getters.lang, {'height': data.height-1})
-                        .then(blockData => {
-                          if (blockData.data.success) {
-                            this.BlockData.push(blockData.data.data)
-                          }
-                        })
+                  this.BlockData.push(blockData.data.data)
                 }
               })
+          }
+        })
     },
     getTranscationData() {
       return this.TranscationData

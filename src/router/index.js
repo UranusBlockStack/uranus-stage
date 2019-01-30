@@ -21,9 +21,9 @@ import AppState from '@/components/buyer/AppState'
 import StateDetail from '@/components/buyer/StateDetail'
 
 // developer
-import Developer from '@/components/developer/Developer'
-import UploadApplication from '@/components/developer/UploadApplication'
-import MyApplication from '@/components/developer/MyApplication'
+// import Developer from '@/components/developer/Developer'
+// import UploadApplication from '@/components/developer/UploadApplication'
+// import MyApplication from '@/components/developer/MyApplication'
 
 // seller
 import Seller from '@/components/seller/Seller'
@@ -107,19 +107,19 @@ const routes = [
       },
         
         // developer routes
-      {
-        path: '/developer',
-        component: Developer,
-        name: 'Developer'
-      }, {
-        path: '/uploadapplication',
-        component: UploadApplication,
-        name: 'UploadApplication'
-      }, {
-        path: '/myapplication',
-        component: MyApplication,
-        name: 'MyApplication'
-      },
+    //   {
+    //     path: '/developer',
+    //     component: Developer,
+    //     name: 'Developer'
+    //   }, {
+    //     path: '/uploadapplication',
+    //     component: UploadApplication,
+    //     name: 'UploadApplication'
+    //   }, {
+    //     path: '/myapplication',
+    //     component: MyApplication,
+    //     name: 'MyApplication'
+    //   },
         
         // seller routes
       {

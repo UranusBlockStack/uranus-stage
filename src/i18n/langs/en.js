@@ -12,9 +12,6 @@ module.exports = {
     // seller
     myHost: 'Host',
     myColony: 'Cluster',
-    myColony1: 'Cluster A',
-    myColony2: 'Cluster B',
-    myColony3: 'Cluster C',
     // developer
     uploadApplication: 'UpLoad Application',
     myApplication: 'My Application'
@@ -86,7 +83,7 @@ module.exports = {
       free: 'Free',
       paid: 'Paid',
       deploy: 'Deploy',
-      deleteSure: 'Are you sure  to delete this app?',
+      deleteSure: 'Are you sure to delete this app?',
       deleteText: 'After deletion, my application repository will not have the application!',
       choose: 'Choose',
       bought: 'Bought',
@@ -173,7 +170,7 @@ module.exports = {
       content: 'Type',
       buyApp: 'Application',
       buyPower: 'UraPower',
-      fee: 'Fee',
+      fee: 'Fee (URAC)',
       purchaseApp: 'Application',
       purchasePower: 'UraPower',
       code: 'Code',
@@ -191,8 +188,8 @@ module.exports = {
     },
     myResource: {
       resourceAll: 'All UraPower',
-      restAll: ' ',
-      restOne: ' ',
+      restAll: '',
+      restOne: '',
       list: 'UraPower purchase list',
       total: 'Total',
       used: 'Used',
@@ -307,8 +304,8 @@ module.exports = {
       type: 'Type',
       time: 'Time',
       hash: 'TX Hash',
-      amount: 'Value (Urac)',
-      fee: 'Fee'
+      amount: 'Value (URAC)',
+      fee: 'Fee (URAC)'
     },
     host: {
       list: 'Hosts list',
@@ -318,7 +315,7 @@ module.exports = {
       online: 'Online',
       offline: 'Offline',
       number: 'Host Name',
-      ip: 'Host Ip',
+      ip: 'Host IP',
       memory: 'Memory',
       disk: 'Disk',
       network: 'Network',
@@ -355,7 +352,8 @@ module.exports = {
       north: 'North America',
       oceania: 'Australia',
       cancel: 'Cancel',
-      confirm: 'OK'
+      confirm: 'OK',
+      deleteSure: 'After deletion, the host will disappear from the system, whether to continue the operating?'
     },
     groups: {
       view: 'Cluster Records',
@@ -380,7 +378,7 @@ module.exports = {
         completedStatus: 'Complete',
         orderTime: 'Creation time',
         clusterPrice: 'Value(URAC)',
-        fee: 'Fee',
+        fee: 'Fee(URAC)',
         ip: 'IP',
         port: 'Port',
         clusterHash: 'TX Hash'
@@ -493,12 +491,12 @@ module.exports = {
       processing: 'Processing',
       creationTime: 'Order creation time',
       operating: 'Operating',
-      text: 'Please click on the installation package in the upper right corner to download the client.',
       deleteHost: 'Delete',
       deleteText1: 'Exit successfully',    // 'The host is already occupied and cannot be logged out of the group.',
       deleteText2: 'The host has been leased and cannot exit the Cluster.',
       deleteText3: "The host which is can't exit is on sale in the cluster.",
       deleteSure: 'After exiting, the relationship of the predicted Cluster will be released, and the corresponding data cannot be restored. Is the exit determined?',
+      text: 'Please click on the installation package in the upper right corner to download the client.',
       clusterFail: 'Cluster information is not perfect',
       usable: {
         cpu: 'core(s)',
@@ -526,7 +524,7 @@ module.exports = {
     from: 'From',
     to: 'To',
     value: 'Value(URAC)',
-    fee: 'Fee',
+    fee: 'Fee(URAC)',
     status: 'State',
     success: 'Success',
     fail: 'Fail',
