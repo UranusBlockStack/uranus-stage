@@ -192,6 +192,10 @@ export default {
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
         padding: 12px 5px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        /*width: 135px;*/
         i {
           font-size: 28px;
         }
