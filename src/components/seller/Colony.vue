@@ -435,7 +435,7 @@ export default {
         this.clusterInfo = data.data.data
         this.tableCluster = JSON.parse(JSON.stringify(data.data.data))
         this.setDatePick()
-        if (this.tableCluster.state == 'online') {
+        if (this.tableCluster.online === true) {
           this.switchVal = true
         } else {
           this.switchVal = false

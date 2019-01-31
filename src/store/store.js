@@ -13,7 +13,7 @@ export default new Vuex.Store({
     apiUrl: 'http://47.75.91.23:4000/',
     downloadUrl: 'http://47.105.142.185:8000/',  // 下载URL
     imageServerUrl: 'http://47.75.91.23:3300/rancher-img/', // app图片服务器
-    lang: {// 全部语言包列表
+    lang: { // 全部语言包列表
       'zh-cn': 'zh-cn',
       'en-us': 'en-us'
     },
