@@ -9,9 +9,10 @@ export default new Vuex.Store({
   state: {
     isLoggedIn: false,
     // apiUrl: `${window.location.protocol}//${window.location.hostname}:3000/api`,
-      // apiUrl: 'http://192.168.110.45:4000',
+    // apiUrl: 'http://192.168.110.45:4000',
     apiUrl: 'http://47.75.91.23:4000/',
-    imageServerUrl: 'http://47.75.91.23:3300/rancher-img/',
+    downloadUrl: 'http://47.105.142.185:8000/',  // 下载URL
+    imageServerUrl: 'http://47.75.91.23:3300/rancher-img/', // app图片服务器
     lang: {// 全部语言包列表
       'zh-cn': 'zh-cn',
       'en-us': 'en-us'

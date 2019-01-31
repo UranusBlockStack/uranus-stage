@@ -31,7 +31,9 @@
       </div>
       <!-- Download button -->
       <div class="download">
-        <span  v-if="this.userRole == 'Seller'">{{$t('userCommon.download')}}</span>
+        <span  v-if="this.userRole === 'Seller'">
+          <a v-bind:href="downloadUrl+'UraPower-Client.zip'"> {{$t('userCommon.download')}}</a>
+        </span>
       </div>
     </nav>
   </section>
@@ -45,7 +47,8 @@ export default {
   data() {
     return {
       curUserName: auth.getCurUserName(),
-      userRole: auth.getCurRole()
+      userRole: auth.getCurRole(),
+      downloadUrl: this.$store.state.downloadUrl
     }
   },
   methods: {
