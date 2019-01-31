@@ -29,7 +29,7 @@
           <el-form-item :label="$t('seller.group.settingName')">
             <el-input v-model="tableCluster.name"></el-input>
           </el-form-item>
-          <p class="rentDay">{{tableCluster.rentPrice}}*1U*1Day</p>
+          <p class="rentDay">{{tableCluster.rentPrice}}*1KU*1Day</p>
           <el-form-item :label="$t('seller.group.setRent')">
             <el-input v-model="tableCluster.rentPrice"></el-input>
           </el-form-item>

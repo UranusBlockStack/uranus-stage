@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import * as auth from '../services/AuthService'
-import {mapActions } from 'vuex'
 
 Vue.use(Vuex)
 
