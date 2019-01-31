@@ -81,7 +81,7 @@ export default {
     background: rgba(101, 143, 247, 0) !important;
     box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
     .userInformation {
-      width: 200px;
+      /*width: 200px;*/
       color: #ffffff;
       float: right;
       height: 50px;

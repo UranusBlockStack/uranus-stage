@@ -25,21 +25,21 @@
     <div class="right">
       <div class="head-block">
         <b>Head Block:</b>
-        <p>{{BlockData.length == 0 ? placeHolder : BlockData[0].height}}</p>
+        <p>{{BlockData.length === 0 ? placeHolder : BlockData[0].height}}</p>
         <b>Head Block Producer:</b>
-        <p>{{BlockData.length == 0 ? placeHolder : BlockData[0].miner}}</p>
+        <p>{{BlockData.length === 0 ? placeHolder : BlockData[0].miner}}</p>
         <b>Head Block Timestamp:</b>
-        <p>{{BlockData.length == 0 ? placeHolder : BlockData[0].timestamp}}</p>
+        <p>{{BlockData.length === 0 ? placeHolder : BlockData[0].timestamp}}</p>
       </div>
       <div class="block">
         <h3>
           <i class="iconfont icon-zhongmingming"></i> Block
         </h3>
         <div class="text">
-          <p>Block {{BlockData.length == 0 ? placeHolder : BlockData[0].height}}</p>
-          <p>{{BlockData.length == 0 ? placeHolder : BlockData[0].timestamp}}</p>
+          <p>Block {{BlockData.length === 0 ? placeHolder : BlockData[0].height}}</p>
+          <p>{{BlockData.length === 0 ? placeHolder : BlockData[0].timestamp}}</p>
           <p>mined by {{BlockData.length == 0 ? placeHolder : BlockData[0].miner}}</p>
-          <p>{{BlockData.length == 0 ? 0 : TranscationData.length}} transactions</p>
+          <p>{{BlockData.length === 0 ? 0 : TranscationData.length}} transactions</p>
         </div>
         <div class="text" id="show">
           <p>Block {{BlockData.length <= 1 ? placeHolder : BlockData[1].height}}</p>
@@ -53,10 +53,10 @@
           <i class="iconfont icon-zhongmingming"></i> Transactions
         </h3>
         <div class="text">
-          <p>TX hash: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].hash}}</p>
-          <p>from: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].from}}</p>
-          <p>to: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].to}}</p>
-          <p>value: {{getTranscationData().length == 0 ? placeHolder : TranscationData[0].value}} URAC</p>
+          <p>TX hash: {{getTranscationData().length === 0 ? placeHolder : TranscationData[0].hash}}</p>
+          <p>from: {{getTranscationData().length === 0 ? placeHolder : TranscationData[0].from}}</p>
+          <p>to: {{getTranscationData().length === 0 ? placeHolder : TranscationData[0].to}}</p>
+          <p>value: {{getTranscationData().length === 0 ? placeHolder : TranscationData[0].value}} URAC</p>
         </div>
         <div class="text" id="show">
           <p>TX hash: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].hash}}</p>
@@ -148,11 +148,17 @@ export default {
         { name: '2', value: [89.781327, 39.608266, 120] },
         { name: '3', value: [120.38, 37.35, 142] },
         { name: '4', value: [22.207216, 29.985295, 123] },
-        { name: '5', value: [127.766922,35.907757, 566] },
+        { name: '5', value: [127.766922, 35.907757, 566] },
         { name: '6', value: [105.318756, 61.52401, 90] },
         { name: '7', value: [138.252924, 36.204824, 90] },
         { name: '8', value: [105.318756, 61.52401, 90] },
-        { name: '9', value: [-95.712891,37.09024, 90] },
+        { name: '9', value: [-95.712891, 37.09024, 90] },
+          { name: '10', value: [37.896, 55.435, 90] },
+          { name: '11', value: [40.435, 56.049, 90] },
+          { name: '12', value: [50.075, 57.483, 90] },
+
+          { name: '13', value: [103.77, 1.343, 100] },
+          { name: '14', value: [101.86, 4.7105, 100] }
       ]
 
       myChartMap2.setOption({
@@ -184,7 +190,7 @@ export default {
         // 图表背景色
         backgroundColor: '#ffffff',
         // 标志颜色
-        color: 'green',
+        color: 'red',
         // 新建散点图series
         series: [
           {
