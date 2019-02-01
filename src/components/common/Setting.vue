@@ -327,8 +327,8 @@ export default {
     },
     userInfo() {
       // 获取用户信息
-      var user = auth.getUserBaseInfo()
-      account.userInfo(this.$store.getters.lang, user.userId).then(data => {
+      const user = auth.getUserBaseInfo()
+      account.userInfo(auth.getCurLang(), user.userId).then(data => {
         this.id = data.data.data.id
         this.phonenum = data.data.data.mobile
         this.mail = data.data.data.email

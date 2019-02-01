@@ -35,11 +35,25 @@
           <a v-bind:href="downloadUrl+'UraPower-Client.zip'"> {{$t('userCommon.download')}}</a>
         </span>
       </div>
+
+      <!-- Help button -->
+    <div class="help_dropdown">
+      <el-dropdown @command="handleCommand">
+      <span class="el-dropdown-link">
+        <i class=" el-icon-question"></i>
+      </span>
+        <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item command="help">Manual</el-dropdown-item>
+            <el-dropdown-item command="faq">FAQ</el-dropdown-item>
+        </el-dropdown-menu>
+        </el-dropdown>
+    </div>
     </nav>
   </section>
 </template>
 
 <script>
+
 import * as auth from '../services/AuthService'
 
 export default {
@@ -52,6 +66,10 @@ export default {
     }
   },
   methods: {
+    handleCommand(command) {
+      this.$message('click on item ' + command)
+      location.href = '/static/' + command + '.pdf'
+    },
     logout() {
       auth.logout()
       this.$router.push({ name: 'Map' })
@@ -111,6 +129,24 @@ export default {
         color: #1890ff;
       }
     }
+      .help_dropdown{
+          width: 50px;
+          float: right;
+          color: #ffffff;
+          span {
+              height: 50px;
+              line-height: 50px;
+          }
+          :hover {
+              color: #1890ff;
+          }
+          .el-dropdown{
+              color: #ffffff
+          }
+          .el-icon-question{
+              font-size: 20px
+          }
+      }
   }
 }
 </style>
