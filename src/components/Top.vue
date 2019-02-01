@@ -43,8 +43,10 @@
         <i class=" el-icon-question"></i>
       </span>
         <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item command="help">Manual</el-dropdown-item>
-            <el-dropdown-item command="faq">FAQ</el-dropdown-item>
+            <el-dropdown-item command="help">
+                <a href="/static/HELP.pdf" target="_blank" >Manual</a></el-dropdown-item>
+            <el-dropdown-item command="faq">
+                <a href="/static/FAQ.pdf" target="_blank" >FAQ</a></el-dropdown-item>
         </el-dropdown-menu>
         </el-dropdown>
     </div>
@@ -68,6 +70,7 @@ export default {
   methods: {
     handleCommand(command) {
       this.$message('click on item ' + command)
+      location.target = '_blank'
       location.href = '/static/' + command + '.pdf'
     },
     logout() {
