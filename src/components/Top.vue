@@ -44,7 +44,7 @@
       </span>
         <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="help">
-                <a href="/static/HELP.pdf" target="_blank" >Help</a></el-dropdown-item>
+                <a href="/static/HELP.pdf" target="_blank" >HELP</a></el-dropdown-item>
             <el-dropdown-item command="faq">
                 <a href="/static/FAQ.pdf" target="_blank" >FAQ</a></el-dropdown-item>
         </el-dropdown-menu>
