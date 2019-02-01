@@ -38,13 +38,13 @@
 
       <!-- Help button -->
     <div class="help_dropdown">
-      <el-dropdown @command="handleCommand">
+      <el-dropdown>
       <span class="el-dropdown-link">
         <i class=" el-icon-question"></i>
       </span>
         <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="help">
-                <a href="/static/HELP.pdf" target="_blank" >Manual</a></el-dropdown-item>
+                <a href="/static/HELP.pdf" target="_blank" >Help</a></el-dropdown-item>
             <el-dropdown-item command="faq">
                 <a href="/static/FAQ.pdf" target="_blank" >FAQ</a></el-dropdown-item>
         </el-dropdown-menu>
