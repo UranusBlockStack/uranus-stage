@@ -615,7 +615,7 @@ module.exports = {
     EmailError: 'Please enter Email',
     newEmailError: 'Please enter new Email',
     passwordError: 'The account or password entered is incorrect. Please re-enter',
-    download: 'Download package'
+    download: 'Download Clients'
   },
   module: {
     day: 'D',
