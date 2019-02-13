@@ -488,6 +488,7 @@ export default {
   // },
 
   methods: {
+    /// common functions
     closeDialog: function(data) {
       this.outerVisible=false
     },
@@ -511,11 +512,6 @@ export default {
         this.getConfirmCode()
       }
     },
-    /// common functions
-    parseConfigData(configData) {
-      this.paramTree = appConfigParser(configData)
-    },
-
     changeMore() {
       this.more = !this.more
     },

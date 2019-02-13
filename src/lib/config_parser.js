@@ -31,13 +31,13 @@ export function appConfigParser(configData) {
             }
             paramup.subquestions.push(param)
           }
-                    // TODO : node on false branch to attach paramup
+          // TODO : node on false branch to attach paramup
         })
       }
-            // TODO :  level 3 trans_struct
-            // if(param.hasOwnProperty('subquestions')){
-            //
-            // }
+      // TODO :  level 3 trans_struct
+      // if(param.hasOwnProperty('subquestions')){
+      //
+      // }
     })
     const groupData = {}
     groupData[group] = newgroup
