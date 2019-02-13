@@ -399,6 +399,8 @@ import * as wallet from '../../services/WalletService'
 import * as order from '../../services/OrderService'
 import TimeOver from '@/components/modules/TimeOver'
 
+import { appConfigParser } from '../../lib/config_parser'
+
 export default {
   name: 'Deployment',
   components: {
@@ -511,48 +513,7 @@ export default {
     },
     /// common functions
     parseConfigData(configData) {
-      /// grouped data
-      let paramTreeTmp = {}
-      configData.map(param => {
-        if (!paramTreeTmp.hasOwnProperty(param.group)) {
-          paramTreeTmp[param.group] = []
-        }
-        paramTreeTmp[param.group].push(param)
-      })
-
-      /// convert struct phase 2
-      const groups = Object.keys(paramTreeTmp)
-      groups.map(group => {
-        let newgroup = []
-        const curgroup = paramTreeTmp[group]
-
-        curgroup.map(param => {
-          const rebranchnode = param.showIf
-            ? param.showIf.endsWith('.enabled=true')
-            : null
-          // move node to the branch its belong
-          if (!rebranchnode) {
-            newgroup.push(param)
-          } else {
-            newgroup.find(paramup => {
-              if (param.showIf === paramup.variable + '=true') {
-                if (!paramup.subquestions) {
-                  paramup.subquestions = []
-                }
-                paramup.subquestions.push(param)
-              }
-              // TODO : node on false branch to attach paramup
-            })
-          }
-          // TODO :  level 3 trans_struct
-          // if(param.hasOwnProperty('subquestions')){
-          //
-          // }
-        })
-        const groupData = {}
-        groupData[group] = newgroup
-        this.paramTree.push(groupData)
-      })
+      this.paramTree = appConfigParser(configData)
     },
 
     changeMore() {
@@ -657,7 +618,8 @@ export default {
           // this.appVersionDetail.files = files
           // this.appVersionDetail.readMe = files['README.md']
           // this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
-          this.parseConfigData(this.appVersionDetail.questions)
+          this.paramTree = appConfigParser(this.appVersionDetail.questions)
+
           // this.appVersionDetail.questions.map(question => {
           //   const key = question.variable
           //   const value = question.defaultValue
