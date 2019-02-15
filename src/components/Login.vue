@@ -160,7 +160,7 @@ export default {
             }).catch(err => {
               self.$message({
                 showClose: true,
-                message: err,
+                message: 'Network Connection Failure',
                 type: 'error'
               })
             })

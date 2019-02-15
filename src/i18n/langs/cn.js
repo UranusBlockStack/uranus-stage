@@ -160,7 +160,7 @@ module.exports = {
       authorApp: '默认作者上传名称',
       configurationOption: '配置选项',
       buy: '购买',
-      deploy: '部署',
+      deploy: '确认',
       confirmTitle: '确认交易信息',
       countdown: '交易倒计时',
       orderNumber: '订单号',

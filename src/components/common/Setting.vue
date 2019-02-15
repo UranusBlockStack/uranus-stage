@@ -160,7 +160,15 @@
           >
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
-                <el-input v-model.trim="newPhoneNum"></el-input>
+                <el-select style="width: 125px;" v-model="currentRegion" @change="currentRegion = currentRegion">
+                  <el-option
+                    v-for="(item,index) in regions"
+                    :key="item.index"
+                    :label="item.fullName"
+                    :value="item.prefix"
+                  ></el-option>
+                </el-select>
+                <el-input style="width: 315px;" v-model.trim="newPhoneNum"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model.trim="bindCaptcha" style="width:69%"></el-input>
@@ -293,6 +301,8 @@ export default {
       confirmPassword: '', // 输入框确认密码
       phoneOuterVisible: false,
       phoneInnerVisible: false,
+      regions: [],
+      currentRegion: '86',
       code: this.$t('setting.codePhone'),
       pwdOuterVisible: false,
       dialogVisible: false,
@@ -351,7 +361,13 @@ export default {
         }
       })
     },
+    getRegionList2() {
+      auth.country(auth.getCurLang()).then(resdata => {
+        this.regions = resdata.data.data
+      })
+    },
     changeCode() {
+        // Replacement of Verification Code Connection
       var codeType = {
         captchaMode: this.code
       }
@@ -449,6 +465,8 @@ export default {
           this.phoneprompt = this.$t('userCommon.phoneError')
         } else {
           this.phoneprompt = ''
+          param.receiver = this.currentRegion + this.newPhoneNum
+          console.log(param.receiver)
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
               this.$message({
@@ -632,7 +650,7 @@ export default {
                   this.mailOuterVisible = false
                   this.mailInnerVisible = false
                 } else if (bindType == 'mobile') {
-                  this.sourceNum = this.newPhoneNum
+                  this.sourceNum = this.currentRegion + this.newPhoneNum
                   this.phoneOuterVisible = false
                   this.phoneInnerVisible = false
                 }
@@ -655,6 +673,7 @@ export default {
           this.phoneprompt = this.$t('userCommon.code')
         } else {
           this.phoneprompt = ''
+
           account
             .userBind(this.$store.getters.lang, bindType, param)
             .then(data => {
@@ -671,7 +690,7 @@ export default {
                   this.mailOuterVisible = false
                   this.mailInnerVisible = false
                 } else if (bindType == 'mobile') {
-                  this.sourceNum = this.newPhoneNum
+                  this.sourceNum = this.currentRegion + this.newPhoneNum
                   this.phoneOuterVisible = false
                   this.phoneInnerVisible = false
                 }
@@ -708,6 +727,7 @@ export default {
   },
   mounted() {
     this.userInfo()
+    this.getRegionList2()
   }
 }
 </script>

@@ -161,7 +161,7 @@ module.exports = {
       authorApp: 'Name of APP',
       configurationOption: 'Configuration Options',
       buy: 'Buy',
-      deploy: 'Deploy',
+      deploy: 'OK',
       confirmTitle: 'Transaction Information',
       countdown: 'Trading countdown',
       orderNumber: 'ID',
