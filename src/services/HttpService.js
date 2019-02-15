@@ -32,7 +32,7 @@ export function httpLang (language) {
   //   con sole.log(error.config)
   // })
 
-  axinstance.defaults.timeout = 80000
+  axinstance.defaults.timeout = store.state.defaultAxiosTimeout * 1000
 
   axinstance.interceptors.request.use(function (config) {
     return config

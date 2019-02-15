@@ -69,6 +69,11 @@ router.beforeEach(function (to, from, next) {
   }
 })
 
+// import appConfigQuestion from './appconf_portworx'
+// import { appConfigParserExpand } from './lib/config_parser'
+//
+// appConfigParserExpand(appConfigQuestion.questions)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
