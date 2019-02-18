@@ -133,7 +133,7 @@
       <el-col v-show="tableType" class="blue-box" :span="24">
         <el-table :data="transactionListTo" style="width: 100%" @row-click="viewDetail">
           <template slot="empty">
-            <p class="empty-text">No Transaction</p>
+            <p class="empty-text">{{ $t("wallet.empty") }}</p>
           </template>
           <el-table-column min-width="150">
             <template slot="header" slot-scope="scope">

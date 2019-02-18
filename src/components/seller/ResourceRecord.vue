@@ -140,30 +140,30 @@ export default {
   name: 'ResourceRecord',
   data() {
     return {
-      dateValue1: '',
-      dateValue2: '',
-      value1: '',
-      options1: [
-        {
-          value: '选项1',
-          label: '选项1'
-        },
-        {
-          value: '选项2',
-          label: '选项2'
-        }
-      ],
-      value2: '',
-      options2: [
-        {
-          value: '选项1',
-          label: '选项1'
-        },
-        {
-          value: '选项2',
-          label: '选项2'
-        }
-      ],
+    //   value1: '',
+    //   options1: [
+    //     {
+    //       value: '选项1',
+    //       label: '选项1'
+    //     },
+    //     {
+    //       value: '选项2',
+    //       label: '选项2'
+    //     }
+    //   ],
+    //   value2: '',
+    //   options2: [
+    //     {
+    //       value: '选项1',
+    //       label: '选项1'
+    //     },
+    //     {
+    //       value: '选项2',
+    //       label: '选项2'
+    //     }
+    //   ],
+    //   dateValue1: '',
+    //   dateValue2: '',
       dialogVisible: false,
       tableData: [
         {

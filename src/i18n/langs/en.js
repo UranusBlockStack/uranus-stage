@@ -528,7 +528,8 @@ module.exports = {
     status: 'State',
     success: 'Success',
     fail: 'Fail',
-    processing: 'Processing'
+    processing: 'Processing',
+    empty: 'No Transaction'
   },
   transfer: {
     transfer: 'Transfer',

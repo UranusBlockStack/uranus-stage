@@ -246,7 +246,7 @@
             </el-select>
           </template>
           <template slot-scope="scope">
-            <p style="margin-left: 30px; text-align: center;">
+            <p style="margin-left: 30px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
               <span
                 v-show="scope.row.clusterId !=''||scope.row.clusterId !=null"
               >{{scope.row.clusterName}}</span>

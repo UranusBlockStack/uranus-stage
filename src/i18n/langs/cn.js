@@ -526,7 +526,8 @@ module.exports = {
     status: '状态',
     success: '成功',
     fail: '失败',
-    processing: '进行中'
+    processing: '进行中',
+    empty: '没有交易'
   },
   transfer: {
     transfer: '转账：',

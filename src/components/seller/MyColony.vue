@@ -8,12 +8,12 @@
         </h1>
       </el-col>
       <el-col :span="4" :offset="8">
-        <!-- <router-link :to="{path: '/resourcerecord'}">
+        <router-link :to="{path: '/resourcerecord'}">
           <p>
             {{$t('seller.groups.view')}}
             <i class="iconfont icon-more"></i>
           </p>
-        </router-link> -->
+        </router-link>
       </el-col>
     </el-row>
 
