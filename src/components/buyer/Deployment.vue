@@ -399,7 +399,8 @@ import * as wallet from '../../services/WalletService'
 import * as order from '../../services/OrderService'
 import TimeOver from '@/components/modules/TimeOver'
 
-import { appConfigParser } from '../../lib/config_parser'
+import { appConfigParser, appConfigParserExpand } from '../../lib/config_parser'
+import appConfigQuestion from '../../appconf_portworx'
 
 export default {
   name: 'Deployment',
@@ -478,14 +479,9 @@ export default {
       this.getUraPowerPoolList()
       this.getReferenceFee()
       this.getOrderOfApp()
+      // this.paramTree = appConfigParserExpand(appConfigQuestion.questions)  // 配置测试，来自本地文件
     }
   },
-  // beforeRouteEnter(to, from, next) {
-  //   if (from.name === 'ApplicationRepository') {
-  //     this.isMyApplication = true
-  //   }
-  //   next()
-  // },
 
   methods: {
     /// common functions
@@ -613,14 +609,7 @@ export default {
           // let files = JSON.parse(this.appVersionDetail.files)
           // this.appVersionDetail.files = files
           // this.appVersionDetail.readMe = files['README.md']
-          // this.appVersionDetail.questions = JSON.parse(this.appVersionDetail.questions)
-          this.paramTree = appConfigParser(this.appVersionDetail.questions)
-
-          // this.appVersionDetail.questions.map(question => {
-          //   const key = question.variable
-          //   const value = question.defaultValue
-          //   this.environment[key] = value
-          // })
+          // this.paramTree = appConfigParser(this.appVersionDetail.questions)
         } else {
           // this.$alert(respon.message, this.$t('common.messages.alert'), {
           //     confirmButtonText: this.$t('common.messages.confirm')

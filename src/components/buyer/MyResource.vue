@@ -1,5 +1,50 @@
 <template>
   <section class="myResource">
+      <el-dialog title="请选择时间范围"
+                 :close-on-click-modal="false"
+                 :close-on-press-escape="false"
+                 :visible.sync="daterangeDialog"
+                 :clearable="false" >
+          <el-form >
+                  <el-form-item>
+                  <span slot="label">
+                    <i class="iconfont icon-time"></i>
+                    时间范围
+                  </span>
+                      <el-col :span="5">
+                          <el-input
+                                  prefix-icon="el-icon-date"
+                                  v-model="daterangeVal.startDate" readonly>
+                          </el-input>
+                      </el-col>
+                      <el-col :span="1">
+                          <span class="timeto"> 到</span>
+                      </el-col>
+                      <el-col :span="6">
+                          <el-date-picker
+                                  type="date"
+                                  range-separator="-"
+                                  v-model="daterangeVal.endDate"
+                                  style="width: 100%;"
+                                  @change = "endDateSelect"
+                                  :picker-options="endDataPickerOptions"
+                          ></el-date-picker>
+                      </el-col>
+                      <el-col :span="4" :offset="1">
+                          <span>共 <span class="days">{{days}}</span> 天</span>
+                      </el-col>
+                  </el-form-item>
+
+                  <el-form-item label="价格计算" >
+                      <span> {{countedPrice}} </span>
+                  </el-form-item>
+          </el-form>
+          <div slot="footer" class="dialog-footer">
+              <el-button @click="daterangeDialog = false">取 消</el-button>
+              <el-button type="primary" @click="daterangeDialog = false">确 定</el-button>
+          </div>
+      </el-dialog>
+
     <el-row class="myResourceHead">
       <el-col class="title" :span="12">
         <h1>
@@ -47,7 +92,7 @@
           <el-col :span="12" v-for="(pool, index) in poolList"  :key="index">
             <el-row style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius:4px; margin:10px;">
               <el-col :span="5" style="margin-bottom: 15px;">
-                  <a @click="checkPatch(index, pool.orderStatus)">
+                  <a @click="resourceDetail(index, pool.orderStatus)">
                   <Ball style="margin:0 auto;" v-if="update1" :chartData='pool.urpowerUsd'/>
                   </a>
               </el-col>
@@ -58,6 +103,9 @@
                 <div class="timeText">
                   <p>{{$t('buyer.myResource.countdownTime')}} <RestTime style="display:inline-block;" :endTime= "pool.time" /></p>
                 </div>
+                  <div class="renew" v-if="pool.renew">
+                    <el-button type="success" @click="renewResource(index)" > 续  费 </el-button>
+                  </div>
               </el-col>
               <!-- <el-col :span="3" :offset="1">
                 <el-dropdown trigger="click" style="margin-top: 10px; margin-left: 20px;">
@@ -97,7 +145,7 @@ import Memory from '@/components/modules/Memory'
 import Network from '@/components/modules/Network'
 import Ball from '@/components/modules/Ball'
 import RestTime from '@/components/modules/RestTime'
-import { getOrderStatusName, getCNNamefromCode } from '../../store/orderStatus'
+import { getOrderStatusName } from '../../store/orderStatus'
 
 export default {
   name: 'MyResource',
@@ -128,12 +176,23 @@ export default {
         'urapowerUsd': 0
       },
       update1: false,
-      update2: false
+      update2: false,
+      daterangeDialog: false,
+      daterangeSelect: '',
+      daterangeVal: {
+        startDate: moment().format('YYYY-MM-DD'),
+        endDate: moment().format('YYYY-MM-DD')
+      },
+      days: 0,
+      countedPrice: 0,
+      curPrice: 0,
+      endDataPickerOptions: {}
     }
   },
   methods: {
     getUraPowerPoolList() {
-      project.projectList(this.$store.getters.lang, this.projectQuertData)
+      const nowstamp = moment(new Date()).valueOf()
+      project.projectList(auth.getCurLang(), this.projectQuertData)
               .then(respData => {
                 this.appList = {}
                 if (respData.data.data) {
@@ -145,17 +204,20 @@ export default {
                     object['appCount'] = data[i].appCount
                     object['time'] = moment(data[i].endTime).format('YYYY-MM-DD hh:mm:ss')
                     object['urpowerUsd'] = data[i].computeRatio
+                    object.endTime = data[i].endTime
                     object.orderStatus = data[i].orderStatus
                     object.orderStatusName = data[i].orderStatusName
                     object.orderDispName = getOrderStatusName(data[i].orderStatus, auth.getCurLang())
                     object.link = '/resourcepool/' + data[i].id + '/' + data[i].projectName
+                    object.renew = nowstamp > data[i].endTime
+                    object.price = data[i].rentPrice
                     this.poolList.push(object)
                   }
                 }
                 this.update1 = true
               })
     },
-    checkPatch(index, ostatus) {
+    resourceDetail(index, ostatus) {
       if (ostatus !== 3) {
         this.$message({
           showClose: true,
@@ -164,6 +226,35 @@ export default {
         })
       } else {
         location.href = this.poolList[index].link
+      }
+    },
+    endDateSelect(v) {
+      this.days = moment(this.daterangeVal.endDate).diff(this.daterangeVal.startDate, 'days')
+      this.countedPrice = this.curPrice * this.days
+      if (!this.daterangeVal.endDate) {
+        this.days = 0
+        this.countedPrice = 0
+      }
+    },
+    renewResource(index) {
+      this.setDatePick()
+      this.daterangeDialog = true
+      this.curPrice = this.poolList[index].price
+    },
+    setDatePick() {
+      let that = this
+      this.endDataPickerOptions = {
+        disabledDate(time) {
+          // if (
+          //         typeof that.daterangeVal.endDate !== 'undefined' &&
+          //         that.daterangeVal.endDate !== null &&
+          //         that.daterangeVal.endDate !== 0
+          //         ) {
+            return (
+                 time.getTime() < new Date(that.daterangeVal.startDate).getTime()
+            )
+          //}
+        }
       }
     },
     allStatisticsProjects() {
@@ -194,6 +285,8 @@ export default {
   border-radius: 2px;
   min-width: 1130px;
   padding-top: 10px;
+  .timeto {padding-left:6px}
+  .days {font-size:20px}
   .boxshadow {
     background: rgba(101, 143, 247, 0);
     box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
@@ -288,6 +381,11 @@ export default {
       }
       .timeText {
           color: #ffffff;
+      }
+      .renew {
+          position:absolute;
+          top: 25px;
+          right: 30px;
       }
     }
   }

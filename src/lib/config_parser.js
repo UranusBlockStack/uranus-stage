@@ -58,6 +58,8 @@ export function appConfigParser(configData) {
   return paramTree
 }
 
+
+
 export function appConfigParserExpand(configData) {
     // /--- grouped data  （phase1）
   let paramTreeTmp = {}
@@ -68,7 +70,8 @@ export function appConfigParserExpand(configData) {
     paramTreeTmp[param.group].push(param)
   })
 
-  //  console.log(paramTreeTmp); return
+  // console.log(paramTreeTmp); return
+
     // /--- convert struct of group（phase 2）
   let paramTree = []
   const groups = Object.keys(paramTreeTmp)
