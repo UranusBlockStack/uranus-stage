@@ -26,7 +26,9 @@ export default new Vuex.Store({
     defaultPageSize: 20,
     defaultCardPageSize: 20,
     refreshDuration: 5,
-    defaultAxiosTimeout: 50
+    defaultAxiosTimeout: 50,
+    renewPreDispDays: 7,
+    renewWaitDays: 7
   },
   getters: {
     lang: function (state) {

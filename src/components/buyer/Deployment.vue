@@ -453,7 +453,7 @@ export default {
         startOnCreate: true
       },
       gridData: [],
-      outerVisible: false,
+      outerVisible: true,
       innerVisible: false,
       rancherServer: [],
       environment: [],

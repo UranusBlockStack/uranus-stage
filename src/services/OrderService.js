@@ -25,6 +25,10 @@ export function orderResource(lang, orderData) {
   return httpLang(lang).post('/order/orders/resource', orderData)
 }
 
+export function orderResourceRenew(lang, orderRenewData) {
+  return orderRenewData
+}
+
 // 交易收益统计
 export function earnings(lang, type) {
   return httpLang(lang).get(`/order/statistics/earnings/${type}`)

@@ -4,6 +4,7 @@
                  :close-on-click-modal="false"
                  :close-on-press-escape="false"
                  :visible.sync="daterangeDialog"
+                 width = "600px"
                  :clearable="false" >
           <el-form >
                   <el-form-item>
@@ -11,16 +12,16 @@
                     <i class="iconfont icon-time"></i>
                     时间范围
                   </span>
-                      <el-col :span="5">
+                      <el-col :span="6">
                           <el-input
                                   prefix-icon="el-icon-date"
                                   v-model="daterangeVal.startDate" readonly>
                           </el-input>
                       </el-col>
                       <el-col :span="1">
-                          <span class="timeto"> 到</span>
+                          <span class="timeto"> 到 </span>
                       </el-col>
-                      <el-col :span="6">
+                      <el-col :span="7">
                           <el-date-picker
                                   type="date"
                                   range-separator="-"
@@ -35,13 +36,54 @@
                       </el-col>
                   </el-form-item>
 
-                  <el-form-item label="价格计算" >
+                  <el-form-item label="基本价格" >
                       <span> {{countedPrice}} </span>
                   </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
               <el-button @click="daterangeDialog = false">取 消</el-button>
-              <el-button type="primary" @click="daterangeDialog = false">确 定</el-button>
+              <el-button type="primary" @click="renewPay">确 定</el-button>
+          </div>
+      </el-dialog>
+
+
+      <el-dialog
+              :title="$t('buyer.deploy.confirmTitle')"
+              :visible.sync="orderVisible"
+              width="800px"
+              :close-on-click-modal="false"
+              :close-on-press-escape="false"
+      >
+          <el-table :data="gridData">
+              <el-table-column property="orderNo" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
+              <el-table-column property="sellerId" :label="$t('buyer.deploy.address')"></el-table-column>
+              <el-table-column property="orderAmount" :label="$t('buyer.deploy.value')"></el-table-column>
+              <el-table-column property="prodType" :label="$t('buyer.deploy.content')"></el-table-column>
+              <el-table-column :label="$t('buyer.deploy.fee')">
+                  <template slot-scope="scope">
+                      <el-input-number size="mini" v-model="fee" :precision="6" :step="0.000001" :max="10"></el-input-number>
+                  </template>
+              </el-table-column>
+          </el-table>
+          <div class="code">
+              <span slot="label">{{ $t("buyer.deploy.code") }}</span>
+              <el-input :placeholder="$t('buyer.deploy.codeIn')" v-model="concode"></el-input>
+              <el-button :class="{'is-disabled': !this.canClick}" @click="countDown">{{content}}</el-button>
+          </div>
+          <p>{{ $t("buyer.deploy.confirmText1") }}</p>
+          <TimeOver style="margin-left:300px;" v-on:listentimeOver="closeDialog"/>
+
+          <div slot="footer" class="dialog-footer">
+              <el-button @click="orderVisible = false">
+                  {{
+                  $t("buyer.deploy.button1")
+                  }}
+              </el-button>
+              <el-button type="primary" @click="startTransfer">
+                  {{
+                  $t("buyer.deploy.button2")
+                  }}
+              </el-button>
           </div>
       </el-dialog>
 
@@ -103,7 +145,7 @@
                 <div class="timeText">
                   <p>{{$t('buyer.myResource.countdownTime')}} <RestTime style="display:inline-block;" :endTime= "pool.time" /></p>
                 </div>
-                  <div class="renew" v-if="pool.renew">
+                  <div class="renew" v-if="pool.renew_btn">
                     <el-button type="success" @click="renewResource(index)" > 续  费 </el-button>
                   </div>
               </el-col>
@@ -138,6 +180,8 @@
 import moment from 'moment'
 import * as project from '../../services/RancherService'
 import * as auth from '../../services/AuthService'
+import * as order from '../../services/OrderService'
+import * as account from '../../services/AccountService'
 import Water from '@/components/modules/Water'
 import Cpu from '@/components/modules/CPU'
 import Disk from '@/components/modules/Disk'
@@ -146,6 +190,7 @@ import Network from '@/components/modules/Network'
 import Ball from '@/components/modules/Ball'
 import RestTime from '@/components/modules/RestTime'
 import { getOrderStatusName } from '../../store/orderStatus'
+import TimeOver from '@/components/modules/TimeOver'
 
 export default {
   name: 'MyResource',
@@ -156,10 +201,14 @@ export default {
     Memory,
     Network,
     Ball,
-    RestTime
+    RestTime,
+    TimeOver
   },
   data() {
     return {
+      content: this.$t('buyer.deploy.codeBtn'),
+      totalTime: 60,
+      canClick: true,
       poolList: [],
       projectQuertData: {
         'page': 0,
@@ -186,12 +235,25 @@ export default {
       days: 0,
       countedPrice: 0,
       curPrice: 0,
-      endDataPickerOptions: {}
+      endDataPickerOptions: {},
+
+      orderForm: {
+        endDate: '',
+        days: 0,
+        resourceId: 0,
+        orderNo: 0
+      },
+      orderVisible: false,
+      gridData: [ ],
+      concode: ''
     }
   },
   methods: {
     getUraPowerPoolList() {
-      const nowstamp = moment(new Date()).valueOf()
+      // const nowstamp = moment(new Date()).valueOf()
+      const nowstamp = moment('2019-02-12').valueOf()
+      const waitdays = this.$store.state.renewWaitDays
+      const predays= this.$store.state.renewPreDispDays
       project.projectList(auth.getCurLang(), this.projectQuertData)
               .then(respData => {
                 this.appList = {}
@@ -199,21 +261,24 @@ export default {
                   const data = respData.data.data.records
                   for (let i = 0; i < data.length; i++) {
                     let object = {}
+                    const renewBtnStatus = (nowstamp > (data[i].endTime - predays * 24 * 60 * 60 * 1000)) && (nowstamp < (data[i].endTime + (waitdays+1) * 24 * 60 * 60 * 1000))
                     object['id'] = data[i].id
                     object['name'] = data[i].projectName
                     object['appCount'] = data[i].appCount
                     object['time'] = moment(data[i].endTime).format('YYYY-MM-DD hh:mm:ss')
                     object['urpowerUsd'] = data[i].computeRatio
                     object.endTime = data[i].endTime
+                    object.orderNo = data[i].orderNo
                     object.orderStatus = data[i].orderStatus
                     object.orderStatusName = data[i].orderStatusName
                     object.orderDispName = getOrderStatusName(data[i].orderStatus, auth.getCurLang())
                     object.link = '/resourcepool/' + data[i].id + '/' + data[i].projectName
-                    object.renew = nowstamp > data[i].endTime
+                    object.renew_btn = renewBtnStatus
                     object.price = data[i].rentPrice
                     this.poolList.push(object)
                   }
                 }
+
                 this.update1 = true
               })
     },
@@ -230,6 +295,8 @@ export default {
     },
     endDateSelect(v) {
       this.days = moment(this.daterangeVal.endDate).diff(this.daterangeVal.startDate, 'days')
+      this.orderForm.days = this.days
+      this.orderForm.endDate = moment(this.daterangeVal.endDate).format('YYYY-MM-DD')
       this.countedPrice = this.curPrice * this.days
       if (!this.daterangeVal.endDate) {
         this.days = 0
@@ -240,6 +307,104 @@ export default {
       this.setDatePick()
       this.daterangeDialog = true
       this.curPrice = this.poolList[index].price
+
+      this.daterangeVal.startDate = moment(this.poolList[index].endTime).format('YYYY-MM-DD')
+      this.daterangeVal.endDate = this.poolList[index].endTime
+      this.orderForm.resourceId = this.poolList[index].id
+      this.orderForm.orderNo = this.poolList[index].orderNo
+    },
+    renewPay() {
+      if (!this.days) {
+        this.$message({
+          showClose: true,
+          message: '不支持续费0天',
+          type: 'warning'
+        })
+      } else {
+        this.daterangeDialog = false
+        // order.orderResourceRenew(auth.getCurLang(), this.orderForm)
+        //     .then(respData => {
+        //       console.log(respData)
+        //     })
+        this.orderVisible = true
+        console.log(this.orderForm)
+      }
+    },
+    startTransfer() {
+      let orders = []
+      this.gridData.map(order => {
+        const tmporder = {
+          buyerId: auth.getCurUserId(),
+          orderAmount: order.orderAmount,
+          orderNo: order.orderNo,
+          fee: this.fee,
+          sellerId: order.sellerId
+        }
+        orders.push(tmporder)
+      })
+      account
+              .userInfo(auth.getCurLang(), auth.getCurUserId())
+              .then(userInfo => {
+                const userData = userInfo.data.data
+                const transData = {
+                  orders: orders,
+                  phone: userData.mobile,
+                  smsCode: this.concode
+                }
+                wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
+                  const transStatusData = transStatus.data
+                  if (transStatusData.success) {
+                    this.appDeploy()
+                    this.outerVisible = false
+                    this.$message({
+                      showClose: true,
+                      message:
+                              this.appDetail.name + this.$t('buyer.deploy.orderSuccess'),
+                      type: 'success',
+                      duration: 3000
+                    })
+                  } else {
+                    this.$message({
+                      showClose: true,
+                      message: transStatusData.errMsg,
+                      type: 'error',
+                      duration: 3000
+                    })
+                  }
+                })
+              })
+
+          // wallet.walletTransfer(auth.getCurLang(), transData)
+          //     .then(respData => {
+          //       const transferStatus = respData.data
+          //       if (transferStatus) {
+          //         this.outerVisible = false
+          //         this.innerVisible = true
+          //       }
+          //     })
+    },
+    countDown() {
+      if (!this.canClick) return
+      else {
+        this.canClick = false
+        this.content =
+                  this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+        let clock = window.setInterval(() => {
+          this.totalTime--
+          this.content =
+                      this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+          if (this.totalTime < 0) {
+            window.clearInterval(clock)
+            this.content = this.$t('userCommon.codeTime')
+            this.totalTime = 60
+            this.canClick = true
+          }
+        }, 1000)
+        this.getConfirmCode()
+      }
+    },
+    closeDialog: function(data) {
+      this.outerVisible=false
     },
     setDatePick() {
       let that = this
@@ -250,10 +415,10 @@ export default {
           //         that.daterangeVal.endDate !== null &&
           //         that.daterangeVal.endDate !== 0
           //         ) {
-            return (
+          return (
                  time.getTime() < new Date(that.daterangeVal.startDate).getTime()
-            )
-          //}
+          )
+          // }
         }
       }
     },
@@ -285,7 +450,33 @@ export default {
   border-radius: 2px;
   min-width: 1130px;
   padding-top: 10px;
-  .timeto {padding-left:6px}
+    .el-dialog {
+        .code {
+            width: 500px;
+            display: flex;
+            margin: 25px;
+            span {
+                width: 85px;
+                font-family: Source-Sans-Pro-Bold;
+                font-size: 16px;
+                color: #363636;
+                line-height: 40px;
+                text-align: left;
+            }
+            .el-button {
+                margin-left: 15px;
+            }
+        }
+        p {
+            margin: 15px auto;
+            text-align: center;
+            font-family: Source-Sans-Pro-Bold;
+            font-size: 14px;
+            color: #f54c46;
+            line-height: 20px;
+        }
+    }
+  .timeto {padding-left:5px}
   .days {font-size:20px}
   .boxshadow {
     background: rgba(101, 143, 247, 0);
