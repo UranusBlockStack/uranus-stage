@@ -246,11 +246,14 @@
             </el-select>
           </template>
           <template slot-scope="scope">
-            <p style="margin-left: 30px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+            <p
+              style="margin-left: 30px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+            >
               <span
                 v-show="scope.row.clusterId !=''||scope.row.clusterId !=null"
               >{{scope.row.clusterName}}</span>
-              <el-button style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
+              <el-button
+                style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
                 @click="joinButtonClick(scope.row.id)"
                 v-show="scope.row.clusterId ==''||scope.row.clusterId ==null"
               >{{$t('seller.host.join')}}</el-button>
@@ -258,36 +261,40 @@
           </template>
         </el-table-column>
         <el-table-column width="160">
-              <template slot-scope="scope">
-              <!-- <el-button style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
+          <template slot-scope="scope">
+            <!-- <el-button style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
               v-show="scope.row.state != 'online'"
                 @click="outerVisible = true"
-              >{{$t('seller.group.deleteHost')}}</el-button> -->
-              <el-dropdown trigger="click" v-show="scope.row.state != 'online'" @command="outerVisible = true">
-                <span class="el-dropdown-link">
-                    <i class="iconfont icon-table-more" style="color: #ffffff; font-size: 22px;"></i>
-                </span>
-                <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>{{$t('seller.group.deleteHost')}}</el-dropdown-item>
-                </el-dropdown-menu>
+            >{{$t('seller.group.deleteHost')}}</el-button>-->
+            <el-dropdown
+              trigger="click"
+              v-show="scope.row.state != 'online'"
+              @command="outerVisible = true"
+            >
+              <span class="el-dropdown-link">
+                <i class="iconfont icon-table-more" style="color: #ffffff; font-size: 22px;"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>{{$t('seller.group.deleteHost')}}</el-dropdown-item>
+              </el-dropdown-menu>
             </el-dropdown>
-              <!-- delete host text box -->
-              <el-dialog :close-on-click-modal="false" :visible.sync="outerVisible" width="480px">
-                <p>{{$t('seller.host.deleteSure')}}</p>
-                <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
-                  <p>{{$t('seller.group.deleteText1')}}</p>
-                  <div slot="footer" class="dialog-footer">
-                    <el-button type="primary" @click="hostReload()">{{$t('seller.group.confirm')}}</el-button>
-                  </div>
-                </el-dialog>
+            <!-- delete host text box -->
+            <el-dialog :close-on-click-modal="false" :visible.sync="outerVisible" width="480px">
+              <p>{{$t('seller.host.deleteSure')}}</p>
+              <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
+                <p>{{$t('seller.group.deleteText1')}}</p>
                 <div slot="footer" class="dialog-footer">
-                  <el-button @click="outerVisible = false">{{$t('seller.group.cancel')}}</el-button>
-                  <el-button
-                    type="primary"
-                    @click="deleteHost(scope.row.id)"
-                  >{{$t('seller.group.confirm')}}</el-button>
+                  <el-button type="primary" @click="hostReload()">{{$t('seller.group.confirm')}}</el-button>
                 </div>
               </el-dialog>
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="outerVisible = false">{{$t('seller.group.cancel')}}</el-button>
+                <el-button
+                  type="primary"
+                  @click="deleteHost(scope.row.id)"
+                >{{$t('seller.group.confirm')}}</el-button>
+              </div>
+            </el-dialog>
           </template>
         </el-table-column>
       </el-table>
@@ -346,7 +353,7 @@ export default {
   methods: {
     //   window reload for update data
     hostReload() {
-      this.innerVisible= false
+      this.innerVisible = false
       this.getHostList()
     },
     getHostList() {
@@ -628,18 +635,29 @@ export default {
       border-radius: 0;
     }
     .on {
-      background: #51a906;
-      border: 2px solid #dcdcdc;
-      width: 12px;
-      height: 12px;
-      border-radius: 100%;
+      //   background: #51a906;
+      //   border: 2px solid #dcdcdc;
+      //   width: 12px;
+      //   height: 12px;
+      //   border-radius: 100%;
+      width: 0;
+      height: 0;
+      border-right: 10px solid transparent;
+      border-left: 10px solid transparent;
+      border-bottom: 10px solid #51a906;
       float: right;
     }
     .off {
-      border: 2px solid #dcdcdc;
-      width: 12px;
-      height: 12px;
-      border-radius: 100%;
+      //   background: #f25954;
+      //   border: 2px solid #dcdcdc;
+      //   width: 12px;
+      //   height: 12px;
+      //   border-radius: 100%;
+      width: 0;
+      height: 0;
+      border-right: 10px solid transparent;
+      border-left: 10px solid transparent;
+      border-top: 10px solid #f25954;
       float: right;
     }
     .table-head {

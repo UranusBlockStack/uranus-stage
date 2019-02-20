@@ -3,7 +3,7 @@
     <el-row class="recordHead">
       <el-col class="title" :span="24">
         <h1>
-          <i class="iconfont"></i>
+          <i class="iconfont icon-records"></i>
           {{$t('buyer.myResource.deployRecord')}}
         </h1>
       </el-col>
@@ -43,9 +43,11 @@
           ></el-date-picker>
         </el-col>-->
         <el-col :span="6" :offset="18">
-         <el-input @keyup.enter.native="searchUra"
+          <el-input
+            @keyup.enter.native="searchUra"
             :placeholder="$t('buyer.myResource.deployPage.searchIn')"
-            prefix-icon="el-icon-search" v-model="prodName"
+            prefix-icon="el-icon-search"
+            v-model="prodName"
           ></el-input>
           <el-button type="success" @click="searchUra">
             <i class="iconfont icon-search"></i>
@@ -62,106 +64,106 @@
       </el-col>
       <el-col class="blue-box" :span="24">
         <el-table :data="tableData" style="width: 100%">
-            <template slot="empty">
-                <p class="empty-text">No Data</p >
+          <template slot="empty">
+            <p class="empty-text">No Data</p>
+          </template>
+          <el-table-column prop="orderNo">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-id"></i>
+                {{$t('buyer.myResource.deployPage.number')}}
+              </p>
             </template>
-            <el-table-column prop="orderNo" :label="$t('buyer.myResource.deployPage.number')">
-              <template slot="header" slot-scope="scope">
-                  <p class="table-head">
-                    <i class="iconfont icon-id"></i>
-                    {{$t('buyer.myResource.deployPage.number')}}
-                  </p>
-                </template>
           </el-table-column>
-          <el-table-column prop="prodName" :label="$t('buyer.myResource.deployPage.appName')">
-              <template slot="header" slot-scope="scope">
-                  <p class="table-head">
-                    <i class="iconfont icon-table-name"></i>
-                    {{$t('buyer.myResource.deployPage.appName')}}
-                  </p>
-                </template>
+          <el-table-column prop="prodName">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-table-name"></i>
+                {{$t('buyer.myResource.deployPage.appName')}}
+              </p>
+            </template>
           </el-table-column>
-          <el-table-column prop="orderStatusName" :label="$t('buyer.myResource.deployPage.appGroup')">
-              <template slot="header" slot-scope="scope">
-                  <p class="table-head">
-                    <i class="iconfont icon-table-state"></i>
-                    {{$t('buyer.myResource.deployPage.appState')}}
-                  </p>
-                </template>
+          <el-table-column prop="orderStatusName">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-table-state"></i>
+                {{$t('buyer.myResource.deployPage.appState')}}
+              </p>
+            </template>
           </el-table-column>
-            <el-table-column prop="beginTime" :label="$t('buyer.myResource.deployPage.appTime')">
-                <template slot="header" slot-scope="scope">
-                    <p class="table-head">
-                        <i class="iconfont icon-start-time"></i>
-                        {{$t('buyer.myResource.deployPage.appTime')}}
-                    </p>
-                </template>
-            </el-table-column>
-          <el-table-column prop="endTime" :label="$t('buyer.myResource.deployPage.appStore')">
-              <template slot="header" slot-scope="scope">
-                  <p class="table-head">
-                    <i class="iconfont icon-finish-time"></i>
-                    {{$t('buyer.myResource.deployPage.appEnd')}}
-                  </p>
-                </template>
+          <el-table-column prop="beginTime">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-start-time"></i>
+                {{$t('buyer.myResource.deployPage.appTime')}}
+              </p>
+            </template>
           </el-table-column>
-          <el-table-column prop="prodPrice" :label="$t('buyer.myResource.deployPage.appValur')">
-              <template slot="header" slot-scope="scope">
-                  <p class="table-head">
-                    <i class="iconfont icon-table-value"></i>
-                    {{$t('buyer.myResource.deployPage.appValur')}}
-                  </p>
-                </template>
+          <el-table-column prop="endTime">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-finish-time"></i>
+                {{$t('buyer.myResource.deployPage.appEnd')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="prodPrice">
+            <template slot="header" slot-scope="scope">
+              <p class="table-head">
+                <i class="iconfont icon-table-value"></i>
+                {{$t('buyer.myResource.deployPage.appValur')}}
+              </p>
+            </template>
           </el-table-column>
         </el-table>
       </el-col>
       <el-col :span="6" :offset="15" class="transaction-foot">
         <el-pagination
-                layout="prev, pager, next"
-                :current-page.sync="currentPage"
-                :page-size="pageSize"
-                :total="totalRecords"
-                @current-change="handleCurrentChange">
-        </el-pagination>
+          layout="prev, pager, next"
+          :current-page.sync="currentPage"
+          :page-size="pageSize"
+          :total="totalRecords"
+          @current-change="handleCurrentChange"
+        ></el-pagination>
       </el-col>
     </el-row>
   </section>
 </template>
 
 <script>
-    import * as auth from '../../services/AuthService'
-    import * as order from '../../services/OrderService'
-    import moment from 'moment'
+import * as auth from '../../services/AuthService'
+import * as order from '../../services/OrderService'
+import moment from 'moment'
 
 export default {
   name: 'urapowerRecord',
   data() {
     return {
-      dateValue1: '',
-      dateValue2: '',
-      value1: '',
-      options1: [
-        {
-          value: '选项1',
-          label: '选项1'
-        },
-        {
-          value: '选项2',
-          label: '选项2'
-        }
-      ],
+      //   dateValue1: '',
+      //   dateValue2: '',
+      //   value1: '',
+      //   options1: [
+      //     {
+      //       value: '选项1',
+      //       label: '选项1'
+      //     },
+      //     {
+      //       value: '选项2',
+      //       label: '选项2'
+      //     }
+      //   ],
+      //   value2: '',
+      //   options2: [
+      //     {
+      //       value: '选项1',
+      //       label: '选项1'
+      //     },
+      //     {
+      //       value: '选项2',
+      //       label: '选项2'
+      //     }
+      //   ],
       prodName: '',
-      value2: '',
-      options2: [
-        {
-          value: '选项1',
-          label: '选项1'
-        },
-        {
-          value: '选项2',
-          label: '选项2'
-        }
-      ],
       dialogVisible: false,
       tableData: [],
       tableData1: [
@@ -302,22 +304,22 @@ export default {
       color: #ffffff;
     }
     .table-head {
-        color: #ffffff;
-        font-weight: 500;
-        font-size: 16px;
-        margin: 0;
-        padding: 0;
-        i {
-          font-size: 23px;
-        }
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      i {
+        font-size: 23px;
       }
+    }
     .el-col {
       display: flex;
       .el-button {
         background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 #2463ff;
-      border-radius: 3px;
-      border: none;
+        box-shadow: inset 0 0 22px 0 #2463ff;
+        border-radius: 3px;
+        border: none;
         margin: 0 20px;
       }
       .el-select {
@@ -345,7 +347,7 @@ export default {
         line-height: 50px;
       }
     }
-     .blue-box {
+    .blue-box {
       .el-table {
         color: #ffffff;
         background-color: rgba(101, 143, 247, 0);
@@ -368,21 +370,21 @@ export default {
       .el-pagination {
         height: 50px;
       }
-      .el-pagination /deep/ .btn-prev{
+      .el-pagination /deep/ .btn-prev {
         background: rgba(36, 99, 255, 0.2);
         color: #ffffff;
-    }
-    .el-pagination /deep/ .btn-next{
+      }
+      .el-pagination /deep/ .btn-next {
         background: rgba(36, 99, 255, 0.2);
         color: #ffffff;
-    }
-    .el-pagination /deep/ .el-pager li{
+      }
+      .el-pagination /deep/ .el-pager li {
         background: rgba(36, 99, 255, 0.2);
         color: #ffffff;
-    }
-    .el-pagination /deep/ .el-pager li.active{
+      }
+      .el-pagination /deep/ .el-pager li.active {
         color: #409eff;
-    }
+      }
     }
   }
 }
