@@ -579,7 +579,9 @@ module.exports = {
     codeBtn: '获取验证码',
     button1: '取 消',
     button2: '确 定',
-    button3: '下一步'
+    button3: '下一步',
+    phoneDifferent: '手机号有误',
+    EmailDifferent: '邮箱有误'
   },
   userCommon: {
     EmailLogin: '邮箱登录',

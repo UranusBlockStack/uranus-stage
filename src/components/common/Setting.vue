@@ -24,7 +24,7 @@
           <i class="iconfont icon-email"></i>
           {{$t('setting.mail')}}
         </p>
-        <p class="contentUn">{{mail}}</p>
+        <p class="contentUn">{{confidential.mail}}</p>
       </el-col>
       <el-col :span="8" :offset="4">
         <p>
@@ -40,7 +40,7 @@
           >
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyMail.email')" prop="buyerEmail">
-                <el-input v-model.trim="mail" disabled="disabled"></el-input>
+                <el-input v-model.trim="sourceEmail"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model.trim="mailCaptcha" style="width:69%"></el-input>
@@ -108,7 +108,7 @@
           <i class="iconfont icon-phone"></i>
           {{$t('setting.phone')}}
         </p>
-        <p class="contentUn">{{phonenum}}</p>
+        <p class="contentUn">{{confidential.phone}}</p>
       </el-col>
       <el-col :span="8" :offset="4">
         <p>
@@ -124,7 +124,19 @@
           >
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
-                <el-input v-model.trim="sourceNum" disabled="disabled"></el-input>
+                <el-select
+                  style="width: 125px;"
+                  v-model="currentRegion"
+                  @change="currentRegion = currentRegion"
+                >
+                  <el-option
+                    v-for="(item,index) in regions"
+                    :key="item.index"
+                    :label="item.fullName"
+                    :value="item.prefix"
+                  ></el-option>
+                </el-select>
+                <el-input style="width: 315px;" v-model.trim="sourceNum"></el-input>
               </el-form-item>
               <el-form-item :label="$t('setting.codeIn')" prop="buyerPhone">
                 <el-input v-model.trim="captcha" style="width:69%"></el-input>
@@ -160,7 +172,11 @@
           >
             <el-form label-width="80px" class="demo-ruleForm">
               <el-form-item :label="$t('setting.modifyPhone.phone')" prop="buyerEmail">
-                <el-select style="width: 125px;" v-model="currentRegion" @change="currentRegion = currentRegion">
+                <el-select
+                  style="width: 125px;"
+                  v-model="currentRegion"
+                  @change="currentRegion = currentRegion"
+                >
                   <el-option
                     v-for="(item,index) in regions"
                     :key="item.index"
@@ -312,7 +328,11 @@ export default {
       canClick: true,
       totalTime: 60,
       content: this.$t('setting.codeBtn'),
-      clock: null
+      clock: null,
+      confidential: {
+        phone: '',
+        mail: ''
+      }
     }
   },
   methods: {
@@ -342,16 +362,16 @@ export default {
         this.id = data.data.data.id
         this.phonenum = data.data.data.mobile
         this.mail = data.data.data.email
-        this.sourceNum = this.phonenum
-        this.sourceEmail = this.mail
         if (this.phonenum == null || this.phonenum === '') {
           this.buttonphoneClick = this.$t('setting.clickLink')
         } else {
+          this.confidential.phone = this.phonenum.substring(0, 2) + '******' + this.phonenum.substr(this.phonenum.length - 2, 2)
           this.buttonphoneClick = this.$t('setting.clickChange')
         }
         if (this.mail == null || this.mail === '') {
           this.buttonmailClick = this.$t('setting.clickLink')
         } else {
+          this.confidential.mail = this.mail.substring(0, 1) + '******@' + this.mail.split('@')[1]
           this.buttonmailClick = this.$t('setting.clickChange')
         }
         if (data.data.data.captchaMode === 'mobile') {
@@ -367,7 +387,7 @@ export default {
       })
     },
     changeCode() {
-        // Replacement of Verification Code Connection
+      // Replacement of Verification Code Connection
       var codeType = {
         captchaMode: this.code
       }
@@ -440,8 +460,11 @@ export default {
       if (this.phoneOuterVisible === true) {
         if (this.sourceNum === '') {
           this.phoneprompt = this.$t('userCommon.phoneError')
+        } else if (this.phonenum != this.currentRegion + this.sourceNum) {
+          this.phoneprompt = this.$t('setting.phoneDifferent')
         } else {
-          this.phoneprompt = ''
+          this.phoneprompt = '123'
+          param.receiver = this.currentRegion + this.sourceNum
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
               this.$message({
@@ -466,7 +489,6 @@ export default {
         } else {
           this.phoneprompt = ''
           param.receiver = this.currentRegion + this.newPhoneNum
-          console.log(param.receiver)
           auth.captcha(this.$store.getters.lang, param).then(data => {
             if (!data.data.success) {
               this.$message({
@@ -486,8 +508,10 @@ export default {
       }
       //   mail
       if (this.mailOuterVisible === true) {
-        if (this.mail === '') {
+        if (this.sourceEmail === '') {
           this.mailprompt = this.$t('userCommon.EmailError')
+        } else if (this.sourceEmail != this.mail) {
+          this.mailprompt = this.$t('setting.EmailDifferent')
         } else {
           this.mailprompt = ''
           auth.captcha(this.$store.getters.lang, param).then(data => {
@@ -603,6 +627,8 @@ export default {
       this.content = this.$t('setting.codeBtn')
       this.canClick = true
       this.totalTime = 60
+      this.sourceEmail = ''
+      this.sourceNum = ''
       this.newEmail = ''
       this.newPhoneNum = ''
       this.mailCaptcha = ''
@@ -673,7 +699,6 @@ export default {
           this.phoneprompt = this.$t('userCommon.code')
         } else {
           this.phoneprompt = ''
-
           account
             .userBind(this.$store.getters.lang, bindType, param)
             .then(data => {

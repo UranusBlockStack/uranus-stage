@@ -582,7 +582,9 @@ module.exports = {
     codeTime: 'Resend',
     button1: 'Cancel',
     button2: 'OK',
-    button3: 'Next'
+    button3: 'Next',
+    phoneDifferent: 'The phone number is incorrect',
+    EmailDifferent: 'The Email is incorrect'
   },
   userCommon: {
     EmailLogin: 'Email login',
