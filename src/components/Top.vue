@@ -32,7 +32,7 @@
       <!-- Download button -->
       <div class="download">
         <span  v-if="this.userRole === 'Seller'">
-          <a v-bind:href="downloadUrl+'UraPower-Client.zip'"> {{$t('userCommon.download')}}</a>
+          <a v-bind:href="downloadUrl + 'UraPower-Client.zip'"> {{$t('userCommon.download')}}</a>
         </span>
       </div>
 
