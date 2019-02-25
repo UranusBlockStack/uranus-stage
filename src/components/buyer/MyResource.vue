@@ -182,6 +182,7 @@ import * as project from '../../services/RancherService'
 import * as auth from '../../services/AuthService'
 import * as order from '../../services/OrderService'
 import * as account from '../../services/AccountService'
+import * as wallet from '../../services/WalletService'
 import Water from '@/components/modules/Water'
 import Cpu from '@/components/modules/CPU'
 import Disk from '@/components/modules/Disk'
@@ -226,6 +227,7 @@ export default {
       },
       update1: false,
       update2: false,
+      fee: 0,
       daterangeDialog: false,
       daterangeSelect: '',
       daterangeVal: {
@@ -238,7 +240,7 @@ export default {
       endDataPickerOptions: {},
 
       orderForm: {
-        endDate: '',
+        endTime: '',
         days: 0,
         resourceId: 0,
         orderNo: 0
@@ -250,8 +252,7 @@ export default {
   },
   methods: {
     getUraPowerPoolList() {
-      // const nowstamp = moment(new Date()).valueOf()
-      const nowstamp = moment('2019-02-12').valueOf()
+      const nowstamp = moment(new Date()).valueOf()
       const waitdays = this.$store.state.renewWaitDays
       const predays= this.$store.state.renewPreDispDays
       project.projectList(auth.getCurLang(), this.projectQuertData)
@@ -262,6 +263,7 @@ export default {
                   for (let i = 0; i < data.length; i++) {
                     let object = {}
                     const renewBtnStatus = (nowstamp > (data[i].endTime - predays * 24 * 60 * 60 * 1000)) && (nowstamp < (data[i].endTime + (waitdays+1) * 24 * 60 * 60 * 1000))
+
                     object['id'] = data[i].id
                     object['name'] = data[i].projectName
                     object['appCount'] = data[i].appCount
@@ -296,7 +298,7 @@ export default {
     endDateSelect(v) {
       this.days = moment(this.daterangeVal.endDate).diff(this.daterangeVal.startDate, 'days')
       this.orderForm.days = this.days
-      this.orderForm.endDate = moment(this.daterangeVal.endDate).format('YYYY-MM-DD')
+      this.orderForm.endTime = moment(this.daterangeVal.endDate).format('YYYY-MM-DD')
       this.countedPrice = this.curPrice * this.days
       if (!this.daterangeVal.endDate) {
         this.days = 0
@@ -313,6 +315,11 @@ export default {
       this.orderForm.resourceId = this.poolList[index].id
       this.orderForm.orderNo = this.poolList[index].orderNo
     },
+    getReferenceFee() {
+      wallet.walletReferenceFee(auth.getCurLang()).then(reffee => {
+        this.fee = reffee.data.data
+      })
+    },
     renewPay() {
       if (!this.days) {
         this.$message({
@@ -322,12 +329,20 @@ export default {
         })
       } else {
         this.daterangeDialog = false
-        // order.orderResourceRenew(auth.getCurLang(), this.orderForm)
-        //     .then(respData => {
-        //       console.log(respData)
-        //     })
+        order.orderResourceRenew(auth.getCurLang(), this.orderForm)
+            .then(purcheStatus => {
+              const purchUraStausData = purcheStatus.data
+              if (purchUraStausData.success) {
+                this.gridData = [purchUraStausData.data]
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: purchUraStausData.errMsg,
+                  type: 'error'
+                })
+              }
+            })
         this.orderVisible = true
-        console.log(this.orderForm)
       }
     },
     startTransfer() {
@@ -354,12 +369,11 @@ export default {
                 wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
                   const transStatusData = transStatus.data
                   if (transStatusData.success) {
-                    this.appDeploy()
-                    this.outerVisible = false
+                    this.orderVisible = false
                     this.$message({
                       showClose: true,
                       message:
-                              this.appDetail.name + this.$t('buyer.deploy.orderSuccess'),
+                        this.$t('buyer.deploy.orderSuccess'),
                       type: 'success',
                       duration: 3000
                     })
@@ -373,15 +387,19 @@ export default {
                   }
                 })
               })
-
-          // wallet.walletTransfer(auth.getCurLang(), transData)
-          //     .then(respData => {
-          //       const transferStatus = respData.data
-          //       if (transferStatus) {
-          //         this.outerVisible = false
-          //         this.innerVisible = true
-          //       }
-          //     })
+    },
+    getConfirmCode() {
+      wallet
+              .walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
+              .then(sendResult => {
+                const status = sendResult.data
+                this.$message({
+                  showClose: true,
+                  message: status.data,
+                  type: 'success',
+                  duration: 3000
+                })
+              })
     },
     countDown() {
       if (!this.canClick) return
@@ -440,6 +458,7 @@ export default {
   created() {
     this.allStatisticsProjects()
     this.getUraPowerPoolList()
+    this.getReferenceFee()
   }
 }
 </script>

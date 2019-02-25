@@ -26,7 +26,7 @@ export function orderResource(lang, orderData) {
 }
 
 export function orderResourceRenew(lang, orderRenewData) {
-  return orderRenewData
+  return httpLang(lang).post('/order/orders/renewal', orderRenewData)
 }
 
 // 交易收益统计
