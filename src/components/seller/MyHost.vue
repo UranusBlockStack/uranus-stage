@@ -1,0 +1,679 @@
+<template>
+  <section class="myHost">
+    <!-- Confirmation Information Bullet Box -->
+    <el-dialog :title="$t('seller.host.chooseGroup')" :visible.sync="dialogVisible" width="550px">
+      <el-form>
+        <div style="margin-bottom:30px;">
+          <el-radio v-model="groupJoin" :label="$t('seller.host.newGroup')"></el-radio>
+          <el-form-item v-show="this.groupJoin==this.$t('seller.host.newGroup')">
+            <el-input
+              autocomplete="off"
+              :placeholder="$t('seller.host.nameGroup')"
+              style="width: 515px"
+              v-model="newClusterName"
+            ></el-input>
+            <el-select
+              style="width: 515px; margin-top:15px;"
+              v-model="rancherId"
+              :placeholder="$t('seller.host.region')"
+            >
+              <template v-if="language== 'zh-cn' ">
+                <el-option
+                  v-for="(item, index) in rancherLists"
+                  :key="index"
+                  :label="item.region"
+                  :value="item.id"
+                ></el-option>
+              </template>
+              <template v-else>
+                <el-option
+                  v-for="(item, index) in rancherLists"
+                  :key="index"
+                  :label="item.regionEnUs"
+                  :value="item.id"
+                ></el-option>
+              </template>
+            </el-select>
+          </el-form-item>
+        </div>
+        <div>
+          <el-radio v-model="groupJoin" :label="$t('seller.host.joinGroup')"></el-radio>
+          <el-form-item v-show="this.groupJoin==this.$t('seller.host.joinGroup')">
+            <el-select
+              v-model="clusterId"
+              style="width: 515px"
+              :placeholder="$t('seller.host.existingGroup')"
+            >
+              <el-option
+                v-for="(item, index) in clusterLists"
+                :key="index"
+                :label="item.name"
+                :value="item.id"
+              ></el-option>
+            </el-select>
+          </el-form-item>
+        </div>
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">{{$t('seller.host.cancel')}}</el-button>
+        <el-button type="primary" @click="okButtonClick()">{{$t('seller.host.confirm')}}</el-button>
+      </span>
+    </el-dialog>
+
+    <!-- Host -->
+    <el-row class="myHostHead">
+      <el-col class="title" :span="12">
+        <h1>
+          <i class="iconfont icon-host"></i>
+          {{$t('menu.myHost')}}
+        </h1>
+      </el-col>
+    </el-row>
+    <el-row class="myHostBox">
+      <el-table :data="tableData" style="width: 100%">
+        <template slot="empty">
+          <p class="empty-text">{{$t('seller.host.text')}}</p>
+        </template>
+        <el-table-column width="50">
+          <template slot-scope="scope">
+            <div :class="scope.row.state == 'active' ? 'on' : 'off'"></div>
+          </template>
+        </el-table-column>
+        <el-table-column width="100">
+          <!--主机状态 state-->
+          <template slot="header" slot-scope="scope">
+            <p class="table-head" style="text-align:left;">
+              <i class="iconfont icon-table-state"></i>
+              {{$t('seller.host.state')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p class="overflow">{{ scope.row.state}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="180">
+          <!--主机名称 name-->
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-table-host"></i>
+              {{$t('seller.host.number')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p class="overflow">{{ scope.row.name}}</p>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="100">
+          <!--主机IP ip-->
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-table-ip"></i>
+              {{$t('seller.host.ip')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p class="overflow">{{ scope.row.hostIp}}</p>
+          </template>
+        </el-table-column>
+
+        <el-table-column width="170">
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-cpu"></i> CPU
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">
+              {{ scope.row.cpuKernelUsed }} {{$t('seller.host.usable.cpu')}}
+              <!--已用核数-->
+            </p>
+            <el-progress
+              :percentage="getPercentNumber(scope.row.cpuKernelUsed, scope.row.cpuKernel)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <p
+              v-if="scope.row.cpuKernel != null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >
+              {{ scope.row.cpuKernel }} {{$t('seller.host.have.cpu')}}
+              <!--总核数-->
+            </p>
+            <p
+              v-if="scope.row.cpuKernel == null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >
+              0 {{$t('seller.host.have.cpu')}}
+              <!--总核数-->
+            </p>
+          </template>
+        </el-table-column>
+
+        <el-table-column width="170">
+          <!--内存-->
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-memory"></i>
+              {{$t('seller.host.memory')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >{{ scope.row.memUsed}} {{$t('seller.host.usable.memory')}}</p>
+            <el-progress
+              :percentage="getPercentNumber(scope.row.memUsed,scope.row.mem)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <p
+              v-if="scope.row.mem != null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >{{ scope.row.mem}} {{$t('seller.host.have.memory')}}</p>
+            <p
+              v-if="scope.row.mem == null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >0 {{$t('seller.host.have.memory')}}</p>
+          </template>
+        </el-table-column>
+
+        <el-table-column width="170">
+          <!--硬盘-->
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-disk"></i>
+              {{$t('seller.host.disk')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >{{ scope.row.diskUsed }} {{$t('seller.host.usable.disk')}}</p>
+            <el-progress
+              :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <p
+              v-if="scope.row.disk != null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >{{ scope.row.disk }} {{$t('seller.host.have.disk')}}</p>
+            <p
+              v-if="scope.row.disk == null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >0 {{$t('seller.host.have.disk')}}</p>
+          </template>
+        </el-table-column>
+
+        <el-table-column width="170">
+          <!--宽带(M)-->
+          <template slot="header" slot-scope="scope">
+            <p class="table-head">
+              <i class="iconfont icon-network"></i>
+              {{$t('seller.host.network')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >{{ scope.row.networkUsed }} {{$t('seller.host.usable.network')}}</p>
+            <el-progress
+              :percentage="getPercentNumber(scope.row.networkUsed,scope.row.network)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <p
+              v-if="scope.row.network != null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >{{ scope.row.network }} {{$t('seller.host.have.network')}}</p>
+            <p
+              v-if="scope.row.network == null"
+              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
+            >0 {{$t('seller.host.have.network')}}</p>
+          </template>
+        </el-table-column>
+
+        <el-table-column width="200">
+          <template slot="header" slot-scope="scope">
+            <el-select v-model="inCluster" :placeholder="$t('seller.host.all')" @change="search()">
+              <el-option :label="$t('seller.host.all')" value="0"></el-option>
+              <el-option :label="$t('seller.host.joined')" value="1"></el-option>
+              <el-option :label="$t('seller.host.notJoined')" value="2"></el-option>
+            </el-select>
+          </template>
+          <template slot-scope="scope">
+            <p
+              style="margin-left: 30px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+            >
+              <span
+                v-show="scope.row.clusterId !=''||scope.row.clusterId !=null"
+              >{{scope.row.clusterName}}</span>
+              <el-button
+                style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
+                @click="joinButtonClick(scope.row.id)"
+                v-show="scope.row.clusterId ==''||scope.row.clusterId ==null"
+              >{{$t('seller.host.join')}}</el-button>
+            </p>
+          </template>
+        </el-table-column>
+        <el-table-column width="160">
+          <template slot-scope="scope">
+            <!-- <el-button style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
+              v-show="scope.row.state != 'online'"
+                @click="outerVisible = true"
+            >{{$t('seller.group.deleteHost')}}</el-button>-->
+            <el-dropdown
+              trigger="click"
+              v-show="scope.row.state != 'online'"
+              @command="outerVisible = true"
+            >
+              <span class="el-dropdown-link">
+                <i class="iconfont icon-table-more" style="color: #ffffff; font-size: 22px;"></i>
+              </span>
+              <el-dropdown-menu slot="dropdown">
+                <el-dropdown-item>{{$t('seller.group.deleteHost')}}</el-dropdown-item>
+              </el-dropdown-menu>
+            </el-dropdown>
+            <!-- delete host text box -->
+            <el-dialog :close-on-click-modal="false" :visible.sync="outerVisible" width="480px">
+              <p>{{$t('seller.host.deleteSure')}}</p>
+              <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
+                <p>{{$t('seller.group.deleteText1')}}</p>
+                <div slot="footer" class="dialog-footer">
+                  <el-button type="primary" @click="hostReload()">{{$t('seller.group.confirm')}}</el-button>
+                </div>
+              </el-dialog>
+              <div slot="footer" class="dialog-footer">
+                <el-button @click="outerVisible = false">{{$t('seller.group.cancel')}}</el-button>
+                <el-button
+                  type="primary"
+                  @click="deleteHost(scope.row.id)"
+                >{{$t('seller.group.confirm')}}</el-button>
+              </div>
+            </el-dialog>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-row>
+        <el-col :span="8" :offset="16" style="margin-top: 15px;">
+          <el-pagination
+            layout="prev, pager, next"
+            :current-page.sync="pageParam.page"
+            :page-size="pageParam.pageSize"
+            :total="pageParam.totalRecords"
+            @current-change="search()"
+          ></el-pagination>
+        </el-col>
+      </el-row>
+    </el-row>
+  </section>
+</template>
+
+<script>
+import * as rancher from '../../services/RancherService'
+import * as auth from '../../services/AuthService'
+import { Message } from 'element-ui'
+
+export default {
+  name: 'MyHost',
+  data() {
+    return {
+      dialogVisible: false,
+      outerVisible: false,
+      innerVisible: false,
+      groupJoin: this.$t('seller.host.newGroup'),
+      state: '',
+      group: '',
+      userId: '',
+      inCluster: '',
+      tableData: [],
+      rancherLists: [],
+      clusterLists: [],
+      language: 'en-us',
+      rancherId: 2,
+      newClusterName: '',
+      clusterName: '',
+      hostId: '',
+      clusterId: '',
+      pageParam: {
+        name: '',
+        page: 2,
+        pageSize: 5,
+        totalRecords: 0,
+        sort: '',
+        sortDesc: true,
+        state: ''
+      }
+    }
+  },
+  methods: {
+    //   window reload for update data
+    hostReload() {
+      this.innerVisible = false
+      this.getHostList()
+    },
+    getHostList() {
+      rancher
+        .hostList(this.language, this.pageParam.page, this.pageParam.pageSize)
+        .then(data => {
+          this.pageParam.page = data.data.data.current
+          this.pageParam.totalRecords = data.data.data.total
+          this.tableData = data.data.data.records
+        })
+    },
+    rancherList() {
+      rancher.rancherList().then(data => {
+        this.rancherLists = data.data.data
+      })
+    },
+    clusterList() {
+      var param = {}
+      rancher.clusterSearch(this.language, param).then(data => {
+        this.clusterLists = data.data.data.records
+      })
+    },
+    addHostToNewCluster() {
+      alert(this.rancherId)
+      var param = {
+        name: this.newClusterName,
+        rancherId: this.rancherId
+      }
+      alert(param.name + '==' + param.rancherId)
+      rancher.clusterAdd(this.language, param).then(data => {
+        if (data.data.success) {
+          this.updatehost()
+        } else {
+          this.$message({
+            showClose: true,
+            message: data.data.errMsg,
+            type: 'error'
+          })
+        }
+      })
+    },
+    updatehost() {
+      var updateInfo = {
+        clusterId: this.clusterId,
+        rancherId: this.rancherId,
+        state: 'registring'
+      }
+      rancher.hostModify(this.language, this.hostId, updateInfo).then(data => {
+        if (data.data.success) {
+          dialogVisible = false
+        } else {
+          this.$message({
+            showClose: true,
+            message: data.data.errMsg,
+            type: 'error'
+          })
+        }
+      })
+    },
+    search() {
+      var param = {
+        scope: this.inCluster,
+        ownerId: this.userId,
+        page: this.pageParam.page,
+        pageSize: this.pageParam.pageSize
+      }
+      rancher.hostSearch(this.language, param).then(data => {
+        this.pageParam.page = data.data.data.current
+        this.pageParam.totalRecords = data.data.data.total
+        this.tableData = data.data.data.records
+      })
+    },
+    okButtonClick() {
+      var param = {
+        newCluster: false,
+        clusterName: this.newClusterName,
+        rancherId: this.rancherId,
+        clusterId: 0
+      }
+      if (this.groupJoin == this.$t('seller.host.newGroup')) {
+        // 主机加入新建集群
+        if (this.rancherId === '' || this.rancherId == null || this.newClusterName === '' || this.newClusterName == null) {
+          this.$message({
+            showClose: true,
+            message: this.$t('seller.host.clusterFail'),
+            type: 'error'
+          })
+        } else {
+          param.newCluster = true
+          rancher.joinCluster(this.language, this.hostId, param).then(data => {
+            if (data.data.success) {
+              this.dialogVisible = false
+              this.getHostList()
+            } else {
+              this.$message({
+                showClose: true,
+                message: data.data.errMsg,
+                type: 'error'
+              })
+            }
+          })
+        }
+      } else {
+        // 主机加入已有集群
+        if (this.clusterId === '' || this.clusterId == null) {
+          this.$message({
+            showClose: true,
+            message: this.$t('seller.host.clusterFail'),
+            type: 'error'
+          })
+        } else {
+          param.newCluster = false
+          param.clusterId = this.clusterId
+          rancher.joinCluster(this.language, this.hostId, param).then(data => {
+            if (data.data.success) {
+              this.dialogVisible = false
+              this.getHostList()
+            } else {
+              this.$message({
+                showClose: true,
+                message: data.data.errMsg,
+                type: 'error'
+              })
+            }
+          })
+        }
+      }
+    },
+    deleteHost(id) {
+      // 删除主机
+      rancher.hostDelete(auth.getCurLang(), id).then(data => {
+        // 删除逻辑
+        if (data.data.success) {
+          this.outerVisible = false
+          this.innerVisible = true
+        } else {
+          this.$message({
+            showClose: true,
+            message: data.data.errMsg,
+            type: 'error'
+          })
+        }
+      })
+    },
+    joinButtonClick(selectedhostId) {
+      this.hostId = selectedhostId
+      this.dialogVisible = true
+    }
+  },
+  computed: {
+    getPercentNumber() {
+      // 计算百分比 a/b
+      return function (a, b) {
+        var n = Number((a / b) * 100).toFixed(2)
+        if (isNaN(Number(n)) || !isFinite(Number(n))) {
+          n = 0
+        }
+        return Number(n)
+      }
+    }
+  },
+  mounted() {
+    this.getHostList()
+    this.rancherList()
+    this.clusterList()
+    this.language = auth.getCurLang()
+    this.userId = auth.getCurUserId()
+  }
+}
+</script>
+
+<style lang="scss" scoped>
+.myHost {
+  background: rgba(101, 143, 247, 0);
+  border-radius: 2px;
+  min-width: 1130px;
+  .myHostHead {
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
+    margin: 10px 10px 0;
+    height: 50px;
+    .title {
+      h1 {
+        font-family: Source-Sans-Pro-Bold;
+        font-size: 16px;
+        color: #ffffff;
+        line-height: 50px;
+        margin: 0;
+        padding: 0;
+        padding-left: 30px;
+        i {
+          font-size: 26px;
+          margin-right: 10px;
+        }
+      }
+    }
+  }
+  .myHostBox {
+    background: rgba(101, 143, 247, 0);
+    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    border-radius: 2px;
+    margin: 10px;
+    padding: 15px;
+    min-height: 550px;
+    .el-pagination /deep/ .btn-prev {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .btn-next {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li {
+      background: rgba(36, 99, 255, 0.2);
+      color: #ffffff;
+    }
+    .el-pagination /deep/ .el-pager li.active {
+      color: #409eff;
+    }
+    p {
+      margin-bottom: 0;
+    }
+    .el-table {
+      color: #ffffff;
+      background-color: rgba(101, 143, 247, 0);
+    }
+    .el-table /deep/ tr:hover td {
+      background-color: rgba(101, 143, 247, 0.2) !important;
+    }
+    .el-table /deep/ th,
+    .el-table /deep/ tr {
+      background-color: rgba(101, 143, 247, 0);
+      border: none;
+    }
+    .el-table /deep/ td {
+      border: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .el-select /deep/ .el-input__inner {
+      background: rgba(36, 99, 255, 0.2);
+      border: 1px solid rgba(24, 144, 255, 0.3);
+      border-radius: 4px;
+      color: #ffffff;
+      font-weight: 400;
+    }
+    // .el-button {
+    //   background: rgba(101, 143, 247, 0);
+    //   box-shadow: inset 0 0 22px 0 #2463ff;
+    //   border-radius: 3px;
+    //   border: none;
+    //   color: #ffffff;
+    // }
+    .el-button :hover {
+      color: #1890ff;
+    }
+    .overflow {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: center;
+      white-space: nowrap;
+      width: 100%;
+    }
+    .empty-text {
+      width: 470px;
+      margin: 30px auto;
+      font-family: Source-Sans-Pro-Bold;
+      font-size: 16px;
+      color: #5d5d5d;
+      text-align: left;
+      line-height: 24px;
+    }
+    .el-progress /deep/ .el-progress-bar__outer {
+      background: #1890ff !important;
+      border-radius: 0;
+    }
+    .el-progress /deep/ .el-progress-bar__inner {
+      background: #f25954 !important;
+      border-radius: 0;
+    }
+    .on {
+      //   background: #51a906;
+      //   border: 2px solid #dcdcdc;
+      //   width: 12px;
+      //   height: 12px;
+      //   border-radius: 100%;
+      width: 0;
+      height: 0;
+      border-right: 10px solid transparent;
+      border-left: 10px solid transparent;
+      border-bottom: 10px solid #51a906;
+      float: right;
+    }
+    .off {
+      //   background: #f25954;
+      //   border: 2px solid #dcdcdc;
+      //   width: 12px;
+      //   height: 12px;
+      //   border-radius: 100%;
+      width: 0;
+      height: 0;
+      border-right: 10px solid transparent;
+      border-left: 10px solid transparent;
+      border-top: 10px solid #f25954;
+      float: right;
+    }
+    .table-head {
+      text-align: center;
+      color: #ffffff;
+      font-weight: 500;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      i {
+        font-size: 23px;
+      }
+    }
+    .el-select /deep/ .el-input__suffix {
+      right: 10px;
+    }
+  }
+}
+</style>

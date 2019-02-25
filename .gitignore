@@ -1,0 +1,17 @@
+
+dist
+eggs
+parts
+
+
+
+# IDE files
+.idea*
+*.log*
+.DS_Store
+
+#vue
+*._.DS_Store
+node_modules/*
+package-lock.json
+
