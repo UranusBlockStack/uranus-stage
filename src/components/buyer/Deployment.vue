@@ -224,6 +224,7 @@
                       range-separator="-"
                       v-model="deployForm.dateRange"
                       style="width: 100%;"
+                      :picker-options="startDatePickerOptions"
                     ></el-date-picker>
                   </el-col>
                 </el-form-item>
@@ -399,9 +400,6 @@ import * as wallet from '../../services/WalletService'
 import * as order from '../../services/OrderService'
 import TimeOver from '@/components/modules/TimeOver'
 
-import { appConfigParser, appConfigParserExpand } from '../../lib/config_parser'
-import appConfigQuestion from '../../appconf_portworx'
-
 export default {
   name: 'Deployment',
   components: {
@@ -463,7 +461,8 @@ export default {
       concode: '',
       isMyApplication: false,
       orderNumber: '',
-      existedResourceSelect: true
+      existedResourceSelect: true,
+      startDatePickerOptions: ''
     }
   },
   created() {
@@ -479,7 +478,7 @@ export default {
       this.getUraPowerPoolList()
       this.getReferenceFee()
       this.getOrderOfApp()
-      // this.paramTree = appConfigParserExpand(appConfigQuestion.questions)  // 配置测试，来自本地文件
+      this.setDatePick()
     }
   },
 
@@ -510,6 +509,15 @@ export default {
     },
     changeMore() {
       this.more = !this.more
+    },
+    setDatePick() {
+      this.startDatePickerOptions = {
+        disabledDate(time) {
+          return (
+               time.getTime() < new Date().getTime()
+          )
+        }
+      }
     },
 
     /// phase 1 resource and appinfo --------

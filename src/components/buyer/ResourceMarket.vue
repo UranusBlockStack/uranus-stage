@@ -205,6 +205,7 @@
                       range-separator="-"
                       v-model="deployForm.dateRange"
                       style="width: 100%;"
+                      :picker-options="startDatePickerOptions"
                     ></el-date-picker>
                   </el-col>
                 </el-form-item>
@@ -268,32 +269,21 @@ export default {
       innerVisible: false,
       fee: 0,
       concode: '',
-      gridData: [
-        // {
-        //   buyerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-        //   buyerId: 60,
-        //   buyerName: '',
-        //   createTime: 1548053643803,
-        //   id: 58,
-        //   orderAmount: 0.0441,
-        //   orderHash: null,
-        //   orderNo: '2019012100002',
-        //   orderStatus: 1,
-        //   paySuccessTime: null,
-        //   poundage: 0.000378,
-        //   prodType: 'UraPower',
-        //   sellerAccount: '0x323ec4e944F0C78FA8254B213b7C1d495632622e',
-        //   sellerId: 60,
-        //   sellerName: '',
-        //   updateTime: 1548053643803
-        // }
-      ]
+      gridData: [],
+      startDatePickerOptions: ''
     }
   },
   created() {
     this.getRegionList()
     this.setConfigSelector()
     this.getReferenceFee()
+    this.startDatePickerOptions = {
+      disabledDate(time) {
+        return (
+             time.getTime() < new Date().getTime()
+        )
+      }
+    }
   },
   methods: {
     closeDialog: function(data) {
