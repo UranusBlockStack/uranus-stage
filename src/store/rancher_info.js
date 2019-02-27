@@ -16,6 +16,9 @@ export const ServerConfigData = {
   },
   Network: {
     paramVals: {'0.5': '0.5Mbps', '1': '1Mbps', '2': '2Mbps', '3': '3Mbps', '4': '4Mbps', '6': '6Mbps', '8': '8Mbps', '10': '10Mbps'}
+  },
+  NetworkInnerOuter: {
+    paramVals: {'inner': 'Intranet', 'outer': 'Extranet'}
   }
 }
 

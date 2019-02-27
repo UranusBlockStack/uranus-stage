@@ -139,7 +139,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item @change="setParamCPU">
+                <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-cpu"></i>
                     {{ $t("buyer.deploy.cpu") }}
@@ -155,7 +155,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.disk')" @change="setParamHD">
+                <el-form-item :label="$t('buyer.deploy.disk')">
                   <span slot="label">
                     <i class="iconfont icon-disk"></i>
                     {{ $t("buyer.deploy.disk") }}
@@ -171,7 +171,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.memory')" @change="setParamRAM">
+                <el-form-item :label="$t('buyer.deploy.memory')">
                   <span slot="label">
                     <i class="iconfont icon-memory"></i>
                     {{ $t("buyer.deploy.memory") }}
@@ -195,7 +195,7 @@
                 </el-form-item>
               </el-col>-->
               <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.network')" @change="setParamNet">
+                <el-form-item :label="$t('buyer.deploy.network')">
                   <span slot="label">
                     <i class="iconfont icon-network"></i>
                     {{ $t("buyer.deploy.network") }}
@@ -206,6 +206,22 @@
                       :key="item.value"
                       :label="item.label"
                       :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="8">
+                <el-form-item :label="$t('buyer.deploy.network')">
+                  <span slot="label">
+                    <i class="iconfont icon-network"></i>
+                    {{ $t("buyer.deploy.network") }}
+                  </span>
+                  <el-select v-model="deployForm.innerOuter">
+                    <el-option
+                            v-for="item in networkTypeSel"
+                            :key="item.value"
+                            :label="item.label"
+                            :value="item.value"
                     ></el-option>
                   </el-select>
                 </el-form-item>
@@ -418,7 +434,8 @@ export default {
         disk: '512G',
         mem: '16',
         network: '512G',
-        dateRange: ''
+        dateRange: '',
+        innerOuter: ''
       },
       imageServerUrl: this.$store.state.imageServerUrl,
       imgsrc: '',
@@ -428,6 +445,7 @@ export default {
       diskSel: [],
       memorySel: [],
       networkSel: [],
+      networkTypeSel: [],
       // existed
       spaceSel: [],
       projectId: '',
@@ -538,6 +556,10 @@ export default {
       const NetworData = ServerConfigData.Network
       this.networkSel = WrapDropDownData(NetworData, null)
       this.deployForm.network = this.networkSel[0].value
+
+      const NetworkTypeData = ServerConfigData.NetworkInnerOuter
+      this.networkTypeSel = WrapDropDownData(NetworkTypeData, null)
+      this.deployForm.innerOuter = this.networkTypeSel[0].value
     },
     getOrderOfApp() {
       app.appPurchaseInfo(auth.getCurLang(), this.appId).then(purchaseInfo => {
@@ -550,18 +572,6 @@ export default {
     },
     setRegionSelectValue(region) {
       this.deployForm.rancherId = region
-    },
-    setParamCPU(value) {
-      this.deployForm.cpuKernel = value
-    },
-    setParamHD(value) {
-      this.deployForm.disk = value
-    },
-    setParamRAM(value) {
-      this.deployForm.mem = value
-    },
-    setParamNet(value) {
-      this.deployForm.network = value
     },
 
     getRegionList() {

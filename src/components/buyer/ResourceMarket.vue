@@ -97,6 +97,7 @@
       <el-row class="margin-top">
         <el-col :span="23" :offset="1">
           <el-form label-width="140px">
+
             <el-row class="margin-top">
               <el-col :span="18">
                 <el-form-item>
@@ -127,13 +128,36 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+
+                <el-col :span="8">
+                    <el-form-item>
+                  <span slot="label">
+                    <i class="iconfont icon-network"></i>
+                    {{$t('buyer.resourceMarket.network')}}Type
+                  </span>
+                        <el-select v-model="deployForm.innerOuter">
+                            <el-option
+                                    v-for="item in networkTypeSel"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+
+            </el-row>
+
+            <el-row >
+
               <el-col :span="8">
                 <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-cpu"></i>
                     {{$t('buyer.resourceMarket.cpu')}}
                   </span>
-                  <el-select v-model="deployForm.cpuKernel" @change="setParamCPU">
+                  <el-select v-model="deployForm.cpuKernel">
                     <el-option
                       v-for="item in cpuSel"
                       :key="item.value"
@@ -144,7 +168,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item @change="setParamHD">
+                <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-disk"></i>
                     {{$t('buyer.resourceMarket.disk')}}
@@ -159,8 +183,12 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
+            </el-row>
+
+            <el-row >
               <el-col :span="8">
-                <el-form-item @change="setParamRAM">
+                <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-memory"></i>
                     {{$t('buyer.resourceMarket.memory')}}
@@ -176,7 +204,7 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item @change="setParamNet">
+                <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-network"></i>
                     {{$t('buyer.resourceMarket.network')}}
@@ -191,6 +219,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+
               <el-col :span="12">
                 <el-form-item>
                   <span slot="label">
@@ -211,9 +240,12 @@
                 </el-form-item>
               </el-col>
             </el-row>
+
+
           </el-form>
         </el-col>
       </el-row>
+
       <el-row class="button">
         <el-col :span="6" :offset="10">
           <el-button type="success" @click="purchaseUraPower">{{$t('buyer.resourceMarket.confirm')}}</el-button>
@@ -254,13 +286,15 @@ export default {
         mem: '16',
         network: '512G',
         dateRange: '',
-        deployStatus: ''
+        deployStatus: '',
+        innerOuter: ''
       },
       regionSel: [],
       cpuSel: [],
       diskSel: [],
       memorySel: [],
       networkSel: [],
+      networkTypeSel: [],
       value: '',
       time1: '',
       time2: '',
@@ -322,25 +356,17 @@ export default {
       this.memorySel = WrapDropDownData(MemData, null)
       this.deployForm.mem = this.memorySel[0].value
 
-      const NetworData = ServerConfigData.Network
-      this.networkSel = WrapDropDownData(NetworData, null)
+      const NetworkData = ServerConfigData.Network
+      this.networkSel = WrapDropDownData(NetworkData, null)
       this.deployForm.network = this.networkSel[0].value
+
+      const NetworkTypeData = ServerConfigData.NetworkInnerOuter
+      this.networkTypeSel = WrapDropDownData(NetworkTypeData, null)
+      this.deployForm.innerOuter = this.networkTypeSel[0].value
     },
 
     setRegionSelectValue(region) {
       this.deployForm.rancherId = region
-    },
-    setParamCPU(value) {
-      this.deployForm.cpuKernel = value
-    },
-    setParamHD(value) {
-      this.deployForm.disk = value
-    },
-    setParamRAM(value) {
-      this.deployForm.mem = value
-    },
-    setParamNet(value) {
-      this.deployForm.network = value
     },
 
     getRegionList() {
@@ -516,7 +542,7 @@ export default {
     background: rgba(101, 143, 247, 0);
     box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
     border-radius: 2px;
-    height: 560px;
+    height: 610px;
     margin: 10px;
     .title {
       border-radius: 4px 4px 0 0;
