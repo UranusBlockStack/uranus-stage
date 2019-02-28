@@ -125,7 +125,7 @@
             </el-row>
 
             <el-row class="margin-top">
-              <el-col :span="8">
+              <el-col :span="10">
                 <el-form-item @change="setRegionSelectValue">
                   <span slot="label">
                     <i class="iconfont icon-region"></i>
@@ -141,11 +141,11 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
-                    <el-form-item :label="$t('buyer.deploy.network')">
+              <el-col :span="10">
+                    <el-form-item>
                   <span slot="label">
-                    <i class="iconfont icon-network"></i>
-                    {{ $t("buyer.deploy.network") }}--
+                    <i class="iconfont icon-attributes"></i>
+                    {{ $t("buyer.deploy.attributes") }}
                   </span>
                         <el-select v-model="deployForm.innerOuter">
                             <el-option
@@ -160,7 +160,7 @@
             </el-row>
 
             <el-row class="margin-top">
-              <el-col :span="8">
+              <el-col :span="10">
                     <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-cpu"></i>
@@ -176,7 +176,7 @@
                         </el-select>
                     </el-form-item>
                 </el-col>
-              <el-col :span="8">
+              <el-col :span="10">
                 <el-form-item :label="$t('buyer.deploy.disk')">
                   <span slot="label">
                     <i class="iconfont icon-disk"></i>
@@ -193,8 +193,8 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row>
-              <el-col :span="8">
+            <el-row class="margin-top">
+              <el-col :span="10">
                 <el-form-item :label="$t('buyer.deploy.memory')">
                   <span slot="label">
                     <i class="iconfont icon-memory"></i>
@@ -218,7 +218,7 @@
                   </el-select>
                 </el-form-item>
               </el-col>-->
-              <el-col :span="8">
+              <el-col :span="10">
                 <el-form-item :label="$t('buyer.deploy.network')">
                   <span slot="label">
                     <i class="iconfont icon-network"></i>
