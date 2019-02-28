@@ -122,6 +122,9 @@
                   ></el-input>
                 </el-form-item>
               </el-col>
+            </el-row>
+
+            <el-row class="margin-top">
               <el-col :span="8">
                 <el-form-item @change="setRegionSelectValue">
                   <span slot="label">
@@ -139,21 +142,40 @@
                 </el-form-item>
               </el-col>
               <el-col :span="8">
-                <el-form-item>
+                    <el-form-item :label="$t('buyer.deploy.network')">
+                  <span slot="label">
+                    <i class="iconfont icon-network"></i>
+                    {{ $t("buyer.deploy.network") }}--
+                  </span>
+                        <el-select v-model="deployForm.innerOuter">
+                            <el-option
+                                    v-for="item in networkTypeSel"
+                                    :key="item.value"
+                                    :label="item.label"
+                                    :value="item.value"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+
+            <el-row class="margin-top">
+              <el-col :span="8">
+                    <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-cpu"></i>
                     {{ $t("buyer.deploy.cpu") }}
                   </span>
-                  <el-select v-model="deployForm.cpuKernel">
-                    <el-option
-                      v-for="item in cpuSel"
-                      :key="item.value"
-                      :label="item.label + item.unit"
-                      :value="item.value"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
+                        <el-select v-model="deployForm.cpuKernel">
+                            <el-option
+                                    v-for="item in cpuSel"
+                                    :key="item.value"
+                                    :label="item.label + item.unit"
+                                    :value="item.value"
+                            ></el-option>
+                        </el-select>
+                    </el-form-item>
+                </el-col>
               <el-col :span="8">
                 <el-form-item :label="$t('buyer.deploy.disk')">
                   <span slot="label">
@@ -170,6 +192,8 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+            </el-row>
+            <el-row>
               <el-col :span="8">
                 <el-form-item :label="$t('buyer.deploy.memory')">
                   <span slot="label">
@@ -210,23 +234,10 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
-                <el-form-item :label="$t('buyer.deploy.network')">
-                  <span slot="label">
-                    <i class="iconfont icon-network"></i>
-                    {{ $t("buyer.deploy.network") }}
-                  </span>
-                  <el-select v-model="deployForm.innerOuter">
-                    <el-option
-                            v-for="item in networkTypeSel"
-                            :key="item.value"
-                            :label="item.label"
-                            :value="item.value"
-                    ></el-option>
-                  </el-select>
-                </el-form-item>
-              </el-col>
-              <el-col :span="12">
+            </el-row>
+
+            <el-row class="margin-top">
+                <el-col :span="12">
                 <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-time"></i>

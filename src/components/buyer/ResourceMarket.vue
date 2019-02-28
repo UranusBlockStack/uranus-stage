@@ -99,7 +99,7 @@
           <el-form label-width="140px">
 
             <el-row class="margin-top">
-              <el-col :span="18">
+                <el-col :span="18">
                 <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-name"></i>
@@ -112,7 +112,10 @@
                   ></el-input>
                 </el-form-item>
               </el-col>
-              <el-col :span="8">
+            </el-row>
+
+            <el-row  class="margin-top">
+                <el-col :span="8">
                 <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-region"></i>
@@ -128,13 +131,11 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
-
                 <el-col :span="8">
                     <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-network"></i>
-                    {{$t('buyer.resourceMarket.network')}}Type
+                    {{$t('buyer.resourceMarket.network')}}-
                   </span>
                         <el-select v-model="deployForm.innerOuter">
                             <el-option
@@ -149,8 +150,7 @@
 
             </el-row>
 
-            <el-row >
-
+            <el-row   class="margin-top">
               <el-col :span="8">
                 <el-form-item>
                   <span slot="label">
@@ -183,7 +183,6 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-
             </el-row>
 
             <el-row >
@@ -219,7 +218,9 @@
                   </el-select>
                 </el-form-item>
               </el-col>
+            </el-row>
 
+            <el-row   class="margin-top">
               <el-col :span="12">
                 <el-form-item>
                   <span slot="label">
@@ -542,7 +543,7 @@ export default {
     background: rgba(101, 143, 247, 0);
     box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
     border-radius: 2px;
-    height: 610px;
+    height: 660px;
     margin: 10px;
     .title {
       border-radius: 4px 4px 0 0;
