@@ -573,25 +573,24 @@ export default {
 
 <style lang="scss" scoped>
 .colony {
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   width: 100%;
   min-width: 1130px;
   .rentDay {
-      color: #8eb357;
-      text-align: right;
-      font-size: 12px;
-      height: 12px;
-      line-height: 12px;
-      margin: 0;
-      padding: 0;
+    color: #8eb357;
+    text-align: right;
+    font-size: 12px;
+    height: 12px;
+    line-height: 12px;
+    margin: 0;
+    padding: 0;
   }
   .colonyHead {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
+    margin: 2px 2px 0;
     height: 50px;
-    margin: 10px 10px 0;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
@@ -610,8 +609,8 @@ export default {
   }
   .colonyBox {
     .title {
-      background: rgba(101, 143, 247, 0);
-      border-radius: 4px 4px 0 0;
+      background: #161618;
+      border-radius: 2px;
       height: 50px;
       h1 {
         font-family: Source-Sans-Pro-Bold;
@@ -628,10 +627,9 @@ export default {
       }
     }
     .rePool {
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+      background: #161618;
       border-radius: 2px;
-      margin: 10px;
+      margin: 2px;
       padding-top: 30px;
       .padding-top {
         padding-top: 5px;
@@ -684,10 +682,9 @@ export default {
       padding-left: 30px;
     }
     .blue-rest {
-      margin: 10px;
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
-      border-radius: 2px;
+      margin: 2px;
+      background: #161618;
+    border-radius: 2px;
       h2 {
         color: #ffffff;
       }
@@ -702,10 +699,9 @@ export default {
       color: #8eb357;
     }
     .myHostBox {
-      margin: 10px;
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
-      border-radius: 2px;
+      margin: 2px;
+      background: #161618;
+    border-radius: 2px;
       padding: 15px;
       min-height: 550px;
       p {
@@ -716,7 +712,7 @@ export default {
         background-color: rgba(101, 143, 247, 0);
       }
       .el-table /deep/ tr:hover td {
-        background-color: rgba(101, 143, 247, 0.2) !important;
+        background:rgba(176,192,255,0.05) !important;
       }
       .el-table /deep/ th,
       .el-table /deep/ tr {

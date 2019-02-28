@@ -217,16 +217,15 @@ export default {
 
 <style lang="scss" scoped>
 .myColony {
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   width: 100%;
   min-width: 1130px;
   .myColonyHead {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
+    margin: 2px 2px 0;
     height: 50px;
-    margin: 10px 10px 0;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
@@ -247,14 +246,14 @@ export default {
       height: 50px;
       line-height: 50px;
       font-size: 16px;
+      color: #627100;
     }
   }
   .shop {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
     min-width: 1130px;
-    margin: 10px;
+    margin: 2px;
     padding: 15px;
     .el-button {
       background: #8eb357;
@@ -304,35 +303,35 @@ export default {
       .setting {
         text-align: right;
         padding-right: 24px;
-        color: #1890ff;
+        color: #627100;
       }
     }
     .el-button {
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 #2463ff;
+      background: #424b00;
+      border: 1px solid #424b00;
       border-radius: 3px;
-      border: none;
     }
     .el-input /deep/ .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
       color: #ffffff;
+      opacity: 0.6;
     }
     .el-pagination /deep/ .btn-prev {
-      background: rgba(36, 99, 255, 0.2);
+      background: rgba(36, 99, 255, 0);
       color: #ffffff;
     }
     .el-pagination /deep/ .btn-next {
-      background: rgba(36, 99, 255, 0.2);
+      background: rgba(36, 99, 255, 0);
       color: #ffffff;
     }
     .el-pagination /deep/ .el-pager li {
-      background: rgba(36, 99, 255, 0.2);
+      background: rgba(36, 99, 255, 0);
       color: #ffffff;
     }
     .el-pagination /deep/ .el-pager li.active {
-      color: #409eff;
+      color: #A2AE44;
     }
   }
 }

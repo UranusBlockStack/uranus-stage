@@ -527,14 +527,14 @@ export default {
 
 <style lang="scss" scoped>
 .myHost {
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
+  width: 100%;
   min-width: 1130px;
   .myHostHead {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
-    margin: 10px 10px 0;
+    margin: 2px 2px 0;
     height: 50px;
     .title {
       h1 {
@@ -553,26 +553,24 @@ export default {
     }
   }
   .myHostBox {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
-    margin: 10px;
+    margin: 2px;
     padding: 15px;
-    min-height: 550px;
     .el-pagination /deep/ .btn-prev {
-      background: rgba(36, 99, 255, 0.2);
+      background: rgba(36, 99, 255, 0);
       color: #ffffff;
     }
     .el-pagination /deep/ .btn-next {
-      background: rgba(36, 99, 255, 0.2);
+      background: rgba(36, 99, 255, 0);
       color: #ffffff;
     }
     .el-pagination /deep/ .el-pager li {
-      background: rgba(36, 99, 255, 0.2);
+      background: rgba(36, 99, 255, 0);
       color: #ffffff;
     }
     .el-pagination /deep/ .el-pager li.active {
-      color: #409eff;
+      color: #A2AE44;
     }
     p {
       margin-bottom: 0;
@@ -582,7 +580,7 @@ export default {
       background-color: rgba(101, 143, 247, 0);
     }
     .el-table /deep/ tr:hover td {
-      background-color: rgba(101, 143, 247, 0.2) !important;
+      background:rgba(176,192,255,0.05) !important;
     }
     .el-table /deep/ th,
     .el-table /deep/ tr {
@@ -594,8 +592,8 @@ export default {
       border-top: 1px solid rgba(255, 255, 255, 0.2);
     }
     .el-select /deep/ .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
       color: #ffffff;
       font-weight: 400;

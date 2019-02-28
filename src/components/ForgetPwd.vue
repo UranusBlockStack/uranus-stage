@@ -29,7 +29,10 @@
               {{currentRegion}}
               <span class="fa fa-caret-down"></span>
             </button>
-            <ul class="dropdown-menu" style="max-height: 250px; overflow: scroll; overflow-x: hidden;">
+            <ul
+              class="dropdown-menu"
+              style="max-height: 250px; overflow: scroll; overflow-x: hidden;"
+            >
               <li v-for="(item,index) in regions" :key="index">
                 <a href="#" :id="item.prefix" @click="selectRegion(item.prefix)">{{ item.fullName }}</a>
               </li>
@@ -105,7 +108,7 @@ export default {
     selectRegion(region) {
       this.currentRegion = region
     },
-    getLoginName: function(logintype) {
+    getLoginName: function (logintype) {
       let loginname = ''
       if (logintype === 'mobile') {
         loginname = this.currentRegion + this.phone
@@ -133,29 +136,29 @@ export default {
             newPassword: this.password
           }
           auth.forgetPassword(auth.getCurLang(), user)
-              .then(respData => {
-                let data = respData.data
-                if (data.success) {
-                  this.$message({
-                    showClose: true,
-                    message: 'Success.',
-                    type: 'success'
-                  })
-                  this.$router.push({ name: 'Map' })
-                } else {
-                  this.$message({
-                    showClose: true,
-                    message: data.errMsg,
-                    type: 'error'
-                  })
-                }
-              }).catch(err => {
+            .then(respData => {
+              let data = respData.data
+              if (data.success) {
                 this.$message({
                   showClose: true,
-                  message: err,
+                  message: 'Success.',
+                  type: 'success'
+                })
+                this.$router.push({ name: 'Map' })
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: data.errMsg,
                   type: 'error'
                 })
+              }
+            }).catch(err => {
+              this.$message({
+                showClose: true,
+                message: err,
+                type: 'error'
               })
+            })
         }
       }
       if (this.phoneShow == true) {
@@ -177,29 +180,29 @@ export default {
           }
 
           auth.forgetPassword(auth.getCurLang(), user)
-              .then(respData => {
-                let data = respData.data
-                if (data.success) {
-                  this.$message({
-                    showClose: true,
-                    message: 'Success.',
-                    type: 'success'
-                  })
-                  this.$router.push({ name: 'Map' })
-                } else {
-                  this.$message({
-                    showClose: true,
-                    message: data.errMsg,
-                    type: 'error'
-                  })
-                }
-              }).catch(err => {
+            .then(respData => {
+              let data = respData.data
+              if (data.success) {
                 this.$message({
                   showClose: true,
-                  message: err,
+                  message: 'Success.',
+                  type: 'success'
+                })
+                this.$router.push({ name: 'Map' })
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: data.errMsg,
                   type: 'error'
                 })
+              }
+            }).catch(err => {
+              this.$message({
+                showClose: true,
+                message: err,
+                type: 'error'
               })
+            })
         }
       }
     },
@@ -284,8 +287,8 @@ export default {
 .forgetPwd {
   width: 100%;
   height: 100%;
-  background: no-repeat url(/static/img/uranus/bg.png);
-  background-size: cover;
+  background: #161618;
+  //   background-size: cover;
   text-align: center;
   position: absolute;
   .back {
@@ -295,10 +298,13 @@ export default {
     left: 50px;
     top: 50px;
     a {
-      color: #1890ff;
+      color: #627100;
       i {
         font-size: 28px;
       }
+    }
+    a:hover {
+      color: #a2ae44;
     }
   }
   .forgetPwdHead {
@@ -331,18 +337,20 @@ export default {
         cursor: pointer;
 
         span {
+          font-family: Source-Sans-Pro-Bold;
+          font-weight: 300;
           display: inline-block;
           height: 30px;
           font-size: 16px;
           line-height: 24px;
-          color: rgba(0, 0, 0, 0.65);
+          color: #c8c8c8;
           text-align: center;
         }
         .chooseBtn {
           font-family: Source-Sans-Pro-Bold;
           font-weight: 500;
-          border-bottom: 2px solid #81a028;
-          color: #81a028;
+          border-bottom: 2px solid #c8c8c8;
+          color: #c8c8c8;
           transition: all 0.5s;
         }
       }
@@ -358,12 +366,14 @@ export default {
         width: 380px;
 
         .phoneHead {
-          background: #ffffff;
-          border: 1px solid #d9d9d9;
+          background: #1d1e23;
+          border: 1px solid rgba(255, 255, 255, 0.1);
           border-right: none;
           border-radius: 4px 0 0 4px;
           width: 70px;
           height: 38px;
+          color: #ffffff;
+          opacity: 0.6;
         }
       }
       .phoneIpt {
@@ -371,36 +381,43 @@ export default {
       }
     }
     input {
-      background: #ffffff;
-      border: 1px solid #d9d9d9;
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
       width: 378px;
       height: 38px;
       margin: 12px auto;
       padding-left: 20px;
+      color: #ffffff;
+      opacity: 0.6;
     }
     .inputCode {
       width: 265px;
     }
     .getCode {
-      background: #ffffff;
-      border: 1px solid #d9d9d9;
+      background: #424b00;
+      border: 1px solid #424b00;
       border-radius: 4px;
       width: 110px;
       height: 38px;
       font-size: 14px;
-      color: rgba(0, 0, 0, 0.65);
+      color: #ffffff;
       line-height: 22px;
       text-align: center;
     }
+    .getCode:hover {
+      background-color: #627100;
+      border-color: #627100;
+    }
     .disabledGet {
-      background-color: #ddd;
-      border-color: #ddd;
-      color: #57a3f3;
+      background-color: #627100;
+      border-color: #627100;
+      color: #ffffff;
       cursor: not-allowed;
     }
     .registerBtn {
-      background: #1890ff;
+      background: #424b00;
+      border: 1px solid #424b00;
       border-radius: 4px;
       width: 380px;
       height: 40px;
@@ -410,10 +427,14 @@ export default {
       color: #ffffff;
       line-height: 20px;
     }
+    .registerBtn:hover {
+      background: #627100;
+      border: 1px solid #627100;
+    }
     .prompt {
       text-align: left;
       padding-left: 20px;
-      color: red;
+      color: #ff5640;
     }
   }
 }

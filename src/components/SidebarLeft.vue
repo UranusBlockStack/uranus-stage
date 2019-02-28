@@ -209,14 +209,14 @@ export default {
     }
     .menu-open {
      > a {
-        color: #8eb357;
+        color: #a2af3c;
         background: rgba(101, 143, 247, 0);
       }
       .treeview-menu {
           padding-left: 30px;
           li:hover {
               >a {
-                  color: #8eb357;
+                  color: #a2af3c;
                   background: rgba(101, 143, 247, 0);
               }
           }
@@ -226,7 +226,7 @@ export default {
     .treeview:hover {
       background: rgba(101, 143, 247, 0);
       > a {
-        color: #8eb357;
+        color: #a2af3c;
         background: rgba(101, 143, 247, 0);
         // i {
         //   font-size: 35px;

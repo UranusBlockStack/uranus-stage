@@ -14,8 +14,14 @@
     <!-- Header Navbar -->
     <nav class="navbar navbar-static-top" role="navigation">
       <!-- Sidebar toggle button-->
-      <div href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-        <span class="sr-only">Toggle navigation</span>
+      <div
+        href="#"
+        class="sidebar-toggle"
+        style="color: #627100;"
+        data-toggle="push-menu"
+        role="button"
+      >
+        <span class="sr-only">Toggle</span>
       </div>
       <!-- User Sign out -->
       <div class="userInformation">
@@ -31,25 +37,27 @@
       </div>
       <!-- Download button -->
       <div class="download">
-        <span  v-if="this.userRole === 'Seller'">
-          <a v-bind:href="downloadUrl + 'UraPower-Client.zip'"> {{$t('userCommon.download')}}</a>
+        <span v-if="this.userRole === 'Seller'">
+          <a v-bind:href="downloadUrl + 'UraPower-Client.zip'">{{$t('userCommon.download')}}</a>
         </span>
       </div>
 
       <!-- Help button -->
-    <div class="help_dropdown">
-      <el-dropdown>
-      <span class="el-dropdown-link">
-        <i class=" el-icon-question"></i>
-      </span>
-        <el-dropdown-menu slot="dropdown">
+      <div class="help_dropdown">
+        <el-dropdown>
+          <span class="el-dropdown-link">
+            <i class="el-icon-question"></i>
+          </span>
+          <el-dropdown-menu slot="dropdown">
             <el-dropdown-item command="help">
-                <a href="/static/HELP.pdf" target="_blank" >HELP</a></el-dropdown-item>
+              <a href="/static/HELP.pdf" target="_blank">HELP</a>
+            </el-dropdown-item>
             <el-dropdown-item command="faq">
-                <a href="/static/FAQ.pdf" target="_blank" >FAQ</a></el-dropdown-item>
-        </el-dropdown-menu>
+              <a href="/static/FAQ.pdf" target="_blank">FAQ</a>
+            </el-dropdown-item>
+          </el-dropdown-menu>
         </el-dropdown>
-    </div>
+      </div>
     </nav>
   </section>
 </template>
@@ -84,8 +92,8 @@ export default {
 <style lang="scss" scoped>
 .Head {
   .logo {
-    background: rgba(101, 143, 247, 0) !important;
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
     .logo-mini {
       img {
         display: block;
@@ -102,18 +110,18 @@ export default {
     }
   }
   .navbar {
-    background: rgba(101, 143, 247, 0) !important;
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
     .userInformation {
       /*width: 200px;*/
-      color: #ffffff;
+      color: #627100;
       float: right;
       height: 50px;
       line-height: 50px;
       .el-button {
         background: rgba(101, 143, 247, 0);
         border: none;
-        color: #ffffff;
+        color: #627100;
         :hover {
           color: #f54c46;
         }
@@ -122,8 +130,23 @@ export default {
     .download {
       width: 150px;
       float: right;
-      color: #ffffff;
+      color: #627100;
       cursor: pointer;
+      span {
+        height: 50px;
+        line-height: 50px;
+      }
+      a {
+        color: #627100;  
+      }
+      :hover {
+        color: #1890ff;
+      }
+    }
+    .help_dropdown {
+      width: 50px;
+      float: right;
+      color: #627100;
       span {
         height: 50px;
         line-height: 50px;
@@ -131,25 +154,13 @@ export default {
       :hover {
         color: #1890ff;
       }
-    }
-      .help_dropdown{
-          width: 50px;
-          float: right;
-          color: #ffffff;
-          span {
-              height: 50px;
-              line-height: 50px;
-          }
-          :hover {
-              color: #1890ff;
-          }
-          .el-dropdown{
-              color: #ffffff
-          }
-          .el-icon-question{
-              font-size: 20px
-          }
+      .el-dropdown {
+        color: #627100;
       }
+      .el-icon-question {
+        font-size: 20px;
+      }
+    }
   }
 }
 </style>

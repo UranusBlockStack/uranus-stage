@@ -248,7 +248,7 @@ export default {
         if ((data.data.data = 'null')) {
           this.allResources
         } else {
-          this.allResources = data.data.data 
+          this.allResources = data.data.data
         }
         this.initOil = true
       })
@@ -352,7 +352,7 @@ export default {
       }
       let myChart = this.$echarts.init(document.getElementById(elementId))
       myChart.setOption(option)
-      window.addEventListener('resize', function() {
+      window.addEventListener('resize', function () {
         myChart.resize()
       })
     }
@@ -360,7 +360,7 @@ export default {
   computed: {
     getPercentNumber() {
       // 计算百分比 a/b
-      return function(a, b) {
+      return function (a, b) {
         var n = Number((a / b) * 100).toFixed(2)
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
           n = 0
@@ -381,17 +381,16 @@ export default {
 
 <style lang="scss" scoped>
 .Seller {
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   min-width: 1130px;
   width: 100%;
   min-width: 1160px;
   .content-title {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
     height: 50px;
-    margin: 10px 10px 0;
+    margin: 2px 2px 0;
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
@@ -408,7 +407,7 @@ export default {
   }
   .content {
     width: 100%;
-    padding: 10px;
+    padding: 2px;
     .my-content {
       min-width: 1130px;
       height: 400px;
@@ -416,16 +415,15 @@ export default {
       display: flex;
       justify-content: space-between;
       .active {
-        color: #1890ff;
+        color: #A2AE44;
         font-weight: bolder;
       }
       .consumption {
         width: 50%;
-        margin-right: 5px;
+        margin-right: 2px;
         min-width: 550px;
         height: 400px;
-        background: rgba(101, 143, 247, 0);
-        box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+        background: #161618;
         border-radius: 2px;
         color: #ffffff;
         p {
@@ -456,11 +454,10 @@ export default {
       }
       .profit {
         width: 50%;
-        margin-left: 5px;
+        margin-left: 0px;
         min-width: 550px;
         height: 400px;
-        background: rgba(101, 143, 247, 0);
-        box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+        background: #161618;
         border-radius: 2px;
         color: #ffffff;
         p {
@@ -492,9 +489,8 @@ export default {
     }
     .power {
       min-width: 1130px;
-      margin-top: 10px;
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+      margin-top: 2px;
+      background: #161618;
       border-radius: 2px;
       color: #ffffff;
       p {
@@ -519,12 +515,11 @@ export default {
       }
     }
     .record {
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+      background: #161618;
       border-radius: 2px;
       color: #ffffff;
       min-width: 1130px;
-      margin: 10px auto;
+      margin: 2px auto;
       padding: 30px;
       .record-head {
         height: 40px;
@@ -556,7 +551,7 @@ export default {
         background-color: rgba(101, 143, 247, 0);
       }
       .el-table /deep/ tr:hover td {
-        background-color: rgba(101, 143, 247, 0.2) !important;
+        background:rgba(176,192,255,0.05) !important;
       }
       .el-table /deep/ th,
       .el-table /deep/ tr {
@@ -571,19 +566,19 @@ export default {
         margin-top: 20px;
       }
       .el-pagination /deep/ .btn-prev {
-        background: rgba(36, 99, 255, 0.2);
+        background: rgba(36, 99, 255, 0);
         color: #ffffff;
       }
       .el-pagination /deep/ .btn-next {
-        background: rgba(36, 99, 255, 0.2);
+        background: rgba(36, 99, 255, 0);
         color: #ffffff;
       }
       .el-pagination /deep/ .el-pager li {
-        background: rgba(36, 99, 255, 0.2);
+        background: rgba(36, 99, 255, 0);
         color: #ffffff;
       }
       .el-pagination /deep/ .el-pager li.active {
-        color: #409eff;
+        color: #A2AE44;
       }
     }
   }

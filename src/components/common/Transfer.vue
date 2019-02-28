@@ -62,7 +62,13 @@
                 <i class="iconfont icon-table-fee"></i>
                 {{$t('transfer.fee')}}
               </span>
-              <el-input type="number" step="0.000001" min="0" v-model="formLabelAlign.fee" :placeholder="$t('transfer.feeIn')"></el-input>
+              <el-input
+                type="number"
+                step="0.000001"
+                min="0"
+                v-model="formLabelAlign.fee"
+                :placeholder="$t('transfer.feeIn')"
+              ></el-input>
             </el-form-item>
             <el-form-item prop="code" class="code">
               <span slot="label">
@@ -128,30 +134,30 @@ export default {
     },
     transfer() {
       wallet.walletTransfer(auth.getCurLang(), this.transData)
-          .then(respData => {
-            let data = respData.data
-            if (data.success) {
-              this.$message({
-                showClose: true,
-                message: 'Success.',
-                type: 'success'
-              })
-              this.outerVisible = false
-              this.$router.push({ name: 'Wallet' })
-            } else {
-              this.$message({
-                showClose: true,
-                message: data.errMsg,
-                type: 'error'
-              })
-            }
-          }).catch(err => {
-            self.$message({
+        .then(respData => {
+          let data = respData.data
+          if (data.success) {
+            this.$message({
               showClose: true,
-              message: err,
+              message: 'Success.',
+              type: 'success'
+            })
+            this.outerVisible = false
+            this.$router.push({ name: 'Wallet' })
+          } else {
+            this.$message({
+              showClose: true,
+              message: data.errMsg,
               type: 'error'
             })
+          }
+        }).catch(err => {
+          self.$message({
+            showClose: true,
+            message: err,
+            type: 'error'
           })
+        })
     },
     getConfirmCode() {
       wallet.walletConfirmCode(auth.getCurLang(), this.curUserInfo.userName)
@@ -183,11 +189,11 @@ export default {
       else {
         this.canClick = false
         this.content =
-        this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+          this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
         let clock = window.setInterval(() => {
           this.totalTime--
           this.content =
-          this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+            this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
           if (this.totalTime < 0) {
             window.clearInterval(clock)
             this.content = this.$t('userCommon.codeTime')
@@ -200,21 +206,21 @@ export default {
     },
     getFee() {
       wallet.walletReferenceFee(auth.getCurLang())
-          .then(respData => {
-            let data = respData.data
-            if (data.success) {
-              this.formLabelAlign.fee = respData.data.data
-            }
-          })
+        .then(respData => {
+          let data = respData.data
+          if (data.success) {
+            this.formLabelAlign.fee = respData.data.data
+          }
+        })
     },
     getBalance() {
       account.userBalcnce(auth.getCurLang())
-          .then(respData => {
-            let data = respData.data
-            if (data.success) {
-              this.balance = respData.data.data.balance
-            }
-          })
+        .then(respData => {
+          let data = respData.data
+          if (data.success) {
+            this.balance = respData.data.data.balance
+          }
+        })
     }
   },
   created() {
@@ -228,17 +234,16 @@ export default {
 .Transfer {
   height: 100%;
   min-width: 1130px;
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   p {
     margin: 0;
   }
   .transfer-head {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
+    margin: 2px 2px 0;
     height: 50px;
-    margin: 10px 10px 0;
     h1 {
       font-family: Source-Sans-Pro-Bold;
       margin: 0;
@@ -276,18 +281,18 @@ export default {
       text-align: left;
     }
     .el-button {
-        color: #ffffff;
+      color: #ffffff;
     }
   }
   .transfer-form {
-    margin: 10px;
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    margin: 2px;
+    background: #161618;
+    border-radius: 2px;
     border-radius: 2px;
     h2 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 10px;
-      color: #3d74e2;
+      color: #627100;
       line-height: 24px;
       text-align: right;
       padding-right: 30px;
@@ -297,10 +302,11 @@ export default {
       margin-top: 30px;
       margin-left: 30px;
       .el-input /deep/ .el-input__inner {
-        background: rgba(36, 99, 255, 0.2);
-        border: 1px solid rgba(24, 144, 255, 0.3);
-        border-radius: 4px;
+        background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
         color: #ffffff;
+        opacity: 0.6;
       }
     }
     span {
@@ -313,10 +319,9 @@ export default {
       }
     }
     .el-button {
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 #2463ff;
+      background: #424b00;
+      border: 1px solid #424b00;
       border-radius: 3px;
-      border: none;
       margin-bottom: 30px;
     }
     .code {
@@ -327,10 +332,9 @@ export default {
         width: 24%;
         margin: 0;
         color: #ffffff;
-        background: rgba(101, 143, 247, 0);
-        box-shadow: inset 0 0 22px 0 #2463ff;
+        background: #424b00;
+        border: 1px solid #424b00;
         border-radius: 3px;
-        border: none;
       }
     }
   }

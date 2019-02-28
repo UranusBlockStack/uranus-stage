@@ -93,7 +93,7 @@
               <div class="prompt">{{mailprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button
+              <el-button type="primary"
                 @click="userBind('email',newEmail,bindMailCaptcha)"
               >{{$t('setting.button2')}}</el-button>
             </div>
@@ -200,7 +200,7 @@
               <div class="prompt">{{phoneprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button
+              <el-button type="primary"
                 @click="userBind('mobile',newPhoneNum,bindCaptcha)"
               >{{$t('setting.button2')}}</el-button>
             </div>
@@ -761,21 +761,20 @@ export default {
 .Setting {
   width: 100%;
   min-width: 1130px;
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   p {
     margin: 0;
   }
   .prompt {
-    color: red;
+    color: #ff5640;
     text-align: left;
     padding-left: 80px;
   }
   .setting-head {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
+    margin: 2px 2px 0;
     height: 50px;
-    margin: 10px 10px 0;
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
@@ -791,10 +790,10 @@ export default {
     }
   }
   .userId {
-    background: rgba(101, 143, 247, 0);
+    background: #161618;
     border-radius: 2px;
     height: 100px;
-    margin: 10px;
+    margin: 2px;
     margin-bottom: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     p {
@@ -821,10 +820,10 @@ export default {
   .phone-box,
   .pwd-box,
   .code-box {
-    background: rgba(101, 143, 247, 0);
+    background: #161618;
     border-radius: 2px;
     height: 100px;
-    margin: 0 10px;
+    margin: 0 2px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     p {
       font-size: 16px;
@@ -846,7 +845,7 @@ export default {
       text-align: left;
     }
     p > .el-button {
-      color: #1890ff;
+      color: #627100;
       margin-top: 45px;
     }
   }
@@ -856,10 +855,11 @@ export default {
       margin-top: 30px;
     }
     .el-select /deep/ .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
       color: #ffffff;
+      opacity: 0.6;
     }
   }
 }

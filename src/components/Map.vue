@@ -11,7 +11,7 @@
         <el-dropdown-menu slot="dropdown">
           <!-- <el-dropdown-item>
             <p @click="chooseCn()">{{$t('map.cn')}}</p>
-          </el-dropdown-item> -->
+          </el-dropdown-item>-->
           <el-dropdown-item>
             <p @click="chooseEn()">{{$t('map.en')}}</p>
           </el-dropdown-item>
@@ -22,7 +22,7 @@
 
     <div id="mapWorld"></div>
 
-    <div class="right">
+    <!-- <div class="right">
       <div class="head-block">
         <b>Head Block:</b>
         <p>{{BlockData.length === 0 ? placeHolder : BlockData[0].height}}</p>
@@ -65,11 +65,11 @@
           <p>value: {{getTranscationData().length <= 1 ? placeHolder : TranscationData[1].value}} URAC</p>
         </div>
       </div>
-    </div>
+    </div>-->
     <div class="mapCon">
       <a @click.prevent="LoginPage('Seller')" class="seller">
         <span>
-          <img src="/static/img/uranus/seller.png">
+          <i class="iconfont icon-map-seller"></i>
           {{$t('map.seller')}}
           <i class="el-icon-arrow-right"></i>
         </span>
@@ -77,7 +77,7 @@
       </a>
       <a @click.prevent="LoginPage('Buyer')" class="buyer">
         <span>
-          <img src="/static/img/uranus/buyer.png">
+          <i class="iconfont icon-map-buyer"></i>
           {{$t('map.buyer')}}
           <i class="el-icon-arrow-right"></i>
         </span>
@@ -86,7 +86,7 @@
       <!-- <a @click.prevent="LoginPage('Developer')" class="developer"> -->
       <a @click.prevent="construction()" class="developer">
         <span>
-          <img src="/static/img/uranus/developer.png">
+          <i class="iconfont icon-map-developer"></i>
           {{$t('map.developer')}}
           <i class="el-icon-arrow-right"></i>
         </span>
@@ -153,12 +153,12 @@ export default {
         { name: '7', value: [138.252924, 36.204824, 90] },
         { name: '8', value: [105.318756, 61.52401, 90] },
         { name: '9', value: [-95.712891, 37.09024, 90] },
-          { name: '10', value: [37.896, 55.435, 90] },
-          { name: '11', value: [40.435, 56.049, 90] },
-          { name: '12', value: [50.075, 57.483, 90] },
+        { name: '10', value: [37.896, 55.435, 90] },
+        { name: '11', value: [40.435, 56.049, 90] },
+        { name: '12', value: [50.075, 57.483, 90] },
 
-          { name: '13', value: [103.77, 1.343, 100] },
-          { name: '14', value: [101.86, 4.7105, 100] }
+        { name: '13', value: [103.77, 1.343, 100] },
+        { name: '14', value: [101.86, 4.7105, 100] }
       ]
 
       myChartMap2.setOption({
@@ -171,14 +171,22 @@ export default {
             // 定义样式
             normal: {
               // 普通状态下的样式
-              areaColor: '#6699CC',
-              borderColor: '#fff'
+              areaColor: '#424B00',
+              borderColor: '#000',
             },
             emphasis: {
               // 高亮状态下的样式
-              areaColor: 'lightgreen'
+              areaColor: '#627100',
+            }
+          },
+          label: {
+            emphasis: {
+              textStyle: {
+                color: '#A2AE44'
+              }
             }
           }
+
         },
         // hover显示目标数据
         // tooltip: {
@@ -188,9 +196,9 @@ export default {
         //   }
         // },
         // 图表背景色
-        backgroundColor: '#ffffff',
+        backgroundColor: '#161618',
         // 标志颜色
-        color: 'red',
+        color: '#A2AE44',
         // 新建散点图series
         series: [
           {
@@ -211,44 +219,44 @@ export default {
       auth.setCurLang(this.langCode)
       this.$router.push({ name: 'Register' })
     },
-    lastedBlock() {
-      this.BlockData = []
-      block.getLastedBlock(this.langCode, { 'height': -1 })
-        .then(blockData => {
-          if (blockData.data.success) {
-            const data = blockData.data.data
-            this.BlockData.push(data)
-            this.TranscationData = data.transactions
-            block.getLastedBlock(this.$store.getters.lang, { 'height': data.height - 1 })
-              .then(blockData => {
-                if (blockData.data.success) {
-                  this.BlockData.push(blockData.data.data)
-                }
-              })
-          }
-        })
-    },
-    getTranscationData() {
-      return this.TranscationData
-    },
-    refushBlockData() {
-      // this.timer = setInterval(() => {
-      //   this.lastedBlock()
-      // }, 5000)
-    }
+    // lastedBlock() {
+    //   this.BlockData = []
+    //   block.getLastedBlock(this.langCode, { 'height': -1 })
+    //     .then(blockData => {
+    //       if (blockData.data.success) {
+    //         const data = blockData.data.data
+    //         this.BlockData.push(data)
+    //         this.TranscationData = data.transactions
+    //         block.getLastedBlock(this.$store.getters.lang, { 'height': data.height - 1 })
+    //           .then(blockData => {
+    //             if (blockData.data.success) {
+    //               this.BlockData.push(blockData.data.data)
+    //             }
+    //           })
+    //       }
+    //     })
+    // },
+    // getTranscationData() {
+    //   return this.TranscationData
+    // },
+    // refushBlockData() {
+    //   // this.timer = setInterval(() => {
+    //   //   this.lastedBlock()
+    //   // }, 5000)
+    // }
   },
   mounted() {
     this.initEchart()
   },
-  created() {
-    this.lastedBlock()
-    this.refushBlockData()
-  },
-  beforeDestroy() {
-    if (this.timer) {
-      clearInterval(this.timer)
-    }
-  }
+//   created() {
+//     this.lastedBlock()
+//     this.refushBlockData()
+//   },
+//   beforeDestroy() {
+//     if (this.timer) {
+//       clearInterval(this.timer)
+//     }
+//   }
 }
 </script>
 
@@ -269,7 +277,7 @@ export default {
 }
 .mapHead {
   height: 60px;
-  background: #252525;
+  background:rgba(176,192,255,0.05);
   width: 100%;
   position: fixed;
   top: 0;
@@ -288,7 +296,7 @@ export default {
     margin-right: 30px;
     text-align: center;
     float: right;
-    color: #81a028;
+    color: #a2ae44;
   }
   .register {
     display: block;
@@ -298,107 +306,107 @@ export default {
     text-align: center;
     margin-right: 30px;
     float: right;
-    color: #81a028;
+    color: #a2ae44;
     cursor: pointer;
   }
 }
-.right {
-  min-width: 200px;
-  width: 10%;
-  height: 100%;
-  position: fixed;
-  right: 20px;
-  top: 80px;
-  z-index: 999;
-  .head-block {
-    background: #ffffff;
-    border: 1px solid #dcdcdc;
-    border-radius: 3px;
-    width: 205px;
-    padding: 15px;
-    height: 170px;
-    font-family: Arial-BoldMT;
-    font-size: 14px;
-    color: #5d5d5d;
-    text-align: left;
-    p {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: 135px;
-    }
-  }
-  .block {
-    background: #ffffff;
-    border-radius: 3px;
-    width: 150px;
-    h3 {
-      font-family: ArialMT;
-      font-size: 16px;
-      color: #545454;
-      text-align: center;
-      line-height: 24px;
-    }
-    #show {
-      display: none;
-    }
-    .text {
-      background: #ffffff;
-      border: 1px solid #f2f2f2;
-      width: 160px;
-      height: 150px;
-      padding: 15px;
-      box-shadow: 10px 10px 5px #f2f2f2;
-      margin-bottom: 15px;
-      p {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        width: 135px;
-      }
-    }
-  }
-  .block:hover .text {
-    display: block !important;
-  }
-  .transactions {
-    background: #f2f2f2;
-    border-radius: 3px;
-    width: 190px;
-    margin-top: 40px;
-    h3 {
-      background: #ffffff;
-      margin: 5px 0;
-      padding-bottom: 15px;
-      font-family: ArialMT;
-      font-size: 16px;
-      color: #545454;
-      letter-spacing: 0;
-      text-align: center;
-      line-height: 24px;
-    }
-    #show {
-      display: none;
-    }
-    .text {
-      background: #ffffff;
-      width: 185px;
-      height: 145px;
-      padding: 15px;
-      margin-bottom: 5px;
-      border: 1px solid #f2f2f2;
-      p {
-        width: 165px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-    }
-  }
-  .transactions:hover .text {
-    display: block !important;
-  }
-}
+// .right {
+//   min-width: 200px;
+//   width: 10%;
+//   height: 100%;
+//   position: fixed;
+//   right: 20px;
+//   top: 80px;
+//   z-index: 999;
+//   .head-block {
+//     background: #ffffff;
+//     border: 1px solid #dcdcdc;
+//     border-radius: 3px;
+//     width: 205px;
+//     padding: 15px;
+//     height: 170px;
+//     font-family: Arial-BoldMT;
+//     font-size: 14px;
+//     color: #5d5d5d;
+//     text-align: left;
+//     p {
+//       overflow: hidden;
+//       text-overflow: ellipsis;
+//       white-space: nowrap;
+//       width: 135px;
+//     }
+//   }
+//   .block {
+//     background: #ffffff;
+//     border-radius: 3px;
+//     width: 150px;
+//     h3 {
+//       font-family: ArialMT;
+//       font-size: 16px;
+//       color: #545454;
+//       text-align: center;
+//       line-height: 24px;
+//     }
+//     #show {
+//       display: none;
+//     }
+//     .text {
+//       background: #ffffff;
+//       border: 1px solid #f2f2f2;
+//       width: 160px;
+//       height: 150px;
+//       padding: 15px;
+//       box-shadow: 10px 10px 5px #f2f2f2;
+//       margin-bottom: 15px;
+//       p {
+//         overflow: hidden;
+//         text-overflow: ellipsis;
+//         white-space: nowrap;
+//         width: 135px;
+//       }
+//     }
+//   }
+//   .block:hover .text {
+//     display: block !important;
+//   }
+//   .transactions {
+//     background: #f2f2f2;
+//     border-radius: 3px;
+//     width: 190px;
+//     margin-top: 40px;
+//     h3 {
+//       background: #ffffff;
+//       margin: 5px 0;
+//       padding-bottom: 15px;
+//       font-family: ArialMT;
+//       font-size: 16px;
+//       color: #545454;
+//       letter-spacing: 0;
+//       text-align: center;
+//       line-height: 24px;
+//     }
+//     #show {
+//       display: none;
+//     }
+//     .text {
+//       background: #ffffff;
+//       width: 185px;
+//       height: 145px;
+//       padding: 15px;
+//       margin-bottom: 5px;
+//       border: 1px solid #f2f2f2;
+//       p {
+//         width: 165px;
+//         overflow: hidden;
+//         text-overflow: ellipsis;
+//         white-space: nowrap;
+//       }
+//     }
+//   }
+//   .transactions:hover .text {
+//     display: block !important;
+//   }
+// }
 .mapCon {
   height: 150px;
   min-width: 820px;
@@ -414,25 +422,22 @@ export default {
     min-width: 250px;
     min-height: 150px;
     border-radius: 15px;
+    background: rgba(176, 192, 255, 0.1);
     margin: 15px;
-    opacity: 0.7;
-    color: #000000;
+    color: #a2ae44;
     text-align: center;
     cursor: pointer;
     span {
       display: block;
       margin-top: 35px;
-      height: 30px;
+      height: 50px;
       font-family: PingFang-SC-Medium;
       font-size: 30px;
-      color: #ffffff;
+      color: #a2ae44;
       text-align: center;
       line-height: 28px;
-      img {
-        display: inline-block;
-        height: 30px;
-        width: 30px;
-        margin-right: 10px;
+      .iconfont {
+        font-size: 50px;
       }
     }
     p {
@@ -440,25 +445,30 @@ export default {
       height: 50px;
       font-family: PingFang-SC-Medium;
       font-size: 18px;
-      color: #ffffff;
+      color: #a2ae44;
       letter-spacing: 0;
       text-align: center;
       line-height: 28px;
     }
   }
   a:hover {
-    opacity: 1;
     width: 35%;
     transition: 1s;
+    opacity: 0.66;
+    background: #627100;
+    span,
+    p {
+      color: #ffffff;
+    }
   }
-  .seller {
-    background: #97c158;
-  }
-  .buyer {
-    background: #7692d9;
-  }
-  .developer {
-    background: #ffbd26;
-  }
+  //   .seller {
+  //     background: #97c158;
+  //   }
+  //   .buyer {
+  //     background: #7692d9;
+  //   }
+  //   .developer {
+  //     background: #ffbd26;
+  //   }
 }
 </style>

@@ -236,8 +236,8 @@ export default {
 .login {
   width: 100%;
   height: 100%;
-  background: no-repeat url(/static/img/uranus/bg.png);
-  background-size: cover;
+  background: #161618;
+//   background-size: cover;
   text-align: center;
   position: absolute;
   .back {
@@ -247,11 +247,13 @@ export default {
     left: 50px;
     top: 50px;
     a {
-      color: #1890ff;
-      font-size: 18px;
+      color: #627100;
       i {
         font-size: 28px;
       }
+    }
+    a:hover {
+        color: #A2AE44
     }
   }
   .loginHead {
@@ -283,18 +285,20 @@ export default {
         cursor: pointer;
 
         span {
+          font-family: Source-Sans-Pro-Bold;
+          font-weight: 300;
           display: inline-block;
           height: 30px;
           font-size: 16px;
           line-height: 24px;
-          color: rgba(0, 0, 0, 0.65);
+          color: #c8c8c8;
           text-align: center;
         }
         .chooseBtn {
           font-family: Source-Sans-Pro-Bold;
           font-weight: 500;
-          border-bottom: 2px solid #81a028;
-          color: #81a028;
+          border-bottom: 2px solid #c8c8c8;
+          color: #c8c8c8;
           transition: all 0.5s;
         }
       }
@@ -308,12 +312,14 @@ export default {
       .input-group {
         width: 380px;
         .phoneHead {
-          background: #ffffff;
-          border: 1px solid #d9d9d9;
+          background: #1d1e23;
+          border: 1px solid rgba(255, 255, 255, 0.1);
           border-right: none;
           border-radius: 4px 0 0 4px;
           width: 70px;
           height: 38px;
+          color: #ffffff;
+          opacity: 0.6;
         }
       }
       .phoneIpt {
@@ -321,13 +327,15 @@ export default {
       }
     }
     input {
-      background: #ffffff;
-      border: 1px solid #d9d9d9;
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
       width: 378px;
       height: 38px;
       margin: 12px auto;
       padding-left: 20px;
+      color: #ffffff;
+      opacity: 0.6;
     }
     .forgetPwd {
       font-size: 14px;
@@ -337,7 +345,8 @@ export default {
       margin-left: 205px;
     }
     .loginBtn {
-      background: #1890ff;
+      background: #424b00;
+      border: 1px solid #424b00;
       border-radius: 4px;
       width: 380px;
       height: 40px;
@@ -347,7 +356,7 @@ export default {
       color: #ffffff;
     }
     .prompt {
-      color: red;
+      color: #ff5640;
       text-align: left;
       padding-left: 20px;
     }
