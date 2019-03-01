@@ -312,7 +312,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -336,7 +336,7 @@ export default {
       background: rgba(36, 99, 255, 0.2);
       border: 1px solid rgba(24, 144, 255, 0.3);
       border-radius: 4px;
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-col {
       display: flex;
@@ -369,12 +369,12 @@ export default {
       p {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
       }
     }
     .table-head {
-      color: #ffffff;
+      color: #c8c8c8;
       font-weight: 500;
       font-size: 16px;
       margin: 0;
@@ -391,7 +391,7 @@ export default {
     }
     .blue-box {
       .el-table {
-        color: #ffffff;
+        color: #c8c8c8;
         background-color: rgba(101, 143, 247, 0);
       }
       .el-table /deep/ tr:hover td {
@@ -404,7 +404,7 @@ export default {
       }
       .el-table /deep/ td {
         border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
     }
     .transaction-foot {
@@ -414,15 +414,15 @@ export default {
       }
       .el-pagination /deep/ .btn-prev {
       background: rgba(36, 99, 255, 0);
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-pagination /deep/ .btn-next {
       background: rgba(36, 99, 255, 0);
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-pagination /deep/ .el-pager li {
       background: rgba(36, 99, 255, 0);
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-pagination /deep/ .el-pager li.active {
       color: #A2AE44;

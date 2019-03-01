@@ -10,9 +10,13 @@
     </el-row>
     <el-row class="wallet-body">
       <el-col :span="18">
-        <p><i class="iconfont icon-balance"></i>{{ $t("wallet.balance") }} {{ balance }} URAC</p>
         <p>
-          <i class="iconfont icon-address"></i>{{ $t("wallet.address") }} {{ address }}
+          <i class="iconfont icon-balance"></i>
+          {{ $t("wallet.balance") }} {{ balance }} URAC
+        </p>
+        <p>
+          <i class="iconfont icon-address"></i>
+          {{ $t("wallet.address") }} {{ address }}
           <el-tooltip class="item" effect="dark" content="Copy address" placement="right">
             <u class="copy" @click="copy()">{{ $t("wallet.copy") }}</u>
           </el-tooltip>
@@ -31,7 +35,10 @@
       <el-col class="transaction-head">
         <p>
           {{ $t("wallet.transactionDetails") }}
-          <span :class="{tableType:!tableType}" @click="tableType = false">Send</span>
+          <span
+            :class="{tableType:!tableType}"
+            @click="tableType = false"
+          >Send</span>
           <span :class="{tableType:tableType}" @click="tableType = true">Recive</span>
         </p>
         <!-- transactions details box -->
@@ -81,7 +88,7 @@
             <template slot-scope="scope">
               <p class="overflow">{{ scope.row.from }}</p>
             </template>
-          </el-table-column> -->
+          </el-table-column>-->
           <el-table-column prop="to" :label="$t('wallet.to')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
@@ -175,7 +182,7 @@
             <template slot-scope="scope">
               <p class="overflow">{{ scope.row.to }}</p>
             </template>
-          </el-table-column> -->
+          </el-table-column>-->
           <el-table-column prop="value" :label="$t('wallet.value')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
@@ -184,7 +191,7 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column prop="fee" :label="$t('wallet.fee')"  min-width="150">
+          <el-table-column prop="fee" :label="$t('wallet.fee')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-fee"></i>
@@ -314,7 +321,7 @@ export default {
       const fields = Object.keys(row)
       fields.map(field => {
         let value = row[field]
-        if (field ==='createTime' || field === 'updateTime') {
+        if (field === 'createTime' || field === 'updateTime') {
           value = moment(row[field]).format('YYYY-MM-DD HH:mm:ss')
         }
         const fieldData = {
@@ -366,7 +373,7 @@ export default {
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -386,7 +393,7 @@ export default {
       padding-top: 20px;
       padding-left: 30px;
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 30px;
       text-align: left;
       i {
@@ -395,7 +402,7 @@ export default {
       }
     }
     .copy {
-      color: #627100;
+      color: #A2AE44;
       display: inline-block;
       cursor: pointer;
       padding-left: 30px;
@@ -405,6 +412,10 @@ export default {
       background: #424b00;
       border: 1px solid #424b00;
       border-radius: 5px;
+    }
+    .el-button:hover {
+      background: #627100;
+      border: 1px solid #627100;
     }
   }
   .transaction {
@@ -420,7 +431,7 @@ export default {
         width: 100%;
       }
       .table-head {
-        color: #ffffff;
+        color: #c8c8c8;
         font-weight: 500;
         font-size: 16px;
         margin: 0;
@@ -435,7 +446,7 @@ export default {
       p {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
         span {
           display: inline-block;
@@ -446,22 +457,23 @@ export default {
           text-align: center;
           background: rgba(101, 143, 247, 0);
           /*box-shadow: inset 0 0 22px 0 #2463ff;*/
-            border-bottom: 1px solid #fff;
+          border-bottom: 1px solid #fff;
           cursor: pointer;
         }
         .tableType {
-            color: #627100;
-            border-bottom: 1px solid #627100;
+          color: #A2AE44;
+          font-weight: 500;
+          border-bottom: 1px solid #A2AE44;
         }
       }
     }
     .blue-box {
       .el-table {
-        color: #ffffff;
+        color: #c8c8c8;
         background-color: rgba(101, 143, 247, 0);
       }
       .el-table /deep/ tr:hover td {
-        background:rgba(176,192,255,0.05) !important;
+        background: rgba(176, 192, 255, 0.05) !important;
       }
       .el-table /deep/ th,
       .el-table /deep/ tr {
@@ -470,7 +482,7 @@ export default {
       }
       .el-table /deep/ td {
         border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
     }
     .transaction-foot {
@@ -479,20 +491,20 @@ export default {
         height: 50px;
       }
       .el-pagination /deep/ .btn-prev {
-      background: rgba(36, 99, 255, 0);
-      color: #ffffff;
-    }
-    .el-pagination /deep/ .btn-next {
-      background: rgba(36, 99, 255, 0);
-      color: #ffffff;
-    }
-    .el-pagination /deep/ .el-pager li {
-      background: rgba(36, 99, 255, 0);
-      color: #ffffff;
-    }
-    .el-pagination /deep/ .el-pager li.active {
-      color: #A2AE44;
-    }
+        background: rgba(36, 99, 255, 0);
+        color: #c8c8c8;
+      }
+      .el-pagination /deep/ .btn-next {
+        background: rgba(36, 99, 255, 0);
+        color: #c8c8c8;
+      }
+      .el-pagination /deep/ .el-pager li {
+        background: rgba(36, 99, 255, 0);
+        color: #c8c8c8;
+      }
+      .el-pagination /deep/ .el-pager li.active {
+        color: #a2ae44;
+      }
     }
   }
 }

@@ -261,7 +261,7 @@ export default {
           }
         ]
       })
-      window.onresize = function() {
+      window.onresize = function () {
         myChart.resize()
       }
     },
@@ -324,16 +324,15 @@ export default {
 
 <style lang="scss" scoped>
 .Buyer {
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   min-width: 1130px;
   width: 100%;
   .content-title {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
     height: 50px;
-    margin: 10px 10px 0;
+    margin: 2px 2px 0;
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
@@ -351,11 +350,10 @@ export default {
   .content {
     padding: 0;
     .shop {
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+      background: #161618;
       border-radius: 2px;
       min-width: 1130px;
-      margin: 10px;
+      margin: 2px;
       padding: 30px;
       p {
         height: 40px;
@@ -369,7 +367,7 @@ export default {
       .more {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #1890ff;
+        color: #a2ae44;
         line-height: 24px;
         text-align: right;
       }
@@ -444,7 +442,7 @@ export default {
               font-family: Source-Sans-Pro-Bold;
               font-weight: 500;
               font-size: 14px;
-              color: #1890ff;
+              color: #a2ae44;
               letter-spacing: 0;
               line-height: 22px;
               text-align: left;
@@ -460,8 +458,8 @@ export default {
               line-height: 22px;
             }
             .el-button {
-              background: rgba(101, 143, 247, 0);
-              box-shadow: inset 0 0 22px 0 #2463ff;
+              background: #424b00;
+              border: 1px solid #424b00;
               border-radius: 5px;
               width: 120px;
               border: none;
@@ -476,10 +474,9 @@ export default {
       padding: 15px;
       min-width: 1130px;
       height: 400px;
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+      background: #161618;
       border-radius: 2px;
-      margin: 10px;
+      margin: 2px;
       .powerTitle p {
         height: 40px;
         line-height: 40px;
@@ -528,7 +525,7 @@ export default {
           cursor: pointer;
         }
         .active {
-          color: #1890ff;
+          color: #a2ae44;
           font-weight: bolder;
         }
       }

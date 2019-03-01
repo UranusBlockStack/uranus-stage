@@ -379,8 +379,7 @@ export default {
           border-radius: 4px 0 0 4px;
           width: 70px;
           height: 38px;
-          color: #ffffff;
-          opacity: 0.6;
+          color: #c8c8c8;
         }
       }
       .phoneIpt {
@@ -395,7 +394,7 @@ export default {
       height: 38px;
       margin: 12px auto;
       padding-left: 20px;
-      color: #ffffff;
+      color: #c8c8c8;
       opacity: 0.6;
     }
     .inputCode {
@@ -408,7 +407,7 @@ export default {
       width: 110px;
       height: 38px;
       font-size: 14px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 22px;
       text-align: center;
     }
@@ -419,7 +418,7 @@ export default {
     .disabledGet {
       background-color: #627100;
       border-color: #627100;
-      color: #ffffff;
+      color: #c8c8c8;
       cursor: not-allowed;
     }
     .registerBtn {
@@ -431,7 +430,7 @@ export default {
       margin-left: 0;
       margin-top: 24px;
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 24px;
     }
     .registerBtn:hover {

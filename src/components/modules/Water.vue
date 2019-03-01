@@ -1,5 +1,5 @@
 <template>
-    <div style="width:100%;height:160px;" ref="echarts"></div>
+  <div style="width:100%;height:160px;" ref="echarts"></div>
 </template>
 
 <script>
@@ -11,7 +11,7 @@ export default {
     chartData: {}
   },
   methods: {
-    drawChart () {
+    drawChart() {
       const vm = this
       var myChart = this.$echarts.init(this.$refs.echarts)
       myChart.setOption({
@@ -25,12 +25,13 @@ export default {
                 direction: 'left',
                 itemStyle: {
                   normal: {
-                    color: '#1890FF'
+                    color: '#283a66'
                   }
                 },
                 label: {
-                  formatter: ['Used', this.chartData*100 + '%' ].join('\n'),
-                  fontSize: '22'
+                  formatter: ['Used', this.chartData * 100 + '%'].join('\n'),
+                  fontSize: '22',
+                  color: '#c8c8c8'
                 }
               }
             ],
@@ -38,14 +39,15 @@ export default {
               show: false
             },
             backgroundStyle: {
-              borderColor: '#1890FF',
-              borderWidth: 3
+              borderColor: '#454545',
+              borderWidth: 3,
+              color: '#25262F'
             }
           }
         ]
-        
+
       })
-      window.onresize = function() {
+      window.onresize = function () {
         myChart.resize()
       }
     }

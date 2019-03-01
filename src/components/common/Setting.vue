@@ -778,7 +778,7 @@ export default {
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -799,7 +799,7 @@ export default {
     p {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 50px;
       text-align: left;
       padding-left: 32px;
@@ -811,7 +811,7 @@ export default {
     .contentUn {
       font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 22px;
       text-align: left;
     }
@@ -827,7 +827,7 @@ export default {
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     p {
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 50px;
       text-align: left;
       padding-left: 32px;
@@ -840,13 +840,16 @@ export default {
     .contentUn {
       font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 22px;
       text-align: left;
     }
     p > .el-button {
       color: #627100;
       margin-top: 45px;
+      :hover {
+          color: #A2AE44;
+      }
     }
   }
   .code-box {
@@ -855,11 +858,13 @@ export default {
       margin-top: 30px;
     }
     .el-select /deep/ .el-input__inner {
-      background: #1d1e23;
+      background: #25262F;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #ffffff;
-      opacity: 0.6;
+      color: #627100;
+    }
+    .el-select /deep/ .el-select__caret {
+        color: #627100;
     }
   }
 }

@@ -187,7 +187,7 @@ export default {
     font-size: 16px;
     .treeview {
       a {
-        color: #ffffff;
+        color: #c8c8c8;
         font-size:16px;
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
@@ -216,7 +216,7 @@ export default {
           padding-left: 30px;
           li:hover {
               >a {
-                  color: #a2af3c;
+                  color: #a2ae44;
                   background: rgba(101, 143, 247, 0);
               }
           }
@@ -226,7 +226,7 @@ export default {
     .treeview:hover {
       background: rgba(101, 143, 247, 0);
       > a {
-        color: #a2af3c;
+        color: #a2ae44;
         background: rgba(101, 143, 247, 0);
         // i {
         //   font-size: 35px;

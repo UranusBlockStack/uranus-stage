@@ -29,7 +29,10 @@
               {{currentRegion}}
               <span class="fa fa-caret-down"></span>
             </button>
-            <ul class="dropdown-menu" style="max-height: 250px; overflow: scroll; overflow-x: hidden;">
+            <ul
+              class="dropdown-menu"
+              style="max-height: 250px; overflow: scroll; overflow-x: hidden;"
+            >
               <li v-for="(item,index) in regions" :key="index">
                 <a href="#" :id="item.prefix" @click="selectRegion(item.prefix)">{{ item.fullName }}</a>
               </li>
@@ -237,7 +240,7 @@ export default {
   width: 100%;
   height: 100%;
   background: #161618;
-//   background-size: cover;
+  //   background-size: cover;
   text-align: center;
   position: absolute;
   .back {
@@ -253,7 +256,7 @@ export default {
       }
     }
     a:hover {
-        color: #A2AE44
+      color: #a2ae44;
     }
   }
   .loginHead {
@@ -312,14 +315,13 @@ export default {
       .input-group {
         width: 380px;
         .phoneHead {
-          background: #1d1e23;
+          background: #25262F;
           border: 1px solid rgba(255, 255, 255, 0.1);
           border-right: none;
           border-radius: 4px 0 0 4px;
           width: 70px;
           height: 38px;
-          color: #ffffff;
-          opacity: 0.6;
+          color: #c8c8c8;
         }
       }
       .phoneIpt {
@@ -327,15 +329,14 @@ export default {
       }
     }
     input {
-      background: #1d1e23;
+      background: #25262F;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
       width: 378px;
       height: 38px;
       margin: 12px auto;
       padding-left: 20px;
-      color: #ffffff;
-      opacity: 0.6;
+      color: #c8c8c8;
     }
     .forgetPwd {
       font-size: 14px;
@@ -353,7 +354,11 @@ export default {
       margin-left: 0;
       margin-top: 24px;
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
+    }
+    .loginBtn:hover {
+      background: #627100;
+      border: 1px solid #627100;
     }
     .prompt {
       color: #ff5640;

@@ -9,7 +9,7 @@ export default {
 
 <style lang="scss" scoped>
 .NotFound {
-    background: url(/static/img/uranus/NotFound/404.png) no-repeat;
+    background: url(/static/img/uranus/NotFound/error.png) no-repeat;
     background-size: cover;
     height: 100%;
     width: 100%;

@@ -615,7 +615,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -638,13 +638,13 @@ export default {
         width: 100%;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 24px;
       }
       h4 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         font-weight: bold;
         line-height: 24px;
         text-align: left;
@@ -652,7 +652,7 @@ export default {
       p {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         letter-spacing: 0;
         line-height: 24px;
         text-align: left;
@@ -686,7 +686,7 @@ export default {
       background: #161618;
     border-radius: 2px;
       h2 {
-        color: #ffffff;
+        color: #c8c8c8;
       }
     }
     .restRes {
@@ -708,7 +708,7 @@ export default {
         margin-bottom: 0;
       }
       .el-table {
-        color: #ffffff;
+        color: #c8c8c8;
         background-color: rgba(101, 143, 247, 0);
       }
       .el-table /deep/ tr:hover td {
@@ -721,7 +721,7 @@ export default {
       }
       .el-table /deep/ td {
         border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
       .overflow {
         overflow: hidden;
@@ -734,7 +734,7 @@ export default {
         margin: 30px auto;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         text-align: left;
         line-height: 24px;
       }
@@ -762,7 +762,7 @@ export default {
         float: right;
       }
       .table-head {
-        color: #ffffff;
+        color: #c8c8c8;
         font-weight: 500;
         font-size: 16px;
         margin: 0;

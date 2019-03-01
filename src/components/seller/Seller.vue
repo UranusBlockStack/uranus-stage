@@ -303,7 +303,7 @@ export default {
               symbolSize: [10, 20],
               symbolOffset: [0, 5],
               lineStyle: {
-                color: '#ffffff'
+                color: '#c8c8c8'
               }
             }
           }
@@ -327,7 +327,7 @@ export default {
               symbolSize: [10, 20],
               symbolOffset: [0, 15],
               lineStyle: {
-                color: '#ffffff'
+                color: '#c8c8c8'
               }
             }
           }
@@ -385,16 +385,18 @@ export default {
   border-radius: 2px;
   min-width: 1130px;
   width: 100%;
-  min-width: 1160px;
   .content-title {
     background: #161618;
     border-radius: 2px;
     height: 50px;
     margin: 2px 2px 0;
+    .title {
+        height: 50px;
+    }
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -416,7 +418,6 @@ export default {
       justify-content: space-between;
       .active {
         color: #A2AE44;
-        font-weight: bolder;
       }
       .consumption {
         width: 50%;
@@ -425,7 +426,7 @@ export default {
         height: 400px;
         background: #161618;
         border-radius: 2px;
-        color: #ffffff;
+        color: #c8c8c8;
         p {
           padding-left: 30px;
           padding-top: 20px;
@@ -459,7 +460,7 @@ export default {
         height: 400px;
         background: #161618;
         border-radius: 2px;
-        color: #ffffff;
+        color: #c8c8c8;
         p {
           padding-left: 30px;
           padding-top: 20px;
@@ -492,7 +493,7 @@ export default {
       margin-top: 2px;
       background: #161618;
       border-radius: 2px;
-      color: #ffffff;
+      color: #c8c8c8;
       p {
         padding-left: 30px;
         padding-top: 20px;
@@ -511,13 +512,14 @@ export default {
           height: 260px;
           margin: 10px;
           color: #979797;
+          opacity: 0.8;
         }
       }
     }
     .record {
       background: #161618;
       border-radius: 2px;
-      color: #ffffff;
+      color: #c8c8c8;
       min-width: 1130px;
       margin: 2px auto;
       padding: 30px;
@@ -534,10 +536,10 @@ export default {
         width: 100%;
       }
       .el-table {
-        color: #ffffff;
+        color: #c8c8c8;
       }
       .table-head {
-        color: #ffffff;
+        color: #c8c8c8;
         font-weight: 500;
         font-size: 16px;
         margin: 0;
@@ -547,7 +549,7 @@ export default {
         }
       }
       .el-table {
-        color: #ffffff;
+        color: #c8c8c8;
         background-color: rgba(101, 143, 247, 0);
       }
       .el-table /deep/ tr:hover td {
@@ -560,22 +562,22 @@ export default {
       }
       .el-table /deep/ td {
         border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
       .el-pagination {
         margin-top: 20px;
       }
       .el-pagination /deep/ .btn-prev {
         background: rgba(36, 99, 255, 0);
-        color: #ffffff;
+        color: #c8c8c8;
       }
       .el-pagination /deep/ .btn-next {
         background: rgba(36, 99, 255, 0);
-        color: #ffffff;
+        color: #c8c8c8;
       }
       .el-pagination /deep/ .el-pager li {
         background: rgba(36, 99, 255, 0);
-        color: #ffffff;
+        color: #c8c8c8;
       }
       .el-pagination /deep/ .el-pager li.active {
         color: #A2AE44;

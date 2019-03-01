@@ -140,7 +140,7 @@ export default {
         color: #627100;  
       }
       :hover {
-        color: #1890ff;
+        color: #A2AE44;
       }
     }
     .help_dropdown {
@@ -152,7 +152,7 @@ export default {
         line-height: 50px;
       }
       :hover {
-        color: #1890ff;
+        color: #A2AE44;
       }
       .el-dropdown {
         color: #627100;

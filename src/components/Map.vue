@@ -454,8 +454,7 @@ export default {
   a:hover {
     width: 35%;
     transition: 1s;
-    opacity: 0.66;
-    background: #627100;
+    background: rgba(98, 113, 0, 0.66);
     span,
     p {
       color: #ffffff;

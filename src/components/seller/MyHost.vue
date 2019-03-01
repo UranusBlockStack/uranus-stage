@@ -540,7 +540,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -559,15 +559,15 @@ export default {
     padding: 15px;
     .el-pagination /deep/ .btn-prev {
       background: rgba(36, 99, 255, 0);
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-pagination /deep/ .btn-next {
       background: rgba(36, 99, 255, 0);
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-pagination /deep/ .el-pager li {
       background: rgba(36, 99, 255, 0);
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-pagination /deep/ .el-pager li.active {
       color: #A2AE44;
@@ -576,7 +576,7 @@ export default {
       margin-bottom: 0;
     }
     .el-table {
-      color: #ffffff;
+      color: #c8c8c8;
       background-color: rgba(101, 143, 247, 0);
     }
     .el-table /deep/ tr:hover td {
@@ -589,13 +589,13 @@ export default {
     }
     .el-table /deep/ td {
       border: none;
-      border-top: 1px solid rgba(255, 255, 255, 0.2);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
     .el-select /deep/ .el-input__inner {
       background: #1d1e23;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #ffffff;
+      color: #c8c8c8;
       font-weight: 400;
     }
     // .el-button {
@@ -660,7 +660,7 @@ export default {
     }
     .table-head {
       text-align: center;
-      color: #ffffff;
+      color: #c8c8c8;
       font-weight: 500;
       font-size: 16px;
       margin: 0;

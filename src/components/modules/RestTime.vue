@@ -81,7 +81,7 @@ export default {
 
 <style lang="scss" scoped>
 p {
-    color: #ffffff;
+    color: #c8c8c8;
 }
 .false {
   b {
@@ -90,9 +90,10 @@ p {
     line-height: 30px;
     width: 50px;
     height: 30px;
-    background: #0084FF;
+    background: #333440;
     border-radius: 3px;
     font-size: 20px;
+    font-weight: 500;
     color: #ffffff;
   }
 }
@@ -106,6 +107,7 @@ p {
     background: #f54c46;
     border-radius: 3px;
     font-size: 20px;
+    font-weight: 500;
     color: #ffffff;
   }
 }
