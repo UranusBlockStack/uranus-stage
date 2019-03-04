@@ -147,7 +147,7 @@
                     <i class="iconfont icon-attributes"></i>
                     {{ $t("buyer.deploy.attributes") }}
                   </span>
-                        <el-select v-model="deployForm.innerOuter">
+                        <el-select v-model="deployForm.netwrokType">
                             <el-option
                                     v-for="item in networkTypeSel"
                                     :key="item.value"
@@ -193,7 +193,7 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row class="margin-top">
+            <el-row>
               <el-col :span="10">
                 <el-form-item :label="$t('buyer.deploy.memory')">
                   <span slot="label">
@@ -446,7 +446,7 @@ export default {
         mem: '16',
         network: '512G',
         dateRange: '',
-        innerOuter: ''
+        netwrokType: ''
       },
       imageServerUrl: this.$store.state.imageServerUrl,
       imgsrc: '',
@@ -570,7 +570,7 @@ export default {
 
       const NetworkTypeData = ServerConfigData.NetworkInnerOuter
       this.networkTypeSel = WrapDropDownData(NetworkTypeData, null)
-      this.deployForm.innerOuter = this.networkTypeSel[0].value
+      this.deployForm.netwrokType = this.networkTypeSel[0].value
     },
     getOrderOfApp() {
       app.appPurchaseInfo(auth.getCurLang(), this.appId).then(purchaseInfo => {
