@@ -137,7 +137,7 @@
                     <i class="iconfont icon-attributes"></i>
                     {{$t('buyer.resourceMarket.attributes')}}
                   </span>
-                        <el-select v-model="deployForm.innerOuter">
+                        <el-select v-model="deployForm.networkType">
                             <el-option
                                     v-for="item in networkTypeSel"
                                     :key="item.value"
@@ -288,7 +288,7 @@ export default {
         network: '512G',
         dateRange: '',
         deployStatus: '',
-        innerOuter: ''
+        networkType: ''
       },
       regionSel: [],
       cpuSel: [],
@@ -363,7 +363,7 @@ export default {
 
       const NetworkTypeData = ServerConfigData.NetworkInnerOuter
       this.networkTypeSel = WrapDropDownData(NetworkTypeData, null)
-      this.deployForm.innerOuter = this.networkTypeSel[0].value
+      this.deployForm.networkType = this.networkTypeSel[0].value
     },
 
     setRegionSelectValue(region) {
