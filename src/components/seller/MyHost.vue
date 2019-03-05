@@ -97,10 +97,14 @@
             <p class="table-head">
               <i class="iconfont icon-table-host"></i>
               {{$t('seller.host.number')}}
+
             </p>
           </template>
           <template slot-scope="scope">
-            <p class="overflow">{{ scope.row.name}}</p>
+            <p class="overflow">{{ scope.row.name}} <br/>
+                <span v-if="scope.row.publicAddress"> [Extranet] </span>
+                <span v-else="!scope.row.publicAddress"> [Intranet] </span>
+            </p>
           </template>
         </el-table-column>
         <el-table-column min-width="100">
