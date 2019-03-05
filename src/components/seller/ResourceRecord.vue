@@ -125,7 +125,7 @@
           <el-table-column prop="orderHash" width="270">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
-                <i class="iconfont icon-hash"></i>
+                <i class="iconfont icon-table-hash"></i>
                 {{$t('seller.groups.deployPage.clusterHash')}}
               </p>
             </template>

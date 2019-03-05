@@ -303,8 +303,8 @@ export default {
       margin-left: 30px;
       .el-input /deep/ .el-input__inner {
         background: #1d1e23;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 4px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
         color: #ffffff;
         opacity: 0.6;
       }
@@ -324,6 +324,10 @@ export default {
       border-radius: 3px;
       margin-bottom: 30px;
     }
+    .el-button:hover {
+      background: #627100;
+      border: 1px solid #627100;
+    }
     .code {
       .el-input {
         width: 75%;
@@ -335,6 +339,10 @@ export default {
         background: #424b00;
         border: 1px solid #424b00;
         border-radius: 3px;
+      }
+      .el-button:hover {
+        background: #627100;
+        border: 1px solid #627100;
       }
     }
   }

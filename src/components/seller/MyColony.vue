@@ -248,6 +248,9 @@ export default {
       font-size: 16px;
       color: #627100;
     }
+    p:hover {
+      color: #a2ae44;
+    }
   }
   .shop {
     background: #161618;

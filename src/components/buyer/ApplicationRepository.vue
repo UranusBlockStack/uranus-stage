@@ -36,7 +36,8 @@
     <div class="shop">
       <el-row>
         <el-col :span="6" :offset="16">
-          <el-input @keyup.enter.native="searchMyApp"
+          <el-input
+            @keyup.enter.native="searchMyApp"
             :placeholder="$t('buyer.appRepository.searchIn')"
             prefix-icon="el-icon-search"
             v-model="searchName"
@@ -188,7 +189,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -211,6 +212,9 @@ export default {
         margin: 0;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
+        color: #627100;
+      }
+      p:hover {
         color: #a2ae44;
       }
     }
@@ -226,23 +230,27 @@ export default {
       border: 1px solid #424b00;
       border-radius: 3px;
     }
+    .el-button:hover {
+      background: #627100;
+      border: 1px solid #627100;
+    }
     .el-input /deep/ .el-input__inner {
       background: #1d1e23;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-pagination /deep/ .btn-prev {
       background: rgba(36, 99, 255, 0);
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-pagination /deep/ .btn-next {
       background: rgba(36, 99, 255, 0);
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-pagination /deep/ .el-pager li {
       background: rgba(36, 99, 255, 0);
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-pagination /deep/ .el-pager li.active {
       color: #a2ae44;
@@ -270,6 +278,9 @@ export default {
         display: inline-block;
         margin: 0 15px;
       }
+      .el-card:hover {
+        background: rgba(176, 192, 255, 0.05);
+      }
       .resources {
         text-align: center;
         padding: 10px;
@@ -290,7 +301,7 @@ export default {
             margin: 10px auto;
             position: relative;
             img {
-
+              background: #f2f2f2;
               min-width: 100px;
               min-height: 80px;
               max-width: 130px;
@@ -310,7 +321,7 @@ export default {
             font-family: Source-Sans-Pro-Bold;
             font-weight: 500;
             font-size: 16px;
-            color: #ffffff;
+            color: #c8c8c8;
             text-align: center;
             line-height: 24px;
             margin-bottom: 0px;
@@ -321,7 +332,7 @@ export default {
             overflow: hidden;
             box-sizing: content-box;
             font-size: 14px;
-            color: #ffffff;
+            color: #c8c8c8;
             text-align: center;
             line-height: 22px;
             margin: -5px auto;
@@ -342,7 +353,7 @@ export default {
             font-weight: 500;
             font-size: 14px;
             padding: 10px 0;
-            color: #ffffff;
+            color: #c8c8c8;
             letter-spacing: 0;
             text-align: center;
             line-height: 22px;
@@ -352,9 +363,12 @@ export default {
             border: 1px solid #424b00;
             border-radius: 5px;
             width: 120px;
-            border: none;
             margin-top: -5px;
             padding: 8px 20px;
+          }
+          .el-button:hover {
+            background: #627100;
+            border: 1px solid #627100;
           }
         }
       }

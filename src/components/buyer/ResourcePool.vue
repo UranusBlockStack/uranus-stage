@@ -30,9 +30,11 @@
           <h1>{{$t('buyer.resourcePool.appList')}}</h1>
         </el-col>
         <el-col :span="5" :offset="10">
-          <el-input @keyup.enter.native="getAppList"
-                  :placeholder="$t('buyer.resourcePool.searchIn')"
-                  prefix-icon="el-icon-search" v-model="appName"
+          <el-input
+            @keyup.enter.native="getAppList"
+            :placeholder="$t('buyer.resourcePool.searchIn')"
+            prefix-icon="el-icon-search"
+            v-model="appName"
           ></el-input>
         </el-col>
         <el-col :span="2" :offset="1">
@@ -42,18 +44,18 @@
         </el-col>
       </el-row>
       <el-row>
-          <!-- delete app notice box -->
-          <el-dialog
-            :title="$t('buyer.resourcePool.notice')"
-            :visible.sync="dialogVisible"
-            width="580px"
-          >
-            <span>{{$t('buyer.resourcePool.deleteSure')}}</span>
-            <span slot="footer" class="dialog-footer">
-              <el-button @click="dialogVisible = false">{{$t('buyer.resourcePool.cancel')}}</el-button>
-              <el-button type="primary" @click="deleteApp()">{{$t('buyer.resourcePool.confirm')}}</el-button>
-            </span>
-          </el-dialog>
+        <!-- delete app notice box -->
+        <el-dialog
+          :title="$t('buyer.resourcePool.notice')"
+          :visible.sync="dialogVisible"
+          width="580px"
+        >
+          <span>{{$t('buyer.resourcePool.deleteSure')}}</span>
+          <span slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">{{$t('buyer.resourcePool.cancel')}}</el-button>
+            <el-button type="primary" @click="deleteApp()">{{$t('buyer.resourcePool.confirm')}}</el-button>
+          </span>
+        </el-dialog>
         <el-col class="rePool" :span="12" v-for="(item, index) in appList" :key="index">
           <el-row>
             <el-col :span="4" :offset="1">
@@ -89,7 +91,7 @@
                   >{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>
                   <!-- <el-dropdown-item
                     @click.native="deleteApp(item.id)"
-                  >{{$t('buyer.resourcePool.delete')}}</el-dropdown-item> -->
+                  >{{$t('buyer.resourcePool.delete')}}</el-dropdown-item>-->
                 </el-dropdown-menu>
               </el-dropdown>
             </el-col>
@@ -142,10 +144,10 @@ export default {
       project
         .appInstanceSearch(
           auth.getCurLang(),
-        {
-          projectId: this.poolId,
-          name: this.appName
-        }
+          {
+            projectId: this.poolId,
+            name: this.appName
+          }
         )
         .then(respData => {
           const appListData = respData.data
@@ -232,21 +234,20 @@ export default {
 
 <style lang="scss" scoped>
 .resourcePool {
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   min-width: 1130px;
-  padding-top: 10px;
   .poolHead {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
-    margin: 0 10px;
     height: 50px;
+    margin: 2px 2px 0;
     .title {
+      height: 50px;
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -259,18 +260,20 @@ export default {
     }
   }
   .poolBox {
-    background: rgba(101, 143, 247, 0);
     border-radius: 2px;
-    margin: 10px;
+    margin: 0 2px;
+    .el-col {
+      background: #161618;
+    }
     .title {
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+      background: #161618;
       border-radius: 4px 4px 0 0;
       height: 50px;
+      margin-top: 2px;
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         text-align: left;
         line-height: 50px;
         margin: 0;
@@ -282,20 +285,24 @@ export default {
         margin-top: 5px;
       }
       .el-input /deep/ .el-input__inner {
-        background: rgba(36, 99, 255, 0.2);
-        border: 1px solid rgba(24, 144, 255, 0.3);
+        background: #1d1e23;
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 4px;
-        color: #ffffff;
+        color: #c8c8c8;
       }
       .el-button {
-        background: rgba(101, 143, 247, 0);
-        box-shadow: inset 0 0 22px 0 #2463ff;
+        background: #424b00;
+        border: 1px solid #424b00;
         border-radius: 3px;
-        border: none;
+      }
+      .el-button:hover {
+        background: #627100;
+        border: 1px solid #627100;
       }
     }
     .rePool {
       padding: 10px;
+      padding-bottom: 30px;
       .el-row {
         border: 1px solid rgba(255, 255, 255, 0.2);
         border-radius: 4px;
@@ -303,7 +310,7 @@ export default {
       h3 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 24px;
         text-align: left;
         margin: 15px 20px;
@@ -355,7 +362,7 @@ export default {
     h2 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 24px;
       text-align: left;
       padding-left: 30px;
@@ -367,7 +374,10 @@ export default {
     }
     .el-dropdown {
       margin: 20px;
-      color: #ffffff;
+      color: #627100;
+    }
+    .el-dropdown:hover {
+      color: #a2ae44;
     }
   }
 }

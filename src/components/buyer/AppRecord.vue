@@ -10,8 +10,9 @@
     </el-row>
     <el-row class="recordBox">
       <el-row>
-        <el-col :span="7">
-          <el-input @keyup.enter.native="searchApps"
+        <el-col :span="7" :offset="16">
+          <el-input
+            @keyup.enter.native="searchApps"
             :placeholder="$t('buyer.appRepository.deployPage.searchIn')"
             prefix-icon="el-icon-search"
             v-model="appName"
@@ -54,7 +55,7 @@
         </el-dialog>
       </el-col>
       <el-col class="blue-box" :span="24">
-        <el-table :data="tableData" style="width: 100%" >
+        <el-table :data="tableData" style="width: 100%">
           <template slot="empty">
             <p class="empty-text">{{$t('seller.host.text')}}</p>
           </template>
@@ -271,19 +272,19 @@ export default {
 .appRecord {
   height: 100%;
   min-width: 1130px;
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   .recordHead {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
     height: 50px;
-    margin: 10px 10px 0;
+    margin: 2px 2px 0;
     .title {
+        height: 50px;
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -298,26 +299,28 @@ export default {
   .recordBox {
     min-height: 630px;
     min-width: 1130px;
-    margin: 10px;
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    margin: 2px;
+    background: #161618;
     border-radius: 2px;
     overflow: hidden;
     padding: 30px;
     .el-input /deep/ .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-col {
       display: flex;
       .el-button {
-        background: rgba(101, 143, 247, 0);
-        box-shadow: inset 0 0 22px 0 #2463ff;
+        background: #424b00;
+        border: 1px solid #424b00;
         border-radius: 3px;
-        border: none;
         margin: 0 20px;
+      }
+      .el-button:hover {
+        background: #627100;
+        border: 1px solid #627100;
       }
       .el-select {
         margin-left: 20px;
@@ -336,7 +339,7 @@ export default {
       }
     }
     .table-head {
-      color: #ffffff;
+      color: #c8c8c8;
       font-weight: 500;
       font-size: 16px;
       margin: 0;
@@ -356,11 +359,11 @@ export default {
     }
     .blue-box {
       .el-table {
-        color: #ffffff;
+        color: #c8c8c8;
         background-color: rgba(101, 143, 247, 0);
       }
       .el-table /deep/ tr:hover td {
-        background-color: rgba(101, 143, 247, 0.2) !important;
+        background: rgba(176, 192, 255, 0.05) !important;
       }
       .el-table /deep/ th,
       .el-table /deep/ tr {
@@ -369,7 +372,7 @@ export default {
       }
       .el-table /deep/ td {
         border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
     }
     .transaction-foot {
@@ -378,19 +381,19 @@ export default {
         height: 50px;
       }
       .el-pagination /deep/ .btn-prev {
-        background: rgba(36, 99, 255, 0.2);
-        color: #ffffff;
+        background: rgba(36, 99, 255, 0);
+        color: #c8c8c8;
       }
       .el-pagination /deep/ .btn-next {
-        background: rgba(36, 99, 255, 0.2);
-        color: #ffffff;
+        background: rgba(36, 99, 255, 0);
+        color: #c8c8c8;
       }
       .el-pagination /deep/ .el-pager li {
-        background: rgba(36, 99, 255, 0.2);
-        color: #ffffff;
+        background: rgba(36, 99, 255, 0);
+        color: #c8c8c8;
       }
       .el-pagination /deep/ .el-pager li.active {
-        color: #409eff;
+        color: #a2ae44;
       }
     }
   }

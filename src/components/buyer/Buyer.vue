@@ -336,7 +336,7 @@ export default {
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -360,16 +360,19 @@ export default {
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 24px;
         text-align: left;
       }
       .more {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #a2ae44;
+        color: #627100;
         line-height: 24px;
         text-align: right;
+      }
+      .more:hover {
+        color: #a2ae44;
       }
       .shopBox {
         width: 100%;
@@ -380,7 +383,7 @@ export default {
           border: 1px solid rgba(255, 255, 255, 0.2);
           width: 270px;
           display: inline-block;
-          margin: 0 15px;
+          margin: 15px;
         }
         .resources {
           text-align: center;
@@ -419,7 +422,7 @@ export default {
               font-family: Source-Sans-Pro-Bold;
               font-weight: 500;
               font-size: 16px;
-              color: #ffffff;
+              color: #c8c8c8;
               text-align: center;
               line-height: 24px;
               margin-bottom: 0px;
@@ -431,7 +434,7 @@ export default {
               box-sizing: content-box;
               font-weight: 300;
               font-size: 14px;
-              color: #ffffff;
+              color: #c8c8c8;
               text-align: center;
               line-height: 22px;
               margin: -5px auto;
@@ -452,7 +455,7 @@ export default {
               font-weight: 500;
               font-size: 14px;
               padding: 10px 0;
-              color: #ffffff;
+              color: #c8c8c8;
               letter-spacing: 0;
               text-align: center;
               line-height: 22px;
@@ -462,9 +465,12 @@ export default {
               border: 1px solid #424b00;
               border-radius: 5px;
               width: 120px;
-              border: none;
               margin-top: -5px;
               padding: 8px 20px;
+            }
+            .el-button:hover {
+              background: #627100;
+              border: 1px solid #627100;
             }
           }
         }
