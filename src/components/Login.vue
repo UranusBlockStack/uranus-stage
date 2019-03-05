@@ -340,10 +340,13 @@ export default {
     }
     .forgetPwd {
       font-size: 14px;
-      color: #1890ff;
+      color: #627100;
       text-align: right;
       line-height: 22px;
       margin-left: 205px;
+    }
+    .forgetPwd:hover {
+        color: #a2ae44;
     }
     .loginBtn {
       background: #424b00;

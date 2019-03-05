@@ -8,17 +8,14 @@
       </el-col>
       <!-- <el-col :span="4">
         <p>{{$t('buyer.stateDetail.rename')}}</p>
-      </el-col> -->
+      </el-col>-->
     </el-row>
     <el-row class="recordBox">
       <el-col class="blue-box" :span="24">
-        <el-table
-          :data="tableData"
-          style="width: 100%"
-        >
-        <template slot="empty">
-          <p class="empty-text">No Dtata</p>
-        </template>
+        <el-table :data="tableData" style="width: 100%">
+          <template slot="empty">
+            <p class="empty-text">No Dtata</p>
+          </template>
           <el-table-column prop="1">
             <template slot="header" slot-scope="scope" min-width="250">
               <p class="table-head">
@@ -66,7 +63,7 @@
         </el-table>
       </el-col>
       <!--<el-col :span="8" :offset="16" class="transaction-foot">-->
-        <!--<el-pagination layout="prev, pager, next" :total="100"></el-pagination>-->
+      <!--<el-pagination layout="prev, pager, next" :total="100"></el-pagination>-->
       <!--</el-col>-->
     </el-row>
   </section>
@@ -138,19 +135,19 @@ export default {
 .appRecord {
   height: 100%;
   min-width: 1130px;
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   .recordHead {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
     height: 50px;
-    margin: 10px 10px 0;
+    margin: 2px 2px 0;
     .title {
+      height: 50px;
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -173,14 +170,14 @@ export default {
   .recordBox {
     min-height: 630px;
     min-width: 1130px;
-    margin: 10px;
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    margin: 2px;
+    background: #161618;
+    border-radius: 2px;
     border-radius: 2px;
     overflow: hidden;
     padding: 30px;
     .table-head {
-      color: #ffffff;
+      color: #c8c8c8;
       font-weight: 500;
       font-size: 16px;
       margin: 0;
@@ -214,11 +211,11 @@ export default {
     // }
     .blue-box {
       .el-table {
-        color: #ffffff;
+        color: #c8c8c8;
         background-color: rgba(101, 143, 247, 0);
       }
       .el-table /deep/ tr:hover td {
-        background-color: rgba(101, 143, 247, 0.2) !important;
+        background: rgba(176, 192, 255, 0.05) !important;
       }
       .el-table /deep/ th,
       .el-table /deep/ tr {
@@ -227,7 +224,7 @@ export default {
       }
       .el-table /deep/ td {
         border: none;
-        border-top: 1px solid rgba(255, 255, 255, 0.2);
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
       }
     }
     .transaction-foot {

@@ -160,7 +160,7 @@ module.exports = {
       pick: 'Pick up',
       more: 'More',
       version: 'Application Version',
-      chooseVersion: 'Version:',
+      chooseVersion: 'Version',
       newApp: 'New application',
       nameApp: 'Name',
       description: 'Description',

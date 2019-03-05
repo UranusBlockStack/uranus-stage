@@ -1,91 +1,92 @@
 <template>
   <section class="myResource">
-      <el-dialog title="请选择时间范围"
-                 :close-on-click-modal="false"
-                 :close-on-press-escape="false"
-                 :visible.sync="daterangeDialog"
-                 width = "600px"
-                 :clearable="false" >
-          <el-form >
-                  <el-form-item>
-                  <span slot="label">
-                    <i class="iconfont icon-time"></i>
-                    时间范围
-                  </span>
-                      <el-col :span="6">
-                          <el-input
-                                  prefix-icon="el-icon-date"
-                                  v-model="daterangeVal.startDate" readonly>
-                          </el-input>
-                      </el-col>
-                      <el-col :span="1">
-                          <span class="timeto"> 到 </span>
-                      </el-col>
-                      <el-col :span="7">
-                          <el-date-picker
-                                  type="date"
-                                  range-separator="-"
-                                  v-model="daterangeVal.endDate"
-                                  style="width: 100%;"
-                                  @change = "endDateSelect"
-                                  :picker-options="endDataPickerOptions"
-                          ></el-date-picker>
-                      </el-col>
-                      <el-col :span="4" :offset="1">
-                          <span>共 <span class="days">{{days}}</span> 天</span>
-                      </el-col>
-                  </el-form-item>
+    <el-dialog
+      title="请选择时间范围"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      :visible.sync="daterangeDialog"
+      width="600px"
+      :clearable="false"
+    >
+      <el-form>
+        <el-form-item>
+          <span slot="label">
+            <i class="iconfont icon-time"></i>
+            时间范围
+          </span>
+          <el-col :span="6">
+            <el-input prefix-icon="el-icon-date" v-model="daterangeVal.startDate" readonly></el-input>
+          </el-col>
+          <el-col :span="1">
+            <span class="timeto">到</span>
+          </el-col>
+          <el-col :span="7">
+            <el-date-picker
+              type="date"
+              range-separator="-"
+              v-model="daterangeVal.endDate"
+              style="width: 100%;"
+              @change="endDateSelect"
+              :picker-options="endDataPickerOptions"
+            ></el-date-picker>
+          </el-col>
+          <el-col :span="4" :offset="1">
+            <span>
+              共
+              <span class="days">{{days}}</span> 天
+            </span>
+          </el-col>
+        </el-form-item>
 
-                  <el-form-item label="基本价格" >
-                      <span> {{countedPrice}} </span>
-                  </el-form-item>
-          </el-form>
-          <div slot="footer" class="dialog-footer">
-              <el-button @click="daterangeDialog = false">取 消</el-button>
-              <el-button type="primary" @click="renewPay">确 定</el-button>
-          </div>
-      </el-dialog>
+        <el-form-item label="基本价格">
+          <span>{{countedPrice}}</span>
+        </el-form-item>
+      </el-form>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="daterangeDialog = false">取 消</el-button>
+        <el-button type="primary" @click="renewPay">确 定</el-button>
+      </div>
+    </el-dialog>
 
+    <el-dialog
+      :title="$t('buyer.deploy.confirmTitle')"
+      :visible.sync="orderVisible"
+      width="800px"
+      :close-on-click-modal="false"
+      :close-on-press-escape="false"
+    >
+      <el-table :data="gridData">
+        <el-table-column property="orderNo" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
+        <el-table-column property="sellerId" :label="$t('buyer.deploy.address')"></el-table-column>
+        <el-table-column property="orderAmount" :label="$t('buyer.deploy.value')"></el-table-column>
+        <el-table-column property="prodType" :label="$t('buyer.deploy.content')"></el-table-column>
+        <el-table-column :label="$t('buyer.deploy.fee')">
+          <template slot-scope="scope">
+            <el-input-number size="mini" v-model="fee" :precision="6" :step="0.000001" :max="10"></el-input-number>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="code">
+        <span slot="label">{{ $t("buyer.deploy.code") }}</span>
+        <el-input :placeholder="$t('buyer.deploy.codeIn')" v-model="concode"></el-input>
+        <el-button :class="{'is-disabled': !this.canClick}" @click="countDown">{{content}}</el-button>
+      </div>
+      <p>{{ $t("buyer.deploy.confirmText1") }}</p>
+      <TimeOver style="margin-left:300px;" v-on:listentimeOver="closeDialog"/>
 
-      <el-dialog
-              :title="$t('buyer.deploy.confirmTitle')"
-              :visible.sync="orderVisible"
-              width="800px"
-              :close-on-click-modal="false"
-              :close-on-press-escape="false"
-      >
-          <el-table :data="gridData">
-              <el-table-column property="orderNo" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
-              <el-table-column property="sellerId" :label="$t('buyer.deploy.address')"></el-table-column>
-              <el-table-column property="orderAmount" :label="$t('buyer.deploy.value')"></el-table-column>
-              <el-table-column property="prodType" :label="$t('buyer.deploy.content')"></el-table-column>
-              <el-table-column :label="$t('buyer.deploy.fee')">
-                  <template slot-scope="scope">
-                      <el-input-number size="mini" v-model="fee" :precision="6" :step="0.000001" :max="10"></el-input-number>
-                  </template>
-              </el-table-column>
-          </el-table>
-          <div class="code">
-              <span slot="label">{{ $t("buyer.deploy.code") }}</span>
-              <el-input :placeholder="$t('buyer.deploy.codeIn')" v-model="concode"></el-input>
-              <el-button :class="{'is-disabled': !this.canClick}" @click="countDown">{{content}}</el-button>
-          </div>
-          <p>{{ $t("buyer.deploy.confirmText1") }}</p>
-          <TimeOver style="margin-left:300px;" v-on:listentimeOver="closeDialog"/>
-
-          <div slot="footer" class="dialog-footer">
-              <el-button @click="orderVisible = false">
-                  {{
-                  $t("buyer.deploy.button1")
-                  }}
-              </el-button>
-              <el-button type="primary" @click="startTransfer">
-                  {{
-                  $t("buyer.deploy.button2")
-                  }}
-              </el-button>
-          </div>
-      </el-dialog>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="orderVisible = false">
+          {{
+          $t("buyer.deploy.button1")
+          }}
+        </el-button>
+        <el-button type="primary" @click="startTransfer">
+          {{
+          $t("buyer.deploy.button2")
+          }}
+        </el-button>
+      </div>
+    </el-dialog>
 
     <el-row class="myResourceHead">
       <el-col class="title" :span="12">
@@ -96,7 +97,10 @@
       </el-col>
       <el-col class="record" :span="12">
         <router-link :to="{path: '/urapowerrecord'}">
-          <p>{{$t('buyer.appRepository.deployRecord')}}<i class="iconfont icon-more"></i></p>
+          <p>
+            {{$t('buyer.appRepository.deployRecord')}}
+            <i class="iconfont icon-more"></i>
+          </p>
         </router-link>
       </el-col>
     </el-row>
@@ -110,44 +114,49 @@
         <el-row>
           <el-col :span="4">
             <div id="restResource">
-              <Water v-if="update2" :chartData='statisObejct.urapowerUsd' style="margin:40px auto"/>
+              <Water v-if="update2" :chartData="statisObejct.urapowerUsd" style="margin:40px auto"/>
             </div>
           </el-col>
           <el-col :span="19" :offset="1">
             <h2>{{$t('buyer.myResource.restOne')}}</h2>
             <div class="restRes">
-            <Cpu v-if="update2" :chartData='statisObejct.cpuUsd'/>
-            <Memory v-if="update2" :chartData='statisObejct.memUsd'/>
-            <Disk v-if="update2" :chartData='statisObejct.diskUsd'/>
-            <Network v-if="update2" :chartData='statisObejct.networkUsd'/>
+              <Cpu v-if="update2" :chartData="statisObejct.cpuUsd"/>
+              <Memory v-if="update2" :chartData="statisObejct.memUsd"/>
+              <Disk v-if="update2" :chartData="statisObejct.diskUsd"/>
+              <Network v-if="update2" :chartData="statisObejct.networkUsd"/>
             </div>
           </el-col>
         </el-row>
       </el-row>
-      <el-row class="boxshadow" style="margin-top:10px;">
+      <el-row class="boxshadow">
         <el-row>
           <el-col class="title" :span="24">
             <h1>{{$t('buyer.myResource.resourceOver')}}</h1>
           </el-col>
         </el-row>
         <el-row class="appResource">
-          <el-col :span="12" v-for="(pool, index) in poolList"  :key="index">
-            <el-row style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius:4px; margin:10px;">
+          <el-col :span="12" v-for="(pool, index) in poolList" :key="index">
+            <el-row
+              style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius:4px; margin:10px;"
+            >
               <el-col :span="5" style="margin-bottom: 15px;">
-                  <a @click="resourceDetail(index, pool.orderStatus)">
-                  <Ball style="margin:0 auto;" v-if="update1" :chartData='pool.urpowerUsd'/>
-                  </a>
+                <a @click="resourceDetail(index, pool.orderStatus)">
+                  <Ball style="margin:0 auto;" v-if="update1" :chartData="pool.urpowerUsd"/>
+                </a>
               </el-col>
               <el-col :span="17" :offset="2">
-                  <h3>Pool: {{pool.name}} </h3>
+                <h3>Pool: {{pool.name}}</h3>
                 <h3>{{$t('buyer.myResource.state')}} {{pool.orderDispName}}</h3>
                 <h3>{{$t('buyer.myResource.number')}} {{pool.appCount}}</h3>
                 <div class="timeText">
-                  <p>{{$t('buyer.myResource.countdownTime')}} <RestTime style="display:inline-block;" :endTime= "pool.time" /></p>
+                  <p>
+                    {{$t('buyer.myResource.countdownTime')}}
+                    <RestTime style="display:inline-block;" :endTime="pool.time"/>
+                  </p>
                 </div>
-                  <div class="renew" v-if="pool.renew_btn">
-                    <el-button type="success" @click="renewResource(index)" > 续  费 </el-button>
-                  </div>
+                <div class="renew" v-if="pool.renew_btn">
+                  <el-button type="success" @click="renewResource(index)">续 费</el-button>
+                </div>
               </el-col>
               <!-- <el-col :span="3" :offset="1">
                 <el-dropdown trigger="click" style="margin-top: 10px; margin-left: 20px;">
@@ -167,7 +176,7 @@
                     </el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-              </el-col> -->
+              </el-col>-->
             </el-row>
           </el-col>
         </el-row>
@@ -246,7 +255,7 @@ export default {
         orderNo: 0
       },
       orderVisible: false,
-      gridData: [ ],
+      gridData: [],
       concode: ''
     }
   },
@@ -254,35 +263,35 @@ export default {
     getUraPowerPoolList() {
       const nowstamp = moment(new Date()).valueOf()
       const waitdays = this.$store.state.renewWaitDays
-      const predays= this.$store.state.renewPreDispDays
+      const predays = this.$store.state.renewPreDispDays
       project.projectList(auth.getCurLang(), this.projectQuertData)
-              .then(respData => {
-                this.appList = {}
-                if (respData.data.data) {
-                  const data = respData.data.data.records
-                  for (let i = 0; i < data.length; i++) {
-                    let object = {}
-                    const renewBtnStatus = (nowstamp > (data[i].endTime - predays * 24 * 60 * 60 * 1000)) && (nowstamp < (data[i].endTime + (waitdays+1) * 24 * 60 * 60 * 1000))
+        .then(respData => {
+          this.appList = {}
+          if (respData.data.data) {
+            const data = respData.data.data.records
+            for (let i = 0; i < data.length; i++) {
+              let object = {}
+              const renewBtnStatus = (nowstamp > (data[i].endTime - predays * 24 * 60 * 60 * 1000)) && (nowstamp < (data[i].endTime + (waitdays + 1) * 24 * 60 * 60 * 1000))
 
-                    object['id'] = data[i].id
-                    object['name'] = data[i].projectName
-                    object['appCount'] = data[i].appCount
-                    object['time'] = moment(data[i].endTime).format('YYYY-MM-DD hh:mm:ss')
-                    object['urpowerUsd'] = data[i].computeRatio
-                    object.endTime = data[i].endTime
-                    object.orderNo = data[i].orderNo
-                    object.orderStatus = data[i].orderStatus
-                    object.orderStatusName = data[i].orderStatusName
-                    object.orderDispName = getOrderStatusName(data[i].orderStatus, auth.getCurLang())
-                    object.link = '/resourcepool/' + data[i].id + '/' + data[i].projectName
-                    object.renew_btn = renewBtnStatus
-                    object.price = data[i].rentPrice
-                    this.poolList.push(object)
-                  }
-                }
+              object['id'] = data[i].id
+              object['name'] = data[i].projectName
+              object['appCount'] = data[i].appCount
+              object['time'] = moment(data[i].endTime).format('YYYY-MM-DD hh:mm:ss')
+              object['urpowerUsd'] = data[i].computeRatio
+              object.endTime = data[i].endTime
+              object.orderNo = data[i].orderNo
+              object.orderStatus = data[i].orderStatus
+              object.orderStatusName = data[i].orderStatusName
+              object.orderDispName = getOrderStatusName(data[i].orderStatus, auth.getCurLang())
+              object.link = '/resourcepool/' + data[i].id + '/' + data[i].projectName
+              object.renew_btn = renewBtnStatus
+              object.price = data[i].rentPrice
+              this.poolList.push(object)
+            }
+          }
 
-                this.update1 = true
-              })
+          this.update1 = true
+        })
     },
     resourceDetail(index, ostatus) {
       if (ostatus !== 3) {
@@ -330,18 +339,18 @@ export default {
       } else {
         this.daterangeDialog = false
         order.orderResourceRenew(auth.getCurLang(), this.orderForm)
-            .then(purcheStatus => {
-              const purchUraStausData = purcheStatus.data
-              if (purchUraStausData.success) {
-                this.gridData = [purchUraStausData.data]
-              } else {
-                this.$message({
-                  showClose: true,
-                  message: purchUraStausData.errMsg,
-                  type: 'error'
-                })
-              }
-            })
+          .then(purcheStatus => {
+            const purchUraStausData = purcheStatus.data
+            if (purchUraStausData.success) {
+              this.gridData = [purchUraStausData.data]
+            } else {
+              this.$message({
+                showClose: true,
+                message: purchUraStausData.errMsg,
+                type: 'error'
+              })
+            }
+          })
         this.orderVisible = true
       }
     },
@@ -358,59 +367,59 @@ export default {
         orders.push(tmporder)
       })
       account
-              .userInfo(auth.getCurLang(), auth.getCurUserId())
-              .then(userInfo => {
-                const userData = userInfo.data.data
-                const transData = {
-                  orders: orders,
-                  phone: userData.mobile,
-                  smsCode: this.concode
-                }
-                wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
-                  const transStatusData = transStatus.data
-                  if (transStatusData.success) {
-                    this.orderVisible = false
-                    this.$message({
-                      showClose: true,
-                      message:
-                        this.$t('buyer.deploy.orderSuccess'),
-                      type: 'success',
-                      duration: 3000
-                    })
-                  } else {
-                    this.$message({
-                      showClose: true,
-                      message: transStatusData.errMsg,
-                      type: 'error',
-                      duration: 3000
-                    })
-                  }
-                })
+        .userInfo(auth.getCurLang(), auth.getCurUserId())
+        .then(userInfo => {
+          const userData = userInfo.data.data
+          const transData = {
+            orders: orders,
+            phone: userData.mobile,
+            smsCode: this.concode
+          }
+          wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
+            const transStatusData = transStatus.data
+            if (transStatusData.success) {
+              this.orderVisible = false
+              this.$message({
+                showClose: true,
+                message:
+                  this.$t('buyer.deploy.orderSuccess'),
+                type: 'success',
+                duration: 3000
               })
+            } else {
+              this.$message({
+                showClose: true,
+                message: transStatusData.errMsg,
+                type: 'error',
+                duration: 3000
+              })
+            }
+          })
+        })
     },
     getConfirmCode() {
       wallet
-              .walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
-              .then(sendResult => {
-                const status = sendResult.data
-                this.$message({
-                  showClose: true,
-                  message: status.data,
-                  type: 'success',
-                  duration: 3000
-                })
-              })
+        .walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
+        .then(sendResult => {
+          const status = sendResult.data
+          this.$message({
+            showClose: true,
+            message: status.data,
+            type: 'success',
+            duration: 3000
+          })
+        })
     },
     countDown() {
       if (!this.canClick) return
       else {
         this.canClick = false
         this.content =
-                  this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+          this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
         let clock = window.setInterval(() => {
           this.totalTime--
           this.content =
-                      this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
+            this.$t('userCommon.codeTime') + '(' + this.totalTime + 's)'
           if (this.totalTime < 0) {
             window.clearInterval(clock)
             this.content = this.$t('userCommon.codeTime')
@@ -421,8 +430,8 @@ export default {
         this.getConfirmCode()
       }
     },
-    closeDialog: function(data) {
-      this.outerVisible=false
+    closeDialog: function (data) {
+      this.outerVisible = false
     },
     setDatePick() {
       let that = this
@@ -434,7 +443,7 @@ export default {
           //         that.daterangeVal.endDate !== 0
           //         ) {
           return (
-                 time.getTime() < new Date(that.daterangeVal.startDate).getTime()
+            time.getTime() < new Date(that.daterangeVal.startDate).getTime()
           )
           // }
         }
@@ -442,17 +451,17 @@ export default {
     },
     allStatisticsProjects() {
       project.statisticsProjects()
-              .then(respData => {
-                if (respData.data.data) {
-                  const data = respData.data.data
-                  this.statisObejct['urapowerUsd'] = data.computeRatio / 100
-                  this.statisObejct['cpuUsd'] = data.cpuKernelRatio
-                  this.statisObejct['diskUsd'] = data.diskRatio
-                  this.statisObejct['memUsd'] = data.memRatio
-                  this.statisObejct['networkUsd'] = data.networkRatio
-                }
-                this.update2 = true
-              })
+        .then(respData => {
+          if (respData.data.data) {
+            const data = respData.data.data
+            this.statisObejct['urapowerUsd'] = data.computeRatio / 100
+            this.statisObejct['cpuUsd'] = data.cpuKernelRatio
+            this.statisObejct['diskUsd'] = data.diskRatio
+            this.statisObejct['memUsd'] = data.memRatio
+            this.statisObejct['networkUsd'] = data.networkRatio
+          }
+          this.update2 = true
+        })
     }
   },
   created() {
@@ -465,54 +474,57 @@ export default {
 
 <style lang="scss" scoped>
 .myResource {
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   min-width: 1130px;
-  padding-top: 10px;
-    .el-dialog {
-        .code {
-            width: 500px;
-            display: flex;
-            margin: 25px;
-            span {
-                width: 85px;
-                font-family: Source-Sans-Pro-Bold;
-                font-size: 16px;
-                color: #363636;
-                line-height: 40px;
-                text-align: left;
-            }
-            .el-button {
-                margin-left: 15px;
-            }
-        }
-        p {
-            margin: 15px auto;
-            text-align: center;
-            font-family: Source-Sans-Pro-Bold;
-            font-size: 14px;
-            color: #f54c46;
-            line-height: 20px;
-        }
+  .el-dialog {
+    .code {
+      width: 500px;
+      display: flex;
+      margin: 25px;
+      span {
+        width: 85px;
+        font-family: Source-Sans-Pro-Bold;
+        font-size: 16px;
+        color: #363636;
+        line-height: 40px;
+        text-align: left;
+      }
+      .el-button {
+        margin-left: 15px;
+      }
     }
-  .timeto {padding-left:5px}
-  .days {font-size:20px}
+    p {
+      margin: 15px auto;
+      text-align: center;
+      font-family: Source-Sans-Pro-Bold;
+      font-size: 14px;
+      color: #f54c46;
+      line-height: 20px;
+    }
+  }
+  .timeto {
+    padding-left: 5px;
+  }
+  .days {
+    font-size: 20px;
+  }
   .boxshadow {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
+    margin: 2px;
   }
   .myResourceHead {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
-    margin: 0 10px;
+    margin: 2px 2px 0;
     height: 50px;
     .title {
+      height: 50px;
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -535,14 +547,15 @@ export default {
         margin: 0;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #0084FF;
+        color: #627100;
+      }
+      p:hover {
+        color: #a2ae44;
       }
     }
   }
   .myResourceBox {
-    background: rgba(101, 143, 247, 0);
     border-radius: 2px;
-    margin: 10px;
     .title {
       background: rgba(101, 143, 247, 0);
       border-radius: 2px;
@@ -550,7 +563,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         text-align: left;
         line-height: 24px;
         padding-left: 30px;
@@ -559,7 +572,7 @@ export default {
     h2 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #ffffff;
+      color: #c8c8c8;
       text-align: center;
       line-height: 24px;
     }
@@ -569,16 +582,17 @@ export default {
       width: 100%;
     }
     .restRes {
-      border-left: 1px solid rgba(255, 255, 255, .2);
+      border-left: 1px solid rgba(255, 255, 255, 0.2);
       height: 200px;
       display: flex;
       padding-left: 50px;
     }
     .appResource {
+        padding-bottom: 30px;
       h3 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 24px;
         text-align: left;
         margin-top: 10px;
@@ -590,12 +604,21 @@ export default {
         line-height: 24px;
       }
       .timeText {
-          color: #ffffff;
+        color: #c8c8c8;
       }
       .renew {
-          position:absolute;
-          top: 25px;
-          right: 30px;
+        position: absolute;
+        top: 25px;
+        right: 30px;
+        .el-button {
+          background: #424b00;
+          border: 1px solid #424b00;
+          border-radius: 3px;
+        }
+        .el-button:hover {
+          background: #627100;
+          border: 1px solid #627100;
+        }
       }
     }
   }

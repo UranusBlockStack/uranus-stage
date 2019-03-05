@@ -193,7 +193,7 @@
                 </el-form-item>
               </el-col>
             </el-row>
-            <el-row class="margin-top">
+            <el-row>
               <el-col :span="10">
                 <el-form-item :label="$t('buyer.deploy.memory')">
                   <span slot="label">
@@ -917,7 +917,7 @@ export default {
 
 <style lang="scss" scoped>
 .deployment {
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   min-width: 1130px;
   .el-dialog {
@@ -947,11 +947,11 @@ export default {
     }
   }
   .resourceBox {
-    background: rgba(101, 143, 247, 0);
+    background: #161618;
     border-radius: 2px;
-    margin: 10px;
+    margin: 2px;
     .border-line {
-      border-bottom: 1px solid #e9e9e9;
+      border-bottom: 2px solid #000;
       margin-top: 33px;
       margin-bottom: 30px;
     }
@@ -959,36 +959,52 @@ export default {
       background: rgba(101, 143, 247, 0);
     }
     .el-button {
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 #2463ff;
+      background: #424b00;
+      border: 1px solid #424b00;
       border-radius: 3px;
-      border: none;
+    }
+    .el-button:hover {
+      background: #627100;
+      border: 1px solid #627100;
     }
     .el-select /deep/ .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #ffffff;
+      color: #627100;
+    }
+    .el-select /deep/ .el-select__caret {
+        color: #627100;
     }
     .el-input /deep/ .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-input__inner /deep/ .el-range-input {
-      background: rgba(36, 99, 255, 0.2);
-      border-radius: 4px;
-      color: #ffffff;
+      background: #1d1e23;
+      color: #c8c8c8;
     }
     .el-radio {
-      color: #ffffff;
+      color: #c8c8c8;
+    }
+    .el-radio /deep/ .el-radio__input.is-checked+.el-radio__label {
+        color: #627100;
+    }
+    .el-radio /deep/ .el-radio__input.is-checked .el-radio__inner {
+        color: #627100;
+        background: #627100;
+        border-color: #627100;
+    }
+    .el-radio /deep/ .el-radio__inner:hover {
+        border-color: #627100;
     }
     .title {
       border-radius: 4px 4px 0 0;
@@ -997,7 +1013,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         text-align: left;
         line-height: 24px;
         padding-left: 30px;
@@ -1027,22 +1043,22 @@ export default {
       h2 {
         font-family: ArialMT;
         font-size: 18px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 22px;
         text-align: left;
       }
       p {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         letter-spacing: 0;
         line-height: 22px;
         text-align: left;
       }
       .border-col {
         margin-top: 60px;
-        border-left: 1px solid #e9e9e9;
-        border-right: 1px solid #e9e9e9;
+        border-left: 1px solid rgba(255, 255, 255, 0.2);
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
         p {
           padding-left: 50px;
         }
@@ -1052,7 +1068,7 @@ export default {
         span {
           font-family: Source-Sans-Pro-Bold;
           font-size: 16px;
-          color: #ffffff;
+          color: #c8c8c8;
           text-align: left;
           line-height: 24px;
           padding-left: 20px;
@@ -1069,8 +1085,9 @@ export default {
       }
       span {
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 24px;
+        font-weight: 400;
         i {
           font-size: 26px;
           margin-right: 10px;
@@ -1080,20 +1097,20 @@ export default {
         margin-bottom: 30px;
         p {
           font-size: 16px;
-          color: #ffffff;
+          color: #c8c8c8;
           text-align: left;
           line-height: 24px;
         }
         span {
           font-size: 16px;
-          color: #ffffff;
+          color: #c8c8c8;
           text-align: left;
           line-height: 24px;
         }
       }
     }
     .more {
-      border-bottom: 1px solid #e9e9e9;
+      border-bottom: 2px solid #000;
       margin-top: 33px;
       margin-bottom: 30px;
       .more-button {
@@ -1101,16 +1118,15 @@ export default {
         text-align: center;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 22px;
       }
     }
     .el-button {
       margin-bottom: 30px;
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 #2463ff;
+      background: #424b00;
+      border: 1px solid #424b00;
       border-radius: 5px;
-      border: none;
       width: 200px;
       height: 34px;
     }

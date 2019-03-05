@@ -205,7 +205,7 @@ export default {
               symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               lineStyle: {
-                color: '#ffffff'
+                color: '#c8c8c8'
               }
             },
             axisTick: {
@@ -213,7 +213,7 @@ export default {
             },
             axisLabel: {
               textStyle: {
-                color: '#ffffff'
+                color: '#c8c8c8'
               }
             }
           }
@@ -228,7 +228,7 @@ export default {
               symbolSize: [10, 20],
               symbolOffset: [0, 15],
               lineStyle: {
-                color: '#ffffff'
+                color: '#c8c8c8'
               }
             },
             splitLine: {
@@ -240,7 +240,7 @@ export default {
             axisLabel: {
               formatter: '{value}',
               textStyle: {
-                color: '#ffffff'
+                color: '#c8c8c8'
               }
             }
           }
@@ -489,12 +489,12 @@ export default {
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         text-align: left;
       }
       .powerCon p {
         font-size: 14px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 40px;
         text-align: left;
       }
@@ -521,7 +521,7 @@ export default {
       .choosePower {
         height: 40px;
         span {
-          color: #ffffff;
+          color: #c8c8c8;
           z-index: 10;
           float: right;
           margin: 3px 10px;

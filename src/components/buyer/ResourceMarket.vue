@@ -97,9 +97,8 @@
       <el-row class="margin-top">
         <el-col :span="23" :offset="1">
           <el-form label-width="140px">
-
             <el-row class="margin-top">
-                <el-col :span="18">
+              <el-col :span="18">
                 <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-name"></i>
@@ -114,8 +113,8 @@
               </el-col>
             </el-row>
 
-            <el-row  class="margin-top">
-                <el-col :span="10">
+            <el-row class="margin-top">
+              <el-col :span="10">
                 <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-region"></i>
@@ -131,26 +130,25 @@
                   </el-select>
                 </el-form-item>
               </el-col>
-                <el-col :span="10">
-                    <el-form-item>
+              <el-col :span="10">
+                <el-form-item>
                   <span slot="label">
                     <i class="iconfont icon-attributes"></i>
                     {{$t('buyer.resourceMarket.attributes')}}
                   </span>
-                        <el-select v-model="deployForm.networkType">
-                            <el-option
-                                    v-for="item in networkTypeSel"
-                                    :key="item.value"
-                                    :label="item.label"
-                                    :value="item.value"
-                            ></el-option>
-                        </el-select>
-                    </el-form-item>
-                </el-col>
-
+                  <el-select v-model="deployForm.networkType">
+                    <el-option
+                      v-for="item in networkTypeSel"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    ></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
             </el-row>
 
-            <el-row   class="margin-top">
+            <el-row class="margin-top">
               <el-col :span="10">
                 <el-form-item>
                   <span slot="label">
@@ -185,7 +183,7 @@
               </el-col>
             </el-row>
 
-            <el-row class="margin-top">
+            <el-row>
               <el-col :span="10">
                 <el-form-item>
                   <span slot="label">
@@ -220,7 +218,7 @@
               </el-col>
             </el-row>
 
-            <el-row   class="margin-top">
+            <el-row class="margin-top">
               <el-col :span="12">
                 <el-form-item>
                   <span slot="label">
@@ -241,8 +239,6 @@
                 </el-form-item>
               </el-col>
             </el-row>
-
-
           </el-form>
         </el-col>
       </el-row>
@@ -315,14 +311,14 @@ export default {
     this.startDatePickerOptions = {
       disabledDate(time) {
         return (
-             time.getTime() < new Date().getTime()
+          time.getTime() < new Date().getTime()
         )
       }
     }
   },
   methods: {
-    closeDialog: function(data) {
-      this.outerVisible=false
+    closeDialog: function (data) {
+      this.outerVisible = false
     },
     countDown() {
       if (!this.canClick) return
@@ -478,7 +474,7 @@ export default {
 
 <style lang="scss" scoped>
 .resourceMarket {
-  background: rgba(101, 143, 247, 0);
+  background: #000;
   border-radius: 2px;
   min-width: 1130px;
   .el-dialog {
@@ -518,16 +514,15 @@ export default {
     }
   }
   .resourceHead {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
-    margin: 10px 10px 0;
+    margin: 2px 2px 0;
     height: 50px;
     .title {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -540,50 +535,55 @@ export default {
     }
   }
   .resourceBox {
-    background: rgba(101, 143, 247, 0);
-    box-shadow: inset 0 0 22px 0 rgba(36, 99, 255, 0.5);
+    background: #161618;
     border-radius: 2px;
     height: 660px;
-    margin: 10px;
+    margin: 2px;
     .title {
       border-radius: 4px 4px 0 0;
       height: 54px;
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         text-align: left;
         line-height: 24px;
         padding-left: 30px;
       }
     }
     .el-button {
-      background: rgba(101, 143, 247, 0);
-      box-shadow: inset 0 0 22px 0 #2463ff;
+      background: #424b00;
+      border: 1px solid #424b00;
       border-radius: 3px;
-      border: none;
+    }
+    .el-button:hover {
+      background: #627100;
+      border: 1px solid #627100;
     }
     .el-select /deep/ .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #ffffff;
+      color: #627100;
+    }
+    .el-select /deep/ .el-select__caret {
+      color: #627100;
     }
     .el-input /deep/ .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #ffffff;
+      color: #c8c8c8;
     }
     .el-input__inner /deep/ input {
-      background: rgba(36, 99, 255, 0);
-      color: #ffffff;
+      background: #1d1e23;
+      color: #c8c8c8;
     }
     .margin-top {
       margin-top: 33px;
@@ -592,7 +592,7 @@ export default {
       }
       span {
         font-size: 16px;
-        color: #ffffff;
+        color: #c8c8c8;
         line-height: 24px;
         font-weight: 400;
         i {
