@@ -76,7 +76,8 @@
         </template>
         <el-table-column width="50">
           <template slot-scope="scope">
-            <div :class="scope.row.state == 'active' ? 'on' : 'off'"></div>
+            <div class="off" v-if="scope.row.state != 'active'"> <i class="iconfont icon-off"></i></div>
+            <div class="on" v-else><i class="iconfont icon-on"></i></div>
           </template>
         </el-table-column>
         <el-table-column width="100">
@@ -103,7 +104,7 @@
           <template slot-scope="scope">
             <p class="overflow">{{ scope.row.name}} <br/>
                 <span v-if="scope.row.publicAddress"> [Extranet] </span>
-                <span v-else="!scope.row.publicAddress"> [Intranet] </span>
+                <span v-else> [Intranet] </span>
             </p>
           </template>
         </el-table-column>
@@ -195,7 +196,19 @@
             <p
               style="color:#8c8c8c; font-size:10px; margin-left:35px;"
             >{{ scope.row.diskUsed }} {{$t('seller.host.usable.disk')}}</p>
-            <el-progress
+            <el-progress class="usageGreen" v-if="getPercentNumber(scope.row.diskUsed,scope.row.disk) <= 50"
+              :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <el-progress class="usageRed" v-else-if="getPercentNumber(scope.row.diskUsed,scope.row.disk) >= 80"
+              :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <el-progress class="usageYellow" v-else
               :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
               :stroke-width="18"
               :text-inside="true"
@@ -224,7 +237,7 @@
             <p
               style="color:#8c8c8c; font-size:10px; margin-left:35px;"
             >{{ scope.row.networkUsed }} {{$t('seller.host.usable.network')}}</p>
-            <el-progress
+            <el-progress v-if="getPercentNumber(scope.row.networkUsed,scope.row.network) == 0"
               :percentage="getPercentNumber(scope.row.networkUsed,scope.row.network)"
               :stroke-width="18"
               :text-inside="true"
@@ -629,11 +642,19 @@ export default {
       line-height: 24px;
     }
     .el-progress /deep/ .el-progress-bar__outer {
-      background: #1890ff !important;
+      background: #333440 !important;
       border-radius: 0;
     }
-    .el-progress /deep/ .el-progress-bar__inner {
-      background: #f25954 !important;
+    .usageGreen /deep/ .el-progress-bar__inner {
+      background: #51a906 !important;
+      border-radius: 0;
+    }
+    .usageYellow /deep/ .el-progress-bar__inner {
+      background: #facc14 !important;
+      border-radius: 0;
+    }
+    .usageRed /deep/ .el-progress-bar__inner {
+      background: #ff5640 !important;
       border-radius: 0;
     }
     .on {
@@ -642,12 +663,7 @@ export default {
       //   width: 12px;
       //   height: 12px;
       //   border-radius: 100%;
-      width: 0;
-      height: 0;
-      border-right: 10px solid transparent;
-      border-left: 10px solid transparent;
-      border-bottom: 10px solid #51a906;
-      float: right;
+      color: #51a906;
     }
     .off {
       //   background: #f25954;
@@ -655,12 +671,7 @@ export default {
       //   width: 12px;
       //   height: 12px;
       //   border-radius: 100%;
-      width: 0;
-      height: 0;
-      border-right: 10px solid transparent;
-      border-left: 10px solid transparent;
-      border-top: 10px solid #f25954;
-      float: right;
+      color: #f25954;
     }
     .table-head {
       text-align: center;
