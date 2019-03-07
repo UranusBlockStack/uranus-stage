@@ -181,7 +181,10 @@
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.name}}</p>
+              <p class="overflow">{{ scope.row.name}} <br/>
+                  <span v-if="scope.row.publicAddress" class="network_type"> [Extranet] </span>
+                  <span v-else class="network_type"> [Intranet] </span>
+              </p>
             </template>
           </el-table-column>
           <!--cpu-->
