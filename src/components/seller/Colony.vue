@@ -261,12 +261,24 @@
               <p
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
               >{{ scope.row.diskUsed }} {{$t('seller.group.usable.disk')}}</p>
-              <el-progress
+                <el-progress class="usageGreen" v-if="getPercentNumber(scope.row.diskUsed,scope.row.disk) <= 50"
                 :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
                 :stroke-width="18"
                 :text-inside="true"
                 style="margin-left:35px;"
-              ></el-progress>
+                ></el-progress>
+                <el-progress class="usageRed" v-else-if="getPercentNumber(scope.row.diskUsed,scope.row.disk) >= 80"
+                             :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
+                             :stroke-width="18"
+                             :text-inside="true"
+                             style="margin-left:35px;"
+                ></el-progress>
+                <el-progress class="usageYellow" v-else
+                             :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
+                             :stroke-width="18"
+                             :text-inside="true"
+                             style="margin-left:35px;"
+                ></el-progress>
               <p
                 v-if="scope.row.disk != null"
                 style="color:#8c8c8c; font-size:10px; margin-left:35px;"
@@ -531,7 +543,7 @@ export default {
     getPercentNumber() {
       // 计算百分比 a/b
       return function (a, b) {
-        var n = Number((a / b) * 100).toFixed(2)
+        let n = Number((a / b) * 100).toFixed(2)
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
           n = 0
         }
@@ -541,7 +553,7 @@ export default {
     dateFormat() {
       return function (time) {
         let momentInfo = moment(time)
-        if (momentInfo.isValid() == false) {
+        if (momentInfo.isValid() === false) {
           return moment(0).format('YYYY-MM-DD hh:mm:ss')
         } else {
           return moment(time).format('YYYY-MM-DD hh:mm:ss')
@@ -550,7 +562,7 @@ export default {
     },
     division() {
       return function (a, b) {
-        var n = a / b
+        let n = a / b
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
           n = 0
         }
@@ -741,14 +753,30 @@ export default {
         text-align: left;
         line-height: 24px;
       }
-      .el-progress /deep/ .el-progress-bar__outer {
+        .el-progress /deep/ .el-progress-bar__outer {
+            background: #333440 !important;
+            border-radius: 0;
+        }
+        .usageGreen /deep/ .el-progress-bar__inner {
+            background: #51a906 !important;
+            border-radius: 0;
+        }
+        .usageYellow /deep/ .el-progress-bar__inner {
+            background: #facc14 !important;
+            border-radius: 0;
+        }
+        .usageRed /deep/ .el-progress-bar__inner {
+            background: #ff5640 !important;
+            border-radius: 0;
+        }
+      /*.el-progress /deep/ .el-progress-bar__outer {
         background: #1890ff !important;
         border-radius: 0;
       }
       .el-progress /deep/ .el-progress-bar__inner {
         background: #f25954 !important;
         border-radius: 0;
-      }
+      }*/
       .on {
         background: #51a906;
         border: 2px solid #dcdcdc;

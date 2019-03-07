@@ -524,7 +524,7 @@ export default {
     getPercentNumber() {
       // 计算百分比 a/b
       return function (a, b) {
-        var n = Number((a / b) * 100).toFixed(2)
+        let n = Number((a / b) * 100).toFixed(2)
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
           n = 0
         }
