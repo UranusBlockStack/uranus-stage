@@ -76,8 +76,12 @@
         </template>
         <el-table-column width="50">
           <template slot-scope="scope">
-            <div class="off" v-if="scope.row.state != 'active'"> <i class="iconfont icon-off"></i></div>
-            <div class="on" v-else><i class="iconfont icon-on"></i></div>
+            <div class="off" v-if="scope.row.state != 'active'">
+              <i class="iconfont icon-off"></i>
+            </div>
+            <div class="on" v-else>
+              <i class="iconfont icon-on"></i>
+            </div>
           </template>
         </el-table-column>
         <el-table-column width="100">
@@ -98,13 +102,14 @@
             <p class="table-head">
               <i class="iconfont icon-table-host"></i>
               {{$t('seller.host.number')}}
-
             </p>
           </template>
           <template slot-scope="scope">
-            <p class="overflow">{{ scope.row.name}} <br/>
-                <span v-if="scope.row.publicAddress" class="network_type"> [Extranet] </span>
-                <span v-else class="network_type"> [Intranet] </span>
+            <p class="overflow">
+              {{ scope.row.name}}
+              <br>
+              <span v-if="scope.row.publicAddress" class="network_type">[Extranet]</span>
+              <span v-else class="network_type">[Intranet]</span>
             </p>
           </template>
         </el-table-column>
@@ -133,7 +138,25 @@
               <!--已用核数-->
             </p>
             <el-progress
-              :percentage="getPercentNumber(scope.row.cpuKernelUsed, scope.row.cpuKernel)"
+              class="usageGreen"
+              v-if="getPercentNumber(scope.row.cpuKernelUsed,scope.row.cpuKernel) <= 50"
+              :percentage="getPercentNumber(scope.row.cpuKernelUsed,scope.row.cpuKernel)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <el-progress
+              class="usageRed"
+              v-else-if="getPercentNumber(scope.row.cpuKernelUsed,scope.row.cpuKernel) >= 80"
+              :percentage="getPercentNumber(scope.row.cpuKernelUsed,scope.row.cpuKernel)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <el-progress
+              class="usageYellow"
+              v-else
+              :percentage="getPercentNumber(scope.row.cpuKernelUsed,scope.row.cpuKernel)"
               :stroke-width="18"
               :text-inside="true"
               style="margin-left:35px;"
@@ -168,6 +191,24 @@
               style="color:#8c8c8c; font-size:10px; margin-left:35px;"
             >{{ scope.row.memUsed}} {{$t('seller.host.usable.memory')}}</p>
             <el-progress
+              class="usageGreen"
+              v-if="getPercentNumber(scope.row.memUsed,scope.row.mem) <= 50"
+              :percentage="getPercentNumber(scope.row.memUsed,scope.row.mem)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <el-progress
+              class="usageRed"
+              v-else-if="getPercentNumber(scope.row.memUsed,scope.row.mem) >= 80"
+              :percentage="getPercentNumber(scope.row.memUsed,scope.row.mem)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <el-progress
+              class="usageYellow"
+              v-else
               :percentage="getPercentNumber(scope.row.memUsed,scope.row.mem)"
               :stroke-width="18"
               :text-inside="true"
@@ -196,19 +237,25 @@
             <p
               style="color:#8c8c8c; font-size:10px; margin-left:35px;"
             >{{ scope.row.diskUsed }} {{$t('seller.host.usable.disk')}}</p>
-            <el-progress class="usageGreen" v-if="getPercentNumber(scope.row.diskUsed,scope.row.disk) <= 50"
+            <el-progress
+              class="usageGreen"
+              v-if="getPercentNumber(scope.row.diskUsed,scope.row.disk) <= 50"
               :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
               :stroke-width="18"
               :text-inside="true"
               style="margin-left:35px;"
             ></el-progress>
-            <el-progress class="usageRed" v-else-if="getPercentNumber(scope.row.diskUsed,scope.row.disk) >= 80"
+            <el-progress
+              class="usageRed"
+              v-else-if="getPercentNumber(scope.row.diskUsed,scope.row.disk) >= 80"
               :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
               :stroke-width="18"
               :text-inside="true"
               style="margin-left:35px;"
             ></el-progress>
-            <el-progress class="usageYellow" v-else
+            <el-progress
+              class="usageYellow"
+              v-else
               :percentage="getPercentNumber(scope.row.diskUsed,scope.row.disk)"
               :stroke-width="18"
               :text-inside="true"
@@ -237,7 +284,25 @@
             <p
               style="color:#8c8c8c; font-size:10px; margin-left:35px;"
             >{{ scope.row.networkUsed }} {{$t('seller.host.usable.network')}}</p>
-            <el-progress v-if="getPercentNumber(scope.row.networkUsed,scope.row.network) == 0"
+            <el-progress
+              class="usageGreen"
+              v-if="getPercentNumber(scope.row.networkUsed,scope.row.network) <= 50"
+              :percentage="getPercentNumber(scope.row.networkUsed,scope.row.network)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <el-progress
+              class="usageRed"
+              v-else-if="getPercentNumber(scope.row.networkUsed,scope.row.network) >= 80"
+              :percentage="getPercentNumber(scope.row.networkUsed,scope.row.network)"
+              :stroke-width="18"
+              :text-inside="true"
+              style="margin-left:35px;"
+            ></el-progress>
+            <el-progress
+              class="usageYellow"
+              v-else
               :percentage="getPercentNumber(scope.row.networkUsed,scope.row.network)"
               :stroke-width="18"
               :text-inside="true"
@@ -557,7 +622,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #a2a6b0;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -576,28 +641,40 @@ export default {
     padding: 15px;
     .el-pagination /deep/ .btn-prev {
       background: rgba(36, 99, 255, 0);
-      color: #c8c8c8;
+      color: #a2a6b0;
     }
     .el-pagination /deep/ .btn-next {
       background: rgba(36, 99, 255, 0);
-      color: #c8c8c8;
+      color: #a2a6b0;
     }
     .el-pagination /deep/ .el-pager li {
       background: rgba(36, 99, 255, 0);
-      color: #c8c8c8;
+      color: #a2a6b0;
     }
     .el-pagination /deep/ .el-pager li.active {
-      color: #A2AE44;
+      color: #a2ae44;
     }
     p {
       margin-bottom: 0;
     }
     .el-table {
-      color: #c8c8c8;
+      color: #a2a6b0;
       background-color: rgba(101, 143, 247, 0);
     }
+    .el-table /deep/ ::-webkit-scrollbar {
+      background-color: #000000;
+      border-radius: 10px;
+      height: 12px;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    }
+    .el-table /deep/ ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: #25262f;
+      border: 2px solid #000000;
+    }
     .el-table /deep/ tr:hover td {
-      background:rgba(176,192,255,0.05) !important;
+      background: rgba(176, 192, 255, 0.05) !important;
     }
     .el-table /deep/ th,
     .el-table /deep/ tr {
@@ -612,7 +689,7 @@ export default {
       background: #1d1e23;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #c8c8c8;
+      color: #a2a6b0;
       font-weight: 400;
     }
     // .el-button {
@@ -645,6 +722,9 @@ export default {
       background: #333440 !important;
       border-radius: 0;
     }
+    .el-progress /deep/ .el-progress-bar__innerText {
+      color: #727680;
+    }
     .usageGreen /deep/ .el-progress-bar__inner {
       background: #51a906 !important;
       border-radius: 0;
@@ -675,7 +755,7 @@ export default {
     }
     .table-head {
       text-align: center;
-      color: #c8c8c8;
+      color: #a2a6b0;
       font-weight: 500;
       font-size: 16px;
       margin: 0;

@@ -39,12 +39,12 @@
           <span>{{$t('menu.home')}}</span>
         </router-link>
       </li>
-      <!-- <li class="treeview" v-show="user== 'Developer'">
+      <li class="treeview" v-show="user== 'Developer'">
         <router-link :to="{path: '/developer'}">
           <i class="iconfont icon-home"></i>
           <span>{{$t('menu.home')}}</span>
         </router-link>
-      </li> -->
+      </li>
       <li class="treeview" v-show="user== 'Buyer'">
         <router-link :to="{path: '/applicationmarket'}">
           <i class="iconfont icon-application-market"></i>
@@ -103,18 +103,18 @@
           </li>
         </ul>
       </li>
-      <!-- <li class="treeview" v-show="user== 'Developer'">
+      <li class="treeview" v-show="user== 'Developer'">
         <router-link :to="{path: '/uploadapplication'}">
-          <i class="iconfont icon-upload-application"></i>
+          <i class="iconfont icon-upload"></i>
           <span>{{$t('menu.uploadApplication')}}</span>
         </router-link>
       </li>
       <li class="treeview" v-show="user== 'Developer'">
         <router-link :to="{path: '/myapplication'}">
-          <i class="iconfont icon-My-application"></i>
+          <i class="iconfont icon-my-application"></i>
           <span>{{$t('menu.myApplication')}}</span>
         </router-link>
-      </li> -->
+      </li>
       <li class="treeview">
         <router-link :to="{path: '/wallet'}">
           <i class="iconfont icon-wallet"></i>
@@ -187,7 +187,7 @@ export default {
     font-size: 16px;
     .treeview {
       a {
-        color: #c8c8c8;
+        color: #A2A6B0;
         font-size:16px;
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;

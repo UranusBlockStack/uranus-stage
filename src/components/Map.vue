@@ -83,8 +83,8 @@
         </span>
         <p>{{$t('map.buyerText')}}</p>
       </a>
-      <!-- <a @click.prevent="LoginPage('Developer')" class="developer"> -->
-      <a @click.prevent="construction()" class="developer">
+      <a @click.prevent="LoginPage('Developer')" class="developer">
+      <!-- <a @click.prevent="construction()" class="developer"> -->
         <span>
           <i class="iconfont icon-map-developer"></i>
           {{$t('map.developer')}}
@@ -444,7 +444,7 @@ export default {
       margin-top: 15px;
       height: 50px;
       font-family: PingFang-SC-Medium;
-      font-size: 18px;
+      font-size: 15px;
       color: #a2ae44;
       letter-spacing: 0;
       text-align: center;

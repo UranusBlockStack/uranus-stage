@@ -284,7 +284,7 @@ export default {
             name: 'uranus',
             type: 'bar',
             barWidth: '25%',
-            color: '#1890ff',
+            color: '#333440',
             data: myData1.y
           }
         ]
@@ -326,7 +326,7 @@ export default {
             name: 'uranus',
             type: 'bar',
             barWidth: '25%',
-            color: '#1890ff',
+            color: '#333440',
             data: myData2.y
           }
         ]

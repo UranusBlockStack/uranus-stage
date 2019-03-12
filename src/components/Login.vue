@@ -294,20 +294,20 @@ export default {
           height: 30px;
           font-size: 16px;
           line-height: 24px;
-          color: #c8c8c8;
+          color: #A2A6B0;
           text-align: center;
         }
         .chooseBtn {
           font-family: Source-Sans-Pro-Bold;
           font-weight: 500;
-          border-bottom: 2px solid #c8c8c8;
-          color: #c8c8c8;
+          border-bottom: 2px solid #A2A6B0;
+          color: #A2A6B0;
           transition: all 0.5s;
         }
       }
     }
     input::-webkit-input-placeholder {
-      color: #c8c8c8;
+      color: #A2A6B0;
       font-family: Source-Sans-Pro-Regular;
     }
     .phoneRes {
@@ -321,7 +321,7 @@ export default {
           border-radius: 4px 0 0 4px;
           width: 70px;
           height: 38px;
-          color: #c8c8c8;
+          color: #A2A6B0;
         }
       }
       .phoneIpt {
@@ -336,7 +336,7 @@ export default {
       height: 38px;
       margin: 12px auto;
       padding-left: 20px;
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .forgetPwd {
       font-size: 14px;
@@ -357,7 +357,7 @@ export default {
       margin-left: 0;
       margin-top: 24px;
       font-size: 16px;
-      color: #c8c8c8;
+      color: #ffffff;
     }
     .loginBtn:hover {
       background: #627100;

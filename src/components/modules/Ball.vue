@@ -22,7 +22,7 @@ export default {
             legendHoverLink: false,
             avoidLabelOverlap: false,
             selectedOffset: 0,
-            color: ['#1890FF', '#f2f2f2'],
+            color: ['#1890FF', '#333440'],
             labelLine: {
               normal: {
                 show: false

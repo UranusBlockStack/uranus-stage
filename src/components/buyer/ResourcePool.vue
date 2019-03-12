@@ -247,7 +247,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -273,7 +273,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         text-align: left;
         line-height: 50px;
         margin: 0;
@@ -288,8 +288,11 @@ export default {
         background: #1d1e23;
         border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: 4px;
-        color: #c8c8c8;
+        color: #A2A6B0;
       }
+      .el-input /deep/ .el-input__prefix {
+      display: none;
+    }
       .el-button {
         background: #424b00;
         border: 1px solid #424b00;
@@ -310,7 +313,7 @@ export default {
       h3 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 24px;
         text-align: left;
         margin: 15px 20px;
@@ -362,7 +365,7 @@ export default {
     h2 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       line-height: 24px;
       text-align: left;
       padding-left: 30px;

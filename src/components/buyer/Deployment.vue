@@ -971,29 +971,29 @@ export default {
       background: #1d1e23;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #627100;
+      color: #A2A6B0;
     }
     .el-select /deep/ .el-select__caret {
-        color: #627100;
+        color: #A2A6B0;
     }
     .el-input /deep/ .el-input__inner {
       background: #1d1e23;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .el-input__inner {
       background: #1d1e23;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .el-input__inner /deep/ .el-range-input {
       background: #1d1e23;
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .el-radio {
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .el-radio /deep/ .el-radio__input.is-checked+.el-radio__label {
         color: #627100;
@@ -1013,7 +1013,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         text-align: left;
         line-height: 24px;
         padding-left: 30px;
@@ -1043,14 +1043,14 @@ export default {
       h2 {
         font-family: ArialMT;
         font-size: 18px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 22px;
         text-align: left;
       }
       p {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         letter-spacing: 0;
         line-height: 22px;
         text-align: left;
@@ -1068,7 +1068,7 @@ export default {
         span {
           font-family: Source-Sans-Pro-Bold;
           font-size: 16px;
-          color: #c8c8c8;
+          color: #A2A6B0;
           text-align: left;
           line-height: 24px;
           padding-left: 20px;
@@ -1085,7 +1085,7 @@ export default {
       }
       span {
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 24px;
         font-weight: 400;
         i {
@@ -1097,13 +1097,13 @@ export default {
         margin-bottom: 30px;
         p {
           font-size: 16px;
-          color: #c8c8c8;
+          color: #A2A6B0;
           text-align: left;
           line-height: 24px;
         }
         span {
           font-size: 16px;
-          color: #c8c8c8;
+          color: #A2A6B0;
           text-align: left;
           line-height: 24px;
         }
@@ -1118,7 +1118,7 @@ export default {
         text-align: center;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 22px;
       }
     }

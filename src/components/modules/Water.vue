@@ -31,7 +31,7 @@ export default {
                 label: {
                   formatter: ['Used', this.chartData * 100 + '%'].join('\n'),
                   fontSize: '22',
-                  color: '#c8c8c8'
+                  color: '#A2A6B0'
                 }
               }
             ],

@@ -778,7 +778,7 @@ export default {
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -795,11 +795,11 @@ export default {
     height: 100px;
     margin: 2px;
     margin-bottom: 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     p {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       line-height: 50px;
       text-align: left;
       padding-left: 32px;
@@ -811,7 +811,7 @@ export default {
     .contentUn {
       font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       line-height: 22px;
       text-align: left;
     }
@@ -824,10 +824,10 @@ export default {
     border-radius: 2px;
     height: 100px;
     margin: 0 2px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     p {
       font-size: 16px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       line-height: 50px;
       text-align: left;
       padding-left: 32px;
@@ -840,7 +840,7 @@ export default {
     .contentUn {
       font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       line-height: 22px;
       text-align: left;
     }

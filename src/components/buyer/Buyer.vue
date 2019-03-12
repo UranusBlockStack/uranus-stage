@@ -205,7 +205,7 @@ export default {
               symbol: ['none', 'arrow'],
               symbolSize: [10, 20],
               lineStyle: {
-                color: '#c8c8c8'
+                color: '#A2A6B0'
               }
             },
             axisTick: {
@@ -213,7 +213,7 @@ export default {
             },
             axisLabel: {
               textStyle: {
-                color: '#c8c8c8'
+                color: '#A2A6B0'
               }
             }
           }
@@ -228,7 +228,7 @@ export default {
               symbolSize: [10, 20],
               symbolOffset: [0, 15],
               lineStyle: {
-                color: '#c8c8c8'
+                color: '#A2A6B0'
               }
             },
             splitLine: {
@@ -240,7 +240,7 @@ export default {
             axisLabel: {
               formatter: '{value}',
               textStyle: {
-                color: '#c8c8c8'
+                color: '#A2A6B0'
               }
             }
           }
@@ -336,7 +336,7 @@ export default {
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -360,7 +360,7 @@ export default {
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 24px;
         text-align: left;
       }
@@ -422,7 +422,7 @@ export default {
               font-family: Source-Sans-Pro-Bold;
               font-weight: 500;
               font-size: 16px;
-              color: #c8c8c8;
+              color: #A2A6B0;
               text-align: center;
               line-height: 24px;
               margin-bottom: 0px;
@@ -434,7 +434,7 @@ export default {
               box-sizing: content-box;
               font-weight: 300;
               font-size: 14px;
-              color: #c8c8c8;
+              color: #A2A6B0;
               text-align: center;
               line-height: 22px;
               margin: -5px auto;
@@ -455,7 +455,7 @@ export default {
               font-weight: 500;
               font-size: 14px;
               padding: 10px 0;
-              color: #c8c8c8;
+              color: #A2A6B0;
               letter-spacing: 0;
               text-align: center;
               line-height: 22px;
@@ -489,12 +489,12 @@ export default {
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         text-align: left;
       }
       .powerCon p {
         font-size: 14px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 40px;
         text-align: left;
       }
@@ -521,7 +521,7 @@ export default {
       .choosePower {
         height: 40px;
         span {
-          color: #c8c8c8;
+          color: #A2A6B0;
           z-index: 10;
           float: right;
           margin: 3px 10px;

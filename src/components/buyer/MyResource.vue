@@ -524,7 +524,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -563,7 +563,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         text-align: left;
         line-height: 24px;
         padding-left: 30px;
@@ -572,7 +572,7 @@ export default {
     h2 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       text-align: center;
       line-height: 24px;
     }
@@ -592,7 +592,7 @@ export default {
       h3 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 24px;
         text-align: left;
         margin-top: 10px;
@@ -604,7 +604,7 @@ export default {
         line-height: 24px;
       }
       .timeText {
-        color: #c8c8c8;
+        color: #A2A6B0;
       }
       .renew {
         position: absolute;

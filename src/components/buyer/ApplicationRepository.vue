@@ -189,7 +189,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -238,19 +238,22 @@ export default {
       background: #1d1e23;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #c8c8c8;
+      color: #A2A6B0;
+    }
+    .el-input /deep/ .el-input__prefix {
+      display: none;
     }
     .el-pagination /deep/ .btn-prev {
       background: rgba(36, 99, 255, 0);
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .el-pagination /deep/ .btn-next {
       background: rgba(36, 99, 255, 0);
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .el-pagination /deep/ .el-pager li {
       background: rgba(36, 99, 255, 0);
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .el-pagination /deep/ .el-pager li.active {
       color: #a2ae44;
@@ -259,7 +262,7 @@ export default {
       height: 40px;
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       line-height: 24px;
       text-align: left;
     }
@@ -321,7 +324,7 @@ export default {
             font-family: Source-Sans-Pro-Bold;
             font-weight: 500;
             font-size: 16px;
-            color: #c8c8c8;
+            color: #A2A6B0;
             text-align: center;
             line-height: 24px;
             margin-bottom: 0px;
@@ -332,7 +335,7 @@ export default {
             overflow: hidden;
             box-sizing: content-box;
             font-size: 14px;
-            color: #c8c8c8;
+            color: #A2A6B0;
             text-align: center;
             line-height: 22px;
             margin: -5px auto;
@@ -353,7 +356,7 @@ export default {
             font-weight: 500;
             font-size: 14px;
             padding: 10px 0;
-            color: #c8c8c8;
+            color: #A2A6B0;
             letter-spacing: 0;
             text-align: center;
             line-height: 22px;

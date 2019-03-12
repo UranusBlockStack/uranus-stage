@@ -84,12 +84,11 @@
           </el-button>
         </el-col>
       </el-row>
-      <el-row class="lineBox"></el-row>
 
       <!-- Cluster List -->
       <el-row class="shopBox">
         <el-col :span="12" v-for="(colony, index) in colonyList" :key="index">
-          <el-row style="border: 1px solid rgba(255, 255, 255, 0.2); margin:10px;">
+          <el-row style="border: 1px solid rgba(255, 255, 255, 0.06); margin:10px;">
             <el-col :span="8">
               <router-link :to="{path: '/colony/'+colony.id}">
                 <Water :chartData="division(colony.usedCompute,colony.totalCompute)"/>
@@ -230,7 +229,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -268,7 +267,7 @@ export default {
       font-family: Source-Sans-Pro-Bold;
       font-weight: 500;
       font-size: 16px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       line-height: 40px;
       text-align: left;
     }
@@ -299,7 +298,7 @@ export default {
         text-align: left;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #c8c8c8;
+        color: #A2A6B0;
         margin-top: 0;
         margin-left: 22px;
         line-height: 22px;
@@ -323,20 +322,20 @@ export default {
       background: #1d1e23;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #c8c8c8;
+      color: #A2A6B0;
       opacity: 0.6;
     }
     .el-pagination /deep/ .btn-prev {
       background: rgba(36, 99, 255, 0);
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .el-pagination /deep/ .btn-next {
       background: rgba(36, 99, 255, 0);
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .el-pagination /deep/ .el-pager li {
       background: rgba(36, 99, 255, 0);
-      color: #c8c8c8;
+      color: #A2A6B0;
     }
     .el-pagination /deep/ .el-pager li.active {
       color: #A2AE44;

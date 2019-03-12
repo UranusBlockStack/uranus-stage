@@ -81,7 +81,7 @@ export default {
 
 <style lang="scss" scoped>
 p {
-    color: #c8c8c8;
+    color: #A2A6B0;
 }
 .false {
   b {
