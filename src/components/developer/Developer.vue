@@ -43,7 +43,9 @@
             <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
               <div class="resources">
                 <div>
-                  <img src="/static/img/uranus/developer/app.png" alt="img">
+                  <div class="img-box">
+                    <img src="/static/img/uranus/developer/app.png" alt="img">
+                  </div>
                   <p class="name">Imagepuler</p>
                   <p
                     class="detail"
@@ -61,11 +63,13 @@
               </div>
             </el-card>
           </el-col>
-          <el-col :span="6" style="margin-bottom:40px">
+          <el-col v-if="appList.length < 4" :span="6" style="margin-bottom:40px">
             <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
               <div class="resources">
                 <div class="upload">
-                  <img src="/static/img/uranus/developer/upload.png" alt="img">
+                  <div class="img-box">
+                    <img src="/static/img/uranus/developer/upload.png" alt="img">
+                  </div>
                   <p class="detail">发布更多应用,赚取额外费用</p>
                   <el-row :gutter="20">
                     <el-button type="success">添加应用</el-button>
@@ -110,8 +114,8 @@
             </el-table>
           </el-col>
         </el-row>
-        <el-row :gutter="20" style="height: 50px">
-          <el-col :span="6" :offset="9">
+        <el-row :gutter="20">
+          <el-col :span="8" :offset="16">
             <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
           </el-col>
         </el-row>
@@ -264,27 +268,61 @@ export default {
         },
         xAxis: [
           {
+            name: 'T',
             type: 'category',
             data: myData1.x,
             axisTick: {
               alignWithLabel: true
+            },
+            axisLine: {
+              show: true,
+              symbol: ['none', 'arrow'],
+              symbolSize: [10, 20],
+              symbolOffset: [0, 5],
+              lineStyle: {
+                color: '#A2A6B0'
+              }
             }
           }
         ],
         yAxis: [
           {
+            name: 'UracPower(U)',
             type: 'value',
-            axisLabel: {
-              formatter: '{value}'
+            /* axisLabel: {
+                          formatter: "{value}"
+                      }, */
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: '#363636'
+              }
+            },
+            axisLine: {
+              show: true,
+              symbol: ['none', 'arrow'],
+              symbolSize: [10, 20],
+              symbolOffset: [0, 15],
+              lineStyle: {
+                color: '#A2A6B0'
+              }
             }
           }
         ],
         series: [
           {
-            name: 'uranus',
+            name: ' ',
             type: 'bar',
-            barWidth: '25%',
-            color: '#333440',
+            barWidth: '30%',
+            color: '#2463ff',
+            // y轴柱形数值
+            data: myData1.y
+          },
+          {
+            name: ' ',
+            type: 'line',
+            color: '#51a906',
+            // y轴连线数值
             data: myData1.y
           }
         ]
@@ -331,7 +369,7 @@ export default {
           }
         ]
       })
-      window.onresize = function() {
+      window.onresize = function () {
         myChart1.resize()
         myChart2.resize()
       }
@@ -346,51 +384,59 @@ export default {
 
 <style lang="scss" scoped>
 .Developer {
-  background: #f2f2f2;
+  background: #000;
+  border-radius: 2px;
+  min-width: 1130px;
   width: 100%;
-  .el-button {
-    background: #8eb357;
-    border: none;
-  }
   .content-title {
-    background: #ffffff;
-    height: 65px;
+    background: #161618;
+    border-radius: 2px;
+    height: 50px;
+    margin: 2px 2px 0;
     h1 {
-      font-family: PingFang-SC-Bold;
-      font-size: 20px;
-      color: #252525;
-      line-height: 24px;
+      font-family: Source-Sans-Pro-Bold;
+      font-size: 16px;
+      color: #a2a6b0;
+      line-height: 50px;
+      margin: 0;
+      padding: 0;
       padding-left: 30px;
+      i {
+        font-size: 26px;
+        margin-right: 10px;
+      }
     }
   }
   .content {
+    width: 100%;
+    padding: 2px;
     .my-content {
-      width: 95%;
       min-width: 1130px;
       height: 400px;
       margin: 0 auto;
       display: flex;
       justify-content: space-between;
       .active {
-        color: #8eb357;
-        font-weight: bolder;
+        color: #a2ae44;
       }
       .downloads {
-        width: 49%;
-        min-width: 530px;
+        width: 50%;
+        margin-right: 2px;
+        min-width: 550px;
         height: 400px;
-        background: #ffffff;
+        background: #161618;
+        border-radius: 2px;
+        color: #a2a6b0;
         p {
           padding-left: 30px;
           padding-top: 20px;
           height: 40px;
-          line-height: 40px;
-          font-family: PingFang-SC-Bold;
+          font-family: Source-Sans-Pro-Bold;
+          font-weight: 500;
           font-size: 16px;
-          color: #252525;
-          text-align: left;
         }
         .chooseDown {
+          margin-top: -30px;
           height: 30px;
           span {
             float: right;
@@ -401,28 +447,31 @@ export default {
           }
         }
         #myDownloads {
-          width: 100%;
-          height: 300px;
+          width: 90%;
+          height: 320px;
           overflow: hidden;
+          margin: 0 auto;
         }
       }
       .profit {
-        width: 49%;
-        min-width: 530px;
+        width: 50%;
+        margin-left: 0px;
+        min-width: 550px;
         height: 400px;
-        background: #ffffff;
+        background: #161618;
+        border-radius: 2px;
+        color: #a2a6b0;
         p {
           padding-left: 30px;
           padding-top: 20px;
           height: 40px;
-          line-height: 40px;
-          font-family: PingFang-SC-Bold;
+          font-family: Source-Sans-Pro-Bold;
+          font-weight: 500;
           font-size: 16px;
-          color: #252525;
-          text-align: left;
         }
         .choosePro {
           height: 30px;
+          margin-top: -30px;
           span {
             float: right;
             margin: 3px 10px;
@@ -432,29 +481,31 @@ export default {
           }
         }
         #myProfit {
-          width: 100%;
-          height: 300px;
+          width: 90%;
+          height: 320px;
           overflow: hidden;
+          margin: 0 auto;
         }
       }
     }
     .application {
-      width: 95%;
       min-width: 1130px;
-      height: 450px;
-      margin: 20px auto;
-      padding: 30px;
-      background: #ffffff;
+      min-height: 450px;
+      margin: 2px auto;
+      padding: 0 30px;
+      background: #161618;
+      border-radius: 2px;
+      color: #a2a6b0;
       p {
+        padding-left: 30px;
+        padding-top: 20px;
         height: 40px;
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
+        font-weight: 500;
         font-size: 16px;
-        color: #252525;
-        line-height: 24px;
-        text-align: left;
       }
       .more {
-        font-family: PingFang-SC-Bold;
+        font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
         color: #8eb357;
         line-height: 24px;
@@ -462,55 +513,98 @@ export default {
       .applicationBox {
         width: 100%;
         min-width: 1130px;
+        margin-top: 15px;
+        min-height: 400px;
+        .el-card {
+          background: rgba(101, 143, 247, 0);
+          border: 1px solid rgba(255, 255, 255, 0.2);
+          width: 270px;
+          display: inline-block;
+          margin: 15px;
+        }
+        .el-card:hover {
+          background: rgba(176, 192, 255, 0.05);
+        }
         .resources {
           text-align: center;
-          padding: 20px;
+          padding: 10px;
           div {
-            cursor: pointer;
-            img {
-              width: 110px;
-              height: 105px;
-              display: inline-block;
+            cursor: default;
+            .img-box {
+              height: 110px;
+              width: 130px;
+              margin: 10px auto;
+              position: relative;
+              img {
+                background: #f2f2f2;
+                min-width: 100px;
+                min-height: 80px;
+                max-width: 130px;
+                max-height: 110px;
+                width: auto;
+                height: auto;
+                display: block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+              }
             }
             .name {
               font-weight: 600;
-              padding: 5px 0 10px;
-              border-bottom: 2px solid #eee;
-              font-family: PingFang-SC-Medium;
-              font-size: 20px;
-              color: #251e1c;
+              padding: 5px 0 5px;
+              font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
+              font-size: 16px;
+              color: #a2a6b0;
               text-align: center;
               line-height: 24px;
+              margin-bottom: 0px;
             }
             .detail {
               width: 220px;
               height: 66px;
               overflow: hidden;
               box-sizing: content-box;
-              font-family: PingFangSC-Regular;
+              font-weight: 300;
               font-size: 14px;
-              color: rgba(0, 0, 0, 0.45);
+              color: #a2a6b0;
               text-align: center;
               line-height: 22px;
-              margin: 10px auto;
+              margin: -5px auto;
             }
             .free {
-              font-weight: 600;
+              font-weight: 500;
               padding: 10px 0;
-              font-family: PingFangSC-Regular;
+              font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
               font-size: 14px;
-              color: #1890ff;
+              color: #a2ae44;
               letter-spacing: 0;
               line-height: 22px;
               text-align: left;
             }
             .downloads {
-              font-family: PingFangSC-Regular;
+              font-family: Source-Sans-Pro-Bold;
+              font-weight: 500;
               font-size: 14px;
-              color: #5d5d5d;
+              padding: 10px 0;
+              color: #a2a6b0;
               letter-spacing: 0;
               text-align: center;
               line-height: 22px;
+            }
+            .el-button {
+              background: #424b00;
+              border: 1px solid #424b00;
+              border-radius: 5px;
+              width: 120px;
+              margin-top: -5px;
+              padding: 8px 20px;
+            }
+            .el-button:hover {
+              background: #627100;
+              border: 1px solid #627100;
             }
           }
           .upload {
@@ -523,16 +617,70 @@ export default {
       }
     }
     .record {
-      background: #ffffff;
-      width: 95%;
+      background: #161618;
+      border-radius: 2px;
+      color: #a2a6b0;
       min-width: 1130px;
-      margin: 20px auto;
-      padding: 20px;
+      margin: 2px auto;
+      padding: 30px;
       .record-head {
-        height: 50px;
+        height: 40px;
+        font-family: Source-Sans-Pro-Bold;
+        font-weight: 500;
+        font-size: 16px;
+      }
+      .overflow {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
         width: 100%;
-        line-height: 50px;
-        padding-left: 15px;
+      }
+      .el-table {
+        color: #a2a6b0;
+      }
+      .table-head {
+        color: #a2a6b0;
+        font-weight: 500;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        i {
+          font-size: 22px;
+        }
+      }
+      .el-table {
+        color: #a2a6b0;
+        background-color: rgba(101, 143, 247, 0);
+      }
+      .el-table /deep/ tr:hover td {
+        background: rgba(176, 192, 255, 0.05) !important;
+      }
+      .el-table /deep/ th,
+      .el-table /deep/ tr {
+        background-color: rgba(101, 143, 247, 0);
+        border: none;
+      }
+      .el-table /deep/ td {
+        border: none;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .el-pagination {
+        margin-top: 20px;
+      }
+      .el-pagination /deep/ .btn-prev {
+        background: rgba(36, 99, 255, 0);
+        color: #a2a6b0;
+      }
+      .el-pagination /deep/ .btn-next {
+        background: rgba(36, 99, 255, 0);
+        color: #a2a6b0;
+      }
+      .el-pagination /deep/ .el-pager li {
+        background: rgba(36, 99, 255, 0);
+        color: #a2a6b0;
+      }
+      .el-pagination /deep/ .el-pager li.active {
+        color: #a2ae44;
       }
     }
   }
