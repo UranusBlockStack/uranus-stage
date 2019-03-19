@@ -273,7 +273,7 @@
         </el-table-column>
 
         <el-table-column width="170">
-          <!--宽带(M)-->
+          <!--带宽(M)-->
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-network"></i>
@@ -336,7 +336,7 @@
               >{{scope.row.clusterName}}</span>
               <el-button
                 style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
-                @click="joinButtonClick(scope.row.id)"
+                @click="joinButtonClick(scope.row)"
                 v-show="scope.row.clusterId ==''||scope.row.clusterId ==null"
               >{{$t('seller.host.join')}}</el-button>
             </p>
@@ -421,6 +421,7 @@ export default {
       clusterName: '',
       hostId: '',
       clusterId: '',
+      curHost: {},
       pageParam: {
         name: '',
         page: 2,
@@ -448,12 +449,13 @@ export default {
         })
     },
     rancherList() {
-      rancher.rancherList().then(data => {
+      const param = {networkType: this.curHost.networkType}
+      rancher.rancherList(param).then(data => {
         this.rancherLists = data.data.data
       })
     },
     clusterList() {
-      var param = {}
+      const param = {networkType: this.curHost.networkType}
       rancher.clusterSearch(this.language, param).then(data => {
         this.clusterLists = data.data.data.records
       })
@@ -513,9 +515,10 @@ export default {
         newCluster: false,
         clusterName: this.newClusterName,
         rancherId: this.rancherId,
+        networkType: this.curHost.networkType,
         clusterId: 0
       }
-      if (this.groupJoin == this.$t('seller.host.newGroup')) {
+      if (this.groupJoin === this.$t('seller.host.newGroup')) {
         // 主机加入新建集群
         if (this.rancherId === '' || this.rancherId == null || this.newClusterName === '' || this.newClusterName == null) {
           this.$message({
@@ -580,8 +583,9 @@ export default {
         }
       })
     },
-    joinButtonClick(selectedhostId) {
-      this.hostId = selectedhostId
+    joinButtonClick(selectedhostInfo) {
+      this.hostId = selectedhostInfo.id
+      this.curHost = this.row
       this.dialogVisible = true
     }
   },
