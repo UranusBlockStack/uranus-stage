@@ -586,6 +586,8 @@ export default {
     joinButtonClick(selectedhostInfo) {
       this.hostId = selectedhostInfo.id
       this.curHost = this.row
+      this.rancherList()
+      this.clusterList()
       this.dialogVisible = true
     }
   },
@@ -603,8 +605,6 @@ export default {
   },
   mounted() {
     this.getHostList()
-    this.rancherList()
-    this.clusterList()
     this.language = auth.getCurLang()
     this.userId = auth.getCurUserId()
   }
