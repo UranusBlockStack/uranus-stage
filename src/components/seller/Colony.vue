@@ -91,11 +91,12 @@
         <el-col class="title" :span="24">
           <h1>{{clusterInfo.name}}</h1>
         </el-col>
-        <el-col :span="4">
+        <el-col :span="4" class="mouseHover">
           <Water
             v-if="update1"
             :chartData="division(clusterInfo.usedCompute,clusterInfo.totalCompute)"
           />
+          <div class="showHover" style="margin-top: -170px;">Used {{clusterInfo.usedCompute}} Total {{clusterInfo.totalCompute}}</div>
         </el-col>
         <el-col class="padding-top" :span="5" :offset="1">
           <h4>{{$t('seller.group.earnings')}} {{clusterInfo.profit}}</h4>
@@ -131,22 +132,42 @@
         <el-col :span="20">
           <h2>{{$t('seller.group.restOne')}}</h2>
           <div class="restRes">
-            <Cpu
-              v-if="update2"
-              :chartData="getPercentNumber(this.clusterInfo.cpuKernelUsed,this.clusterInfo.cpuKernel)"
-            />
-            <Memory
-              v-if="update2"
-              :chartData="getPercentNumber(this.clusterInfo.memUsed,this.clusterInfo.mem)"
-            />
-            <Disk
-              v-if="update2"
-              :chartData="getPercentNumber(this.clusterInfo.diskUsed,this.clusterInfo.disk)"
-            />
-            <Network
-              v-if="update2"
-              :chartData="getPercentNumber(this.clusterInfo.networkUsed,this.clusterInfo.network)"
-            />
+            <div class="mouseHover restResbox">
+              <div
+                class="showHover"
+              >Used {{clusterInfo.cpuKernelUsed}} Total {{clusterInfo.cpuKernel}}</div>
+              <Cpu
+                v-if="update2"
+                :chartData="getPercentNumber(this.clusterInfo.cpuKernelUsed,this.clusterInfo.cpuKernel)"
+              />
+            </div>
+            <div class="mouseHover restResbox">
+              <div
+                class="showHover"
+              >Used {{clusterInfo.memUsed}} Total {{clusterInfo.mem}}</div>
+              <Memory
+                v-if="update2"
+                :chartData="getPercentNumber(this.clusterInfo.memUsed,this.clusterInfo.mem)"
+              />
+            </div>
+            <div class="mouseHover restResbox">
+              <div
+                class="showHover"
+              >Used {{clusterInfo.diskUsed}} Total {{clusterInfo.disk}}</div>
+              <Disk
+                v-if="update2"
+                :chartData="getPercentNumber(this.clusterInfo.diskUsed,this.clusterInfo.disk)"
+              />
+            </div>
+            <div class="mouseHover restResbox">
+              <div
+                class="showHover"
+              >Used {{clusterInfo.networkUsed}} Total {{clusterInfo.network}}</div>
+              <Network
+                v-if="update2"
+                :chartData="getPercentNumber(this.clusterInfo.networkUsed,this.clusterInfo.network)"
+              />
+            </div>
           </div>
         </el-col>
       </el-row>
@@ -187,7 +208,7 @@
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">
+              <p class="overflow" style="text-align: center;">
                 {{ scope.row.name}}
                 <br>
                 <span v-if="scope.row.publicAddress" class="network_type">[Extranet]</span>
@@ -691,6 +712,17 @@ export default {
     }
   }
   .colonyBox {
+    .showHover {
+      text-align: center;
+      color: #a2a6b0;
+      visibility: hidden;
+    }
+    .mouseHover:hover {
+      .showHover {
+        visibility: visible;
+        transition: 1.5s;
+      }
+    }
     .title {
       background: #161618;
       border-radius: 2px;
@@ -714,6 +746,7 @@ export default {
       border-radius: 2px;
       margin: 2px;
       padding-top: 30px;
+      height: 250px;
       .padding-top {
         padding-top: 5px;
       }
@@ -773,9 +806,13 @@ export default {
       }
     }
     .restRes {
-      height: 200px;
+      height: 220px;
       display: flex;
       padding-left: 50px;
+      .restResbox {
+        height: 220px;
+        width: 100%;
+      }
     }
     .el-dropdown {
       margin: 20px;

@@ -249,14 +249,14 @@ export default {
           {
             name: this.$t('buyer.home.allPower'),
             type: 'bar',
-            color: '#2463ff',
+            color: '#333440',
             barWidth: '20%',
             data: myData.y
           },
           {
             name: this.$t('buyer.home.restPower'),
             type: 'line',
-            color: '#51a906',
+            color: '#627100',
             data: myData.line
           }
         ]
@@ -503,7 +503,7 @@ export default {
           height: 10px;
           display: inline-block;
           width: 10px;
-          background: #1890ff;
+          background: #333440;
           border-radius: 10px;
           margin-right: 10px;
         }
@@ -513,7 +513,7 @@ export default {
           height: 10px;
           display: inline-block;
           width: 10px;
-          background: #9bcc3d;
+          background: #627100;
           border-radius: 10px;
           margin-right: 10px;
         }

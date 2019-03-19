@@ -314,14 +314,14 @@ export default {
             name: ' ',
             type: 'bar',
             barWidth: '30%',
-            color: '#2463ff',
+            color: '#333440',
             // y轴柱形数值
             data: myData1.y
           },
           {
             name: ' ',
             type: 'line',
-            color: '#51a906',
+            color: '#627100',
             // y轴连线数值
             data: myData1.y
           }
@@ -344,18 +344,47 @@ export default {
         },
         xAxis: [
           {
+            name: 'T',
             type: 'category',
             data: myData2.x,
             axisTick: {
               alignWithLabel: true
+            },
+            axisLine: {
+              show: true,
+              symbol: ['none', 'arrow'],
+              symbolSize: [10, 20],
+              symbolOffset: [0, 5],
+              lineStyle: {
+                color: '#A2A6B0'
+              }
             }
           }
         ],
         yAxis: [
           {
+            name: '(U)',
             type: 'value',
+            axisLine: {
+              show: true,
+              symbol: ['none', 'arrow'],
+              symbolSize: [10, 20],
+              symbolOffset: [0, 15],
+              lineStyle: {
+                color: '#A2A6B0'
+              }
+            },
+            splitLine: {
+              show: true,
+              lineStyle: {
+                color: '#363636'
+              }
+            },
             axisLabel: {
-              formatter: '{value}'
+              formatter: '{value}',
+              textStyle: {
+                color: '#A2A6B0'
+              }
             }
           }
         ],
@@ -507,8 +536,11 @@ export default {
       .more {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #8eb357;
+        color: #627100;
         line-height: 24px;
+      }
+      .more:hover {
+        color: #a2ae44;
       }
       .applicationBox {
         width: 100%;

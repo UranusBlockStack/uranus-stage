@@ -337,14 +337,14 @@ export default {
             name: ' ',
             type: 'bar',
             barWidth: '30%',
-            color: '#2463ff',
+            color: '#333440',
             // y轴柱形数值
             data: yValue
           },
           {
             name: ' ',
             type: 'line',
-            color: '#51a906',
+            color: '#627100',
             // y轴连线数值
             data: lineValue
           }

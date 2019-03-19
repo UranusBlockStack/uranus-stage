@@ -74,9 +74,12 @@
           <p style="padding-left: 15px;">{{$t('seller.groups.list')}}</p>
         </el-col>
         <el-col :span="4" :offset="12">
-          <el-input v-model="searchParam.name" @keyup.enter.native="clusterSearch"
-                    :placeholder="$t('seller.groups.searchIn')"
-                    prefix-icon="el-icon-search"></el-input>
+          <el-input
+            v-model="searchParam.name"
+            @keyup.enter.native="clusterSearch"
+            :placeholder="$t('seller.groups.searchIn')"
+            prefix-icon="el-icon-search"
+          ></el-input>
         </el-col>
         <el-col :span="2">
           <el-button style="margin-left:10px;" type="success" @click="clusterSearch()">
@@ -89,13 +92,17 @@
       <el-row class="shopBox">
         <el-col :span="12" v-for="(colony, index) in colonyList" :key="index">
           <el-row style="border: 1px solid rgba(255, 255, 255, 0.06); margin:10px;">
-            <el-col :span="8">
+            <el-col :span="8" class="mouseHover">
               <router-link :to="{path: '/colony/'+colony.id}">
-                <Water :chartData="division(colony.usedCompute,colony.totalCompute)"/>
+                <Water
+                  :chartData="division(colony.usedCompute,colony.totalCompute)"
+                  style="margin-top: 15px;"
+                />
               </router-link>
+              <div class="showHover">Used {{colony.usedCompute}} Total {{colony.totalCompute}}</div>
             </el-col>
             <el-col class="padding-top" :span="16">
-                <h1>{{$t('seller.groups.name')}}: {{colony.name}}</h1>
+              <h1>{{$t('seller.groups.name')}}: {{colony.name}}</h1>
               <h2>
                 <p>
                   <i class="iconfont icon-earnings"></i>
@@ -115,7 +122,7 @@
               <h2 class="setting" @click="dialogVisible = true">
                 <i class="iconfont icon-setting" style="font-size: 25px;"></i>
               </h2>
-            </el-col> -->
+            </el-col>-->
           </el-row>
         </el-col>
       </el-row>
@@ -127,9 +134,13 @@
       </el-row>-->
       <el-row>
         <el-col :span="8" :offset="16">
-          <el-pagination layout="prev, pager, next" :current-page.sync="searchParam.page" :page-size="searchParam.pageSize" :total="searchParam.totalRecords"
-                         @current-change="handleCurrentChange">
-          </el-pagination>
+          <el-pagination
+            layout="prev, pager, next"
+            :current-page.sync="searchParam.page"
+            :page-size="searchParam.pageSize"
+            :total="searchParam.totalRecords"
+            @current-change="handleCurrentChange"
+          ></el-pagination>
         </el-col>
       </el-row>
     </div>
@@ -181,8 +192,8 @@ export default {
     },
     clusterSearch() {
       rancher.clusterSearch(this.language, this.searchParam).then(data => {
-        this.searchParam.page=data.data.data.current
-        this.searchParam.totalRecords=data.data.data.total
+        this.searchParam.page = data.data.data.current
+        this.searchParam.totalRecords = data.data.data.total
         var records = data.data.data.records
         this.colonyList = records
         records.forEach((item, index) => {
@@ -198,7 +209,7 @@ export default {
   },
   computed: {
     division() {
-      return function(a, b) {
+      return function (a, b) {
         var n = a / b
         if (isNaN(Number(n)) || !isFinite(Number(n))) {
           n = 0
@@ -229,7 +240,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #A2A6B0;
+        color: #a2a6b0;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -267,7 +278,7 @@ export default {
       font-family: Source-Sans-Pro-Bold;
       font-weight: 500;
       font-size: 16px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       line-height: 40px;
       text-align: left;
     }
@@ -277,6 +288,18 @@ export default {
     .shopBox {
       padding-top: 20px;
       min-height: 250px;
+      .showHover {
+        text-align: center;
+        margin-top: -170px;
+        color: #a2a6b0;
+        visibility: hidden;
+      }
+      .mouseHover:hover {
+        .showHover {
+          visibility: visible;
+          transition: 1.5s;
+        }
+      }
       .padding-top {
         padding-top: 20px;
         h2 {
@@ -298,7 +321,7 @@ export default {
         text-align: left;
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #A2A6B0;
+        color: #a2a6b0;
         margin-top: 0;
         margin-left: 22px;
         line-height: 22px;
@@ -315,30 +338,30 @@ export default {
       border-radius: 3px;
     }
     .el-button:hover {
-        background: #627100;
+      background: #627100;
       border: 1px solid #627100;
     }
     .el-input /deep/ .el-input__inner {
       background: #1d1e23;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       opacity: 0.6;
     }
     .el-pagination /deep/ .btn-prev {
       background: rgba(36, 99, 255, 0);
-      color: #A2A6B0;
+      color: #a2a6b0;
     }
     .el-pagination /deep/ .btn-next {
       background: rgba(36, 99, 255, 0);
-      color: #A2A6B0;
+      color: #a2a6b0;
     }
     .el-pagination /deep/ .el-pager li {
       background: rgba(36, 99, 255, 0);
-      color: #A2A6B0;
+      color: #a2a6b0;
     }
     .el-pagination /deep/ .el-pager li.active {
-      color: #A2AE44;
+      color: #a2ae44;
     }
   }
 }
