@@ -17,7 +17,7 @@
               v-model="rancherId"
               :placeholder="$t('seller.host.region')"
             >
-              <template v-if="language== 'zh-cn' ">
+              <template v-if="language === 'zh-cn' ">
                 <el-option
                   v-for="(item, index) in rancherLists"
                   :key="index"
@@ -416,7 +416,7 @@ export default {
       rancherLists: [],
       clusterLists: [],
       language: 'en-us',
-      rancherId: 2,
+      rancherId: '',
       newClusterName: '',
       clusterName: '',
       hostId: '',
@@ -450,8 +450,8 @@ export default {
     },
     rancherList() {
       const param = {networkType: this.curHost.publicAddress? 'outer':'inner'}
-      rancher.rancherList(param).then(data => {
-        this.rancherLists = data.data.data
+      rancher.rancherSearch(this.language, param).then(data => {
+        this.rancherLists = data.data.data.records
       })
     },
     clusterList() {
