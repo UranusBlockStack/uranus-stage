@@ -449,13 +449,13 @@ export default {
         })
     },
     rancherList() {
-      const param = {networkType: this.curHost.networkType}
+      const param = {networkType: this.curHost.publicAddress? 'outer':'inner'}
       rancher.rancherList(param).then(data => {
         this.rancherLists = data.data.data
       })
     },
     clusterList() {
-      const param = {networkType: this.curHost.networkType}
+      const param = {networkType: this.curHost.publicAddress? 'outer':'inner'}
       rancher.clusterSearch(this.language, param).then(data => {
         this.clusterLists = data.data.data.records
       })
@@ -515,7 +515,6 @@ export default {
         newCluster: false,
         clusterName: this.newClusterName,
         rancherId: this.rancherId,
-        networkType: this.curHost.networkType,
         clusterId: 0
       }
       if (this.groupJoin === this.$t('seller.host.newGroup')) {
@@ -585,7 +584,8 @@ export default {
     },
     joinButtonClick(selectedhostInfo) {
       this.hostId = selectedhostInfo.id
-      this.curHost = this.row
+      this.curHost = selectedhostInfo
+
       this.rancherList()
       this.clusterList()
       this.dialogVisible = true
