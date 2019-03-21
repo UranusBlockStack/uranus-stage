@@ -58,6 +58,6 @@ export default {
   background:#000;
 }
 .main-sidebar {
-  background:#08080a;
+  background:#08080a !important;
 }
 </style>
