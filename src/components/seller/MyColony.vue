@@ -99,7 +99,12 @@
                   style="margin-top: 15px;"
                 />
               </router-link>
-              <div class="showHover">Used {{colony.usedCompute}} Total {{colony.totalCompute}}</div>
+              <div class="showHover">
+                <span>Used</span>
+                <span class="spanVal">{{colony.usedCompute}}</span>
+                <span>Total</span>
+                <span class="spanVal">{{colony.totalCompute}}</span>
+              </div>
             </el-col>
             <el-col class="padding-top" :span="16">
               <h1>{{$t('seller.groups.name')}}: {{colony.name}}</h1>
@@ -293,6 +298,18 @@ export default {
         margin-top: -170px;
         color: #a2a6b0;
         visibility: hidden;
+        height: 30px;
+        span {
+          display: inline-block;
+          height: 30px;
+          width: 35px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .spanVal {
+          width: 45px;
+        }
       }
       .mouseHover:hover {
         .showHover {

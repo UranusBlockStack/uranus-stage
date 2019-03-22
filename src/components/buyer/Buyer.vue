@@ -336,7 +336,7 @@ export default {
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -360,7 +360,7 @@ export default {
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
         font-size: 16px;
-        color: #A2A6B0;
+        color: #a2a6b0;
         line-height: 24px;
         text-align: left;
       }
@@ -384,6 +384,9 @@ export default {
           width: 270px;
           display: inline-block;
           margin: 15px;
+        }
+        .el-card:hover {
+          background: rgba(176, 192, 255, 0.05);
         }
         .resources {
           text-align: center;
@@ -422,7 +425,7 @@ export default {
               font-family: Source-Sans-Pro-Bold;
               font-weight: 500;
               font-size: 16px;
-              color: #A2A6B0;
+              color: #a2a6b0;
               text-align: center;
               line-height: 24px;
               margin-bottom: 0px;
@@ -434,7 +437,7 @@ export default {
               box-sizing: content-box;
               font-weight: 300;
               font-size: 14px;
-              color: #A2A6B0;
+              color: #a2a6b0;
               text-align: center;
               line-height: 22px;
               margin: -5px auto;
@@ -455,7 +458,7 @@ export default {
               font-weight: 500;
               font-size: 14px;
               padding: 10px 0;
-              color: #A2A6B0;
+              color: #a2a6b0;
               letter-spacing: 0;
               text-align: center;
               line-height: 22px;
@@ -489,12 +492,12 @@ export default {
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
         font-size: 16px;
-        color: #A2A6B0;
+        color: #a2a6b0;
         text-align: left;
       }
       .powerCon p {
         font-size: 14px;
-        color: #A2A6B0;
+        color: #a2a6b0;
         line-height: 40px;
         text-align: left;
       }
@@ -521,7 +524,7 @@ export default {
       .choosePower {
         height: 40px;
         span {
-          color: #A2A6B0;
+          color: #a2a6b0;
           z-index: 10;
           float: right;
           margin: 3px 10px;

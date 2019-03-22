@@ -96,7 +96,12 @@
             v-if="update1"
             :chartData="division(clusterInfo.usedCompute,clusterInfo.totalCompute)"
           />
-          <div class="showHover" style="margin-top: -170px;">Used {{clusterInfo.usedCompute}} Total {{clusterInfo.totalCompute}}</div>
+          <div class="showHover" style="margin-top: -170px;">
+            <span>Used</span>
+            <span class="spanVal">{{clusterInfo.usedCompute}}</span>
+            <span>Total</span>
+            <span class="spanVal">{{clusterInfo.totalCompute}}</span>
+          </div>
         </el-col>
         <el-col class="padding-top" :span="5" :offset="1">
           <h4>{{$t('seller.group.earnings')}} {{clusterInfo.profit}}</h4>
@@ -133,36 +138,48 @@
           <h2>{{$t('seller.group.restOne')}}</h2>
           <div class="restRes">
             <div class="mouseHover restResbox">
-              <div
-                class="showHover"
-              >Used {{clusterInfo.cpuKernelUsed}} Total {{clusterInfo.cpuKernel}}</div>
+              <div class="showHover">
+                <span>Used</span>
+                <span class="spanVal">{{clusterInfo.cpuKernelUsed}}</span>
+                <span>Total</span>
+                <span class="spanVal">{{clusterInfo.cpuKernel}}</span>
+              </div>
               <Cpu
                 v-if="update2"
                 :chartData="getPercentNumber(this.clusterInfo.cpuKernelUsed,this.clusterInfo.cpuKernel)"
               />
             </div>
             <div class="mouseHover restResbox">
-              <div
-                class="showHover"
-              >Used {{clusterInfo.memUsed}} Total {{clusterInfo.mem}}</div>
+              <div class="showHover">
+                <span>Used</span>
+                <span class="spanVal">{{clusterInfo.memUsed}}</span>
+                <span>Total</span>
+                <span class="spanVal">{{clusterInfo.mem}}</span>
+              </div>
               <Memory
                 v-if="update2"
                 :chartData="getPercentNumber(this.clusterInfo.memUsed,this.clusterInfo.mem)"
               />
             </div>
             <div class="mouseHover restResbox">
-              <div
-                class="showHover"
-              >Used {{clusterInfo.diskUsed}} Total {{clusterInfo.disk}}</div>
+              <div class="showHover">
+                <span>Used</span>
+                <span class="spanVal">{{clusterInfo.diskUsed}}</span>
+                <span>Total</span>
+                <span class="spanVal">{{clusterInfo.disk}}</span>
+              </div>
               <Disk
                 v-if="update2"
                 :chartData="getPercentNumber(this.clusterInfo.diskUsed,this.clusterInfo.disk)"
               />
             </div>
             <div class="mouseHover restResbox">
-              <div
-                class="showHover"
-              >Used {{clusterInfo.networkUsed}} Total {{clusterInfo.network}}</div>
+              <div class="showHover">
+                <span>Used</span>
+                <span class="spanVal">{{clusterInfo.networkUsed}}</span>
+                <span>Total</span>
+                <span class="spanVal">{{clusterInfo.network}}</span>
+              </div>
               <Network
                 v-if="update2"
                 :chartData="getPercentNumber(this.clusterInfo.networkUsed,this.clusterInfo.network)"
@@ -174,7 +191,7 @@
       <el-row class="myHostBox">
         <el-table :data="tableData" style="width: 100%">
           <template slot="empty">
-            <p class="empty-text">{{$t('seller.group.text')}}</p>
+            <p class="empty-text" style="height: 300px; line-height: 300px;">{{$t('seller.group.text')}}</p>
           </template>
           <el-table-column width="70">
             <template slot-scope="scope">
@@ -681,6 +698,30 @@ export default {
   border-radius: 2px;
   width: 100%;
   min-width: 1130px;
+  // .el-dialog__wrapper /deep/ .el-dialog {
+  //   background: rgba(114, 118, 128, 0.8);
+  //   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.5);
+  //   border-radius: 6px;
+  // }
+  // .el-dialog__wrapper /deep/ .el-button {
+  //   background: #627100;
+  //   border: 1px solid #627100;
+  //   border-radius: 3px;
+  //   color: #ffffff;
+  // }
+  // .el-dialog__wrapper /deep/ .el-button--primary {
+  //   background: rgba(114,118,128,0.30);
+  //   border: 1px solid rgba(114,118,128,0.30);
+  //   border-radius: 3px;
+  //   color: #ffffff;
+  // }
+  // .el-dialog__wrapper /deep/ .el-input__inner {
+  //   background: #1d1e23;
+  //   border: 1px solid rgba(255, 255, 255, 0.1);
+  //   border-radius: 4px;
+  //   color: #a2a6b0;
+  //   opacity: 0.6;
+  // }
   .rentDay {
     color: #8eb357;
     text-align: right;
@@ -716,6 +757,18 @@ export default {
       text-align: center;
       color: #a2a6b0;
       visibility: hidden;
+      height: 30px;
+      span {
+        display: inline-block;
+        height: 30px;
+        width: 35px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+      .spanVal {
+        width: 45px;
+      }
     }
     .mouseHover:hover {
       .showHover {
@@ -806,7 +859,7 @@ export default {
       }
     }
     .restRes {
-      height: 220px;
+      height: 250px;
       display: flex;
       padding-left: 50px;
       .restResbox {

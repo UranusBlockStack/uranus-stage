@@ -93,7 +93,8 @@
               <div class="prompt">{{mailprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button type="primary"
+              <el-button
+                type="primary"
                 @click="userBind('email',newEmail,bindMailCaptcha)"
               >{{$t('setting.button2')}}</el-button>
             </div>
@@ -200,7 +201,8 @@
               <div class="prompt">{{phoneprompt}}</div>
             </el-form>
             <div slot="footer" class="dialog-footer">
-              <el-button type="primary"
+              <el-button
+                type="primary"
                 @click="userBind('mobile',newPhoneNum,bindCaptcha)"
               >{{$t('setting.button2')}}</el-button>
             </div>
@@ -762,6 +764,37 @@ export default {
   width: 100%;
   min-width: 1130px;
   background: #000;
+  // .el-dialog__wrapper /deep/ .el-dialog {
+  //   background: rgba(39, 40, 45, 1);
+  //   box-shadow: 0 2px 20px 0 rgba(0, 0, 0, 0.5);
+  //   border-radius: 6px;
+  // }
+  // .el-dialog__wrapper /deep/ .el-dialog__title {
+  //   color: #c8c8c8;
+  // }
+  // .el-dialog__wrapper /deep/ .el-form-item__label {
+  //   color: #a2a6b0;
+  //   font-family: Source-Sans-Pro;
+  // }
+  // .el-dialog__wrapper /deep/ .el-button {
+  //   background: #627100;
+  //   border: 1px solid #627100;
+  //   border-radius: 3px;
+  //   color: #ffffff;
+  // }
+  // .el-dialog__wrapper /deep/ .el-button--primary {
+  //   background: rgba(114,118,128,0.30);
+  //   border: 1px solid rgba(114,118,128,0.30);
+  //   border-radius: 3px;
+  //   color: #ffffff;
+  // }
+  // .el-dialog__wrapper /deep/ .el-input__inner {
+  //   background: #1d1e23;
+  //   border: 1px solid rgba(255, 255, 255, 0.1);
+  //   border-radius: 4px;
+  //   color: #a2a6b0;
+  //   opacity: 0.6;
+  // }
   p {
     margin: 0;
   }
@@ -778,7 +811,7 @@ export default {
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -799,7 +832,7 @@ export default {
     p {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       line-height: 50px;
       text-align: left;
       padding-left: 32px;
@@ -811,7 +844,7 @@ export default {
     .contentUn {
       font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       line-height: 22px;
       text-align: left;
     }
@@ -827,7 +860,7 @@ export default {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     p {
       font-size: 16px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       line-height: 50px;
       text-align: left;
       padding-left: 32px;
@@ -840,7 +873,7 @@ export default {
     .contentUn {
       font-family: Source-Sans-Pro-Bold;
       font-size: 14px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       line-height: 22px;
       text-align: left;
     }
@@ -848,7 +881,7 @@ export default {
       color: #627100;
       margin-top: 45px;
       :hover {
-          color: #A2AE44;
+        color: #a2ae44;
       }
     }
   }
@@ -858,13 +891,13 @@ export default {
       margin-top: 30px;
     }
     .el-select /deep/ .el-input__inner {
-      background: #25262F;
+      background: #25262f;
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
       color: #627100;
     }
     .el-select /deep/ .el-select__caret {
-        color: #627100;
+      color: #627100;
     }
   }
 }

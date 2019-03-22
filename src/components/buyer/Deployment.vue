@@ -347,7 +347,7 @@
                 <i class="iconfont icon-description"></i>
                 {{ $t("buyer.deploy.description") }}
               </span>
-              <el-input v-model="input" :placeholder="$t('buyer.deploy.authorApp')"></el-input>
+              <el-input v-model="input" :placeholder="$t('buyer.deploy.descrip')"></el-input>
             </el-form-item>
           </el-col>
         </el-form>

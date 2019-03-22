@@ -72,7 +72,7 @@
     <el-row class="myHostBox">
       <el-table :data="tableData" style="width: 100%">
         <template slot="empty">
-          <p class="empty-text">{{$t('seller.host.text')}}</p>
+          <p class="empty-text" style="height: 300px; line-height: 300px;">{{$t('seller.host.text')}}</p>
         </template>
         <el-table-column width="50">
           <template slot-scope="scope">
@@ -273,7 +273,7 @@
         </el-table-column>
 
         <el-table-column width="170">
-          <!--带宽(M)-->
+          <!--宽带(M)-->
           <template slot="header" slot-scope="scope">
             <p class="table-head">
               <i class="iconfont icon-network"></i>
@@ -336,7 +336,7 @@
               >{{scope.row.clusterName}}</span>
               <el-button
                 style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
-                @click="joinButtonClick(scope.row)"
+                @click="joinButtonClick(scope.row.id)"
                 v-show="scope.row.clusterId ==''||scope.row.clusterId ==null"
               >{{$t('seller.host.join')}}</el-button>
             </p>
@@ -421,7 +421,6 @@ export default {
       clusterName: '',
       hostId: '',
       clusterId: '',
-      curHost: {},
       pageParam: {
         name: '',
         page: 2,
@@ -517,7 +516,7 @@ export default {
         rancherId: this.rancherId,
         clusterId: 0
       }
-      if (this.groupJoin === this.$t('seller.host.newGroup')) {
+      if (this.groupJoin == this.$t('seller.host.newGroup')) {
         // 主机加入新建集群
         if (this.rancherId === '' || this.rancherId == null || this.newClusterName === '' || this.newClusterName == null) {
           this.$message({
@@ -605,6 +604,8 @@ export default {
   },
   mounted() {
     this.getHostList()
+    this.rancherList()
+    this.clusterList()
     this.language = auth.getCurLang()
     this.userId = auth.getCurUserId()
   }

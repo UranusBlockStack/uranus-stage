@@ -88,7 +88,7 @@
           <el-col :span="24">
             <el-table :data="tableData" style="width: 100%">
               <template slot="empty">
-                <p class="empty-text">No Transaction</p>
+                <p class="empty-text" style="height: 220px; line-height: 220px;">No Transaction</p>
               </template>
               <el-table-column prop="type">
                 <template slot="header" slot-scope="scope">

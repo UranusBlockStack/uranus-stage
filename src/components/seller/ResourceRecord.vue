@@ -69,7 +69,7 @@
       <el-col class="blue-box" :span="24">
         <el-table :data="tableData" style="width: 100%">
           <template slot="empty">
-            <p class="empty-text">No Data</p>
+            <p class="empty-text" style="height: 300px; line-height: 300px;">No Data</p>
           </template>
           <el-table-column prop="orderNo">
             <template slot="header" slot-scope="scope">
@@ -312,7 +312,7 @@ export default {
       h1 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #A2A6B0;
+        color: #a2a6b0;
         line-height: 50px;
         margin: 0;
         padding: 0;
@@ -333,19 +333,23 @@ export default {
     overflow: hidden;
     padding: 30px;
     .el-input /deep/ .el-input__inner {
-      background: rgba(36, 99, 255, 0.2);
-      border: 1px solid rgba(24, 144, 255, 0.3);
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 4px;
-      color: #A2A6B0;
+      color: #a2a6b0;
+      opacity: 0.6;
     }
     .el-col {
       display: flex;
       .el-button {
-        background: rgba(101, 143, 247, 0);
-        box-shadow: inset 0 0 22px 0 #2463ff;
+        background: #424b00;
+        border: 1px solid #424b00;
         border-radius: 3px;
-        border: none;
         margin: 0 20px;
+      }
+      .el-button:hover {
+        background: #627100;
+        border: 1px solid #627100;
       }
       .el-select {
         margin-left: 20px;
@@ -369,12 +373,12 @@ export default {
       p {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #A2A6B0;
+        color: #a2a6b0;
         line-height: 50px;
       }
     }
     .table-head {
-      color: #A2A6B0;
+      color: #a2a6b0;
       font-weight: 500;
       font-size: 16px;
       margin: 0;
@@ -391,11 +395,11 @@ export default {
     }
     .blue-box {
       .el-table {
-        color: #A2A6B0;
+        color: #a2a6b0;
         background-color: rgba(101, 143, 247, 0);
       }
       .el-table /deep/ tr:hover td {
-        background:rgba(176,192,255,0.05) !important;
+        background: rgba(176, 192, 255, 0.05) !important;
       }
       .el-table /deep/ th,
       .el-table /deep/ tr {
@@ -413,20 +417,20 @@ export default {
         height: 50px;
       }
       .el-pagination /deep/ .btn-prev {
-      background: rgba(36, 99, 255, 0);
-      color: #A2A6B0;
-    }
-    .el-pagination /deep/ .btn-next {
-      background: rgba(36, 99, 255, 0);
-      color: #A2A6B0;
-    }
-    .el-pagination /deep/ .el-pager li {
-      background: rgba(36, 99, 255, 0);
-      color: #A2A6B0;
-    }
-    .el-pagination /deep/ .el-pager li.active {
-      color: #A2AE44;
-    }
+        background: rgba(36, 99, 255, 0);
+        color: #a2a6b0;
+      }
+      .el-pagination /deep/ .btn-next {
+        background: rgba(36, 99, 255, 0);
+        color: #a2a6b0;
+      }
+      .el-pagination /deep/ .el-pager li {
+        background: rgba(36, 99, 255, 0);
+        color: #a2a6b0;
+      }
+      .el-pagination /deep/ .el-pager li.active {
+        color: #a2ae44;
+      }
     }
   }
 }

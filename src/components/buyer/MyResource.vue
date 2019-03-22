@@ -1,7 +1,7 @@
 <template>
   <section class="myResource">
     <el-dialog
-      title="请选择时间范围"
+      :title="$t('buyer.myResource.selectTime')"
       :close-on-click-modal="false"
       :close-on-press-escape="false"
       :visible.sync="daterangeDialog"
@@ -12,13 +12,13 @@
         <el-form-item>
           <span slot="label">
             <i class="iconfont icon-time"></i>
-            时间范围
+            {{$t('buyer.myResource.timeScreening')}}
           </span>
           <el-col :span="6">
             <el-input prefix-icon="el-icon-date" v-model="daterangeVal.startDate" readonly></el-input>
           </el-col>
           <el-col :span="1">
-            <span class="timeto">到</span>
+            <span class="timeto"> To </span>
           </el-col>
           <el-col :span="7">
             <el-date-picker
@@ -32,19 +32,19 @@
           </el-col>
           <el-col :span="4" :offset="1">
             <span>
-              共
-              <span class="days">{{days}}</span> 天
+              {{$t('buyer.myResource.totalDay')}}
+              <span class="days"> {{days}} </span> {{$t('buyer.myResource.days')}}
             </span>
           </el-col>
         </el-form-item>
 
-        <el-form-item label="基本价格">
+        <el-form-item :label="$t('buyer.myResource.value')">
           <span>{{countedPrice}}</span>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="daterangeDialog = false">取 消</el-button>
-        <el-button type="primary" @click="renewPay">确 定</el-button>
+        <el-button @click="daterangeDialog = false">{{$t('buyer.deploy.button1')}}</el-button>
+        <el-button type="primary" @click="renewPay">{{$t('buyer.deploy.button2')}}</el-button>
       </div>
     </el-dialog>
 
