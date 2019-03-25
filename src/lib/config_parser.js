@@ -21,7 +21,7 @@ export function appConfigParser(configData) {
         if (param.showSubquestionIf === 'false') {
           param.subquestionsFalse = param.subquestions
           param.subquestions = []
-          console.log(param)
+          // console.log(param)
         }
       }
 
@@ -54,7 +54,7 @@ export function appConfigParser(configData) {
     paramTree.push(groupData)
   })
 
-  console.log('questions', paramTree)
+  // console.log('questions', paramTree)
   return paramTree
 }
 

@@ -426,6 +426,7 @@ import * as project from '../../services/RancherService'
 import * as wallet from '../../services/WalletService'
 import * as order from '../../services/OrderService'
 import TimeOver from '@/components/modules/TimeOver'
+import {appConfigParser} from "../../lib/config_parser"
 
 export default {
   name: 'Deployment',
@@ -638,7 +639,7 @@ export default {
           // let files = JSON.parse(this.appVersionDetail.files)
           // this.appVersionDetail.files = files
           // this.appVersionDetail.readMe = files['README.md']
-          // this.paramTree = appConfigParser(this.appVersionDetail.questions)
+          this.paramTree = appConfigParser(this.appVersionDetail.questions)
         } else {
           // this.$alert(respon.message, this.$t('common.messages.alert'), {
           //     confirmButtonText: this.$t('common.messages.confirm')
