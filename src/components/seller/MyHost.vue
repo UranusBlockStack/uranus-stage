@@ -429,7 +429,8 @@ export default {
         sort: '',
         sortDesc: true,
         state: ''
-      }
+      },
+      curHost: ''
     }
   },
   methods: {
@@ -516,7 +517,7 @@ export default {
         rancherId: this.rancherId,
         clusterId: 0
       }
-      if (this.groupJoin == this.$t('seller.host.newGroup')) {
+      if (this.groupJoin === this.$t('seller.host.newGroup')) {
         // 主机加入新建集群
         if (this.rancherId === '' || this.rancherId == null || this.newClusterName === '' || this.newClusterName == null) {
           this.$message({

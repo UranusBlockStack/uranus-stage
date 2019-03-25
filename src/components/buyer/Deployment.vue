@@ -147,7 +147,7 @@
                     <i class="iconfont icon-attributes"></i>
                     {{ $t("buyer.deploy.attributes") }}
                   </span>
-                        <el-select v-model="deployForm.networkType">
+                        <el-select v-model="deployForm.networkType" @change="setCurNetType">
                             <el-option
                                     v-for="item in networkTypeSel"
                                     :key="item.value"
@@ -426,7 +426,7 @@ import * as project from '../../services/RancherService'
 import * as wallet from '../../services/WalletService'
 import * as order from '../../services/OrderService'
 import TimeOver from '@/components/modules/TimeOver'
-import {appConfigParser} from "../../lib/config_parser"
+import {appConfigParser} from '../../lib/config_parser'
 
 export default {
   name: 'Deployment',
@@ -441,7 +441,7 @@ export default {
       orderMode: '1',
       deployForm: {
         projectName: '',
-        rancherId: 2,
+        rancherId: '',
         cpuKernel: '4',
         disk: '512G',
         mem: '16',
@@ -492,7 +492,8 @@ export default {
       isMyApplication: false,
       orderNumber: '',
       existedResourceSelect: true,
-      startDatePickerOptions: ''
+      startDatePickerOptions: '',
+      curNetType: 'inner'
     }
   },
   created() {
@@ -586,20 +587,27 @@ export default {
       this.deployForm.rancherId = region
     },
 
+    setCurNetType(netType) {
+      this.curNetType = netType
+      this.getRegionList()
+    },
+
     getRegionList() {
-      rancher.rancherList(auth.getCurLang()).then(respData => {
+      rancher.rancherSearch(auth.getCurLang(), { networkType: this.curNetType }).then(respData => {
         this.rancherServer = respData.data.data
         let regionData = []
-        this.rancherServer.map(rancher => {
-          const region = {
-            value: rancher.id,
-            label:
-              auth.getCurLang() === 'zh-cn'
-                ? rancher.region
-                : rancher.regionEnUs
-          }
-          regionData.push(region)
-        })
+        if (respData.data.success) {
+          this.rancherServer.records.map(rancher => {
+            const region = {
+              value: rancher.id,
+              label:
+                  auth.getCurLang() === 'zh-cn'
+                    ? rancher.region
+                    : rancher.regionEnUs
+            }
+            regionData.push(region)
+          })
+        }
 
         this.regionSel = regionData
       })
