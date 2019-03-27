@@ -191,7 +191,10 @@
       <el-row class="myHostBox">
         <el-table :data="tableData" style="width: 100%">
           <template slot="empty">
-            <p class="empty-text" style="height: 300px; line-height: 300px;">{{$t('seller.group.text')}}</p>
+            <p
+              class="empty-text"
+              style="height: 300px; line-height: 300px;"
+            >{{$t('seller.group.text')}}</p>
           </template>
           <el-table-column width="70">
             <template slot-scope="scope">
@@ -883,6 +886,9 @@ export default {
       .el-table {
         color: #a2a6b0;
         background-color: rgba(101, 143, 247, 0);
+      }
+      .el-table::before {
+        background: rgba(255, 255, 255, 0.1);
       }
       .el-table /deep/ ::-webkit-scrollbar {
         background-color: #000000;

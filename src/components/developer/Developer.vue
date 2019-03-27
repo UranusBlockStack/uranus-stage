@@ -684,6 +684,9 @@ export default {
         color: #a2a6b0;
         background-color: rgba(101, 143, 247, 0);
       }
+      .el-table::before {
+        background: rgba(255, 255, 255, 0.1);
+      }
       .el-table /deep/ tr:hover td {
         background: rgba(176, 192, 255, 0.05) !important;
       }

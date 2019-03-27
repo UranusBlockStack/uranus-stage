@@ -373,7 +373,7 @@ export default {
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -393,7 +393,7 @@ export default {
       padding-top: 20px;
       padding-left: 30px;
       font-size: 16px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       line-height: 30px;
       text-align: left;
       i {
@@ -402,7 +402,7 @@ export default {
       }
     }
     .copy {
-      color: #A2AE44;
+      color: #a2ae44;
       display: inline-block;
       cursor: pointer;
       padding-left: 30px;
@@ -431,7 +431,7 @@ export default {
         width: 100%;
       }
       .table-head {
-        color: #A2A6B0;
+        color: #a2a6b0;
         font-weight: 500;
         font-size: 16px;
         margin: 0;
@@ -446,7 +446,7 @@ export default {
       p {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;
-        color: #A2A6B0;
+        color: #a2a6b0;
         line-height: 50px;
         span {
           display: inline-block;
@@ -457,20 +457,23 @@ export default {
           text-align: center;
           background: rgba(101, 143, 247, 0);
           /*box-shadow: inset 0 0 22px 0 #2463ff;*/
-          border-bottom: 1px solid #A2A6B0;
+          border-bottom: 1px solid #a2a6b0;
           cursor: pointer;
         }
         .tableType {
-          color: #A2AE44;
+          color: #a2ae44;
           font-weight: 500;
-          border-bottom: 1px solid #A2AE44;
+          border-bottom: 1px solid #a2ae44;
         }
       }
     }
     .blue-box {
       .el-table {
-        color: #A2A6B0;
+        color: #a2a6b0;
         background-color: rgba(101, 143, 247, 0);
+      }
+      .el-table::before {
+        background: rgba(255, 255, 255, 0.1);
       }
       .el-table /deep/ tr:hover td {
         background: rgba(176, 192, 255, 0.05) !important;
@@ -492,15 +495,15 @@ export default {
       }
       .el-pagination /deep/ .btn-prev {
         background: rgba(36, 99, 255, 0);
-        color: #A2A6B0;
+        color: #a2a6b0;
       }
       .el-pagination /deep/ .btn-next {
         background: rgba(36, 99, 255, 0);
-        color: #A2A6B0;
+        color: #a2a6b0;
       }
       .el-pagination /deep/ .el-pager li {
         background: rgba(36, 99, 255, 0);
-        color: #A2A6B0;
+        color: #a2a6b0;
       }
       .el-pagination /deep/ .el-pager li.active {
         color: #a2ae44;

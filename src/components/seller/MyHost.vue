@@ -667,6 +667,9 @@ export default {
       color: #a2a6b0;
       background-color: rgba(101, 143, 247, 0);
     }
+    .el-table::before {
+      background: transparent;
+    }
     .el-table /deep/ ::-webkit-scrollbar {
       background-color: #000000;
       border-radius: 10px;

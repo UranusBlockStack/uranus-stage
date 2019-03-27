@@ -52,7 +52,7 @@
         <input type="text" :placeholder="$t('userCommon.Email')" v-model="mail">
       </div>
       <input type="password" :placeholder="$t('userCommon.password')" v-model="password">
-      <router-link class="forgetPwd" :to="{ path: '/forgetPwd'}">{{$t('userCommon.forgetPwd')}}</router-link>
+      <router-link class="forgetPwd" :to="{ path: '/forgetPwd'}">{{$t('userCommon.forgotPwd')}}</router-link>
       <div class="prompt">{{prompt}}</div>
       <el-button class="loginBtn" @click="userLogin">{{user}} {{$t('userCommon.loginBtn')}}</el-button>
     </div>

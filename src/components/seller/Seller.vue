@@ -391,12 +391,12 @@ export default {
     height: 50px;
     margin: 2px 2px 0;
     .title {
-        height: 50px;
+      height: 50px;
     }
     h1 {
       font-family: Source-Sans-Pro-Bold;
       font-size: 16px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       line-height: 50px;
       margin: 0;
       padding: 0;
@@ -417,7 +417,7 @@ export default {
       display: flex;
       justify-content: space-between;
       .active {
-        color: #A2AE44;
+        color: #a2ae44;
       }
       .consumption {
         width: 50%;
@@ -426,7 +426,7 @@ export default {
         height: 400px;
         background: #161618;
         border-radius: 2px;
-        color: #A2A6B0;
+        color: #a2a6b0;
         p {
           padding-left: 30px;
           padding-top: 20px;
@@ -460,7 +460,7 @@ export default {
         height: 400px;
         background: #161618;
         border-radius: 2px;
-        color: #A2A6B0;
+        color: #a2a6b0;
         p {
           padding-left: 30px;
           padding-top: 20px;
@@ -493,7 +493,7 @@ export default {
       margin-top: 2px;
       background: #161618;
       border-radius: 2px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       p {
         padding-left: 30px;
         padding-top: 20px;
@@ -519,7 +519,7 @@ export default {
     .record {
       background: #161618;
       border-radius: 2px;
-      color: #A2A6B0;
+      color: #a2a6b0;
       min-width: 1130px;
       margin: 2px auto;
       padding: 30px;
@@ -535,11 +535,8 @@ export default {
         white-space: nowrap;
         width: 100%;
       }
-      .el-table {
-        color: #A2A6B0;
-      }
       .table-head {
-        color: #A2A6B0;
+        color: #a2a6b0;
         font-weight: 500;
         font-size: 16px;
         margin: 0;
@@ -549,11 +546,14 @@ export default {
         }
       }
       .el-table {
-        color: #A2A6B0;
+        color: #a2a6b0;
         background-color: rgba(101, 143, 247, 0);
       }
+      .el-table::before {
+        background: rgba(255, 255, 255, 0.1);
+      }
       .el-table /deep/ tr:hover td {
-        background:rgba(176,192,255,0.05) !important;
+        background: rgba(176, 192, 255, 0.05) !important;
       }
       .el-table /deep/ th,
       .el-table /deep/ tr {
@@ -569,18 +569,18 @@ export default {
       }
       .el-pagination /deep/ .btn-prev {
         background: rgba(36, 99, 255, 0);
-        color: #A2A6B0;
+        color: #a2a6b0;
       }
       .el-pagination /deep/ .btn-next {
         background: rgba(36, 99, 255, 0);
-        color: #A2A6B0;
+        color: #a2a6b0;
       }
       .el-pagination /deep/ .el-pager li {
         background: rgba(36, 99, 255, 0);
-        color: #A2A6B0;
+        color: #a2a6b0;
       }
       .el-pagination /deep/ .el-pager li.active {
-        color: #A2AE44;
+        color: #a2ae44;
       }
     }
   }
