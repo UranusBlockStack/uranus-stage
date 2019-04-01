@@ -25,9 +25,9 @@
     <!-- <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
     </footer>-->
     <!-- Control Sidebar -->
-    <aside class="control-sidebar control-sidebar-dark">
+    <!-- <aside class="control-sidebar control-sidebar-dark">
       <SiderbarRight/>
-    </aside>
+    </aside> -->
     <!-- /.control-sidebar -->
     <!-- Add the sidebar's background. This div must be placed
     immediately after the control sidebar-->

@@ -100,7 +100,7 @@
             <el-row class="margin-top">
               <el-col :span="18">
                 <el-form-item>
-                  <span slot="label">
+                  <span slot="label" style="text-align: left;">
                     <i class="iconfont icon-name"></i>
                     {{$t('buyer.resourceMarket.resourceName')}}
                   </span>
@@ -244,7 +244,7 @@
       </el-row>
 
       <el-row class="button">
-        <el-col :span="6" :offset="10">
+        <el-col :span="4" :offset="9">
           <el-button type="success" @click="purchaseUraPower">{{$t('buyer.resourceMarket.confirm')}}</el-button>
         </el-col>
       </el-row>
@@ -545,6 +545,9 @@ export default {
     border-radius: 2px;
     height: 660px;
     margin: 2px;
+    .el-form /deep/ .el-form-item__label {
+      text-align: left;
+    }
     .title {
       border-radius: 4px 4px 0 0;
       height: 54px;

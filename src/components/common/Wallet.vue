@@ -39,7 +39,7 @@
             :class="{tableType:!tableType}"
             @click="tableType = false"
           >Send</span>
-          <span :class="{tableType:tableType}" @click="tableType = true">Recive</span>
+          <span :class="{tableType:tableType}" @click="tableType = true">Receive</span>
         </p>
         <!-- transactions details box -->
         <el-dialog
