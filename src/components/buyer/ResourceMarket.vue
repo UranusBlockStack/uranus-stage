@@ -422,12 +422,21 @@ export default {
         .walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
         .then(sendResult => {
           const status = sendResult.data
-          this.$message({
-            showClose: true,
-            message: status.data,
-            type: 'success',
-            duration: 3000
-          })
+          if (status.success) {
+            this.$message({
+              showClose: true,
+              message: status.data,
+              type: 'success',
+              duration: 3000
+            })
+          } else {
+            this.$message({
+              showClose: true,
+              message: status.errMsg,
+              type: 'error',
+              duration: 3000
+            })
+          }
         })
     },
 
