@@ -336,7 +336,7 @@
               >{{scope.row.clusterName}}</span>
               <el-button
                 style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
-                @click="joinButtonClick(scope.row.id)"
+                @click="joinButtonClick(scope.row)"
                 v-show="scope.row.clusterId ==''||scope.row.clusterId ==null"
               >{{$t('seller.host.join')}}</el-button>
             </p>

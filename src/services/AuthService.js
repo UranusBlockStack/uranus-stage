@@ -4,6 +4,25 @@ import jwt from 'jsonwebtoken'
 import moment from 'moment'
 
 /// / Conversation State Manage  Functions
+
+const defaultUserStatus =
+  {
+    userName: '',
+    userId: '',
+    loginType: 'mobile',
+    userAddress: '',
+    loginRole: 'Seller',
+    loginLanguage: 'en-us',
+    activity: {
+      currentact: '',
+      attendlist: []
+    }
+  }
+
+export function getDefaultUserStatus () {
+  return defaultUserStatus
+}
+
 function setToken (token, user) {
   localStorage.setItem('token', token)
   store.dispatch('authenticate', user)
@@ -19,7 +38,7 @@ export function getUserBaseInfo() {
 }
 
 export function setCurLang(lang) {
-  updatePropValue('loginLanguage', lang)
+  updatePropValue('loginLanguage', null, lang)
 }
 
 export function getCurLang() {
@@ -28,33 +47,34 @@ export function getCurLang() {
 }
 
 export function setCurRole(role) {
-  updatePropValue('loginRole', role)
+  updatePropValue('loginRole', null, role)
 }
 
-const defaultUserStatus =
-  {
-    userName: '',
-    userId: '',
-    loginType: 'mobile',
-    userAddress: '',
-    loginRole: 'Seller',
-    loginLanguage: 'en-us'
-  }
-
-export function getDefaultUserStatus () {
-  return defaultUserStatus
-}
-
-function updatePropValue(propName, value) {
+/// 更新属性值功能，支持操作二级属性， 如果不使用二级属性，第二个参数设置为null
+function updatePropValue(propName, subPropName = null, value = null) {
   const userData = getUserBaseInfo()
 
   let userTmpVar = defaultUserStatus
   if (userData) {
     userTmpVar = userData
   }
-  userTmpVar[propName] = value
+  if (!subPropName) {
+    userTmpVar[propName] = value 
+  } else {
+    console.log('prop', propName, '--', subPropName)
+    userTmpVar[propName][subPropName] = value
+  }
 
   localStorage.setItem('currentUserStatus', JSON.stringify(userTmpVar))
+}
+
+export function getCurActivity() {
+  const curUserState = localStorage.getItem('currentUserStatus')
+  return JSON.parse(curUserState).activity.currentact
+}
+
+export function setCurActivity() {
+
 }
 
 export function getCurRole() {
