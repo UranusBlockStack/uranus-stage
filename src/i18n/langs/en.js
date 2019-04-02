@@ -123,7 +123,8 @@ module.exports = {
       button1: 'Cancel',
       button2: 'OK',
       confirmText3: 'Successfully Paid',
-      orderSuccess: 'Order payment is successful, please wait patient'
+      orderSuccess: 'Order payment is successful, please wait patient',
+      errorMsg: 'error'
     },
     deploy: {
       application: 'Deploy Application',

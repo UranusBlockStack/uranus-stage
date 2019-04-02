@@ -968,6 +968,9 @@ export default {
     background: #161618;
     border-radius: 2px;
     margin: 2px;
+    .el-form /deep/ .el-form-item__label {
+      text-align: left;
+    }
     .border-line {
       border-bottom: 2px solid #000;
       margin-top: 33px;

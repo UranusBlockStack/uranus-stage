@@ -92,7 +92,7 @@ export default {
 <style lang="scss" scoped>
 .Head {
   .logo {
-    background: #161618 !important;
+    background: #08080a !important;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
     .logo-mini {
       img {
@@ -110,7 +110,7 @@ export default {
     }
   }
   .navbar {
-    background: #161618 !important;
+    background: #08080a !important;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.3);
     .userInformation {
       /*width: 200px;*/
