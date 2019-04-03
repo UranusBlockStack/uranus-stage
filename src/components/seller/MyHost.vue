@@ -350,21 +350,21 @@
             >{{$t('seller.group.deleteHost')}}</el-button>-->
             <el-dropdown
               trigger="click"
-              v-show="scope.row.state != 'online'"
-              @command="outerVisible = true"
+              v-show="scope.row.state !== 'online'"
+              @command="cacheHostId(scope.row.id)"
             >
               <span class="el-dropdown-link">
                 <i class="iconfont icon-table-more" style="color: #ffffff; font-size: 22px;"></i>
               </span>
               <el-dropdown-menu slot="dropdown">
-                <el-dropdown-item>{{$t('seller.group.deleteHost')}}</el-dropdown-item>
+                <el-dropdown-item>{{$t('seller.group.deleteHost')}} </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
             <!-- delete host text box -->
             <el-dialog :close-on-click-modal="false" :visible.sync="outerVisible" width="480px">
-              <p>{{$t('seller.host.deleteSure')}}</p>
+              <p>{{$t('seller.host.deleteSure')}} </p>
               <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
-                <p>{{$t('seller.group.deleteText1')}}</p>
+                <p>{{$t('seller.group.deleteText1')}} </p>
                 <div slot="footer" class="dialog-footer">
                   <el-button type="primary" @click="hostReload()">{{$t('seller.group.confirm')}}</el-button>
                 </div>
@@ -373,7 +373,7 @@
                 <el-button @click="outerVisible = false">{{$t('seller.group.cancel')}}</el-button>
                 <el-button
                   type="primary"
-                  @click="deleteHost(scope.row.id)"
+                  @click="deleteHost()"
                 >{{$t('seller.group.confirm')}}</el-button>
               </div>
             </el-dialog>
@@ -430,7 +430,8 @@ export default {
         sortDesc: true,
         state: ''
       },
-      curHost: ''
+      curHost: '',
+      selectHostId: 0
     }
   },
   methods: {
@@ -438,6 +439,10 @@ export default {
     hostReload() {
       this.innerVisible = false
       this.getHostList()
+    },
+    cacheHostId(hostId) {
+      this.outerVisible = true
+      this.selectHostId = hostId
     },
     getHostList() {
       rancher
@@ -568,7 +573,7 @@ export default {
     },
     deleteHost(id) {
       // 删除主机
-      rancher.hostDelete(auth.getCurLang(), id).then(data => {
+      rancher.hostDelete(auth.getCurLang(), this.selectHostId).then(data => {
         // 删除逻辑
         if (data.data.success) {
           this.outerVisible = false
