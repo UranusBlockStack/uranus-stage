@@ -67,18 +67,18 @@
         <router-link :to="{path: '/myresource'}">
           <i class="iconfont icon-resource"></i>
           <span>{{$t('menu.myResource')}}</span>
-          <span class="pull-right-container">
+          <!-- <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
-          </span>
+          </span> -->
         </router-link>
-        <ul class="treeview-menu">
+        <!-- <ul class="treeview-menu">
           <li v-for="(item,index) in uraPowerList" :key="index">
             <router-link :to="{path: '/resourcepool/' + item.id + '/' + item.projectName}">
               <i class="iconfont icon-resource"></i>
               {{item.projectName}}
             </router-link>
           </li>
-        </ul>
+        </ul> -->
       </li>
       <li class="treeview" v-show="user== 'Seller'">
         <router-link :to="{path: '/myhost'}">
@@ -90,18 +90,18 @@
         <router-link :to="{path: '/mycolony'}">
           <i class="iconfont icon-cluster"></i>
           <span>{{$t('menu.myColony')}}</span>
-          <span class="pull-right-container">
+          <!-- <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
-          </span>
+          </span> -->
         </router-link>
-        <ul class="treeview-menu">
-            <li v-for="(item,index) in clusterList" :key="index">
+        <!-- <ul class="treeview-menu">
+          <li v-for="(item,index) in clusterList" :key="index">
             <router-link :to="{path: '/colony/' + item.id}">
               <i class="iconfont icon-resource"></i>
               {{item.name}}
             </router-link>
           </li>
-        </ul>
+        </ul> -->
       </li>
       <li class="treeview" v-show="user== 'Developer'">
         <router-link :to="{path: '/uploadapplication'}">
@@ -155,28 +155,28 @@ export default {
   },
   created() {
     this.getUser()
-    this.getUraPowerPoolList()
-    this.getClusterList()
+    // this.getUraPowerPoolList()
+    // this.getClusterList()
   },
 
   methods: {
     getUser() {
       this.user = auth.getUserBaseInfo().loginRole
     },
-    getUraPowerPoolList() {
-      project.projectList(this.$store.getters.lang, this.projectQuertData)
-                .then(respData => {
-                  const data = respData.data.data.records
-                  this.uraPowerList = data
-                })
-    },
-    getClusterList() {
-      project.clusterSearch(this.$store.getters.lang, this.projectQuertData)
-                .then(respData => {
-                  const data = respData.data.data.records
-                  this.clusterList = data
-                })
-    }
+    // getUraPowerPoolList() {
+    //   project.projectList(this.$store.getters.lang, this.projectQuertData)
+    //     .then(respData => {
+    //       const data = respData.data.data.records
+    //       this.uraPowerList = data
+    //     })
+    // },
+    // getClusterList() {
+    //   project.clusterSearch(this.$store.getters.lang, this.projectQuertData)
+    //     .then(respData => {
+    //       const data = respData.data.data.records
+    //       this.clusterList = data
+    //     })
+    // }
   }
 }
 </script>
@@ -187,8 +187,8 @@ export default {
     font-size: 16px;
     .treeview {
       a {
-        color: #A2A6B0;
-        font-size:16px;
+        color: #a2a6b0;
+        font-size: 16px;
         font-family: Source-Sans-Pro-Bold;
         font-weight: 500;
         padding: 12px 5px;
@@ -200,7 +200,7 @@ export default {
           font-size: 28px;
         }
         span {
-            padding-left: 5px;
+          padding-left: 5px;
         }
       }
       .treeview-menu {
@@ -208,20 +208,19 @@ export default {
       }
     }
     .menu-open {
-     > a {
+      > a {
         color: #a2af3c;
         background: rgba(101, 143, 247, 0);
       }
       .treeview-menu {
-          padding-left: 30px;
-          li:hover {
-              >a {
-                  color: #a2ae44;
-                  background: rgba(101, 143, 247, 0);
-              }
+        padding-left: 30px;
+        li:hover {
+          > a {
+            color: #a2ae44;
+            background: rgba(101, 143, 247, 0);
           }
+        }
       }
-      
     }
     .treeview:hover {
       background: rgba(101, 143, 247, 0);
@@ -233,7 +232,6 @@ export default {
         //   transition: 1.2s;
         // }
       }
-
     }
   }
 }

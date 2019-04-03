@@ -15,11 +15,10 @@
             {{ $t("buyer.myResource.timeScreening") }}
           </span>
           <el-col :span="6">
-            <el-input
-              prefix-icon="el-icon-date"
-              v-model="daterangeVal.startDate"
-              readonly
-            ></el-input>
+            <el-input prefix-icon="el-icon-date" v-model="daterangeVal.startDate" readonly></el-input>
+          </el-col>
+          <el-col :span="1">
+            <span class="timeto">To</span>
           </el-col>
           <el-col :span="1"> <span class="timeto"> To </span> </el-col>
           <el-col :span="7">
@@ -34,9 +33,9 @@
           </el-col>
           <el-col :span="4" :offset="1">
             <span>
-              {{ $t("buyer.myResource.totalDay") }}
-              <span class="days"> {{ days }} </span>
-              {{ $t("buyer.myResource.days") }}
+              {{$t('buyer.myResource.totalDay')}}
+              <span class="days">{{days}}</span>
+              {{$t('buyer.myResource.days')}}
             </span>
           </el-col>
         </el-form-item>
@@ -186,6 +185,7 @@
         </el-row>
 
         <el-row class="appResource">
+          <el-col :span="24" style="text-align: center; color: #a2a6b0; margin-top: 30px;" v-if="this.poolList.length = '0'">No data</el-col>
           <el-col :span="12" v-for="(pool, index) in poolList" :key="index">
             <el-row
               style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius:4px; margin:10px;"
@@ -215,9 +215,7 @@
                   </p>
                 </div>
                 <div class="renew" v-if="pool.renew_btn">
-                  <el-button type="success" @click="renewResource(index)"
-                    >续 费</el-button
-                  >
+                  <el-button type="success" @click="renewResource(index)">Renewal fee</el-button>
                 </div>
               </el-col>
               <!-- <el-col :span="3" :offset="1">
@@ -335,11 +333,7 @@ export default {
             const data = respData.data.data.records
             for (let i = 0; i < data.length; i++) {
               let object = {}
-              const renewBtnStatus =
-                nowstamp > data[i].endTime - predays * 24 * 60 * 60 * 1000 &&
-                nowstamp <
-                  data[i].endTime + (waitdays + 1) * 24 * 60 * 60 * 1000
-
+              const renewBtnStatus = (nowstamp > (data[i].endTime - predays * 24 * 60 * 60 * 1000)) && (nowstamp < (data[i].endTime + (waitdays + 1) * 24 * 60 * 60 * 1000))
               object['id'] = data[i].id
               object['name'] = data[i].projectName
               object['appCount'] = data[i].appCount
@@ -362,7 +356,6 @@ export default {
               this.poolList.push(object)
             }
           }
-
           this.update1 = true
         })
     },
@@ -547,6 +540,7 @@ export default {
     this.allStatisticsProjects()
     this.getUraPowerPoolList()
     this.getReferenceFee()
+    console.log(this.poolList)
   }
 }
 </script>
@@ -668,6 +662,7 @@ export default {
     }
     .appResource {
       padding-bottom: 30px;
+      min-height: 150px;
       h3 {
         font-family: Source-Sans-Pro-Bold;
         font-size: 16px;

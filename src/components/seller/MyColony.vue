@@ -182,7 +182,7 @@ export default {
       searchParam: {
         name: '',
         page: 0,
-        pageSize: 6,
+        pageSize: 12,
         totalRecords: 0,
         sort: '',
         sortDesc: true,
