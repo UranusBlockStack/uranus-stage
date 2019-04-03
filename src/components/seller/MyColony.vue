@@ -203,7 +203,7 @@ export default {
         this.colonyList = records
         records.forEach((item, index) => {
           let momentInfo = moment(item.endTime)
-          if (momentInfo.isValid() == false) {
+          if (momentInfo.isValid() === false) {
             this.colonyList[index].endTime = moment(0).format('YYYY-MM-DD hh:mm:ss')
           } else {
             this.colonyList[index].endTime = moment(item.endTime).format('YYYY-MM-DD hh:mm:ss')

@@ -3,7 +3,7 @@ import { httpLang } from './HttpService'
 import jwt from 'jsonwebtoken'
 import moment from 'moment'
 
-/// / Conversation State Manage  Functions
+/// ---// Conversation State Manage  Functions
 
 const defaultUserStatus =
   {
@@ -19,13 +19,31 @@ const defaultUserStatus =
     }
   }
 
-export function getDefaultUserStatus () {
-  return defaultUserStatus
-}
-
 function setToken (token, user) {
   localStorage.setItem('token', token)
   store.dispatch('authenticate', user)
+}
+
+/// 更新属性值功能，支持操作二级属性， 如果不使用二级属性，第二个参数设置为null
+function updatePropValue(propName, subPropName = null, value = null) {
+  const userData = getUserBaseInfo()
+
+  let userTmpVar = defaultUserStatus
+  if (userData) {
+    userTmpVar = userData
+  }
+  if (!subPropName) {
+    userTmpVar[propName] = value
+  } else {
+    console.log('prop', propName, '--', subPropName)
+    userTmpVar[propName][subPropName] = value
+  }
+
+  localStorage.setItem('currentUserStatus', JSON.stringify(userTmpVar))
+}
+
+export function getDefaultUserStatus () {
+  return defaultUserStatus
 }
 
 export function getToken () {
@@ -50,22 +68,9 @@ export function setCurRole(role) {
   updatePropValue('loginRole', null, role)
 }
 
-/// 更新属性值功能，支持操作二级属性， 如果不使用二级属性，第二个参数设置为null
-function updatePropValue(propName, subPropName = null, value = null) {
-  const userData = getUserBaseInfo()
-
-  let userTmpVar = defaultUserStatus
-  if (userData) {
-    userTmpVar = userData
-  }
-  if (!subPropName) {
-    userTmpVar[propName] = value 
-  } else {
-    console.log('prop', propName, '--', subPropName)
-    userTmpVar[propName][subPropName] = value
-  }
-
-  localStorage.setItem('currentUserStatus', JSON.stringify(userTmpVar))
+export function getCurRole() {
+  const curUserState = localStorage.getItem('currentUserStatus')
+  return JSON.parse(curUserState).loginRole
 }
 
 export function getCurActivity() {
@@ -73,13 +78,8 @@ export function getCurActivity() {
   return JSON.parse(curUserState).activity.currentact
 }
 
-export function setCurActivity() {
-
-}
-
-export function getCurRole() {
-  const curUserState = localStorage.getItem('currentUserStatus')
-  return JSON.parse(curUserState).loginRole
+export function setCurActivity(activitycode) {
+  updatePropValue('activity', 'currentact', activitycode)
 }
 
 export function getCurUserName() {
@@ -92,6 +92,7 @@ export function getCurUserId() {
   return JSON.parse(curUserState).userId
 }
 
+/// -- 这个目前不能使用
 export function getUsername () {
   const token = decodeToken()
   if (!token) {
@@ -100,6 +101,7 @@ export function getUsername () {
   return token.user.userName
 }
 
+/// -- 这个目前不能使用
 export function getUserId () {
   const token = decodeToken()
   if (!token) {
@@ -151,7 +153,8 @@ export function login (lang, userLoginfo) {
                 loginType: userLoginfo.loginType,
                 userAddress: userdata.accountAddress,
                 loginRole: getCurRole(),
-                loginLanguage: 'en-us'
+                loginLanguage: 'en-us',
+                activity: {}
               }
               setToken(userdata.token, curLoginUserInfo)
               localStorage.setItem('currentUserStatus', JSON.stringify(curLoginUserInfo))
