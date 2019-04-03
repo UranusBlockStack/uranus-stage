@@ -90,6 +90,11 @@
 
       <!-- Cluster List -->
       <el-row class="shopBox">
+        <el-col
+            :span="24"
+            style="text-align: center; color: #a2a6b0; margin-top: 30px;"
+            v-if="this.colonyList.length == '0'"
+          >No data</el-col>
         <el-col :span="12" v-for="(colony, index) in colonyList" :key="index">
           <el-row style="border: 1px solid rgba(255, 255, 255, 0.06); margin:10px;">
             <el-col :span="8" class="mouseHover">

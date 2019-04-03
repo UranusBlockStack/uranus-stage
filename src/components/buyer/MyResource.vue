@@ -20,7 +20,9 @@
           <el-col :span="1">
             <span class="timeto">To</span>
           </el-col>
-          <el-col :span="1"> <span class="timeto"> To </span> </el-col>
+          <el-col :span="1">
+            <span class="timeto">To</span>
+          </el-col>
           <el-col :span="7">
             <el-date-picker
               type="date"
@@ -45,12 +47,16 @@
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
-        <el-button @click="daterangeDialog = false">{{
+        <el-button @click="daterangeDialog = false">
+          {{
           $t("buyer.deploy.button1")
-        }}</el-button>
-        <el-button type="primary" @click="renewPay">{{
+          }}
+        </el-button>
+        <el-button type="primary" @click="renewPay">
+          {{
           $t("buyer.deploy.button2")
-        }}</el-button>
+          }}
+        </el-button>
       </div>
     </el-dialog>
 
@@ -62,63 +68,35 @@
       :close-on-press-escape="false"
     >
       <el-table :data="gridData">
-        <el-table-column
-          property="orderNo"
-          :label="$t('buyer.deploy.orderNumber')"
-        ></el-table-column>
-        <el-table-column
-          property="sellerId"
-          :label="$t('buyer.deploy.address')"
-        ></el-table-column>
-        <el-table-column
-          property="orderAmount"
-          :label="$t('buyer.deploy.value')"
-        ></el-table-column>
-        <el-table-column
-          property="prodType"
-          :label="$t('buyer.deploy.content')"
-        ></el-table-column>
+        <el-table-column property="orderNo" :label="$t('buyer.deploy.orderNumber')"></el-table-column>
+        <el-table-column property="sellerId" :label="$t('buyer.deploy.address')"></el-table-column>
+        <el-table-column property="orderAmount" :label="$t('buyer.deploy.value')"></el-table-column>
+        <el-table-column property="prodType" :label="$t('buyer.deploy.content')"></el-table-column>
         <el-table-column :label="$t('buyer.deploy.fee')">
           <template slot-scope="scope">
-            <el-input-number
-              size="mini"
-              v-model="fee"
-              :precision="6"
-              :step="0.000001"
-              :max="10"
-            ></el-input-number>
+            <el-input-number size="mini" v-model="fee" :precision="6" :step="0.000001" :max="10"></el-input-number>
           </template>
         </el-table-column>
       </el-table>
       <div class="code">
         <span slot="label">{{ $t("buyer.deploy.code") }}</span>
-        <el-input
-          :placeholder="$t('buyer.deploy.codeIn')"
-          v-model="concode"
-        ></el-input>
-        <el-button
-          :class="{ 'is-disabled': !this.canClick }"
-          @click="countDown"
-          >{{ content }}</el-button
-        >
+        <el-input :placeholder="$t('buyer.deploy.codeIn')" v-model="concode"></el-input>
+        <el-button :class="{ 'is-disabled': !this.canClick }" @click="countDown">{{ content }}</el-button>
       </div>
       <p>{{ $t("buyer.deploy.confirmText1") }}</p>
-      <TimeOver style="margin-left:300px;" v-on:listentimeOver="closeDialog" />
+      <TimeOver style="margin-left:300px;" v-on:listentimeOver="closeDialog"/>
 
       <div slot="footer" class="dialog-footer">
-        <el-button @click="orderVisible = false">
-          {{ $t("buyer.deploy.button1") }}
-        </el-button>
-        <el-button type="primary" @click="startTransfer">
-          {{ $t("buyer.deploy.button2") }}
-        </el-button>
+        <el-button @click="orderVisible = false">{{ $t("buyer.deploy.button1") }}</el-button>
+        <el-button type="primary" @click="startTransfer">{{ $t("buyer.deploy.button2") }}</el-button>
       </div>
     </el-dialog>
 
     <el-row class="myResourceHead">
       <el-col class="title" :span="12">
         <h1>
-          <i class="iconfont icon-resource"></i> {{ $t("menu.myResource") }}
+          <i class="iconfont icon-resource"></i>
+          {{ $t("menu.myResource") }}
         </h1>
       </el-col>
       <el-col class="record" :span="12">
@@ -141,20 +119,16 @@
         <el-row>
           <el-col :span="4">
             <div id="restResource">
-              <Water
-                v-if="update2"
-                :chartData="statisObejct.urapowerUsd"
-                style="margin:40px auto"
-              />
+              <Water v-if="update2" :chartData="statisObejct.urapowerUsd" style="margin:40px auto"/>
             </div>
           </el-col>
           <el-col :span="19" :offset="1">
             <h2>{{ $t("buyer.myResource.restOne") }}</h2>
             <div class="restRes">
-              <Cpu v-if="update2" :chartData="statisObejct.cpuUsd" />
-              <Memory v-if="update2" :chartData="statisObejct.memUsd" />
-              <Disk v-if="update2" :chartData="statisObejct.diskUsd" />
-              <Network v-if="update2" :chartData="statisObejct.networkUsd" />
+              <Cpu v-if="update2" :chartData="statisObejct.cpuUsd"/>
+              <Memory v-if="update2" :chartData="statisObejct.memUsd"/>
+              <Disk v-if="update2" :chartData="statisObejct.diskUsd"/>
+              <Network v-if="update2" :chartData="statisObejct.networkUsd"/>
             </div>
           </el-col>
         </el-row>
@@ -165,7 +139,7 @@
           <el-col class="title" :span="6">
             <h1>{{ $t("buyer.myResource.resourceOver") }}</h1>
           </el-col>
-          <el-col :span="4" :offset="12">
+          <el-col :span="4" :offset="12" style="margin-top: 15px;">
             <el-input
               v-model="projectQueryData.projectName"
               @keyup.enter.native="getUraPowerPoolList"
@@ -174,44 +148,35 @@
             ></el-input>
           </el-col>
           <el-col :span="2">
-            <el-button
-              style="margin-left:10px;"
-              type="success"
-              @click="getUraPowerPoolList()"
-            >
+            <el-button style="margin-left:10px;" type="success" @click="getUraPowerPoolList()">
               <i class="iconfont icon-search"></i>
             </el-button>
           </el-col>
         </el-row>
 
         <el-row class="appResource">
-          <el-col :span="24" style="text-align: center; color: #a2a6b0; margin-top: 30px;" v-if="this.poolList.length = '0'">No data</el-col>
+          <el-col
+            :span="24"
+            style="text-align: center; color: #a2a6b0; margin-top: 30px;"
+            v-if="this.poolList.length == '0'"
+          >No data</el-col>
           <el-col :span="12" v-for="(pool, index) in poolList" :key="index">
             <el-row
               style="border: 1px solid rgba(255, 255, 255, 0.2); border-radius:4px; margin:10px;"
             >
               <el-col :span="5" style="margin-bottom: 15px;">
                 <a @click="resourceDetail(index, pool.orderStatus)">
-                  <Ball
-                    style="margin:0 auto;"
-                    v-if="update1"
-                    :chartData="pool.urpowerUsd"
-                  />
+                  <Ball style="margin:0 auto;" v-if="update1" :chartData="pool.urpowerUsd"/>
                 </a>
               </el-col>
               <el-col :span="17" :offset="2">
                 <h3>Pool: {{ pool.name }}</h3>
-                <h3>
-                  {{ $t("buyer.myResource.state") }} {{ pool.orderDispName }}
-                </h3>
+                <h3>{{ $t("buyer.myResource.state") }} {{ pool.orderDispName }}</h3>
                 <h3>{{ $t("buyer.myResource.number") }} {{ pool.appCount }}</h3>
                 <div class="timeText">
                   <p>
                     {{ $t("buyer.myResource.countdownTime") }}
-                    <RestTime
-                      style="display:inline-block;"
-                      :endTime="pool.time"
-                    />
+                    <RestTime style="display:inline-block;" :endTime="pool.time"/>
                   </p>
                 </div>
                 <div class="renew" v-if="pool.renew_btn">
@@ -503,7 +468,7 @@ export default {
         this.getConfirmCode()
       }
     },
-    closeDialog: function(data) {
+    closeDialog: function (data) {
       this.outerVisible = false
     },
     setDatePick() {
@@ -540,7 +505,6 @@ export default {
     this.allStatisticsProjects()
     this.getUraPowerPoolList()
     this.getReferenceFee()
-    console.log(this.poolList)
   }
 }
 </script>
@@ -695,22 +659,23 @@ export default {
         }
       }
     }
-      .el-button {
-          background: #424b00;
-          border: 1px solid #424b00;
-          border-radius: 3px;
-      }
-      .el-button:hover {
-          background: #627100;
-          border: 1px solid #627100;
-      }
-      .el-input /deep/ .el-input__inner {
-          background: #1d1e23;
-          border: 1px solid rgba(255, 255, 255, 0.1);
-          border-radius: 4px;
-          color: #a2a6b0;
-          opacity: 0.6;
-      }
+    .el-button {
+      background: #424b00;
+      border: 1px solid #424b00;
+      border-radius: 3px;
+      margin-top: 15px;
+    }
+    .el-button:hover {
+      background: #627100;
+      border: 1px solid #627100;
+    }
+    .el-input /deep/ .el-input__inner {
+      background: #1d1e23;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      color: #a2a6b0;
+      opacity: 0.6;
+    }
   }
 }
 </style>

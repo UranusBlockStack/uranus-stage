@@ -50,6 +50,11 @@
         </el-col>
       </el-row>
       <el-row class="shopBox" :gutter="20">
+        <el-col
+            :span="24"
+            style="text-align: center; color: #a2a6b0; margin-top: 30px;"
+            v-if="this.appList.length == '0'"
+          >No data</el-col>
         <el-col :span="24" style="margin-bottom:40px">
           <el-card
             :body-style="{ padding: '0px', height:'360px'}"
@@ -59,7 +64,7 @@
           >
             <div class="resources">
               <div>
-                <el-dropdown trigger="click" style="display: none;">
+                <!-- <el-dropdown trigger="click" style="display: none;">
                   <span class="el-dropdown-link">
                     <span class="iconfont icon-menu"></span>
                   </span>
@@ -69,7 +74,7 @@
                     </el-dropdown-item>
                     <el-dropdown-item>{{$t('buyer.appRepository.detail')}}</el-dropdown-item>
                   </el-dropdown-menu>
-                </el-dropdown>
+                </el-dropdown> -->
                 <div class="img-box">
                   <img :src="app.imageurl" alt="img">
                 </div>

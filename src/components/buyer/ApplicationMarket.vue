@@ -49,6 +49,11 @@
         </el-col>
       </el-row>
       <el-row class="shopBox" :gutter="20">
+        <el-col
+            :span="24"
+            style="text-align: center; color: #a2a6b0; margin-top: 30px;"
+            v-if="this.appList.length == '0'"
+          >No data</el-col>
         <el-col :span="24" style="margin-bottom:40px">
           <el-card
             :body-style="{ padding: '0px', height:'380px',}"
@@ -79,6 +84,7 @@
             </div>
           </el-card>
         </el-col>
+        
       </el-row>
       <el-row>
         <el-col :span="8" :offset="16">
