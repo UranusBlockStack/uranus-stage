@@ -277,7 +277,7 @@ export default {
       canClick: true,
       deployForm: {
         projectName: '',
-        rancherId: 2,
+        rancherId: '',
         cpuKernel: '4',
         disk: '512G',
         mem: '16',

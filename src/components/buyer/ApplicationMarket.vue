@@ -104,6 +104,7 @@
 <script>
 import * as app from '../../services/RancherService'
 import * as auth from '../../services/AuthService'
+import {preventApplist} from '../../store/applistConfig'
 
 export default {
   name: 'ApplicationMarket',
@@ -154,15 +155,22 @@ export default {
       }
 
       app.appList(auth.getCurLang(), searchData).then(respData => {
-        this.appList = respData.data.data.records
+        this.appList = []
+        const tmpappList = respData.data.data.records
         this.totalRecords = respData.data.data.total
 
-        this.appList.map(appitem => {
+        tmpappList.map(appitem => {
           appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
           appitem.computedPrice = appitem.free
             ? this.$t('buyer.deploy.free')
             : appitem.price
-          return appitem
+          const showstate = preventApplist.indexOf(appitem.name)
+          if (showstate<0) {
+            this.appList.push(appitem)
+          } else {
+            this.totalRecords--
+              console.log(this.totalRecords);
+          }
         })
       })
     },

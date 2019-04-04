@@ -610,6 +610,7 @@ export default {
         }
 
         this.regionSel = regionData
+        this.deployForm.rancherId = this.regionSel[0].value
       })
     },
     getAppDetail(appid) {
