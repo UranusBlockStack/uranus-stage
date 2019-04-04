@@ -14,14 +14,30 @@
           <i class="iconfont icon-balance"></i>
           {{ $t("wallet.balance") }} {{ balance }} URAC
         </p>
-        <p>
+        <!-- <p>
           <i class="iconfont icon-address"></i>
           {{ $t("wallet.address") }} {{ address }}
           <el-tooltip class="item" effect="dark" content="Copy address" placement="right">
             <u class="copy" @click="copy()">{{ $t("wallet.copy") }}</u>
           </el-tooltip>
+        </p>-->
+        <p>
+          <i class="iconfont icon-jifen"></i>
+          {{ $t("wallet.integral") }} {{ integral }}
+          <span
+            style="display: inline-block; margin-left: 50px; background: #424b00; width: 120px; text-align: center; color: #fff; border-radius: 5px;"
+            type="text"
+            @click="detailVisible = true"
+          >Detail</span>
         </p>
       </el-col>
+      <el-dialog title="提示" :visible.sync="detailVisible" width="30%">
+        <span>这是一段信息</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="detailVisible = false">取 消</el-button>
+          <el-button type="primary" @click="detailVisible = false">确 定</el-button>
+        </span>
+      </el-dialog>
       <el-col :span="6">
         <el-button type="success" @click="goTransfer">
           {{
@@ -236,6 +252,8 @@ export default {
   data() {
     return {
       address: '',
+      integral: '1234',
+      detailVisible: false,
       balance: '0',
       dialogVisible: false,
       transactionListFrom: [],

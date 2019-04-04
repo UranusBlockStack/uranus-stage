@@ -1,5 +1,20 @@
 <template>
   <section class="Map">
+    <el-dialog
+      :visible.sync="dialogVisible"
+      top="60px"
+      width="930px"
+      :close-on-click-modal="false"
+      :center="true"
+    >
+      <img src="/static/img/uranus/activity/activity.png">
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="dialogVisible = false">我要参加</el-button>
+      </span>
+    </el-dialog>
+    <div class="openImg" @click="dialogVisible = true">
+      <img src="/static/img/uranus/activity/join.png">
+    </div>
     <header class="mapHead">
       <img class="headImg" src="/static/img/uranus/head.png" alt="uranus">
       <el-dropdown class="language" trigger="click">
@@ -84,7 +99,7 @@
         <p>{{$t('map.buyerText')}}</p>
       </a>
       <a @click.prevent="LoginPage('Developer')" class="developer">
-      <!-- <a @click.prevent="construction()" class="developer"> -->
+        <!-- <a @click.prevent="construction()" class="developer"> -->
         <span>
           <i class="iconfont icon-map-developer"></i>
           {{$t('map.developer')}}
@@ -112,7 +127,8 @@ export default {
       role: '',
       placeHolder: '--',
       BlockData: [],
-      TranscationData: []
+      TranscationData: [],
+      dialogVisible: true
     }
   },
   methods: {
@@ -247,15 +263,15 @@ export default {
   mounted() {
     this.initEchart()
   },
-//   created() {
-//     this.lastedBlock()
-//     this.refushBlockData()
-//   },
-//   beforeDestroy() {
-//     if (this.timer) {
-//       clearInterval(this.timer)
-//     }
-//   }
+  //   created() {
+  //     this.lastedBlock()
+  //     this.refushBlockData()
+  //   },
+  //   beforeDestroy() {
+  //     if (this.timer) {
+  //       clearInterval(this.timer)
+  //     }
+  //   }
 }
 </script>
 
@@ -267,6 +283,42 @@ export default {
   min-width: 1130px;
   background: #ffffff;
   overflow: hidden;
+  .el-dialog__wrapper /deep/ .el-dialog {
+    background: #000000;
+    img {
+      width: 880px;
+      height: 900px;
+      display: inline-block;
+    }
+  }
+  .el-button {
+    background: #627100;
+    border: 1px solid #627100;
+    border-radius: 3px;
+    width: 300px;
+    height: 40px;
+    font-family: SourceSansPro-Regular;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+  }
+  // .el-button:hover {
+  //   background: #627100;
+  //   border: 1px solid #627100;
+  // }
+}
+.openImg {
+  position: fixed;
+  right: 30px;
+  top: 100px;
+  z-index: 999;
+  width: 120px;
+  height: 50px;
+  img {
+    display: block;
+    width: 120px;
+    height: 50px;
+  }
 }
 #mapWorld {
   width: 100%;
@@ -276,7 +328,7 @@ export default {
 }
 .mapHead {
   height: 60px;
-  background:rgba(176,192,255,0.05);
+  background: rgba(176, 192, 255, 0.05);
   width: 100%;
   position: fixed;
   top: 0;
@@ -430,7 +482,7 @@ export default {
       display: block;
       margin-top: 35px;
       height: 50px;
-      font-family: PingFang-SC-Medium;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 30px;
       color: #a2ae44;
       text-align: center;
@@ -442,7 +494,7 @@ export default {
     p {
       margin-top: 15px;
       height: 50px;
-      font-family: PingFang-SC-Medium;
+      font-family: Source-Sans-Pro-Bold;
       font-size: 15px;
       color: #a2ae44;
       letter-spacing: 0;

@@ -529,6 +529,7 @@ module.exports = {
     title: '钱包',
     balance: '账户余额：',
     address: '我的地址：',
+    integral: '积分：',
     copy: '复制',
     button: '转账',
     transactionDetails: '交易详情',

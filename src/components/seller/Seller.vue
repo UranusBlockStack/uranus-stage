@@ -1,11 +1,25 @@
 <template>
   <section class="Seller">
+    <el-dialog
+      :visible.sync="dialogVisible"
+      top="60px"
+      width="930px"
+      :close-on-click-modal="false"
+      :center="true"
+    >
+      <img src="/static/img/uranus/activity/activity.png">
+    </el-dialog>
     <el-row class="content-title">
       <el-col class="title" :span="12">
         <h1>
           <i class="iconfont icon-home"></i>
           {{$t('menu.home')}}
         </h1>
+      </el-col>
+      <el-col :span="4" :offset="8">
+        <div class="openImg" @click="dialogVisible = true">
+          <img src="/static/img/uranus/activity/join.png">
+        </div>
       </el-col>
     </el-row>
     <!-- Main content -->
@@ -173,6 +187,7 @@ export default {
   },
   data() {
     return {
+      dialogVisible: false,
       language: 'en-us',
       indexCon: 2,
       indexPro: 2,
@@ -385,6 +400,25 @@ export default {
   border-radius: 2px;
   min-width: 1130px;
   width: 100%;
+  .el-dialog__wrapper /deep/ .el-dialog {
+    background: #000000;
+    img {
+      width: 880px;
+      height: 900px;
+      display: inline-block;
+    }
+  }
+  .el-button {
+    background: #627100;
+    border: 1px solid #627100;
+    border-radius: 3px;
+    width: 300px;
+    height: 40px;
+    font-family: SourceSansPro-Regular;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: center;
+  }
   .content-title {
     background: #161618;
     border-radius: 2px;
@@ -404,6 +438,15 @@ export default {
       i {
         font-size: 26px;
         margin-right: 10px;
+      }
+    }
+    .openImg {
+      width: 120px;
+      height: 50px;
+      img {
+        display: block;
+        width: 120px;
+        height: 50px;
       }
     }
   }

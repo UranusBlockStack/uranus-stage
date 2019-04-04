@@ -1,6 +1,6 @@
 <template>
   <section>
-    <p class="false" v-show="flag == false">
+    <p :class="red? 'red' : 'false'" v-show="flag == false">
       <b>{{showDay}}</b>
       {{$t('module.day')}}
       <b>{{showHour}}</b>
@@ -11,13 +11,13 @@
       {{$t('module.second')}}
     </p>
     <p class="true" v-show="flag == true">
-      <b>0</b>
+      <b>-</b>
       {{$t('module.day')}}
-      <b>0</b>
+      <b>-</b>
       {{$t('module.hour')}}
-      <b>0</b>
+      <b>-</b>
       {{$t('module.minute')}}
-      <b>0</b>
+      <b>-</b>
       {{$t('module.second')}}
     </p>
   </section>
@@ -32,7 +32,8 @@ export default {
       showHour: '',
       showMinute: '',
       showSecond: '',
-      flag: false
+      flag: false,
+      red: false
     }
   },
   mounted() {
@@ -60,6 +61,13 @@ export default {
       if (leftTime <= 0) {
         this.flag = true
         this.$emit('time-end')
+      } else if (leftTime <= 259200) {
+        this.red = true
+        this.time = `${d} d ${h} h ${m} m ${s} s`
+        this.showDay = `${d}`
+        this.showHour = `${h}`
+        this.showMinute = `${m}`
+        this.showSecond = `${s}`
       } else {
         this.time = `${d} d ${h} h ${m} m ${s} s`
         this.showDay = `${d}`
@@ -90,7 +98,21 @@ p {
     line-height: 30px;
     width: 50px;
     height: 30px;
-    background: #333440;
+    background: #5B8C00;
+    border-radius: 3px;
+    font-size: 20px;
+    font-weight: 500;
+    color: #ffffff;
+  }
+}
+.red {
+  b {
+    display: inline-block;
+    text-align: center;
+    line-height: 30px;
+    width: 50px;
+    height: 30px;
+    background: #f54c46;
     border-radius: 3px;
     font-size: 20px;
     font-weight: 500;
@@ -104,7 +126,7 @@ p {
     line-height: 30px;
     width: 50px;
     height: 30px;
-    background: #f54c46;
+    background: #363636;
     border-radius: 3px;
     font-size: 20px;
     font-weight: 500;

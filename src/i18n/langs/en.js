@@ -531,6 +531,7 @@ module.exports = {
     title: 'Wallet',
     balance: 'Balance:',
     address: 'Address:',
+    integral: 'Integral:',
     copy: 'Copy',
     button: 'Transfer',
     transactionDetails: 'Transaction Details',
