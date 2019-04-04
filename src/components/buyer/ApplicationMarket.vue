@@ -169,7 +169,6 @@ export default {
             this.appList.push(appitem)
           } else {
             this.totalRecords--
-              console.log(this.totalRecords);
           }
         })
       })

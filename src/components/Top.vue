@@ -38,7 +38,7 @@
       <!-- Download button -->
       <div class="download">
         <span v-if="this.userRole === 'Seller'">
-          <a v-bind:href="downloadUrl">{{$t('userCommon.download')}}</a>
+          <a v-bind:href="downloadUrl" target="_blank">{{$t('userCommon.download')}}</a>
         </span>
       </div>
 
@@ -53,7 +53,7 @@
               <a href="/static/HELP.pdf" target="_blank">HELP</a>
             </el-dropdown-item>
             <el-dropdown-item command="faq">
-              <a href="/static/FAQ.pdf" target="_blank">FAQ</a>
+              <a href="https://www.uranus.io/faq" target="_blank">FAQ</a>
             </el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
