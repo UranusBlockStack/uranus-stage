@@ -99,8 +99,8 @@
         </span>
         <p>{{$t('map.buyerText')}}</p>
       </a>
-      <a @click.prevent="LoginPage('Developer')" class="developer">
-        <!-- <a @click.prevent="construction()" class="developer"> -->
+      <!--<a @click.prevent="LoginPage('Developer')" class="developer">-->
+         <a @click.prevent="construction()" class="developer">
         <span>
           <i class="iconfont icon-map-developer"></i>
           {{$t('map.developer')}}
