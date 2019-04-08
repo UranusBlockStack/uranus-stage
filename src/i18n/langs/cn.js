@@ -543,7 +543,13 @@ module.exports = {
     success: '成功',
     fail: '失败',
     processing: '进行中',
-    empty: '没有交易'
+    empty: '没有交易',
+    activity: {
+      time: '时间',
+      value: '价格',
+      type: '类型',
+      balance: '余额'
+    }
   },
   transfer: {
     transfer: '转账：',

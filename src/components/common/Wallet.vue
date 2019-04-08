@@ -31,20 +31,55 @@
           >Detail</span>
         </p>
       </el-col>
-      <el-dialog title="提示" :visible.sync="detailVisible" width="30%">
-        <span>这是一段信息</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="detailVisible = false">取 消</el-button>
-          <el-button type="primary" @click="detailVisible = false">确 定</el-button>
-        </span>
+      <el-dialog :visible.sync="detailVisible" width="80%">
+        <el-table :data="transactionListTo" style="width: 100%">
+          <template slot="empty">
+            <p class="empty-text" style="height: 300px; line-height: 300px;">No Data</p>
+          </template>
+          <el-table-column prop="createTime" :formatter="formateDate" min-width="160">
+            <template slot="header" slot-scope="scope">
+              <p class="activity-table">
+                <i class="iconfont icon-time"></i>
+                {{ $t("wallet.activity.time") }}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column min-width="150">
+            <template slot="header" slot-scope="scope">
+              <p class="activity-table">
+                <i class="iconfont icon-table-value"></i>
+                {{ $t("wallet.activity.value") }}
+              </p>
+            </template>
+            <template slot-scope="scope">
+              <p class="overflow">{{ scope.row.from }}</p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="TransStatus" min-width="60">
+            <template slot="header" slot-scope="scope">
+              <p class="activity-table">
+                <i class="iconfont icon-table-type"></i>
+                {{ $t("wallet.activity.type") }}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column prop="value" min-width="150">
+            <template slot="header" slot-scope="scope">
+              <p class="activity-table">
+                <i class="iconfont icon-balance"></i>
+                {{ $t("wallet.activity.balance") }}
+              </p>
+            </template>
+          </el-table-column>
+        </el-table>
       </el-dialog>
-      <el-col :span="6">
+      <!-- <el-col :span="6">
         <el-button type="success" @click="goTransfer">
           {{
           $t("wallet.button")
           }}
         </el-button>
-      </el-col>
+      </el-col> -->
     </el-row>
 
     <el-row class="transaction">
@@ -454,6 +489,17 @@ export default {
         font-size: 16px;
         margin: 0;
         padding: 0;
+        i {
+          font-size: 23px;
+        }
+      }
+      .activity-table {
+        color: #000000;
+        font-weight: 500;
+        font-size: 16px;
+        margin: 0;
+        padding: 0;
+        text-align: center;
         i {
           font-size: 23px;
         }

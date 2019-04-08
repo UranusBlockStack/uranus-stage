@@ -9,7 +9,7 @@
     >
       <img src="/static/img/uranus/activity/activity.png">
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false">我要参加</el-button>
+        <el-button type="primary" @click="dialogVisible = false">Join</el-button>
       </span>
     </el-dialog>
     <div class="openImg" @click="dialogVisible = true">
@@ -286,8 +286,8 @@ export default {
   .el-dialog__wrapper /deep/ .el-dialog {
     background: #000000;
     img {
-      width: 880px;
-      height: 900px;
+      width: 860px;
+      height: 1020px;
       display: inline-block;
     }
   }

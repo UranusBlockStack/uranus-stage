@@ -346,8 +346,8 @@ export default {
   .el-dialog__wrapper /deep/ .el-dialog {
     background: #000000;
     img {
-      width: 880px;
-      height: 900px;
+      width: 860px;
+      height: 1020px;
       display: inline-block;
     }
   }

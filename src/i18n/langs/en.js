@@ -545,7 +545,13 @@ module.exports = {
     success: 'Success',
     fail: 'Fail',
     processing: 'Processing',
-    empty: 'No Transaction'
+    empty: 'No Transaction',
+    activity: {
+      time: 'Time',
+      value: 'Value',
+      type: 'Type',
+      balance: 'Balance'
+    }
   },
   transfer: {
     transfer: 'Transfer',
