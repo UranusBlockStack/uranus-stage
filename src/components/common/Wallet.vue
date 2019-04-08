@@ -31,7 +31,7 @@
           >Detail</span>
         </p>
       </el-col>
-      <el-dialog :visible.sync="detailVisible" width="80%">
+      <el-dialog :visible.sync="detailVisible" width="680px">
         <el-table :data="activityData" style="width: 100%">
           <template slot="empty">
             <p class="empty-text" style="height: 300px; line-height: 300px;">No Data</p>
@@ -52,7 +52,7 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column prop="remark" min-width="60">
+          <el-table-column prop="remark" min-width="160">
             <template slot="header" slot-scope="scope">
               <p class="activity-table">
                 <i class="iconfont icon-table-type"></i>
@@ -61,12 +61,12 @@
             </template>
           </el-table-column>
           <!--<el-table-column prop="value" min-width="150">-->
-            <!--<template slot="header" slot-scope="scope">-->
-              <!--<p class="activity-table">-->
-                <!--<i class="iconfont icon-balance"></i>-->
-                <!--{{ $t("wallet.activity.balance") }}-->
-              <!--</p>-->
-            <!--</template>-->
+          <!--<template slot="header" slot-scope="scope">-->
+          <!--<p class="activity-table">-->
+          <!--<i class="iconfont icon-balance"></i>-->
+          <!--{{ $t("wallet.activity.balance") }}-->
+          <!--</p>-->
+          <!--</template>-->
           <!--</el-table-column>-->
         </el-table>
       </el-dialog>
@@ -76,7 +76,7 @@
           $t("wallet.button")
           }}
         </el-button>
-      </el-col> -->
+      </el-col>-->
     </el-row>
 
     <el-row class="transaction">
@@ -118,7 +118,7 @@
               <p class="overflow">{{ scope.row.hash }}</p>
             </template>
           </el-table-column>
-          <el-table-column prop="createTime" :formatter="formateDate" min-width="130">
+          <el-table-column prop="createTime" :formatter="formateDate" min-width="160">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-time"></i>
@@ -148,7 +148,7 @@
               <p class="overflow">{{ scope.row.to }}</p>
             </template>
           </el-table-column>
-          <el-table-column prop="value" :label="$t('wallet.value')" min-width="130">
+          <el-table-column prop="value" :label="$t('wallet.value')" min-width="160">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-value"></i>
@@ -156,7 +156,7 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column prop="fee" :label="$t('wallet.fee')" min-width="130">
+          <el-table-column prop="fee" :label="$t('wallet.fee')" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-fee"></i>
@@ -231,7 +231,7 @@
               <p class="overflow">{{ scope.row.to }}</p>
             </template>
           </el-table-column>-->
-          <el-table-column prop="value" :label="$t('wallet.value')" min-width="150">
+          <el-table-column prop="value" :label="$t('wallet.value')" min-width="160">
             <template slot="header" slot-scope="scope">
               <p class="table-head">
                 <i class="iconfont icon-table-value"></i>
@@ -267,7 +267,6 @@
           @current-change="handleCurrentChangeTo"
         ></el-pagination>
       </el-col>
-
     </el-row>
   </section>
 </template>
@@ -335,19 +334,19 @@ export default {
     getIntegral() {
       const self = this
       account.userPointsSummary(auth.getCurLang(), auth.getCurUserId(), {})
-          .then(function (respData) {
-            const pointSummaryData = respData.data
-            self.integral = pointSummaryData.data.point
-          })
+        .then(function (respData) {
+          const pointSummaryData = respData.data
+          self.integral = pointSummaryData.data.point
+        })
     },
     getIntegralDetail() {
       const self = this
       this.detailVisible = true
       account.userPoints(auth.getCurLang(), auth.getCurUserId(), 1, 100)
-            .then(function (respData) {
-              const pointData = respData.data
-              self.activityData = pointData.data.records
-            })
+        .then(function (respData) {
+          const pointData = respData.data
+          self.activityData = pointData.data.records
+        })
     },
     getTradeList() {
       wallet
@@ -471,6 +470,16 @@ export default {
         margin-right: 10px;
       }
     }
+    .activity-table {
+      color: #606266;
+      font-weight: 500;
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      i {
+        font-size: 23px;
+      }
+    }
     .copy {
       color: #a2ae44;
       display: inline-block;
@@ -510,17 +519,6 @@ export default {
           font-size: 23px;
         }
       }
-      .activity-table {
-        color: #000000;
-        font-weight: 500;
-        font-size: 16px;
-        margin: 0;
-        padding: 0;
-        text-align: center;
-        i {
-          font-size: 23px;
-        }
-      }
     }
     .transaction-head {
       height: 50px;
@@ -555,6 +553,9 @@ export default {
       }
       .el-table::before {
         background: rgba(255, 255, 255, 0.1);
+      }
+      .el-table /deep/ .cell {
+        text-align: center;
       }
       .el-table /deep/ tr:hover td {
         background: rgba(176, 192, 255, 0.05) !important;
