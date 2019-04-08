@@ -61,6 +61,7 @@
 
 <script>
 import * as auth from '../services/AuthService'
+import * as promo from '../services/ActivityManageService'
 import { Message } from 'element-ui'
 
 export default {
@@ -124,7 +125,7 @@ export default {
       this.prompt = ''
     },
     userLogin() {
-      if (this.phoneShow == true) {
+      if (this.phoneShow === true) {
         if (this.phone === '') {
           this.prompt = this.$t('userCommon.phoneError')
         } else if (this.password === '') {
@@ -132,6 +133,7 @@ export default {
         } else if (this.password.length < 6 || this.password.length > 12) {
           this.prompt = this.$t('userCommon.password')
         } else {
+          const curact = auth.getCurActivity()
           this.prompt = ''
           const logintype = this.phoneShow ? 'mobile' : 'email'
           const userLoginfo = {
@@ -152,6 +154,13 @@ export default {
                   type: 'success'
                 })
                 // self.$router.push({ path: respData.curLoginUserInfo.loginRole })
+                // const curact = auth.getCurActivity()
+
+                promo.userJoinPromotion(auth.getCurLang(), 1, auth.getCurUserId())
+                      .then(function (respData) {
+                        const joinstatus = respData.data
+                        console.log(joinstatus)
+                      })
                 location.href = respData.curLoginUserInfo.loginRole
               } else {
                 self.$message({
@@ -175,7 +184,7 @@ export default {
           const globalUserinfo = auth.getUserBaseInfo()
         }
       }
-      if (this.phoneShow == false) {
+      if (this.phoneShow === false) {
         if (this.mail === '') {
           this.prompt = this.$t('userCommon.EmailError')
         } else if (this.password === '') {
@@ -203,6 +212,12 @@ export default {
                   type: 'success'
                 })
                 // self.$router.push({ path: respData.curLoginUserInfo.loginRole })
+
+                promo.userJoinPromotion(auth.getCurLang(), 1, auth.getCurUserId())
+                      .then(function (respData) {
+                        const joinstatus = respData.data
+                        console.log(joinstatus)
+                      })
                 location.href = respData.curLoginUserInfo.loginRole
               } else {
                 self.$message({

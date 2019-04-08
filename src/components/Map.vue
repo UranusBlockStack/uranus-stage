@@ -9,7 +9,7 @@
     >
       <img src="/static/img/uranus/activity/activity.png">
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false, joinAct = true">Join</el-button>
+        <el-button type="primary" @click="userJoin">Join</el-button>
       </span>
     </el-dialog>
     <div class="openImg" @click="dialogVisible = true">
@@ -141,6 +141,11 @@ export default {
         type: 'warning'
       })
     },
+    userJoin() {
+      this.dialogVisible = false
+      this.joinAct = true
+      auth.setCurActivity('promo1')
+    },
     chooseCn() {
       this.lang = '中文'
       this.langCode = 'zh-cn'
@@ -189,11 +194,11 @@ export default {
             normal: {
               // 普通状态下的样式
               areaColor: '#424B00',
-              borderColor: '#000',
+              borderColor: '#000'
             },
             emphasis: {
               // 高亮状态下的样式
-              areaColor: '#627100',
+              areaColor: '#627100'
             }
           },
           label: {
@@ -235,7 +240,7 @@ export default {
     userRegister() {
       auth.setCurLang(this.langCode)
       this.$router.push({ name: 'Register' })
-    },
+    }
     // lastedBlock() {
     //   this.BlockData = []
     //   block.getLastedBlock(this.langCode, { 'height': -1 })
@@ -264,7 +269,7 @@ export default {
   },
   mounted() {
     this.initEchart()
-  },
+  }
   //   created() {
   //     this.lastedBlock()
   //     this.refushBlockData()

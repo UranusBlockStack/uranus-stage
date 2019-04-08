@@ -19,5 +19,5 @@ export function promoRuleInfo (lang, promoRuleid) {
 
 /// 用户参加活动
 export function userJoinPromotion (lang, promoid, userid) {
-  return httpLang(lang).post(`/promotion/promotions/{pid}/users/{uid}`)
+  return httpLang(lang).post(`/promotion/promotions/${promoid}/users/${userid}`)
 }

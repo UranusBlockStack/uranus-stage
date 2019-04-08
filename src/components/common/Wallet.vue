@@ -333,6 +333,12 @@ export default {
           this.address = userInfo.data.data.accountAddress
         })
     },
+    getIntegral() {
+      account.userPointsSummary(auth.getCurLang(), auth.getCurUserId())
+          .then(function (pointData) {
+            console.log(pointData)
+          })
+    },
     getTradeList() {
       wallet
         .getTradeListFromUser(

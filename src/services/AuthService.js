@@ -35,7 +35,7 @@ function updatePropValue(propName, subPropName = null, value = null) {
   if (!subPropName) {
     userTmpVar[propName] = value
   } else {
-    console.log('prop', propName, '--', subPropName)
+    // console.log('prop', propName, '--', subPropName, value)
     userTmpVar[propName][subPropName] = value
   }
 
@@ -75,7 +75,7 @@ export function getCurRole() {
 
 export function getCurActivity() {
   const curUserState = localStorage.getItem('currentUserStatus')
-  return JSON.parse(curUserState).activity.currentact
+    return JSON.parse(curUserState).activity.currentact
 }
 
 export function setCurActivity(activitycode) {
