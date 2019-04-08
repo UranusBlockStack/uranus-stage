@@ -9,11 +9,12 @@
     >
       <img src="/static/img/uranus/activity/activity.png">
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogVisible = false">Join</el-button>
+        <el-button type="primary" @click="dialogVisible = false, joinAct = true">Join</el-button>
       </span>
     </el-dialog>
     <div class="openImg" @click="dialogVisible = true">
-      <img src="/static/img/uranus/activity/join.png">
+      <img v-show="!joinAct" src="/static/img/uranus/activity/join.png">
+      <img v-show="joinAct" src="/static/img/uranus/activity/joined.png">
     </div>
     <header class="mapHead">
       <img class="headImg" src="/static/img/uranus/head.png" alt="uranus">
@@ -128,7 +129,8 @@ export default {
       placeHolder: '--',
       BlockData: [],
       TranscationData: [],
-      dialogVisible: true
+      dialogVisible: true,
+      joinAct: false
     }
   },
   methods: {
@@ -284,7 +286,8 @@ export default {
   background: #ffffff;
   overflow: hidden;
   .el-dialog__wrapper /deep/ .el-dialog {
-    background: #000000;
+    background: #00000c;
+    border-radius: 5px;
     img {
       width: 860px;
       height: 1020px;

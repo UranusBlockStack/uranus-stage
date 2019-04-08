@@ -16,7 +16,7 @@
           {{$t('menu.home')}}
         </h1>
       </el-col>
-      <el-col :span="4" :offset="8">
+      <el-col :span="3" :offset="9">
         <div class="openImg" @click="dialogVisible = true">
           <img src="/static/img/uranus/activity/join.png">
         </div>
@@ -344,7 +344,8 @@ export default {
   min-width: 1130px;
   width: 100%;
   .el-dialog__wrapper /deep/ .el-dialog {
-    background: #000000;
+    background: #00000c;
+    border-radius: 5px;
     img {
       width: 860px;
       height: 1020px;
