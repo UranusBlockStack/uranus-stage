@@ -21,3 +21,13 @@ export function userInfo (lang, id) {
 export function userBalcnce (lang) {
   return httpLang(lang).get('/accounts/users/balance')
 }
+
+/// 用户积分详情
+export function userPoints (lang, userid) {
+  return httpLang(lang).get(`/accounts/users/${userid}/points`)
+}
+
+/// 用户积分总结
+export function userPointsSummary (lang, userid) {
+  return httpLang(lang).post(`/accounts/users/{userid}/points/summary`)
+}
