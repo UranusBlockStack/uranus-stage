@@ -27,16 +27,16 @@
           <span
             style="display: inline-block; margin-left: 50px; background: #424b00; width: 120px; text-align: center; color: #fff; border-radius: 5px;"
             type="text"
-            @click="detailVisible = true"
+            @click="getIntegralDetail()"
           >Detail</span>
         </p>
       </el-col>
       <el-dialog :visible.sync="detailVisible" width="80%">
-        <el-table :data="transactionListTo" style="width: 100%">
+        <el-table :data="activityData" style="width: 100%">
           <template slot="empty">
             <p class="empty-text" style="height: 300px; line-height: 300px;">No Data</p>
           </template>
-          <el-table-column prop="createTime" :formatter="formateDate" min-width="160">
+          <el-table-column prop="logDate" :formatter="formateDate" min-width="160">
             <template slot="header" slot-scope="scope">
               <p class="activity-table">
                 <i class="iconfont icon-time"></i>
@@ -44,18 +44,15 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column min-width="150">
+          <el-table-column prop="point" min-width="150">
             <template slot="header" slot-scope="scope">
               <p class="activity-table">
                 <i class="iconfont icon-table-value"></i>
                 {{ $t("wallet.activity.value") }}
               </p>
             </template>
-            <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.from }}</p>
-            </template>
           </el-table-column>
-          <el-table-column prop="TransStatus" min-width="60">
+          <el-table-column prop="remark" min-width="60">
             <template slot="header" slot-scope="scope">
               <p class="activity-table">
                 <i class="iconfont icon-table-type"></i>
@@ -63,14 +60,14 @@
               </p>
             </template>
           </el-table-column>
-          <el-table-column prop="value" min-width="150">
-            <template slot="header" slot-scope="scope">
-              <p class="activity-table">
-                <i class="iconfont icon-balance"></i>
-                {{ $t("wallet.activity.balance") }}
-              </p>
-            </template>
-          </el-table-column>
+          <!--<el-table-column prop="value" min-width="150">-->
+            <!--<template slot="header" slot-scope="scope">-->
+              <!--<p class="activity-table">-->
+                <!--<i class="iconfont icon-balance"></i>-->
+                <!--{{ $t("wallet.activity.balance") }}-->
+              <!--</p>-->
+            <!--</template>-->
+          <!--</el-table-column>-->
         </el-table>
       </el-dialog>
       <!-- <el-col :span="6">
@@ -270,6 +267,7 @@
           @current-change="handleCurrentChangeTo"
         ></el-pagination>
       </el-col>
+
     </el-row>
   </section>
 </template>
@@ -287,13 +285,14 @@ export default {
   data() {
     return {
       address: '',
-      integral: '1234',
+      integral: '0000',
       detailVisible: false,
       balance: '0',
       dialogVisible: false,
       transactionListFrom: [],
       transactionListTo: [],
       tableData1: [],
+      activityData: [],
       curLang: this.$store.getters.lang,
       curUserInfo: auth.getUserBaseInfo(),
       currentPageFrom: 1,
@@ -334,10 +333,21 @@ export default {
         })
     },
     getIntegral() {
-      account.userPointsSummary(auth.getCurLang(), auth.getCurUserId())
-          .then(function (pointData) {
-            console.log(pointData)
+      const self = this
+      account.userPointsSummary(auth.getCurLang(), auth.getCurUserId(), {})
+          .then(function (respData) {
+            const pointSummaryData = respData.data
+            self.integral = pointSummaryData.data.point
           })
+    },
+    getIntegralDetail() {
+      const self = this
+      this.detailVisible = true
+      account.userPoints(auth.getCurLang(), auth.getCurUserId(), 1, 100)
+            .then(function (respData) {
+              const pointData = respData.data
+              self.activityData = pointData.data.records
+            })
     },
     getTradeList() {
       wallet
@@ -411,6 +421,7 @@ export default {
     this.getUserInfo()
     this.getBalance()
     this.getTradeList()
+    this.getIntegral()
   }
 }
 </script>

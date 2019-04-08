@@ -23,11 +23,11 @@ export function userBalcnce (lang) {
 }
 
 /// 用户积分详情
-export function userPoints (lang, userid) {
-  return httpLang(lang).get(`/accounts/users/${userid}/points`)
+export function userPoints (lang, userid, page, size) {
+  return httpLang(lang).get(`/accounts/users/${userid}/points?page=${page}&size=${size}`)
 }
 
 /// 用户积分总结
-export function userPointsSummary (lang, userid) {
-  return httpLang(lang).post(`/accounts/users/{userid}/points/summary`)
+export function userPointsSummary (lang, userid, cond) {
+  return httpLang(lang).post(`/accounts/users/${userid}/points/summary`, cond)
 }
