@@ -454,33 +454,42 @@ export default {
       })
       account
         .userInfo(auth.getCurLang(), auth.getCurUserId())
-        .then(userInfo => {
-          const userData = userInfo.data.data
-          const transData = {
-            orders: orders,
-            phone: userData.mobile,
-            smsCode: this.concode
-          }
-          wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
-            const transStatusData = transStatus.data
-            if (transStatusData.success) {
-              this.outerVisible = false
-              this.$message({
-                showClose: true,
-                message: this.$t('buyer.resourceMarket.orderSuccess'),
-                type: 'success',
-                duration: 3000
-              })
-              this.$router.push({ name: 'ApplicationRepository' })
-            } else {
-              this.$message({
-                showClose: true,
-                message: transStatusData.errMsg,
-                type: 'error',
-                duration: 3000
-              })
+        .then(respData => {
+          const userData = respData.data
+          if (userData.success) {
+            const transData = {
+              orders: orders,
+              phone: userData.data.mobile,
+              smsCode: this.concode
             }
-          })
+            wallet.walletPay(auth.getCurLang(), transData).then(transStatus => {
+              const transStatusData = transStatus.data
+              if (transStatusData.success) {
+                this.outerVisible = false
+                this.$message({
+                  showClose: true,
+                  message: this.$t('buyer.resourceMarket.orderSuccess'),
+                  type: 'success',
+                  duration: 3000
+                })
+                this.$router.push({ name: 'ApplicationRepository' })
+              } else {
+                this.$message({
+                  showClose: true,
+                  message: transStatusData.errMsg,
+                  type: 'error',
+                  duration: 3000
+                })
+              }
+            })
+          } else {
+            this.$message({
+              showClose: true,
+              message: userData.errMsg,
+              type: 'error',
+              duration: 3000
+            })
+          }
         })
     }
   }
