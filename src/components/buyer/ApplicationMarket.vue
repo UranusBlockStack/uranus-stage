@@ -10,7 +10,7 @@
     </el-row>
     <div class="shop">
       <el-row>
-        <el-col :span="4">
+        <el-col :span="3">
           <el-select
             v-model="appType"
             :placeholder="$t('buyer.appMarket.application')"
@@ -24,7 +24,7 @@
             ></el-option>
           </el-select>
         </el-col>
-        <el-col :span="4" :offset="1">
+        <el-col :span="3" :offset="1">
           <el-select v-model="catalogRid" :placeholder="$t('buyer.appMarket.storeAll')">
             <el-option
               v-for="item in options2"
@@ -34,7 +34,17 @@
             ></el-option>
           </el-select>
         </el-col>
-        <el-col :span="6" :offset="7">
+      <el-col :span="3" :offset="1">
+      <el-select v-model="selectedCategory" @change="searchApps" :placeholder="$t('buyer.appMarket.storeAll')">
+          <el-option
+                  v-for="item in appCategories"
+                  :key="item.value"
+                  :label="item.label"
+                  :value="item.value"
+          ></el-option>
+      </el-select>
+      </el-col>
+        <el-col :span="5" :offset="5">
           <el-input
             @keyup.enter.native="searchApps"
             :placeholder="$t('buyer.appMarket.searchIn')"
@@ -48,6 +58,7 @@
           </el-button>
         </el-col>
       </el-row>
+
       <el-row class="shopBox" :gutter="20">
         <el-col
             :span="24"
@@ -104,7 +115,7 @@
 <script>
 import * as app from '../../services/RancherService'
 import * as auth from '../../services/AuthService'
-import {preventApplist} from '../../store/applistConfig'
+import {preventApplist, flatListToDropdownData} from '../../store/applistConfig'
 
 export default {
   name: 'ApplicationMarket',
@@ -135,6 +146,8 @@ export default {
       appTypeSelected: 0,
       catalogRid: 'library',
       searchName: '',
+      appCategories: [],
+      selectedCategory: '',
       currentPage: 1,
       pageSize: this.$store.state.defaultCardPageSize,
       totalRecords: 0,
@@ -143,11 +156,15 @@ export default {
     }
   },
   methods: {
-    // to do 分页的实现
+    getCategoriesList() {
+      const cateData = this.$store.state.appCategories
+      this.appCategories = flatListToDropdownData(cateData)
+    },
     getAppList() {
       const searchData = {
         free: this.appTypeSelected,
         name: this.searchName,
+        categories: this.selectedCategory,
         page: this.currentPage,
         pageSize: this.pageSize,
         // 'sort': this.sort,
@@ -218,6 +235,7 @@ export default {
   },
   created() {
     this.getAppList()
+    this.getCategoriesList()
   }
 }
 </script>
