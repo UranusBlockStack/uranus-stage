@@ -2,7 +2,7 @@
   <section class="Head">
     <!-- Logo -->
     <router-link :to="{path : '/'}" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <!-- mini logo for sidebar mini pixels -->
       <span class="logo-mini">
         <img src="/static/img/uranus/uranus_mini.png" alt>
       </span>
@@ -137,10 +137,10 @@ export default {
         line-height: 50px;
       }
       a {
-        color: #627100;  
+        color: #627100;
       }
       :hover {
-        color: #A2AE44;
+        color: #a2ae44;
       }
     }
     .help_dropdown {
@@ -152,7 +152,7 @@ export default {
         line-height: 50px;
       }
       :hover {
-        color: #A2AE44;
+        color: #a2ae44;
       }
       .el-dropdown {
         color: #627100;
