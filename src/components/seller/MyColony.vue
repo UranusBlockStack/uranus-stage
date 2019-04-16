@@ -114,6 +114,18 @@
             <el-col class="padding-top" :span="16">
               <h1>{{$t('seller.groups.name')}}: {{colony.name}}</h1>
               <h2>
+                <p class="colonyState" v-show="colony.state == 'active'" style="color: #5b8c00; font-weight: 600;">
+                  <i class="iconfont icon-table-state"></i>
+                  {{$t('seller.groups.status')}} {{colony.state }}
+                </p>
+              </h2>
+              <h2>
+                <p class="colonyState" v-show="colony.state != 'active'" style="color: #f54c46; font-weight: 600;">
+                  <i class="iconfont icon-table-state"></i>
+                  {{$t('seller.groups.status')}} {{colony.state }}
+                </p>
+              </h2>
+              <h2>
                 <p>
                   <i class="iconfont icon-earnings"></i>
                   {{$t('seller.groups.earnings')}} {{colony.profit }} URAC

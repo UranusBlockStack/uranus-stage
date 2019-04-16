@@ -98,7 +98,7 @@ p {
     line-height: 30px;
     width: 50px;
     height: 30px;
-    background: #5B8C00;
+    background: #363636;
     border-radius: 3px;
     font-size: 20px;
     font-weight: 500;

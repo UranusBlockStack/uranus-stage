@@ -420,6 +420,7 @@ module.exports = {
       inSale: '上架',
       notSale: '未上架',
       operatingStatus: '运行状态：',
+      status: '状态：',
       running: '运行中',
       notRunning: '未运行',
       region: '所属区域：',

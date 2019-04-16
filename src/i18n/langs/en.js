@@ -423,6 +423,7 @@ module.exports = {
       operatingStatus: 'Operating Status:',
       running: 'Running',
       notRunning: 'Not running',
+      status: 'Status:',
       region: 'region:',
       asia: 'Asia',
       europe: 'Europe',
