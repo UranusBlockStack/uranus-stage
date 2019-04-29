@@ -260,7 +260,7 @@ export default {
     hosts() {
       rancher.hosts(this.language).then(data => {
         // 卖家所有资源
-        if ((data.data.data = 'null')) {
+        if (data.data.data === 'null') {
           this.allResources
         } else {
           this.allResources = data.data.data
