@@ -35,7 +35,7 @@
           </el-select>
         </el-col>
       <el-col :span="3" :offset="1">
-      <el-select v-model="selectedCategory" @change="searchApps" :placeholder="$t('buyer.appMarket.storeAll')">
+        <el-select v-model="selectedCategory" @change="setCategory" :placeholder="$t('buyer.appMarket.storeAll')">
           <el-option
                   v-for="item in appCategories"
                   :key="item.value"
@@ -227,6 +227,9 @@ export default {
     },
     setAppType(select) {
       this.appTypeSelected = select
+    },
+    setCategory(sel){
+      this.selectedCategory = sel
     },
     handleCurrentChange(val) {
       this.currentPage = val
