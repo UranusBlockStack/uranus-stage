@@ -24,6 +24,9 @@ import StateDetail from '@/components/buyer/StateDetail'
 import Developer from '@/components/developer/Developer'
 import UploadApplication from '@/components/developer/UploadApplication'
 import MyApplication from '@/components/developer/MyApplication'
+import ApplicationDetails from '@/components/developer/ApplicationDetails'
+import ApplicationRecard from '@/components/developer/ApplicationRecard'
+import ApplicationName from '@/components/developer/ApplicationName'
 
 // seller
 import Seller from '@/components/seller/Seller'
@@ -119,6 +122,18 @@ const routes = [
         path: '/myapplication',
         component: MyApplication,
         name: 'MyApplication'
+      }, {
+        path: '/applicationname',
+        component: ApplicationName,
+        name: 'ApplicationName'
+      }, {
+        path: '/applicationdetails',
+        component: ApplicationDetails,
+        name: 'ApplicationDetails'
+      }, {
+        path: '/applicationrecard',
+        component: ApplicationRecard,
+        name: 'ApplicationRecard'
       },
         
         // seller routes

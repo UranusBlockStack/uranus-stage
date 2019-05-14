@@ -552,6 +552,10 @@ module.exports = {
       balance: '余额'
     }
   },
+  developer: {
+    home: '首页',
+    download: '下载量'
+  },
   transfer: {
     transfer: '转账：',
     countdown: '支付倒计时： ',

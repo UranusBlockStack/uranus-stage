@@ -8,17 +8,39 @@
       :center="true"
     >
       <img src="/static/img/uranus/activity/activity.png">
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="userJoin">Join</el-button>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button
+          type="primary"
+          @click="userJoin"
+        >Join</el-button>
       </span>
     </el-dialog>
-    <div class="openImg" @click="dialogVisible = true">
-      <img v-show="!joinAct" src="/static/img/uranus/activity/join.png">
-      <img v-show="joinAct" src="/static/img/uranus/activity/joined.png">
+    <div
+      class="openImg"
+      @click="dialogVisible = true"
+    >
+      <img
+        v-show="!joinAct"
+        src="/static/img/uranus/activity/join.png"
+      >
+      <img
+        v-show="joinAct"
+        src="/static/img/uranus/activity/joined.png"
+      >
     </div>
     <header class="mapHead">
-      <img class="headImg" src="/static/img/uranus/head.png" alt="uranus">
-      <el-dropdown class="language" trigger="click">
+      <img
+        class="headImg"
+        src="/static/img/uranus/head.png"
+        alt="uranus"
+      >
+      <el-dropdown
+        class="language"
+        trigger="click"
+      >
         <span class="el-dropdown-link">
           <i class="iconfont icon-language"></i>
           {{lang}}
@@ -33,7 +55,10 @@
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
-      <a @click.prevent="userRegister" class="register">{{$t('map.register')}}</a>
+      <a
+        @click.prevent="userRegister"
+        class="register"
+      >{{$t('map.register')}}</a>
     </header>
 
     <div id="mapWorld"></div>
@@ -83,7 +108,10 @@
       </div>
     </div>-->
     <div class="mapCon">
-      <a @click.prevent="LoginPage('Seller')" class="seller">
+      <a
+        @click.prevent="LoginPage('Seller')"
+        class="seller"
+      >
         <span>
           <i class="iconfont icon-map-seller"></i>
           {{$t('map.seller')}}
@@ -91,7 +119,10 @@
         </span>
         <p>{{$t('map.sellerText')}}</p>
       </a>
-      <a @click.prevent="LoginPage('Buyer')" class="buyer">
+      <a
+        @click.prevent="LoginPage('Buyer')"
+        class="buyer"
+      >
         <span>
           <i class="iconfont icon-map-buyer"></i>
           {{$t('map.buyer')}}
@@ -99,8 +130,11 @@
         </span>
         <p>{{$t('map.buyerText')}}</p>
       </a>
-      <!--<a @click.prevent="LoginPage('Developer')" class="developer">-->
-         <a @click.prevent="construction()" class="developer">
+      <a
+        @click.prevent="LoginPage('Developer')"
+        class="developer"
+      >
+        <!-- <a @click.prevent="construction()" class="developer"> -->
         <span>
           <i class="iconfont icon-map-developer"></i>
           {{$t('map.developer')}}

@@ -1,5 +1,5 @@
 <template>
-  <section class="myApplication">
+  <section class="applicationRecard">
     <el-row class="recordHead">
       <el-col
         class="title"
@@ -7,17 +7,8 @@
       >
         <h1>
           <i class="iconfont icon-records"></i>
-          {{$t('developer.myApplication.myApplication')}}
+          {{$t('developer.applicationRecard.application')}}
         </h1>
-      </el-col>
-      <el-col
-        class="recard"
-        :span="2"
-        :offset="9"
-      >
-        <router-link :to="{path: '/applicationrecard'}">
-          <span>Recard</span>
-        </router-link>
       </el-col>
     </el-row>
     <el-row class="recordBox">
@@ -28,7 +19,7 @@
         >
           <el-input
             @keyup.enter.native="searchUra"
-            :placeholder="$t('developer.myApplication.searchIn')"
+            :placeholder="$t('developer.applicationRecard.searchIn')"
             prefix-icon="el-icon-search"
             v-model="prodName"
           ></el-input>
@@ -51,18 +42,18 @@
               style="height: 300px; line-height: 300px;"
             >No Data</p>
           </template>
-          <el-table-column prop="icon">
+          <el-table-column prop="number">
             <template
               slot="header"
               slot-scope="scope"
             >
               <p class="table-head">
                 <i class="iconfont icon-table-name"></i>
-                {{$t('developer.myApplication.table.icon')}}
+                {{$t('developer.applicationRecard.table.number')}}
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.icon }}</p>
+              <p class="overflow">{{ scope.row.number }}</p>
             </template>
           </el-table-column>
           <el-table-column prop="name">
@@ -80,23 +71,6 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="status"
-            min-width="105"
-          >
-            <template
-              slot="header"
-              slot-scope="scope"
-            >
-              <p class="table-head">
-                <i class="iconfont icon-table-state"></i>
-                {{$t('developer.myApplication.table.status')}}
-              </p>
-            </template>
-            <template slot-scope="scope">
-              <p>{{ scope.row.status }}</p>
-            </template>
-          </el-table-column>
-          <el-table-column
             prop="version"
             min-width="50"
           >
@@ -106,12 +80,12 @@
             >
               <p class="table-head">
                 <i class="iconfont icon-start-time"></i>
-                {{$t('developer.myApplication.table.version')}}
+                {{$t('developer.applicationRecard.table.version')}}
               </p>
             </template>
           </el-table-column>
           <el-table-column
-            prop="updateTime"
+            prop="orderTime"
             min-width="110"
           >
             <template
@@ -120,7 +94,37 @@
             >
               <p class="table-head">
                 <i class="iconfont icon-finish-time"></i>
-                {{$t('developer.myApplication.table.updateTime')}}
+                {{$t('developer.applicationRecard.table.orderTime')}}
+              </p>
+            </template>
+          </el-table-column>
+          <el-table-column
+            min-width="45"
+          >
+            <template
+              slot="header"
+              slot-scope="scope"
+            >
+              <p class="table-head">
+                <i class="iconfont icon-finish-time"></i>
+                {{$t('developer.applicationRecard.table.value')}}
+              </p>
+            </template>
+            <template slot-scope="scope">
+              <p class="overflow">{{ scope.row.value }} URAC</p>
+            </template>
+          </el-table-column>
+          <el-table-column
+            prop="hash"
+            min-width="60"
+          >
+            <template
+              slot="header"
+              slot-scope="scope"
+            >
+              <p class="table-head">
+                <i class="iconfont icon-finish-time"></i>
+                {{$t('developer.applicationRecard.table.hash')}}
               </p>
             </template>
           </el-table-column>
@@ -154,11 +158,12 @@ export default {
       dialogVisible: false,
       tableData: [
         {
-          icon: '132',
+          number: '132',
           name: 'Uranus',
-          status: 'Success',
           version: '1',
-          updateTime: '2018-11-02 09:56'
+          orderTime: '2018-11-02 09:56',
+          value: '123',
+          hash: '123456789'
         }
       ],
       prodName: '',
@@ -171,7 +176,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.myApplication {
+.applicationRecard {
   height: 100%;
   background: #000;
   border-radius: 2px;

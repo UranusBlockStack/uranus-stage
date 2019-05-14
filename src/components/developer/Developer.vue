@@ -1,7 +1,10 @@
 <template>
-  <section class="Developer">
+  <section class="developer">
     <el-row class="content-title">
-      <el-col class="title" :span="12">
+      <el-col
+        class="title"
+        :span="12"
+      >
         <h1>首页D</h1>
       </el-col>
     </el-row>
@@ -11,20 +14,44 @@
         <div class="downloads">
           <p>下载量</p>
           <div class="chooseDown">
-            <span @click="downloadsYear(0)" :class="{active: indexDown == '0'}">全年</span>
-            <span @click="downloadsMounth(1)" :class="{active: indexDown == '1'}">本月</span>
-            <span @click="downloadsWeek(2)" :class="{active: indexDown == '2'}">本周</span>
-            <span @click="downloadsDay(3)" :class="{active: indexDown == '3'}">今天</span>
+            <span
+              @click="downloadsYear(0)"
+              :class="{active: indexDown == '0'}"
+            >全年</span>
+            <span
+              @click="downloadsMounth(1)"
+              :class="{active: indexDown == '1'}"
+            >本月</span>
+            <span
+              @click="downloadsWeek(2)"
+              :class="{active: indexDown == '2'}"
+            >本周</span>
+            <span
+              @click="downloadsDay(3)"
+              :class="{active: indexDown == '3'}"
+            >今天</span>
           </div>
           <div id="myDownloads"></div>
         </div>
         <div class="profit">
           <p>我的收益</p>
           <div class="choosePro">
-            <span @click="profitYear(0)" :class="{active: this.indexPro == '0'}">全年</span>
-            <span @click="profitMounth(1)" :class="{active: this.indexPro == '1'}">本月</span>
-            <span @click="profitWeek(2)" :class="{active: this.indexPro == '2'}">本周</span>
-            <span @click="profitDay(3)" :class="{active: this.indexPro == '3'}">今天</span>
+            <span
+              @click="profitYear(0)"
+              :class="{active: this.indexPro == '0'}"
+            >全年</span>
+            <span
+              @click="profitMounth(1)"
+              :class="{active: this.indexPro == '1'}"
+            >本月</span>
+            <span
+              @click="profitWeek(2)"
+              :class="{active: this.indexPro == '2'}"
+            >本周</span>
+            <span
+              @click="profitDay(3)"
+              :class="{active: this.indexPro == '3'}"
+            >今天</span>
           </div>
           <div id="myProfit"></div>
         </div>
@@ -34,27 +61,48 @@
           <el-col :span="6">
             <p>我的应用</p>
           </el-col>
-          <el-col :span="3" :offset="15">
+          <el-col
+            :span="3"
+            :offset="15"
+          >
             <p class="more">查看更多>></p>
           </el-col>
         </el-row>
-        <el-row class="applicationBox" :gutter="20">
-          <el-col :span="6" v-for="(app, index) in appList" :key="index" style="margin-bottom:40px">
-            <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
+        <el-row
+          class="applicationBox"
+          :gutter="20"
+        >
+          <el-col
+            :span="6"
+            v-for="(app, index) in appList"
+            :key="index"
+            style="margin-bottom:40px"
+          >
+            <el-card
+              :body-style="{ padding: '0px', height:'360px'}"
+              shadow="hover"
+            >
               <div class="resources">
                 <div>
                   <div class="img-box">
-                    <img src="/static/img/uranus/developer/app.png" alt="img">
+                    <img
+                      src="/static/img/uranus/activity/joined.png"
+                      alt="img"
+                    >
                   </div>
                   <p class="name">Imagepuler</p>
-                  <p
-                    class="detail"
-                  >DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
+                  <p class="detail">DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
                   <el-row :gutter="20">
-                    <el-col :span="6" :offset="2">
+                    <el-col
+                      :span="6"
+                      :offset="2"
+                    >
                       <p class="free">免费</p>
                     </el-col>
-                    <el-col :span="10" :offset="6">
+                    <el-col
+                      :span="10"
+                      :offset="6"
+                    >
                       <p class="downloads">123人下载</p>
                     </el-col>
                     <el-button type="success">查看详情</el-button>
@@ -63,12 +111,22 @@
               </div>
             </el-card>
           </el-col>
-          <el-col v-if="appList.length < 4" :span="6" style="margin-bottom:40px">
-            <el-card :body-style="{ padding: '0px', height:'360px'}" shadow="hover">
+          <el-col
+            v-if="appList.length < 4"
+            :span="6"
+            style="margin-bottom:40px"
+          >
+            <el-card
+              :body-style="{ padding: '0px', height:'360px'}"
+              shadow="hover"
+            >
               <div class="resources">
                 <div class="upload">
                   <div class="img-box">
-                    <img src="/static/img/uranus/developer/upload.png" alt="img">
+                    <img
+                      src="/static/img/uranus/activity/join.png"
+                      alt="img"
+                    >
                   </div>
                   <p class="detail">发布更多应用,赚取额外费用</p>
                   <el-row :gutter="20">
@@ -84,39 +142,130 @@
         <div class="record-head">Record</div>
         <el-row>
           <el-col :span="24">
-            <el-table :data="tableData" style="width: 100%">
-              <el-table-column label="Type">
+            <el-table
+              :data="tableData"
+              style="width: 100%"
+            >
+              <template slot="empty">
+                <p
+                  class="empty-text"
+                  style="height: 300px; line-height: 300px;"
+                >{{ $t("developer.home.empty") }}</p>
+              </template>
+              <el-table-column min-width="150">
+                <template
+                  slot="header"
+                  slot-scope="scope"
+                >
+                  <p class="table-head">
+                    <i class="iconfont icon-table-hash"></i>
+                    {{ $t("developer.home.empty") }}
+                  </p>
+                </template>
                 <template slot-scope="scope">
-                  <i class="el-icon-time"></i>
-                  <span style="margin-left: 10px">{{ scope.row.type }}</span>
+                  <p class="overflow">{{ scope.row.hash }}</p>
                 </template>
               </el-table-column>
-              <el-table-column label="Order Time">
-                <template slot-scope="scope">
-                  <p>{{ scope.row.time }}</p>
+              <el-table-column
+                prop="time"
+                min-width="160"
+              >
+                <template
+                  slot="header"
+                  slot-scope="scope"
+                >
+                  <p class="table-head">
+                    <i class="iconfont icon-table-time"></i>
+                    {{ $t("developer.home.time") }}
+                  </p>
                 </template>
               </el-table-column>
-              <el-table-column label="Order Hash">
+              <el-table-column min-width="150">
+                <template
+                  slot="header"
+                  slot-scope="scope"
+                >
+                  <p class="table-head">
+                    <i class="iconfont icon-table-from"></i>
+                    {{ $t("developer.home.from") }}
+                  </p>
+                </template>
                 <template slot-scope="scope">
-                  <p>{{ scope.row.hash }}</p>
+                  <p class="overflow">{{ scope.row.from }}</p>
                 </template>
               </el-table-column>
-              <el-table-column label="Amount">
+              <el-table-column
+                prop="to"
+                min-width="150"
+              >
+                <template
+                  slot="header"
+                  slot-scope="scope"
+                >
+                  <p class="table-head">
+                    <i class="iconfont icon-table-from"></i>
+                    {{ $t("developer.home.to") }}
+                  </p>
+                </template>
                 <template slot-scope="scope">
-                  <p>{{ scope.row.amount }}</p>
+                  <p class="overflow">{{ scope.row.to }}</p>
                 </template>
               </el-table-column>
-              <el-table-column label="Fee">
-                <template slot-scope="scope">
-                  <p>{{ scope.row.fee }}</p>
+              <el-table-column
+                prop="value"
+                :label="$t('developer.home.value')"
+                min-width="160"
+              >
+                <template
+                  slot="header"
+                  slot-scope="scope"
+                >
+                  <p class="table-head">
+                    <i class="iconfont icon-table-value"></i>
+                    {{ $t("developer.home.value") }}
+                  </p>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="fee"
+                min-width="150"
+              >
+                <template
+                  slot="header"
+                  slot-scope="scope"
+                >
+                  <p class="table-head">
+                    <i class="iconfont icon-table-fee"></i>
+                    {{ $t("developer.home.fee") }}
+                  </p>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="status"
+                min-width="110"
+              >
+                <template
+                  slot="header"
+                  slot-scope="scope"
+                >
+                  <p class="table-head">
+                    <i class="iconfont icon-table-state"></i>
+                    {{ $t("developer.home.status") }}
+                  </p>
                 </template>
               </el-table-column>
             </el-table>
           </el-col>
         </el-row>
         <el-row :gutter="20">
-          <el-col :span="8" :offset="16">
-            <el-pagination layout="prev, pager, next" :total="100"></el-pagination>
+          <el-col
+            :span="8"
+            :offset="16"
+          >
+            <el-pagination
+              layout="prev, pager, next"
+              :total="100"
+            ></el-pagination>
           </el-col>
         </el-row>
       </div>
@@ -182,25 +331,31 @@ export default {
       ],
       tableData: [
         {
-          type: 'Receive',
+          hash: '123',
           time: '2018-11-02 09:56',
-          hash: '0xb2ddddc25f1375bo693e6',
-          amount: '0.63367',
-          fee: '0.000378'
+          from: '132456',
+          to: '132456',
+          value: '123456132456.66',
+          fee: '13.21',
+          status: 'Success'
         },
         {
-          type: 'Receive',
+          hash: '123',
           time: '2018-11-02 09:56',
-          hash: '0xb2ddddc25f1375bo693e6',
-          amount: '0.63367',
-          fee: '0.000378'
+          from: '132456',
+          to: '132456',
+          value: '123456132456.66',
+          fee: '13.21',
+          status: 'Success'
         },
         {
-          type: 'Receive',
+          hash: '123',
           time: '2018-11-02 09:56',
-          hash: '0xb2ddddc25f1375bo693e6',
-          amount: '0.63367',
-          fee: '0.000378'
+          from: '132456',
+          to: '132456',
+          value: '123456132456.66',
+          fee: '13.21',
+          status: 'Success'
         }
       ]
     }
@@ -412,7 +567,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.Developer {
+.developer {
   background: #000;
   border-radius: 2px;
   min-width: 1130px;

@@ -528,6 +528,45 @@ module.exports = {
       }
     }
   },
+  developer: {
+    home: {
+      hash: 'TX Hash',
+      time: 'Create Time',
+      from: 'From',
+      to: 'To',
+      value: 'Value(URAC)',
+      fee: 'Fee(URAC)',
+      status: 'Status',
+      success: 'Success',
+      fail: 'Fail',
+      processing: 'Processing',
+      empty: 'No Transaction'
+    },
+    myApplication: {
+      myApplication: '我的镜像',
+      recard: '交易记录',
+      searchIn: 'Search',
+      table: {
+        icon: 'icon',
+        name: 'Name',
+        status: 'Status',
+        version: 'Version',
+        updateTime: 'updateTime'
+      }
+    },
+    applicationRecard: {
+      application: '镜像交易记录',
+      searchIn: 'Search',
+      table: {
+        number: 'Number',
+        name: 'Name',
+        version: 'Version',
+        orderTime: '购买时间',
+        value: 'Value',
+        hash: 'Hash'
+      }
+    }
+  },
   wallet: {
     title: 'Wallet',
     balance: 'Balance:',
