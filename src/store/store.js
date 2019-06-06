@@ -8,8 +8,8 @@ export default new Vuex.Store({
   state: {
     isLoggedIn: false,
     // apiUrl: `${window.location.protocol}//${window.location.hostname}:3000/api`,
-    // apiUrl: 'http://192.168.110.22:4000/',
-    apiUrl: 'http://47.75.91.23:4000/',
+    apiUrl: 'http://13.209.11.76:4000/',
+    // apiUrl: 'http://127.0.0.1:4000/',
     downloadUrl: 'ftp://47.106.75.136:8000/',  // 下载URL
     imageServerUrl: 'http://47.75.91.23:3300/rancher-img/', // app图片服务器
     lang: { // 全部语言包列表

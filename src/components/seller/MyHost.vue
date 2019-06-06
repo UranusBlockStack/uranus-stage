@@ -423,7 +423,7 @@ export default {
       clusterId: '',
       pageParam: {
         name: '',
-        page: 2,
+        page: 1,
         pageSize: 5,
         totalRecords: 0,
         sort: '',
