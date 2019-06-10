@@ -5,53 +5,45 @@
         class="title"
         :span="12"
       >
-        <h1>首页D</h1>
+        <h1>{{$t('developer.home.home')}}</h1>
       </el-col>
     </el-row>
     <!-- Main content -->
     <div class="content container-fluid">
       <div class="my-content">
         <div class="downloads">
-          <p>下载量</p>
+          <p>{{$t('developer.home.dowmloads')}}</p>
           <div class="chooseDown">
             <span
               @click="downloadsYear(0)"
               :class="{active: indexDown == '0'}"
-            >全年</span>
+            >{{$t('developer.home.month')}}</span>
             <span
               @click="downloadsMounth(1)"
               :class="{active: indexDown == '1'}"
-            >本月</span>
+            >{{$t('developer.home.week')}}</span>
             <span
               @click="downloadsWeek(2)"
               :class="{active: indexDown == '2'}"
-            >本周</span>
-            <span
-              @click="downloadsDay(3)"
-              :class="{active: indexDown == '3'}"
-            >今天</span>
+            >{{$t('developer.home.day')}}</span>
           </div>
           <div id="myDownloads"></div>
         </div>
         <div class="profit">
-          <p>我的收益</p>
+          <p>{{$t('developer.home.earnings')}}</p>
           <div class="choosePro">
             <span
               @click="profitYear(0)"
               :class="{active: this.indexPro == '0'}"
-            >全年</span>
+            >{{$t('developer.home.month')}}</span>
             <span
               @click="profitMounth(1)"
               :class="{active: this.indexPro == '1'}"
-            >本月</span>
+            >{{$t('developer.home.week')}}</span>
             <span
               @click="profitWeek(2)"
               :class="{active: this.indexPro == '2'}"
-            >本周</span>
-            <span
-              @click="profitDay(3)"
-              :class="{active: this.indexPro == '3'}"
-            >今天</span>
+            >{{$t('developer.home.day')}}</span>
           </div>
           <div id="myProfit"></div>
         </div>
@@ -59,13 +51,13 @@
       <div class="application">
         <el-row :gutter="20">
           <el-col :span="6">
-            <p>我的应用</p>
+            <p>{{$t('developer.home.myApplication')}}</p>
           </el-col>
           <el-col
             :span="3"
             :offset="15"
           >
-            <p class="more">查看更多>></p>
+            <p class="more" @click="$router.push({path: '/myapplication'})">{{$t('developer.home.more')}}>></p>
           </el-col>
         </el-row>
         <el-row
@@ -86,7 +78,7 @@
                 <div>
                   <div class="img-box">
                     <img
-                      src="/static/img/uranus/activity/joined.png"
+                      src="http://54.180.158.219:3300/rancher-img/library-wordpress/icon"
                       alt="img"
                     >
                   </div>
@@ -97,15 +89,15 @@
                       :span="6"
                       :offset="2"
                     >
-                      <p class="free">免费</p>
+                      <p class="free">{{$t('developer.home.free')}}</p>
                     </el-col>
                     <el-col
                       :span="10"
                       :offset="6"
                     >
-                      <p class="downloads">123人下载</p>
+                      <p class="downloads">{{$t('developer.home.download')}} 123</p>
                     </el-col>
-                    <el-button type="success">查看详情</el-button>
+                    <el-button type="success">{{$t('developer.home.details')}}</el-button>
                   </el-row>
                 </div>
               </div>
@@ -124,13 +116,14 @@
                 <div class="upload">
                   <div class="img-box">
                     <img
-                      src="/static/img/uranus/activity/join.png"
+                      src="/static/img/uranus/developer/addApp.png"
+                      style="background: transparent !important; cursor: pointer;"
                       alt="img"
                     >
                   </div>
-                  <p class="detail">发布更多应用,赚取额外费用</p>
+                  <p class="detail">{{ $t('developer.home.postApp') }}</p>
                   <el-row :gutter="20">
-                    <el-button type="success">添加应用</el-button>
+                    <el-button type="success">{{ $t('developer.home.addApp') }}</el-button>
                   </el-row>
                 </div>
               </div>
@@ -138,8 +131,26 @@
           </el-col>
         </el-row>
       </div>
-      <div class="record">
-        <div class="record-head">Record</div>
+      <div class="recordTable">
+        <el-row class="recordHead">
+          <el-col
+            class="title"
+            :span="6"
+          >
+            <h1>
+              {{$t('developer.home.recard')}}
+            </h1>
+          </el-col>
+          <el-col
+            class="recard"
+            :span="2"
+            :offset="16"
+          >
+            <router-link :to="{path: '/applicationrecard'}">
+              <span>{{$t('developer.home.more')}}>></span>
+            </router-link>
+          </el-col>
+        </el-row>
         <el-row>
           <el-col :span="24">
             <el-table
@@ -152,23 +163,51 @@
                   style="height: 300px; line-height: 300px;"
                 >{{ $t("developer.home.empty") }}</p>
               </template>
-              <el-table-column min-width="150">
+              <el-table-column>
                 <template
                   slot="header"
                   slot-scope="scope"
                 >
                   <p class="table-head">
-                    <i class="iconfont icon-table-hash"></i>
-                    {{ $t("developer.home.empty") }}
+                    <i class="iconfont icon-id"></i>
+                     {{$t('developer.applicationRecard.table.number')}}
                   </p>
                 </template>
                 <template slot-scope="scope">
-                  <p class="overflow">{{ scope.row.hash }}</p>
+                  <p class="overflow">{{ scope.row.orderNo }}</p>
+                </template>
+              </el-table-column>
+              <el-table-column>
+                <template
+                  slot="header"
+                  slot-scope="scope"
+                >
+                  <p class="table-head">
+                    <i class="iconfont icon-Mirror-name"></i>
+                    {{$t('developer.myApplication.table.name')}}
+                  </p>
+                </template>
+                <template slot-scope="scope">
+                  <p class="overflow">{{ scope.row.prodName }}</p>
                 </template>
               </el-table-column>
               <el-table-column
-                prop="time"
-                min-width="160"
+                prop="version"
+                min-width="50"
+              >
+                <template
+                  slot="header"
+                  slot-scope="scope"
+                >
+                  <p class="table-head">
+                    <i class="iconfont icon-version"></i>
+                    {{$t('developer.applicationRecard.table.version')}}
+                  </p>
+                </template>
+              </el-table-column>
+              <el-table-column
+                prop="createTime"
+                min-width="60"
               >
                 <template
                   slot="header"
@@ -176,82 +215,43 @@
                 >
                   <p class="table-head">
                     <i class="iconfont icon-table-time"></i>
-                    {{ $t("developer.home.time") }}
+                    {{$t('developer.applicationRecard.table.orderTime')}}
                   </p>
                 </template>
               </el-table-column>
-              <el-table-column min-width="150">
-                <template
-                  slot="header"
-                  slot-scope="scope"
-                >
-                  <p class="table-head">
-                    <i class="iconfont icon-table-from"></i>
-                    {{ $t("developer.home.from") }}
-                  </p>
-                </template>
-                <template slot-scope="scope">
-                  <p class="overflow">{{ scope.row.from }}</p>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="to"
-                min-width="150"
-              >
-                <template
-                  slot="header"
-                  slot-scope="scope"
-                >
-                  <p class="table-head">
-                    <i class="iconfont icon-table-from"></i>
-                    {{ $t("developer.home.to") }}
-                  </p>
-                </template>
-                <template slot-scope="scope">
-                  <p class="overflow">{{ scope.row.to }}</p>
-                </template>
-              </el-table-column>
-              <el-table-column
-                prop="value"
-                :label="$t('developer.home.value')"
-                min-width="160"
-              >
+              <el-table-column min-width="45">
                 <template
                   slot="header"
                   slot-scope="scope"
                 >
                   <p class="table-head">
                     <i class="iconfont icon-table-value"></i>
-                    {{ $t("developer.home.value") }}
+                    {{$t('developer.applicationRecard.table.value')}}
                   </p>
                 </template>
+                <template slot-scope="scope">
+                  <p
+                    class="overflow"
+                    v-if="!scope.row.free"
+                  >{{ scope.row.prodPrice }} URAC</p>
+                  <p
+                    class="overflow"
+                    v-if="scope.row.free"
+                  > Free </p>
+                </template>
               </el-table-column>
-              <el-table-column
-                prop="fee"
-                min-width="150"
-              >
+              <el-table-column min-width="80">
                 <template
                   slot="header"
                   slot-scope="scope"
                 >
                   <p class="table-head">
-                    <i class="iconfont icon-table-fee"></i>
-                    {{ $t("developer.home.fee") }}
+                    <i class="iconfont icon-table-hash"></i>
+                    {{$t('developer.applicationRecard.table.hash')}}
                   </p>
                 </template>
-              </el-table-column>
-              <el-table-column
-                prop="status"
-                min-width="110"
-              >
-                <template
-                  slot="header"
-                  slot-scope="scope"
-                >
-                  <p class="table-head">
-                    <i class="iconfont icon-table-state"></i>
-                    {{ $t("developer.home.status") }}
-                  </p>
+                <template slot-scope="scope">
+                  <p class="overflow"> {{ scope.row.orderHash }} </p>
                 </template>
               </el-table-column>
             </el-table>
@@ -331,31 +331,44 @@ export default {
       ],
       tableData: [
         {
-          hash: '123',
-          time: '2018-11-02 09:56',
-          from: '132456',
-          to: '132456',
-          value: '123456132456.66',
-          fee: '13.21',
-          status: 'Success'
+          orderNo: '18865432165',
+          prodName: 'MySQL',
+          version: 'V10.1.0',
+          createTime: '2018-05-10',
+          prodPrice: '168',
+          orderHash: '4564sdfasf165sdf165s1'
         },
         {
-          hash: '123',
-          time: '2018-11-02 09:56',
-          from: '132456',
-          to: '132456',
-          value: '123456132456.66',
-          fee: '13.21',
-          status: 'Success'
+          orderNo: '18865432166',
+          prodName: 'MySQL',
+          version: 'V10.1.0',
+          createTime: '2018-05-10',
+          prodPrice: '168',
+          orderHash: '4564sdfasf165sdf165s1'
         },
         {
-          hash: '123',
-          time: '2018-11-02 09:56',
-          from: '132456',
-          to: '132456',
-          value: '123456132456.66',
-          fee: '13.21',
-          status: 'Success'
+          orderNo: '18865432167',
+          prodName: 'MySQL',
+          version: 'V10.1.0',
+          createTime: '2018-05-10',
+          prodPrice: '168',
+          orderHash: '4564sdfasf165sdf165s1'
+        },
+        {
+          orderNo: '18865432168',
+          prodName: 'MySQL',
+          version: 'V10.1.0',
+          createTime: '2018-05-10',
+          prodPrice: '168',
+          orderHash: '4564sdfasf165sdf165s1'
+        },
+        {
+          orderNo: '18865432169',
+          prodName: 'MySQL',
+          version: 'V10.1.0',
+          createTime: '2018-05-10',
+          prodPrice: '168',
+          orderHash: '4564sdfasf165sdf165s1'
         }
       ]
     }
@@ -442,7 +455,7 @@ export default {
         ],
         yAxis: [
           {
-            name: 'UracPower(U)',
+            name: ' ',
             type: 'value',
             /* axisLabel: {
                           formatter: "{value}"
@@ -518,7 +531,7 @@ export default {
         ],
         yAxis: [
           {
-            name: '(U)',
+            name: ' ',
             type: 'value',
             axisLine: {
               show: true,
@@ -803,18 +816,55 @@ export default {
         }
       }
     }
-    .record {
+    .recordTable {
       background: #161618;
       border-radius: 2px;
       color: #a2a6b0;
       min-width: 1130px;
       margin: 2px auto;
       padding: 30px;
-      .record-head {
-        height: 40px;
-        font-family: Source-Sans-Pro-Bold;
-        font-weight: 500;
-        font-size: 16px;
+      .recordHead {
+        background: #161618;
+        border-radius: 2px;
+        margin: 2px 2px 0;
+        height: 50px;
+        .title {
+          h1 {
+            
+            font-family: Source-Sans-Pro-Bold;
+            font-size: 16px;
+            color: #a2a6b0;
+            line-height: 50px;
+            margin: 0;
+            padding: 0;
+            padding-left: 30px;
+            i {
+              font-size: 26px;
+              margin-right: 10px;
+            }
+          }
+        }
+        .recard {
+          font-family: Source-Sans-Pro-Bold;
+          font-size: 16px;
+          color: #727680;
+          line-height: 50px;
+          i {
+            font-size: 26px;
+            margin-right: 10px;
+          }
+          span {
+            font-size: 16px;
+            color: #627100;
+            line-height: 50px;
+          }
+        }
+        .recard :hover {
+          i,
+          span {
+            color: #a2ae44;
+          }
+        }
       }
       .overflow {
         overflow: hidden;

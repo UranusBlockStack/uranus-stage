@@ -12,11 +12,11 @@
       </el-col>
       <el-col
         class="recard"
-        :span="2"
-        :offset="9"
+        :span="4"
+        :offset="7"
       >
         <router-link :to="{path: '/applicationrecard'}">
-          <span>Recard</span>
+          <span>{{$t('developer.myApplication.recard')}}</span>
         </router-link>
       </el-col>
     </el-row>
@@ -32,7 +32,7 @@
             prefix-icon="el-icon-search"
             v-model="prodName"
           ></el-input>
-          <el-button type="success">
+          <el-button type="success" @click="searchUra">
             <i class="iconfont icon-search"></i>
           </el-button>
         </el-col>
@@ -51,18 +51,14 @@
               style="height: 300px; line-height: 300px;"
             >No Data</p>
           </template>
-          <el-table-column prop="icon">
-            <template
-              slot="header"
-              slot-scope="scope"
-            >
-              <p class="table-head">
-                <i class="iconfont icon-table-name"></i>
-                {{$t('developer.myApplication.table.icon')}}
-              </p>
-            </template>
+          <el-table-column>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.icon }}</p>
+              <div class="img-box">
+                <img
+                  :src="scope.row.imageurl"
+                  alt="img"
+                >
+              </div>
             </template>
           </el-table-column>
           <el-table-column prop="name">
@@ -71,7 +67,7 @@
               slot-scope="scope"
             >
               <p class="table-head">
-                <i class="iconfont icon-table-name"></i>
+                <i class="iconfont icon-Mirror-name"></i>
                 {{$t('developer.myApplication.table.name')}}
               </p>
             </template>
@@ -81,7 +77,7 @@
           </el-table-column>
           <el-table-column
             prop="status"
-            min-width="105"
+            min-width="75"
           >
             <template
               slot="header"
@@ -98,14 +94,14 @@
           </el-table-column>
           <el-table-column
             prop="version"
-            min-width="50"
+            min-width="70"
           >
             <template
               slot="header"
               slot-scope="scope"
             >
               <p class="table-head">
-                <i class="iconfont icon-start-time"></i>
+                <i class="iconfont icon-version"></i>
                 {{$t('developer.myApplication.table.version')}}
               </p>
             </template>
@@ -119,7 +115,7 @@
               slot-scope="scope"
             >
               <p class="table-head">
-                <i class="iconfont icon-finish-time"></i>
+                <i class="iconfont icon-table-time"></i>
                 {{$t('developer.myApplication.table.updateTime')}}
               </p>
             </template>
@@ -154,8 +150,8 @@ export default {
       dialogVisible: false,
       tableData: [
         {
-          icon: '132',
-          name: 'Uranus',
+          imageurl: 'http://54.180.158.219:3300/rancher-img/library-wordpress/icon',
+          name: 'wordpress',
           status: 'Success',
           version: '1',
           updateTime: '2018-11-02 09:56'
@@ -166,6 +162,11 @@ export default {
       pageSize: this.$store.state.defaultPageSize,
       totalRecords: 0
     }
+  },
+  methods: {
+    searchUra() {
+      
+    },
   }
 }
 </script>
@@ -307,6 +308,26 @@ export default {
       .el-table /deep/ td {
         border: none;
         border-top: 1px solid rgba(255, 255, 255, 0.1);
+      }
+      .img-box {
+        height: 55px;
+        width: 65px;
+        margin: 5px auto;
+        position: relative;
+        img {
+          background: #f2f2f2;
+          min-width: 50px;
+          min-height: 40px;
+          max-width: 60px;
+          max-height: 55px;
+          width: auto;
+          height: auto;
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
       }
     }
     .transaction-foot {

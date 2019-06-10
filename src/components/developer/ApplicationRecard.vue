@@ -42,18 +42,18 @@
               style="height: 300px; line-height: 300px;"
             >No Data</p>
           </template>
-          <el-table-column prop="number">
+          <el-table-column>
             <template
               slot="header"
               slot-scope="scope"
             >
               <p class="table-head">
-                <i class="iconfont icon-table-name"></i>
+                <i class="iconfont icon-id"></i>
                 {{$t('developer.applicationRecard.table.number')}}
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.number }}</p>
+              <p class="overflow">{{ scope.row.orderNo }}</p>
             </template>
           </el-table-column>
           <el-table-column prop="name">
@@ -62,12 +62,12 @@
               slot-scope="scope"
             >
               <p class="table-head">
-                <i class="iconfont icon-table-name"></i>
+                <i class="iconfont icon-Mirror-name"></i>
                 {{$t('developer.myApplication.table.name')}}
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.name }}</p>
+              <p class="overflow">{{ scope.row.prodName }}</p>
             </template>
           </el-table-column>
           <el-table-column
@@ -85,15 +85,15 @@
             </template>
           </el-table-column>
           <el-table-column
-            prop="orderTime"
-            min-width="110"
+            prop="createTime"
+            min-width="60"
           >
             <template
               slot="header"
               slot-scope="scope"
             >
               <p class="table-head">
-                <i class="iconfont icon-finish-time"></i>
+                <i class="iconfont icon-table-time"></i>
                 {{$t('developer.applicationRecard.table.orderTime')}}
               </p>
             </template>
@@ -106,17 +106,16 @@
               slot-scope="scope"
             >
               <p class="table-head">
-                <i class="iconfont icon-finish-time"></i>
+                <i class="iconfont icon-table-value"></i>
                 {{$t('developer.applicationRecard.table.value')}}
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.value }} URAC</p>
+              <p class="overflow">{{ scope.row.prodPrice }} URAC</p>
             </template>
           </el-table-column>
           <el-table-column
-            prop="hash"
-            min-width="60"
+            min-width="80"
           >
             <template
               slot="header"
@@ -127,6 +126,9 @@
                 {{$t('developer.applicationRecard.table.hash')}}
               </p>
             </template>
+            <template slot-scope="scope">
+                  <p class="overflow"> {{ scope.row.orderHash }} </p>
+                </template>
           </el-table-column>
         </el-table>
       </el-col>
@@ -158,12 +160,44 @@ export default {
       dialogVisible: false,
       tableData: [
         {
-          number: '132',
-          name: 'Uranus',
-          version: '1',
-          orderTime: '2018-11-02 09:56',
-          value: '123',
-          hash: '123456789'
+          orderNo: '18865432165',
+          prodName: 'MySQL',
+          version: 'V10.1.0',
+          createTime: '2018-05-10',
+          prodPrice: '168',
+          orderHash: '4564sdfasf165sdf165s1'
+        },
+        {
+          orderNo: '18865432166',
+          prodName: 'MySQL',
+          version: 'V10.1.0',
+          createTime: '2018-05-10',
+          prodPrice: '168',
+          orderHash: '4564sdfasf165sdf165s1'
+        },
+        {
+          orderNo: '18865432167',
+          prodName: 'MySQL',
+          version: 'V10.1.0',
+          createTime: '2018-05-10',
+          prodPrice: '168',
+          orderHash: '4564sdfasf165sdf165s1'
+        },
+        {
+          orderNo: '18865432168',
+          prodName: 'MySQL',
+          version: 'V10.1.0',
+          createTime: '2018-05-10',
+          prodPrice: '168',
+          orderHash: '4564sdfasf165sdf165s1'
+        },
+        {
+          orderNo: '18865432169',
+          prodName: 'MySQL',
+          version: 'V10.1.0',
+          createTime: '2018-05-10',
+          prodPrice: '168',
+          orderHash: '4564sdfasf165sdf165s1'
         }
       ],
       prodName: '',

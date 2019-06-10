@@ -530,6 +530,22 @@ module.exports = {
   },
   developer: {
     home: {
+      home: 'Home',
+      dowmloads: 'Downloads',
+      earnings: 'My earning',
+      day: 'Day',
+      week: 'Week',
+      month: 'Month',
+      yName: 'UraPower',
+      xName: 'Time',
+      myApplication: 'My mirror',
+      more: 'More',
+      details: 'View',
+      free: 'Free',
+      download: 'Download:',
+      postApp: 'Post more apps and earn extra',
+      addApp: 'Add',
+      recard: 'Transaction Record',
       hash: 'TX Hash',
       time: 'Create Time',
       from: 'From',
@@ -543,8 +559,8 @@ module.exports = {
       empty: 'No Transaction'
     },
     myApplication: {
-      myApplication: '我的镜像',
-      recard: '交易记录',
+      myApplication: 'My Application',
+      recard: 'Transaction Record',
       searchIn: 'Search',
       table: {
         icon: 'icon',
@@ -555,16 +571,31 @@ module.exports = {
       }
     },
     applicationRecard: {
-      application: '镜像交易记录',
+      application: 'Transaction Record',
       searchIn: 'Search',
       table: {
         number: 'Number',
         name: 'Name',
         version: 'Version',
-        orderTime: '购买时间',
+        orderTime: 'Create Time',
         value: 'Value',
         hash: 'Hash'
       }
+    },
+    uploadApplication: {
+      upload: 'Upload app',
+      information: 'Basic Information',
+      name: 'Application Name',
+      mode: 'Charging mode',
+      change: 'Charges',
+      free: 'Free',
+      price: 'Price(URAC)',
+      priceIn: 'Please enter the price',
+      package: 'Application package',
+      archive: 'Archive',
+      here: 'Drag files here, or ',
+      click: 'click to upload',
+      requires: 'The installation package requires no more than 1GB'
     }
   },
   wallet: {

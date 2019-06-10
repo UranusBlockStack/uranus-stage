@@ -440,7 +440,7 @@ export default {
       canClick: true,
       orderMode: '1',
       deployForm: {
-        projectName: '',
+        projectName: 'default-' + Math.round(Math.random()*100),
         rancherId: '',
         cpuKernel: '4',
         disk: '512G',
