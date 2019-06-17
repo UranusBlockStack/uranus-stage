@@ -47,6 +47,10 @@
                 {{$t('buyer.appState.name')}}
               </p>
             </template>
+            <template slot-scope="scope">
+              <p class="overflow">{{ scope.row.name }}</p>
+              <div  v-html="scope.row.links"> {{scope.row.links}} </div>
+            </template>
           </el-table-column>
           <el-table-column prop="image" width="320">
             <template slot="header" slot-scope="scope" min-width="250">
@@ -145,6 +149,15 @@ export default {
                 object['image'] = item1.image
               }
             })
+
+            const endpoints = JSON.parse(item.publicEndpoints)
+            let links = ""
+            if(endpoints){
+              endpoints.map(epitem=>{
+                links += `<a href='${epitem.addresses[0]}:${epitem.port}' title="${epitem.addresses[0]}:${epitem.port}"> ${epitem.port}/${epitem.protocol.toLowerCase()} </a>`
+              })
+            }
+            object['links'] = links
             object['scale'] = item.scale
             this.workLoadList.push(object)
           })
@@ -273,7 +286,7 @@ export default {
   },
   created () {
     this.getWorkLoads()
-    this.touchCluster()
+    // this.touchCluster()
   }
 }
 </script>
