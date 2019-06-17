@@ -2,8 +2,8 @@
 dist
 eggs
 parts
-
-
+prepost
+*~
 
 # IDE files
 .idea*

@@ -8,9 +8,12 @@ export default new Vuex.Store({
   state: {
     isLoggedIn: false,
     // apiUrl: `${window.location.protocol}//${window.location.hostname}:3000/api`,
-    apiUrl:  'http://54.180.158.219:4000/',
-    // apiUrl: 'http://127.0.0.1:4000/',
-    downloadUrl: 'ftp://47.106.75.136:8000/',  // 下载URL
+    // apiUrl: 'https://39.106.101.34:4000/',
+    apiUrl: 'https://localhost:4000/',
+    rancherHttpsProxyUrl: 'https://localhost:8088/',
+    rancherWssProxyUrl: 'wss://localhost:8088/',
+    // apiUrl: 'http://47.75.91.23:4000/',
+    downloadUrl: 'ftp://47.106.75.136:8000/', // 下载URL
     imageServerUrl: 'http://54.180.158.219:3300/rancher-img/', // app图片服务器
     lang: { // 全部语言包列表
       'zh-cn': 'zh-cn',
@@ -40,7 +43,7 @@ export default new Vuex.Store({
     authenticate: function (state, user) {
       state.isLoggedIn = auth.isLoggedIn()
     },
-    setLang: function(state, lang) {
+    setLang: function (state, lang) {
       state.curLang = lang
     }
   },
@@ -48,7 +51,7 @@ export default new Vuex.Store({
     authenticate: function (context, user) {
       context.commit('authenticate', user)
     },
-    setLang: function(context, lang) {
+    setLang: function (context, lang) {
       context.commit('setLang', lang)
     }
   }

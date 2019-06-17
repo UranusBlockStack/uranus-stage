@@ -1,6 +1,15 @@
 <template>
   <section class="appRecord">
-    <el-dialog :title="$t('buyer.appState.shellTitle')" :close-on-click-modal='false' :visible.sync="dialogTableVisible" width='90%' :show-close='false' center>
+    <el-dialog  :close-on-click-modal='false' :visible.sync="dialogTableVisible" width='90%' :show-close='false' center >
+        <div slot="title" class="dialog-title">
+          <div class="title-left">
+            <h2> <i class="icon icon-terminal"></i> 命令行: {{podName}}</h2>
+            <!--<p class="protip"> 提示文本提示文本提示文本提示文本提示文本 </p>-->
+          </div>
+          <!--<div class="title-right"> 已连接 </div>-->
+          <!--<span>{{$t('buyer.appState.shellTitle')}}-->
+            <!--</span>-->
+        </div>
         <div id="xterm" style="width:100%;"></div>
         <span slot="footer" class="dialog-footer">
     <el-button type="primary" @click="closeConnect()">{{$t($t('buyer.appState.button'))}}</el-button>
@@ -65,14 +74,14 @@
                   <i class="iconfont icon-menu"></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
-                  <!--<el-dropdown-item v-show="workLoadList.status!='active'"-->
-                    <!--@click.native="workloadAction(scope.row.wid, 'execute')"-->
-                  <!--&gt;{{$t('buyer.appState.shell')}}</el-dropdown-item>-->
                   <el-dropdown-item v-show="workLoadList.status!='active'"
-                    @click.native="workloadAction(scope.row.wid, 'resume')"
+                    @click.native="workloadAction(scope.row.wid, scope.row.name, 'execute')"
+                  >{{$t('buyer.appState.shell')}}</el-dropdown-item>
+                  <el-dropdown-item v-show="workLoadList.status!='active'"
+                    @click.native="workloadAction(scope.row.wid,scope.row.name, 'resume')"
                   >{{$t('buyer.appState.resume')}}</el-dropdown-item>
                   <el-dropdown-item v-show="workLoadList.status=='active'"
-                    @click.native="workloadAction(scope.row.wid, 'pause')"
+                    @click.native="workloadAction(scope.row.wid, scope.row.name,'pause')"
                   >{{$t('buyer.appState.pause')}}</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
@@ -90,17 +99,20 @@
 <script>
 import * as auth from '../../services/AuthService'
 import * as apps from '../../services/RancherService'
+import * as shell from '../../services/RancherService'
+import * as excluster from '../../services/ExClusterService'
 import { Terminal } from 'xterm'
 import * as fit from 'xterm/lib/addons/fit/fit'
 
 export default {
   name: 'AppRecord',
-  data() {
+  data () {
     return {
       workLoadList: [],
       appId: this.$route.params.appId,
       appName: this.$route.params.appname,
       poolId: this.$route.params.projectId,
+      podName: '',
       Base64: require('js-base64').Base64,
       DefaultCommand: [
         '/bin/sh',
@@ -108,11 +120,12 @@ export default {
         'TERM=xterm-256color; export TERM; [ -x /bin/bash ] && ([ -x /usr/bin/script ] && /usr/bin/script -q -c "/bin/bash" /dev/null || exec /bin/bash) || exec /bin/sh'
       ],
       dialogTableVisible: false,
-      websocket: null
+      websocket: null,
+      rancherCode: 'rancher2'
     }
   },
   methods: {
-    getWorkLoads() {
+    getWorkLoads () {
       this.workLoadList = []
       apps
         .appInstanceWorkLoads(auth.getCurLang(), this.$route.params.appId)
@@ -137,7 +150,7 @@ export default {
           })
         })
     },
-    ConncetContainer(url) {
+    ConncetContainer (url) {
       this.websocket = new WebSocket(url, 'base64.channel.k8s.io')
       this.websocket.onopen = () => {
         Terminal.applyAddon(fit)
@@ -169,7 +182,7 @@ export default {
         }
       }
     },
-    closeConnect() {
+    closeConnect () {
       if (this.websocket) {
         this.websocket.close()
         this.websocket = null
@@ -177,52 +190,90 @@ export default {
       this.dialogTableVisible = false
       document.getElementById('xterm').innerHTML = ''
     },
-    innerBuildUrl(baseUrl) {
+    innerBuildUrl (baseUrl) {
       this.DefaultCommand.forEach(c => {
         baseUrl += `&command=${encodeURIComponent(c)}`
       })
       return baseUrl
     },
-    workloadAction(wid, type) {
-      apps.projectWorkloadActon(auth.getCurLang(), this.poolId, wid, type)
-            .then(respData => {
-              let data = respData.data
-              if (data.success) {
-                if (type === 'execute') {
-                  let baseUrl = data.data
 
-                  let url = this.innerBuildUrl(baseUrl)
-                  this.dialogTableVisible = true
-                  this.ConncetContainer(url)
-                } else {
-                  this.$message({
-                    showClose: true,
-                    message: 'Success.',
-                    type: 'success'
-                  })
-                  this.getWorkLoads()
-                }
-              } else {
-                this.$message({
-                  showClose: true,
-                  message: data.errMsg,
-                  type: 'error'
-                })
-              }
-            }).catch(err => {
+    touchCluster () {
+      let date = new Date()
+      date.setTime(date.getTime() - 10000)
+      document.cookie = 'CSRF = ; expires=' + date.toGMTString()
+
+      // excluster.rancherLogin(this.rancherCode, loginInfo) // <--localtest ---
+      shell.rancherLoginWorkload(auth.getCurLang(), this.poolId, this.appId)
+        .then(respData => {
+          const authdata = respData.data
+          // if (1 === 1) { // <--localtest ---
+          if (authdata.success) {
+            console.log(authdata)
+            document.cookie = 'CSRF = '
+            // document.cookie = 'R_SESS=' + authdata.token // <--localtest ---
+            document.cookie = 'R_SESS=' + authdata.data.token
+          } else {
+            this.$message({
+              showClose: true,
+              message: authdata.errMsg,
+              type: 'error'
+            })
+          }
+        })
+        .catch(err => {
+          this.$message({
+            showClose: true,
+            message: err,
+            type: 'error',
+            duration: 4000
+          })
+        })
+    },
+    workloadAction (wid, podName, type) {
+      this.podName = podName
+      shell.rancherWorkloadWebsocket(auth.getCurLang(), wid)
+        .then(respData => {
+          let data = respData.data
+          if (data.success) {
+            if (type === 'execute') {
+              const podurl = data.data
+
+              const wssproxy = this.$store.state.rancherWssProxyUrl
+              const baseUrl = wssproxy + this.rancherCode + podurl.slice(podurl.indexOf('/k8s'))
+
+              let url = this.innerBuildUrl(baseUrl)
+              this.dialogTableVisible = true
+              this.ConncetContainer(url)
+            } else {
               this.$message({
                 showClose: true,
-                message: err,
-                type: 'error'
+                message: 'Success.',
+                type: 'success'
               })
+              this.getWorkLoads()
+            }
+          } else {
+            this.$message({
+              showClose: true,
+              message: data.errMsg,
+              type: 'error'
             })
+          }
+        }).catch(err => {
+          this.$message({
+            showClose: true,
+            message: err,
+            type: 'error'
+          })
+        })
     },
-    execPod(wid, type) {
+    execPod (wid, type) {
       this.workloadAction(wid, type)
     }
   },
-  created() {
+  created () {
     this.getWorkLoads()
+    this.touchCluster()
   }
 }
 </script>
@@ -233,6 +284,35 @@ export default {
   min-width: 1130px;
   background: #000;
   border-radius: 2px;
+  .title-left {
+    /*width : 70%;*/
+    float:left;
+    h2{
+      margin:0;
+      font-size:20px;
+    }
+    .protip{
+      color: #79c8ce;
+    }
+  }
+  .title-rigth {
+    width : 26%;
+    float:right;
+    text-align: right;
+    padding-left:28px;
+  }
+  .el-dialog {
+    background-color: #ccc !important;
+  }
+  #xterm{
+    height: 550px;
+    .terminal {
+      height:650px;
+    }
+  }
+  .xterm-screen{
+    height: 567px;
+  }
   .recordHead {
     background: #161618;
     border-radius: 2px;

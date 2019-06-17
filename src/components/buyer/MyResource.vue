@@ -332,7 +332,8 @@ export default {
           type: 'warning'
         })
       } else {
-        location.href = this.poolList[index].link
+        // location.href = this.poolList[index].link
+        this.$router.push(this.poolList[index].link)
       }
     },
     endDateSelect(v) {

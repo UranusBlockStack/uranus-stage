@@ -1,7 +1,6 @@
 import Vue from 'vue'
-import {mapActions } from Vuex from 'vuex'
+import Vuex from 'vuex'
 import * as auth from '../services/AuthService'
-
 
 Vue.use(Vuex)
 
@@ -9,11 +8,14 @@ export default new Vuex.Store({
   state: {
     isLoggedIn: false,
     // apiUrl: `${window.location.protocol}//${window.location.hostname}:3000/api`,
-    // apiUrl: 'http://192.168.110.45:4000',
-    apiUrl: 'http://beta.uranus.io:4000/',
+    // apiUrl: 'https://39.106.101.34:4000/',
+    apiUrl: 'https://localhost:4000/',
+    rancherHttpsProxyUrl: 'https://localhost:8088',
+    rancherWssProxyUrl: 'wss://localhost:8088',
+    // apiUrl: 'http://47.75.91.23:4000/',
     downloadUrl: 'ftp://47.106.75.136:8000/', // 下载URL
-    imageServerUrl: 'http://beta.uranus.io:3300/rancher-img/',
-    lang: {// 全部语言包列表
+    imageServerUrl: 'http://47.75.91.23:3300/rancher-img/', // app图片服务器
+    lang: { // 全部语言包列表
       'zh-cn': 'zh-cn',
       'en-us': 'en-us'
     },
@@ -27,7 +29,10 @@ export default new Vuex.Store({
     defaultPageSize: 20,
     defaultCardPageSize: 20,
     refreshDuration: 5,
-    defaultAxiosTimeout: 50
+    defaultAxiosTimeout: 50,
+    renewPreDispDays: 7,
+    renewWaitDays: 7,
+    appCategories: ['', 'Blog', 'Cache', 'CI/CD', 'CMS', 'dashboard', 'Database', 'E-commerce', 'elasticsearch', 'etcd', 'hadoop', 'keyvalue', 'logging', 'machine learning', 'Microservice', 'Monitoring', 'MySQL', 'NoSQL', 'repository', 'security', 'Service mesh', 'storage']
   },
   getters: {
     lang: function (state) {

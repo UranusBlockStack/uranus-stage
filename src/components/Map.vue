@@ -149,13 +149,14 @@
 <script>
 import '../../static/js/world.js'
 import * as auth from '../services/AuthService'
+import * as excluster from '../services/ExClusterService'
 import * as block from '../services/BlockService'
 import moment from 'moment'
 import { Message } from 'element-ui'
 
 export default {
   name: 'Map',
-  data() {
+  data () {
     return {
       lang: 'English',
       langCode: 'en-us',
@@ -168,35 +169,35 @@ export default {
     }
   },
   methods: {
-    construction() {
+    construction () {
       this.$message({
         showClose: true,
         message: 'This role is under construction',
         type: 'warning'
       })
     },
-    userJoin() {
+    userJoin () {
       this.dialogVisible = false
       this.joinAct = true
       auth.setCurActivity('promo1')
     },
-    chooseCn() {
+    chooseCn () {
       this.lang = '中文'
       this.langCode = 'zh-cn'
       this.$i18n.locale = 'cn'
     },
-    chooseEn() {
+    chooseEn () {
       this.lang = 'English'
       this.langCode = 'en-us'
       this.$i18n.locale = 'en'
     },
-    LoginPage(userRole) {
+    LoginPage (userRole) {
       auth.setCurRole(userRole)
       auth.setCurLang(this.langCode)
       this.$router.push({ name: 'Login' })
     },
 
-    initEchart() {
+    initEchart () {
       // 绘制地图
       let myChartMap2 = this.$echarts.init(document.getElementById('mapWorld'))
       // 地图上数据
@@ -271,10 +272,26 @@ export default {
         myChartMap2.resize()
       }
     },
-    userRegister() {
+    userRegister () {
       auth.setCurLang(this.langCode)
       this.$router.push({ name: 'Register' })
+    },
+    testHttps () {
+      const rancherCode = 'rancher2'
+      excluster.getCluster(rancherCode)
+        .then(respData => {
+          console.log(respData.data)
+        })
+        .catch(err => {
+          this.$message({
+            showClose: true,
+            message: err,
+            type: 'error',
+            duration: 4000
+          })
+        })
     }
+
     // lastedBlock() {
     //   this.BlockData = []
     //   block.getLastedBlock(this.langCode, { 'height': -1 })
@@ -301,7 +318,8 @@ export default {
     //   // }, 5000)
     // }
   },
-  mounted() {
+  mounted () {
+    this.testHttps()
     this.initEchart()
   }
   //   created() {

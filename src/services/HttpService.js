@@ -1,15 +1,11 @@
 import store from '../store/store'
 import axios from 'axios'
 import * as auth from './AuthService'
+import ServerInfo from '../store/ServerInfo'
 
 // Creates a global http method to use for making request to the server
-export function http () {
-  return axios.create({
-    baseURL: store.state.apiUrl,
-    headers: {
-      Authorization: auth.getToken()
-    }
-  })
+export function http (rancherCode) {
+  return axios.create(ServerInfo[rancherCode])
 }
 
 export function httpLang (language) {
@@ -40,7 +36,7 @@ export function httpLang (language) {
     return Promise.reject(error)
   })
 
-  axinstance.interceptors.response.use(function(response) {
+  axinstance.interceptors.response.use(function (response) {
     const axdata = response.data
     if (axdata.errCode === 'TOKEN_NOT_INVALID') {
       localStorage.setItem('token', '')
