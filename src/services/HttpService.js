@@ -1,7 +1,8 @@
 import store from '../store/store'
 import axios from 'axios'
 import * as auth from './AuthService'
-import ServerInfo from '../store/ServerInfo'
+// import ServerInfo from '../store/ServerInfo'
+const ServerInfo = {}
 
 // Creates a global http method to use for making request to the server
 export function http (rancherCode) {
