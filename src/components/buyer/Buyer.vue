@@ -118,6 +118,9 @@
 <script>
 import * as app from '../../services/RancherService'
 import * as auth from '../../services/AuthService'
+var echarts = require('echarts/lib/echarts')
+require("echarts/lib/chart/bar")
+require("echarts/lib/chart/line")
 
 export default {
   name: 'Buyer',
@@ -193,7 +196,7 @@ export default {
       this.indexPower = x
     },
     initEchart(val) {
-      var myChart = this.$echarts.init(document.getElementById('myPower'))
+      var myChart = echarts.init(document.getElementById('myPower'))
       var myData = val
       myChart.setOption({
         color: ['#1890ff'],

@@ -3,6 +3,8 @@ const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
+const webpack = require('webpack')
+const manifest = require('../vendor-manifest.json')
 
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
@@ -27,6 +29,12 @@ module.exports = {
       '@': resolve('src')
     }
   },
+  plugins: [
+    // 把dll的vendor-manifest.json引用到需要的预编译的依赖
+    new webpack.DllReferencePlugin({
+      manifest
+    })
+  ],
   module: {
     rules: [
       // ...(config.dev.useEslint? [{

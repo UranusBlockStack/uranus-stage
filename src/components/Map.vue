@@ -147,12 +147,18 @@
 </template>
 
 <script>
-import '../../static/js/world.js'
+
+var echarts = require('echarts/lib/echarts')
+require("echarts/lib/component/geo")
+require("echarts/lib/chart/scatter")
+// import '../../static/js/world.js'
+import mapdata from '../../static/js/world_data'
 import * as auth from '../services/AuthService'
 import * as excluster from '../services/ExClusterService'
-import * as block from '../services/BlockService'
-import moment from 'moment'
-import { Message } from 'element-ui'
+// import * as block from '../services/BlockService'
+// import moment from 'moment'
+// import { Message } from 'element-ui'
+
 
 export default {
   name: 'Map',
@@ -198,10 +204,11 @@ export default {
     },
 
     initEchart () {
+      echarts.registerMap('world', mapdata)
       // 绘制地图
-      let myChartMap2 = this.$echarts.init(document.getElementById('mapWorld'))
+      let myChartMap2 = echarts.init(document.getElementById('mapWorld'))
       // 地图上数据
-      let myData = [
+      let mapdots = [
         { name: '1', value: [121.15, 31.89, 9] },
         { name: '2', value: [89.781327, 39.608266, 120] },
         { name: '3', value: [120.38, 37.35, 142] },
@@ -262,7 +269,7 @@ export default {
             name: '', // series名称
             type: 'scatter', // 为散点类型
             coordinateSystem: 'geo', // series坐标系类型
-            data: myData,
+            data: mapdots,
             symbol: 'pin',
             symbolSize: [20, 20]
           }

@@ -6,8 +6,9 @@ import VueRouter from 'vue-router'
 import routes from './router'
 import VueI18n from 'vue-i18n'
 import i18n from './i18n/i18n'
-import echarts from 'echarts'
+// import echarts from 'echarts'
 import ElementUI from 'element-ui'
+
 import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css'
 import './lib/jquery-vender.js'
@@ -26,7 +27,7 @@ Vue.use(VueRouter)
 Vue.use(VueI18n)
 Vue.use(ElementUI, { locale })
 
-Vue.prototype.$echarts = echarts
+// Vue.prototype.$echarts = echarts
 Vue.config.productionTip = false
 
 var router = new VueRouter({
@@ -42,7 +43,7 @@ router.beforeEach(function (to, from, next) {
   const nextRoute = ['/', '/login', '/register']
   const thruRoute = ['/forgetPwd']
 
-  if (thruRoute.indexOf(to.path) >= 0) {  // 直接放行页
+  if (thruRoute.indexOf(to.path) >= 0) { // 直接放行页
     next()
   } else {
     const token = localStorage.getItem('token')
@@ -61,8 +62,8 @@ router.beforeEach(function (to, from, next) {
         const tokenNeedRefresh = auth.tokenNeedUpdate()
         if (tokenNeedRefresh) {
           auth.refreshToken(auth.getCurLang())
-              .then(newtoken => {
-              })
+            .then(newtoken => {
+            })
         }
       }
     }
