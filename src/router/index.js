@@ -17,25 +17,25 @@ import ResourceMarket from '@/components/buyer/ResourceMarket'
 import MyResource from '@/components/buyer/MyResource'
 import ResourcePool from '@/components/buyer/ResourcePool'
 import UrapowerRecord from '@/components/buyer/UrapowerRecord'
-// import AppState from '@/components/buyer/AppState'
-// import StateDetail from '@/components/buyer/StateDetail'
-//
-// // developer
-// import Developer from '@/components/developer/Developer'
-// import UploadApplication from '@/components/developer/UploadApplication'
-// import MyApplication from '@/components/developer/MyApplication'
-// import ApplicationDetails from '@/components/developer/ApplicationDetails'
-// import ApplicationRecard from '@/components/developer/ApplicationRecard'
-// import ApplicationName from '@/components/developer/ApplicationName'
-//
-// // seller
-// import Seller from '@/components/seller/Seller'
-// import MyHost from '@/components/seller/MyHost'
-// import MyColony from '@/components/seller/MyColony'
-// import Colony from '@/components/seller/Colony'
-// import ResourceRecord from '@/components/seller/ResourceRecord'
-//
-// // common
+import AppState from '@/components/buyer/AppState'
+import StateDetail from '@/components/buyer/StateDetail'
+
+// developer
+import Developer from '@/components/developer/Developer'
+import UploadApplication from '@/components/developer/UploadApplication'
+import MyApplication from '@/components/developer/MyApplication'
+import ApplicationDetails from '@/components/developer/ApplicationDetails'
+import ApplicationRecard from '@/components/developer/ApplicationRecard'
+import ApplicationName from '@/components/developer/ApplicationName'
+
+// seller
+import Seller from '@/components/seller/Seller'
+import MyHost from '@/components/seller/MyHost'
+import MyColony from '@/components/seller/MyColony'
+import Colony from '@/components/seller/Colony'
+import ResourceRecord from '@/components/seller/ResourceRecord'
+
+// common
 import Wallet from '@/components/common/Wallet'
 import Transfer from '@/components/common/Transfer'
 import Setting from '@/components/common/Setting'
@@ -99,7 +99,7 @@ const routes = [
         path: '/urapowerrecord',
         component: UrapowerRecord,
         name: 'UrapowerRecord'
-      }, /* {
+      }, {
         path: '/appstate/:projectId?/:appId?/:appname?',
         component: AppState,
         name: 'AppState'
@@ -107,9 +107,9 @@ const routes = [
         path: '/statedetail',
         component: StateDetail,
         name: 'StateDetail'
-      } */
+      },
         
-      /* // developer routes
+      // developer routes
       {
         path: '/developer',
         component: Developer,
@@ -136,7 +136,7 @@ const routes = [
         name: 'ApplicationRecard'
       },
         
-        // seller routes
+      // seller routes
       {
         path: '/seller',
         component: Seller,
@@ -158,7 +158,7 @@ const routes = [
         component: ResourceRecord,
         name: 'ResourceRecord'
       },
-      */
+
       // common routes
       {
         path: '/wallet',

@@ -3,6 +3,8 @@
 </template>
 
 <script>
+
+var echarts = require('echarts/lib/echarts')
 import 'echarts-liquidfill'
 
 export default {
@@ -13,7 +15,7 @@ export default {
   methods: {
     drawChart() {
       const vm = this
-      var myChart = this.$echarts.init(this.$refs.echarts)
+      var myChart = echarts.init(this.$refs.echarts)
       myChart.setOption({
         series: [
           {

@@ -3,6 +3,9 @@
 </template>
 
 <script>
+var echarts = require('echarts/lib/echarts')
+require("echarts/lib/chart/pie")
+
 export default {
   name: 'EchartsNetwork',
   props: {
@@ -11,7 +14,7 @@ export default {
   methods: {
     drawChart () {
       const vm = this
-      var myChart = this.$echarts.init(this.$refs.echarts)
+      var myChart = echarts.init(this.$refs.echarts)
       myChart.setOption({
         series: [
           {
