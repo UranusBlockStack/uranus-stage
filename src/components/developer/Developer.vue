@@ -15,16 +15,16 @@
           <p>{{$t('developer.home.dowmloads')}}</p>
           <div class="chooseDown">
             <span
-              @click="downloadsYear(0)"
-              :class="{active: indexDown == '0'}"
+              @click="getDownloads('myDownloads','month')"
+              :class="{active: this.indexDown == '0'}"
             >{{$t('developer.home.month')}}</span>
             <span
-              @click="downloadsMounth(1)"
-              :class="{active: indexDown == '1'}"
+              @click="getDownloads('myDownloads','week')"
+              :class="{active: this.indexDown == '1'}"
             >{{$t('developer.home.week')}}</span>
             <span
-              @click="downloadsWeek(2)"
-              :class="{active: indexDown == '2'}"
+              @click="getDownloads('myDownloads','day')"
+              :class="{active: this.indexDown == '2'}"
             >{{$t('developer.home.day')}}</span>
           </div>
           <div id="myDownloads"></div>
@@ -33,15 +33,15 @@
           <p>{{$t('developer.home.earnings')}}</p>
           <div class="choosePro">
             <span
-              @click="profitYear(0)"
+              @click="getEarning('myProfit','month')"
               :class="{active: this.indexPro == '0'}"
             >{{$t('developer.home.month')}}</span>
             <span
-              @click="profitMounth(1)"
+              @click="getEarning('myProfit','week')"
               :class="{active: this.indexPro == '1'}"
             >{{$t('developer.home.week')}}</span>
             <span
-              @click="profitWeek(2)"
+              @click="getEarning('myProfit','day')"
               :class="{active: this.indexPro == '2'}"
             >{{$t('developer.home.day')}}</span>
           </div>
@@ -57,7 +57,10 @@
             :span="3"
             :offset="15"
           >
-            <p class="more" @click="$router.push({path: '/myapplication'})">{{$t('developer.home.more')}}>></p>
+            <p
+              class="more"
+              @click="$router.push({path: '/myapplication'})"
+            >{{$t('developer.home.more')}}>></p>
           </el-col>
         </el-row>
         <el-row
@@ -78,33 +81,38 @@
                 <div>
                   <div class="img-box">
                     <img
-                      src="http://54.180.158.219:3300/rancher-img/library-wordpress/icon"
+                      :src="app.imageurl"
                       alt="img"
                     >
                   </div>
-                  <p class="name">Imagepuler</p>
-                  <p class="detail">DEPRECATED:This catalog item is deprecated and moved to rancher-catalog under pre-pull…</p>
+                  <p class="name">{{app.name}}</p>
+                  <p class="detail">{{app.description}}</p>
                   <el-row :gutter="20">
                     <el-col
                       :span="6"
                       :offset="2"
                     >
-                      <p class="free">{{$t('developer.home.free')}}</p>
+                      <p
+                        class="free"
+                        v-if="app.free == 1"
+                      >{{app.computedPrice}}</p>
                     </el-col>
                     <el-col
                       :span="10"
                       :offset="6"
                     >
-                      <p class="downloads">{{$t('developer.home.download')}} 123</p>
+                      <p class="downloads">{{$t('developer.home.download')}} {{app.downloadTimes}}</p>
                     </el-col>
-                    <el-button type="success">{{$t('developer.home.details')}}</el-button>
+                    <el-button
+                      type="success"
+                      @click="view(app.id, app.rid, app.defaultVersion, app.catalog)"
+                    >{{$t('developer.home.details')}}</el-button>
                   </el-row>
                 </div>
               </div>
             </el-card>
           </el-col>
           <el-col
-            v-if="appList.length < 4"
             :span="6"
             style="margin-bottom:40px"
           >
@@ -117,13 +125,17 @@
                   <div class="img-box">
                     <img
                       src="/static/img/uranus/developer/addApp.png"
-                      style="background: transparent !important; cursor: pointer;"
                       alt="img"
+                      style="background: transparent !important; cursor: pointer;"
+                      @click="$router.push({path: '/uploadApplication'})"
                     >
                   </div>
                   <p class="detail">{{ $t('developer.home.postApp') }}</p>
                   <el-row :gutter="20">
-                    <el-button type="success">{{ $t('developer.home.addApp') }}</el-button>
+                    <el-button
+                      type="success"
+                      @click="$router.push({path: '/uploadApplication'})"
+                    >{{ $t('developer.home.addApp') }}</el-button>
                   </el-row>
                 </div>
               </div>
@@ -170,7 +182,7 @@
                 >
                   <p class="table-head">
                     <i class="iconfont icon-id"></i>
-                     {{$t('developer.applicationRecard.table.number')}}
+                    {{$t('developer.applicationRecard.table.number')}}
                   </p>
                 </template>
                 <template slot-scope="scope">
@@ -257,169 +269,38 @@
             </el-table>
           </el-col>
         </el-row>
-        <el-row :gutter="20">
-          <el-col
-            :span="8"
-            :offset="16"
-          >
-            <el-pagination
-              layout="prev, pager, next"
-              :total="100"
-            ></el-pagination>
-          </el-col>
-        </el-row>
       </div>
     </div>
   </section>
 </template>
 
 <script>
+import * as auth from '../../services/AuthService'
+import * as order from '../../services/OrderService'
+import * as rancher from '../../services/RancherService.js'
+import * as account from '../../services/AccountService'
+import moment from 'moment'
+
 export default {
   name: 'Developer',
   data() {
     return {
+      language: 'en-us',
       indexDown: '3',
       indexPro: '3',
-      dataDownloads: {
-        day: {
-          x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
-          y: [10, 20, 30, 40, 50, 60]
-        },
-        week: {
-          x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          y: [100, 200, 300, 400, 500, 600, 700]
-        },
-        mounth: {
-          x: ['1', '3', '5', '7', '9', '11', '12'],
-          y: [1000, 520, 200, 334, 390, 330, 220]
-        },
-        year: {
-          x: ['13', '15', '16', '17', '18', '19'],
-          y: [10000, 520, 200, 334, 390, 330]
-        }
-      },
-      downloadsVal: {
-        x: '',
-        y: ''
-      },
-      dataProfit: {
-        day: {
-          x: ['00:00', '04:00', '08:00', '12:00', '16:00', '18:00'],
-          y: [10, 20, 30, 40, 50, 60]
-        },
-        week: {
-          x: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-          y: [100, 200, 300, 400, 500, 600, 700]
-        },
-        mounth: {
-          x: ['1', '3', '5', '7', '9', '11', '12'],
-          y: [1000, 520, 200, 334, 390, 330, 220]
-        },
-        year: {
-          x: ['13', '15', '16', '17', '18', '19'],
-          y: [10000, 520, 200, 334, 390, 330]
-        }
-      },
-      profitVal: {
-        x: '',
-        y: ''
-      },
-      appList: [
-        { id: '1', name: 'Imagepuller' },
-        { id: '1', name: 'Imagepuller' },
-        { id: '1', name: 'Imagepuller' }
-      ],
-      tableData: [
-        {
-          orderNo: '18865432165',
-          prodName: 'MySQL',
-          version: 'V10.1.0',
-          createTime: '2018-05-10',
-          prodPrice: '168',
-          orderHash: '4564sdfasf165sdf165s1'
-        },
-        {
-          orderNo: '18865432166',
-          prodName: 'MySQL',
-          version: 'V10.1.0',
-          createTime: '2018-05-10',
-          prodPrice: '168',
-          orderHash: '4564sdfasf165sdf165s1'
-        },
-        {
-          orderNo: '18865432167',
-          prodName: 'MySQL',
-          version: 'V10.1.0',
-          createTime: '2018-05-10',
-          prodPrice: '168',
-          orderHash: '4564sdfasf165sdf165s1'
-        },
-        {
-          orderNo: '18865432168',
-          prodName: 'MySQL',
-          version: 'V10.1.0',
-          createTime: '2018-05-10',
-          prodPrice: '168',
-          orderHash: '4564sdfasf165sdf165s1'
-        },
-        {
-          orderNo: '18865432169',
-          prodName: 'MySQL',
-          version: 'V10.1.0',
-          createTime: '2018-05-10',
-          prodPrice: '168',
-          orderHash: '4564sdfasf165sdf165s1'
-        }
-      ]
+      appList: [],
+      page: 1,
+      pageSize: 3,
+      tableData: [],
+      currentPage: 1,
+      currentpageSize: 5,
+      totalRecords: 0,
+      imageServerUrl: this.$store.state.imageServerUrl
     }
   },
   methods: {
-    downloadsDay(x) {
-      this.downloadsVal = this.dataDownloads.day
-      this.initEchart(this.downloadsVal, this.profitVal)
-      this.indexDown = x
-    },
-    downloadsWeek(x) {
-      this.downloadsVal = this.dataDownloads.week
-      this.initEchart(this.downloadsVal, this.profitVal)
-      this.indexDown = x
-    },
-    downloadsMounth(x) {
-      this.downloadsVal = this.dataDownloads.mounth
-      this.initEchart(this.downloadsVal, this.profitVal)
-      this.indexDown = x
-    },
-    downloadsYear(x) {
-      this.downloadsVal = this.dataDownloads.year
-      this.initEchart(this.downloadsVal, this.profitVal)
-      this.indexDown = x
-    },
-    profitDay(x) {
-      this.profitVal = this.dataProfit.day
-      this.initEchart(this.downloadsVal, this.profitVal)
-      this.indexPro = x
-    },
-    profitWeek(x) {
-      this.profitVal = this.dataProfit.week
-      this.initEchart(this.downloadsVal, this.profitVal)
-      this.indexPro = x
-    },
-    profitMounth(x) {
-      this.profitVal = this.dataProfit.mounth
-      this.initEchart(this.downloadsVal, this.profitVal)
-      this.indexPro = x
-    },
-    profitYear(x) {
-      this.profitVal = this.dataProfit.year
-      this.initEchart(this.downloadsVal, this.profitVal)
-      this.indexPro = x
-    },
-    initEchart(val1, val2) {
-      var myChart1 = this.$echarts.init(document.getElementById('myDownloads'))
-      var myChart2 = this.$echarts.init(document.getElementById('myProfit'))
-      var myData1 = val1
-      var myData2 = val2
-      myChart1.setOption({
+    initEchart(elementId, xValue, yValue) {
+      let option = {
         color: ['#3398DB'],
         tooltip: {
           trigger: 'axis',
@@ -438,7 +319,8 @@ export default {
           {
             name: 'T',
             type: 'category',
-            data: myData1.x,
+            // x轴数值
+            data: xValue,
             axisTick: {
               alignWithLabel: true
             },
@@ -484,97 +366,114 @@ export default {
             barWidth: '30%',
             color: '#333440',
             // y轴柱形数值
-            data: myData1.y
+            data: yValue
           },
-          {
-            name: ' ',
-            type: 'line',
-            color: '#627100',
-            // y轴连线数值
-            data: myData1.y
-          }
+          // {
+          //   name: ' ',
+          //   type: 'line',
+          //   color: '#627100',
+          //   // y轴连线数值
+          //   data: lineValue
+          // }
         ]
-      })
-      myChart2.setOption({
-        color: ['#3398DB'],
-        tooltip: {
-          trigger: 'axis',
-          axisPointer: {
-            // 坐标轴指示器，坐标轴触发有效
-            type: 'line' // 默认为直线，可选为：'line' | 'shadow'
-          }
-        },
-        grid: {
-          left: '3%',
-          right: '4%',
-          bottom: '3%',
-          containLabel: true
-        },
-        xAxis: [
-          {
-            name: 'T',
-            type: 'category',
-            data: myData2.x,
-            axisTick: {
-              alignWithLabel: true
-            },
-            axisLine: {
-              show: true,
-              symbol: ['none', 'arrow'],
-              symbolSize: [10, 20],
-              symbolOffset: [0, 5],
-              lineStyle: {
-                color: '#A2A6B0'
-              }
-            }
-          }
-        ],
-        yAxis: [
-          {
-            name: ' ',
-            type: 'value',
-            axisLine: {
-              show: true,
-              symbol: ['none', 'arrow'],
-              symbolSize: [10, 20],
-              symbolOffset: [0, 15],
-              lineStyle: {
-                color: '#A2A6B0'
-              }
-            },
-            splitLine: {
-              show: true,
-              lineStyle: {
-                color: '#363636'
-              }
-            },
-            axisLabel: {
-              formatter: '{value}',
-              textStyle: {
-                color: '#A2A6B0'
-              }
-            }
-          }
-        ],
-        series: [
-          {
-            name: 'uranus',
-            type: 'bar',
-            barWidth: '25%',
-            color: '#333440',
-            data: myData2.y
-          }
-        ]
-      })
-      window.onresize = function () {
-        myChart1.resize()
-        myChart2.resize()
       }
+      let myChart = this.$echarts.init(document.getElementById(elementId))
+      myChart.setOption(option)
+      window.addEventListener('resize', function () {
+        myChart.resize()
+      })
+    },
+    getDownloads(elementId, type) {
+      order.earnings(this.language, type).then(data => {
+        let result = data.data.data
+        let xValue = []
+        let yValue = []
+        result.forEach((item, index) => {
+          xValue.push(item.datetimeValue)
+          yValue.push(item.sumProd)
+        })
+        this.initEchart(elementId, xValue, yValue)
+      })
+      if (type == 'day') {
+        this.indexDown = 2
+      } else if (type == 'week') {
+        this.indexDown = 1
+      } else if (type == 'month') {
+        this.indexDown = 0
+      }
+    },
+    getEarning(elementId, type) {
+      order.earnings(this.language, type).then(data => {
+        let result = data.data.data
+        let xValue = []
+        let yValue = []
+        result.forEach((item, index) => {
+          xValue.push(item.datetimeValue)
+          yValue.push(item.earnings)
+        })
+        this.initEchart(elementId, xValue, yValue)
+      })
+      if (type == 'day') {
+        this.indexPro = 2
+      } else if (type == 'week') {
+        this.indexPro = 1
+      } else if (type == 'month') {
+        this.indexPro = 0
+      }
+    },
+    getAppList() {
+      const user = auth.getUserBaseInfo()
+      const searchData = {
+        page: this.page,
+        pageSize: this.pageSize,
+        // 'sort': this.sort,
+        sortDesc: this.sortDesc,
+        ownerId: user.userId,
+      }
+      rancher.appList(this.language, searchData).then(respData => {
+        this.appList = respData.data.data.records
+        this.appList.map(appitem => {
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.computedPrice = appitem.free
+            ? this.$t('developer.home.free')
+            : appitem.price
+          return appitem
+        })
+      })
+    },
+    view(appId, appRid, versionId, catalog) {
+      this.$router.push({
+        path: '/applicationdetails',
+        query: {
+          appId: appId,
+          appRid: appRid,
+          versionId: versionId,
+          catalog: catalog
+        }
+      })
+    },
+    getRecard() {
+      const queryData = {
+        sellerId: auth.getCurUserId(),
+        page: this.currentPage,
+        pageSize: this.currentpageSize,
+        sortDesc: true
+      }
+      order.orderSearch(auth.getCurLang(), queryData).then(appList => {
+        this.tableData = appList.data.data.records
+        this.totalRecords = appList.data.data.total
+        this.tableData.map(row => {
+          row.createTime = moment(row.createTime).format('YYYY-MM-DD hh:mm')
+        })
+      })
     }
   },
   mounted() {
-    this.downloadsDay(3)
-    this.profitDay(3)
+    this.language = auth.getCurLang()
+    this.getAppList()
+    this.getRecard()
+    this.getDownloads('myDownloads', 'month')
+    this.getEarning('myProfit', 'month')
   }
 }
 </script>

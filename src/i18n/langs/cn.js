@@ -329,6 +329,9 @@ module.exports = {
       online: '在线',
       offline: '离线',
       number: '主机编号',
+      type: '主机类型',
+      machine: '矿机',
+      ordinary: '普通',
       ip: '主机IP',
       memory: '内存',
       disk: '硬盘',
@@ -366,7 +369,13 @@ module.exports = {
       oceania: '澳洲',
       confirm: '确 定',
       cancel: '取 消',
-      deleteSure: '删除后，主机将从系统中消失，是否继续操作？'
+      deleteSure: '删除后，主机将从系统中消失，是否继续操作？',
+      addMachine: '添加矿机',
+      addInput: '请输入主机ID',
+      waitAdd: '请等待',
+      resMachine: '添加结果',
+      successRes: '已添加成功，请继续操作',
+      emptyRes: 'Id不能为空'
     },
     groups: {
       view: '集群记录',

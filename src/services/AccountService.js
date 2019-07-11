@@ -18,6 +18,10 @@ export function userInfo (lang, id) {
   return httpLang(lang).get(`/accounts/users/${id}`)
 }
 
+export function userName (lang, name) {
+  return httpLang(lang).put('/accounts/users/loginname', name)
+}
+
 export function userBalcnce (lang) {
   return httpLang(lang).get('/accounts/users/balance')
 }

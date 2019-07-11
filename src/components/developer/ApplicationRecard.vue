@@ -18,12 +18,12 @@
           :offset="18"
         >
           <el-input
-            @keyup.enter.native="searchUra"
+            @keyup.enter.native="searchApps"
             :placeholder="$t('developer.applicationRecard.searchIn')"
             prefix-icon="el-icon-search"
             v-model="prodName"
           ></el-input>
-          <el-button type="success">
+          <el-button type="success" @click="searchApps">
             <i class="iconfont icon-search"></i>
           </el-button>
         </el-col>
@@ -56,7 +56,7 @@
               <p class="overflow">{{ scope.row.orderNo }}</p>
             </template>
           </el-table-column>
-          <el-table-column prop="name">
+          <el-table-column>
             <template
               slot="header"
               slot-scope="scope"
@@ -79,7 +79,7 @@
               slot-scope="scope"
             >
               <p class="table-head">
-                <i class="iconfont icon-start-time"></i>
+                <i class="iconfont icon-version"></i>
                 {{$t('developer.applicationRecard.table.version')}}
               </p>
             </template>
@@ -111,7 +111,8 @@
               </p>
             </template>
             <template slot-scope="scope">
-              <p class="overflow">{{ scope.row.prodPrice }} URAC</p>
+              <p class="overflow" v-if="!scope.row.free">{{ scope.row.prodPrice }} URAC</p>
+              <p class="overflow" v-if="scope.row.free"> Free </p>
             </template>
           </el-table-column>
           <el-table-column
@@ -122,13 +123,13 @@
               slot-scope="scope"
             >
               <p class="table-head">
-                <i class="iconfont icon-finish-time"></i>
+                <i class="iconfont icon-table-hash"></i>
                 {{$t('developer.applicationRecard.table.hash')}}
               </p>
             </template>
             <template slot-scope="scope">
-                  <p class="overflow"> {{ scope.row.orderHash }} </p>
-                </template>
+              <p class="overflow"> {{ scope.row.orderHash }} </p>
+            </template>
           </el-table-column>
         </el-table>
       </el-col>
@@ -142,6 +143,7 @@
           :current-page.sync="currentPage"
           :page-size="pageSize"
           :total="totalRecords"
+          @current-change="handleCurrentChange"
         ></el-pagination>
       </el-col>
     </el-row>
@@ -157,54 +159,40 @@ export default {
   name: 'MyApplication',
   data() {
     return {
-      dialogVisible: false,
-      tableData: [
-        {
-          orderNo: '18865432165',
-          prodName: 'MySQL',
-          version: 'V10.1.0',
-          createTime: '2018-05-10',
-          prodPrice: '168',
-          orderHash: '4564sdfasf165sdf165s1'
-        },
-        {
-          orderNo: '18865432166',
-          prodName: 'MySQL',
-          version: 'V10.1.0',
-          createTime: '2018-05-10',
-          prodPrice: '168',
-          orderHash: '4564sdfasf165sdf165s1'
-        },
-        {
-          orderNo: '18865432167',
-          prodName: 'MySQL',
-          version: 'V10.1.0',
-          createTime: '2018-05-10',
-          prodPrice: '168',
-          orderHash: '4564sdfasf165sdf165s1'
-        },
-        {
-          orderNo: '18865432168',
-          prodName: 'MySQL',
-          version: 'V10.1.0',
-          createTime: '2018-05-10',
-          prodPrice: '168',
-          orderHash: '4564sdfasf165sdf165s1'
-        },
-        {
-          orderNo: '18865432169',
-          prodName: 'MySQL',
-          version: 'V10.1.0',
-          createTime: '2018-05-10',
-          prodPrice: '168',
-          orderHash: '4564sdfasf165sdf165s1'
-        }
-      ],
+      tableData: [],
       prodName: '',
       currentPage: 1,
       pageSize: this.$store.state.defaultPageSize,
       totalRecords: 0
     }
+  },
+  methods: {
+    getAppRecords() {
+      const queryData = {
+        prodName: this.prodName,
+        sellerId: auth.getCurUserId(),
+        page: this.currentPage,
+        pageSize: this.pageSize,
+        sortDesc: true
+      }
+      order.orderSearch(auth.getCurLang(), queryData).then(appList => {
+        this.tableData = appList.data.data.records
+        this.totalRecords = appList.data.data.total
+        this.tableData.map(row => {
+          row.createTime = moment(row.createTime).format('YYYY-MM-DD hh:mm')
+        })
+      })
+    },
+    searchApps() {
+      this.getAppRecords()
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.getAppRecords()
+    }
+  },
+  created() {
+    this.getAppRecords()
   }
 }
 </script>

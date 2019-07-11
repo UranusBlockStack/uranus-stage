@@ -330,6 +330,9 @@ module.exports = {
       online: 'Online',
       offline: 'Offline',
       number: 'Host Name',
+      type: 'Type',
+      machine: 'Mining machine',
+      ordinary: 'Ordinary',
       ip: 'Host IP',
       memory: 'Memory',
       disk: 'Disk',
@@ -368,7 +371,13 @@ module.exports = {
       oceania: 'Australia',
       cancel: 'Cancel',
       confirm: 'OK',
-      deleteSure: 'After deletion, the host will disappear from the system, whether to continue the operating?'
+      deleteSure: 'After deletion, the host will disappear from the system, whether to continue the operating?',
+      addMachine: 'Add mining machine',
+      addInput: 'Please enter the host ID',
+      waitAdd: 'Please wait',
+      resMachine: 'Add result',
+      successRes: 'Added successfully, please continue',
+      emptyRes: 'Host Id cannot be empty'
     },
     groups: {
       view: 'Cluster Records',
@@ -508,7 +517,7 @@ module.exports = {
       creationTime: 'Order creation time',
       operating: 'Operating',
       deleteHost: 'Delete',
-      deleteText1: 'Exit successfully',    // 'The host is already occupied and cannot be logged out of the group.',
+      deleteText1: 'Exit successfully', // 'The host is already occupied and cannot be logged out of the group.',
       deleteText2: 'The host has been leased and cannot exit the Cluster.',
       deleteText3: "The host which is can't exit is on sale in the cluster.",
       deleteSure: 'After exiting, the relationship of the predicted Cluster will be released, and the corresponding data cannot be restored. Is the exit determined?',
@@ -566,6 +575,9 @@ module.exports = {
         icon: 'icon',
         name: 'Name',
         status: 'Status',
+        success: 'Success',
+        fail: 'Fail',
+        processing: 'Processing',
         version: 'Version',
         updateTime: 'updateTime'
       }
@@ -580,6 +592,20 @@ module.exports = {
         orderTime: 'Create Time',
         value: 'Value',
         hash: 'Hash'
+      }
+    },
+    applicationName: {
+      application: '',
+      searchIn: 'Search',
+      table: {
+        icon: 'icon',
+        name: 'Name',
+        status: 'Status',
+        version: 'Version',
+        updateTime: 'updateTime',
+        operate: 'Operate',
+        delete: 'Delete',
+        more: 'More'
       }
     },
     uploadApplication: {

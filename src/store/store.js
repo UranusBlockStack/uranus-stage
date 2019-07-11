@@ -9,7 +9,7 @@ export default new Vuex.Store({
     isLoggedIn: false,
     // apiUrl: `${window.location.protocol}//${window.location.hostname}:3000/api`,
     // apiUrl: 'https://39.106.101.34:4000/',
-    apiUrl: 'https://localhost:4000/',
+    apiUrl: 'http://54.180.158.219:4000/',
     rancherHttpsProxyUrl: 'https://localhost:8088/',
     rancherWssProxyUrl: 'wss://localhost:8088/',
     // apiUrl: 'http://47.75.91.23:4000/',
@@ -43,7 +43,7 @@ export default new Vuex.Store({
     authenticate: function (state, user) {
       state.isLoggedIn = auth.isLoggedIn()
     },
-    setLang: function (state, lang) {
+    setLang: function(state, lang) {
       state.curLang = lang
     }
   },
@@ -51,7 +51,7 @@ export default new Vuex.Store({
     authenticate: function (context, user) {
       context.commit('authenticate', user)
     },
-    setLang: function (context, lang) {
+    setLang: function(context, lang) {
       context.commit('setLang', lang)
     }
   }

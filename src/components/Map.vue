@@ -319,7 +319,7 @@ export default {
     // }
   },
   mounted () {
-    this.testHttps()
+    // this.testHttps()
     this.initEchart()
   }
   //   created() {

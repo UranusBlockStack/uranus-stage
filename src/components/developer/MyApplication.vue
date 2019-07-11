@@ -6,7 +6,7 @@
         :span="12"
       >
         <h1>
-          <i class="iconfont icon-records"></i>
+          <i class="iconfont icon-my-application"></i>
           {{$t('developer.myApplication.myApplication')}}
         </h1>
       </el-col>
@@ -32,7 +32,10 @@
             prefix-icon="el-icon-search"
             v-model="prodName"
           ></el-input>
-          <el-button type="success" @click="searchUra">
+          <el-button
+            type="success"
+            @click="searchUra"
+          >
             <i class="iconfont icon-search"></i>
           </el-button>
         </el-col>
@@ -42,8 +45,9 @@
         :span="24"
       >
         <el-table
-          :data="tableData"
+          :data="appList"
           style="width: 100%"
+          @row-click="applicationdetails"
         >
           <template slot="empty">
             <p
@@ -77,7 +81,7 @@
           </el-table-column>
           <el-table-column
             prop="status"
-            min-width="75"
+            min-width="55"
           >
             <template
               slot="header"
@@ -89,11 +93,13 @@
               </p>
             </template>
             <template slot-scope="scope">
-              <p>{{ scope.row.status }}</p>
+              <p v-if="scope.row.status == 0">{{ $t('developer.myApplication.table.processing') }} </p>
+              <p v-if="scope.row.status == 1">{{ $t('developer.myApplication.table.success') }} </p>
+              <p v-if="scope.row.status == 2">{{ $t('developer.myApplication.table.fail') }} </p>
             </template>
           </el-table-column>
           <el-table-column
-            prop="version"
+            prop="defaultVersion"
             min-width="70"
           >
             <template
@@ -108,6 +114,7 @@
           </el-table-column>
           <el-table-column
             prop="updateTime"
+            :formatter="formateDate"
             min-width="110"
           >
             <template
@@ -132,6 +139,7 @@
           :current-page.sync="currentPage"
           :page-size="pageSize"
           :total="totalRecords"
+          @current-change="handleCurrentChange"
         ></el-pagination>
       </el-col>
     </el-row>
@@ -140,23 +148,15 @@
 
 <script>
 import * as auth from '../../services/AuthService'
-import * as order from '../../services/OrderService'
+import * as rancher from '../../services/RancherService.js'
 import moment from 'moment'
 
 export default {
   name: 'MyApplication',
   data() {
     return {
-      dialogVisible: false,
-      tableData: [
-        {
-          imageurl: 'http://54.180.158.219:3300/rancher-img/library-wordpress/icon',
-          name: 'wordpress',
-          status: 'Success',
-          version: '1',
-          updateTime: '2018-11-02 09:56'
-        }
-      ],
+      imageServerUrl: this.$store.state.imageServerUrl,
+      appList: [],
       prodName: '',
       currentPage: 1,
       pageSize: this.$store.state.defaultPageSize,
@@ -164,9 +164,65 @@ export default {
     }
   },
   methods: {
-    searchUra() {
-      
+    formateDate(row, column, cellValue) {
+      return moment(cellValue).format('YYYY-MM-DD HH:mm:ss')
     },
+    getAppList() {
+      const user = auth.getUserBaseInfo()
+      const searchData = {
+        page: this.page,
+        pageSize: this.pageSize,
+        // 'sort': this.sort,
+        sortDesc: this.sortDesc,
+        ownerId: user.userId,
+        name: this.prodName
+      }
+      rancher.appList(this.language, searchData).then(respData => {
+        this.appList = respData.data.data.records
+        this.appList.map(appitem => {
+          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.computedPrice = appitem.free
+            ? this.$t('developer.home.free')
+            : appitem.price
+          return appitem
+        })
+      })
+    },
+    handleCurrentChange(val) {
+      this.currentPage = val
+      this.getAppList()
+    },
+    searchUra() {
+      this.getAppList()
+    },
+    // applicationName(row) {
+    //   this.$router.push({
+    //     path: '/applicationName',
+    //     query: {
+    //       appName: row.name,
+    //       appId: row.id,
+    //       appRid: row.rid,
+    //       versionId: row.defaultVersion,
+    //       catalog: row.catalog
+    //     }
+    //   })
+    // }
+    applicationdetails(row) {
+      this.$router.push({
+        path: '/applicationdetails',
+        query: {
+          appName: row.name,
+          appId: row.id,
+          appRid: row.rid,
+          versionId: row.defaultVersion,
+          catalog: row.catalog
+        }
+      })
+    }
+  },
+  mounted() {
+    this.language = auth.getCurLang()
+    this.getAppList()
   }
 }
 </script>
@@ -210,13 +266,14 @@ export default {
       }
       span {
         font-size: 16px;
-        color: #727680;
+        color: #627100;
         line-height: 50px;
       }
     }
     .recard :hover {
-      i, span {
-        color: #627100;
+      i,
+      span {
+        color: #a2ae44;
       }
     }
   }

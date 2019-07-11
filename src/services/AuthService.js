@@ -75,7 +75,7 @@ export function getCurRole() {
 
 export function getCurActivity() {
   const curUserState = localStorage.getItem('currentUserStatus')
-    return JSON.parse(curUserState).activity.currentact
+  return JSON.parse(curUserState).activity.currentact
 }
 
 export function setCurActivity(activitycode) {

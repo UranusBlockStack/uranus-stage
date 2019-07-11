@@ -1,10 +1,17 @@
 <template>
   <section class="myHost">
     <!-- Confirmation Information Bullet Box -->
-    <el-dialog :title="$t('seller.host.chooseGroup')" :visible.sync="dialogVisible" width="550px">
+    <el-dialog
+      :title="$t('seller.host.chooseGroup')"
+      :visible.sync="dialogVisible"
+      width="550px"
+    >
       <el-form>
         <div style="margin-bottom:30px;">
-          <el-radio v-model="groupJoin" :label="$t('seller.host.newGroup')"></el-radio>
+          <el-radio
+            v-model="groupJoin"
+            :label="$t('seller.host.newGroup')"
+          ></el-radio>
           <el-form-item v-show="this.groupJoin==this.$t('seller.host.newGroup')">
             <el-input
               autocomplete="off"
@@ -37,7 +44,10 @@
           </el-form-item>
         </div>
         <div>
-          <el-radio v-model="groupJoin" :label="$t('seller.host.joinGroup')"></el-radio>
+          <el-radio
+            v-model="groupJoin"
+            :label="$t('seller.host.joinGroup')"
+          ></el-radio>
           <el-form-item v-show="this.groupJoin==this.$t('seller.host.joinGroup')">
             <el-select
               v-model="clusterId"
@@ -54,40 +64,127 @@
           </el-form-item>
         </div>
       </el-form>
-      <span slot="footer" class="dialog-footer">
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
         <el-button @click="dialogVisible = false">{{$t('seller.host.cancel')}}</el-button>
-        <el-button type="primary" @click="okButtonClick()">{{$t('seller.host.confirm')}}</el-button>
+        <el-button
+          type="primary"
+          @click="okButtonClick()"
+        >{{$t('seller.host.confirm')}}</el-button>
       </span>
+    </el-dialog>
+
+    <!-- Add mining machine to user  -->
+    <el-dialog
+      :title="$t('seller.host.addMachine')"
+      :visible.sync="addVisible"
+      :close-on-click-modal=false
+      :show-close=false
+      width="550px"
+    >
+      <el-input
+        type="text"
+        :placeholder="$t('seller.host.addInput')"
+        v-model="machineId"
+        maxlength="15"
+        show-word-limit
+      >
+      </el-input>
+      <span
+        slot="footer"
+        class="dialog-footer"
+      >
+        <el-button @click="clearMachineId()">{{ $t('seller.host.cancel') }}</el-button>
+        <el-button
+          type="primary"
+          @click="readyAdd()"
+        >{{ $t('seller.host.confirm') }}</el-button>
+      </span>
+      <el-dialog
+        :title="$t('seller.host.resMachine')"
+        :visible.sync="resVisible"
+        :close-on-click-modal=false
+        :show-close=false
+        append-to-body
+        width="550px"
+      >
+        <span>{{ this.machineText }}</span>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button
+            type="primary"
+            @click="endAdd()"
+          >{{ $t('seller.host.confirm') }}</el-button>
+        </span>
+      </el-dialog>
     </el-dialog>
 
     <!-- Host -->
     <el-row class="myHostHead">
-      <el-col class="title" :span="12">
+      <el-col
+        class="title"
+        :span="12"
+      >
         <h1>
           <i class="iconfont icon-host"></i>
           {{$t('menu.myHost')}}
         </h1>
       </el-col>
+      <el-col
+        class="addMac"
+        :span="3"
+        :offset="7"
+      >
+        <el-button
+          @click="addVisible = true"
+          class="addMachine"
+        >
+          {{ $t('seller.host.addMachine') }}
+          <!-- {{ this.balance }} -->
+        </el-button>
+      </el-col>
     </el-row>
     <el-row class="myHostBox">
-      <el-table :data="tableData" style="width: 100%">
+      <el-table
+        :data="tableData"
+        style="width: 100%"
+      >
         <template slot="empty">
-          <p class="empty-text" style="height: 300px; line-height: 300px;">{{$t('seller.host.text')}}</p>
+          <p
+            class="empty-text"
+            style="height: 300px; line-height: 300px;"
+          >{{$t('seller.host.text')}}</p>
         </template>
         <el-table-column width="50">
           <template slot-scope="scope">
-            <div class="off" v-if="scope.row.state != 'active'">
+            <div
+              class="off"
+              v-if="scope.row.state != 'active'"
+            >
               <i class="iconfont icon-off"></i>
             </div>
-            <div class="on" v-else>
+            <div
+              class="on"
+              v-else
+            >
               <i class="iconfont icon-on"></i>
             </div>
           </template>
         </el-table-column>
         <el-table-column width="100">
           <!--主机状态 state-->
-          <template slot="header" slot-scope="scope">
-            <p class="table-head" style="text-align:left;">
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
+            <p
+              class="table-head"
+              style="text-align:left;"
+            >
               <i class="iconfont icon-table-state"></i>
               {{$t('seller.host.state')}}
             </p>
@@ -96,9 +193,12 @@
             <p class="overflow">{{ scope.row.state}}</p>
           </template>
         </el-table-column>
-        <el-table-column min-width="180">
+        <el-table-column min-width="160">
           <!--主机名称 name-->
-          <template slot="header" slot-scope="scope">
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
             <p class="table-head">
               <i class="iconfont icon-table-host"></i>
               {{$t('seller.host.number')}}
@@ -108,14 +208,39 @@
             <p class="overflow">
               {{ scope.row.name}}
               <br>
-              <span v-if="scope.row.publicAddress" class="network_type">[Extranet]</span>
-              <span v-else class="network_type">[Intranet]</span>
+              <span
+                v-if="scope.row.publicAddress"
+                class="network_type"
+              >[Extranet]</span>
+              <span
+                v-else
+                class="network_type"
+              >[Intranet]</span>
             </p>
+          </template>
+        </el-table-column>
+        <el-table-column min-width="150">
+          <!--主机类型 矿机-->
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
+            <p class="table-head">
+              <i class="iconfont icon-machine"></i>
+              {{$t('seller.host.type')}}
+            </p>
+          </template>
+          <template slot-scope="scope">
+            <p class="overflow" v-if="scope.row.ltc == 0">{{ $t('seller.host.ordinary') }}</p>
+            <p class="overflow" v-if="scope.row.ltc == 1">{{ $t('seller.host.machine') }}</p>
           </template>
         </el-table-column>
         <el-table-column min-width="100">
           <!--主机IP ip-->
-          <template slot="header" slot-scope="scope">
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
             <p class="table-head">
               <i class="iconfont icon-table-ip"></i>
               {{$t('seller.host.ip')}}
@@ -125,9 +250,11 @@
             <p class="overflow">{{ scope.row.hostIp}}</p>
           </template>
         </el-table-column>
-
         <el-table-column width="170">
-          <template slot="header" slot-scope="scope">
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
             <p class="table-head">
               <i class="iconfont icon-cpu"></i> CPU
             </p>
@@ -180,16 +307,17 @@
 
         <el-table-column width="170">
           <!--内存-->
-          <template slot="header" slot-scope="scope">
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
             <p class="table-head">
               <i class="iconfont icon-memory"></i>
               {{$t('seller.host.memory')}}
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.memUsed}} {{$t('seller.host.usable.memory')}}</p>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{ scope.row.memUsed}} {{$t('seller.host.usable.memory')}}</p>
             <el-progress
               class="usageGreen"
               v-if="getPercentNumber(scope.row.memUsed,scope.row.mem) <= 50"
@@ -227,16 +355,17 @@
 
         <el-table-column width="170">
           <!--硬盘-->
-          <template slot="header" slot-scope="scope">
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
             <p class="table-head">
               <i class="iconfont icon-disk"></i>
               {{$t('seller.host.disk')}}
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.diskUsed }} {{$t('seller.host.usable.disk')}}</p>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{ scope.row.diskUsed }} {{$t('seller.host.usable.disk')}}</p>
             <el-progress
               class="usageGreen"
               v-if="getPercentNumber(scope.row.diskUsed,scope.row.disk) <= 50"
@@ -274,16 +403,17 @@
 
         <el-table-column width="170">
           <!--宽带(M)-->
-          <template slot="header" slot-scope="scope">
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
             <p class="table-head">
               <i class="iconfont icon-network"></i>
               {{$t('seller.host.network')}}
             </p>
           </template>
           <template slot-scope="scope">
-            <p
-              style="color:#8c8c8c; font-size:10px; margin-left:35px;"
-            >{{ scope.row.networkUsed }} {{$t('seller.host.usable.network')}}</p>
+            <p style="color:#8c8c8c; font-size:10px; margin-left:35px;">{{ scope.row.networkUsed }} {{$t('seller.host.usable.network')}}</p>
             <el-progress
               class="usageGreen"
               v-if="getPercentNumber(scope.row.networkUsed,scope.row.network) <= 50"
@@ -320,22 +450,34 @@
         </el-table-column>
 
         <el-table-column width="200">
-          <template slot="header" slot-scope="scope">
-            <el-select v-model="inCluster" :placeholder="$t('seller.host.all')" @change="search()">
-              <el-option :label="$t('seller.host.all')" value="0"></el-option>
-              <el-option :label="$t('seller.host.joined')" value="1"></el-option>
-              <el-option :label="$t('seller.host.notJoined')" value="2"></el-option>
+          <template
+            slot="header"
+            slot-scope="scope"
+          >
+            <el-select
+              v-model="inCluster"
+              :placeholder="$t('seller.host.all')"
+              @change="search()"
+            >
+              <el-option
+                :label="$t('seller.host.all')"
+                value="0"
+              ></el-option>
+              <el-option
+                :label="$t('seller.host.joined')"
+                value="1"
+              ></el-option>
+              <el-option
+                :label="$t('seller.host.notJoined')"
+                value="2"
+              ></el-option>
             </el-select>
           </template>
           <template slot-scope="scope">
-            <p
-              style="margin-left: 30px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-            >
-              <span
-                v-show="scope.row.clusterId !=''||scope.row.clusterId !=null"
-              >{{scope.row.clusterName}}</span>
+            <p style="margin-left: 30px; text-align: center; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+              <span v-show="scope.row.clusterId !=''||scope.row.clusterId !=null">{{scope.row.clusterName}}</span>
               <el-button
-                style="background: rgba(101, 143, 247, 0); box-shadow: inset 0 0 22px 0 #2463ff; border-radius: 3px; border: none; color: #ffffff; margin-left: 35px;"
+                class="joinBtn"
                 @click="joinButtonClick(scope.row)"
                 v-show="scope.row.clusterId ==''||scope.row.clusterId ==null"
               >{{$t('seller.host.join')}}</el-button>
@@ -354,22 +496,42 @@
               @command="cacheHostId(scope.row.id)"
             >
               <span class="el-dropdown-link">
-                <i class="iconfont icon-table-more" style="color: #ffffff; font-size: 22px;"></i>
+                <i
+                  class="iconfont icon-table-more"
+                  style="color: #ffffff; font-size: 22px;"
+                ></i>
               </span>
               <el-dropdown-menu slot="dropdown">
                 <el-dropdown-item>{{$t('seller.group.deleteHost')}} </el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
             <!-- delete host text box -->
-            <el-dialog :close-on-click-modal="false" :visible.sync="outerVisible" width="480px">
+            <el-dialog
+              :close-on-click-modal="false"
+              :visible.sync="outerVisible"
+              width="480px"
+            >
               <p>{{$t('seller.host.deleteSure')}} </p>
-              <el-dialog width="480px" :visible.sync="innerVisible" append-to-body>
+              <el-dialog
+                width="480px"
+                :visible.sync="innerVisible"
+                append-to-body
+              >
                 <p>{{$t('seller.group.deleteText1')}} </p>
-                <div slot="footer" class="dialog-footer">
-                  <el-button type="primary" @click="hostReload()">{{$t('seller.group.confirm')}}</el-button>
+                <div
+                  slot="footer"
+                  class="dialog-footer"
+                >
+                  <el-button
+                    type="primary"
+                    @click="hostReload()"
+                  >{{$t('seller.group.confirm')}}</el-button>
                 </div>
               </el-dialog>
-              <div slot="footer" class="dialog-footer">
+              <div
+                slot="footer"
+                class="dialog-footer"
+              >
                 <el-button @click="outerVisible = false">{{$t('seller.group.cancel')}}</el-button>
                 <el-button
                   type="primary"
@@ -381,7 +543,11 @@
         </el-table-column>
       </el-table>
       <el-row>
-        <el-col :span="8" :offset="16" style="margin-top: 15px;">
+        <el-col
+          :span="8"
+          :offset="16"
+          style="margin-top: 15px;"
+        >
           <el-pagination
             layout="prev, pager, next"
             :current-page.sync="pageParam.page"
@@ -398,12 +564,18 @@
 <script>
 import * as rancher from '../../services/RancherService'
 import * as auth from '../../services/AuthService'
+// import * as account from '../../services/AccountService'
 import { Message } from 'element-ui'
 
 export default {
   name: 'MyHost',
   data() {
     return {
+      // balance: '',
+      addVisible: false,
+      resVisible: false,
+      machineId: '',
+      machineText: this.$t('seller.host.waitAdd'),
       dialogVisible: false,
       outerVisible: false,
       innerVisible: false,
@@ -423,7 +595,7 @@ export default {
       clusterId: '',
       pageParam: {
         name: '',
-        page: 1,
+        page: 0,
         pageSize: 5,
         totalRecords: 0,
         sort: '',
@@ -440,6 +612,39 @@ export default {
       this.innerVisible = false
       this.getHostList()
     },
+    // getBalance() {
+    //   return account.userBalcnce(this.curLang).then(resPdata => {
+    //     let data = resPdata.data.data
+    //     this.balance = data.balance
+    //   })
+    // },
+    clearMachineId() {
+      this.machineId = ''
+      this.addVisible = false
+    },
+    readyAdd() {
+      if (this.machineId != '') {
+        this.addVisible = false
+        this.resVisible = true
+        rancher.bindHost(this.language, this.machineId).then(data => {
+          if (data.data.success) {
+            this.machineText = this.$t('seller.host.successRes')
+
+          } else {
+            this.machineText = data.data.errMsg
+          }
+        })
+      } else {
+        this.addVisible = false
+        this.resVisible = true
+        this.machineText = this.$t('seller.host.emptyRes')
+      }
+    },
+    endAdd() {
+      this.resVisible = false
+      this.machineId = ''
+      this.machineText = '请等待'
+    },
     cacheHostId(hostId) {
       this.outerVisible = true
       this.selectHostId = hostId
@@ -454,13 +659,13 @@ export default {
         })
     },
     rancherList() {
-      const param = {networkType: this.curHost.publicAddress? 'outer':'inner'}
+      const param = { networkType: this.curHost.publicAddress ? 'outer' : 'inner' }
       rancher.rancherSearch(this.language, param).then(data => {
         this.rancherLists = data.data.data.records
       })
     },
     clusterList() {
-      const param = {networkType: this.curHost.publicAddress? 'outer':'inner'}
+      const param = { networkType: this.curHost.publicAddress ? 'outer' : 'inner' }
       rancher.clusterSearch(this.language, param).then(data => {
         this.clusterLists = data.data.data.records
       })
@@ -609,6 +814,7 @@ export default {
     }
   },
   mounted() {
+    // this.getBalance()
     this.getHostList()
     this.rancherList()
     this.clusterList()
@@ -643,6 +849,20 @@ export default {
           margin-right: 10px;
         }
       }
+    }
+    .addMac {
+      .el-button {
+      margin-top: 5px;
+      background: #424b00;
+      border: 1px solid #424b00;
+      border-radius: 5px;
+      color: #a2a6b0;
+    }
+    .el-button:hover {
+      background: #627100;
+      border: 1px solid #627100;
+      color: #ffffff;
+    }
     }
   }
   .myHostBox {
@@ -706,15 +926,16 @@ export default {
       color: #a2a6b0;
       font-weight: 400;
     }
-    // .el-button {
-    //   background: rgba(101, 143, 247, 0);
-    //   box-shadow: inset 0 0 22px 0 #2463ff;
-    //   border-radius: 3px;
-    //   border: none;
-    //   color: #ffffff;
-    // }
-    .el-button :hover {
-      color: #1890ff;
+    .joinBtn {
+      background: #424b00;
+      border: 1px solid #424b00;
+      border-radius: 5px;
+      color: #a2a6b0;
+    }
+    .joinBtn :hover {
+      background: #627100;
+      border: 1px solid #627100;
+      color: #ffffff;
     }
     .overflow {
       overflow: hidden;
