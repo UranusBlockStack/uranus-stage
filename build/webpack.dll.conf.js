@@ -2,7 +2,7 @@ const path = require('path')
 const webpack = require('webpack')
 module.exports = {
   entry: {
-    vendor: ['element-ui', 'jquery', 'xterm']
+    vendor: ['echarts/lib/echarts', 'vue', 'moment','elliptic', 'jquery', 'xterm']
   },
   output: {
     path: path.join(__dirname, '../static'),
