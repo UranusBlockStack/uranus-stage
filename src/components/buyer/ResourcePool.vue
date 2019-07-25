@@ -111,6 +111,7 @@ import * as auth from '../../services/AuthService'
 import * as project from '../../services/RancherService'
 import moment from 'moment'
 import { Message } from 'element-ui'
+import * as catalog from '../../services/CatalogService'
 
 export default {
   name: 'ResourcePool',
@@ -123,7 +124,7 @@ export default {
   data() {
     return {
       appList: [],
-      imageServerUrl: this.$store.state.imageServerUrl,
+      imageServerUrl: serverConfig.imageServerUrl,
       statisObejct: {
         cpuUsd: 10,
         diskUsd: 20,
@@ -170,7 +171,7 @@ export default {
       return moment(time).format('YYYY-MM-DD HH:mm:ss')
     },
     getImage(rid) {
-      return this.imageServerUrl + rid + '/icon'
+      return catalog.constructImageUrl(this.imageServerUrl, rid)
     },
     deleteAppId(appId) {
       this.deleteId = appId

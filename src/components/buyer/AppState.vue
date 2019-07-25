@@ -221,7 +221,7 @@ export default {
           const authdata = respData.data
           // if (1 === 1) { // <--localtest ---
           if (authdata.success) {
-            console.log(authdata)
+            // console.log(authdata)
             document.cookie = 'CSRF = '
             // document.cookie = 'R_SESS=' + authdata.token // <--localtest ---
             document.cookie = 'R_SESS=' + authdata.data.token
@@ -247,6 +247,7 @@ export default {
       shell.rancherWorkloadWebsocket(auth.getCurLang(), wid)
         .then(respData => {
           let data = respData.data
+          console.log(data)
           if (data.success) {
             if (type === 'execute') {
               const podurl = data.data
@@ -286,7 +287,7 @@ export default {
   },
   created () {
     this.getWorkLoads()
-    // this.touchCluster()
+    this.touchCluster()
   }
 }
 </script>

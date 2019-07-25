@@ -17,4 +17,4 @@ package-lock.json
 ./src/store/store.js
 vendor-manifest.json
 static/dll.vendor.js
-
+./static/dll.vendor.js

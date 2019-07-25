@@ -11,7 +11,7 @@ export function http (rancherCode) {
 
 export function httpLang (language) {
   const axinstance = axios.create({
-    baseURL: store.state.apiUrl,
+    baseURL: serverConfig.apiUrl,
     headers: {
       Authorization: auth.getToken(),
       Language: language

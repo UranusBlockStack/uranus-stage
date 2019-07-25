@@ -118,6 +118,7 @@
 <script>
 import * as app from '../../services/RancherService'
 import * as auth from '../../services/AuthService'
+import * as catalog from '../../services/CatalogService'
 var echarts = require('echarts/lib/echarts')
 require("echarts/lib/chart/bar")
 require("echarts/lib/chart/line")
@@ -149,7 +150,7 @@ export default {
       },
       powerVal: {},
       appList: [],
-      imageServerUrl: this.$store.state.imageServerUrl
+      imageServerUrl: serverConfig.imageServerUrl
     }
   },
   methods: {
@@ -164,7 +165,7 @@ export default {
       app.appList(auth.getCurLang(), searchData).then(respData => {
         this.appList = respData.data.data.records
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.imageurl = catalog.constructImageUrl(this.imageServerUrl, appitem.rid)
           appitem.computedPrice = appitem.free
             ? this.$t('buyer.deploy.free')
             : appitem.price

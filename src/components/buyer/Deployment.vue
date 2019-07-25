@@ -427,20 +427,21 @@ import * as wallet from '../../services/WalletService'
 import * as order from '../../services/OrderService'
 import TimeOver from '@/components/modules/TimeOver'
 import {appConfigParser} from '../../lib/config_parser'
+import * as catalog from '../../services/CatalogService'
 
 export default {
   name: 'Deployment',
   components: {
     TimeOver
   },
-  data() {
+  data () {
     return {
       content: this.$t('buyer.deploy.codeBtn'),
       totalTime: 60,
       canClick: true,
       orderMode: '1',
       deployForm: {
-        projectName: 'default-' + Math.round(Math.random()*100),
+        projectName: 'default-' + Math.round(Math.random() * 100),
         rancherId: '',
         cpuKernel: '4',
         disk: '512G',
@@ -449,7 +450,7 @@ export default {
         dateRange: '',
         networkType: ''
       },
-      imageServerUrl: this.$store.state.imageServerUrl,
+      imageServerUrl: serverConfig.imageServerUrl,
       imgsrc: '',
       price: '',
       regionSel: [],
@@ -496,7 +497,7 @@ export default {
       curNetType: 'inner'
     }
   },
-  created() {
+  created () {
     if (typeof this.$route.query.appId !== 'undefined') {
       this.appId = this.$route.query.appId
       this.appRid = this.$route.query.appRid
@@ -515,10 +516,10 @@ export default {
 
   methods: {
     /// common functions
-    closeDialog: function(data) {
-      this.outerVisible=false
+    closeDialog: function (data) {
+      this.outerVisible = false
     },
-    countDown() {
+    countDown () {
       if (!this.canClick) return
       else {
         this.canClick = false
@@ -538,14 +539,14 @@ export default {
         this.getConfirmCode()
       }
     },
-    changeMore() {
+    changeMore () {
       this.more = !this.more
     },
-    setDatePick() {
+    setDatePick () {
       this.startDatePickerOptions = {
-        disabledDate(time) {
+        disabledDate (time) {
           return (
-               time.getTime() < new Date().getTime()
+            time.getTime() < new Date().getTime()
           )
         }
       }
@@ -553,7 +554,7 @@ export default {
 
     /// phase 1 resource and appinfo --------
 
-    setConfigSelector() {
+    setConfigSelector () {
       const CpuData = ServerConfigData.CPU
       this.cpuSel = WrapDropDownData(CpuData, auth.getCurLang())
       this.deployForm.cpuKernel = this.cpuSel[0].value
@@ -574,7 +575,7 @@ export default {
       this.networkTypeSel = WrapDropDownData(NetworkTypeData, null)
       this.deployForm.networkType = this.networkTypeSel[0].value
     },
-    getOrderOfApp() {
+    getOrderOfApp () {
       app.appPurchaseInfo(auth.getCurLang(), this.appId).then(purchaseInfo => {
         const purchaseInfoData = purchaseInfo.data
         if (purchaseInfoData.success) {
@@ -583,16 +584,16 @@ export default {
         }
       })
     },
-    setRegionSelectValue(region) {
+    setRegionSelectValue (region) {
       this.deployForm.rancherId = region
     },
 
-    setCurNetType(netType) {
+    setCurNetType (netType) {
       this.curNetType = netType
       this.getRegionList()
     },
 
-    getRegionList() {
+    getRegionList () {
       rancher.rancherSearch(auth.getCurLang(), { networkType: this.curNetType }).then(respData => {
         this.rancherServer = respData.data.data
         let regionData = []
@@ -613,7 +614,7 @@ export default {
         this.deployForm.rancherId = this.regionSel[0].value
       })
     },
-    getAppDetail(appid) {
+    getAppDetail (appid) {
       app.appDetail(auth.getCurLang(), appid).then(respData => {
         if (respData.data.success) {
           const appInfo = respData.data.data
@@ -621,7 +622,7 @@ export default {
           this.stackData.name = appInfo.name.replace(/\s+/g, '-')
           const versions = JSON.parse(this.appDetail.versionLinks)
           this.appDetail.versionlinks = []
-          this.imgsrc = this.imageServerUrl + this.appDetail.rid + '/icon'
+          this.imgsrc = catalog.constructImageUrl(this.imageServerUrl, this.appDetail.rid)
           this.price = this.appDetail.free
             ? this.$t('buyer.deploy.free')
             : this.price
@@ -641,7 +642,7 @@ export default {
         }
       })
     },
-    getAppVersionDetail(appId, version) {
+    getAppVersionDetail (appId, version) {
       app.appVersion(auth.getCurLang(), appId, version).then(respData => {
         if (respData.data.success) {
           this.appVersionDetail = respData.data.data
@@ -657,7 +658,7 @@ export default {
       })
     },
 
-    getUraPowerPoolList() {
+    getUraPowerPoolList () {
       const projectQuertData = {
         page: 0,
         pageSize: 0,
@@ -686,12 +687,12 @@ export default {
 
     /// phase 2 buy resource and application --------
 
-    getReferenceFee() {
+    getReferenceFee () {
       wallet.walletReferenceFee(auth.getCurLang()).then(reffee => {
         this.fee = reffee.data.data
       })
     },
-    getConfirmCode() {
+    getConfirmCode () {
       wallet
         .walletConfirmCode(auth.getCurLang(), auth.getCurUserName())
         .then(sendResult => {
@@ -713,7 +714,7 @@ export default {
           }
         })
     },
-    purchaseEntry() {
+    purchaseEntry () {
       if (this.orderMode === '1') {
         this.purchaseUraPowerPlus()
       } else if (this.orderMode === '2') {
@@ -722,7 +723,7 @@ export default {
         this.purchaseAppliction()
       }
     },
-    purchaseUraPowerPlus() {
+    purchaseUraPowerPlus () {
       this.deployForm.beginTime = this.deployForm.dateRange[0]
       this.deployForm.endTime = this.deployForm.dateRange[1]
       order
@@ -750,7 +751,7 @@ export default {
         })
     },
 
-    purchaseAppliction() {
+    purchaseAppliction () {
       if (!this.isMyApplication) {
         // app order
         order
@@ -786,7 +787,7 @@ export default {
       }
     },
 
-    startTransfer() {
+    startTransfer () {
       let orders = []
       this.gridData.map(order => {
         const tmporder = {
@@ -842,33 +843,33 @@ export default {
 
     /// phase 3 deploy application --------
 
-    deployConfirm() {
+    deployConfirm () {
       this.innerVisible = false
       if (this.orderMode !== '3') {
         this.$confirm(
-            this.$t('buyer.deploy.deployText'),
-            this.$t('buyer.deploy.deployTitle'),
+          this.$t('buyer.deploy.deployText'),
+          this.$t('buyer.deploy.deployTitle'),
           {
             confirmButtonText: this.$t('buyer.deploy.button2'),
             cancelButtonText: this.$t('buyer.deploy.button1'),
             type: 'warning'
           }
         )
-        .then(() => {
-          this.appDeploy()
-          this.$message({
-            type: 'success',
-            message: this.$t('buyer.deploy.deployAuto'),
-            duration: 3000
+          .then(() => {
+            this.appDeploy()
+            this.$message({
+              type: 'success',
+              message: this.$t('buyer.deploy.deployAuto'),
+              duration: 3000
+            })
           })
-        })
-        .catch(() => {
-          this.$message({
-            type: 'info',
-            message: this.$t('buyer.deploy.deployCancel'),
-            duration: 3000
+          .catch(() => {
+            this.$message({
+              type: 'info',
+              message: this.$t('buyer.deploy.deployCancel'),
+              duration: 3000
+            })
           })
-        })
       } else {
         this.$message({
           type: 'success',
@@ -878,13 +879,13 @@ export default {
         this.successToListPage()
       }
     },
-    successToListPage() {
+    successToListPage () {
       if (this.orderMode === '1' || this.orderMode === '2') {
         this.$router.push({ name: 'MyResource' })
       } else this.$router.push({ name: 'ApplicationRepository' })
     },
 
-    genRealConfigData() {
+    genRealConfigData () {
       const paramsData = this.paramTree
       let relConfData = {}
       paramsData.map(groupData => {
@@ -902,7 +903,7 @@ export default {
       return relConfData
     },
 
-    appDeploy() {
+    appDeploy () {
       this.appDeployParam['appId'] = this.appId
       this.appDeployParam['appVersion'] = this.versionValue
 

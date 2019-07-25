@@ -116,6 +116,7 @@
 import * as app from '../../services/RancherService'
 import * as auth from '../../services/AuthService'
 import {preventApplist, flatListToDropdownData} from '../../store/applistConfig'
+import * as catalog from '../../services/CatalogService'
 
 export default {
   name: 'ApplicationMarket',
@@ -141,7 +142,7 @@ export default {
       value1: '',
       value2: '',
       appList: [],
-      imageServerUrl: this.$store.state.imageServerUrl,
+      imageServerUrl: serverConfig.imageServerUrl,
       appType: 'All',
       appTypeSelected: 0,
       catalogRid: 'library',
@@ -177,7 +178,7 @@ export default {
         this.totalRecords = respData.data.data.total
 
         tmpappList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.imageurl = catalog.constructImageUrl(this.imageServerUrl, appitem.rid)
           appitem.computedPrice = appitem.free
             ? this.$t('buyer.deploy.free')
             : appitem.price

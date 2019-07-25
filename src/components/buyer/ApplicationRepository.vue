@@ -116,6 +116,7 @@
 <script>
 import * as app from '../../services/RancherService'
 import * as auth from '../../services/AuthService'
+import * as catalog from '../../services/CatalogService'
 
 export default {
   name: 'Applicationmarket',
@@ -123,7 +124,7 @@ export default {
     return {
       letter: '123',
       dialogVisible: false,
-      imageServerUrl: this.$store.state.imageServerUrl,
+      imageServerUrl: serverConfig.imageServerUrl,
       appList: [],
       searchName: '',
       currentPage: 1,
@@ -147,7 +148,7 @@ export default {
         this.totalRecords = respData.data.data.total
 
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.imageurl = catalog.constructImageUrl(this.imageServerUrl, appitem.rid)
           appitem.computedPrice = appitem.free
             ? this.$t('buyer.deploy.free')
             : appitem.price
