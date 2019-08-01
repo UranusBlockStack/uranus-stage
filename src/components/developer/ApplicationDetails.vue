@@ -1,5 +1,22 @@
 <template>
   <section class="appDetail">
+    <el-dialog
+        title="提示"
+        :visible.sync="dialogVisible"
+        width="30%"
+      >
+        <span>Confirm to delete version {{ this.versionValue }} of {{ this.appDetail.name }} ?</span>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button @click="dialogVisible = false">Cancel</el-button>
+          <el-button
+            type="primary"
+            @click="deleteApp"
+          >Confirm</el-button>
+        </span>
+      </el-dialog>
     <el-row class="resourceBox">
       <el-row>
         <el-col
@@ -139,7 +156,7 @@
         >
           <el-button
             type="success"
-            @click="deleteApp"
+            @click="dialogVisible = true"
           >
             Delete
           </el-button>
@@ -179,7 +196,8 @@ export default {
         startOnCreate: true
       },
       paramTree: [],
-      configuration: false
+      configuration: false,
+      dialogVisible: false
     }
   },
   created() {
@@ -223,7 +241,7 @@ export default {
       })
     },
     getAppVersionDetail(appId, version) {
-      console.log(appId,version)
+      console.log(appId, version)
       app.appVersion(auth.getCurLang(), appId, version).then(respData => {
         if (respData.data.success) {
           this.appVersionDetail = respData.data.data
@@ -250,7 +268,6 @@ export default {
       this.getAppVersionDetail(this.appId, this.versionValue)
     },
     deleteApp(app) {
-      console.log('delete', this.appDetail.name, this.appDetail.catalog, this.versionValue)
       catalog.deleteApp(auth.getCurLang(), this.appDetail.name, this.appDetail.catalog, this.versionValue).then(res => {
         if (res.data.success) {
           this.$router.push({ path: '/myapplication' })
@@ -262,6 +279,7 @@ export default {
           })
         }
       })
+      this.dialogVisible = false
     }
   }
 }

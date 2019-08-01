@@ -170,7 +170,7 @@ export default {
     getAppList() {
       const user = auth.getUserBaseInfo()
       const searchData = {
-        page: this.page,
+        page: this.currentPage,
         pageSize: this.pageSize,
         // 'sort': this.sort,
         sortDesc: this.sortDesc,
@@ -178,6 +178,7 @@ export default {
         name: this.prodName
       }
       rancher.appList(this.language, searchData).then(respData => {
+        this.totalRecords = respData.data.data.total
         this.appList = respData.data.data.records
         this.appList.map(appitem => {
           appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'

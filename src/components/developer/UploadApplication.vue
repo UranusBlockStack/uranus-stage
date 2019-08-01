@@ -194,14 +194,15 @@ export default {
         loginNameIn: '',
         name: '',
         price: '0',
-        projectName: 'urnaus-cloud'
+        projectName: 'uranus-cloud'
       },
+      appId: '',
       upload: false,
       headers: {
         Authorization: auth.getToken(),
         Language: auth.getCurLang()
       },
-      apiUrl: this.$store.state.apiUrl + 'catalog/charts/uranus-cloud/000'
+      apiUrl: ''
     }
   },
   methods: {
@@ -226,7 +227,8 @@ export default {
       const reqData = {
         name: this.form.loginName + '-' + this.form.name,
         price: this.form.price,
-        projectName: this.form.projectName
+        projectName: this.form.projectName,
+        rancherId: 2
       }
       if (this.form.name === '') {
         this.$message({
@@ -243,6 +245,8 @@ export default {
               type: 'success'
             })
             this.upload = true
+            this.appId = resData.data.data
+            this.apiUrl = this.$store.state.apiUrl + 'catalog/charts/uranus-cloud/' + this.appId
           } else {
             this.$message({
               showClose: true,
