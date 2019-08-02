@@ -1,7 +1,6 @@
 <template>
   <section class="appDetail">
     <el-dialog
-        title="提示"
         :visible.sync="dialogVisible"
         width="30%"
       >
@@ -177,7 +176,7 @@ export default {
   name: 'ApplicationDetails',
   data() {
     return {
-      imageServerUrl: this.$store.state.imageServerUrl,
+      imageServerUrl: serverConfig.imageServerUrl,
       imgsrc: '',
       price: '',
       // version
@@ -220,7 +219,7 @@ export default {
           this.stackData.name = appInfo.name.replace(/\s+/g, '-')
           const versions = JSON.parse(this.appDetail.versionLinks)
           this.appDetail.versionlinks = []
-          this.imgsrc = this.imageServerUrl + this.appDetail.rid + '/icon'
+          this.imgsrc = catalog.constructImageUrl(this.imageServerUrl, this.appDetail.rid)
           this.price = this.appDetail.free
             ? this.$t('buyer.deploy.free')
             : this.price
@@ -255,7 +254,6 @@ export default {
           } else {
             this.configuration = false
           }
-
         } else {
           console.log('error')
           // this.$alert(respon.message, this.$t('common.messages.alert'), {

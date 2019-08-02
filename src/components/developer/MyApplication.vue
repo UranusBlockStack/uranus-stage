@@ -149,13 +149,14 @@
 <script>
 import * as auth from '../../services/AuthService'
 import * as rancher from '../../services/RancherService.js'
+import * as catalog from '../../services/CatalogService'
 import moment from 'moment'
 
 export default {
   name: 'MyApplication',
   data() {
     return {
-      imageServerUrl: this.$store.state.imageServerUrl,
+      imageServerUrl: serverConfig.imageServerUrl,
       appList: [],
       prodName: '',
       currentPage: 1,
@@ -181,7 +182,7 @@ export default {
         this.totalRecords = respData.data.data.total
         this.appList = respData.data.data.records
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.imageurl = catalog.constructImageUrl(this.imageServerUrl, appitem.rid)
           appitem.computedPrice = appitem.free
             ? this.$t('developer.home.free')
             : appitem.price

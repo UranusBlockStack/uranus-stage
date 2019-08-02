@@ -279,7 +279,11 @@ import * as auth from '../../services/AuthService'
 import * as order from '../../services/OrderService'
 import * as rancher from '../../services/RancherService.js'
 import * as account from '../../services/AccountService'
+import * as catalog from '../../services/CatalogService'
 import moment from 'moment'
+var echarts = require('echarts/lib/echarts')
+require("echarts/lib/chart/bar")
+require("echarts/lib/chart/line")
 
 export default {
   name: 'Developer',
@@ -295,7 +299,7 @@ export default {
       currentPage: 1,
       currentpageSize: 5,
       totalRecords: 0,
-      imageServerUrl: this.$store.state.imageServerUrl
+      imageServerUrl: serverConfig.imageServerUrl
     }
   },
   methods: {
@@ -377,7 +381,7 @@ export default {
           // }
         ]
       }
-      let myChart = this.$echarts.init(document.getElementById(elementId))
+      let myChart = echarts.init(document.getElementById(elementId))
       myChart.setOption(option)
       window.addEventListener('resize', function () {
         myChart.resize()
@@ -433,7 +437,7 @@ export default {
       rancher.appList(this.language, searchData).then(respData => {
         this.appList = respData.data.data.records
         this.appList.map(appitem => {
-          appitem.imageurl = this.imageServerUrl + appitem.rid + '/icon'
+          appitem.imageurl = catalog.constructImageUrl(this.imageServerUrl, appitem.rid)
           appitem.computedPrice = appitem.free
             ? this.$t('developer.home.free')
             : appitem.price

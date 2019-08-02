@@ -179,6 +179,9 @@ import * as wallet from '../../services/WalletService'
 import * as rancher from '../../services/RancherService.js'
 import * as auth from '../../services/AuthService'
 import * as order from '../../services/OrderService'
+var echarts = require('echarts/lib/echarts')
+require("echarts/lib/chart/bar")
+require("echarts/lib/chart/line")
 
 export default {
   name: 'Seller',
@@ -260,7 +263,7 @@ export default {
     hosts() {
       rancher.hosts(this.language).then(data => {
         // 卖家所有资源
-        if (data.data.data === 'null') {
+        if (data.data.data == null) {
           this.allResources
         } else {
           this.allResources = data.data.data
@@ -365,7 +368,7 @@ export default {
           }
         ]
       }
-      let myChart = this.$echarts.init(document.getElementById(elementId))
+      let myChart = echarts.init(document.getElementById(elementId))
       myChart.setOption(option)
       window.addEventListener('resize', function () {
         myChart.resize()
