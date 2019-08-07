@@ -14,7 +14,9 @@ prepost
 *._.DS_Store
 node_modules/*
 package-lock.json
-./src/store/store.js
 vendor-manifest.json
 static/dll.vendor.js
-./static/dll.vendor.js
+
+src/store/store.js
+static/serverConfig-container.js
+

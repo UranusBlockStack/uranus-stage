@@ -250,10 +250,11 @@ export default {
           console.log(data)
           if (data.success) {
             if (type === 'execute') {
-              const podurl = data.data
-
               const wssproxy = this.$store.state.rancherWssProxyUrl
+
+              const podurl = data.data
               const baseUrl = wssproxy + this.rancherCode + podurl.slice(podurl.indexOf('/k8s'))
+              // const baseUrl = wssproxy + data.data  /// 正式的地址
 
               let url = this.innerBuildUrl(baseUrl)
               this.dialogTableVisible = true
