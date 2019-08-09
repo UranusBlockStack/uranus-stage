@@ -609,9 +609,11 @@ module.exports = {
       }
     },
     uploadApplication: {
-      upload: 'Upload app',
+      upload: 'Upload Application',
       information: 'Basic Information',
       name: 'Application Name',
+      tipApp: 'Name the format of username-Application name to customize your private format Application name.',
+      tipLogin: 'Please set your username as the unique personal identifier when you name your app. It can only be set once and cannot be changed.',
       mode: 'Charging mode',
       change: 'Charges',
       free: 'Free',

@@ -240,14 +240,12 @@ export default {
       })
     },
     getAppVersionDetail(appId, version) {
-      console.log(appId, version)
       app.appVersion(auth.getCurLang(), appId, version).then(respData => {
         if (respData.data.success) {
           this.appVersionDetail = respData.data.data
           // let files = JSON.parse(this.appVersionDetail.files)
           // this.appVersionDetail.files = files
           // this.appVersionDetail.readMe = files['README.md']
-          console.log(this.appVersionDetail)
           if (this.appVersionDetail.questions != null) {
             this.paramTree = appConfigParser(this.appVersionDetail.questions)
             this.configuration = true
@@ -266,7 +264,7 @@ export default {
       this.getAppVersionDetail(this.appId, this.versionValue)
     },
     deleteApp(app) {
-      catalog.deleteApp(auth.getCurLang(), this.appDetail.name, this.appDetail.catalog, this.versionValue).then(res => {
+      catalog.deleteApp(auth.getCurLang(), this.appDetail.catalog, this.appDetail.name, this.versionValue).then(res => {
         if (res.data.success) {
           this.$router.push({ path: '/myapplication' })
         } else {

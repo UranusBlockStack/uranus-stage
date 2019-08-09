@@ -535,6 +535,10 @@ module.exports = {
       }
     }
   },
+  developer: {
+    home: '首页',
+    download: '下载量'
+  },
   wallet: {
     title: '钱包',
     balance: '账户余额：',
@@ -560,10 +564,6 @@ module.exports = {
       type: '类型',
       balance: '余额'
     }
-  },
-  developer: {
-    home: '首页',
-    download: '下载量'
   },
   transfer: {
     transfer: '转账：',

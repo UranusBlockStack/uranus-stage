@@ -426,6 +426,7 @@ export default {
       }
     },
     getAppList() {
+      rancher.updateApp(this.language,2).then(response => {})
       const user = auth.getUserBaseInfo()
       const searchData = {
         page: this.page,

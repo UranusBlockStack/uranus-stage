@@ -25,20 +25,25 @@
             <el-input
               style="width: 45%;"
               v-model="form.loginNameIn"
-            ></el-input> -
+              placeholder="Username"
+            ></el-input> &nbsp; - &nbsp;
             <el-input
               style="width: 45%;"
               v-model="form.name"
+              placeholder="Application name"
             ></el-input>
+            <p class="tip">{{ $t('developer.uploadApplication.tipApp') }}</p>
+            <p class="tip">{{ $t('developer.uploadApplication.tipLogin') }}</p>
           </el-form-item>
           <el-form-item v-if="this.existsBtn" :label="this.$t('developer.uploadApplication.name')">
             <el-input
               class="existsName"
               v-model="form.name"
-              
+              placeholder="Application name"
             >
-              <template slot="prepend">{{form.loginName}} - </template>
+              <template slot="prepend">{{form.loginName}} &nbsp; - &nbsp; </template>
             </el-input>
+            <p class="tip">{{ $t('developer.uploadApplication.tipApp') }}</p>
           </el-form-item>
           <!-- <el-form-item label="镜像简介">
             <el-input
@@ -246,7 +251,7 @@ export default {
             })
             this.upload = true
             this.appId = resData.data.data
-            this.apiUrl = this.$store.state.apiUrl + 'catalog/charts/uranus-cloud/' + this.appId
+            this.apiUrl = serverConfig.apiUrl + 'catalog/charts/uranus-cloud/' + this.appId
           } else {
             this.$message({
               showClose: true,
@@ -280,7 +285,6 @@ export default {
       }
     },
     uploadSuccess(res) {
-      console.log('success', res)
       if (res.success) {
         this.$router.push({ path: '/myapplication' })
       } else {
@@ -292,7 +296,6 @@ export default {
       }
     },
     uploadError(res) {
-      console.log('error', res)
       this.$message({
         showClose: true,
         message: 'Upload failed',
@@ -351,6 +354,13 @@ export default {
       width: 200px;
       height: 34px;
     }
+    .tip {
+      height: 15px;
+      line-height: 15px;
+      margin: 5px 0;
+      width: 850px;
+      color: #666565;
+    }
     .el-form /deep/ .el-form-item__label {
       text-align: left;
     }
@@ -386,6 +396,9 @@ export default {
       border-radius: 4px;
       color: #a2a6b0;
       opacity: 0.6;
+    }
+    .el-input /deep/ .el-input__inner::-webkit-input-placeholder{
+      color:#666565;
     }
     .existsName /deep/ .el-input__inner {
       border-left: none;

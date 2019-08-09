@@ -169,6 +169,7 @@ export default {
       return moment(cellValue).format('YYYY-MM-DD HH:mm:ss')
     },
     getAppList() {
+      rancher.updateApp(this.language,2).then(response => {})
       const user = auth.getUserBaseInfo()
       const searchData = {
         page: this.currentPage,
