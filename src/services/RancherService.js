@@ -124,6 +124,10 @@ export function updateApp(lang, id) {
   return httpLang(lang).post(`/rancher/apps/${id}/action=sync`)
 }
 
+export function refreshApp(lang, name, queryData) {
+  return httpLang(lang).post(`/rancher/apps/${name}?action=` + queryData.action)
+}
+
 /** Rancher - 我的App  AppUserController Service ***/
 
 export function appByUser(lang, queryData) {

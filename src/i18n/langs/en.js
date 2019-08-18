@@ -578,6 +578,7 @@ module.exports = {
         success: 'Success',
         fail: 'Fail',
         processing: 'Processing',
+        delete: 'Deleting',
         version: 'Version',
         updateTime: 'updateTime'
       }

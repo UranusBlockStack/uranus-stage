@@ -96,6 +96,7 @@
               <p v-if="scope.row.status == 0">{{ $t('developer.myApplication.table.processing') }} </p>
               <p v-if="scope.row.status == 1">{{ $t('developer.myApplication.table.success') }} </p>
               <p v-if="scope.row.status == 2">{{ $t('developer.myApplication.table.fail') }} </p>
+              <p v-if="scope.row.status == 4">{{ $t('developer.myApplication.table.delete') }} </p>
             </template>
           </el-table-column>
           <el-table-column

@@ -266,7 +266,20 @@ export default {
     deleteApp(app) {
       catalog.deleteApp(auth.getCurLang(), this.appDetail.catalog, this.appDetail.name, this.versionValue).then(res => {
         if (res.data.success) {
-          this.$router.push({ path: '/myapplication' })
+          const reData = {
+            action: 'refresh'
+          }
+          rancher.refreshApp(auth.getCurLang(), this.appDetail.name, reData).then(res => {
+            if (res.data.success) {
+              this.$router.push({ path: '/myapplication' })
+            } else {
+              this.$message({
+                showClose: true,
+                message: res.data.errMsg,
+                type: 'error'
+              })
+            }
+          })
         } else {
           this.$message({
             showClose: true,
