@@ -169,6 +169,7 @@
 import * as app from '../../services/RancherService'
 import * as auth from '../../services/AuthService'
 import * as catalog from '../../services/CatalogService'
+import * as rancher from '../../services/RancherService'
 import { appConfigParser } from '../../lib/config_parser'
 import { Message } from 'element-ui'
 

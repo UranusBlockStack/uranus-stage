@@ -235,7 +235,7 @@
             <p class="overflow" v-if="scope.row.ltc == 1">{{ $t('seller.host.machine') }}</p>
           </template>
         </el-table-column>
-        <el-table-column min-width="100">
+        <el-table-column min-width="140">
           <!--主机IP ip-->
           <template
             slot="header"
@@ -250,7 +250,7 @@
             <p class="overflow">{{ scope.row.hostIp}}</p>
           </template>
         </el-table-column>
-        <el-table-column width="170">
+        <el-table-column width="160">
           <template
             slot="header"
             slot-scope="scope"
@@ -305,7 +305,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="170">
+        <el-table-column width="160">
           <!--内存-->
           <template
             slot="header"
@@ -353,7 +353,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="170">
+        <el-table-column width="160">
           <!--硬盘-->
           <template
             slot="header"
@@ -401,7 +401,7 @@
           </template>
         </el-table-column>
 
-        <el-table-column width="170">
+        <el-table-column width="160">
           <!--宽带(M)-->
           <template
             slot="header"
