@@ -1,5 +1,6 @@
-module.exports = {  
-    plugins: {  
-      'autoprefixer': {browsers: 'last 5 version'}  
-    }  
-} 
+// CSS后处理
+module.exports = {
+  plugins: [
+    require('autoprefixer')
+  ]
+}

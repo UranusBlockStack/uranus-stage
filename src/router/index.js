@@ -1,3 +1,4 @@
+import VueRouter from "vue-router"
 import Starter from '@/components/Starter'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
@@ -40,145 +41,152 @@ import Wallet from '@/components/common/Wallet'
 import Transfer from '@/components/common/Transfer'
 import Setting from '@/components/common/Setting'
 
-const routes = [
-  {
-    path: '/',
-    name: 'Map',
-    component: Map
-  }, {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  }, {
-    path: '/register',
-    name: 'Register',
-    component: Register
-  }, {
-    path: '/forgetPwd',
-    name: 'ForgetPwd',
-    component: ForgetPwd
-  }, {
-    path: '',
-    name: 'Starter',
-    component: Starter,
-    children: [
-      // buyer routes
-      {
-        path: '/buyer',
-        component: Buyer,
-        name: 'Buyer'
-      }, {
-        path: '/applicationmarket',
-        component: ApplicationMarket,
-        name: 'ApplicationMarket'
-      }, {
-        path: '/applicationrepository',
-        component: ApplicationRepository,
-        name: 'ApplicationRepository'
-      }, {
-        path: '/deployment',
-        component: Deployment,
-        name: 'Deployment'
-      }, {
-        path: '/apprecord',
-        component: AppRecord,
-        name: 'AppRecord'
-      }, {
-        path: '/resourcemarket',
-        component: ResourceMarket,
-        name: 'ResourceMarket'
-      }, {
-        path: '/myresource',
-        component: MyResource,
-        name: 'MyResource'
-      }, {
-        path: '/resourcepool/:poolid?/:poolname?',
-        component: ResourcePool,
-        name: 'ResourcePool'
-      }, {
-        path: '/urapowerrecord',
-        component: UrapowerRecord,
-        name: 'UrapowerRecord'
-      }, {
-        path: '/appstate/:projectId?/:appId?/:appname?',
-        component: AppState,
-        name: 'AppState'
-      }, {
-        path: '/statedetail',
-        component: StateDetail,
-        name: 'StateDetail'
-      },
-        
-      // developer routes
-      {
-        path: '/developer',
-        component: Developer,
-        name: 'Developer'
-      }, {
-        path: '/uploadapplication',
-        component: UploadApplication,
-        name: 'UploadApplication'
-      }, {
-        path: '/myapplication',
-        component: MyApplication,
-        name: 'MyApplication'
-      }, {
-        path: '/applicationname',
-        component: ApplicationName,
-        name: 'ApplicationName'
-      }, {
-        path: '/applicationdetails',
-        component: ApplicationDetails,
-        name: 'ApplicationDetails'
-      }, {
-        path: '/applicationrecard',
-        component: ApplicationRecard,
-        name: 'ApplicationRecard'
-      },
-        
-      // seller routes
-      {
-        path: '/seller',
-        component: Seller,
-        name: 'Seller'
-      }, {
-        path: '/myhost',
-        component: MyHost,
-        name: 'MyHost'
-      }, {
-        path: '/mycolony',
-        component: MyColony,
-        name: 'MyColony'
-      }, {
-        path: '/colony/:resid?',
-        component: Colony,
-        name: 'Colony'
-      }, {
-        path: '/resourcerecord',
-        component: ResourceRecord,
-        name: 'ResourceRecord'
-      },
+// 路由懒加载, 得结合 babel-plugin-syntax-dynamic-import 插件使用
+// const HelloWorld = () => import("@/components/HelloWorld.vue");
+// const Me = () => import("@/components/Me.vue");
 
-      // common routes
-      {
-        path: '/wallet',
-        component: Wallet,
-        name: 'Wallet'
-      }, {
-        path: '/setting',
-        component: Setting,
-        name: 'Setting'
-      }, {
-        path: '/transfer',
-        component: Transfer,
-        name: 'Transfer'
-      }
-    ]
-  }, {
-    path: '*',
-    name: 'NotFound',
-    component: NotFound
-  }
-]
+const router = new VueRouter({
+  mode: 'history',
+  routes: [
+    {
+      path: '/',
+      name: 'Map',
+      component: Map
+    }, {
+      path: '/login',
+      name: 'Login',
+      component: Login
+    }, {
+      path: '/register',
+      name: 'Register',
+      component: Register
+    }, {
+      path: '/forgetPwd',
+      name: 'ForgetPwd',
+      component: ForgetPwd
+    }, {
+      path: '',
+      name: 'Starter',
+      component: Starter,
+      children: [
+        // buyer routes
+        {
+          path: '/buyer',
+          component: Buyer,
+          name: 'Buyer'
+        }, {
+          path: '/applicationmarket',
+          component: ApplicationMarket,
+          name: 'ApplicationMarket'
+        }, {
+          path: '/applicationrepository',
+          component: ApplicationRepository,
+          name: 'ApplicationRepository'
+        }, {
+          path: '/deployment',
+          component: Deployment,
+          name: 'Deployment'
+        }, {
+          path: '/apprecord',
+          component: AppRecord,
+          name: 'AppRecord'
+        }, {
+          path: '/resourcemarket',
+          component: ResourceMarket,
+          name: 'ResourceMarket'
+        }, {
+          path: '/myresource',
+          component: MyResource,
+          name: 'MyResource'
+        }, {
+          path: '/resourcepool/:poolid?/:poolname?',
+          component: ResourcePool,
+          name: 'ResourcePool'
+        }, {
+          path: '/urapowerrecord',
+          component: UrapowerRecord,
+          name: 'UrapowerRecord'
+        }, {
+          path: '/appstate/:projectId?/:appId?/:appname?',
+          component: AppState,
+          name: 'AppState'
+        }, {
+          path: '/statedetail',
+          component: StateDetail,
+          name: 'StateDetail'
+        },
+          
+        // developer routes
+        {
+          path: '/developer',
+          component: Developer,
+          name: 'Developer'
+        }, {
+          path: '/uploadapplication',
+          component: UploadApplication,
+          name: 'UploadApplication'
+        }, {
+          path: '/myapplication',
+          component: MyApplication,
+          name: 'MyApplication'
+        }, {
+          path: '/applicationname',
+          component: ApplicationName,
+          name: 'ApplicationName'
+        }, {
+          path: '/applicationdetails',
+          component: ApplicationDetails,
+          name: 'ApplicationDetails'
+        }, {
+          path: '/applicationrecard',
+          component: ApplicationRecard,
+          name: 'ApplicationRecard'
+        },
+          
+        // seller routes
+        {
+          path: '/seller',
+          component: Seller,
+          name: 'Seller'
+        }, {
+          path: '/myhost',
+          component: MyHost,
+          name: 'MyHost'
+        }, {
+          path: '/mycolony',
+          component: MyColony,
+          name: 'MyColony'
+        }, {
+          path: '/colony/:resid?',
+          component: Colony,
+          name: 'Colony'
+        }, {
+          path: '/resourcerecord',
+          component: ResourceRecord,
+          name: 'ResourceRecord'
+        },
+  
+        // common routes
+        {
+          path: '/wallet',
+          component: Wallet,
+          name: 'Wallet'
+        }, {
+          path: '/setting',
+          component: Setting,
+          name: 'Setting'
+        }, {
+          path: '/transfer',
+          component: Transfer,
+          name: 'Transfer'
+        }
+      ]
+    }, {
+      path: '*',
+      name: 'NotFound',
+      component: NotFound
+    }
+  ]
+});
 
-export default routes
+export default router;

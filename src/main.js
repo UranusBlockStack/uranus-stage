@@ -1,13 +1,12 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
-import App from './App'
+import App from './App.vue'
 import VueRouter from 'vue-router'
-import routes from './router'
 import VueI18n from 'vue-i18n'
 import i18n from './i18n/i18n'
-// import echarts from 'echarts'
 import ElementUI from 'element-ui'
+
+import router from './router'
+import store from './store/store'
 
 import locale from 'element-ui/lib/locale/lang/en'
 import 'element-ui/lib/theme-chalk/index.css'
@@ -20,20 +19,13 @@ import 'admin-lte/dist/css/AdminLTE.min.css'
 import 'admin-lte/dist/css/skins/_all-skins.min.css'
 import 'xterm/dist/xterm.css'
 
-import store from './store/store'
 import * as auth from './services/AuthService'
 
+// 注册路由
+Vue.use(VueRouter)
 Vue.use(VueRouter)
 Vue.use(VueI18n)
 Vue.use(ElementUI, { locale })
-
-// Vue.prototype.$echarts = echarts
-Vue.config.productionTip = false
-
-var router = new VueRouter({
-  routes,
-  mode: 'history'
-})
 
 /// jump1 登录、注册、Map页已登录控制
 /// jump2 未登录自动跳转到map页
@@ -70,12 +62,10 @@ router.beforeEach(function (to, from, next) {
   }
 })
 
-/* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  i18n,
-  template: '<App/>',
-  components: { App }
-})
+    el: '#app',
+    router,
+    store,
+    i18n,
+    render: h => h(App),
+});
