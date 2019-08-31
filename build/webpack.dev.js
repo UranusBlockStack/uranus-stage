@@ -7,6 +7,8 @@ module.exports = merge(common, {
     devServer: {
         contentBase: '../dist',
         historyApiFallback: true,
+        host: '0.0.0.0',
+        port: 8080,//8080 is default
     },
     output: {
         filename: 'js/[name].[hash].js',

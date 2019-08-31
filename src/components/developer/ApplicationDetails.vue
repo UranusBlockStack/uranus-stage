@@ -247,7 +247,7 @@ export default {
           // let files = JSON.parse(this.appVersionDetail.files)
           // this.appVersionDetail.files = files
           // this.appVersionDetail.readMe = files['README.md']
-          if (this.appVersionDetail.questions != null) {
+          if (this.appVersionDetail != null) {
             this.paramTree = appConfigParser(this.appVersionDetail.questions)
             this.configuration = true
           } else {
