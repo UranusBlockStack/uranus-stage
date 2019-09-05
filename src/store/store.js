@@ -8,8 +8,8 @@ export default new Vuex.Store({
   state: {
     isLoggedIn: false,
     // apiUrl: `${window.location.protocol}//${window.location.hostname}:3000/api`,
-    rancherHttpsProxyUrl: 'https://localhost:8088/',
-    rancherWssProxyUrl: 'wss://localhost:8088/',
+    rancherHttpsProxyUrl: 'https://localhost:8088',
+    rancherWssProxyUrl: 'wss://54.180.158.219:8088',
     downloadUrl: 'ftp://47.106.75.136:8000/', // 下载URL
     lang: { // 全部语言包列表
       'zh-cn': 'zh-cn',

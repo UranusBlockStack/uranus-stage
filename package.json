@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "webpack-dev-server --hot --open --inline --config build/webpack.dev.js --api_env botme",
+    "dev": "webpack-dev-server --hot --open --inline --config build/webpack.dev.js ",
     "commit": "node commit/git-commit.js",
     "build:dll": "webpack --config ./build/webpack.dll.js",
     "build": "webpack --config build/webpack.prod.js"
@@ -53,8 +53,8 @@
     "echarts": "^4.2.1",
     "echarts-liquidfill": "^2.0.4",
     "element-ui": "^2.4.11",
-    "eslint-plugin-html": "^5.0.5",
     "es6-promise": "^4.2.5",
+    "eslint-plugin-html": "^5.0.5",
     "font-awesome": "^4.7.0",
     "jsonwebtoken": "^8.5.1",
     "vue": "^2.5.17",

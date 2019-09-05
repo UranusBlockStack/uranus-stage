@@ -124,8 +124,7 @@ export default {
         'TERM=xterm-256color; export TERM; [ -x /bin/bash ] && ([ -x /usr/bin/script ] && /usr/bin/script -q -c "/bin/bash" /dev/null || exec /bin/bash) || exec /bin/sh'
       ],
       dialogTableVisible: false,
-      websocket: null,
-      rancherCode: 'rancher2'
+      websocket: null
     }
   },
   methods: {
@@ -247,14 +246,12 @@ export default {
       shell.rancherWorkloadWebsocket(auth.getCurLang(), wid)
         .then(respData => {
           let data = respData.data
-          console.log(data)
           if (data.success) {
             if (type === 'execute') {
               const wssproxy = this.$store.state.rancherWssProxyUrl
 
-              const podurl = data.data
-              const baseUrl = wssproxy + this.rancherCode + podurl.slice(podurl.indexOf('/k8s'))
-              // const baseUrl = wssproxy + data.data  /// 正式的地址
+              // const baseUrl = wssproxy + this.rancherCode + podurl.slice(podurl.indexOf('/k8s'))
+              const baseUrl = wssproxy + data.data /// 正式的地址
 
               let url = this.innerBuildUrl(baseUrl)
               this.dialogTableVisible = true

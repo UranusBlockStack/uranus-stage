@@ -16,7 +16,5 @@ node_modules/*
 package-lock.json
 vendor-manifest.json
 static/dll.vendor.js
-
 src/store/store.js
-static/serverConfig-container.js
 
