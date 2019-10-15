@@ -343,6 +343,7 @@ export default {
           {
             name: ' ',
             type: 'value',
+            minInterval: 0.001,
             /* axisLabel: {
                           formatter: "{value}"
                       }, */
@@ -411,6 +412,7 @@ export default {
         let result = data.data.data
         let xValue = []
         let yValue = []
+        console.log(result)
         result.forEach((item, index) => {
           xValue.push(item.datetimeValue)
           yValue.push(item.earnings)

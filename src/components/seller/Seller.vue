@@ -330,6 +330,7 @@ export default {
           {
             name: 'UracPower(U)',
             type: 'value',
+            minInterval: 0.001,
             /* axisLabel: {
                           formatter: "{value}"
                       }, */
