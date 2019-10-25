@@ -49,7 +49,7 @@
             </template>
             <template slot-scope="scope">
               <p class="overflow">{{ scope.row.name }}</p>
-              <div  v-html="scope.row.links"> {{scope.row.links}} </div>
+              <div v-html="scope.row.links"> {{scope.row.links}} </div>
             </template>
           </el-table-column>
           <el-table-column prop="image" width="320">
@@ -153,7 +153,7 @@ export default {
             let links = ""
             if(endpoints){
               endpoints.map(epitem=>{
-                links += `<a href='${epitem.addresses[0]}:${epitem.port}' title="${epitem.addresses[0]}:${epitem.port}"> ${epitem.port}/${epitem.protocol.toLowerCase()} </a>`
+                links += `<a href='http://${epitem.addresses[0]}:${epitem.port}' title="${epitem.addresses[0]}:${epitem.port}" target="_blank"> ${epitem.port}/${epitem.protocol.toLowerCase()} </a>`
               })
             }
             object['links'] = links
