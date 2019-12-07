@@ -248,7 +248,7 @@ export default {
           let data = respData.data
           if (data.success) {
             if (type === 'execute') {
-              const wssproxy = this.$store.state.rancherWssProxyUrl
+              const wssproxy = serverConfig.rancherWssProxyUrl
 
               // const baseUrl = wssproxy + this.rancherCode + podurl.slice(podurl.indexOf('/k8s'))
               const baseUrl = wssproxy + data.data /// 正式的地址
